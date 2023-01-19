@@ -6,19 +6,40 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "test": "jest --config ./jest.config.js",
+    "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
+    "lint:fix": "eslint --fix 'src/**/*.{js,jsx,ts,tsx}"
   },
   "dependencies": {
+    "axios": "^1.2.3",
     "next": "12.1.6",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-query": "^3.39.2"
   },
   "devDependencies": {
-    "@types/react": "^18.0.14",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
     "@types/node": "^18.0.0",
+    "@types/react": "^18.0.14",
     "@types/react-dom": "18.0.10",
+    "@typescript-eslint/eslint-plugin": "^5.48.2",
+    "@typescript-eslint/parser": "^5.48.2",
+    "autoprefixer": "^10.4.13",
     "eslint": "8.18.0",
     "eslint-config-next": "12.1.6",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-prefer-arrow": "^1.2.3",
+    "eslint-plugin-react": "^7.32.1",
+    "jest-environment-jsdom": "^29.3.1",
+    "jest-mock-axios": "^4.7.0-beta4",
+    "postcss": "^8.4.21",
+    "prettier": "^2.8.3",
+    "sass": "^1.57.1",
+    "tailwindcss": "^3.2.4",
+    "ts-jest": "^29.0.5",
     "typescript": "^4.7.4"
   }
 }
