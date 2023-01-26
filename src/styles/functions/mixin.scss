@@ -1,0 +1,18 @@
+@import './function.scss';
+
+/*
+-------------------------------------------------------------
+ブレイクポイントごとのメディアクエリを出力する
+-------------------------------------------------------------
+*/
+@mixin mq-breakpoint($key) {
+  $width: breakpoint-min($key);
+
+  @if $width {
+    @media (min-width: $width) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}

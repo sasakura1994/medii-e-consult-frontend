@@ -1,4 +1,4 @@
-$font-family: Noto Sans JP,Avenir,Helvetica,Arial,sans-serif !default;
+$font-family: 'Noto Sans JP', 'Avenir', Helvetica, Arial, sans-serif !default;
 
 //===========================================================
 // Colors
@@ -12,3 +12,21 @@ $primary-color: #5c6bc0 !default;
 // Sizes
 //===========================================================
 $font-size-base: 1.6rem !default;
+
+
+//===========================================================
+// Breakpoints
+//===========================================================
+$sm: 640px !default;
+$md: 768px !default;
+$lg: 1024px !default;
+$xl: 1280px !default;
+$xxl: 1536px !default;
+
+$breakpoints: (
+  sm: $sm,
+  md: $md,
+  lg: $lg,
+  xl: $xl,
+  xxl: $xxl
+) !default;

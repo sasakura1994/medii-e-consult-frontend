@@ -1,20 +1,21 @@
-import React from 'react'
-import { Header } from './Headers/Header'
-import { HeaderSimple } from './Headers/HeaderSimple'
+import React from 'react';
+import { Header } from './Header';
+import { HeaderSimple } from './HeaderSimple';
+import { SpFooterMenu } from '@/components/Commons/SpFooterMenu';
 
-type HeaderFigureType = 'normal' | 'simple'
+type HeaderFigureType = 'default' | 'simple';
 
 type PropsType = {
-  children: React.ReactNode
-  headerFigure?: HeaderFigureType
-}
+  children: React.ReactNode;
+  headerFigure?: HeaderFigureType;
+};
 
 export const Layout = (props: PropsType) => {
-  const { children, headerFigure } = props
+  const { children, headerFigure } = props;
 
   return (
     <>
-      {!headerFigure || headerFigure === 'normal' ? (
+      {!headerFigure || headerFigure === 'default' ? (
         <Header />
       ) : headerFigure === 'simple' ? (
         <HeaderSimple />
@@ -22,6 +23,7 @@ export const Layout = (props: PropsType) => {
         <Header />
       )}
       <main>{children}</main>
+      <SpFooterMenu />
     </>
-  )
-}
+  );
+};

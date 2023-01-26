@@ -1,13 +1,12 @@
-import React from 'react'
-import { CustomHead } from '@/components/Commons/CustomHead'
-import type { NextPage } from 'next'
+import React from 'react';
+import type { NextPage } from 'next';
 
 const Home: NextPage = () => {
   return (
     <>
-      <CustomHead />
+      <h1>Welcom E-コンサル</h1>
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
