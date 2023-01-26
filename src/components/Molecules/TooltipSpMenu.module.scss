@@ -1,0 +1,72 @@
+@import '../../styles/utilities/variable.scss';
+@import '../../styles/functions/mixin.scss';
+
+.tooltip_sp {
+  background-color: #ffffff;
+  padding: 16px 16px;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px 0 rgba(0,0,0,0.5);
+}
+
+.tooltip_sp_nav {
+  width: 170px;
+  &:not(:last-of-type) {
+    margin-bottom: 12px;
+  }
+  &__heading {
+    color: $primary-color;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+}
+
+.tooltip_sp_menu {
+  background-color: #eff3f6;
+  padding: 4px 4px;
+  border-radius: 4px;
+
+  &__link {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+    padding: 4px 4px;
+    &::before {
+      content: "";
+      display: block;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      width: 24px;
+      height: 24px;
+      margin-right: 4px;
+    }
+
+    &___profile::before {
+      background-image: url('/icons/my_profile.svg');
+    }
+    &___point::before {
+      background-image: url('/icons/point.svg');
+    }
+    &___gift::before {
+      background-image: url('/icons/gift.svg');
+    }
+    &___invite::before {
+      background-image: url('/icons/invite.svg');
+    }
+    &___notify::before {
+      background-image: url('/icons/noti_setting.svg');
+    }
+
+    &___help::before {
+      background-image: url('/icons/help.svg');
+    }
+    &___faq::before {
+      background-image: url('/icons/faq.svg');
+    }
+    &___contact::before {
+      background-image: url('/icons/contact.svg');
+    }
+  }
+}

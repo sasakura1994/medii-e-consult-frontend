@@ -1,9 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
-import styles from './SpFooterMenu.module.scss';
+import styles from './FooterSpMenu.module.scss';
 import { Badge } from '@/components/Atoms/Badge';
 
-export const SpFooterMenu: React.FC = () => {
+export const FooterSpMenu: React.FC = () => {
   return (
     <nav className={styles.sp_footer_nav}>
       <ul className={styles.sp_footer_menu}>
@@ -20,7 +20,7 @@ export const SpFooterMenu: React.FC = () => {
             text="NEW"
             styles="bg-red-400
                    text-white
-                   text-base
+                   text-[10px]
                    text-center
                    leading-none
                    px-2
@@ -29,7 +29,7 @@ export const SpFooterMenu: React.FC = () => {
                    rounded-full
                    absolute
                    top-3
-                   right-0"
+                   right-[-6px]"
           />
         </li>
         <li className={styles.sp_footer_menu__item}>

@@ -1,4 +1,4 @@
-@import './utilities/reset.scss';
+// @import './utilities/reset.scss';
 @import './utilities/variable.scss';
 
 @import '~tailwindcss/base';
@@ -18,7 +18,7 @@
 :root {
   /* 100%  -> 16px ブラウザ標準ベースフォントサイズ */
   /* 62.5% -> 10px ベースフォントサイズを10pxに */
-  font-size: 62.5%;
+  font-size: 100%;
 }
 
 html {
@@ -36,6 +36,7 @@ body {
   background-color: $bg-color-base;
   font-size: $font-size-base;
   line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
 }
 
 

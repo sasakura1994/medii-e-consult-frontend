@@ -1,7 +1,7 @@
 import React from 'react';
 import { Header } from './Header';
 import { HeaderSimple } from './HeaderSimple';
-import { SpFooterMenu } from '@/components/Commons/SpFooterMenu';
+import { FooterSpMenu } from '@/components/Commons/FooterSpMenu';
 
 type HeaderFigureType = 'default' | 'simple';
 
@@ -23,7 +23,7 @@ export const Layout = (props: PropsType) => {
         <Header />
       )}
       <main>{children}</main>
-      <SpFooterMenu />
+      <FooterSpMenu />
     </>
   );
 };

@@ -22,15 +22,15 @@ export const HeaderMenu: React.FC = () => {
               text="NEW"
               styles="bg-red-400
                       text-white
-                      text-base
+                      text-[10px]
                       text-center
                       leading-none
-                      px-2
+                      px-[5px]
                       pt-[3px]
                       pb-px
                       rounded-full
                       absolute
-                      top-[-14px]
+                      top-[-12px]
                       left-[-2px]"
             />
           </li>

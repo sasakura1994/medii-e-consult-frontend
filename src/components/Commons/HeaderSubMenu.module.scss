@@ -12,25 +12,18 @@
   display: flex;
 
   &__item {
-    margin-bottom: -0.4rem;
+    margin-bottom: -4px;
     &:not(:last-of-type) {
-      margin-right: 0.8rem;
+      margin-right: 8px;
     }
-  }
-
-  &__link {
-    display: inline-block;
-    color: $primary-color;
-    font-size: 1.4rem;
-    position: relative;
 
     &::after {
       content: "";
       display: block;
       background-color: $primary-color;
       width: 100%;
-      height: 0.2rem;
-      margin-top: 0.2rem;
+      height: 2px;
+      margin-top: 2px;
       transform: scale(0, 1);
       transform-origin: right top;
       transition: transform 0.3s;
@@ -39,6 +32,13 @@
       transform-origin: left top;
       transform: scale(1, 1);
     }
+  }
+
+  &__link {
+    display: block;
+    color: $primary-color;
+    font-size: 14px;
+    position: relative;
   }
 
   &__link_text {
@@ -53,9 +53,9 @@
       mask-repeat: no-repeat;
       mask-position: center;
       mask-size: contain;
-      width: 2.4rem;
-      height: 2.4rem;
-      margin-right: 0.3rem;
+      width: 24px;
+      height: 24px;
+      margin-right: 4px;
     }
 
     &___menu::before {
@@ -82,7 +82,7 @@
 
   &__item {
     &:not(:last-of-type) {
-      margin-right: 1.2rem;
+      margin-right: 12px;
     }
   }
 
@@ -91,7 +91,7 @@
     flex-direction: column;
     align-items: center;
     color: $primary-color;
-    font-size: 1rem;
+    font-size: 10px;
     position: relative;
 
     &::before {
@@ -101,9 +101,9 @@
       mask-repeat: no-repeat;
       mask-position: center;
       mask-size: contain;
-      width: 2.4rem;
-      height: 2.4rem;
-      margin-right: 0.3rem;
+      width: 24px;
+      height: 24px;
+      margin-right: 3px;
     }
 
     &___seminar::before {
