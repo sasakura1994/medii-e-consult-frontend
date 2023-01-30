@@ -36,14 +36,16 @@ const getListStyle = (style: StyleType | undefined): string => {
 
 const getItemStyle = (style: StyleType | undefined): string => {
   if (!style) return styles.tooltip_menu__item;
-  if (style.item && styles.tooltip_menu__item) return `${styles.tooltip_menu__item} ${style.item}`;
+  if (style.item && styles.tooltip_menu__item)
+    return `${styles.tooltip_menu__item} ${style.item}`;
   if (style.item) return style.item;
   return styles.tooltip_menu__item;
 };
 
 const getLinkStyle = (style: StyleType | undefined): string => {
   if (!style) return styles.tooltip_menu__link;
-  if (style.link && styles.tooltip_menu__link) return `${styles.tooltip_menu__link} ${style.link}`;
+  if (style.link && styles.tooltip_menu__link)
+    return `${styles.tooltip_menu__link} ${style.link}`;
   if (style.link) return style.link;
   return styles.tooltip_menu__link;
 };

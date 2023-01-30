@@ -10,29 +10,47 @@ export const TooltipSpMenu: React.FC = () => {
         <ul className={styles.tooltip_sp_menu}>
           <li className={styles.tooltip_sp_menu__item}>
             <Link href="/">
-              <a className={`${styles.tooltip_sp_menu__link} ${styles.tooltip_sp_menu__link___profile}`}>
+              <a
+                className={`${styles.tooltip_sp_menu__link} ${styles.tooltip_sp_menu__link___profile}`}
+              >
                 プロフィール
               </a>
             </Link>
           </li>
           <li className={styles.tooltip_sp_menu__item}>
             <Link href="/">
-              <a className={`${styles.tooltip_sp_menu__link} ${styles.tooltip_sp_menu__link___point}`}>Mediiポイント</a>
+              <a
+                className={`${styles.tooltip_sp_menu__link} ${styles.tooltip_sp_menu__link___point}`}
+              >
+                Mediiポイント
+              </a>
             </Link>
           </li>
           <li className={styles.tooltip_sp_menu__item}>
             <Link href="/">
-              <a className={`${styles.tooltip_sp_menu__link} ${styles.tooltip_sp_menu__link___gift}`}>Amazonギフト</a>
+              <a
+                className={`${styles.tooltip_sp_menu__link} ${styles.tooltip_sp_menu__link___gift}`}
+              >
+                Amazonギフト
+              </a>
             </Link>
           </li>
           <li className={styles.tooltip_sp_menu__item}>
             <Link href="/">
-              <a className={`${styles.tooltip_sp_menu__link} ${styles.tooltip_sp_menu__link___invite}`}>医師紹介</a>
+              <a
+                className={`${styles.tooltip_sp_menu__link} ${styles.tooltip_sp_menu__link___invite}`}
+              >
+                医師紹介
+              </a>
             </Link>
           </li>
           <li className={styles.tooltip_sp_menu__item}>
             <Link href="/">
-              <a className={`${styles.tooltip_sp_menu__link} ${styles.tooltip_sp_menu__link___notify}`}>通知設定</a>
+              <a
+                className={`${styles.tooltip_sp_menu__link} ${styles.tooltip_sp_menu__link___notify}`}
+              >
+                通知設定
+              </a>
             </Link>
           </li>
         </ul>
@@ -43,19 +61,29 @@ export const TooltipSpMenu: React.FC = () => {
         <ul className={styles.tooltip_sp_menu}>
           <li className={styles.tooltip_sp_menu__item}>
             <Link href="/">
-              <a className={`${styles.tooltip_sp_menu__link} ${styles.tooltip_sp_menu__link___help}`}>
+              <a
+                className={`${styles.tooltip_sp_menu__link} ${styles.tooltip_sp_menu__link___help}`}
+              >
                 E-コンサルの使い方
               </a>
             </Link>
           </li>
           <li className={styles.tooltip_sp_menu__item}>
             <Link href="/">
-              <a className={`${styles.tooltip_sp_menu__link} ${styles.tooltip_sp_menu__link___faq}`}>よくある質問</a>
+              <a
+                className={`${styles.tooltip_sp_menu__link} ${styles.tooltip_sp_menu__link___faq}`}
+              >
+                よくある質問
+              </a>
             </Link>
           </li>
           <li className={styles.tooltip_sp_menu__item}>
             <Link href="/">
-              <a className={`${styles.tooltip_sp_menu__link} ${styles.tooltip_sp_menu__link___contact}`}>お問合わせ</a>
+              <a
+                className={`${styles.tooltip_sp_menu__link} ${styles.tooltip_sp_menu__link___contact}`}
+              >
+                お問合わせ
+              </a>
             </Link>
           </li>
         </ul>

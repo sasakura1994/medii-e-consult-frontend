@@ -1,7 +1,9 @@
 @import '../../styles/utilities/variable.scss';
 @import '../../styles/functions/mixin.scss';
 
-.tooltip {}
+.tooltip {
+  z-index: $z-tooltip;
+}
 
 .tooltip_arrow {
   width: 0;

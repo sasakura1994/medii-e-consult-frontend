@@ -37,14 +37,14 @@ export const Tooltip: React.FC<PropsType> = (props) => {
   const trigger = children[0];
   const body = children[1];
 
-  const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } = usePopperTooltip({
-    trigger: triggerAction,
-    offset,
-    // visible: true, // Debug
-    interactive: true,
-    delayHide: delayHide || 0,
-    closeOnTriggerHidden: false,
-  });
+  const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
+    usePopperTooltip({
+      trigger: triggerAction,
+      offset,
+      interactive: true,
+      delayHide: delayHide || 0,
+      closeOnTriggerHidden: false,
+    });
 
   return (
     <>

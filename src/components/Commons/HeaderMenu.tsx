@@ -24,13 +24,11 @@ export const HeaderMenu: React.FC = () => {
                       text-white
                       text-[10px]
                       text-center
-                      leading-none
-                      px-[5px]
-                      pt-[3px]
-                      pb-px
+                      leading-normal
+                      w-[33px]
                       rounded-full
                       absolute
-                      top-[-12px]
+                      top-[-11px]
                       left-[-2px]"
             />
           </li>

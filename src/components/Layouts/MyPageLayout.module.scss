@@ -1,0 +1,15 @@
+@import '../../styles/utilities/variable.scss';
+@import '../../styles/functions/mixin.scss';
+
+.mypage_layout {
+  width: 100%;
+}
+
+.mypage_container {
+  width: 100%;
+  margin: 0 auto;
+  padding-top: 40px;
+  @include mq-breakpoint(lg) {
+    width: 644px;
+  }
+}

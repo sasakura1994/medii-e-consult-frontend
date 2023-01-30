@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Noto Sans JP';
+  src: url('../../libs/fonts/NotoSansJP/NotoSansJP-Regular.otf') format('opentype');
+}
+
 $font-family: 'Noto Sans JP', 'Avenir', Helvetica, Arial, sans-serif !default;
 
 //===========================================================
@@ -15,7 +20,7 @@ $font-size-base: 16px !default;
 
 
 //===========================================================
-// Breakpoints
+// Breakpoints（Based on Tailwind CSS）
 //===========================================================
 $sm: 640px !default;
 $md: 768px !default;
@@ -30,3 +35,10 @@ $breakpoints: (
   xl: $xl,
   xxl: $xxl
 ) !default;
+
+
+//===========================================================
+// Z-Indexes
+//===========================================================
+$z-tooltip: 1010 !default;
+$z-modal: 1100 !default;
