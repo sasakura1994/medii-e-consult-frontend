@@ -1,0 +1,15 @@
+@import '../../styles/utilities/variable.scss';
+@import '../../styles/functions/mixin.scss';
+
+.tooltip {}
+
+.tooltip_arrow {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 16px 16px 16px;
+  border-color: transparent transparent #ffffff transparent;
+  filter: drop-shadow(0 0 5px #dcdcdc);
+  // top: -1.6rem;
+  z-index: -1;
+}

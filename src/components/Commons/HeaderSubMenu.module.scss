@@ -1,0 +1,116 @@
+@import '../../styles/utilities/variable.scss';
+@import '../../styles/functions/mixin.scss';
+
+.header_subnav {
+  display: none;
+  @include mq-breakpoint(lg) {
+    display: block;
+    margin-left: auto;
+  }
+}
+.header_submenu {
+  display: flex;
+
+  &__item {
+    margin-bottom: -4px;
+    &:not(:last-of-type) {
+      margin-right: 8px;
+    }
+
+    &::after {
+      content: "";
+      display: block;
+      background-color: $primary-color;
+      width: 100%;
+      height: 2px;
+      margin-top: 2px;
+      transform: scale(0, 1);
+      transform-origin: right top;
+      transition: transform 0.3s;
+    }
+    &:hover::after {
+      transform-origin: left top;
+      transform: scale(1, 1);
+    }
+  }
+
+  &__link {
+    display: block;
+    color: $primary-color;
+    font-size: 14px;
+    position: relative;
+  }
+
+  &__link_text {
+    display: flex;
+    align-items: center;
+    line-height: 1;
+
+    &::before {
+      content: "";
+      display: block;
+      background-color: $primary-color;
+      mask-repeat: no-repeat;
+      mask-position: center;
+      mask-size: contain;
+      width: 24px;
+      height: 24px;
+      margin-right: 4px;
+    }
+
+    &___menu::before {
+      mask-image: url('/icons/menu.svg');
+    }
+    &___seminar::before {
+      mask-image: url('/icons/seminar.svg');
+    }
+    &___mypage::before {
+      mask-image: url('/icons/my_profile.svg');
+    }
+  }
+}
+
+.header_subnav_sp {
+  display: block;
+  margin-left: auto;
+  @include mq-breakpoint(lg) {
+    display: none;
+  }
+}
+.header_submenu_sp {
+  display: flex;
+
+  &__item {
+    &:not(:last-of-type) {
+      margin-right: 12px;
+    }
+  }
+
+  &__link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: $primary-color;
+    font-size: 10px;
+    position: relative;
+
+    &::before {
+      content: "";
+      display: block;
+      background-color: $primary-color;
+      mask-repeat: no-repeat;
+      mask-position: center;
+      mask-size: contain;
+      width: 24px;
+      height: 24px;
+      margin-right: 3px;
+    }
+
+    &___seminar::before {
+      mask-image: url('/icons/seminar.svg');
+    }
+    &___menu::before {
+      mask-image: url('/icons/menu.svg');
+    }
+  }
+}

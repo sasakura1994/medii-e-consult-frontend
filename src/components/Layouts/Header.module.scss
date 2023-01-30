@@ -1,0 +1,32 @@
+@import '../../styles/utilities/variable.scss';
+@import '../../styles/functions/mixin.scss';
+
+.header {
+  background-color: #ffffff;
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    height: 63px;
+    padding: 15px 16px 15px 5%;
+    @include mq-breakpoint(lg) {
+      padding: 15px 30px 15px 5%;
+    }
+    border-bottom: 1px solid #d5d5d5;
+    position: relative;
+  }
+
+  &__logo {
+    width: 100.28px;
+    height: 27px;
+    margin-top: -4px;
+  }
+  &_logo_link {
+    display: inline-block;
+    text-decoration: none;
+  }
+  &_logo_item {
+    width: 100%;
+    height: 100%;
+  }
+}
