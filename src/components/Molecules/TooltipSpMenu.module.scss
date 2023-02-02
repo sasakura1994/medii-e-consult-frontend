@@ -32,41 +32,17 @@
     font-weight: 700;
     line-height: 1;
     padding: 4px 4px;
-    &::before {
-      content: "";
-      display: block;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: contain;
-      width: 24px;
-      height: 24px;
-      margin-right: 4px;
-    }
+  }
 
-    &___profile::before {
-      background-image: url('/icons/my_profile.svg');
-    }
-    &___point::before {
-      background-image: url('/icons/point.svg');
-    }
-    &___gift::before {
-      background-image: url('/icons/gift.svg');
-    }
-    &___invite::before {
-      background-image: url('/icons/invite.svg');
-    }
-    &___notify::before {
-      background-image: url('/icons/noti_setting.svg');
-    }
-
-    &___help::before {
-      background-image: url('/icons/help.svg');
-    }
-    &___faq::before {
-      background-image: url('/icons/faq.svg');
-    }
-    &___contact::before {
-      background-image: url('/icons/contact.svg');
+  &__icon {
+    display: block;
+    width: 24px;
+    height: 24px;
+    margin-right: 4px;
+    & > img {
+      display: inline-block;
+      width: 100%;
+      height: 100%;
     }
   }
 }

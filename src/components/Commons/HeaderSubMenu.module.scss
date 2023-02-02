@@ -38,7 +38,9 @@
     display: block;
     color: $primary-color;
     font-size: 14px;
+    text-decoration: none;
     position: relative;
+    cursor: pointer;
   }
 
   &__link_text {
@@ -92,6 +94,7 @@
     align-items: center;
     color: $primary-color;
     font-size: 10px;
+    text-decoration: none;
     position: relative;
 
     &::before {

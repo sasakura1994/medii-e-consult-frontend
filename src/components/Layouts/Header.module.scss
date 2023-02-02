@@ -30,3 +30,21 @@
     height: 100%;
   }
 }
+
+.back_btn {
+  display: block;
+  background: none;
+  color: #333333;
+  text-decoration: none;
+  margin-left: -8px;
+  margin-right: 8px;
+  padding: 8px 8px;
+  @include mq-breakpoint(lg) {
+    display: none;
+  }
+
+  &__img {
+    width: 12.22px;
+    height: 20px;
+  }
+}
