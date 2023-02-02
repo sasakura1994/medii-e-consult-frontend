@@ -36,7 +36,7 @@
     font-weight: 700;
     padding: 7px 24px;
     border: none;
-    border-radius: 9999px;
+    border-radius: 9999px; // 両サイドを完全な角丸を実現するための設定 see: https://eclair.blog/css-border-radius/
     filter: drop-shadow(0 4px 10px rgba(92,107,192,0.3));
   }
 }
