@@ -9,7 +9,7 @@ export const HeaderSubMenu: React.FC = () => {
   return (
     <>
       <nav className={styles.header_subnav}>
-        {/* PC Submenu */}
+        {/***** PC Submenu *****/}
         <ul className={styles.header_submenu}>
           <li className={styles.header_submenu__item}>
             <Tooltip delayHide={100} offset={[50, 4]} showArrow={true}>
@@ -29,8 +29,16 @@ export const HeaderSubMenu: React.FC = () => {
                     link: '/',
                     icon: <img src="/icons/help.svg" />,
                   },
-                  { text: 'よくある質問', link: '/', icon: <img src="/icons/faq.svg" /> },
-                  { text: 'お問合わせ', link: '/', icon: <img src="/icons/contact.svg" /> },
+                  {
+                    text: 'よくある質問',
+                    link: '/',
+                    icon: <img src="/icons/faq.svg" />,
+                  },
+                  {
+                    text: 'お問合わせ',
+                    link: '/',
+                    icon: <img src="/icons/contact.svg" />,
+                  },
                 ]}
                 style={{
                   nav: `bg-white mt-4 rounded shadow-[0_5px_5px_0_rgba(0,0,0,0.5)]`,
@@ -51,28 +59,38 @@ export const HeaderSubMenu: React.FC = () => {
           </li>
           <li className={styles.header_submenu__item}>
             <Tooltip delayHide={300} offset={[-28, 4]} showArrow={true}>
-              <Link href="/">
-                <a className={styles.header_submenu__link}>
-                  <span
-                    className={`${styles.header_submenu__link_text} ${styles.header_submenu__link_text___mypage}`}
-                  >
-                    マイページ
-                  </span>
-                </a>
-              </Link>
+              <a className={styles.header_submenu__link}>
+                <span
+                  className={`${styles.header_submenu__link_text} ${styles.header_submenu__link_text___mypage}`}
+                >
+                  マイページ
+                </span>
+              </a>
               <TooltipMenu
                 menus={[
                   {
                     text: 'プロフィール',
-                    link: '/',
+                    link: '/edit-profile',
                     icon: <img src="/icons/my_profile.svg" />,
                   },
-                  { text: 'Mediiポイント', link: '/', icon: <img src="/icons/point.svg" /> },
-                  { text: 'Amazonギフト', link: '/', icon: <img src="/icons/gift.svg" /> },
-                  { text: '医師紹介', link: '/', icon: <img src="/icons/invite.svg" /> },
+                  {
+                    text: 'Mediiポイント',
+                    link: '/point-history',
+                    icon: <img src="/icons/point.svg" />,
+                  },
+                  {
+                    text: 'Amazonギフト',
+                    link: '/amazon-gift',
+                    icon: <img src="/icons/gift.svg" />,
+                  },
+                  {
+                    text: '医師紹介',
+                    link: '/affiliate',
+                    icon: <img src="/icons/invite.svg" />,
+                  },
                   {
                     text: '通知設定',
-                    link: '/',
+                    link: '/notify-settings',
                     icon: <img src="/icons/noti_setting.svg" />,
                   },
                 ]}
@@ -85,7 +103,7 @@ export const HeaderSubMenu: React.FC = () => {
         </ul>
       </nav>
 
-      {/* SP Submenu */}
+      {/***** SP Submenu *****/}
       <nav className={styles.header_subnav_sp}>
         <ul className={styles.header_submenu_sp}>
           <li className={styles.header_submenu_sp__item}>
@@ -106,7 +124,54 @@ export const HeaderSubMenu: React.FC = () => {
                   メニュー
                 </span>
               </div>
-              <TooltipSpMenu />
+              <TooltipSpMenu
+                menus={{
+                  mypage: [
+                    {
+                      text: 'プロフィール',
+                      link: '/edit-profile',
+                      icon: <img src="/icons/my_profile.svg" />,
+                    },
+                    {
+                      text: 'Mediiポイント',
+                      link: '/point-history',
+                      icon: <img src="/icons/point.svg" />,
+                    },
+                    {
+                      text: 'Amazonギフト',
+                      link: '/amazon-gift',
+                      icon: <img src="/icons/gift.svg" />,
+                    },
+                    {
+                      text: '医師紹介',
+                      link: '/affiliate',
+                      icon: <img src="/icons/invite.svg" />,
+                    },
+                    {
+                      text: '通知設定',
+                      link: '/notify-settings',
+                      icon: <img src="/icons/noti_setting.svg" />,
+                    },
+                  ],
+                  service: [
+                    {
+                      text: 'E-コンサルの使い方',
+                      link: '/',
+                      icon: <img src="/icons/help.svg" />,
+                    },
+                    {
+                      text: 'よくある質問',
+                      link: '/',
+                      icon: <img src="/icons/faq.svg" />,
+                    },
+                    {
+                      text: 'お問合わせ',
+                      link: '/',
+                      icon: <img src="/icons/contact.svg" />,
+                    },
+                  ],
+                }}
+              />
             </Tooltip>
           </li>
         </ul>
