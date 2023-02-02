@@ -1,0 +1,48 @@
+@import '../../../styles/utilities/variable.scss';
+@import '../../../styles/functions/mixin.scss';
+
+.affiliate {
+  background-color: #ffffff;
+  width: 100%;
+  margin-top: 40px;
+  margin-bottom: 49px;
+  padding: 24px 24px;
+  @include mq-breakpoint(lg) {
+    margin-bottom: 40px;
+    padding: 40px 84px;
+  }
+  border: 1px solid #d5d5d5;
+  border-radius: 4px;
+
+  &__heading {
+    font-size: 24px;
+    text-align: center;
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+
+  &__sub_heading {
+    background: linear-gradient(90deg,#90bfea,#7b91e0 43.23%);
+    color: #ffffff;
+    font-weight: normal;
+    text-align: center;
+    line-height: 1.5;
+    border-radius: 4px;
+  }
+
+  &__text {
+    font-size: 14px;
+    text-align: center;
+    padding: 16px 16px;
+  }
+
+  &__btn {
+    background-color: #5c6bc0;
+    color: #ffffff;
+    font-weight: 700;
+    padding: 7px 24px;
+    border: none;
+    border-radius: 9999px;
+    filter: drop-shadow(0 4px 10px rgba(92,107,192,0.3));
+  }
+}

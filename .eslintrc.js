@@ -31,10 +31,11 @@ module.exports = {
     '**/public/*',
     '**/node_modules/*',
     '**/.vscode/*',
+    'next.config.js',
     '.eslintrc.js',
     '.prettierrc.js',
     'jest.config.js',
     'postcss.config.js',
     'tailwind.config.js',
   ],
-}
+};
