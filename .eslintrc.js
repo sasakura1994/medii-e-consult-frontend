@@ -25,6 +25,7 @@ module.exports = {
         classPropertiesAllowed: false,
       },
     ],
+    'react/prop-types': 'off', // TS で型を縛ってるので props の厳密な検証は不要
   },
   // ESLint の除外ファイル
   ignorePatterns: [
