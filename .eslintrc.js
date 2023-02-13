@@ -38,5 +38,6 @@ module.exports = {
     'jest.config.js',
     'postcss.config.js',
     'tailwind.config.js',
+    '.stylelintrc.js',
   ],
 };
