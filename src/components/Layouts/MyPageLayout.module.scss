@@ -9,7 +9,9 @@
   width: 100%;
   margin: 0 auto;
   padding-top: 40px;
+  padding-bottom: 82px;
   @include mq-breakpoint(lg) {
     width: 644px;
+    padding-bottom: 0;
   }
 }

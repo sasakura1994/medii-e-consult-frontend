@@ -2,6 +2,7 @@ import React from 'react';
 import '@/styles/globals.scss';
 import 'react-toastify/dist/ReactToastify.css';
 import { CookiesProvider } from 'react-cookie';
+import { RecoilRoot } from 'recoil';
 import { CustomHead } from '@/components/Commons/CustomHead';
 import { Layout } from '@/components/Layouts/Layout';
 import type { NextPage } from 'next';
@@ -28,7 +29,9 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
 
   return getLayout(
     <CookiesProvider>
-      <Component {...pageProps} />
+      <RecoilRoot>
+        <Component {...pageProps} />
+      </RecoilRoot>
     </CookiesProvider>
   );
 };
