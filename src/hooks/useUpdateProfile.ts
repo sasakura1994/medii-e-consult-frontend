@@ -45,10 +45,6 @@ export const useUpdateProfile = (): UseUpdateProfileType => {
     try {
       const res = await apiClient.put(dummyUrl, dummyParams);
       const updatedData = fromNullToUndefined<ProfileEntityType>(data);
-      if (!updatedData) {
-        return;
-      }
-
       mutate({ ...profile, ...updatedData }, false);
       setIsSuccess(true);
     } catch (e: unknown) {

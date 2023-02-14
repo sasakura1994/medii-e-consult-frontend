@@ -14,13 +14,13 @@ type ComvertedDataType = {
  */
 export const fromNullToUndefined = <T extends ComvertedDataType>(
   data: T
-): T | undefined => {
+): T => {
   if (!data) {
-    return undefined;
+    return {} as T;
   }
 
   if (Object.keys(data).length === 0) {
-    return undefined;
+    return {} as T;
   }
 
   const newData: ComvertedDataType = {};

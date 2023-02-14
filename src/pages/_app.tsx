@@ -27,11 +27,9 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
       </>
     ));
 
-  return getLayout(
+  return (
     <CookiesProvider>
-      <RecoilRoot>
-        <Component {...pageProps} />
-      </RecoilRoot>
+      <RecoilRoot>{getLayout(<Component {...pageProps} />)}</RecoilRoot>
     </CookiesProvider>
   );
 };
