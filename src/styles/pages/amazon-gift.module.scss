@@ -1,0 +1,49 @@
+@import "../utilities/variable.scss";
+@import "../functions/mixin.scss";
+
+.amazon_gift {
+  background-color: #ffffff;
+  width: 100%;
+  margin-top: 40px;
+  margin-bottom: 49px;
+  padding: 16px 16px;
+  @include mq-breakpoint(lg) {
+    margin-bottom: 40px;
+  }
+  border: 1px solid #d5d5d5;
+  border-radius: 4px;
+  position: relative;
+
+  &__btn_choice {
+    background-color: #ffffff;
+    padding: 4px 8px;
+    border: solid 1px #999999;
+    border-radius: 4px;
+    cursor: pointer;
+    &:not(:last-of-type) {
+      margin-right: 8px;
+    }
+
+    &:hover {
+      background-color: #dcdcdc;
+    }
+  }
+}
+
+.amazon_gift_table {
+  border-collapse: separate;
+
+  thead {
+    color: #999999;
+    text-align: left;
+  }
+
+  th {
+    padding-right: 20px;
+  }
+
+  td {
+    font-size: 15px;
+    padding: 4px 20px 4px 0;
+  }
+}
