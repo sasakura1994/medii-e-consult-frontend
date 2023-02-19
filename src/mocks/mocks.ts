@@ -62,6 +62,13 @@ export const getProfileMock: ResponseResolver<
 > = (req, res, ctx) => {
   return res(ctx.status(200), ctx.json(profileMock));
 };
+export const updateProfileMock: ResponseResolver<
+  RestRequest<never, PathParams<string>>,
+  RestContext,
+  DefaultBodyType
+> = (req, res, ctx) => {
+  return res(ctx.status(200));
+};
 
 /**
  * Mediiポイントモック

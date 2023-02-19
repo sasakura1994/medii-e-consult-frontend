@@ -34,7 +34,7 @@ describe('useFetchCurrentPoint', () => {
 
   test('should handle 500 error.', async () => {
     server.use(
-      rest.get(dummyUrl, (req, res, ctx) => {
+      rest.get(dummyUrl, (_, res, ctx) => {
         return res.once(ctx.status(500));
       })
     );
