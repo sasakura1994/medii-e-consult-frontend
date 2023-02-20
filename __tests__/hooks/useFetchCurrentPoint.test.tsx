@@ -3,33 +3,25 @@ import { rest } from 'msw';
 import { server } from '@/mocks/server';
 import { useFetchCurrentPoint } from '@/hooks/useFetchCurrentPoint';
 import { currentPointMock } from '@/mocks/mocks';
-import type { RenderHookResult } from '@testing-library/react';
-import type { UseFetchCurrentPointType } from '@/hooks/useFetchCurrentPoint';
 
 const dummyUrl = 'https://jsonplaceholder.typicode.com/users/2';
 
 describe('useFetchCurrentPoint', () => {
   test('should return currentPoint data when fetch succeeds.', async () => {
-    let hookResult:
-      | RenderHookResult<UseFetchCurrentPointType, unknown>
-      | undefined;
-    await act(async () => {
-      hookResult = renderHook(() => useFetchCurrentPoint());
-      await waitFor(() => !!hookResult?.result.current);
+    const { result } = renderHook(() => useFetchCurrentPoint());
+
+    expect(result.current.isLoading).toBe(true);
+    expect(result.current.currentPoint).toBeUndefined();
+    expect(result.current.error).toBeUndefined();
+
+    await waitFor(() => {
+      expect(result.current.isLoading).toBe(false);
+      expect(result.current.currentPoint).toEqual(currentPointMock.point);
+      expect(result.current.error).toBeUndefined();
     });
-
-    if (!hookResult?.result.current.currentPoint) return;
-
-    expect(hookResult?.result.current.isLoading).toBeFalsy();
-    expect(hookResult?.result.current.currentPoint).toEqual(
-      currentPointMock.point
-    );
-    expect(hookResult?.result.current.error).toBeUndefined();
 
     // swr のキャッシュクリア
-    await act(async () => {
-      await hookResult?.result.current.mutate(undefined, false);
-    });
+    await act(async () => result.current.mutate(undefined, false));
   });
 
   test('should handle 500 error.', async () => {
@@ -39,28 +31,23 @@ describe('useFetchCurrentPoint', () => {
       })
     );
 
-    let hookResult:
-      | RenderHookResult<UseFetchCurrentPointType, unknown>
-      | undefined;
-    await act(async () => {
-      hookResult = renderHook(() => useFetchCurrentPoint());
-      await waitFor(() => !!hookResult?.result.current);
-    });
+    const { result } = renderHook(() => useFetchCurrentPoint());
 
-    await act(async () => {
-      await hookResult?.result.current.mutate();
-    });
+    expect(result.current.isLoading).toBe(false);
+    expect(result.current.currentPoint).toBeUndefined();
+    expect(result.current.error).toBeUndefined();
 
-    expect(hookResult?.result.current.currentPoint).toBeUndefined();
-    expect(hookResult?.result.current.error).toEqual({
+    // API実行後にエラーを受け取りたいのでキャッシュを更新する
+    await act(async () => result.current.mutate());
+
+    expect(result.current.isLoading).toBe(false);
+    expect(result.current.currentPoint).toBeUndefined();
+    expect(result.current.error).toEqual({
       message: 'サーバーでエラーが発生しました',
       status: 500,
       url: dummyUrl,
     });
 
-    // swr のキャッシュクリア
-    await act(async () => {
-      await hookResult?.result.current.mutate(undefined, false);
-    });
+    await act(async () => result.current.mutate(undefined, false));
   });
 });

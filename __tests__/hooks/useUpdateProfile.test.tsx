@@ -1,12 +1,10 @@
-import { renderHook, act, waitFor } from '@testing-library/react';
+import { renderHook, act } from '@testing-library/react';
 import { rest } from 'msw';
 import { server } from '@/mocks/server';
 import { useUpdateProfile } from '@/hooks/useUpdateProfile';
 import { profileMock } from '@/mocks/mocks';
-import type { RenderHookResult } from '@testing-library/react';
-import type { UseUpdateProfileType } from '@/hooks/useUpdateProfile';
 
-const dummyUrl = 'https://jsonplaceholder.typicode.com/posts/1';
+const dummyUrl = 'https://jsonplaceholder.typicode.com/posts/1'; // TODO: 正規のURLに変更する
 
 describe('useUpdateProfile', () => {
   test('should update profile.', async () => {
@@ -17,24 +15,18 @@ describe('useUpdateProfile', () => {
       not_seminar_mail_target: false,
     };
 
-    let hookResult: RenderHookResult<UseUpdateProfileType, unknown> | undefined;
+    const { result } = renderHook(() => useUpdateProfile());
+
+    expect(result.current.isSuccess).toBe(false);
+    expect(result.current.isError).toBe(false);
+
+    await act(async () => result.current.updateProfile(updateData));
+
+    expect(result.current.isSuccess).toBe(true);
+    expect(result.current.isError).toBe(false);
+
     await act(async () => {
-      hookResult = renderHook(() => useUpdateProfile());
-      await waitFor(() => !!hookResult?.result.current);
-    });
-
-    act(() => {
-      hookResult?.result.current.updateProfile(updateData);
-    });
-
-    await waitFor(() => {
-      expect(hookResult?.result.current.isSuccess).toBe(true);
-      expect(hookResult?.result.current.isError).toBe(false);
-    });
-
-    // swr のキャッシュクリア
-    await act(async () => {
-      await hookResult?.result.current.mutate(undefined, false);
+      await result.current.mutate(undefined, false);
     });
   });
 
@@ -52,26 +44,20 @@ describe('useUpdateProfile', () => {
       })
     );
 
-    let hookResult: RenderHookResult<UseUpdateProfileType, unknown> | undefined;
-    await act(async () => {
-      hookResult = renderHook(() => useUpdateProfile());
-      await waitFor(() => !!hookResult?.result.current);
-    });
+    const { result } = renderHook(() => useUpdateProfile());
 
-    act(() => {
-      hookResult?.result.current.updateProfile(updateData);
-    });
+    expect(result.current.isSuccess).toBe(false);
+    expect(result.current.isError).toBe(false);
 
     await act(async () => {
-      await hookResult?.result.current.mutate();
+      result.current.updateProfile(updateData);
     });
 
-    expect(hookResult?.result.current.isSuccess).toBe(false);
-    expect(hookResult?.result.current.isError).toBe(true);
+    expect(result.current.isSuccess).toBe(false);
+    expect(result.current.isError).toBe(true);
 
-    // swr のキャッシュクリア
     await act(async () => {
-      await hookResult?.result.current.mutate(undefined, false);
+      await result.current.mutate(undefined, false);
     });
   });
 });

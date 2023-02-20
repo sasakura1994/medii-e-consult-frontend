@@ -5,18 +5,18 @@ import { createApiClient } from '@/libs/apiClient';
 const mock = new MockAdapter(axios);
 
 describe('createApiClient', () => {
-  it('should add token to headers when token is provided', () => {
+  test('should add token to headers when token is provided', () => {
     const token = 'dummy_token';
     const apiClient = createApiClient({ token });
     expect(apiClient.defaults.headers.Authorization).toEqual(`Bearer ${token}`);
   });
 
-  it('should not add token to headers when token is not provided', () => {
+  test('should not add token to headers when token is not provided', () => {
     const apiClient = createApiClient();
     expect(apiClient.defaults.headers.Authorization).toBeUndefined();
   });
 
-  it('should handle 401 error', async () => {
+  test('should handle 401 error', async () => {
     mock.onGet('/dummy').reply(401);
     const apiClient = createApiClient();
     await expect(apiClient.get('/dummy')).rejects.toMatchObject({
@@ -25,7 +25,7 @@ describe('createApiClient', () => {
     });
   });
 
-  it('should handle 403 error', async () => {
+  test('should handle 403 error', async () => {
     mock.onGet('/dummy').reply(403);
     const apiClient = createApiClient();
     await expect(apiClient.get('/dummy')).rejects.toMatchObject({
@@ -34,7 +34,7 @@ describe('createApiClient', () => {
     });
   });
 
-  it('should handle 404 error', async () => {
+  test('should handle 404 error', async () => {
     mock.onGet('/dummy').reply(404);
     const apiClient = createApiClient();
     await expect(apiClient.get('/dummy')).rejects.toMatchObject({
@@ -43,7 +43,7 @@ describe('createApiClient', () => {
     });
   });
 
-  it('should handle 422 error', async () => {
+  test('should handle 422 error', async () => {
     mock.onGet('/dummy').reply(422);
     const apiClient = createApiClient();
     await expect(apiClient.get('/dummy')).rejects.toMatchObject({
@@ -52,7 +52,7 @@ describe('createApiClient', () => {
     });
   });
 
-  it('should handle 500 error', async () => {
+  test('should handle 500 error', async () => {
     mock.onGet('/dummy').reply(500);
     const apiClient = createApiClient();
     await expect(apiClient.get('/dummy')).rejects.toMatchObject({
@@ -61,7 +61,7 @@ describe('createApiClient', () => {
     });
   });
 
-  it('should handle 503 error', async () => {
+  test('should handle 503 error', async () => {
     mock.onGet('/dummy').reply(503);
     const apiClient = createApiClient();
     await expect(apiClient.get('/dummy')).rejects.toMatchObject({
@@ -70,7 +70,7 @@ describe('createApiClient', () => {
     });
   });
 
-  it('should handle network error', async () => {
+  test('should handle network error', async () => {
     mock.onGet('/dummy').networkError();
     const apiClient = createApiClient();
     await expect(apiClient.get('/dummy')).rejects.toMatchObject({

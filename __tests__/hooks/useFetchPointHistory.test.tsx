@@ -4,35 +4,30 @@ import { server } from '@/mocks/server';
 import { fromNullToUndefined } from '@/libs/apiResponse';
 import { useFetchPointHistory } from '@/hooks/useFetchPointHistory';
 import { pointHistoriesMock } from '@/mocks/mocks';
-import type { RenderHookResult } from '@testing-library/react';
-import type { UseFetchPointHistoryType } from '@/hooks/useFetchPointHistory';
 import type { PointHistoryEntityType } from '@/types/entities/pointHistoryEntity';
 
-const dummyUrl = 'https://jsonplaceholder.typicode.com/users/1';
+const dummyUrl = 'https://jsonplaceholder.typicode.com/users/1'; // TODO: 正規のURLに変更する
 
 describe('useFetchPointHistory', () => {
   test('should return pointHistories data when fetch succeeds.', async () => {
-    let hookResult:
-      | RenderHookResult<UseFetchPointHistoryType, unknown>
-      | undefined;
-    await act(async () => {
-      hookResult = renderHook(() => useFetchPointHistory());
-      await waitFor(() => !!hookResult?.result.current);
-    });
+    const { result } = renderHook(() => useFetchPointHistory());
 
-    if (!hookResult?.result.current.pointHistories) return;
+    expect(result.current.isLoading).toBe(true);
+    expect(result.current.pointHistories).toBeUndefined();
+    expect(result.current.error).toBeUndefined();
 
     const convertedData = pointHistoriesMock.map((pointHistory) =>
       fromNullToUndefined<PointHistoryEntityType>(pointHistory)
     );
 
-    expect(hookResult?.result.current.isLoading).toBeFalsy();
-    expect(hookResult?.result.current.pointHistories).toEqual(convertedData);
-    expect(hookResult?.result.current.error).toBeUndefined();
+    await waitFor(() => {
+      expect(result.current.isLoading).toBe(false);
+      expect(result.current.pointHistories).toEqual(convertedData);
+      expect(result.current.error).toBeUndefined();
+    });
 
-    // swr のキャッシュクリア
     await act(async () => {
-      await hookResult?.result.current.mutate(undefined, false);
+      await result.current.mutate(undefined, false);
     });
   });
 
@@ -43,28 +38,23 @@ describe('useFetchPointHistory', () => {
       })
     );
 
-    let hookResult:
-      | RenderHookResult<UseFetchPointHistoryType, unknown>
-      | undefined;
-    await act(async () => {
-      hookResult = renderHook(() => useFetchPointHistory());
-      await waitFor(() => !!hookResult?.result.current);
-    });
+    const { result } = renderHook(() => useFetchPointHistory());
 
-    await act(async () => {
-      await hookResult?.result.current.mutate();
-    });
+    expect(result.current.isLoading).toBe(false);
+    expect(result.current.pointHistories).toBeUndefined();
+    expect(result.current.error).toBeUndefined();
 
-    expect(hookResult?.result.current.pointHistories).toBeUndefined();
-    expect(hookResult?.result.current.error).toEqual({
+    await act(async () => result.current.mutate());
+
+    expect(result.current.pointHistories).toBeUndefined();
+    expect(result.current.error).toEqual({
       message: 'サーバーでエラーが発生しました',
       status: 500,
       url: dummyUrl,
     });
 
-    // swr のキャッシュクリア
     await act(async () => {
-      await hookResult?.result.current.mutate(undefined, false);
+      await result.current.mutate(undefined, false);
     });
   });
 });

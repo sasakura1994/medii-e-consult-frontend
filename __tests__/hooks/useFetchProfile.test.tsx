@@ -4,28 +4,28 @@ import { server } from '@/mocks/server';
 import { fromNullToUndefined } from '@/libs/apiResponse';
 import { useFetchProfile } from '@/hooks/useFetchProfile';
 import { profileMock } from '@/mocks/mocks';
-import type { RenderHookResult } from '@testing-library/react';
-import type { UseFetchProfileType } from '@/hooks/useFetchProfile';
+import type { ProfileEntityType } from '@/types/entities/profileEntity';
 
-const dummyUrl = 'https://jsonplaceholder.typicode.com/users';
+const dummyUrl = 'https://jsonplaceholder.typicode.com/users'; // TODO: 正規のURLに変更する
 
 describe('useFetchProfile', () => {
   test('should return profile data when fetch succeeds.', async () => {
-    let hookResult: RenderHookResult<UseFetchProfileType, unknown> | undefined;
-    await act(async () => {
-      hookResult = renderHook(() => useFetchProfile());
-      await waitFor(() => !!hookResult?.result.current);
+    const { result } = renderHook(() => useFetchProfile());
+
+    expect(result.current.isLoading).toBe(true);
+    expect(result.current.profile).toBeUndefined();
+    expect(result.current.error).toBeUndefined();
+
+    const convertedData = fromNullToUndefined<ProfileEntityType>(profileMock);
+
+    await waitFor(() => {
+      expect(result.current.isLoading).toBe(false);
+      expect(result.current.profile).toEqual(convertedData);
+      expect(result.current.error).toBeUndefined();
     });
 
-    expect(hookResult?.result.current.isLoading).toBeFalsy();
-    expect(hookResult?.result.current.profile).toEqual(
-      fromNullToUndefined(profileMock)
-    );
-    expect(hookResult?.result.current.error).toBeUndefined();
-
-    // swr のキャッシュクリア
     await act(async () => {
-      await hookResult?.result.current.mutate(undefined, false);
+      await result.current.mutate(undefined, false);
     });
   });
 
@@ -36,26 +36,24 @@ describe('useFetchProfile', () => {
       })
     );
 
-    let hookResult: RenderHookResult<UseFetchProfileType, unknown> | undefined;
-    await act(async () => {
-      hookResult = renderHook(() => useFetchProfile());
-      await waitFor(() => !!hookResult?.result.current);
-    });
+    const { result } = renderHook(() => useFetchProfile());
 
-    await act(async () => {
-      await hookResult?.result.current.mutate();
-    });
+    expect(result.current.isLoading).toBe(false);
+    expect(result.current.profile).toBeUndefined();
+    expect(result.current.error).toBeUndefined();
 
-    expect(hookResult?.result.current.profile).toBeUndefined();
-    expect(hookResult?.result.current.error).toEqual({
+    await act(async () => result.current.mutate());
+
+    expect(result.current.isLoading).toBe(false);
+    expect(result.current.profile).toBeUndefined();
+    expect(result.current.error).toEqual({
       message: 'サーバーでエラーが発生しました',
       status: 500,
       url: dummyUrl,
     });
 
-    // swr のキャッシュクリア
     await act(async () => {
-      await hookResult?.result.current.mutate(undefined, false);
+      await result.current.mutate(undefined, false);
     });
   });
 });
