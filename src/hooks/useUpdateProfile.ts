@@ -2,7 +2,8 @@ import React from 'react';
 import useSWR from 'swr';
 import { createApiClient } from '@/libs/apiClient';
 import { fromNullToUndefined } from '@/libs/apiResponse';
-import { profileMock } from '@/mocks/profileMock';
+import { profileMock } from '@/mocks/mocks';
+import type { KeyedMutator } from 'swr';
 import type { ProfileEntityType } from '@/types/entities/profileEntity';
 
 const dummyToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6Ixxxxxxxxxxxxxxxxxxxxxxxx';
@@ -14,9 +15,10 @@ const dummyParams = {
   body: 'Updated by userId 1',
 };
 
-type UseUpdateProfileType = {
+export type UseUpdateProfileType = {
   isSuccess: boolean;
   isError: boolean;
+  mutate: KeyedMutator<ProfileEntityType>;
   updateProfile: (data: ProfileEntityType) => void;
 };
 
@@ -56,6 +58,7 @@ export const useUpdateProfile = (): UseUpdateProfileType => {
   return {
     isSuccess,
     isError,
+    mutate,
     updateProfile,
   };
 };

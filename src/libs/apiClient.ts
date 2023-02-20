@@ -10,7 +10,6 @@ type Header = {
   Authorization?: string;
 };
 
-type ApiClient = AxiosInstance;
 export type ApiClientResponse<T> = AxiosResponse<T>;
 export type ApiClientError<T> = AxiosError<T>;
 export type ApiErrorType = {
@@ -19,7 +18,9 @@ export type ApiErrorType = {
   url?: string;
 };
 
-export const createApiClient = (options: ApiClientOption = {}): ApiClient => {
+export const createApiClient = (
+  options: ApiClientOption = {}
+): AxiosInstance => {
   const headers: Header = {
     'content-type': 'application/json; charset=utf-8',
   };
