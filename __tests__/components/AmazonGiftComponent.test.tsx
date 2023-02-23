@@ -12,7 +12,7 @@ describe('amazon-gift page', () => {
       </RecoilRoot>
     );
 
-    const selectBtn = screen.getByTestId('btn-select-3000');
+    const selectBtn = screen.getByTestId('btn-select-1000');
     const exchangeBtn = screen.getByTestId('btn-exchange');
 
     expect(exchangeBtn).toBeDisabled();
@@ -33,7 +33,7 @@ describe('amazon-gift page', () => {
       </RecoilRoot>
     );
 
-    const selectBtn = screen.getByTestId('btn-select-3000');
+    const selectBtn = screen.getByTestId('btn-select-1000');
     const exchangeBtn = screen.getByTestId('btn-exchange');
 
     // 金額ボタンをクリックして`Amazonギフトに交換する`ボタンを Enabeld にする
