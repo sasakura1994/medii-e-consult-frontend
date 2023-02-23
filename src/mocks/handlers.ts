@@ -4,6 +4,8 @@ import {
   updateProfileMock,
   getCurrentPointMock,
   getPointHistoriesMock,
+  getAmazonGiftsMock,
+  postAmazonGiftsMock,
 } from './mocks';
 
 // TODO: エンドポイントを正規のURLに変更する
@@ -16,4 +18,6 @@ export const handlers = [
     'https://jsonplaceholder.typicode.com/users/1',
     getPointHistoriesMock
   ),
+  rest.get('https://jsonplaceholder.typicode.com/users/4', getAmazonGiftsMock),
+  rest.post('https://jsonplaceholder.typicode.com/posts', postAmazonGiftsMock),
 ];
