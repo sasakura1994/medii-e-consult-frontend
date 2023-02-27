@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSetRecoilState } from 'recoil';
-import { amazonGiftCodeComfirmState } from '@/globalStates/amazonGiftCodeComfirmState';
+import { amazonGiftCodeComfirmState } from './amazonGiftCodeComfirmState';
 import { createApiClient } from '@/libs/apiClient';
 
 const dummyToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6Ixxxxxxxxxxxxxxxxxxxxxxxx';

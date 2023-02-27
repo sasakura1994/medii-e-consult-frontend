@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAmazonGift } from '@/hooks/useAmazonGift';
+import { useAmazonGift } from './useAmazonGift';
 import { SpinnerBorder } from '@/components/Atoms/SpinnerBorder';
 
 export const AmazonGiftPointExchangeDialog: React.FC = () => {

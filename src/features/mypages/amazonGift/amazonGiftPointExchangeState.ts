@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import type { AmazonGiftPointExchangeType } from '@/types/amazonGiftPointExchange';
+import type { AmazonGiftPointExchangeType } from './amazonGiftPointExchange';
 
 export const amazonGiftPointExchangeState = atom<AmazonGiftPointExchangeType>({
   key: 'amazonGiftPointExchange',

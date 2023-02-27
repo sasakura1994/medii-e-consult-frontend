@@ -1,12 +1,12 @@
 import React from 'react';
 import useSWR from 'swr';
 import { useSetRecoilState } from 'recoil';
-import { amazonGiftPointExchangeState } from '@/globalStates/amazonGiftPointExchangeState';
+import { amazonGiftPointExchangeState } from './amazonGiftPointExchangeState';
 import { createApiClient } from '@/libs/apiClient';
 import { fromNullToUndefined } from '@/libs/apiResponse';
 import { amazonGiftsMock } from '@/mocks/mocks';
 import type { KeyedMutator } from 'swr';
-import type { AmazonGiftEntityType } from '@/types/entities/amazonGiftEntity';
+import type { AmazonGiftEntityType } from './amazonGiftEntity';
 
 const dummyToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6Ixxxxxxxxxxxxxxxxxxxxxxxx';
 const dummyUrl = 'https://jsonplaceholder.typicode.com/users/4';

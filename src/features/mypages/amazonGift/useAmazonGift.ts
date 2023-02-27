@@ -1,13 +1,13 @@
 import React from 'react';
 import { useRecoilState } from 'recoil';
-import { amazonGiftPointExchangeState } from '@/globalStates/amazonGiftPointExchangeState';
-import { amazonGiftCodeComfirmState } from '@/globalStates/amazonGiftCodeComfirmState';
-import { useFetchCurrentPoint } from '@/hooks/useFetchCurrentPoint';
-import { usePostAmazonGift } from '@/hooks/usePostAmazonGift';
-import { usePostAmazonGiftCode } from '@/hooks/usePostAmazonGiftCode';
-import { usePostAmazonGiftPinCode } from '@/hooks/usePostAmazonGiftPinCode';
-import type { AmazonGiftPointExchangeType } from '@/types/amazonGiftPointExchange';
-import type { AmazonGiftCodeComfirmType } from '@/types/amazonGiftCodeComfirm';
+import { amazonGiftPointExchangeState } from './amazonGiftPointExchangeState';
+import { amazonGiftCodeComfirmState } from './amazonGiftCodeComfirmState';
+import { useFetchCurrentPoint } from '@/features/mypages/pointHistory/useFetchCurrentPoint';
+import { usePostAmazonGift } from './usePostAmazonGift';
+import { usePostAmazonGiftCode } from './usePostAmazonGiftCode';
+import { usePostAmazonGiftPinCode } from './usePostAmazonGiftPinCode';
+import type { AmazonGiftPointExchangeType } from './amazonGiftPointExchange';
+import type { AmazonGiftCodeComfirmType } from './amazonGiftCodeComfirm';
 
 export type UseAmazonGiftType = {
   priceList: number[];

@@ -1,7 +1,7 @@
 import React from 'react';
 import { createApiClient } from '@/libs/apiClient';
 import { useSetRecoilState } from 'recoil';
-import { amazonGiftCodeComfirmState } from '@/globalStates/amazonGiftCodeComfirmState';
+import { amazonGiftCodeComfirmState } from './amazonGiftCodeComfirmState';
 import { amazonGiftConfirmMock } from '@/mocks/mocks';
 
 const dummyToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6Ixxxxxxxxxxxxxxxxxxxxxxxx';
@@ -24,8 +24,6 @@ export const usePostAmazonGiftCode = (): UsePostAmazonGiftCodeType => {
   const requestGiftCode = async (requestId: string, pinCode: string) => {
     setIsSuccess(false);
     setIsError(false);
-
-    console.log(pinCode, requestId);
 
     const apiClient = createApiClient({
       token: dummyToken,

@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import type { AmazonGiftCodeComfirmType } from '@/types/amazonGiftCodeComfirm';
+import type { AmazonGiftCodeComfirmType } from './amazonGiftCodeComfirm';
 
 export const amazonGiftCodeComfirmState = atom<AmazonGiftCodeComfirmType>({
   key: 'amazonGiftComfirm',

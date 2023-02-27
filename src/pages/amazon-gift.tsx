@@ -1,7 +1,7 @@
 import React from 'react';
 import { MyPageLayout } from '@/components/Layouts/MyPageLayout';
 import { MyPageMenu } from '@/components/Molecules/MyPageMenu';
-import { AmazonGiftComponent } from '@/components/Organisms/MyPage/AmazonGiftComponent';
+import { AmazonGift } from '@/features/mypages/amazonGift/AmazonGift';
 import type { NextPageWithLayout } from '@/pages/_app';
 
 /**
@@ -25,20 +25,20 @@ import type { NextPageWithLayout } from '@/pages/_app';
  * 2. ボタンの下に`確認コードを再送信しました。`メッセージを表示
  */
 
-const AmazonGift: NextPageWithLayout = () => {
+const AmazonGiftPage: NextPageWithLayout = () => {
   return (
     <>
       <h1 className="mb-10 text-center text-2xl leading-[2.2rem]">
         マイページ
       </h1>
       <MyPageMenu />
-      <AmazonGiftComponent />
+      <AmazonGift />
     </>
   );
 };
 
-export default AmazonGift;
+export default AmazonGiftPage;
 
-AmazonGift.getLayout = (page: React.ReactElement) => {
+AmazonGiftPage.getLayout = (page: React.ReactElement) => {
   return <MyPageLayout>{page}</MyPageLayout>;
 };

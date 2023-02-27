@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAmazonGift } from '@/hooks/useAmazonGift';
+import { useAmazonGift } from './useAmazonGift';
 
 export const AmazonGiftCodeConfirmDialog: React.FC = () => {
   const {

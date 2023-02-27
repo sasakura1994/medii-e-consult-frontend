@@ -1,12 +1,12 @@
 import React from 'react';
-import styles from '@/styles/pages/amazon-gift.module.scss';
-import { useAmazonGift } from '@/hooks/useAmazonGift';
-import { useFetchAmazonGift } from '@/hooks/useFetchAmazonGift';
-import { usePostAmazonGiftPinCode } from '@/hooks/usePostAmazonGiftPinCode';
-import { AmazonGiftPointExchangeDialog } from '@/components/Organisms/MyPage/AmazonGiftPointExchangeDialog';
-import { AmazonGiftCodeConfirmDialog } from '@/components/Organisms/MyPage/AmazonGiftCodeConfirmDialog';
+import styles from './AmazonGift.module.scss';
+import { useAmazonGift } from './useAmazonGift';
+import { useFetchAmazonGift } from './useFetchAmazonGift';
+import { usePostAmazonGiftPinCode } from './usePostAmazonGiftPinCode';
+import { AmazonGiftPointExchangeDialog } from './AmazonGiftPointExchangeDialog';
+import { AmazonGiftCodeConfirmDialog } from './AmazonGiftCodeConfirmDialog';
 
-export const AmazonGiftComponent: React.FC = () => {
+export const AmazonGift: React.FC = () => {
   const {
     priceList,
     currentPoint,

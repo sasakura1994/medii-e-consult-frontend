@@ -2,7 +2,7 @@ import useSWR from 'swr';
 import { createApiClient } from '@/libs/apiClient';
 import { fromNullToUndefined } from '@/libs/apiResponse';
 import { amazonGiftsMock } from '@/mocks/mocks';
-import type { AmazonGiftEntityType } from '@/types/entities/amazonGiftEntity';
+import type { AmazonGiftEntityType } from './amazonGiftEntity';
 
 const dummyToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6Ixxxxxxxxxxxxxxxxxxxxxxxx';
 const dummyUrl = 'https://jsonplaceholder.typicode.com/users/1';

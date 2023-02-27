@@ -74,7 +74,7 @@ export const updateProfileMock: ResponseResolver<
  * Mediiポイントモック
  */
 export const currentPointMock = {
-  point: 2500,
+  point: 8000,
 };
 export const getCurrentPointMock: ResponseResolver<
   RestRequest<never, PathParams<string>>,
