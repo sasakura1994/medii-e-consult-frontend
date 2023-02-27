@@ -2,7 +2,7 @@ import useSWR from 'swr';
 import { createApiClient } from '@/libs/apiClient';
 import { currentPointMock } from '@/mocks/mocks';
 import type { KeyedMutator } from 'swr';
-import type { CurrentPointEntityType } from '@/types/entities/pointHistoryEntity';
+import type { CurrentPointEntityType } from './pointHistoryEntity';
 
 const dummyToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6Ixxxxxxxxxxxxxxxxxxxxxxxx';
 const dummyUrl = 'https://jsonplaceholder.typicode.com/users/2';

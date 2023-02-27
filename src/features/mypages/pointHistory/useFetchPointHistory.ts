@@ -3,7 +3,7 @@ import { createApiClient } from '@/libs/apiClient';
 import { fromNullToUndefined } from '@/libs/apiResponse';
 import { pointHistoriesMock } from '@/mocks/mocks';
 import type { KeyedMutator } from 'swr';
-import type { PointHistoryEntityType } from '@/types/entities/pointHistoryEntity';
+import type { PointHistoryEntityType } from './pointHistoryEntity';
 
 const dummyToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6Ixxxxxxxxxxxxxxxxxxxxxxxx';
 const dummyUrl = 'https://jsonplaceholder.typicode.com/users/1';
