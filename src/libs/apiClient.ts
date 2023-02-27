@@ -29,7 +29,7 @@ export const createApiClient = (
     headers['Authorization'] = `Bearer ${options.token}`;
   }
 
-  const endpoint = process.env.WEB_SERVER_URL;
+  const endpoint = process.env.ENDPOINT_URL;
 
   const instance = axios.create({
     baseURL: endpoint,

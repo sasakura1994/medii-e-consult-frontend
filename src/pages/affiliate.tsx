@@ -1,23 +1,23 @@
 import React from 'react';
 import { MyPageLayout } from '@/components/Layouts/MyPageLayout';
 import { MyPageMenu } from '@/components/Molecules/MyPageMenu';
-import { AffiliateContainer } from '@/components/Organisms/MyPage/AffiliateContainer';
+import { Affiliate } from '@/features/mypages/affiliate/Affiliate';
 import type { NextPageWithLayout } from '@/pages/_app';
 
-const Affiliate: NextPageWithLayout = () => {
+const AffiliatePage: NextPageWithLayout = () => {
   return (
     <>
-      <h1 className="text-2xl leading-[2.2rem] text-center mb-10">
+      <h1 className="mb-10 text-center text-2xl leading-[2.2rem]">
         マイページ
       </h1>
       <MyPageMenu />
-      <AffiliateContainer />
+      <Affiliate />
     </>
   );
 };
 
-export default Affiliate;
+export default AffiliatePage;
 
-Affiliate.getLayout = (page: React.ReactElement) => {
+AffiliatePage.getLayout = (page: React.ReactElement) => {
   return <MyPageLayout>{page}</MyPageLayout>;
 };
