@@ -1,14 +1,20 @@
 import React from 'react';
-import { useRecoilState } from 'recoil';
-import { profileState } from '@/globalStates/profileState';
 import { toast } from 'react-toastify';
-import { ToastContainer } from 'react-toastify';
+import { profileState } from '@/globalStates/profileState';
+import { useRecoilState } from 'recoil';
 import { useFetchProfile } from '@/hooks/useFetchProfile';
 import { useUpdateProfile } from '@/hooks/useUpdateProfile';
-import { NotifySettingsPresenter } from './NotifySettingsPresenter';
 import type { ProfileEntityType } from '@/types/entities/profileEntity';
 
-export const NotifySettingsContainer: React.FC = () => {
+export type UseNotifySettingsType = {
+  profile?: ProfileEntityType;
+  isError: boolean;
+  changeNotifyNew: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  changeNotifySeminar: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  update: () => void;
+};
+
+export const useNotifySettings = (): UseNotifySettingsType => {
   const [profile, setProfile] = useRecoilState(profileState);
   const { isLoading, profile: profileData } = useFetchProfile();
   const { isSuccess, isError, updateProfile } = useUpdateProfile();
@@ -48,7 +54,7 @@ export const NotifySettingsContainer: React.FC = () => {
   /**
    * 新着メッセージ通知の選択処理
    */
-  const handleChangeNotifyNew = React.useCallback(
+  const changeNotifyNew = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       let notifyNewFlags = {
         is_mail_notify: true,
@@ -89,7 +95,7 @@ export const NotifySettingsContainer: React.FC = () => {
   /**
    * お知らせメールの選択処理
    */
-  const handleChangeNotifySeminar = React.useCallback(
+  const changeNotifySeminar = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       let notifySeminarFlags = true;
 
@@ -115,29 +121,15 @@ export const NotifySettingsContainer: React.FC = () => {
   /**
    * 更新実行
    */
-  const handleClickUpdate = () => {
+  const update = () => {
     updateProfile(profile);
   };
 
-  return (
-    <>
-      <NotifySettingsPresenter
-        profile={profile}
-        handleChangeNotifyNew={handleChangeNotifyNew}
-        handleChangeNotifySeminar={handleChangeNotifySeminar}
-        handleClickUpdate={handleClickUpdate}
-      />
-      <ToastContainer
-        hideProgressBar={true}
-        autoClose={2000}
-        position={toast.POSITION.TOP_CENTER}
-        closeButton={false}
-        toastClassName={() =>
-          isError
-            ? 'bg-[#b20000] text-white text-center py-[8px] shadow-md'
-            : 'bg-[#3f51b5] text-white text-center py-[8px] shadow-md'
-        }
-      />
-    </>
-  );
+  return {
+    profile,
+    isError,
+    changeNotifyNew,
+    changeNotifySeminar,
+    update,
+  };
 };
