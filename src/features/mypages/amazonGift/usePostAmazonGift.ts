@@ -48,8 +48,6 @@ export const usePostAmazonGift = (): UsePostAmazonGiftType => {
     setIsSuccess(false);
     setIsError(false);
 
-    console.log(price);
-
     const apiClient = createApiClient({
       token: dummyToken,
     });

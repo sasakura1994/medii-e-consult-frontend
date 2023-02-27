@@ -15,7 +15,7 @@ export const handlers = [
   rest.put('https://jsonplaceholder.typicode.com/posts/1', updateProfileMock),
   rest.get('https://jsonplaceholder.typicode.com/users/2', getCurrentPointMock),
   rest.get(
-    'https://jsonplaceholder.typicode.com/users/1',
+    'https://jsonplaceholder.typicode.com/users/3',
     getPointHistoriesMock
   ),
   rest.get('https://jsonplaceholder.typicode.com/users/4', getAmazonGiftsMock),

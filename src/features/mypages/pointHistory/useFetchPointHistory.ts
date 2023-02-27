@@ -6,7 +6,7 @@ import type { KeyedMutator } from 'swr';
 import type { PointHistoryEntityType } from './pointHistoryEntity';
 
 const dummyToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6Ixxxxxxxxxxxxxxxxxxxxxxxx';
-const dummyUrl = 'https://jsonplaceholder.typicode.com/users/1';
+const dummyUrl = 'https://jsonplaceholder.typicode.com/users/3';
 
 export type UseFetchPointHistoryType = {
   isLoading: boolean;

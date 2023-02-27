@@ -5,7 +5,7 @@ import { amazonGiftsMock } from '@/mocks/mocks';
 import type { AmazonGiftEntityType } from './amazonGiftEntity';
 
 const dummyToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6Ixxxxxxxxxxxxxxxxxxxxxxxx';
-const dummyUrl = 'https://jsonplaceholder.typicode.com/users/1';
+const dummyUrl = 'https://jsonplaceholder.typicode.com/users/4';
 
 export type UseFetchAmazonGiftType = {
   isLoading: boolean;
