@@ -30,7 +30,7 @@ export const usePostAmazonGiftPinCode = (): UsePostAmazonGiftPinCodeType => {
     });
 
     try {
-      const res = await apiClient.post(dummyPostUrl, {
+      await apiClient.post(dummyPostUrl, {
         pin_code_update: pinCodeUpdate,
         request_id: requestId,
       });

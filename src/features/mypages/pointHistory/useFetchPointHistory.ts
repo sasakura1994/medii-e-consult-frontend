@@ -25,7 +25,7 @@ export const useFetchPointHistory = (): UseFetchPointHistoryType => {
     [dummyUrl, dummyToken],
     async ([url, token]) => {
       const apiClient = createApiClient({ token });
-      const res = await apiClient.get<PointHistoryEntityType[]>(url);
+      await apiClient.get<PointHistoryEntityType[]>(url); // TODO: res を受け取る
       const data = pointHistoriesMock; // TODO: res.data に差し替え
 
       const pointHistories = data.map((data) =>

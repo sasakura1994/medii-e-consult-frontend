@@ -30,10 +30,10 @@ export const usePostAmazonGiftCode = (): UsePostAmazonGiftCodeType => {
     });
 
     try {
-      const res = await apiClient.post(dummyPostUrl, {
+      await apiClient.post(dummyPostUrl, {
         pin_code: pinCode,
         request_id: requestId,
-      });
+      }); // TODO: res を受け取る
 
       const data = amazonGiftConfirmMock; // TODO: res.data に差し替え
 

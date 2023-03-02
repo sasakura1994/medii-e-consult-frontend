@@ -24,7 +24,7 @@ export const useFetchCurrentPoint = (): UseFetchCurrentPointType => {
     [dummyUrl, dummyToken],
     async ([url, token]) => {
       const apiClient = createApiClient({ token });
-      const res = await apiClient.get<CurrentPointEntityType>(url);
+      await apiClient.get<CurrentPointEntityType>(url); // TODO: res を受け取る
       const data = currentPointMock; // TODO: res.data に差し替え
       return data.point;
     },

@@ -30,9 +30,9 @@ export const useUpdateProfile = (): UseUpdateProfileType => {
     [dummyUrl, dummyToken],
     async ([url, token]) => {
       const apiClient = createApiClient({ token });
-      const res = await apiClient.get<ProfileEntityType>(url);
-      const data = profileMock;
-      return fromNullToUndefined<ProfileEntityType>(data); // TODO: res.data に差し替え
+      await apiClient.get<ProfileEntityType>(url); // TODO: res.data に差し替え
+      const data = profileMock; // TODO: res.data に差し替え
+      return fromNullToUndefined<ProfileEntityType>(data);
     }
   );
 
@@ -45,7 +45,7 @@ export const useUpdateProfile = (): UseUpdateProfileType => {
     });
 
     try {
-      const res = await apiClient.put(dummyUrl, dummyParams);
+      await apiClient.put(dummyUrl, dummyParams);
       const updatedData = fromNullToUndefined<ProfileEntityType>(data);
       mutate({ ...profile, ...updatedData }, false);
       setIsSuccess(true);
