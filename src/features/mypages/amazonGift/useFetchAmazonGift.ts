@@ -2,6 +2,7 @@ import useSWR from 'swr';
 import { createApiClient } from '@/libs/apiClient';
 import { fromNullToUndefined } from '@/libs/apiResponse';
 import { amazonGiftsMock } from '@/mocks/mocks';
+import type { KeyedMutator } from 'swr';
 import type { AmazonGiftEntityType } from './amazonGiftEntity';
 
 const dummyToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6Ixxxxxxxxxxxxxxxxxxxxxxxx';
@@ -11,6 +12,7 @@ export type UseFetchAmazonGiftType = {
   isLoading: boolean;
   error?: Error;
   amazonGifts?: AmazonGiftEntityType[];
+  mutate: KeyedMutator<AmazonGiftEntityType[]>;
 };
 
 export const useFetchAmazonGift = (): UseFetchAmazonGiftType => {
@@ -18,6 +20,7 @@ export const useFetchAmazonGift = (): UseFetchAmazonGiftType => {
     isLoading,
     error,
     data: amazonGifts,
+    mutate,
   } = useSWR(
     [dummyUrl, dummyToken],
     async ([url, token]) => {
@@ -38,5 +41,6 @@ export const useFetchAmazonGift = (): UseFetchAmazonGiftType => {
     isLoading,
     error,
     amazonGifts,
+    mutate,
   };
 };

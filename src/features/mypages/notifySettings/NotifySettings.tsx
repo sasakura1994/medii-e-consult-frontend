@@ -29,6 +29,7 @@ export const NotifySettings: React.FC = () => {
                     checked={profile?.is_mail_notify && profile?.is_push_notify}
                     id="mail-push"
                     onChange={changeNotifyNew}
+                    data-testid="radio-new-notify"
                   />
                   <label htmlFor="mail-push">
                     メール・プッシュ通知両方受け取る
@@ -46,6 +47,7 @@ export const NotifySettings: React.FC = () => {
                     }
                     id="mail"
                     onChange={changeNotifyNew}
+                    data-testid="radio-new-notify"
                   />
                   <label htmlFor="mail">メール通知</label>
                 </div>
@@ -61,6 +63,7 @@ export const NotifySettings: React.FC = () => {
                     }
                     id="push"
                     onChange={changeNotifyNew}
+                    data-testid="radio-new-notify"
                   />
                   <label htmlFor="push" className="">
                     プッシュ通知（パソコン／アプリ版）
@@ -85,6 +88,7 @@ export const NotifySettings: React.FC = () => {
                     checked={!profile?.not_seminar_mail_target}
                     id="permit"
                     onChange={changeNotifySeminar}
+                    data-testid="radio-seminar-notify"
                   />
                   <label htmlFor="permit">メール通知を受け取る</label>
                 </div>
@@ -98,6 +102,7 @@ export const NotifySettings: React.FC = () => {
                     checked={profile?.not_seminar_mail_target}
                     id="deny"
                     onChange={changeNotifySeminar}
+                    data-testid="radio-seminar-notify"
                   />
                   <label htmlFor="deny">メール通知を受け取らない</label>
                 </div>

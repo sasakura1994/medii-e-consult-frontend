@@ -45,6 +45,7 @@ export const useNotifySettings = (): UseNotifySettingsType => {
       return;
     }
 
+    // Recoil のデフォルト値がここで swr から取得したモックに差し変わる
     setProfile((oldValues) => ({
       ...oldValues,
       ...profileData,
@@ -89,7 +90,7 @@ export const useNotifySettings = (): UseNotifySettingsType => {
         ...notifyNewFlags,
       }));
     },
-    []
+    [setProfile]
   );
 
   /**

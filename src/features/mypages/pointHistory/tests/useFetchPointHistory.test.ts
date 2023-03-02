@@ -2,11 +2,11 @@ import { renderHook, act, waitFor } from '@testing-library/react';
 import { rest } from 'msw';
 import { server } from '@/mocks/server';
 import { fromNullToUndefined } from '@/libs/apiResponse';
-import { useFetchPointHistory } from '@/hooks/useFetchPointHistory';
+import { useFetchPointHistory } from '../useFetchPointHistory';
 import { pointHistoriesMock } from '@/mocks/mocks';
-import type { PointHistoryEntityType } from '@/types/entities/pointHistoryEntity';
+import type { PointHistoryEntityType } from '../pointHistoryEntity';
 
-const dummyUrl = 'https://jsonplaceholder.typicode.com/users/1'; // TODO: 正規のURLに変更する
+const dummyUrl = 'https://jsonplaceholder.typicode.com/users/3'; // TODO: 正規のURLに変更する
 
 describe('useFetchPointHistory', () => {
   test('should return pointHistories data when fetch succeeds.', async () => {
