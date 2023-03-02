@@ -1,11 +1,10 @@
 import 'cross-fetch/polyfill';
-import { renderHook, act, waitFor } from '@testing-library/react';
+import { renderHook, act } from '@testing-library/react';
 import { useAffiliate } from '../useAffiliate';
 import { UseAffiliateType } from '../useAffiliate';
 
 const mockAccountId = 'example_account_id';
 const mockQrCodeUrl = 'http://example.com/qr_code.png';
-const mockClipboardUrl = 'http://example.com/clipboard';
 
 describe('useAffiliate', () => {
   beforeEach(() => {
