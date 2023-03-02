@@ -5,7 +5,9 @@ import { ToastContainer } from 'react-toastify';
 import { useAffiliate } from './useAffiliate';
 
 export const Affiliate: React.FC = () => {
-  const { isError, qrCodeUrl, downloadQrCode, clipboard } = useAffiliate();
+  const accountId = 'AC10-6226-9933-69'; // TODO: ログイン情報から取得する
+  const { isError, qrCodeUrl, downloadQrCode, clipboard } =
+    useAffiliate(accountId);
 
   return (
     <>

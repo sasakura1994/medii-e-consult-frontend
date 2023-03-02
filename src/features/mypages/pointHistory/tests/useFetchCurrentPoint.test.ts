@@ -2,7 +2,7 @@ import { renderHook, act, waitFor } from '@testing-library/react';
 import { rest } from 'msw';
 import { server } from '@/mocks/server';
 import { useFetchCurrentPoint } from '../useFetchCurrentPoint';
-import { currentPointMock } from '@/mocks/mocks';
+import { currentPointMock } from '../pointMock';
 
 const dummyUrl = 'https://jsonplaceholder.typicode.com/users/2';
 

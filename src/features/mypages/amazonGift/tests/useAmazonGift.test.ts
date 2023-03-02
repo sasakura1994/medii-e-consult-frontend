@@ -1,7 +1,7 @@
 import { renderHook, act, waitFor, cleanup } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
 import { useAmazonGift } from '../useAmazonGift';
-import { amazonGiftConfirmMock } from '@/mocks/mocks';
+import { amazonGiftConfirmMock } from '../amazonGiftMock';
 
 afterEach(() => cleanup());
 

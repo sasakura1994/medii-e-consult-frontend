@@ -1,7 +1,6 @@
 import React from 'react';
 import { toast } from 'react-toastify';
 
-const accountId = 'AC10-6226-9933-69'; // TODO: ログイン情報から取得する
 const qrCodeFileName = 'Medii医師紹介QRコード.png';
 
 export type AffiliateUrlsType = {
@@ -17,7 +16,7 @@ export type UseAffiliateType = {
   clipboard: () => void;
 };
 
-export const useAffiliate = (): UseAffiliateType => {
+export const useAffiliate = (accountId: string): UseAffiliateType => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
   const [qrCodeUrl, setQrcodeUrl] = React.useState('');
@@ -61,6 +60,8 @@ export const useAffiliate = (): UseAffiliateType => {
       setClipboardUrl(urls.clipboard);
       setIsLoading(false);
     } catch (e: unknown) {
+      const error = e as Error;
+      console.log('*** error ***', error.message);
       setIsLoading(false);
       setIsError(true);
       toast('QRコードの取得に失敗しました');

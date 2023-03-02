@@ -4,7 +4,7 @@ import { useSetRecoilState } from 'recoil';
 import { amazonGiftPointExchangeState } from './amazonGiftPointExchangeState';
 import { createApiClient } from '@/libs/apiClient';
 import { fromNullToUndefined } from '@/libs/apiResponse';
-import { amazonGiftsMock } from '@/mocks/mocks';
+import { amazonGiftsMock } from './amazonGiftMock';
 import type { KeyedMutator } from 'swr';
 import type { AmazonGiftEntityType } from './amazonGiftEntity';
 

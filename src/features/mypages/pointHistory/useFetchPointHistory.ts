@@ -1,7 +1,7 @@
 import useSWR from 'swr';
 import { createApiClient } from '@/libs/apiClient';
 import { fromNullToUndefined } from '@/libs/apiResponse';
-import { pointHistoriesMock } from '@/mocks/mocks';
+import { pointHistoriesMock } from './pointMock';
 import type { KeyedMutator } from 'swr';
 import type { PointHistoryEntityType } from './pointHistoryEntity';
 

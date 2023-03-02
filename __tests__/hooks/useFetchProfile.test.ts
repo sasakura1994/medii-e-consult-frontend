@@ -3,7 +3,7 @@ import { rest } from 'msw';
 import { server } from '@/mocks/server';
 import { fromNullToUndefined } from '@/libs/apiResponse';
 import { useFetchProfile } from '@/hooks/useFetchProfile';
-import { profileMock } from '@/mocks/mocks';
+import { profileMock } from '@/mocks/profileMock';
 import type { ProfileEntityType } from '@/types/entities/profileEntity';
 
 const dummyUrl = 'https://jsonplaceholder.typicode.com/users'; // TODO: 正規のURLに変更する

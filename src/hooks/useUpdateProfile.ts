@@ -2,7 +2,7 @@ import React from 'react';
 import useSWR from 'swr';
 import { createApiClient } from '@/libs/apiClient';
 import { fromNullToUndefined } from '@/libs/apiResponse';
-import { profileMock } from '@/mocks/mocks';
+import { profileMock } from '@/mocks/profileMock';
 import type { KeyedMutator } from 'swr';
 import type { ProfileEntityType } from '@/types/entities/profileEntity';
 

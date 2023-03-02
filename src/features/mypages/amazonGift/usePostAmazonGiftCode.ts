@@ -2,7 +2,7 @@ import React from 'react';
 import { createApiClient } from '@/libs/apiClient';
 import { useSetRecoilState } from 'recoil';
 import { amazonGiftCodeComfirmState } from './amazonGiftCodeComfirmState';
-import { amazonGiftConfirmMock } from '@/mocks/mocks';
+import { amazonGiftConfirmMock } from './amazonGiftMock';
 
 const dummyToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6Ixxxxxxxxxxxxxxxxxxxxxxxx';
 const dummyPostUrl = 'https://jsonplaceholder.typicode.com/posts';

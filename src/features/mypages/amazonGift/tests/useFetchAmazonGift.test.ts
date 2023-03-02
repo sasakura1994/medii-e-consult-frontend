@@ -3,7 +3,7 @@ import { rest } from 'msw';
 import { server } from '@/mocks/server';
 import { fromNullToUndefined } from '@/libs/apiResponse';
 import { useFetchAmazonGift } from '../useFetchAmazonGift';
-import { amazonGiftsMock } from '@/mocks/mocks';
+import { amazonGiftsMock } from '../amazonGiftMock';
 import type { AmazonGiftEntityType } from '../amazonGiftEntity';
 
 const url = 'https://jsonplaceholder.typicode.com/users/4'; // TODO: 正規のURLに変える
