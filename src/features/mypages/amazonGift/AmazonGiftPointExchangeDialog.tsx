@@ -36,7 +36,7 @@ export const AmazonGiftPointExchangeDialog: React.FC = () => {
         </p>
 
         {pointExchangeState.purchaseCompleted && (
-          <p>
+          <p data-testid="txt-exchange-completed">
             交換を受け付けました。ギフト券の発行が完了次第メールにてご連絡いたします。
           </p>
         )}
@@ -49,15 +49,16 @@ export const AmazonGiftPointExchangeDialog: React.FC = () => {
           !pointExchangeState.purchaseCompleted && (
             <button
               type="button"
-              onClick={exchangeExec}
+              onClick={() => exchangeExec(pointExchangeState.price)}
               className="mx-auto
-                       mb-3
-                       block
-                       rounded-full
-                       bg-[#5c6bc0]
-                       py-[7px] px-6
-                       font-bold text-white
-                       drop-shadow-[0_4px_10px_rgba(92,107,192,0.3)]"
+                         mb-3
+                         block
+                         rounded-full
+                         bg-[#5c6bc0]
+                         py-[7px] px-6
+                         font-bold text-white
+                         drop-shadow-[0_4px_10px_rgba(92,107,192,0.3)]"
+              data-testid="btn-exec-exchange"
             >
               交換する
             </button>

@@ -60,7 +60,9 @@ export const AmazonGiftCodeConfirmDialog: React.FC = () => {
 
         <button
           type="button"
-          onClick={showGiftCode}
+          onClick={() =>
+            showGiftCode(codeConfirmState.requestId, codeConfirmState.pinCode)
+          }
           className="mx-auto
                      mb-3
                      block
@@ -88,7 +90,7 @@ export const AmazonGiftCodeConfirmDialog: React.FC = () => {
           // 初期表示
           <button
             type="button"
-            onClick={resendPinCode}
+            onClick={() => resendPinCode(codeConfirmState.requestId)}
             className="mx-auto
                      mb-3
                      block

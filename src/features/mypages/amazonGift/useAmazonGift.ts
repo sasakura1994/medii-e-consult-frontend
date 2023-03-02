@@ -17,11 +17,11 @@ export type UseAmazonGiftType = {
   isSelectEnabled: (price: number) => boolean;
   selectPrice: (e: React.MouseEvent<HTMLButtonElement>, price: number) => void;
   exchangeConfirm: () => void;
-  exchangeExec: () => void;
+  exchangeExec: (price: number) => void;
   closePointExchangeDialog: () => void;
   inputPinCode: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  showGiftCode: () => void;
-  resendPinCode: () => void;
+  showGiftCode: (requestId: string, pinCode: string) => void;
+  resendPinCode: (requestId: string) => void;
   closeCodeComfirmDialog: () => void;
 };
 
@@ -69,7 +69,6 @@ export const useAmazonGift = (): UseAmazonGiftType => {
     target.style.border = '2px solid #5c6bc0';
     target.style.fontWeight = '700';
 
-    // setPrice(price);
     setAmazonGiftPointExchange((oldValues) => ({
       ...oldValues,
       price,
@@ -91,7 +90,7 @@ export const useAmazonGift = (): UseAmazonGiftType => {
   /**
    * ポイント交換実行
    */
-  const exchangeExec = () => {
+  const exchangeExec = (price: number) => {
     setAmazonGiftPointExchange((oldValues) => ({
       ...oldValues,
       showExchangeDialog: true, // ダイアログ表示
@@ -100,7 +99,7 @@ export const useAmazonGift = (): UseAmazonGiftType => {
     }));
 
     // 交換金額を送信する
-    requestExchange(amazonGiftPointExchange.price);
+    requestExchange(price);
   };
 
   /**
@@ -130,18 +129,15 @@ export const useAmazonGift = (): UseAmazonGiftType => {
   /**
    * ギフトコードの表示
    */
-  const showGiftCode = () => {
-    requestGiftCode(
-      amazonGiftCodeComfirm.requestId,
-      amazonGiftCodeComfirm.pinCode
-    );
+  const showGiftCode = (requestId: string, pinCode: string) => {
+    requestGiftCode(requestId, pinCode);
   };
 
   /**
    * PINコード再送
    */
-  const resendPinCode = () => {
-    requestPinCode(amazonGiftCodeComfirm.requestId, false);
+  const resendPinCode = (requestId: string) => {
+    requestPinCode(requestId, false);
     setAmazonGiftCodeComfirm((oldValues) => ({
       ...oldValues,
       message: '確認コードを再送信しました。',

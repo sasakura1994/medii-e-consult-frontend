@@ -17,6 +17,7 @@ export type UsePostAmazonGiftPinCodeType = {
  */
 export const usePostAmazonGiftPinCode = (): UsePostAmazonGiftPinCodeType => {
   const setAmazonGiftComfirm = useSetRecoilState(amazonGiftCodeComfirmState);
+
   const [isSuccess, setIsSuccess] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
 
