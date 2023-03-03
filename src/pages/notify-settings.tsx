@@ -1,23 +1,23 @@
 import React from 'react';
 import { MyPageLayout } from '@/components/Layouts/MyPageLayout';
 import { MyPageMenu } from '@/components/Molecules/MyPageMenu';
-import { NotifySettingsContainer } from '@/components/Organisms/MyPage/NotifySettingsContainer';
+import { NotifySettings } from '@/features/mypages/notifySettings/NotifySettings';
 import type { NextPageWithLayout } from '@/pages/_app';
 
-const NotifySettings: NextPageWithLayout = () => {
+const NotifySettingsPage: NextPageWithLayout = () => {
   return (
     <>
-      <h1 className="text-2xl leading-[2.2rem] text-center mb-10">
+      <h1 className="mb-10 text-center text-2xl leading-[2.2rem]">
         マイページ
       </h1>
       <MyPageMenu />
-      <NotifySettingsContainer />
+      <NotifySettings />
     </>
   );
 };
 
-export default NotifySettings;
+export default NotifySettingsPage;
 
-NotifySettings.getLayout = (page: React.ReactElement) => {
+NotifySettingsPage.getLayout = (page: React.ReactElement) => {
   return <MyPageLayout>{page}</MyPageLayout>;
 };

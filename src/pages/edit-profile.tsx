@@ -1,21 +1,23 @@
 import React from 'react';
-import styles from '@/styles/pages/affiliate.module.scss';
 import { MyPageLayout } from '@/components/Layouts/MyPageLayout';
 import { MyPageMenu } from '@/components/Molecules/MyPageMenu';
+import { EditProfile } from '@/features/mypages/editProfile/EditProfile';
 import type { NextPageWithLayout } from '@/pages/_app';
 
-const EditProfile: NextPageWithLayout = () => {
+const EditProfilePage: NextPageWithLayout = () => {
   return (
     <>
-      <h1 className="text-2xl leading-[2.2rem] text-center mb-10">マイページ</h1>
+      <h1 className="mb-10 text-center text-2xl leading-[2.2rem]">
+        マイページ
+      </h1>
       <MyPageMenu />
-      <div className={styles.affiliate}>プロフィール</div>
+      <EditProfile />
     </>
   );
 };
 
-export default EditProfile;
+export default EditProfilePage;
 
-EditProfile.getLayout = (page: React.ReactElement) => {
+EditProfilePage.getLayout = (page: React.ReactElement) => {
   return <MyPageLayout>{page}</MyPageLayout>;
 };

@@ -1,0 +1,23 @@
+@import "../../../styles/utilities/variable.scss";
+@import "../../../styles/functions/mixin.scss";
+
+.edit_profile {
+  background-color: #ffffff;
+  width: 100%;
+  margin-top: 40px;
+  margin-bottom: 49px;
+  padding: 24px 24px;
+  @include mq-breakpoint(lg) {
+    margin-bottom: 40px;
+    padding: 40px 84px;
+  }
+  border: 1px solid #d5d5d5;
+  border-radius: 4px;
+
+  &__heading {
+    font-size: 24px;
+    text-align: center;
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+}

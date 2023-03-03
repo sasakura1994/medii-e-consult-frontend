@@ -2,7 +2,7 @@ import { renderHook, act } from '@testing-library/react';
 import { rest } from 'msw';
 import { server } from '@/mocks/server';
 import { useUpdateProfile } from '@/hooks/useUpdateProfile';
-import { profileMock } from '@/mocks/mocks';
+import { profileMock } from '@/mocks/profileMock';
 
 const dummyUrl = 'https://jsonplaceholder.typicode.com/posts/1'; // TODO: 正規のURLに変更する
 
