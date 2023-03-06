@@ -22,7 +22,7 @@ export const HeaderMenu: React.FC = () => {
               text="NEW"
               styles="bg-red-400
                       text-white
-                      text-[10px]
+                      text-xxs
                       text-center
                       leading-normal
                       w-[33px]

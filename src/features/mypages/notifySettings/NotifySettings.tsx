@@ -117,7 +117,7 @@ export const NotifySettings: React.FC = () => {
             onClick={update}
             className="rounded-full
                        border-0
-                       bg-[#5c6bc0]
+                       bg-primary
                        py-3.5
                        px-8
                        font-bold
@@ -136,8 +136,8 @@ export const NotifySettings: React.FC = () => {
         closeButton={false}
         toastClassName={() =>
           isError
-            ? 'bg-[#b20000] text-white text-center py-[8px] shadow-md'
-            : 'bg-[#3f51b5] text-white text-center py-[8px] shadow-md'
+            ? 'bg-toast-error text-white text-center py-2 shadow-md'
+            : 'bg-toast-success text-white text-center py-2 shadow-md'
         }
       />
     </>

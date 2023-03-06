@@ -72,7 +72,7 @@ export const AmazonGift: React.FC = () => {
                        border-none
                        bg-primary
                        py-[7px]
-                       px-[24px]
+                       px-6
                        font-bold
                        text-white
                        drop-shadow-[0_4px_10px_rgba(92,107,192,0.3)]
