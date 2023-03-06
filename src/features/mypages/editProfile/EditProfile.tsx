@@ -1,8 +1,15 @@
 import React from 'react';
 import styles from './EditProfile.module.scss';
+import { toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import { useClipboard } from '@/hooks/useClipboard';
 import { CaptionWithBody } from '@/components/Parts/CaptionWithBody';
 
 export const EditProfile: React.FC = () => {
+  const accountId = 'AC10-6226-9933-69'; // TODO: ログイン情報から取得する
+  const clipboardUrl = `${process.env.WEB_SERVER_URL}/NewChatRoom?target_account_id=${accountId}`;
+  const { isError, clipboard } = useClipboard(clipboardUrl);
+
   return (
     <>
       <div className="mt-4 bg-white p-2">
@@ -30,7 +37,7 @@ export const EditProfile: React.FC = () => {
                        text-white
                        drop-shadow-[0_4px_10px_rgba(92,107,192,0.3)]"
             data-testid="btn-exec-exchange"
-            onClick={() => console.log('URL発行')}
+            onClick={() => clipboard('クリップボードにコピーしました')}
           >
             <img
               src="/icons/clip.svg"
@@ -180,6 +187,18 @@ export const EditProfile: React.FC = () => {
           ログアウト
         </button>
       </div>
+
+      <ToastContainer
+        hideProgressBar={true}
+        autoClose={2000}
+        position={toast.POSITION.BOTTOM_CENTER}
+        closeButton={false}
+        toastClassName={() =>
+          isError
+            ? 'bg-[#b20000] text-white text-center py-[8px] shadow-md'
+            : 'bg-[#3f51b5] text-white text-center py-[8px] shadow-md'
+        }
+      />
     </>
   );
 };
