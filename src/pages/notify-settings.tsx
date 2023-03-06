@@ -1,6 +1,6 @@
 import React from 'react';
 import { MyPageLayout } from '@/components/Layouts/MyPageLayout';
-import { MyPageMenu } from '@/components/Molecules/MyPageMenu';
+import { MyPageMenu } from '@/components/Parts/Menu/MyPageMenu';
 import { NotifySettings } from '@/features/mypages/notifySettings/NotifySettings';
 import type { NextPageWithLayout } from '@/pages/_app';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import styles from './HeaderMenu.module.scss';
-import { Badge } from '@/components/Atoms/Badge';
+import { Badge } from '@/components/Parts/Badge/Badge';
 
 export const HeaderMenu: React.FC = () => {
   return (

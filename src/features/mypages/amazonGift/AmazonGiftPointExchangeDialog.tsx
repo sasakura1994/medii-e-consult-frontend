@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAmazonGift } from './useAmazonGift';
-import { SpinnerBorder } from '@/components/Atoms/SpinnerBorder';
+import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 
 export const AmazonGiftPointExchangeDialog: React.FC = () => {
   const { pointExchangeState, exchangeExec, closePointExchangeDialog } =

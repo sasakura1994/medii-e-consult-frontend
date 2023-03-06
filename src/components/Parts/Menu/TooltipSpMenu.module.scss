@@ -1,11 +1,11 @@
-@import '../../styles/utilities/variable.scss';
-@import '../../styles/functions/mixin.scss';
+@import "../../../styles/utilities/variable.scss";
+@import "../../../styles/functions/mixin.scss";
 
 .tooltip_sp {
   background-color: #ffffff;
   padding: 16px 16px;
   border-radius: 4px;
-  box-shadow: 0 5px 5px 0 rgba(0,0,0,0.5);
+  box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.5);
 }
 
 .tooltip_sp_nav {

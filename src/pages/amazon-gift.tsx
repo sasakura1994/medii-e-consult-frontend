@@ -1,6 +1,6 @@
 import React from 'react';
 import { MyPageLayout } from '@/components/Layouts/MyPageLayout';
-import { MyPageMenu } from '@/components/Molecules/MyPageMenu';
+import { MyPageMenu } from '@/components/Parts/Menu/MyPageMenu';
 import { AmazonGift } from '@/features/mypages/amazonGift/AmazonGift';
 import type { NextPageWithLayout } from '@/pages/_app';
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
 import styles from './HeaderSubMenu.module.scss';
-import { Tooltip } from '@/components/Molecules/Tooltip';
-import { TooltipMenu } from '@/components/Molecules/TooltipMenu';
-import { TooltipSpMenu } from '@/components/Molecules/TooltipSpMenu';
+import { Tooltip } from '@/components/Parts/Menu/Tooltip';
+import { TooltipMenu } from '@/components/Parts/Menu/TooltipMenu';
+import { TooltipSpMenu } from '@/components/Parts/Menu/TooltipSpMenu';
 
 export const HeaderSubMenu: React.FC = () => {
   return (
