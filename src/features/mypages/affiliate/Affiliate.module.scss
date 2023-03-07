@@ -1,5 +1,5 @@
-@import '../../../styles/utilities/variable.scss';
-@import '../../../styles/functions/mixin.scss';
+@import "../../../styles/utilities/variable.scss";
+@import "../../../styles/functions/mixin.scss";
 
 .affiliate {
   background-color: #ffffff;
@@ -22,7 +22,7 @@
   }
 
   &__sub_heading {
-    background: linear-gradient(90deg,#90bfea,#7b91e0 43.23%);
+    background: linear-gradient(90deg, #90bfea, #7b91e0 43.23%);
     color: #ffffff;
     font-weight: normal;
     text-align: center;
@@ -37,6 +37,6 @@
     padding: 7px 24px;
     border: none;
     border-radius: 9999px; // 両サイドを完全な角丸を実現するための設定 see: https://eclair.blog/css-border-radius/
-    filter: drop-shadow(0 4px 10px rgba(92,107,192,0.3));
+    filter: drop-shadow(0 4px 10px rgba(92, 107, 192, 0.3));
   }
 }
