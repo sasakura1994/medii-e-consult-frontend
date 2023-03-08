@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAmazonGift } from './useAmazonGift';
-import { SpinnerBorder } from '@/components/Atoms/SpinnerBorder';
+import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 
 export const AmazonGiftPointExchangeDialog: React.FC = () => {
   const { pointExchangeState, exchangeExec, closePointExchangeDialog } =
@@ -54,7 +54,7 @@ export const AmazonGiftPointExchangeDialog: React.FC = () => {
                          mb-3
                          block
                          rounded-full
-                         bg-[#5c6bc0]
+                         bg-primary
                          py-[7px] px-6
                          font-bold text-white
                          drop-shadow-[0_4px_10px_rgba(92,107,192,0.3)]"

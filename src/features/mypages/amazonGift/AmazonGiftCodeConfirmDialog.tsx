@@ -67,7 +67,7 @@ export const AmazonGiftCodeConfirmDialog: React.FC = () => {
                      mb-3
                      block
                      rounded-full
-                     bg-[#5c6bc0]
+                     bg-primary
                      py-[7px]
                      px-6
                      font-bold
@@ -95,7 +95,7 @@ export const AmazonGiftCodeConfirmDialog: React.FC = () => {
                      mb-3
                      block
                      rounded-full
-                     bg-[#5c6bc0]
+                     bg-primary
                      py-[7px]
                      px-6
                      font-bold

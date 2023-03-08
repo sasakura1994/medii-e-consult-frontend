@@ -40,7 +40,7 @@ export const Affiliate: React.FC = () => {
         </div>
 
         <div className="mb-[22px] hidden lg:block">
-          <h3 className="bg-[#e2e7ff] text-center text-sm leading-6 text-[#5c6bc0]">
+          <h3 className="bg-[#e2e7ff] text-center text-sm leading-6 text-primary">
             スマートフォン向けアプリもぜひご利用ください
           </h3>
           <div className="flex items-center justify-center gap-x-12 px-6 py-3">
@@ -67,8 +67,8 @@ export const Affiliate: React.FC = () => {
         closeButton={false}
         toastClassName={() =>
           isError
-            ? 'bg-[#b20000] text-white text-center py-[8px] shadow-md'
-            : 'bg-[#3f51b5] text-white text-center py-[8px] shadow-md'
+            ? 'bg-toast-error text-white text-center py-2 shadow-md'
+            : 'bg-toast-success text-white text-center py-2 shadow-md'
         }
       />
     </>

@@ -1,5 +1,5 @@
-@import '../../../styles/utilities/variable.scss';
-@import '../../../styles/functions/mixin.scss';
+@import "../../../styles/utilities/variable.scss";
+@import "../../../styles/functions/mixin.scss";
 
 .notify_settings {
   &__content {
@@ -39,7 +39,6 @@
   }
 
   &__btn {
-
   }
 }
 
@@ -51,7 +50,7 @@
       padding-left: 18px;
       position: relative;
     }
-  
+
     // ラジオボタン枠
     & + label::before {
       content: "";
@@ -69,7 +68,7 @@
     &:checked + label::before {
       border: 1.5px solid $primary-color;
     }
-  
+
     // ラジオボタンチェック（中身の丸）
     &:checked + label::after {
       content: "";

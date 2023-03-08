@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import styles from './HeaderMenu.module.scss';
-import { Badge } from '@/components/Atoms/Badge';
+import { Badge } from '@/components/Parts/Badge/Badge';
 
 export const HeaderMenu: React.FC = () => {
   return (
@@ -22,7 +22,7 @@ export const HeaderMenu: React.FC = () => {
               text="NEW"
               styles="bg-red-400
                       text-white
-                      text-[10px]
+                      text-xxs
                       text-center
                       leading-normal
                       w-[33px]

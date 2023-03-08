@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import styles from './FooterSpMenu.module.scss';
-import { Badge } from '@/components/Atoms/Badge';
+import { Badge } from '@/components/Parts/Badge/Badge';
 
 export const FooterSpMenu: React.FC = () => {
   return (
@@ -28,13 +28,13 @@ export const FooterSpMenu: React.FC = () => {
             text="NEW"
             styles="bg-red-400
                     text-white
-                    text-[10px]
+                    text-xxs
                     text-center
                     leading-normal
                     w-[33px]
                     rounded-full
                     absolute
-                    top-[16px]
+                    top-4
                     right-0"
           />
         </li>
