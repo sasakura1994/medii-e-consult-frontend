@@ -3,7 +3,11 @@ import { createApiClient } from '@/libs/apiClient';
 import type { ProfileEntityType } from '@/types/entities/profileEntity';
 
 export type UseLoginType = {
-  login: ( email: string, password: string ) => void;
+  email: string;
+  setEmail: React.Dispatch<React.SetStateAction<string>>;
+  password: string;
+  setPassword: React.Dispatch<React.SetStateAction<string>>;
+  login: () => void;
   isError: boolean;
   profile?: ProfileEntityType | null;
   token?: string;
@@ -11,11 +15,13 @@ export type UseLoginType = {
 
 export const useLogin = (): UseLoginType =>
 {
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
   const [ isError, setIsError ] = React.useState( false );
   const [ profile, setProfile ] = React.useState<ProfileEntityType | null>( null );
   const [ token, setToken ] = React.useState( "" );
 
-  const login = async ( email: string, password: string ) =>
+  const login = async () =>
   {
     const apiClient = createApiClient();
     const url = `${process.env.ENDPOINT_URL}/api/doctor/login`;
@@ -37,6 +43,10 @@ export const useLogin = (): UseLoginType =>
 
   }
   return {
+    email,
+    setEmail,
+    password,
+    setPassword,
     login,
     isError,
     profile,
