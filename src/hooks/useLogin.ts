@@ -10,7 +10,7 @@ export type UseLoginType = {
   login: () => void;
   isError: boolean;
   profile?: ProfileEntityType | null;
-  token?: string;
+  token: string;
 };
 
 export const useLogin = (): UseLoginType =>
@@ -32,13 +32,13 @@ export const useLogin = (): UseLoginType =>
 
     console.log('res', res.data);
 
-    if (!res) {
+    if (!res || res.data.code === -1) {
       setIsError(true);
       return;
     }
 
-    localStorage.setItem( 'token', res.data.jwt_token );
-    setToken( res.data.jwt_token );
+    localStorage.setItem('token', res.data.jwt_token);
+    setToken(res.data.jwt_token);
     setProfile(res.data.doctor)
 
   }
