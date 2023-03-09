@@ -24,7 +24,15 @@ const GuideLink = ({children}: {children: string}) =>
 }
 const Login: NextPage = () =>
 {
-  const { email, setEmail, password, setPassword, login } = useLogin();
+  const { email, setEmail, password, setPassword, login, token } = useLogin();
+  const router = useRouter();
+  useEffect( () =>
+  {
+    if ( token !== "" )
+    {
+        router.replace( (router.query.redirect as string) ?? '/top');
+     }
+   }, [token])
   return (
     <div className="mt-6 mb-12">
       <div className="mx-auto flex w-login-container max-w-login-container flex-col items-center border border-solid border-login-container-frame bg-white py-4">
