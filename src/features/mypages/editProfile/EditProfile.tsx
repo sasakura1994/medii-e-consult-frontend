@@ -3,9 +3,9 @@ import styles from './EditProfile.module.scss';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import { useClipboard } from '@/hooks/useClipboard';
-import { EditProfileUrlPublish } from './EditProfileUrlPublish';
-import { EditProfileDetail } from './EditProfileDetail';
-import { EditProfileEdit } from './EditProfileEdit';
+import { UrlPublish } from './UrlPublish';
+import { Detail } from './Detail';
+import { Edit } from './Edit';
 
 export const EditProfile: React.FC = () => {
   const accountId = 'AC10-6226-9933-69'; // TODO: ログイン情報から取得する
@@ -14,11 +14,11 @@ export const EditProfile: React.FC = () => {
 
   return (
     <>
-      <EditProfileUrlPublish clipboard={clipboard} />
+      <UrlPublish clipboard={clipboard} />
 
       <div className={styles.edit_profile}>
-        <EditProfileDetail />
-        <EditProfileEdit />
+        <Detail />
+        <Edit />
       </div>
 
       <div className="text-center lg:pb-20">

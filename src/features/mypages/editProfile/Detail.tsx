@@ -1,9 +1,8 @@
 import React from 'react';
-import styles from './EditProfile.module.scss';
 import { useEditProfile } from './useEditProfile';
 import { CaptionWithBody } from '@/components/Parts/CaptionWithBody';
 
-export const EditProfileDetail: React.FC = () => {
+export const Detail: React.FC = () => {
   const { editProfileScreen, openEdit } = useEditProfile();
 
   if (!editProfileScreen.isDetailOpen) {

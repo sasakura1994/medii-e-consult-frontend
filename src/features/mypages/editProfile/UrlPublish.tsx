@@ -4,7 +4,7 @@ type PropsType = {
   clipboard: (message?: string | undefined) => void;
 };
 
-export const EditProfileUrlPublish: React.FC<PropsType> = (props) => {
+export const UrlPublish: React.FC<PropsType> = (props) => {
   const { clipboard } = props;
 
   return (
@@ -27,7 +27,7 @@ export const EditProfileUrlPublish: React.FC<PropsType> = (props) => {
                    mb-3
                    block
                    rounded-full
-                   bg-[#5c6bc0]
+                   bg-primary
                    py-[7px] px-8
                    font-bold
                    text-white
