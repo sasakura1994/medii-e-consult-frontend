@@ -7,6 +7,7 @@ import { CustomHead } from '@/components/Commons/CustomHead';
 import { Layout } from '@/components/Layouts/Layout';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
+import Head from 'next/head';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {

@@ -4,6 +4,7 @@ import { AiFillApple } from 'react-icons/ai';
 import { useLogin } from '@/hooks/useLogin';
 import { useRouter } from 'next/router';
 import AppleSignin from 'react-apple-signin-auth';
+import Link from 'next/link';
 
 const TextField = (props: JSX.IntrinsicElements['input']) => {
   return (
@@ -14,17 +15,17 @@ const TextField = (props: JSX.IntrinsicElements['input']) => {
   );
 };
 
-const GuideLink = ({children}: {children: string}) =>
+const GuideLink = ({children, href}: {children: string, href: string}) =>
 {
     return (
-      <a className="text-guide-link underline text-sm">
-        {children}
-      </a>
+      <Link href={href}>
+        <a className="text-sm text-guide-link underline">{children}</a>
+      </Link>
     );
 }
 const Login: NextPage = () =>
 {
-  const { email, setEmail, password, setPassword, login, token } = useLogin();
+  const { email, setEmail, password, setPassword, login, token, errorMessage } = useLogin();
   const router = useRouter();
   useEffect( () =>
   {
@@ -34,8 +35,8 @@ const Login: NextPage = () =>
      }
    }, [token])
   return (
-    <div className="mt-6 mb-12">
-      <div className="mx-auto flex w-login-container max-w-login-container flex-col items-center border border-solid border-login-container-frame bg-white py-4">
+    <div className="md:mt-6 mb-12">
+      <div className="mx-auto flex max-w-login-container flex-col items-center border border-solid border-login-container-frame bg-white py-4">
         <h1 className="my-6 text-center text-2xl">E-コンサルにログイン</h1>
         <TextField
           placeholder="メールアドレス"
@@ -52,10 +53,12 @@ const Login: NextPage = () =>
           }}
         />
         <div className="mt-2">
-          <GuideLink>新規登録はこちら</GuideLink>
+          <GuideLink href="/registration">新規登録はこちら</GuideLink>
         </div>
         <div className="mt-2">
-          <GuideLink>パスワードを忘れた場合はこちら</GuideLink>
+          <GuideLink href="/password-reset-request">
+            パスワードを忘れた場合はこちら
+          </GuideLink>
         </div>
         <div>
           <button
@@ -88,6 +91,9 @@ const Login: NextPage = () =>
           />
         </div>
       </div>
+      {errorMessage != '' && (
+        <p className="text-center font-bold text-red-500">{errorMessage}</p>
+      )}
     </div>
   );
 };
