@@ -25,7 +25,7 @@ export const AmazonGiftCodeConfirmDialog: React.FC = () => {
                    translate-x-[-50%]
                    rounded border
                    border-solid
-                   border-[#999999]
+                   border-block-gray
                    bg-white
                    p-4
                    lg:w-[33%]"
@@ -46,12 +46,12 @@ export const AmazonGiftCodeConfirmDialog: React.FC = () => {
           <input
             type="text"
             id=""
-            className="h-[48px]
-                       w-[160px]
+            className="h-12
+                       w-40
                        rounded
                        border
                        border-solid
-                       border-[#999999]
+                       border-block-gray
                        py-2
                        px-3"
             onChange={inputPinCode}
@@ -72,7 +72,7 @@ export const AmazonGiftCodeConfirmDialog: React.FC = () => {
                      px-6
                      font-bold
                      text-white
-                     drop-shadow-[0_4px_10px_rgba(92,107,192,0.3)]"
+                     drop-shadow-button"
         >
           ギフトコードを表示
         </button>
@@ -92,15 +92,15 @@ export const AmazonGiftCodeConfirmDialog: React.FC = () => {
             type="button"
             onClick={() => resendPinCode(codeConfirmState.requestId)}
             className="mx-auto
-                     mb-3
-                     block
-                     rounded-full
-                     bg-primary
-                     py-[7px]
-                     px-6
-                     font-bold
-                     text-white
-                     drop-shadow-[0_4px_10px_rgba(92,107,192,0.3)]"
+                       mb-3
+                       block
+                       rounded-full
+                       bg-primary
+                       py-[7px]
+                       px-6
+                       font-bold
+                       text-white
+                       drop-shadow-button"
           >
             確認コードの再送信
           </button>
