@@ -23,7 +23,7 @@ export const AmazonGift: React.FC = () => {
       <div className={styles.amazon_gift}>
         <div className="mb-4">
           <p
-            className="border-b border-solid border-b-[#dcdcdc] pb-1"
+            className="border-b border-solid border-b-heading-line pb-1"
             data-testid="txt-point-balance"
           >
             Mediiポイント残高
@@ -47,13 +47,13 @@ export const AmazonGift: React.FC = () => {
                            rounded
                            border
                            border-solid
-                           border-[#999999]
+                           border-btn-gray
                            bg-white py-1 px-2
                            last-of-type:mr-0
-                           hover:bg-[#dcdcdc]
+                           hover:bg-btn-hover-gray
                            disabled:cursor-default
-                           disabled:border-[#cccccc]
-                           disabled:text-[#cccccc]
+                           disabled:border-btn-light-gray
+                           disabled:text-btn-light-gray
                            disabled:hover:bg-inherit"
                 onClick={(e) => selectPrice(e, price)}
                 data-testid={`btn-select-${price}`}
@@ -75,8 +75,8 @@ export const AmazonGift: React.FC = () => {
                        px-6
                        font-bold
                        text-white
-                       drop-shadow-[0_4px_10px_rgba(92,107,192,0.3)]
-                       disabled:bg-[#999999]
+                       drop-shadow-button
+                       disabled:bg-btn-gray
                        lg:w-3/5"
             onClick={exchangeConfirm}
             data-testid="btn-exchange"
@@ -86,7 +86,7 @@ export const AmazonGift: React.FC = () => {
         </div>
 
         <div>
-          <h2 className="mb-3 border-b border-solid border-b-[#dcdcdc] pb-1">
+          <h2 className="mb-3 border-b border-solid border-b-heading-line pb-1">
             Amazonギフト一覧
           </h2>
 
@@ -110,11 +110,11 @@ export const AmazonGift: React.FC = () => {
                       <button
                         type="button"
                         className="rounded-[3px]
-                       border border-solid border-[#999999]
-                       bg-gray-100
-                       py-1 px-2
-                       text-sm
-                       leading-[1.2]"
+                                   border border-solid border-btn-gray
+                                   bg-gray-100
+                                   py-1 px-2
+                                   text-sm
+                                   leading-[1.2]"
                         onClick={() =>
                           requestPinCode(amazonGift.request_id, false)
                         }

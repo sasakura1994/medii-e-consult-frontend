@@ -33,7 +33,7 @@ export const PointHistory: React.FC = () => {
       </div>
 
       <div>
-        <h2 className="mb-3 border-b border-solid border-b-[#dcdcdc] pb-1">
+        <h2 className="mb-3 border-b border-solid border-b-heading-line pb-1">
           Medii ポイント履歴
         </h2>
 

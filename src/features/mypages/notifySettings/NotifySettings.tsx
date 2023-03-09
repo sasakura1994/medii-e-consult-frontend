@@ -122,7 +122,7 @@ export const NotifySettings: React.FC = () => {
                        px-8
                        font-bold
                        text-white
-                       drop-shadow-[0_4px_10px_rgba(92,107,192,0.3)]"
+                       drop-shadow-button"
           >
             通知設定を更新
           </button>
