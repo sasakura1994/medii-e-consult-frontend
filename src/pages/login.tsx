@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import type { NextPage } from 'next';
 import { AiFillApple } from 'react-icons/ai';
 import { useLogin } from '@/hooks/useLogin';
+import { useRouter } from 'next/router';
+import AppleSignin from 'react-apple-signin-auth';
 
 const TextField = (props: JSX.IntrinsicElements['input']) => {
   return (
@@ -48,15 +50,34 @@ const Login: NextPage = () =>
           <GuideLink>パスワードを忘れた場合はこちら</GuideLink>
         </div>
         <div>
-          <button onClick={ () => login()} className="my-4 rounded-full bg-primary py-2 px-14 text-white drop-shadow-[0_4px_10px_rgba(92,107,192,.3)]">
+          <button
+            onClick={() => login()}
+            className="my-4 rounded-full bg-primary py-2 px-14 text-white drop-shadow-[0_4px_10px_rgba(92,107,192,.3)]"
+          >
             ログイン
           </button>
         </div>
         <div>
-          <button className="mt-6 inline-flex items-center rounded-md border border-solid border-black py-2 px-10">
-            <AiFillApple className="inline" size="30" />
-            Appleでログイン
-          </button>
+          <AppleSignin
+            authOptions={{
+              clientId: 'jp.medii.e-consult',
+              scope: 'email',
+              redirectURI: `${process.env.ENDPOINT_URL}/api/apple_auth/callback`,
+              state: '',
+              nonce: 'nonce',
+              usePopup: false,
+            }}
+            onSuccess={(response) => console.log(response)}
+            render={(props) => (
+              <button
+                className="mt-6 inline-flex items-center rounded-md border border-solid border-black py-2 px-10"
+                {...props}
+              >
+                <AiFillApple className="inline" size="30" />
+                Appleでログイン
+              </button>
+            )}
+          />
         </div>
       </div>
     </div>
