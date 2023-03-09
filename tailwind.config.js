@@ -12,6 +12,11 @@ module.exports = {
         'login-container-frame': '#ddd',
         'text-field-frame': '#999',
         'guide-link': 'rgb(0, 0, 238)',
+        'btn-gray': '#999',
+        'btn-hover-gray': '#dcdcdc',
+        'btn-light-gray': '#ccc',
+        'block-gray': '#999',
+        'heading-line': '#dcdcdc',
       },
       fontSize: {
         xxs: '10px',
@@ -21,6 +26,9 @@ module.exports = {
       },
       maxWidth: {
         'login-container': '476px',
+      },
+      dropShadow: {
+        button: '0 4px 10px rgba(92,107,192,0.3)',
       },
     },
   },

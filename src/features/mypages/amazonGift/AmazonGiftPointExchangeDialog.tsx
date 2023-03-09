@@ -18,7 +18,7 @@ export const AmazonGiftPointExchangeDialog: React.FC = () => {
       <div
         className="absolute top-1/2 left-1/2 w-[90%] translate-y-[-50%] translate-x-[-50%]
                    rounded
-                   border border-solid border-[#999999]
+                   border border-solid border-block-gray
                    bg-white
                    p-4
                    lg:w-[33%]"
@@ -57,7 +57,7 @@ export const AmazonGiftPointExchangeDialog: React.FC = () => {
                          bg-primary
                          py-[7px] px-6
                          font-bold text-white
-                         drop-shadow-[0_4px_10px_rgba(92,107,192,0.3)]"
+                         drop-shadow-button"
               data-testid="btn-exec-exchange"
             >
               交換する
