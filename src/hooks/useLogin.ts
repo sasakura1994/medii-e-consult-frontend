@@ -7,6 +7,8 @@ export type UseLoginType = {
   setEmail: React.Dispatch<React.SetStateAction<string>>;
   password: string;
   setPassword: React.Dispatch<React.SetStateAction<string>>;
+  errorMessage: string;
+  setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
   login: () => void;
   isError: boolean;
   profile?: ProfileEntityType | null;
@@ -18,6 +20,7 @@ export const useLogin = (): UseLoginType =>
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [ isError, setIsError ] = React.useState( false );
+  const [ errorMessage, setErrorMessage ] = React.useState('');
   const [ profile, setProfile ] = React.useState<ProfileEntityType | null>( null );
   const [ token, setToken ] = React.useState( "" );
 
@@ -32,8 +35,16 @@ export const useLogin = (): UseLoginType =>
 
     console.log('res', res.data);
 
-    if (!res || res.data.code === -1) {
+    if (!res) {
       setIsError(true);
+      setErrorMessage('エラーが発生しました');
+      return;
+    }
+    if ( res.data.code === -1 )
+    {
+      setIsError( true );
+      console.log( res.data.message );
+      setErrorMessage(res.data.message);
       return;
     }
 
@@ -47,6 +58,8 @@ export const useLogin = (): UseLoginType =>
     setEmail,
     password,
     setPassword,
+    errorMessage,
+    setErrorMessage,
     login,
     isError,
     profile,
