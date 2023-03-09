@@ -3,9 +3,6 @@ module.exports = {
   mode: 'jit',
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    screens: {
-      'login-container': '476px',
-    },
     extend: {
       colors: {
         primary: '#5c6bc0',
