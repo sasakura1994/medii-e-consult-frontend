@@ -1,12 +1,21 @@
 import React from 'react';
 import styles from './EditProfile.module.scss';
+import { useEditProfile } from './useEditProfile';
 import { CaptionWithBody } from '@/components/Parts/CaptionWithBody';
 
 export const EditProfileDetail: React.FC = () => {
+  const { editProfileScreen, openEdit } = useEditProfile();
+
+  if (!editProfileScreen.isDetailOpen) {
+    return null;
+  }
+
   return (
-    <div className={styles.edit_profile}>
+    <>
       <div className="item mb-10 flex items-center justify-between">
-        <h2 className="text-2xl leading-8">プロフィール</h2>
+        <h2 className="text-2xl leading-8" data-testid="h-edit-profile-detail">
+          プロフィール
+        </h2>
         <button
           type="button"
           className="inline-block
@@ -19,7 +28,8 @@ export const EditProfileDetail: React.FC = () => {
                      py-2
                      text-sm
                      leading-none"
-          onClick={() => console.log('プロフィール編集')}
+          onClick={openEdit}
+          data-testid="btn-profile-edit"
         >
           プロフィールを編集
         </button>
@@ -131,6 +141,6 @@ export const EditProfileDetail: React.FC = () => {
         <h3 className="mb-4 text-primary">■ E-コンサル利用区分</h3>
         <p>回答医&相談（E−コンサルへの回答も行います）</p>
       </div>
-    </div>
+    </>
   );
 };

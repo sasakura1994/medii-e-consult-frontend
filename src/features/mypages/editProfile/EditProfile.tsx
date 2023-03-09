@@ -1,8 +1,11 @@
 import React from 'react';
+import styles from './EditProfile.module.scss';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import { useClipboard } from '@/hooks/useClipboard';
+import { EditProfileUrlPublish } from './EditProfileUrlPublish';
 import { EditProfileDetail } from './EditProfileDetail';
+import { EditProfileEdit } from './EditProfileEdit';
 
 export const EditProfile: React.FC = () => {
   const accountId = 'AC10-6226-9933-69'; // TODO: ログイン情報から取得する
@@ -11,44 +14,12 @@ export const EditProfile: React.FC = () => {
 
   return (
     <>
-      <div className="mt-4 bg-white p-2">
-        <div className="rounded bg-[#eff3f6] p-4 text-center">
-          <h2 className="mb-1 text-xl">
-            自身へのコンサルを行うことができるURLの発行ボタンです。
-          </h2>
-          <p className="mb-1 leading-7">
-            お困りの先生に発行することで、
-            <br />
-            スムーズにE-コンサルの利用が行えますので、ご利用ください。
-          </p>
-          <p className="mb-3 text-sm">
-            ※別途、E-コンサルの登録が必要となります。
-          </p>
-          <button
-            type="button"
-            className="mx-auto
-                       mb-3
-                       block
-                       rounded-full
-                       bg-[#5c6bc0]
-                       py-[7px] px-8
-                       font-bold
-                       text-white
-                       drop-shadow-[0_4px_10px_rgba(92,107,192,0.3)]"
-            data-testid="btn-exec-exchange"
-            onClick={() => clipboard('クリップボードにコピーしました')}
-          >
-            <img
-              src="/icons/clip.svg"
-              alt=""
-              className="mr-3 inline-block align-middle"
-            />
-            コンサル受付URLを発行する
-          </button>
-        </div>
-      </div>
+      <EditProfileUrlPublish clipboard={clipboard} />
 
-      <EditProfileDetail />
+      <div className={styles.edit_profile}>
+        <EditProfileDetail />
+        <EditProfileEdit />
+      </div>
 
       <div className="text-center lg:pb-20">
         <button
@@ -67,8 +38,8 @@ export const EditProfile: React.FC = () => {
         closeButton={false}
         toastClassName={() =>
           isError
-            ? 'bg-[#b20000] text-white text-center py-[8px] shadow-md'
-            : 'bg-[#3f51b5] text-white text-center py-[8px] shadow-md'
+            ? 'bg-toast-error text-white text-center py-2 shadow-md'
+            : 'bg-toast-success text-white text-center py-2 shadow-md'
         }
       />
     </>
