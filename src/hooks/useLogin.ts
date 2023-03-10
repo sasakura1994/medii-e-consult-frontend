@@ -16,16 +16,14 @@ export type UseLoginType = {
   token: string;
 };
 
-export const useLogin = (): UseLoginType =>
-{
+export const useLogin = (): UseLoginType => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [ errorMessage, setErrorMessage ] = React.useState('');
-  const [profile, setProfile] =  useRecoilState(profileState);
-  const [ token, setToken ] = React.useState( "" );
+  const [errorMessage, setErrorMessage] = React.useState('');
+  const [profile, setProfile] = useRecoilState(profileState);
+  const [token, setToken] = React.useState('');
 
-  const login = async () =>
-  {
+  const login = async () => {
     try {
       const apiClient = createApiClient();
       const url = `${process.env.ENDPOINT_URL}/api/doctor/login`;
@@ -53,7 +51,7 @@ export const useLogin = (): UseLoginType =>
       const error = e as Error;
       setErrorMessage(error.message);
     }
-  }
+  };
   return {
     email,
     setEmail,
@@ -63,6 +61,6 @@ export const useLogin = (): UseLoginType =>
     setErrorMessage,
     login,
     profile,
-    token
+    token,
   };
 };

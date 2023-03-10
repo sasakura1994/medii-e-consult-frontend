@@ -9,33 +9,30 @@ import Link from 'next/link';
 const TextField = (props: JSX.IntrinsicElements['input']) => {
   return (
     <input
-      className="border-text-field-frame h-12 rounded border border-solid w-80 p-4 mb-4"
+      className="mb-4 h-12 w-80 rounded border border-solid border-text-field-frame p-4"
       {...props}
     />
   );
 };
 
-const GuideLink = ({children, href}: {children: string, href: string}) =>
-{
-    return (
-      <Link href={href}>
-        <a className="text-sm text-guide-link underline">{children}</a>
-      </Link>
-    );
-}
-const Login: NextPage = () =>
-{
-  const { email, setEmail, password, setPassword, login, token, errorMessage } = useLogin();
-  const router = useRouter();
-  useEffect( () =>
-  {
-    if ( token !== "" )
-    {
-        router.replace( (router.query.redirect as string) ?? '/top');
-     }
-   }, [token])
+const GuideLink = ({ children, href }: { children: string; href: string }) => {
   return (
-    <div className="md:mt-6 mb-12">
+    <Link href={href}>
+      <a className="text-sm text-guide-link underline">{children}</a>
+    </Link>
+  );
+};
+const Login: NextPage = () => {
+  const { email, setEmail, password, setPassword, login, token, errorMessage } =
+    useLogin();
+  const router = useRouter();
+  useEffect(() => {
+    if (token !== '') {
+      router.replace((router.query.redirect as string) ?? '/top');
+    }
+  }, [token]);
+  return (
+    <div className="mb-12 md:mt-6">
       <div className="mx-auto flex max-w-login-container flex-col items-center border border-solid border-login-container-frame bg-white py-4">
         <h1 className="my-6 text-center text-2xl">E-コンサルにログイン</h1>
         <TextField
