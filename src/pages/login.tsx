@@ -23,7 +23,7 @@ const GuideLink = ({ children, href }: { children: string; href: string }) => {
   );
 };
 const Login: NextPage = () => {
-  const { email, setEmail, password, setPassword, login, token, errorMessage } =
+  const { setEmail, setPassword, login, token, errorMessage } =
     useLogin();
   const router = useRouter();
   useEffect(() => {
