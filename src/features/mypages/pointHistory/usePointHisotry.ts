@@ -11,11 +11,11 @@ export type UsePointHistoryType = {
   getChatRoomLink: (refId: string) => string;
 };
 
-export const usePointHistory = (): UsePointHistoryType => {
+export const usePointHistory = (token: string): UsePointHistoryType => {
   const { isLoading: fetchCurrentPointLoading, currentPoint } =
-    useFetchCurrentPoint();
+    useFetchCurrentPoint(token);
   const { isLoading: fetchPointHistoryLoading, pointHistories } =
-    useFetchPointHistory();
+    useFetchPointHistory(token);
 
   const getActionNameFromRefId = (refId: string): string => {
     if (refId.startsWith('con:')) {

@@ -1,31 +1,32 @@
 import useSWR from 'swr';
 import { createApiClient } from '@/libs/apiClient';
-import { currentPointMock } from './pointMock';
 import type { KeyedMutator } from 'swr';
 import type { CurrentPointEntityType } from './pointHistoryEntity';
 
-const dummyToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6Ixxxxxxxxxxxxxxxxxxxxxxxx';
-const dummyUrl = 'https://jsonplaceholder.typicode.com/users/2';
+const endpoint = '/api/medii_point/current_point';
 
 export type UseFetchCurrentPointType = {
   isLoading: boolean;
   error?: Error;
-  mutate: KeyedMutator<number>;
+  mutate: KeyedMutator<number | undefined>;
   currentPoint?: number;
 };
 
-export const useFetchCurrentPoint = (): UseFetchCurrentPointType => {
+export const useFetchCurrentPoint = (
+  token: string
+): UseFetchCurrentPointType => {
   const {
     isLoading,
     error,
     mutate,
     data: currentPoint,
   } = useSWR(
-    [dummyUrl, dummyToken],
+    [endpoint, token],
     async ([url, token]) => {
+      if (!token) return;
+
       const apiClient = createApiClient({ token });
-      await apiClient.get<CurrentPointEntityType>(url); // TODO: res を受け取る
-      const data = currentPointMock; // TODO: res.data に差し替え
+      const { data } = await apiClient.get<CurrentPointEntityType>(url);
       return data.point;
     },
     { revalidateOnFocus: false }

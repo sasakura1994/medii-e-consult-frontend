@@ -2,10 +2,8 @@ import React from 'react';
 import { createApiClient } from '@/libs/apiClient';
 import { useSetRecoilState } from 'recoil';
 import { amazonGiftCodeComfirmState } from './amazonGiftCodeComfirmState';
-import { amazonGiftConfirmMock } from './amazonGiftMock';
 
-const dummyToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6Ixxxxxxxxxxxxxxxxxxxxxxxx';
-const dummyPostUrl = 'https://jsonplaceholder.typicode.com/posts';
+const endpoint = '/api/amazon_gift/show_gift_code';
 
 export type UsePostAmazonGiftCodeType = {
   isSuccess: boolean;
@@ -16,7 +14,9 @@ export type UsePostAmazonGiftCodeType = {
 /**
  * ギフトコードを取得する処理
  */
-export const usePostAmazonGiftCode = (): UsePostAmazonGiftCodeType => {
+export const usePostAmazonGiftCode = (
+  token: string
+): UsePostAmazonGiftCodeType => {
   const [isSuccess, setIsSuccess] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
   const setAmazonGiftCode = useSetRecoilState(amazonGiftCodeComfirmState);
@@ -26,16 +26,15 @@ export const usePostAmazonGiftCode = (): UsePostAmazonGiftCodeType => {
     setIsError(false);
 
     const apiClient = createApiClient({
-      token: dummyToken,
+      token,
+      contentType: 'application/json',
     });
 
     try {
-      await apiClient.post(dummyPostUrl, {
+      const { data } = await apiClient.post(endpoint, {
         pin_code: pinCode,
         request_id: requestId,
-      }); // TODO: res を受け取る
-
-      const data = amazonGiftConfirmMock; // TODO: res.data に差し替え
+      });
 
       if (data.code === 1) {
         // 取得できた場合

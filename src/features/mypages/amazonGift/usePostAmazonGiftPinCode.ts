@@ -3,8 +3,7 @@ import { useSetRecoilState } from 'recoil';
 import { amazonGiftCodeComfirmState } from './amazonGiftCodeComfirmState';
 import { createApiClient } from '@/libs/apiClient';
 
-const dummyToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6Ixxxxxxxxxxxxxxxxxxxxxxxx';
-const dummyPostUrl = 'https://jsonplaceholder.typicode.com/posts';
+const endpoint = '/api/amazon_gift/request_pin_code';
 
 export type UsePostAmazonGiftPinCodeType = {
   isSuccess: boolean;
@@ -15,7 +14,9 @@ export type UsePostAmazonGiftPinCodeType = {
 /**
  * PINコードをメールに送るためのリクエスト処理
  */
-export const usePostAmazonGiftPinCode = (): UsePostAmazonGiftPinCodeType => {
+export const usePostAmazonGiftPinCode = (
+  token: string
+): UsePostAmazonGiftPinCodeType => {
   const setAmazonGiftComfirm = useSetRecoilState(amazonGiftCodeComfirmState);
 
   const [isSuccess, setIsSuccess] = React.useState(false);
@@ -26,11 +27,12 @@ export const usePostAmazonGiftPinCode = (): UsePostAmazonGiftPinCodeType => {
     setIsError(false);
 
     const apiClient = createApiClient({
-      token: dummyToken,
+      token,
+      contentType: 'application/json',
     });
 
     try {
-      await apiClient.post(dummyPostUrl, {
+      await apiClient.post(endpoint, {
         pin_code_update: pinCodeUpdate,
         request_id: requestId,
       });

@@ -2,6 +2,7 @@ import React from 'react';
 import { useRecoilState } from 'recoil';
 import { amazonGiftPointExchangeState } from './amazonGiftPointExchangeState';
 import { amazonGiftCodeComfirmState } from './amazonGiftCodeComfirmState';
+import { useToken } from '@/hooks/useToken';
 import { useFetchCurrentPoint } from '@/features/mypages/pointHistory/useFetchCurrentPoint';
 import { usePostAmazonGift } from './usePostAmazonGift';
 import { usePostAmazonGiftCode } from './usePostAmazonGiftCode';
@@ -33,10 +34,12 @@ export const useAmazonGift = (): UseAmazonGiftType => {
     amazonGiftCodeComfirmState
   );
 
-  const { currentPoint } = useFetchCurrentPoint();
-  const { requestExchange } = usePostAmazonGift();
-  const { requestGiftCode } = usePostAmazonGiftCode();
-  const { requestPinCode } = usePostAmazonGiftPinCode();
+  const token = useToken();
+
+  const { currentPoint } = useFetchCurrentPoint(token);
+  const { requestExchange } = usePostAmazonGift(token);
+  const { requestGiftCode } = usePostAmazonGiftCode(token);
+  const { requestPinCode } = usePostAmazonGiftPinCode(token);
 
   const isSelectEnabled = (price: number): boolean => {
     if (!currentPoint || currentPoint < price) {
