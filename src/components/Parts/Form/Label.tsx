@@ -1,7 +1,7 @@
 import React from 'react';
 
 type PropsType = {
-  label?: string;
+  label?: string | JSX.Element;
   required?: boolean;
   id?: string;
 };
