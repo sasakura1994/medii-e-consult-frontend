@@ -5,12 +5,13 @@ export const UserInfo: React.FC = () => {
   return (
     <div className="mb-10">
       <h3 className="mb-4 text-primary">■ 利用者情報</h3>
-      <div className="mb-4 flex gap-6">
+      <div className="mb-4 lg:flex lg:gap-6">
         <TextField
           name="last_name"
           value="蜂谷"
           disabled={true}
           id="last_name"
+          className="mb-4 lg:mb-0"
           label="姓"
         />
 
@@ -23,12 +24,13 @@ export const UserInfo: React.FC = () => {
         />
       </div>
 
-      <div className="mb-4 flex gap-6">
+      <div className="mb-4 lg:flex lg:gap-6">
         <TextField
           name="last_name_hira"
           value="はちや"
           disabled={true}
           id="last_name_hira"
+          className="mb-4 lg:mb-0"
           label="姓（かな）"
         />
 
@@ -45,13 +47,13 @@ export const UserInfo: React.FC = () => {
         <label htmlFor="birthday_year" className="mb-1 block font-bold">
           生年月日（半角）
         </label>
-        <div className="flex gap-6">
+        <div className="flex gap-3">
           <TextField
             name="birthday_year"
             value="1978"
             disabled={true}
             id="birthday_year"
-            className="!w-40"
+            className="!w-32 lg:!w-40"
             subscript="年"
           />
 
@@ -68,7 +70,7 @@ export const UserInfo: React.FC = () => {
             value="7"
             disabled={true}
             id="birthday_day"
-            subscript="月"
+            subscript="日"
           />
         </div>
       </div>
