@@ -1,22 +1,6 @@
 @import "../../styles/utilities/variable.scss";
 @import "../../styles/functions/mixin.scss";
 
-.header {
-  &__logo {
-    width: 100.28px;
-    height: 27px;
-    margin-top: -4px;
-  }
-  &_logo_link {
-    display: inline-block;
-    text-decoration: none;
-  }
-  &_logo_item {
-    width: 100%;
-    height: 100%;
-  }
-}
-
 .back_btn {
   display: block;
   background: none;
