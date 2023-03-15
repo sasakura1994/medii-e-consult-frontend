@@ -1,49 +1,20 @@
 import React from 'react';
-import Link from 'next/link';
-import styles from './HeaderMenu.module.scss';
-import { Badge } from '@/components/Parts/Badge/Badge';
+import { HeaderMenuContainer } from '../Layouts/HeaderMenuContainer';
+import { HeaderMenuList } from '../Layouts/HeaderMenuList';
+import { HeaderMenuListItem } from '../Layouts/HeaderMenuListItem';
 
 export const HeaderMenu: React.FC = () => {
   return (
-    <>
-      <nav className={styles.header_nav}>
-        {/* PC Menu */}
-        <ul className={styles.header_menu}>
-          <li className={styles.header_menu__item}>
-            <Link href="/">
-              <a className={styles.header_menu__link}>コンサル一覧</a>
-            </Link>
-          </li>
-          <li className={styles.header_menu__item}>
-            <Link href="/">
-              <a className={styles.header_menu__link}>所属グループ</a>
-            </Link>
-            <Badge
-              text="NEW"
-              styles="bg-red-400
-                      text-white
-                      text-xxs
-                      text-center
-                      leading-normal
-                      w-[33px]
-                      rounded-full
-                      absolute
-                      top-[-11px]
-                      left-[-2px]"
-            />
-          </li>
-          <li className={styles.header_menu__item}>
-            <Link href="/">
-              <a className={styles.header_menu__link}>症例バンク</a>
-            </Link>
-          </li>
-          <li className={styles.header_menu__item}>
-            <Link href="/">
-              <a className={styles.header_menu__link}>コンサル事例集</a>
-            </Link>
-          </li>
-        </ul>
-      </nav>
-    </>
+    <HeaderMenuContainer>
+      {/* PC Menu */}
+      <HeaderMenuList>
+        <HeaderMenuListItem href="/">コンサル一覧</HeaderMenuListItem>
+        <HeaderMenuListItem href="/" badgeText="NEW">
+          所属グループ
+        </HeaderMenuListItem>
+        <HeaderMenuListItem href="/">症例バンク</HeaderMenuListItem>
+        <HeaderMenuListItem href="/">コンサル事例集</HeaderMenuListItem>
+      </HeaderMenuList>
+    </HeaderMenuContainer>
   );
 };
