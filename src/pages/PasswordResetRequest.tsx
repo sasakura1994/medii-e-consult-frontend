@@ -1,13 +1,26 @@
 import React from 'react';
 import type { NextPageWithLayout } from '@/pages/_app';
 import { PublicLayout } from '@/components/Layouts/PublicLayout';
+import { Card } from '@/components/Parts/Card/Card';
 
 const PasswordResetRequestPage: NextPageWithLayout = () => {
   return (
     <>
-      <h1 className="mb-10 text-center text-2xl leading-9">
-        password reset request
-      </h1>
+      <Card
+        className="
+          p-[16px]
+        "
+      >
+        <h1 className="text-center text-[24px]">Medii パスワードリセット</h1>
+        <div className="mt-[16px] flex  justify-center">
+          <div>
+            <div className="font-bold">メールアドレス</div>
+            <div className="mt-[4px]">
+              <input />
+            </div>
+          </div>
+        </div>
+      </Card>
     </>
   );
 };
