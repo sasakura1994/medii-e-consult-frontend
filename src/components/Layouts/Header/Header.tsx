@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Header.module.scss';
-import { HeaderMenu } from '@/components/Commons/HeaderMenu';
-import { HeaderSubMenu } from '@/components/Commons/HeaderSubMenu';
+import { HeaderMenu } from '@/components/Layouts/Header/HeaderMenu';
+import { HeaderSubMenu } from '@/components/Layouts/Header/HeaderSubMenu';
 import { HeaderContainer } from './HeaderContainer';
 import { HeaderLogo } from './HeaderLogo';
 

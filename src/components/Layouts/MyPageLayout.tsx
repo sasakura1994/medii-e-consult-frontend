@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './MyPageLayout.module.scss';
-import { Header } from './Header';
+import { Header } from '@/components/Layouts/Header/Header';
 import { FooterSpMenu } from '@/components/Commons/FooterSpMenu';
 
 type PropsType = {

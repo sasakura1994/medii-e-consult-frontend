@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './MyPageLayout.module.scss';
-import { HeaderSimple } from './HeaderSimple';
+import { HeaderSimple } from './Header/HeaderSimple';
 
 type PropsType = {
   children: React.ReactNode;

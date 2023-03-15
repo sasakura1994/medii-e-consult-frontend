@@ -1,7 +1,7 @@
 import React from 'react';
-import { HeaderMenuContainer } from '../Layouts/HeaderMenuContainer';
-import { HeaderMenuList } from '../Layouts/HeaderMenuList';
-import { HeaderMenuListItem } from '../Layouts/HeaderMenuListItem';
+import { HeaderMenuContainer } from './HeaderMenuContainer';
+import { HeaderMenuList } from './HeaderMenuList';
+import { HeaderMenuListItem } from './HeaderMenuListItem';
 
 export const HeaderMenu: React.FC = () => {
   return (
