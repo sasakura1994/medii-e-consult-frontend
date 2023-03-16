@@ -34,7 +34,7 @@ export const TextArea: React.FC<PropsType> = (props) => {
 
   const textAreaClassName = React.useMemo(() => {
     let customClassName =
-      'border border-solid border-block-gray rounded h-12 p-2 disabled:bg-[#d5d5d5] disabled:text-block-gray w-full';
+      'border border-solid border-block-gray rounded h-12 px-2 py-[6px] font-[monospace] text-[15px] leading-[1.4] disabled:bg-[#d5d5d5] disabled:text-block-gray w-full';
     if (className) customClassName = `${customClassName} ${className}`;
     return customClassName;
   }, [className]);
