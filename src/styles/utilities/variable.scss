@@ -1,9 +1,10 @@
 @font-face {
-  font-family: 'Noto Sans JP';
-  src: url('../../utilities/fonts/NotoSansJP/NotoSansJP-Regular.otf') format('opentype');
+  font-family: "Noto Sans JP";
+  src: url("../../utilities/fonts/NotoSansJP/NotoSansJP-Regular.otf")
+    format("opentype");
 }
 
-$font-family: 'Noto Sans JP', 'Avenir', Helvetica, Arial, sans-serif !default;
+$font-family: "Noto Sans JP", "Avenir", Helvetica, Arial, sans-serif !default;
 
 //===========================================================
 // Colors
@@ -12,12 +13,10 @@ $font-color-base: #333333 !default;
 $bg-color-base: #eff3f6 !default;
 $primary-color: #5c6bc0 !default;
 
-
 //===========================================================
 // Sizes
 //===========================================================
 $font-size-base: 16px !default;
-
 
 //===========================================================
 // Breakpoints（Based on Tailwind CSS）
@@ -33,9 +32,8 @@ $breakpoints: (
   md: $md,
   lg: $lg,
   xl: $xl,
-  xxl: $xxl
+  xxl: $xxl,
 ) !default;
-
 
 //===========================================================
 // Z-Indexes
