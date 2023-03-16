@@ -2,6 +2,7 @@ import React from 'react';
 import type { NextPageWithLayout } from '@/pages/_app';
 import { PublicLayout } from '@/components/Layouts/PublicLayout';
 import { Card } from '@/components/Parts/Card/Card';
+import { TextField } from '@/components/Parts/Form/TextField';
 
 const PasswordResetRequestPage: NextPageWithLayout = () => {
   return (
@@ -12,7 +13,7 @@ const PasswordResetRequestPage: NextPageWithLayout = () => {
           <div>
             <div className="font-bold">メールアドレス</div>
             <div className="mt-1">
-              <input />
+              <TextField name="mail_address" />
             </div>
             <div className="my-6 text-center">
               <button type="button">送信</button>
