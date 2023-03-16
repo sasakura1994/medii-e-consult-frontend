@@ -6,17 +6,16 @@ import { Card } from '@/components/Parts/Card/Card';
 const PasswordResetRequestPage: NextPageWithLayout = () => {
   return (
     <>
-      <Card
-        className="
-          p-[16px]
-        "
-      >
+      <Card className="p-4">
         <h1 className="text-center text-[24px]">Medii パスワードリセット</h1>
-        <div className="mt-[16px] flex  justify-center">
+        <div className="mt-4 flex  justify-center">
           <div>
             <div className="font-bold">メールアドレス</div>
-            <div className="mt-[4px]">
+            <div className="mt-1">
               <input />
+            </div>
+            <div className="my-6 text-center">
+              <button type="button">送信</button>
             </div>
           </div>
         </div>
