@@ -1,0 +1,18 @@
+.select_box {
+  flex: 1;
+  position: relative;
+
+  &::after {
+    content: "";
+    display: block;
+    background-image: url("/icons/arrow_pull.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 12px;
+    width: 12px;
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+  }
+}
