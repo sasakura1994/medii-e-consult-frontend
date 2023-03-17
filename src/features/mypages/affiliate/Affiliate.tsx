@@ -14,13 +14,13 @@ export const Affiliate: React.FC = () => {
     <>
       <Card
         className="
-        mt-[40px]
+        mt-10
         mb-[49px]
-        px-[24px]
-        py-[24px]
-        lg:mb-[40px]
+        px-6
+        py-6
+        lg:mb-10
         lg:px-[84px]
-        lg:py-[40px]
+        lg:py-10
       "
       >
         <h2 className={styles.affiliate__heading}>医師紹介</h2>

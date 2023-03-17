@@ -5,5 +5,5 @@ type Props = {
 };
 
 export const HeaderMenuList: React.FC<Props> = ({ children }: Props) => {
-  return <ul className="ml-[40px] flex">{children}</ul>;
+  return <ul className="ml-10 flex">{children}</ul>;
 };

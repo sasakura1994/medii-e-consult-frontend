@@ -8,7 +8,7 @@ const PasswordResetRequestPage: NextPageWithLayout = () => {
   return (
     <>
       <Card className="p-4">
-        <h1 className="text-center text-[24px]">Medii パスワードリセット</h1>
+        <h1 className="text-center text-2xl">Medii パスワードリセット</h1>
         <div className="mt-4 flex  justify-center">
           <div>
             <div className="font-bold">メールアドレス</div>

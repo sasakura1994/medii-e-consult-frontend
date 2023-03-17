@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export const HeaderLogo: React.FC = () => {
   return (
-    <div className="mt-[-4px] h-[27px] w-[100.28px]">
+    <div className="-mt-1 h-[27px] w-[100.28px]">
       <Link href="/">
         <a className="inline-block no-underline">
           <img

@@ -33,7 +33,7 @@ export const HeaderMenuListItem: React.FC<Props> = ({
                       rounded-full
                       absolute
                       top-[-11px]
-                      left-[-2px]"
+                      -left-0.5"
         />
       )}
     </li>

@@ -9,7 +9,7 @@ export const Card: React.FC<Props> = ({ children, className }: Props) => {
   return (
     <div
       className={`
-        rounded-[4px]
+        rounded
         border
         border-[#d5d5d5]
         bg-[#ffffff]
