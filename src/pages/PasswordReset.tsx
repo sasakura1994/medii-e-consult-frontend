@@ -49,7 +49,9 @@ const PasswordResetPage: NextPageWithLayout = () => {
           </div>
         </div>
         {!isTokenExists && (
-          <ErrorMessage>トークンが指定されていません</ErrorMessage>
+          <ErrorMessage className="text-center">
+            トークンが指定されていません
+          </ErrorMessage>
         )}
       </Card>
     </>
