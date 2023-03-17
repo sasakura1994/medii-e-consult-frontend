@@ -4,6 +4,7 @@ import { PublicLayout } from '@/components/Layouts/PublicLayout';
 import { Card } from '@/components/Parts/Card/Card';
 import { TextField } from '@/components/Parts/Form/TextField';
 import { usePasswordReset } from '@/features/password/usePasswordReset';
+import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
 
 const PasswordResetPage: NextPageWithLayout = () => {
   const {
@@ -49,9 +50,7 @@ const PasswordResetPage: NextPageWithLayout = () => {
           </div>
         </div>
         {!isTokenExists && (
-          <div className="text-center font-bold text-[#f27474]">
-            トークンが指定されていません
-          </div>
+          <ErrorMessage>トークンが指定されていません</ErrorMessage>
         )}
       </Card>
     </>
