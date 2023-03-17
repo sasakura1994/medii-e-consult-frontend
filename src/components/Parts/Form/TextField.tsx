@@ -12,6 +12,7 @@ export type PropsType = {
   label?: string | JSX.Element;
   required?: boolean;
   subscript?: string;
+  type?: React.HTMLInputTypeAttribute;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
 };
@@ -28,6 +29,7 @@ export const TextField: React.FC<PropsType> = (props) => {
     label,
     required,
     subscript,
+    type = 'text',
     onChange,
     onBlur,
   } = props;
@@ -45,7 +47,7 @@ export const TextField: React.FC<PropsType> = (props) => {
 
       <div className="flex items-end">
         <input
-          type="text"
+          type={type}
           name={name}
           value={value}
           placeholder={placeholder}
