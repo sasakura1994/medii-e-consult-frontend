@@ -53,7 +53,7 @@ const PasswordResetRequestPage: NextPageWithLayout = () => {
             </form>
           </>
         ) : (
-          <div className="text-center">
+          <div className="text-center" data-testid="result-text">
             {mailAddress}にパスワードリセット用のメールをお送りしました。
             <br />
             メール本文内のリンクからパスワードのリセットをお願いいたします。
