@@ -9,6 +9,7 @@ import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
 const PasswordResetPage: NextPageWithLayout = () => {
   const {
     firstPassword,
+    isPasswordNotMatched,
     isTokenExists,
     secondPassword,
     setFirstPassword,
@@ -39,11 +40,9 @@ const PasswordResetPage: NextPageWithLayout = () => {
                 onChange={(e) => setSecondPassword(e.target.value)}
               />
             </div>
-            {firstPassword !== '' &&
-              secondPassword !== '' &&
-              firstPassword !== secondPassword && (
-                <div className="text-center">パスワードが一致していません</div>
-              )}
+            {isPasswordNotMatched && (
+              <div className="text-center">パスワードが一致していません</div>
+            )}
             <div className="my-6 text-center">
               <button type="button">パスワード設定</button>
             </div>
