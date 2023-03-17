@@ -1,0 +1,31 @@
+@import "../../../styles/utilities/variable.scss";
+
+.checkbox {
+  input[type="checkbox"] {
+    display: none;
+
+    & + .checkbox-icon {
+      position: relative;
+      vertical-align: middle;
+    }
+
+    & + .checkbox-icon:before {
+      content: '\f372';
+      font-family: 'Ionicons';
+      color: #ccc;
+      font-size: 22px;
+      margin-right: 4px;
+      margin-left: 6px;
+    }
+
+    &:checked + .checkbox-icon:before {
+      content: '\f374';
+      color: $primary-color;
+    }
+
+    & label {
+      caret-color: transparent;
+      white-space: nowrap;
+    }
+  }
+}
