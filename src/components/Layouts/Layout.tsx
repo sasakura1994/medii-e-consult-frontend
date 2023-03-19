@@ -1,6 +1,6 @@
 import React from 'react';
-import { Header } from './Header';
-import { HeaderSimple } from './HeaderSimple';
+import { Header } from '@/components/Layouts/Header/Header';
+import { HeaderSimple } from '@/components/Layouts/Header/HeaderSimple';
 import { FooterSpMenu } from '@/components/Commons/FooterSpMenu';
 
 type HeaderFigureType = 'default' | 'simple';

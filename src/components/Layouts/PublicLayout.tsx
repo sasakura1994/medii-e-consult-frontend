@@ -1,22 +1,20 @@
 import React from 'react';
 import styles from './MyPageLayout.module.scss';
-import { Header } from '@/components/Layouts/Header/Header';
-import { FooterSpMenu } from '@/components/Commons/FooterSpMenu';
+import { HeaderSimple } from './Header/HeaderSimple';
 
 type PropsType = {
   children: React.ReactNode;
 };
 
-export const MyPageLayout = (props: PropsType) => {
+export const PublicLayout = (props: PropsType) => {
   const { children } = props;
 
   return (
     <>
-      <Header />
+      <HeaderSimple />
       <div className={styles.mypage_layout}>
         <main className={styles.mypage_container}>{children}</main>
       </div>
-      <FooterSpMenu />
     </>
   );
 };
