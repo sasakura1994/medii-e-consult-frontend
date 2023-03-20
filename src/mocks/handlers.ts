@@ -9,6 +9,7 @@ import {
   postAmazonGiftsMock,
 } from '@/features/mypages/amazonGift/amazonGiftMock';
 import { getQrCodeMock } from '@/features/mypages/affiliate/affiliateMock';
+import { registerMock } from '@/features/register/registerMock';
 
 // TODO: エンドポイントを正規のURLに変更する
 export const handlers = [
@@ -23,4 +24,5 @@ export const handlers = [
   ),
   rest.get('https://jsonplaceholder.typicode.com/users/4', getAmazonGiftsMock),
   rest.post('https://jsonplaceholder.typicode.com/posts', postAmazonGiftsMock),
+  rest.post('https://jsonplaceholder.typicode.com/users', registerMock),
 ];
