@@ -1,0 +1,44 @@
+@import "../../../styles/utilities/variable.scss";
+
+.radio {
+  input[type="radio"] {
+    display: none;
+
+    & + label {
+      padding-left: 18px;
+      position: relative;
+    }
+
+    // ラジオボタン枠
+    & + label::before {
+      content: "";
+      display: block;
+      width: 14px;
+      height: 14px;
+      border: 1.5px solid #cccccc;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+    }
+
+    &:checked + label::before {
+      border: 1.5px solid $primary-color;
+    }
+
+    // ラジオボタンチェック（中身の丸）
+    &:checked + label::after {
+      content: "";
+      display: block;
+      background-color: $primary-color;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 3.5px;
+      transform: translateY(-50%);
+    }
+  }
+}

@@ -11,18 +11,13 @@ import {
 import { getQrCodeMock } from '@/features/mypages/affiliate/affiliateMock';
 import { registerMock } from '@/features/register/registerMock';
 
-// TODO: エンドポイントを正規のURLに変更する
 export const handlers = [
   rest.get('https://chart.googleapis.com/chart', getQrCodeMock),
-  rest.get('https://jsonplaceholder.typicode.com/users', getProfileMock),
-  rest.get('https://jsonplaceholder.typicode.com/posts/1', getProfileMock),
-  rest.put('https://jsonplaceholder.typicode.com/posts/1', updateProfileMock),
-  rest.get('https://jsonplaceholder.typicode.com/users/2', getCurrentPointMock),
-  rest.get(
-    'https://jsonplaceholder.typicode.com/users/3',
-    getPointHistoriesMock
-  ),
-  rest.get('https://jsonplaceholder.typicode.com/users/4', getAmazonGiftsMock),
-  rest.post('https://jsonplaceholder.typicode.com/posts', postAmazonGiftsMock),
-  rest.post('https://jsonplaceholder.typicode.com/users', registerMock),
+  rest.get('/api/doctor/profile', getProfileMock),
+  rest.post('/api/doctor/update_profile', updateProfileMock),
+  rest.get('/api/medii_point/current_point', getCurrentPointMock),
+  rest.get('/api/medii_point/point_history', getPointHistoriesMock),
+  rest.get('/api/amazon_gift/amazon_gift_list', getAmazonGiftsMock),
+  rest.post('/api/amazon_gift/purchase_amazon_gift', postAmazonGiftsMock),
+  rest.post('/api/doctor/create_account', registerMock),
 ];

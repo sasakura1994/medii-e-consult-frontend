@@ -3,6 +3,7 @@ import styles from './Affiliate.module.scss';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import { useAffiliate } from './useAffiliate';
+import { Card } from '@/components/Parts/Card/Card';
 
 export const Affiliate: React.FC = () => {
   const accountId = 'AC10-6226-9933-69'; // TODO: ログイン情報から取得する
@@ -11,7 +12,17 @@ export const Affiliate: React.FC = () => {
 
   return (
     <>
-      <div className={styles.affiliate}>
+      <Card
+        className="
+        mt-10
+        mb-[49px]
+        px-6
+        py-6
+        lg:mb-10
+        lg:px-[84px]
+        lg:py-10
+      "
+      >
         <h2 className={styles.affiliate__heading}>医師紹介</h2>
 
         <div className="mb-8 lg:mb-1">
@@ -58,7 +69,7 @@ export const Affiliate: React.FC = () => {
             </a>
           </div>
         </div>
-      </div>
+      </Card>
 
       <ToastContainer
         hideProgressBar={true}

@@ -2,6 +2,7 @@ import React from 'react';
 import { toast } from 'react-toastify';
 import { profileState } from '@/globalStates/profileState';
 import { useRecoilState } from 'recoil';
+import { useToken } from '@/hooks/useToken';
 import { useFetchProfile } from '@/hooks/useFetchProfile';
 import { useUpdateProfile } from '@/hooks/useUpdateProfile';
 import type { ProfileEntityType } from '@/types/entities/profileEntity';
@@ -16,8 +17,10 @@ export type UseNotifySettingsType = {
 
 export const useNotifySettings = (): UseNotifySettingsType => {
   const [profile, setProfile] = useRecoilState(profileState);
-  const { isLoading, profile: profileData } = useFetchProfile();
-  const { isSuccess, isError, updateProfile } = useUpdateProfile();
+  const token = useToken();
+
+  const { isLoading, profile: profileData } = useFetchProfile(token);
+  const { isSuccess, isError, updateProfile } = useUpdateProfile(token);
 
   /**
    * 更新失敗

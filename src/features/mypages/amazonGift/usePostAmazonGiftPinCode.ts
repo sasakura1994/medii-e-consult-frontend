@@ -1,10 +1,9 @@
 import React from 'react';
+import { useAxios } from '@/hooks/useAxios';
 import { useSetRecoilState } from 'recoil';
 import { amazonGiftCodeComfirmState } from './amazonGiftCodeComfirmState';
-import { createApiClient } from '@/libs/apiClient';
 
-const dummyToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6Ixxxxxxxxxxxxxxxxxxxxxxxx';
-const dummyPostUrl = 'https://jsonplaceholder.typicode.com/posts';
+const endpoint = '/api/amazon_gift/request_pin_code';
 
 export type UsePostAmazonGiftPinCodeType = {
   isSuccess: boolean;
@@ -17,7 +16,7 @@ export type UsePostAmazonGiftPinCodeType = {
  */
 export const usePostAmazonGiftPinCode = (): UsePostAmazonGiftPinCodeType => {
   const setAmazonGiftComfirm = useSetRecoilState(amazonGiftCodeComfirmState);
-
+  const { axios } = useAxios();
   const [isSuccess, setIsSuccess] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
 
@@ -25,12 +24,8 @@ export const usePostAmazonGiftPinCode = (): UsePostAmazonGiftPinCodeType => {
     setIsSuccess(false);
     setIsError(false);
 
-    const apiClient = createApiClient({
-      token: dummyToken,
-    });
-
     try {
-      await apiClient.post(dummyPostUrl, {
+      await axios.post(endpoint, {
         pin_code_update: pinCodeUpdate,
         request_id: requestId,
       });
