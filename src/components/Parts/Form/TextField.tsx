@@ -7,6 +7,7 @@ export type PropsType = {
   placeholder?: string;
   disabled?: boolean;
   id?: string;
+  ariaLabel?: string;
   className?: string;
   style?: React.CSSProperties;
   label?: string | JSX.Element;
@@ -24,6 +25,7 @@ export const TextField: React.FC<PropsType> = (props) => {
     placeholder,
     disabled,
     id,
+    ariaLabel,
     className,
     style,
     label,
@@ -53,6 +55,7 @@ export const TextField: React.FC<PropsType> = (props) => {
           placeholder={placeholder}
           disabled={disabled}
           id={id}
+          aria-label={ariaLabel}
           className={textFielClassName}
           style={style}
           onChange={onChange}

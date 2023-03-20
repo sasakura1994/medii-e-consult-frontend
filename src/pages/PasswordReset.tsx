@@ -3,7 +3,7 @@ import type { NextPageWithLayout } from '@/pages/_app';
 import { PublicLayout } from '@/components/Layouts/PublicLayout';
 import { Card } from '@/components/Parts/Card/Card';
 import { TextField } from '@/components/Parts/Form/TextField';
-import { usePasswordReset } from '@/features/password/usePasswordReset';
+import { usePasswordReset } from '@/features/password/passwordReset/usePasswordReset';
 import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 import Link from 'next/link';
@@ -35,6 +35,7 @@ const PasswordResetPage: NextPageWithLayout = () => {
                     <TextField
                       type="password"
                       name="first_password"
+                      ariaLabel="first_password"
                       value={firstPassword}
                       onChange={(e) => setFirstPassword(e.target.value)}
                     />
@@ -44,6 +45,7 @@ const PasswordResetPage: NextPageWithLayout = () => {
                     <TextField
                       type="password"
                       name="second_password"
+                      ariaLabel="second_password"
                       value={secondPassword}
                       onChange={(e) => setSecondPassword(e.target.value)}
                     />
@@ -72,7 +74,7 @@ const PasswordResetPage: NextPageWithLayout = () => {
             )}
           </>
         ) : (
-          <div className="text-center">
+          <div className="text-center" data-testid="result-text">
             パスワードリセットが完了しました。
             <br />
             <Link href="/login" data-label="backToLoginLink">
