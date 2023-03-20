@@ -2,7 +2,6 @@ import React from 'react';
 import { useRecoilState } from 'recoil';
 import { amazonGiftPointExchangeState } from './amazonGiftPointExchangeState';
 import { amazonGiftCodeComfirmState } from './amazonGiftCodeComfirmState';
-import { useToken } from '@/hooks/useToken';
 import { useFetchCurrentPoint } from '@/features/mypages/pointHistory/useFetchCurrentPoint';
 import { usePostAmazonGift } from './usePostAmazonGift';
 import { usePostAmazonGiftCode } from './usePostAmazonGiftCode';
