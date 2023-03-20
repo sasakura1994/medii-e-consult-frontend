@@ -5,12 +5,17 @@ import { Card } from '@/components/Parts/Card/Card';
 import { TextField } from '@/components/Parts/Form/TextField';
 import { usePasswordReset } from '@/features/password/usePasswordReset';
 import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
+import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
+import Link from 'next/link';
 
 const PasswordResetPage: NextPageWithLayout = () => {
   const {
     firstPassword,
+    isCompleted,
     isPasswordNotMatched,
+    isSending,
     isTokenExists,
+    onSubmit,
     secondPassword,
     setFirstPassword,
     setSecondPassword,
@@ -19,39 +24,61 @@ const PasswordResetPage: NextPageWithLayout = () => {
   return (
     <>
       <Card className="p-4">
-        <h1 className="text-center text-2xl">Medii パスワードリセット</h1>
-        <div className="mt-4 flex  justify-center">
-          <div>
-            <div className="font-bold">パスワード</div>
-            <div className="mt-1">
-              <TextField
-                type="password"
-                name="first_password"
-                value={firstPassword}
-                onChange={(e) => setFirstPassword(e.target.value)}
-              />
-            </div>
-            <div className="mt-4 font-bold">パスワード(確認)</div>
-            <div className="mt-1">
-              <TextField
-                type="password"
-                name="second_password"
-                value={secondPassword}
-                onChange={(e) => setSecondPassword(e.target.value)}
-              />
-            </div>
-            {isPasswordNotMatched && (
-              <div className="text-center">パスワードが一致していません</div>
+        {!isCompleted ? (
+          <>
+            <h1 className="text-center text-2xl">Medii パスワードリセット</h1>
+            <form onSubmit={onSubmit}>
+              <div className="mt-4 flex  justify-center">
+                <div>
+                  <div className="font-bold">パスワード</div>
+                  <div className="mt-1">
+                    <TextField
+                      type="password"
+                      name="first_password"
+                      value={firstPassword}
+                      onChange={(e) => setFirstPassword(e.target.value)}
+                    />
+                  </div>
+                  <div className="mt-4 font-bold">パスワード(確認)</div>
+                  <div className="mt-1">
+                    <TextField
+                      type="password"
+                      name="second_password"
+                      value={secondPassword}
+                      onChange={(e) => setSecondPassword(e.target.value)}
+                    />
+                  </div>
+                  {isPasswordNotMatched && (
+                    <div className="text-center">
+                      パスワードが一致していません
+                    </div>
+                  )}
+                  <div className="my-6 text-center">
+                    {!isSending ? (
+                      <button type="submit">パスワード設定</button>
+                    ) : (
+                      <div className="mt-4 text-center">
+                        <SpinnerBorder />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </form>
+            {!isTokenExists && (
+              <ErrorMessage className="text-center">
+                トークンが指定されていません
+              </ErrorMessage>
             )}
-            <div className="my-6 text-center">
-              <button type="button">パスワード設定</button>
-            </div>
+          </>
+        ) : (
+          <div className="text-center">
+            パスワードリセットが完了しました。
+            <br />
+            <Link href="/login" data-label="backToLoginLink">
+              ログインはこちらから
+            </Link>
           </div>
-        </div>
-        {!isTokenExists && (
-          <ErrorMessage className="text-center">
-            トークンが指定されていません
-          </ErrorMessage>
         )}
       </Card>
     </>
