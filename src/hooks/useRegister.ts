@@ -9,34 +9,30 @@ export type UseLoginType = {
   errorMessage: string;
   setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
   setIsPrivacyPolicyAgree: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsTermsAgree:  React.Dispatch<React.SetStateAction<boolean>>;
+  setIsTermsAgree: React.Dispatch<React.SetStateAction<boolean>>;
   register: () => void;
   isSent: boolean;
 };
 
 export const useRegister = (): UseLoginType => {
   const [email, setEmail] = React.useState('');
-  const [ errorMessage, setErrorMessage ] = React.useState( '' );
-  const [isPrivacyPolicyAgree, setIsPrivacyPolicyAgree] =
-    React.useState(false );
-  const [isTermsAgree, setIsTermsAgree] =
-    React.useState( false );
+  const [errorMessage, setErrorMessage] = React.useState('');
+  const [isPrivacyPolicyAgree, setIsPrivacyPolicyAgree] = React.useState(false);
+  const [isTermsAgree, setIsTermsAgree] = React.useState(false);
   const [isSent, setIsSent] = React.useState(false);
 
-  const register = async () =>
-  {
-    if (email === "") {
-      setErrorMessage( 'メールアドレスを入力してください' );
-      return
+  const register = async () => {
+    if (email === '') {
+      setErrorMessage('メールアドレスを入力してください');
+      return;
     }
-    if ( !isPrivacyPolicyAgree )
-    {
-      setErrorMessage( '個人情報の取扱いについて確認してください' );
-      return
+    if (!isPrivacyPolicyAgree) {
+      setErrorMessage('個人情報の取扱いについて確認してください');
+      return;
     }
     if (!isTermsAgree) {
-      setErrorMessage( '利用規約を確認してください' );
-      return
+      setErrorMessage('利用規約を確認してください');
+      return;
     }
     try {
       const apiClient = createApiClient();
@@ -52,7 +48,7 @@ export const useRegister = (): UseLoginType => {
       if (res.data.code === -1) {
         throw new Error(res.data.message);
       }
-      setIsSent( true );
+      setIsSent(true);
     } catch (e: unknown) {
       const error = e as Error;
       setErrorMessage(error.message);

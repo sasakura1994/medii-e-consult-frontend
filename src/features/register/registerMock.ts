@@ -12,4 +12,4 @@ export const registerMock: ResponseResolver<
   DefaultBodyType
 > = (req, res, ctx) => {
   return res(ctx.status(200));
-  };
+};
