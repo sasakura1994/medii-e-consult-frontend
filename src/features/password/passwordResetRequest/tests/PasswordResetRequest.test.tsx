@@ -9,7 +9,7 @@ import { AxiosInstance } from 'axios';
 
 jest.mock('@/libs/apiClient');
 
-describe('EditProfile', () => {
+describe('PasswordResetRequest', () => {
   test('結果を表示する', async () => {
     const apiClientMock = apiClient as jest.Mocked<typeof apiClient>;
     apiClientMock.createApiClient.mockReturnValue({

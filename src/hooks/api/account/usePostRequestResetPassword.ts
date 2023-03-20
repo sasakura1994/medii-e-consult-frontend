@@ -1,4 +1,6 @@
+import { useAxios } from '@/hooks/useAxios';
 import { createApiClient } from '@/libs/apiClient';
+import React from 'react';
 
 type PostRequestResetPasswordRequestData = {
   mail_address: string;
@@ -13,16 +15,21 @@ export type PostRequestResetPasswordResponseData = {
  * パスワードリセット要求
  */
 export const usePostRequestResetPassword = () => {
-  const requestResetPassword = async (mailAddress: string) => {
-    const data: PostRequestResetPasswordRequestData = {
-      mail_address: mailAddress,
-    };
+  const { axios } = useAxios();
 
-    return createApiClient().post<PostRequestResetPasswordResponseData>(
-      '/api/doctor/request_reset_password',
-      data
-    );
-  };
+  const requestResetPassword = React.useCallback(
+    async (mailAddress: string) => {
+      const data: PostRequestResetPasswordRequestData = {
+        mail_address: mailAddress,
+      };
+
+      return axios.post<PostRequestResetPasswordResponseData>(
+        '/api/doctor/request_reset_password',
+        data
+      );
+    },
+    [axios]
+  );
 
   return {
     requestResetPassword,
