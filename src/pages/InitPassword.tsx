@@ -3,15 +3,19 @@ import type { NextPageWithLayout } from '@/pages/_app';
 import { PublicLayout } from '@/components/Layouts/PublicLayout';
 import { Card } from '@/components/Parts/Card/Card';
 import { TextField } from '@/components/Parts/Form/TextField';
-import { useInitPassword } from '@/features/password/useInitPassword';
+import { useInitPassword } from '@/features/password/initPassword/useInitPassword';
 import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
 import { Checkbox } from '@/components/Parts/Form/Checkbox';
 import Link from 'next/link';
+import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 
 const PasswordResetPage: NextPageWithLayout = () => {
   const {
+    errorMessage,
     firstPassword,
+    isEmailDuplicated,
     isPasswordNotMatched,
+    isSending,
     isTokenExists,
     secondPassword,
     setFirstPassword,
@@ -31,6 +35,7 @@ const PasswordResetPage: NextPageWithLayout = () => {
                 name="first_password"
                 value={firstPassword}
                 onChange={(e) => setFirstPassword(e.target.value)}
+                required
               />
             </div>
             <div className="mt-4 font-bold">パスワード(確認)</div>
@@ -40,6 +45,7 @@ const PasswordResetPage: NextPageWithLayout = () => {
                 name="second_password"
                 value={secondPassword}
                 onChange={(e) => setSecondPassword(e.target.value)}
+                required
               />
             </div>
             {isPasswordNotMatched && (
@@ -108,11 +114,39 @@ const PasswordResetPage: NextPageWithLayout = () => {
           </div>
         </div>
         <div className="my-6 text-center">
-          <button type="button">送信</button>
+          {!isSending ? (
+            <button type="button">送信</button>
+          ) : (
+            <div className="mt-4 text-center">
+              <SpinnerBorder />
+            </div>
+          )}
         </div>
         {!isTokenExists && (
           <ErrorMessage className="text-center">
             トークンが指定されていません
+          </ErrorMessage>
+        )}
+        {errorMessage !== '' && (
+          <ErrorMessage className="text-center">{errorMessage}</ErrorMessage>
+        )}
+        {isEmailDuplicated && (
+          <ErrorMessage className="mt-4 text-center">
+            <Link href="/Login">
+              <a
+                className="text-inherit underline"
+                style={{ color: '-webkit-link' }}
+              >
+                ログイン画面
+              </a>
+            </Link>{' '}
+            よりログインし直すか{' '}
+            <Link href="/PasswordResetRequest">
+              <a className="underline" style={{ color: '-webkit-link' }}>
+                パスワードの再設定
+              </a>
+            </Link>{' '}
+            をお願いします。
           </ErrorMessage>
         )}
       </Card>
