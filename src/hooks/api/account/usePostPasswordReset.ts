@@ -1,4 +1,4 @@
-import { createApiClient } from '@/libs/apiClient';
+import { useAxios } from '@/hooks/useAxios';
 import React from 'react';
 
 export type ResetPasswordArgs = {
@@ -13,12 +13,17 @@ export type PostResetPasswordResponseData = {
 };
 
 export const usePostResetPassword = () => {
-  const resetPassword = React.useCallback((data: ResetPasswordArgs) => {
-    return createApiClient().post<PostResetPasswordResponseData>(
-      '/api/doctor/reset_password',
-      data
-    );
-  }, []);
+  const { axios } = useAxios();
+
+  const resetPassword = React.useCallback(
+    (data: ResetPasswordArgs) => {
+      return axios.post<PostResetPasswordResponseData>(
+        '/api/doctor/reset_password',
+        data
+      );
+    },
+    [axios]
+  );
 
   return { resetPassword };
 };
