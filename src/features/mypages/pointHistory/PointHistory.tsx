@@ -2,11 +2,9 @@ import React from 'react';
 import Link from 'next/link';
 import styles from './PointHistory.module.scss';
 import { dateFormat } from '@/libs/date';
-import { useToken } from '@/hooks/useToken';
 import { usePointHistory } from './usePointHisotry';
 
 export const PointHistory: React.FC = () => {
-  const token = useToken();
   const {
     fetchCurrentPointLoading,
     fetchPointHistoryLoading,
@@ -14,7 +12,7 @@ export const PointHistory: React.FC = () => {
     pointHistories,
     getActionNameFromRefId,
     getChatRoomLink,
-  } = usePointHistory(token);
+  } = usePointHistory();
 
   if (fetchCurrentPointLoading && !currentPoint) {
     return null;
