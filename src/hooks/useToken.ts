@@ -1,6 +1,7 @@
 import React from 'react';
+import { getAuthToken } from '@/libs/localStrage';
 
-export const useToken = (key: string): string => {
+export const useToken = (): string => {
   const [token, setToken] = React.useState('');
 
   React.useEffect(() => {
@@ -8,7 +9,7 @@ export const useToken = (key: string): string => {
       return;
     }
 
-    const storageToken = localStorage.getItem('token');
+    const storageToken = getAuthToken();
     setToken(storageToken || '');
   }, [token, typeof window]);
 
