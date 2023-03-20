@@ -1,16 +1,14 @@
-import { createApiClient } from '@/libs/apiClient';
-import { useToken } from './useToken';
+import { useAxios } from './useAxios';
 
 export type UseFetcherType = {
   fetcher: (url: string) => unknown;
 };
 
 export const useFetcher = (): UseFetcherType => {
-  const token = useToken('token');
-  const apiClient = createApiClient({ token });
+  const { axios } = useAxios();
 
   const fetcher = async (url: string) => {
-    const { data } = await apiClient.get(url);
+    const { data } = await axios.get(url);
     return data;
   };
 
