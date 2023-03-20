@@ -3,8 +3,12 @@ import Link from 'next/link';
 import styles from './Header.module.scss';
 import { HeaderMenu } from '@/components/Commons/HeaderMenu';
 import { HeaderSubMenu } from '@/components/Commons/HeaderSubMenu';
+import { useRouter } from 'next/router';
+import { RegistrationHeaderMenu } from '../Commons/RegistrationHeaderMenu';
 
-export const Header: React.FC = () => {
+export const Header: React.FC = () =>
+{
+  const router = useRouter();
   return (
     <header className={styles.header}>
       <div className={styles.header__inner}>
@@ -23,8 +27,8 @@ export const Header: React.FC = () => {
           </Link>
         </div>
 
-        <HeaderMenu />
-        <HeaderSubMenu />
+        { router.pathname === "/registration" ? <RegistrationHeaderMenu /> : <HeaderMenu /> }
+        { router.pathname === "/registration" ? null : <HeaderSubMenu /> }
       </div>
     </header>
   );
