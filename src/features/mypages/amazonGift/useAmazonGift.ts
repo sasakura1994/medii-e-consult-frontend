@@ -34,12 +34,10 @@ export const useAmazonGift = (): UseAmazonGiftType => {
     amazonGiftCodeComfirmState
   );
 
-  const token = useToken();
-
-  const { currentPoint } = useFetchCurrentPoint(token);
-  const { requestExchange } = usePostAmazonGift(token);
-  const { requestGiftCode } = usePostAmazonGiftCode(token);
-  const { requestPinCode } = usePostAmazonGiftPinCode(token);
+  const { currentPoint } = useFetchCurrentPoint();
+  const { requestExchange } = usePostAmazonGift();
+  const { requestGiftCode } = usePostAmazonGiftCode();
+  const { requestPinCode } = usePostAmazonGiftPinCode();
 
   const isSelectEnabled = (price: number): boolean => {
     if (!currentPoint || currentPoint < price) {

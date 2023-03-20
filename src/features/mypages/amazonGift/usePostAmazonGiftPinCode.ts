@@ -1,7 +1,7 @@
 import React from 'react';
+import { useAxios } from '@/hooks/useAxios';
 import { useSetRecoilState } from 'recoil';
 import { amazonGiftCodeComfirmState } from './amazonGiftCodeComfirmState';
-import { createApiClient } from '@/libs/apiClient';
 
 const endpoint = '/api/amazon_gift/request_pin_code';
 
@@ -14,11 +14,9 @@ export type UsePostAmazonGiftPinCodeType = {
 /**
  * PINコードをメールに送るためのリクエスト処理
  */
-export const usePostAmazonGiftPinCode = (
-  token: string
-): UsePostAmazonGiftPinCodeType => {
+export const usePostAmazonGiftPinCode = (): UsePostAmazonGiftPinCodeType => {
   const setAmazonGiftComfirm = useSetRecoilState(amazonGiftCodeComfirmState);
-
+  const { axios } = useAxios();
   const [isSuccess, setIsSuccess] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
 
@@ -26,13 +24,8 @@ export const usePostAmazonGiftPinCode = (
     setIsSuccess(false);
     setIsError(false);
 
-    const apiClient = createApiClient({
-      token,
-      contentType: 'application/json',
-    });
-
     try {
-      await apiClient.post(endpoint, {
+      await axios.post(endpoint, {
         pin_code_update: pinCodeUpdate,
         request_id: requestId,
       });

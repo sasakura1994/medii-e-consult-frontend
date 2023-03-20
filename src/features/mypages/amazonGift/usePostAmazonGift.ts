@@ -1,7 +1,7 @@
 import React from 'react';
+import { useAxios } from '@/hooks/useAxios';
 import { useSetRecoilState } from 'recoil';
 import { amazonGiftPointExchangeState } from './amazonGiftPointExchangeState';
-import { createApiClient } from '@/libs/apiClient';
 
 const endpoint = '/api/amazon_gift/purchase_amazon_gift';
 
@@ -14,7 +14,8 @@ export type UsePostAmazonGiftType = {
 /**
  * Amazonギフトコードへの変更処理
  */
-export const usePostAmazonGift = (token: string): UsePostAmazonGiftType => {
+export const usePostAmazonGift = (): UsePostAmazonGiftType => {
+  const { axios } = useAxios();
   const setAmazonGiftExchangeState = useSetRecoilState(
     amazonGiftPointExchangeState
   );
@@ -25,13 +26,8 @@ export const usePostAmazonGift = (token: string): UsePostAmazonGiftType => {
     setIsSuccess(false);
     setIsError(false);
 
-    const apiClient = createApiClient({
-      token,
-      contentType: 'application/json',
-    });
-
     try {
-      await apiClient.post(endpoint, {
+      await axios.post(endpoint, {
         size: price,
       });
 

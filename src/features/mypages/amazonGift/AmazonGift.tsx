@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './AmazonGift.module.scss';
-import { useToken } from '@/hooks/useToken';
 import { useAmazonGift } from './useAmazonGift';
 import { useFetchAmazonGift } from './useFetchAmazonGift';
 import { usePostAmazonGiftPinCode } from './usePostAmazonGiftPinCode';
@@ -16,9 +15,8 @@ export const AmazonGift: React.FC = () => {
     selectPrice,
     exchangeConfirm,
   } = useAmazonGift();
-  const token = useToken();
-  const { amazonGifts } = useFetchAmazonGift(token);
-  const { requestPinCode } = usePostAmazonGiftPinCode(token);
+  const { amazonGifts } = useFetchAmazonGift();
+  const { requestPinCode } = usePostAmazonGiftPinCode();
 
   return (
     <>
