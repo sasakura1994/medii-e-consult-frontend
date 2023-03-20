@@ -23,7 +23,7 @@ export const createApiClient = (
   options: ApiClientOption = {}
 ): AxiosInstance => {
   const headers: Header = {
-    'content-type': 'multipart/form-data',
+    'content-type': 'application/json',
   };
 
   if (options.token) {
