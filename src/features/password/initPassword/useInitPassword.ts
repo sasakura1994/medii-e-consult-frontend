@@ -11,7 +11,11 @@ export const useInitPassword = () => {
   const router = useRouter();
   const query = router.query as Query;
   const passwordInput = usePasswordInput();
+  const [isPrivacyPolicyAgreed, setIsPrivacyPolicyAgreed] =
+    React.useState(false);
+  const [isTermsOfUseAgreed, setIsTermsOfUseAgreed] = React.useState(false);
   const [isEmailDuplicated, setIsEmailDuplicated] = React.useState(false);
+  const [isRead, setIsRead] = React.useState(false);
   const [isSending, setIsSending] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState('');
   const { setPassword } = usePostSetPassword();
@@ -23,6 +27,12 @@ export const useInitPassword = () => {
   const onSubmit = React.useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
+
+      if (!isPrivacyPolicyAgreed || !isTermsOfUseAgreed || !isRead) {
+        setErrorMessage('チェックボックスがチェックされていません');
+        return;
+      }
+
       setIsSending(true);
       setErrorMessage('');
 
@@ -50,17 +60,30 @@ export const useInitPassword = () => {
         return;
       }
 
+      localStorage.setItem('token', response.data.jwt_token);
       router.push('/EditProfile?registerMode=true');
     },
-    [passwordInput.firstPassword, passwordInput.secondPassword]
+    [
+      passwordInput.firstPassword,
+      passwordInput.secondPassword,
+      isPrivacyPolicyAgreed,
+      isTermsOfUseAgreed,
+      isRead,
+    ]
   );
 
   return {
     ...passwordInput,
     errorMessage,
     isEmailDuplicated,
+    isPrivacyPolicyAgreed,
+    isRead,
     isSending,
+    isTermsOfUseAgreed,
     isTokenExists,
     onSubmit,
+    setIsRead,
+    setIsTermsOfUseAgreed,
+    setIsPrivacyPolicyAgreed,
   };
 };

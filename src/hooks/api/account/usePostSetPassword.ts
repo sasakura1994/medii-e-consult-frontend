@@ -9,6 +9,7 @@ export type SetPasswordArgs = {
 
 export type PostSetPasswordResponseData = {
   code: number;
+  jwt_token: string;
   message: string;
 };
 
