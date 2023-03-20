@@ -6,11 +6,11 @@ import { useFetchProfile } from '@/hooks/useFetchProfile';
 import { profileMock } from '@/mocks/profileMock';
 import type { ProfileEntityType } from '@/types/entities/profileEntity';
 
-const dummyUrl = 'https://jsonplaceholder.typicode.com/users'; // TODO: 正規のURLに変更する
+const dummyToken = 'test-token';
 
 describe('useFetchProfile', () => {
   test('should return profile data when fetch succeeds.', async () => {
-    const { result } = renderHook(() => useFetchProfile());
+    const { result } = renderHook(() => useFetchProfile(dummyToken));
 
     expect(result.current.isLoading).toBe(true);
     expect(result.current.profile).toBeUndefined();
@@ -31,12 +31,12 @@ describe('useFetchProfile', () => {
 
   test('should handle 500 error.', async () => {
     server.use(
-      rest.get(dummyUrl, (_, res, ctx) => {
+      rest.get('/api/doctor/profile', (_, res, ctx) => {
         return res.once(ctx.status(500));
       })
     );
 
-    const { result } = renderHook(() => useFetchProfile());
+    const { result } = renderHook(() => useFetchProfile(dummyToken));
 
     expect(result.current.isLoading).toBe(false);
     expect(result.current.profile).toBeUndefined();
@@ -49,7 +49,7 @@ describe('useFetchProfile', () => {
     expect(result.current.error).toEqual({
       message: 'サーバーでエラーが発生しました',
       status: 500,
-      url: dummyUrl,
+      url: '/api/doctor/profile',
     });
 
     await act(async () => {

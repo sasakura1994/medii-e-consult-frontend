@@ -2,7 +2,8 @@ import axios from 'axios';
 import type { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 
 export type ApiClientOption = {
-  token?: string;
+  token?: string | null;
+  contentType?: string;
 };
 
 type Header = {
@@ -22,11 +23,15 @@ export const createApiClient = (
   options: ApiClientOption = {}
 ): AxiosInstance => {
   const headers: Header = {
-    'content-type': 'application/json; charset=utf-8',
+    'content-type': 'application/json',
   };
 
   if (options.token) {
     headers['Authorization'] = `Bearer ${options.token}`;
+  }
+
+  if (options.contentType) {
+    headers['content-type'] = options.contentType;
   }
 
   const endpoint = process.env.ENDPOINT_URL;
