@@ -32,6 +32,7 @@ const PasswordResetRequestPage: NextPageWithLayout = () => {
                       name="mail_address"
                       value={mailAddress}
                       onChange={(e) => setMailAddress(e.target.value)}
+                      required
                     />
                   </div>
                   {!isSending ? (

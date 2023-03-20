@@ -38,6 +38,7 @@ const PasswordResetPage: NextPageWithLayout = () => {
                       ariaLabel="first_password"
                       value={firstPassword}
                       onChange={(e) => setFirstPassword(e.target.value)}
+                      required
                     />
                   </div>
                   <div className="mt-4 font-bold">パスワード(確認)</div>
@@ -48,6 +49,7 @@ const PasswordResetPage: NextPageWithLayout = () => {
                       ariaLabel="second_password"
                       value={secondPassword}
                       onChange={(e) => setSecondPassword(e.target.value)}
+                      required
                     />
                   </div>
                   {isPasswordNotMatched && (

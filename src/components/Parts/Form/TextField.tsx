@@ -60,6 +60,7 @@ export const TextField: React.FC<PropsType> = (props) => {
           style={style}
           onChange={onChange}
           onBlur={onBlur}
+          required
         />
         {subscript && <span className="ml-2">{subscript}</span>}
       </div>
