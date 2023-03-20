@@ -7,7 +7,6 @@ import { PostRequestResetPasswordResponseData } from '@/hooks/api/account/usePos
 import * as apiClient from '@/libs/apiClient';
 import { AxiosInstance } from 'axios';
 
-jest.mock('axios');
 jest.mock('@/libs/apiClient');
 
 describe('EditProfile', () => {
