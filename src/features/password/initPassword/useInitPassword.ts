@@ -61,6 +61,7 @@ export const useInitPassword = () => {
       }
 
       localStorage.setItem('token', response.data.jwt_token);
+      // @todo Vueの時はヘッダと一緒にプロフィールが読み込まれるがこちらではここでglobalStateにセットする
       router.push('/EditProfile?registerMode=true');
     },
     [
