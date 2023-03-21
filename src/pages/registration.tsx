@@ -21,7 +21,7 @@ const CheckBox = (props: {
     <input
       onChange={props.onChange}
       type="checkbox"
-      className="relative float-left mt-[0.15rem] mr-[6px] h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-neutral-300 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:content-[''] checked:border-primary checked:bg-primary checked:after:absolute checked:after:ml-[0.25rem] checked:after:-mt-px checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-t-0 checked:after:border-l-0 checked:after:border-solid checked:after:border-white checked:after:content-[''] hover:cursor-pointer"
+      className="relative float-left mr-[6px] mt-[0.15rem] h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-neutral-300 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:content-[''] checked:border-primary checked:bg-primary checked:after:absolute checked:after:ml-[0.25rem] checked:after:-mt-px checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-t-0 checked:after:border-l-0 checked:after:border-solid checked:after:border-white checked:after:content-[''] hover:cursor-pointer"
     />
   );
 };
@@ -46,7 +46,7 @@ const Registration: NextPageWithLayout = () => {
   return (
     <div className="bg-[url('/images/registration/bg.png')] md:py-14">
       {isSent ? (
-        <div className="shadow-[0_4px_4px_rgb(0 / 25%)] 0 0 mx-auto flex w-fit items-stretch justify-center rounded-md border border-slate-300 bg-white py-4 px-8">
+        <div className="shadow-[0_4px_4px_rgb(0 25%)] 0 0 / mx-auto flex w-fit items-stretch justify-center rounded-md border border-slate-300 bg-white py-4 px-8">
           <p>
             ご入力頂いたメールアドレスに確認用のメールをお送りしました。
             <br />
@@ -54,7 +54,7 @@ const Registration: NextPageWithLayout = () => {
           </p>
         </div>
       ) : (
-        <div className="shadow-[0_4px_4px_rgb(0 / 25%)] 0 0 mx-auto flex flex-col items-stretch justify-center md:flex-row md:py-4">
+        <div className="shadow-[0_4px_4px_rgb(0 25%)] 0 0 / mx-auto flex flex-col items-stretch justify-center md:flex-row md:py-4">
           <img
             src="/images/registration/left.png"
             className="hidden max-w-[480px] bg-white md:block"
