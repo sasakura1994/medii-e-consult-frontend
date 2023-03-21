@@ -2,6 +2,8 @@ import React from 'react';
 import type { NextPage } from 'next';
 import Link from 'next/link';
 import { useRegister } from '@/hooks/useRegister';
+import { RegistrationLayout } from '@/components/Layouts/RegistrationLayout';
+import { NextPageWithLayout } from './_app';
 
 const TextField = (props: JSX.IntrinsicElements['input']) => {
   return (
@@ -32,7 +34,7 @@ const GuideLink = ({ children, href }: { children: string; href: string }) => {
   );
 };
 
-const Registration: NextPage = () => {
+const Registration: NextPageWithLayout = () => {
   const {
     setEmail,
     register,
@@ -156,3 +158,7 @@ const Registration: NextPage = () => {
 };
 
 export default Registration;
+
+Registration.getLayout = (page: React.ReactElement) => {
+  return <RegistrationLayout>{page}</RegistrationLayout>;
+};
