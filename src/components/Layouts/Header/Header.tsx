@@ -24,12 +24,8 @@ export const Header: React.FC = () => {
       </button>
       <HeaderLogo />
 
-      {router.pathname === '/registration' ? (
-        <RegistrationHeaderMenu />
-      ) : (
-        <HeaderMenu />
-      )}
-      {router.pathname === '/registration' ? null : <HeaderSubMenu />}
+      <HeaderMenu />
+      <HeaderSubMenu />
     </HeaderContainer>
   );
 };
