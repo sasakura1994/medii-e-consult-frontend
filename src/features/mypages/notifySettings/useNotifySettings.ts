@@ -20,7 +20,7 @@ export const useNotifySettings = (): UseNotifySettingsType => {
   const token = useToken();
 
   const { isLoading, profile: profileData } = useFetchProfile(token);
-  const { isSuccess, isError, updateProfile } = useUpdateProfile(token);
+  const { isSuccess, isError, updateProfile } = useUpdateProfile();
 
   /**
    * 更新失敗
