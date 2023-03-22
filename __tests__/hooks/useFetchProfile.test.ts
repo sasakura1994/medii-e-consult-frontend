@@ -2,7 +2,7 @@ import { renderHook, act, waitFor } from '@testing-library/react';
 import { rest } from 'msw';
 import { server } from '@/mocks/server';
 import { fromNullToUndefined } from '@/libs/apiResponse';
-import { useFetchProfile } from '@/hooks/useFetchProfile';
+import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { profileMock } from '@/mocks/profileMock';
 import type { ProfileEntityType } from '@/types/entities/profileEntity';
 

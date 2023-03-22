@@ -70,27 +70,27 @@ export const HeaderSubMenu: React.FC = () => {
                 menus={[
                   {
                     text: 'プロフィール',
-                    link: '/edit-profile',
+                    link: '/EditProfile',
                     icon: <img src="/icons/my_profile.svg" />,
                   },
                   {
                     text: 'Mediiポイント',
-                    link: '/point-history',
+                    link: '/PointHistory',
                     icon: <img src="/icons/point.svg" />,
                   },
                   {
                     text: 'Amazonギフト',
-                    link: '/amazon-gift',
+                    link: '/AmazonGift',
                     icon: <img src="/icons/gift.svg" />,
                   },
                   {
                     text: '医師紹介',
-                    link: '/affiliate',
+                    link: '/Affiliate',
                     icon: <img src="/icons/invite.svg" />,
                   },
                   {
                     text: '通知設定',
-                    link: '/notify-settings',
+                    link: '/NotifySettings',
                     icon: <img src="/icons/noti_setting.svg" />,
                   },
                 ]}
@@ -129,27 +129,27 @@ export const HeaderSubMenu: React.FC = () => {
                   mypage: [
                     {
                       text: 'プロフィール',
-                      link: '/edit-profile',
+                      link: '/EditProfile',
                       icon: <img src="/icons/my_profile.svg" />,
                     },
                     {
                       text: 'Mediiポイント',
-                      link: '/point-history',
+                      link: '/PointHistory',
                       icon: <img src="/icons/point.svg" />,
                     },
                     {
                       text: 'Amazonギフト',
-                      link: '/amazon-gift',
+                      link: '/AmazonGift',
                       icon: <img src="/icons/gift.svg" />,
                     },
                     {
                       text: '医師紹介',
-                      link: '/affiliate',
+                      link: '/Affiliate',
                       icon: <img src="/icons/invite.svg" />,
                     },
                     {
                       text: '通知設定',
-                      link: '/notify-settings',
+                      link: '/NotifySettings',
                       icon: <img src="/icons/noti_setting.svg" />,
                     },
                   ],
