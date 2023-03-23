@@ -7,7 +7,7 @@ const endpoint = '/api/doctor/update_profile';
 export type UseUpdateProfileType = {
   isSuccess: boolean;
   isError: boolean;
-  updateProfile: (data: ProfileEntityType) => void;
+  updateProfile: (data: ProfileEntityType | undefined) => void;
 };
 
 export const useUpdateProfile = (): UseUpdateProfileType => {
@@ -15,7 +15,9 @@ export const useUpdateProfile = (): UseUpdateProfileType => {
   const [isSuccess, setIsSuccess] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
 
-  const updateProfile = async (data: ProfileEntityType) => {
+  const updateProfile = async (data: ProfileEntityType | undefined) => {
+    if (!data) return;
+
     setIsSuccess(false);
     setIsError(false);
 
