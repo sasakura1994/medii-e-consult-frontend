@@ -7,7 +7,6 @@ import { HeaderLogo } from './HeaderLogo';
 import { useRouter } from 'next/router';
 
 export const Header: React.FC = () => {
-  const router = useRouter();
   return (
     <HeaderContainer>
       <button

@@ -16,7 +16,6 @@ export const RegistrationLayout = (props: PropsType) => {
       <div className={styles.mypage_layout}>
         <main>{children}</main>
       </div>
-      <FooterSpMenu />
     </>
   );
 };
