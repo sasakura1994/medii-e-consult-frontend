@@ -1,9 +1,10 @@
 import React from 'react';
 import { createApiClient } from '@/libs/apiClient';
+import { useAxios } from './network/useAxios';
 
 const dummyUrl = 'https://jsonplaceholder.typicode.com/users';
 
-export type UseLoginType = {
+export type UseRegisterType = {
   email: string;
   setEmail: React.Dispatch<React.SetStateAction<string>>;
   errorMessage: string;
@@ -14,7 +15,8 @@ export type UseLoginType = {
   isSent: boolean;
 };
 
-export const useRegister = (): UseLoginType => {
+export const useRegister = (): UseRegisterType => {
+   const { axios } = useAxios();
   const [email, setEmail] = React.useState('');
   const [errorMessage, setErrorMessage] = React.useState('');
   const [isPrivacyPolicyAgree, setIsPrivacyPolicyAgree] = React.useState(false);
@@ -35,8 +37,7 @@ export const useRegister = (): UseLoginType => {
       return;
     }
     try {
-      const apiClient = createApiClient();
-      const res = await apiClient.post(dummyUrl, {
+      const res = await axios.post(dummyUrl, {
         mail_address: email,
       });
 
