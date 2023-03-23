@@ -7,7 +7,7 @@ type PropsType = {
   checked?: boolean;
   defaultChecked?: boolean;
   id?: string;
-  label?: string;
+  label?: string | JSX.Element;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 

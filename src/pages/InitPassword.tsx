@@ -5,7 +5,7 @@ import { Card } from '@/components/Parts/Card/Card';
 import { TextField } from '@/components/Parts/Form/TextField';
 import { useInitPassword } from '@/features/password/initPassword/useInitPassword';
 import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
-import { Checkbox } from '@/components/Parts/Form/Checkbox';
+import { CheckBox } from '@/components/Parts/Form/CheckBox';
 import Link from 'next/link';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 
@@ -66,12 +66,17 @@ const PasswordResetPage: NextPageWithLayout = () => {
               以下の内容をご確認いただき、同意いただけましたらチェックして会員登録にお進みください。
             </p>
             <div className="mt-5">
-              <Checkbox
+              <CheckBox
                 id="agree-privacy-policy"
                 name="agree_privacy_policy"
                 label={
                   <>
-                    <Link href="/PrivacyPolicy">プライバシーポリシー</Link>
+                    <Link
+                      href="/PrivacyPolicy"
+                      style={{ color: '-webkit-link' }}
+                    >
+                      プライバシーポリシー
+                    </Link>
                     に同意します。
                   </>
                 }
@@ -80,12 +85,15 @@ const PasswordResetPage: NextPageWithLayout = () => {
               />
             </div>
             <div className="mt-5">
-              <Checkbox
+              <CheckBox
                 id="agree-terms-of-use"
                 name="agree_terms_of_use"
                 label={
                   <>
-                    <a href="https://e-consult.medii.jp/doc/terms_of_usage.pdf">
+                    <a
+                      href="https://e-consult.medii.jp/doc/terms_of_usage.pdf"
+                      style={{ color: '-webkit-link' }}
+                    >
                       利用規約
                     </a>
                     に同意します。
@@ -96,35 +104,33 @@ const PasswordResetPage: NextPageWithLayout = () => {
               />
             </div>
             <div className="mt-5">
-              <Checkbox
+              <CheckBox
                 id="agree-details"
                 name="agree_details"
                 checked={isRead}
                 onChange={(e) => setIsRead(e.target.checked)}
-                label={
-                  <>
-                    以下の項目につき確認の上、その内容に同意します。
-                    <div className="flex flex-col gap-4">
-                      <p>
-                        1.
-                        本サービスにおいて、当社は会員同士が専門医の医学的知見・経験を共有するためのプラットフォームを運営するにとどまり、当社自身が医学的知見・経験を提供するものではなく、その情報が完全性、正確性、有用性を有することについて、何ら保証するものではありません。コンサルティングの内容については、主治医において最終判断を行い、患者様への診断・治療の責任は主治医において負うものであることに、同意します。
-                      </p>
-                      <p>
-                        2.
-                        本サービスを通じて行われる専門医の医学的知見・経験の提供は、あくまで医療情報の提供を目的としており、診断・治療又はこれに準ずる行為を含まないことに同意します。
-                      </p>
-                      <p>
-                        3.
-                        会員は、本サービスを利用するにあたり、患者様の健康状態や病歴等の医療情報が、当社及び会員に提供され取り扱われることにつき、患者様から予め同意を得ていることを確認します。
-                      </p>
-                      <p>
-                        4.
-                        会員は、自己の所属機関及び専門科、患者に対する自己の診断内容に関する情報を当社が取得し取り扱うことにつき、同意します。
-                      </p>
-                    </div>
-                  </>
-                }
+                label="以下の項目につき確認の上、その内容に同意します。"
               />
+              <label htmlFor="agree-details">
+                <div className="flex flex-col gap-4">
+                  <p>
+                    1.
+                    本サービスにおいて、当社は会員同士が専門医の医学的知見・経験を共有するためのプラットフォームを運営するにとどまり、当社自身が医学的知見・経験を提供するものではなく、その情報が完全性、正確性、有用性を有することについて、何ら保証するものではありません。コンサルティングの内容については、主治医において最終判断を行い、患者様への診断・治療の責任は主治医において負うものであることに、同意します。
+                  </p>
+                  <p>
+                    2.
+                    本サービスを通じて行われる専門医の医学的知見・経験の提供は、あくまで医療情報の提供を目的としており、診断・治療又はこれに準ずる行為を含まないことに同意します。
+                  </p>
+                  <p>
+                    3.
+                    会員は、本サービスを利用するにあたり、患者様の健康状態や病歴等の医療情報が、当社及び会員に提供され取り扱われることにつき、患者様から予め同意を得ていることを確認します。
+                  </p>
+                  <p>
+                    4.
+                    会員は、自己の所属機関及び専門科、患者に対する自己の診断内容に関する情報を当社が取得し取り扱うことにつき、同意します。
+                  </p>
+                </div>
+              </label>
             </div>
           </div>
           <div className="my-6 text-center">
