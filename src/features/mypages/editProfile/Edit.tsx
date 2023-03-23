@@ -1,12 +1,12 @@
 import React from 'react';
-import { useEditProfile } from './useEditProfile';
+import { useProfile } from './useProfile';
 import { UserInfo } from './UserInfo';
 import { MedicalCareer } from './MedicalCareer';
 import { HospitalAffiliation } from './HospitalAffiliation';
 import { UsageClassification } from './UsageClassification';
 
 export const Edit: React.FC = () => {
-  const { editProfileScreen } = useEditProfile();
+  const { editProfileScreen } = useProfile();
 
   if (!editProfileScreen.isEditOpen) {
     return null;
