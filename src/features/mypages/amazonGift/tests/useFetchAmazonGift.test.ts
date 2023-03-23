@@ -8,54 +8,56 @@ import type { AmazonGiftEntityType } from '../amazonGiftEntity';
 
 const url = 'https://jsonplaceholder.typicode.com/users/4'; // TODO: 正規のURLに変える
 
-// afterEach(() => cleanup());
+afterEach(() => cleanup());
 
-// describe('useFetchAmazonGift', () => {
-//   test('should fetch amazon gift data.', async () => {
-//     const { result } = renderHook(() => useFetchAmazonGift());
+describe('useFetchAmazonGift', () => {
+  test.todo('Need to implement: should fetch amazon gift data.');
+  // test('should fetch amazon gift data.', async () => {
+  //   const { result } = renderHook(() => useFetchAmazonGift());
 
-//     expect(result.current.isLoading).toBe(true);
-//     expect(result.current.amazonGifts).toBeUndefined();
-//     expect(result.current.error).toBeUndefined();
+  //   expect(result.current.isLoading).toBe(true);
+  //   expect(result.current.amazonGifts).toBeUndefined();
+  //   expect(result.current.error).toBeUndefined();
 
-//     const convertedData = amazonGiftsMock.map((amazonGift) =>
-//       fromNullToUndefined<AmazonGiftEntityType>(amazonGift)
-//     );
+  //   const convertedData = amazonGiftsMock.map((amazonGift) =>
+  //     fromNullToUndefined<AmazonGiftEntityType>(amazonGift)
+  //   );
 
-//     await waitFor(() => {
-//       expect(result.current.isLoading).toBe(false);
-//       expect(result.current.amazonGifts).toEqual(convertedData);
-//       expect(result.current.error).toBeUndefined();
-//     });
+  //   await waitFor(() => {
+  //     expect(result.current.isLoading).toBe(false);
+  //     expect(result.current.amazonGifts).toEqual(convertedData);
+  //     expect(result.current.error).toBeUndefined();
+  //   });
 
-//     // swr のキャッシュクリア
-//     await act(async () => result.current.mutate(undefined, false));
-//   });
+  //   // swr のキャッシュクリア
+  //   await act(async () => result.current.mutate(undefined, false));
+  // });
 
-//   test('should handle 500 error.', async () => {
-//     server.use(
-//       rest.get(url, (_, res, ctx) => {
-//         return res.once(ctx.status(500));
-//       })
-//     );
+  test.todo('Need to implement: should handle 500 error.');
+  // test('should handle 500 error.', async () => {
+  //   server.use(
+  //     rest.get(url, (_, res, ctx) => {
+  //       return res.once(ctx.status(500));
+  //     })
+  //   );
 
-//     const { result } = renderHook(() => useFetchAmazonGift());
+  //   const { result } = renderHook(() => useFetchAmazonGift());
 
-//     expect(result.current.isLoading).toBe(false);
-//     expect(result.current.amazonGifts).toBeUndefined();
-//     expect(result.current.error).toBeUndefined();
+  //   expect(result.current.isLoading).toBe(false);
+  //   expect(result.current.amazonGifts).toBeUndefined();
+  //   expect(result.current.error).toBeUndefined();
 
-//     await act(async () => result.current.mutate());
+  //   await act(async () => result.current.mutate());
 
-//     expect(result.current.amazonGifts).toBeUndefined();
-//     expect(result.current.error).toEqual({
-//       message: 'サーバーでエラーが発生しました',
-//       status: 500,
-//       url: url,
-//     });
+  //   expect(result.current.amazonGifts).toBeUndefined();
+  //   expect(result.current.error).toEqual({
+  //     message: 'サーバーでエラーが発生しました',
+  //     status: 500,
+  //     url: url,
+  //   });
 
-//     await act(async () => {
-//       await result.current.mutate(undefined, false);
-//     });
-//   });
-// });
+  //   await act(async () => {
+  //     await result.current.mutate(undefined, false);
+  //   });
+  // });
+});

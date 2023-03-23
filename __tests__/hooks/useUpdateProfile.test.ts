@@ -2,7 +2,7 @@ import { renderHook, act } from '@testing-library/react';
 import { rest } from 'msw';
 import { server } from '@/mocks/server';
 import { useSWRConfig } from 'swr';
-import { useUpdateProfile } from '@/hooks/useUpdateProfile';
+import { useUpdateProfile } from '@/hooks/api/doctor/useUpdateProfile';
 import { profileMock } from '@/mocks/profileMock';
 
 const dummyToken = 'test-token';
