@@ -7,11 +7,13 @@ export type PropsType = {
   placeholder?: string;
   disabled?: boolean;
   id?: string;
+  ariaLabel?: string;
   className?: string;
   style?: React.CSSProperties;
   label?: string | JSX.Element;
   required?: boolean;
   subscript?: string;
+  type?: React.HTMLInputTypeAttribute;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
 };
@@ -23,11 +25,13 @@ export const TextField: React.FC<PropsType> = (props) => {
     placeholder,
     disabled,
     id,
+    ariaLabel,
     className,
     style,
     label,
     required,
     subscript,
+    type = 'text',
     onChange,
     onBlur,
   } = props;
@@ -45,16 +49,18 @@ export const TextField: React.FC<PropsType> = (props) => {
 
       <div className="flex items-end">
         <input
-          type="text"
+          type={type}
           name={name}
           value={value}
           placeholder={placeholder}
           disabled={disabled}
           id={id}
+          aria-label={ariaLabel}
           className={textFielClassName}
           style={style}
           onChange={onChange}
           onBlur={onBlur}
+          required
         />
         {subscript && <span className="ml-2">{subscript}</span>}
       </div>
