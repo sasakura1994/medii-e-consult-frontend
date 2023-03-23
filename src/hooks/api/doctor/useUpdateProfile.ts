@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAxios } from './useAxios';
+import { useAxios } from '@/hooks/network/useAxios';
 import type { ProfileEntityType } from '@/types/entities/profileEntity';
 
 const endpoint = '/api/doctor/update_profile';

@@ -23,8 +23,7 @@ const GuideLink = ({ children, href }: { children: string; href: string }) => {
   );
 };
 const Login: NextPage = () => {
-  const { setEmail, setPassword, login, token, errorMessage } =
-    useLogin();
+  const { setEmail, setPassword, login, token, errorMessage } = useLogin();
   const router = useRouter();
   useEffect(() => {
     if (token !== '') {
@@ -75,8 +74,8 @@ const Login: NextPage = () => {
               nonce: 'nonce',
               usePopup: false,
             }}
-            onSuccess={(response) => console.log(response)}
-            render={(props) => (
+            onSuccess={(response: any) => console.log(response)}
+            render={(props: any) => (
               <button
                 className="mt-6 inline-flex items-center rounded-md border border-solid border-black py-2 px-10"
                 {...props}

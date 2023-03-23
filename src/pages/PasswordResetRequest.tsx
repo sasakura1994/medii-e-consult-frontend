@@ -30,8 +30,10 @@ const PasswordResetRequestPage: NextPageWithLayout = () => {
                   <div className="mt-1">
                     <TextField
                       name="mail_address"
+                      type="email"
                       value={mailAddress}
                       onChange={(e) => setMailAddress(e.target.value)}
+                      required
                     />
                   </div>
                   {!isSending ? (

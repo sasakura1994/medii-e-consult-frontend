@@ -3,6 +3,7 @@ import styles from './NotifySettings.module.scss';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import { useNotifySettings } from './useNotifySettings';
+import { Radio } from '@/components/Parts/Form/Radio';
 
 export const NotifySettings: React.FC = () => {
   const { profile, isError, changeNotifyNew, changeNotifySeminar, update } =
@@ -21,54 +22,34 @@ export const NotifySettings: React.FC = () => {
 
             <ul className={styles.notify_settings__list}>
               <li className={styles.notify_settings__item}>
-                <div className={styles.radio}>
-                  <input
-                    type="radio"
-                    value="mail-push"
-                    name="new_notify"
-                    checked={profile?.is_mail_notify && profile?.is_push_notify}
-                    id="mail-push"
-                    onChange={changeNotifyNew}
-                    data-testid="radio-new-notify"
-                  />
-                  <label htmlFor="mail-push">
-                    メール・プッシュ通知両方受け取る
-                  </label>
-                </div>
+                <Radio
+                  value="mail-push"
+                  name="new_notify"
+                  checked={profile?.is_mail_notify && profile?.is_push_notify}
+                  id="mail-push"
+                  label="メール・プッシュ通知両方受け取る"
+                  onChange={changeNotifyNew}
+                />
               </li>
               <li className={styles.notify_settings__item}>
-                <div className={styles.radio}>
-                  <input
-                    type="radio"
-                    value="mail"
-                    name="new_notify"
-                    checked={
-                      profile?.is_mail_notify && !profile?.is_push_notify
-                    }
-                    id="mail"
-                    onChange={changeNotifyNew}
-                    data-testid="radio-new-notify"
-                  />
-                  <label htmlFor="mail">メール通知</label>
-                </div>
+                <Radio
+                  value="mail"
+                  name="new_notify"
+                  checked={profile?.is_mail_notify && !profile?.is_push_notify}
+                  id="mail"
+                  label="メール通知"
+                  onChange={changeNotifyNew}
+                />
               </li>
               <li className={styles.notify_settings__item}>
-                <div className={styles.radio}>
-                  <input
-                    type="radio"
-                    value="push"
-                    name="new_notify"
-                    checked={
-                      !profile?.is_mail_notify && profile?.is_push_notify
-                    }
-                    id="push"
-                    onChange={changeNotifyNew}
-                    data-testid="radio-new-notify"
-                  />
-                  <label htmlFor="push" className="">
-                    プッシュ通知（パソコン／アプリ版）
-                  </label>
-                </div>
+                <Radio
+                  value="push"
+                  name="new_notify"
+                  checked={!profile?.is_mail_notify && profile?.is_push_notify}
+                  id="push"
+                  label="プッシュ通知（パソコン／アプリ版）"
+                  onChange={changeNotifyNew}
+                />
               </li>
             </ul>
           </div>
@@ -80,32 +61,24 @@ export const NotifySettings: React.FC = () => {
 
             <ul className={styles.notify_settings__list}>
               <li className={styles.notify_settings__item}>
-                <div className={styles.radio}>
-                  <input
-                    type="radio"
-                    value="permit"
-                    name="seminar_notify"
-                    checked={!profile?.not_seminar_mail_target}
-                    id="permit"
-                    onChange={changeNotifySeminar}
-                    data-testid="radio-seminar-notify"
-                  />
-                  <label htmlFor="permit">メール通知を受け取る</label>
-                </div>
+                <Radio
+                  value="permit"
+                  name="seminar_notify"
+                  checked={!profile?.not_seminar_mail_target}
+                  id="permit"
+                  label="プッシュ通知（パソコン／アプリ版）"
+                  onChange={changeNotifySeminar}
+                />
               </li>
               <li className={styles.notify_settings__item}>
-                <div className={styles.radio}>
-                  <input
-                    type="radio"
-                    value="deny"
-                    name="seminar_notify"
-                    checked={profile?.not_seminar_mail_target}
-                    id="deny"
-                    onChange={changeNotifySeminar}
-                    data-testid="radio-seminar-notify"
-                  />
-                  <label htmlFor="deny">メール通知を受け取らない</label>
-                </div>
+                <Radio
+                  value="deny"
+                  name="seminar_notify"
+                  checked={profile?.not_seminar_mail_target}
+                  id="deny"
+                  label="メール通知を受け取らない"
+                  onChange={changeNotifySeminar}
+                />
               </li>
             </ul>
           </div>

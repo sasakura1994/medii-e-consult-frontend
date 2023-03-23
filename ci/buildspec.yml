@@ -1,0 +1,21 @@
+version: 0.2
+env:
+  variables:
+    version: 'v0.95'
+  secrets-manager:
+    DOCKERHUB_USER: arn:aws:secretsmanager:ap-northeast-1:811142747210:secret:docker-hub-FizPQI:username
+    DOCKERHUB_PASS: arn:aws:secretsmanager:ap-northeast-1:811142747210:secret:docker-hub-FizPQI:password
+phases:
+  pre_build:
+    on-failure: ABORT
+    commands:
+      - aws ecr get-login-password --region ap-northeast-1 | docker login --username AWS --password-stdin 811142747210.dkr.ecr.ap-northeast-1.amazonaws.com
+      - echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin
+  build:
+    on-failure: ABORT
+    commands:
+      - docker build --build-arg endpoint_url="${ENDPOINT_URL}" --build-arg web_server_url="${WEB_SERVER_URL}" -t ${IMAGE_REPO_NAME} -f docker/Dockerfile .
+      - docker tag ${IMAGE_REPO_NAME}:latest 811142747210.dkr.ecr.ap-northeast-1.amazonaws.com/${IMAGE_REPO_NAME}:latest
+  post_build:
+    commands:
+      - docker push 811142747210.dkr.ecr.ap-northeast-1.amazonaws.com/${IMAGE_REPO_NAME}:latest

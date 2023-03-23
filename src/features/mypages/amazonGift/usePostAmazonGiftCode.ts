@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAxios } from '@/hooks/useAxios';
+import { useAxios } from '@/hooks/network/useAxios';
 import { useSetRecoilState } from 'recoil';
 import { amazonGiftCodeComfirmState } from './amazonGiftCodeComfirmState';
 

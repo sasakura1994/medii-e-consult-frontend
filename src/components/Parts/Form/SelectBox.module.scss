@@ -2,7 +2,7 @@
   flex: 1;
   position: relative;
 
-  &::after {
+  &::before {
     content: "";
     display: block;
     background-image: url("/icons/arrow_pull.svg");
@@ -14,5 +14,7 @@
     top: 50%;
     right: 12px;
     transform: translateY(-50%);
+    pointer-events: none;
+    z-index: 1;
   }
 }

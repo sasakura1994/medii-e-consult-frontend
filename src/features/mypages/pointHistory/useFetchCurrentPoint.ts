@@ -1,4 +1,4 @@
-import { useAuthenticatedSWR } from '@/hooks/useAuthenticatedSWR';
+import { useAuthenticatedSWR } from '@/hooks/network/useAuthenticatedSWR';
 import type { CurrentPointEntityType } from './pointHistoryEntity';
 
 const endpoint = '/api/medii_point/current_point';
