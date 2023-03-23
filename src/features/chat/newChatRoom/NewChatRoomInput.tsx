@@ -5,6 +5,7 @@ import { NewChatRoomRoomType } from './NewChatRoomRoomType';
 import { Radio } from '@/components/Parts/Form/Radio';
 import { SelectBox } from '@/components/Parts/Form/SelectBox';
 import { ages, childAges } from '@/data/age';
+import { TextField } from '@/components/Parts/Form/TextField';
 
 type Props = ReturnType<typeof useNewChatRoom>;
 
@@ -114,6 +115,18 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
               </SelectBox>
             </div>
           )}
+        </div>
+        <NewChatRoomFormLabel className="mt-4">要約</NewChatRoomFormLabel>
+        <div className="mt-1">
+          <TextField
+            name="disease_name"
+            value={formData.disease_name}
+            onChange={(e) =>
+              setFormData({ ...formData, disease_name: e.target.value })
+            }
+            placeholder="例）多関節痛を訴える抗核抗体陽性患者への追加検査"
+            required
+          />
         </div>
       </div>
     </>

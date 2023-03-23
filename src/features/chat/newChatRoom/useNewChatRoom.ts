@@ -8,6 +8,7 @@ export const useNewChatRoom = () => {
   const [formData, setFormData] = React.useState<NewChatRoomEntity>({
     room_type: 'FREE',
     gender: 'man',
+    disease_name: '',
   });
   const [ageRange, setAgeRange] = React.useState<AgeRange>('');
   const [childAge, setChildAge] = React.useState<string>('');
