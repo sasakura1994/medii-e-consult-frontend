@@ -1,7 +1,7 @@
 import React from 'react';
 
 import userEvent from '@testing-library/user-event';
-import { render, screen, act, fireEvent } from '@testing-library/react';
+import { render, screen, act } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
 import * as apiClient from '@/libs/apiClient';
 import { AxiosInstance } from 'axios';
@@ -31,12 +31,8 @@ describe('PasswordReset', () => {
       );
     });
 
-    fireEvent.change(screen.getByLabelText('first_password'), {
-      target: { value: '11111111' },
-    });
-    fireEvent.change(screen.getByLabelText('second_password'), {
-      target: { value: '11111111' },
-    });
+    userEvent.type(screen.getByLabelText('first_password'), '11111111');
+    userEvent.type(screen.getByLabelText('second_password'), '11111111');
 
     await act(() => {
       userEvent.click(screen.getByRole('button'));
