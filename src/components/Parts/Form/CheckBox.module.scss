@@ -1,0 +1,53 @@
+.visually_hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.check_box {
+  &__label {
+    padding-left: 22px;
+    position: relative;
+  }
+
+  // チェックボックス枠
+  &__label:before {
+    content: "";
+    display: block;
+    background-color: #ffffff;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 17px;
+    height: 17px;
+    border: 2px solid #ccc;
+    border-radius: 2px;
+  }
+
+  &__input:checked + &__label::before {
+    background-color: #5c6bc0;
+    border: 2px solid #5c6bc0;
+  }
+
+  &__input:checked + &__label::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 4px;
+    left: 5px;
+    width: 7px;
+    height: 11px;
+    transform: rotate(45deg);
+    border-bottom: 2px solid #fff;
+    border-right: 2px solid #fff;
+  }
+
+  &__input:focus + &__label::before {
+    box-shadow: 0 0 0 2px rgba(#3e82ff, 0.3);
+  }
+}
