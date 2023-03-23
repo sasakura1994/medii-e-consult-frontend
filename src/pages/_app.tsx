@@ -2,7 +2,7 @@ import React from 'react';
 import '@/styles/globals.scss';
 import 'react-toastify/dist/ReactToastify.css';
 import { SWRConfig } from 'swr';
-import { useFetcher } from '@/hooks/useFetcher';
+import { useFetcher } from '@/hooks/network/useFetcher';
 import { CookiesProvider } from 'react-cookie';
 import { RecoilRoot } from 'recoil';
 import { CustomHead } from '@/components/Commons/CustomHead';

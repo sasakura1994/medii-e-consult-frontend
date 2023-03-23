@@ -1,6 +1,6 @@
 import React from 'react';
 import { createApiClient } from '@/libs/apiClient';
-import { useToken } from './useToken';
+import { useToken } from '@/hooks/authentication/useToken';
 
 export const useAxios = (contentType?: string) => {
   const token = useToken();

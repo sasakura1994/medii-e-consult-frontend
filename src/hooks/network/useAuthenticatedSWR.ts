@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import { useToken } from '@/hooks/useToken';
+import { useToken } from '@/hooks/authentication/useToken';
 
 export const useAuthenticatedSWR = <T>(key: string) => {
   const token = useToken();
