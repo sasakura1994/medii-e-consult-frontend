@@ -1,7 +1,7 @@
 import React from 'react';
 import { toast } from 'react-toastify';
 import { profileState } from '@/globalStates/profileState';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { useUpdateProfile } from '@/hooks/api/doctor/useUpdateProfile';
 import type { ProfileEntityType } from '@/types/entities/profileEntity';
@@ -15,8 +15,8 @@ export type UseNotifySettingsType = {
 };
 
 export const useNotifySettings = (): UseNotifySettingsType => {
-  const [profile, setProfile] = useRecoilState(profileState);
-  const { isLoading, profile: profileData } = useFetchProfile();
+  const setProfile = useSetRecoilState(profileState);
+  const { profile } = useFetchProfile();
   const { isSuccess, isError, updateProfile } = useUpdateProfile();
 
   /**
@@ -36,21 +36,6 @@ export const useNotifySettings = (): UseNotifySettingsType => {
       toast('通知設定を変更しました');
     }
   }, [isSuccess]);
-
-  /**
-   * プロフィールデータの状態管理
-   */
-  React.useEffect(() => {
-    if (isLoading && !profileData) {
-      return;
-    }
-
-    // Recoil のデフォルト値がここで swr から取得したモックに差し変わる
-    setProfile((oldValues) => ({
-      ...oldValues,
-      ...profileData,
-    }));
-  }, [isLoading, profileData]);
 
   /**
    * 新着メッセージ通知の選択処理
