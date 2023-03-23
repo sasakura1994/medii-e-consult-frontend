@@ -1,44 +1,54 @@
 @import "../../../styles/utilities/variable.scss";
 
+.visually_hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
 .radio {
-  input[type="radio"] {
-    display: none;
+  &__label {
+    padding-left: 18px;
+    position: relative;
+  }
 
-    & + label {
-      padding-left: 18px;
-      position: relative;
-    }
+  // ラジオボタン枠
+  &__label::before {
+    content: "";
+    display: block;
+    width: 14px;
+    height: 14px;
+    border: 1.5px solid #cccccc;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+  }
 
-    // ラジオボタン枠
-    & + label::before {
-      content: "";
-      display: block;
-      width: 14px;
-      height: 14px;
-      border: 1.5px solid #cccccc;
-      border-radius: 50%;
-      position: absolute;
-      top: 50%;
-      left: 0;
-      transform: translateY(-50%);
-    }
+  &__input:checked + &__label::before {
+    border: 1.5px solid $primary-color;
+  }
 
-    &:checked + label::before {
-      border: 1.5px solid $primary-color;
-    }
+  // ラジオボタンチェック（中身の丸）
+  &__input:checked + &__label::after {
+    content: "";
+    display: block;
+    background-color: $primary-color;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 3.5px;
+    transform: translateY(-50%);
+  }
 
-    // ラジオボタンチェック（中身の丸）
-    &:checked + label::after {
-      content: "";
-      display: block;
-      background-color: $primary-color;
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      position: absolute;
-      top: 50%;
-      left: 3.5px;
-      transform: translateY(-50%);
-    }
+  &__input:focus + &__label::before {
+    box-shadow: 0 0 0 2px rgba(#3e82ff, 0.3);
   }
 }
