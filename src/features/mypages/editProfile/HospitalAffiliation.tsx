@@ -19,12 +19,12 @@ export const HospitalAffiliation: React.FC = () => {
           options={[
             { name: '都道府県' },
             { id: 1, value: '8', name: '茨城県' },
-            { id: 1, value: '9', name: '栃木県' },
-            { id: 1, value: '10', name: '群馬県' },
-            { id: 1, value: '11', name: '埼玉県' },
-            { id: 1, value: '12', name: '千葉県' },
-            { id: 1, value: '13', name: '東京都' },
-            { id: 1, value: '14', name: '神奈川県' },
+            { id: 2, value: '9', name: '栃木県' },
+            { id: 3, value: '10', name: '群馬県' },
+            { id: 4, value: '11', name: '埼玉県' },
+            { id: 5, value: '12', name: '千葉県' },
+            { id: 6, value: '13', name: '東京都' },
+            { id: 7, value: '14', name: '神奈川県' },
           ]}
         />
       </div>

@@ -1,9 +1,12 @@
 import React from 'react';
+import { useProfile } from './useProfile';
 import { Label } from '@/components/Parts/Form/Label';
 import { TextField } from '@/components/Parts/Form/TextField';
 import { TextArea } from '@/components/Parts/Form/TextArea';
 
 export const MedicalCareer: React.FC = () => {
+  const { openMedicalSpeciality } = useProfile();
+
   return (
     <div className="mb-10">
       <h3 className="mb-4 text-primary">■ 医療従事経歴</h3>
@@ -43,6 +46,7 @@ export const MedicalCareer: React.FC = () => {
                      after:-translate-y-1/2
                      after:bg-[url('/icons/pull.svg')]
                      after:content-['']"
+          onClick={openMedicalSpeciality}
         >
           所属科を選び直す
         </button>

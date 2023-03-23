@@ -3,16 +3,17 @@ import styles from './Profile.module.scss';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import { useClipboard } from '@/hooks/useClipboard';
-import { useEditProfile } from './useEditProfile';
+import { useProfile } from './useProfile';
 import { UrlPublish } from './UrlPublish';
 import { Detail } from './Detail';
 import { Edit } from './Edit';
+import { Modal } from '@/components/Parts/Modal/Modal';
 
 export const Profile: React.FC = () => {
   const accountId = 'AC10-6226-9933-69'; // TODO: ログイン情報から取得する
   const clipboardUrl = `${process.env.WEB_SERVER_URL}/NewChatRoom?target_account_id=${accountId}`;
   const { isError, clipboard } = useClipboard(clipboardUrl);
-  const { editProfileScreen } = useEditProfile();
+  const { editProfileScreen, showModal } = useProfile();
 
   return (
     <>
@@ -74,6 +75,12 @@ export const Profile: React.FC = () => {
             : 'bg-toast-success text-white text-center py-2 shadow-md'
         }
       />
+
+      <Modal isShow={showModal}>
+        <div className="h-32 w-32 rounded-md bg-white">
+          <h2>モーダル</h2>
+        </div>
+      </Modal>
     </>
   );
 };
