@@ -6,9 +6,9 @@ module.exports = {
     extend: {
       colors: {
         primary: '#5c6bc0',
-        error: '#e20000',
+        error: '#f27474',
         'toast-success': '#3f51b5',
-        'toast-error': '#e20000',
+        'toast-error': '#f27474',
         'login-container-frame': '#ddd',
         'text-field-frame': '#999',
         'guide-link': 'rgb(0, 0, 238)',
