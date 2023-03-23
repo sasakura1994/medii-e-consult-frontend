@@ -4,6 +4,17 @@ import { TextField } from '@/components/Parts/Form/TextField';
 import { SelectBox } from '@/components/Parts/Form/SelectBox';
 import { Radio } from '@/components/Parts/Form/Radio';
 
+const prefectures = [
+  { id: 1, value: '', name: '都道府県' },
+  { id: 1, value: '8', name: '茨城県' },
+  { id: 1, value: '9', name: '栃木県' },
+  { id: 1, value: '10', name: '群馬県' },
+  { id: 1, value: '11', name: '埼玉県' },
+  { id: 1, value: '12', name: '千葉県' },
+  { id: 1, value: '13', name: '東京都' },
+  { id: 1, value: '14', name: '神奈川県' },
+];
+
 export const HospitalAffiliation: React.FC = () => {
   return (
     <div className="mb-10">
@@ -16,17 +27,13 @@ export const HospitalAffiliation: React.FC = () => {
           className="!w-72"
           label="勤務先病院の所在地"
           required={true}
-          options={[
-            { name: '都道府県' },
-            { id: 1, value: '8', name: '茨城県' },
-            { id: 1, value: '9', name: '栃木県' },
-            { id: 1, value: '10', name: '群馬県' },
-            { id: 1, value: '11', name: '埼玉県' },
-            { id: 1, value: '12', name: '千葉県' },
-            { id: 1, value: '13', name: '東京都' },
-            { id: 1, value: '14', name: '神奈川県' },
-          ]}
-        />
+        >
+          {prefectures.map((prefecture) => (
+            <option value={prefecture.value} key={prefecture.value}>
+              {prefecture.name}
+            </option>
+          ))}
+        </SelectBox>
       </div>
 
       <div className="mb-4">
@@ -36,12 +43,9 @@ export const HospitalAffiliation: React.FC = () => {
           id="hospital-data"
           label="病院データから選択"
         />
-        <SelectBox
-          name="hospital_name"
-          id="hospital_name"
-          className="mt-1"
-          options={[]}
-        />
+        <SelectBox name="hospital_name" id="hospital_name" className="mt-1">
+          <option value=""></option>
+        </SelectBox>
       </div>
 
       <div className="mb-4">

@@ -2,13 +2,6 @@ import React from 'react';
 import styles from './SelectBox.module.scss';
 import { Label } from './Label';
 
-export type OptionType = {
-  id?: number | string;
-  value?: number | string | undefined;
-  name: string;
-  checked?: boolean;
-};
-
 type PropsType = {
   name: string;
   value?: string;
@@ -20,7 +13,7 @@ type PropsType = {
   label?: string;
   required?: boolean;
   subscript?: string;
-  options: OptionType[];
+  children: React.ReactNode;
   onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
@@ -35,7 +28,7 @@ export const SelectBox: React.FC<PropsType> = (props) => {
     label,
     required,
     subscript,
-    options,
+    children,
     onChange,
   } = props;
 
@@ -60,15 +53,7 @@ export const SelectBox: React.FC<PropsType> = (props) => {
             style={style}
             onChange={onChange}
           >
-            {options.map((option) => (
-              <option
-                value={option.value}
-                defaultChecked={option.checked}
-                key={option.id}
-              >
-                {option.name}
-              </option>
-            ))}
+            {children}
           </select>
         </div>
         {subscript && <span className="ml-2">{subscript}</span>}
