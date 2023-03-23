@@ -23,6 +23,7 @@ export const CheckBox: React.FC<PropsType> = (props) => {
         checked={checked}
         defaultChecked={defaultChecked}
         id={id}
+        data-testid={id}
         className={`${styles.check_box__input} ${styles.visually_hidden}`}
         onChange={onChange}
       />

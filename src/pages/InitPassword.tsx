@@ -9,7 +9,7 @@ import { CheckBox } from '@/components/Parts/Form/CheckBox';
 import Link from 'next/link';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 
-const PasswordResetPage: NextPageWithLayout = () => {
+const InitPasswordPage: NextPageWithLayout = () => {
   const {
     errorMessage,
     firstPassword,
@@ -41,6 +41,7 @@ const PasswordResetPage: NextPageWithLayout = () => {
                 <TextField
                   type="password"
                   name="first_password"
+                  ariaLabel="first_password"
                   value={firstPassword}
                   onChange={(e) => setFirstPassword(e.target.value)}
                   required
@@ -51,6 +52,7 @@ const PasswordResetPage: NextPageWithLayout = () => {
                 <TextField
                   type="password"
                   name="second_password"
+                  ariaLabel="second_password"
                   value={secondPassword}
                   onChange={(e) => setSecondPassword(e.target.value)}
                   required
@@ -175,8 +177,8 @@ const PasswordResetPage: NextPageWithLayout = () => {
   );
 };
 
-PasswordResetPage.getLayout = (page: React.ReactElement) => {
+InitPasswordPage.getLayout = (page: React.ReactElement) => {
   return <PublicLayout>{page}</PublicLayout>;
 };
 
-export default PasswordResetPage;
+export default InitPasswordPage;
