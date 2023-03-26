@@ -16,7 +16,7 @@ export type UseRegisterType = {
 };
 
 export const useRegister = (): UseRegisterType => {
-   const { axios } = useAxios();
+  const { axios } = useAxios();
   const [email, setEmail] = React.useState('');
   const [errorMessage, setErrorMessage] = React.useState('');
   const [isPrivacyPolicyAgree, setIsPrivacyPolicyAgree] = React.useState(false);
