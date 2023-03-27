@@ -4,7 +4,6 @@ import { HeaderMenu } from '@/components/Layouts/Header/HeaderMenu';
 import { HeaderSubMenu } from '@/components/Layouts/Header/HeaderSubMenu';
 import { HeaderContainer } from './HeaderContainer';
 import { HeaderLogo } from './HeaderLogo';
-import { useRouter } from 'next/router';
 
 export const Header: React.FC = () => {
   return (
