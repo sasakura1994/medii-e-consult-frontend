@@ -5,7 +5,12 @@ import { MedicalCareer } from './MedicalCareer';
 import { HospitalAffiliation } from './HospitalAffiliation';
 import { UsageClassification } from './UsageClassification';
 
-export const Edit: React.FC = () => {
+type PropsType = {
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+export const Edit: React.FC<PropsType> = (props) => {
+  const { setShowModal } = props;
   const { editProfileScreen } = useProfile();
 
   if (!editProfileScreen.isEditOpen) {
@@ -22,7 +27,7 @@ export const Edit: React.FC = () => {
       </h2>
 
       <UserInfo />
-      <MedicalCareer />
+      <MedicalCareer setShowModal={setShowModal} />
       <HospitalAffiliation />
       <UsageClassification />
     </>

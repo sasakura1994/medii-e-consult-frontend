@@ -1,8 +1,6 @@
 import React from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { profileState } from '@/globalStates/profileState';
+import { useRecoilState } from 'recoil';
 import { editProfileScreenState } from './editProfileScreenState';
-import { modalState } from '@/globalStates/modalState';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { useFetchEmail } from '@/hooks/api/account/useFetchEmail';
 import { useFetchMedicalSpeciality } from '@/hooks/api/medicalCategory/useFetchMedicalSpeciality';
@@ -24,12 +22,11 @@ export type UseProfile = {
   editProfileScreen: EditProfileScreenStateType;
   showModal: boolean;
   openEdit: () => void;
-  openDetail: () => void;
-  openMedicalSpeciality: () => void;
   getMedicalSpecialityNameByCode: (
     code: string | undefined
   ) => string | undefined;
   getPrefectureNameByCode: (code: string | undefined) => string | undefined;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const useProfile = (): UseProfile => {
@@ -42,31 +39,14 @@ export const useProfile = (): UseProfile => {
   const [editProfileScreen, setEditProfileScreen] = useRecoilState(
     editProfileScreenState
   );
-  const setProfile = useSetRecoilState(profileState);
-  const [showModal, showShowModal] = useRecoilState(modalState);
+  // モーダルからモーダルを表示（2重表示）する場合があるので、グローバルではなくローカルステートで定義し props で渡せるようにする
+  const [showModal, setShowModal] = React.useState(false);
 
   const openEdit = () => {
     setEditProfileScreen((oldValues) => ({
       ...oldValues,
       isEditOpen: true,
       isDetailOpen: false,
-    }));
-    console.log('profile', profile);
-  };
-
-  const openDetail = () => {
-    console.log('openDetail');
-  };
-
-  const openMedicalSpeciality = () => {
-    showShowModal(true);
-  };
-
-  const resetOpen = () => {
-    setEditProfileScreen((oldValues) => ({
-      ...oldValues,
-      isEditOpen: false,
-      isDetailOpen: true,
     }));
   };
 
@@ -92,10 +72,6 @@ export const useProfile = (): UseProfile => {
     [prefecture]
   );
 
-  // React.useEffect(() => {
-  //   console.log('medicalSpeciality', medicalSpeciality);
-  // }, [medicalSpeciality]);
-
   return {
     profile,
     email,
@@ -105,9 +81,8 @@ export const useProfile = (): UseProfile => {
     editProfileScreen,
     showModal,
     openEdit,
-    openDetail,
-    openMedicalSpeciality,
     getMedicalSpecialityNameByCode,
     getPrefectureNameByCode,
+    setShowModal,
   };
 };

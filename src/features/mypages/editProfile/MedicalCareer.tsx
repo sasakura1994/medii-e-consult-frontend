@@ -1,11 +1,14 @@
 import React from 'react';
-import { useProfile } from './useProfile';
 import { Label } from '@/components/Parts/Form/Label';
 import { TextField } from '@/components/Parts/Form/TextField';
 import { TextArea } from '@/components/Parts/Form/TextArea';
 
-export const MedicalCareer: React.FC = () => {
-  const { openMedicalSpeciality } = useProfile();
+type PropsType = {
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+export const MedicalCareer: React.FC<PropsType> = (props) => {
+  const { setShowModal } = props;
 
   return (
     <div className="mb-10">
@@ -46,7 +49,7 @@ export const MedicalCareer: React.FC = () => {
                      after:-translate-y-1/2
                      after:bg-[url('/icons/pull.svg')]
                      after:content-['']"
-          onClick={openMedicalSpeciality}
+          onClick={() => setShowModal(true)}
         >
           所属科を選び直す
         </button>
