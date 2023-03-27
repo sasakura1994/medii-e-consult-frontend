@@ -26,7 +26,7 @@ const Registration: NextPageWithLayout = () => {
   return (
     <div className="bg-[url('/images/registration/bg.png')] bg-cover md:py-14">
       {isSent ? (
-        <div className="mx-auto flex w-fit items-stretch justify-center rounded-md border border-slate-300 bg-white py-4 px-8 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
+        <div className="mx-auto flex w-fit items-stretch justify-center rounded-md border border-slate-300 bg-white py-4 px-8 md:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
           <p>
             ご入力頂いたメールアドレスに確認用のメールをお送りしました。
             <br />
@@ -35,7 +35,7 @@ const Registration: NextPageWithLayout = () => {
         </div>
       ) : (
         <div className="mx-auto flex justify-center md:py-4">
-          <div className="flex flex-col items-stretch justify-center shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] md:flex-row">
+          <div className="flex flex-col items-stretch justify-center md:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] mb-8 md:flex-row">
             <img
               src="/images/registration/left.png"
               className="hidden max-w-[480px] bg-white md:block"
@@ -44,7 +44,7 @@ const Registration: NextPageWithLayout = () => {
               src="/images/registration/mobile_main.png"
               className="max-w-[480px] bg-white md:hidden"
             />
-            <div className="flex max-w-[480px] flex-col items-center justify-items-stretch bg-white px-[16px] pb-14 md:pl-[30px] md:pr-[48px] md:pt-[64px] md:pb-4">
+            <div className="flex max-w-[480px] flex-col items-center justify-items-stretch bg-white px-[16px] pb-6 md:pl-[30px] md:pr-[48px] md:pt-[64px] md:pb-4">
               <h1 className="my-6 text-center text-2xl text-primary">
                 新規会員登録
               </h1>
@@ -94,7 +94,7 @@ const Registration: NextPageWithLayout = () => {
                 <br />
                 取締役個人情報保護管理者 e-mail: info@medii.jp
               </div>
-              <div className="mt-2">
+              <div className="mt-2 w-full">
                 <label>
                   <CheckBox
                     name="privacyPolicy"
@@ -105,7 +105,7 @@ const Registration: NextPageWithLayout = () => {
                   個人情報の取り扱いについて同意します。
                 </label>
               </div>
-              <div className="mt-2">
+              <div className="mt-2 w-full">
                 <label>
                   <CheckBox
                     name="termsAgree"
