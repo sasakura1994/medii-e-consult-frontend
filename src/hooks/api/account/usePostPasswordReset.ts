@@ -1,4 +1,4 @@
-import { useAxios } from '@/hooks/useAxios';
+import { useAxios } from '@/hooks/network/useAxios';
 import React from 'react';
 
 export type ResetPasswordArgs = {

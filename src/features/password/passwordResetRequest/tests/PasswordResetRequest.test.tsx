@@ -1,6 +1,6 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { render, screen, act, fireEvent } from '@testing-library/react';
+import { render, screen, act } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
 import PasswordResetRequestPage from '@/pages/PasswordResetRequest';
 import { PostRequestResetPasswordResponseData } from '@/hooks/api/account/usePostRequestResetPassword';
@@ -25,9 +25,7 @@ describe('PasswordResetRequest', () => {
       );
     });
 
-    fireEvent.change(screen.getByRole('textbox'), {
-      target: { value: 'dummy@example.com' },
-    });
+    userEvent.type(screen.getByRole('textbox'), 'dummy@example.com');
 
     await act(() => {
       userEvent.click(screen.getByRole('button'));
