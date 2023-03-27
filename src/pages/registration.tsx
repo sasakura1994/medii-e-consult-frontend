@@ -44,7 +44,7 @@ const Registration: NextPageWithLayout = () => {
               src="/images/registration/mobile_main.png"
               className="max-w-[480px] bg-white md:hidden"
             />
-            <div className="flex max-w-[480px] flex-col items-center justify-items-stretch bg-white px-[16px] pb-6 md:pl-[30px] md:pr-[48px] md:pt-[64px] md:pb-4">
+            <div className="flex max-w-[480px] flex-col items-center justify-items-stretch bg-white px-4 pb-6 md:pl-8 md:pr-12 md:pt-16 md:pb-4">
               <h1 className="my-6 text-center text-2xl text-primary">
                 新規会員登録
               </h1>
