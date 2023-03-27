@@ -25,7 +25,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
   return (
     <>
       <h1 className="text-center text-2xl leading-9">E-コンサル ルーム作成</h1>
-      <div className="mx-auto px-4 lg:w-[80%]">
+      <div className="mx-auto lg:w-[80%]">
         <NewChatRoomFormLabel className="mt-4">
           専門医指定方法
         </NewChatRoomFormLabel>
@@ -154,6 +154,15 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
               setFormData({ ...formData, first_message: e.target.value })
             }
           />
+          <div className="mt-3 flex items-center gap-2">
+            <button type="button">参考画像追加</button>
+            <div className="text-[11px] text-block-gray">
+              画像・動画・Word・PDF等を含むあらゆるファイル形式に対応しています
+            </div>
+          </div>
+          <div className="my-6 text-center">
+            <button type="submit">プレビュー</button>
+          </div>
         </div>
       </div>
     </>
