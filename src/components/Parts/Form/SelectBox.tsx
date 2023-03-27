@@ -64,7 +64,7 @@ export const SelectBox: React.FC<PropsType> = (props) => {
               <option
                 value={option.value}
                 defaultChecked={option.checked}
-                key={`pref_${option.id}`}
+                key={`${name}_${option.id}`}
               >
                 {option.name}
               </option>
