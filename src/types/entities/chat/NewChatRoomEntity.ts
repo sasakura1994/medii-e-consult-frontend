@@ -5,4 +5,5 @@ export type NewChatRoomEntity = {
   gender: ChatRoomGender;
   age?: number;
   disease_name: string;
+  first_message: string;
 };

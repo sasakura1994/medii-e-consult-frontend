@@ -6,6 +6,8 @@ import { Radio } from '@/components/Parts/Form/Radio';
 import { SelectBox } from '@/components/Parts/Form/SelectBox';
 import { ages, childAges } from '@/data/age';
 import { TextField } from '@/components/Parts/Form/TextField';
+import { consultMessageTemplates } from '@/data/chatRoom';
+import { ExpandTextArea } from '@/components/Parts/Form/ExpandTextArea';
 
 type Props = ReturnType<typeof useNewChatRoom>;
 
@@ -14,6 +16,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
     ageRange,
     childAge,
     formData,
+    selectConsultMessageTemplate,
     setAgeRangeWrapper,
     setChildAgeWrapper,
     setFormData,
@@ -126,6 +129,30 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
             }
             placeholder="例）多関節痛を訴える抗核抗体陽性患者への追加検査"
             required
+          />
+        </div>
+        <NewChatRoomFormLabel className="mt-4">コンサル文</NewChatRoomFormLabel>
+        <div className="mt-6 text-xs font-bold">テンプレートを反映</div>
+        <div className="mt-4 flex flex-row gap-6">
+          {consultMessageTemplates.map((consultMessageTemplate) => (
+            <Radio
+              key={consultMessageTemplate.title}
+              name="consult_message_template"
+              label={consultMessageTemplate.title}
+              onChange={() =>
+                selectConsultMessageTemplate(consultMessageTemplate.text)
+              }
+            />
+          ))}
+        </div>
+        <div className="mt-6">
+          <ExpandTextArea
+            name="first_message"
+            className="min-h-[140px] text-[13px]"
+            value={formData.first_message}
+            onChange={(e) =>
+              setFormData({ ...formData, first_message: e.target.value })
+            }
           />
         </div>
       </div>

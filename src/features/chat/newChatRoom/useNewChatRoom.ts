@@ -9,6 +9,7 @@ export const useNewChatRoom = () => {
     room_type: 'FREE',
     gender: 'man',
     disease_name: '',
+    first_message: '',
   });
   const [ageRange, setAgeRange] = React.useState<AgeRange>('');
   const [childAge, setChildAge] = React.useState<string>('');
@@ -35,11 +36,28 @@ export const useNewChatRoom = () => {
     [formData]
   );
 
+  const selectConsultMessageTemplate = React.useCallback(
+    (firstMessage: string) => {
+      if (
+        formData.first_message.trim() !== '' &&
+        !confirm(
+          'コンサル文にテンプレートを反映します。現在書かれている内容は消えてしまいますがよろしいですか？'
+        )
+      ) {
+        return;
+      }
+
+      setFormData((formData) => ({ ...formData, first_message: firstMessage }));
+    },
+    [formData.first_message]
+  );
+
   return {
     ageRange,
     childAge,
     formData,
     mode,
+    selectConsultMessageTemplate,
     setAgeRange,
     setAgeRangeWrapper,
     setChildAgeWrapper,
