@@ -30,7 +30,7 @@ export const Footer: React.FC = () => {
               href: 'https://e-consult.medii.jp/PrivacyPolicy',
             },
           ].map((e) => (
-            <Link href={e.href}>
+            <Link href={e.href} key={e.href}>
               <a className="mb-4 text-[14px] font-bold text-primary">
                 {e.label}
               </a>
