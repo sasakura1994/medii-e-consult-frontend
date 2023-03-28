@@ -53,9 +53,26 @@ export const useNewChatRoom = () => {
     [formData.first_message]
   );
 
+  const confirmInput = React.useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      setMode('confirm');
+      window.scrollTo(0, 0);
+    },
+    [formData]
+  );
+
+  const backToInput = React.useCallback(() => {
+    setMode('input');
+    window.scrollTo(0, 0);
+  }, []);
+
   return {
     ageRange,
+    backToInput,
     childAge,
+    confirmInput,
     formData,
     mode,
     selectConsultMessageTemplate,
