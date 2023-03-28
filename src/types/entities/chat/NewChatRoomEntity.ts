@@ -6,4 +6,5 @@ export type NewChatRoomEntity = {
   age?: number;
   disease_name: string;
   first_message: string;
+  publishment_accepted: boolean;
 };

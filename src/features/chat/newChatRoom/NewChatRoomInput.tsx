@@ -8,6 +8,7 @@ import { ages, childAges } from '@/data/age';
 import { TextField } from '@/components/Parts/Form/TextField';
 import { consultMessageTemplates } from '@/data/chatRoom';
 import { ExpandTextArea } from '@/components/Parts/Form/ExpandTextArea';
+import { CheckBox } from '@/components/Parts/Form/CheckBox';
 
 type Props = ReturnType<typeof useNewChatRoom>;
 
@@ -25,7 +26,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
   return (
     <>
       <h1 className="text-center text-2xl leading-9">E-コンサル ルーム作成</h1>
-      <div className="mx-auto lg:w-[80%]">
+      <div className="mx-auto mb-10 lg:w-[80%]">
         <NewChatRoomFormLabel className="mt-4">
           専門医指定方法
         </NewChatRoomFormLabel>
@@ -162,6 +163,24 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
           </div>
           <div className="my-6 text-center">
             <button type="submit">プレビュー</button>
+          </div>
+          <div className="mt-6">
+            <CheckBox
+              name="publishment_accepted"
+              label="コンサル事例としての掲載を許可する。"
+              checked={formData.publishment_accepted}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  publishment_accepted: e.target.checked,
+                })
+              }
+            />
+            <div>
+              ※名前などの個人情報は伏せた上で掲載させていただきます。
+              <br />
+              ※専門医も掲載を許可した場合のみ掲載されます。
+            </div>
           </div>
         </div>
       </div>

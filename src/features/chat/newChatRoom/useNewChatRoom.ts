@@ -10,6 +10,7 @@ export const useNewChatRoom = () => {
     gender: 'man',
     disease_name: '',
     first_message: '',
+    publishment_accepted: true,
   });
   const [ageRange, setAgeRange] = React.useState<AgeRange>('');
   const [childAge, setChildAge] = React.useState<string>('');
