@@ -9,12 +9,14 @@ import { TextField } from '@/components/Parts/Form/TextField';
 import { consultMessageTemplates } from '@/data/chatRoom';
 import { ExpandTextArea } from '@/components/Parts/Form/ExpandTextArea';
 import { CheckBox } from '@/components/Parts/Form/CheckBox';
+import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
 
 type Props = ReturnType<typeof useNewChatRoom>;
 
 export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
   const {
     ageRange,
+    errorMessage,
     childAge,
     confirmInput,
     formData,
@@ -171,6 +173,11 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
             <div className="my-6 text-center">
               <button type="submit">プレビュー</button>
             </div>
+            {errorMessage !== '' && (
+              <ErrorMessage className="text-center">
+                {errorMessage}
+              </ErrorMessage>
+            )}
             <div className="mt-6">
               <CheckBox
                 name="publishment_accepted"

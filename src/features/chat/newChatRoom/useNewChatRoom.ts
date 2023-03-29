@@ -1,10 +1,15 @@
+import {
+  PostChatRoomResponseData,
+  usePostChatRoom,
+} from '@/hooks/api/chat/usePostChatRoom';
 import { NewChatRoomEntity } from '@/types/entities/chat/NewChatRoomEntity';
 import React from 'react';
 
 type AgeRange = string | 'child';
+type Mode = 'input' | 'confirm';
 
 export const useNewChatRoom = () => {
-  const [mode, setMode] = React.useState<'input' | 'confirm'>('input');
+  const [mode, setMode] = React.useState<Mode>('input');
   const [formData, setFormData] = React.useState<NewChatRoomEntity>({
     room_type: 'FREE',
     gender: 'man',
@@ -14,6 +19,9 @@ export const useNewChatRoom = () => {
   });
   const [ageRange, setAgeRange] = React.useState<AgeRange>('');
   const [childAge, setChildAge] = React.useState<string>('');
+  const [isSending, setIsSending] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState('');
+  const { createNewChatRoom } = usePostChatRoom();
 
   const setAgeRangeWrapper = React.useCallback(
     (age: AgeRange) => {
@@ -53,32 +61,78 @@ export const useNewChatRoom = () => {
     [formData.first_message]
   );
 
+  const setModeAndScrollToTop = React.useCallback((mode: Mode) => {
+    setMode(mode);
+    window.scrollTo(0, 0);
+  }, []);
+
   const confirmInput = React.useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      setMode('confirm');
-      window.scrollTo(0, 0);
+      setModeAndScrollToTop('confirm');
     },
     [formData]
   );
 
   const backToInput = React.useCallback(() => {
-    setMode('input');
-    window.scrollTo(0, 0);
+    setModeAndScrollToTop('input');
   }, []);
+
+  const submit = React.useCallback(async () => {
+    setIsSending(true);
+    setErrorMessage('');
+
+    // if (this.reConsultChatRoom) {
+    //   formData.re_consult_chat_room_id = this.reConsultChatRoom.chat_room_id
+    //   formData.re_consult_file_chat_message_ids =
+    //     this.reConsultFileMessages.map((chatMessage) => chatMessage.uid)
+    // }
+
+    // formData.target_specialities = formData.target_specialities.map(
+    //   (medicalSpeciality) => medicalSpeciality.speciality_code
+    // )
+
+    const response = await createNewChatRoom({
+      ...formData,
+      chat_draft_image_ids: [],
+      target_specialities: [],
+    }).catch((error) => {
+      console.error(error);
+      setErrorMessage(
+        (error.response.data as PostChatRoomResponseData).message
+      );
+      return null;
+    });
+
+    if (!response) {
+      setIsSending(false);
+      setModeAndScrollToTop('input');
+      return;
+    }
+
+    if (response.data.code !== 1) {
+      setIsSending(false);
+      setErrorMessage(response.data.message);
+      setModeAndScrollToTop('input');
+      return;
+    }
+  }, [formData]);
 
   return {
     ageRange,
     backToInput,
     childAge,
     confirmInput,
+    errorMessage,
     formData,
+    isSending,
     mode,
     selectConsultMessageTemplate,
     setAgeRange,
     setAgeRangeWrapper,
     setChildAgeWrapper,
     setFormData,
+    submit,
   };
 };

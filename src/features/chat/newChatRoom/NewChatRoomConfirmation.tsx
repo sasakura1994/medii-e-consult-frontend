@@ -2,11 +2,13 @@ import React from 'react';
 import { useNewChatRoom } from '@/features/chat/newChatRoom/useNewChatRoom';
 import { NewChatRoomConfirmationLabel } from './NewChatRoomConfirmationLabel';
 import { NewChatRoomConfirmationValue } from './NewChatRoomConfirmationValue';
+import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 
 type Props = ReturnType<typeof useNewChatRoom>;
 
 export const NewChatRoomConfirmation: React.FC<Props> = (props: Props) => {
-  const { ageRange, backToInput, childAge, formData } = props;
+  const { ageRange, backToInput, childAge, formData, isSending, submit } =
+    props;
 
   return (
     <>
@@ -36,14 +38,22 @@ export const NewChatRoomConfirmation: React.FC<Props> = (props: Props) => {
           {formData.first_message}
         </div>
         <div className="mt-8 text-center">
-          <button type="button" onClick={() => backToInput()}>
-            編集
-          </button>
-        </div>
-        <div className="mt-4 text-center">
-          <button type="button" onClick={() => backToInput()}>
-            E-コンサルを開始
-          </button>
+          {!isSending ? (
+            <>
+              <div>
+                <button type="button" onClick={() => backToInput()}>
+                  編集
+                </button>
+              </div>
+              <div className="mt-4">
+                <button type="button" onClick={() => submit()}>
+                  E-コンサルを開始
+                </button>
+              </div>
+            </>
+          ) : (
+            <SpinnerBorder />
+          )}
         </div>
       </div>
     </>
