@@ -1,12 +1,24 @@
 import React from 'react';
 
 type PropsType = {
-  text: string;
-  styles?: string;
+  children?: React.ReactNode;
+  className?: string;
 };
 
 export const Badge: React.FC<PropsType> = (props) => {
-  const { text, styles } = props;
+  const { children, className } = props;
 
-  return <span className={styles}>{text}</span>;
+  return (
+    <span
+      className={`
+        rounded-full
+        bg-danger
+        text-center
+        text-white
+        ${className}
+      `}
+    >
+      {children}
+    </span>
+  );
 };
