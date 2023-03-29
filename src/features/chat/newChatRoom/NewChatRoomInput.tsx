@@ -10,6 +10,7 @@ import { consultMessageTemplates } from '@/data/chatRoom';
 import { ExpandTextArea } from '@/components/Parts/Form/ExpandTextArea';
 import { CheckBox } from '@/components/Parts/Form/CheckBox';
 import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
+import { ImageEditor } from '@/components/Parts/ImageEditor/ImageEditor';
 
 type Props = ReturnType<typeof useNewChatRoom>;
 
@@ -199,6 +200,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
           </div>
         </form>
       </div>
+      <ImageEditor />
     </>
   );
 };
