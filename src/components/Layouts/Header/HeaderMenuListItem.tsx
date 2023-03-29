@@ -22,19 +22,9 @@ export const HeaderMenuListItem: React.FC<Props> = ({
       {/*  暫定。他のバッジのパターンがあれば別のやり方のほうが良いかもしれない。
       もしくはバッジがある場合はこのコンポーネントを使わないなど */}
       {badgeText && (
-        <Badge
-          text={badgeText}
-          styles="bg-red-400
-                      text-white
-                      text-xxs
-                      text-center
-                      leading-normal
-                      w-[33px]
-                      rounded-full
-                      absolute
-                      top-[-11px]
-                      -left-0.5"
-        />
+        <Badge className="absolute top-[-11px] -left-0.5 w-[33px] text-xxs">
+          {badgeText}
+        </Badge>
       )}
     </li>
   );

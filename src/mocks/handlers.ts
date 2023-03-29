@@ -9,6 +9,7 @@ import {
   postAmazonGiftsMock,
 } from '@/features/mypages/amazonGift/amazonGiftMock';
 import { getQrCodeMock } from '@/features/mypages/affiliate/affiliateMock';
+import { registerMock } from '@/features/register/registerMock';
 
 export const handlers = [
   rest.get('https://chart.googleapis.com/chart', getQrCodeMock),
@@ -18,4 +19,5 @@ export const handlers = [
   rest.get('/api/medii_point/point_history', getPointHistoriesMock),
   rest.get('/api/amazon_gift/amazon_gift_list', getAmazonGiftsMock),
   rest.post('/api/amazon_gift/purchase_amazon_gift', postAmazonGiftsMock),
+  rest.post('/api/doctor/create_account', registerMock),
 ];

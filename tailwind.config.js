@@ -7,6 +7,7 @@ module.exports = {
       colors: {
         primary: '#5c6bc0',
         error: '#f27474',
+        danger: '#f5847d',
         'toast-success': '#3f51b5',
         'toast-error': '#f27474',
         'login-container-frame': '#ddd',
