@@ -24,19 +24,9 @@ export const FooterSpMenu: React.FC = () => {
               所属グループ
             </a>
           </Link>
-          <Badge
-            text="NEW"
-            styles="bg-red-400
-                    text-white
-                    text-xxs
-                    text-center
-                    leading-normal
-                    w-[33px]
-                    rounded-full
-                    absolute
-                    top-4
-                    right-0"
-          />
+          <Badge className="absolute top-4 right-0 w-[33px] text-xxs">
+            NEW
+          </Badge>
         </li>
         <li className={styles.sp_footer_menu__item}>
           <Link href="/">
