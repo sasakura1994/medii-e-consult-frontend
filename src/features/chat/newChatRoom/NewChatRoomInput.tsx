@@ -10,7 +10,17 @@ import { consultMessageTemplates } from '@/data/chatRoom';
 import { ExpandTextArea } from '@/components/Parts/Form/ExpandTextArea';
 import { CheckBox } from '@/components/Parts/Form/CheckBox';
 import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
-import { ImageEditor } from '@/components/Parts/ImageEditor/ImageEditor';
+import ImageEditor, {
+  ImageEditorProps,
+} from '@/components/Parts/ImageEditor/ImageEditor';
+import dynamic, { DynamicOptions } from 'next/dynamic';
+const ImageEditorComponent = dynamic<ImageEditorProps>(
+  (() =>
+    import(
+      '@/components/Parts/ImageEditor/ImageEditor'
+    )) as DynamicOptions<ImageEditorProps>,
+  { ssr: false }
+) as typeof ImageEditor;
 
 type Props = ReturnType<typeof useNewChatRoom>;
 
@@ -214,7 +224,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
           </div>
         </form>
       </div>
-      {editingImage && <ImageEditor file={editingImage} />}
+      {editingImage && <ImageEditorComponent file={editingImage} />}
     </>
   );
 };

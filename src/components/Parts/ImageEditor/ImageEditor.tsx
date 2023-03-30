@@ -2,20 +2,20 @@ import React from 'react';
 import { useImageEditor } from './useImageEditor';
 import styles from './ImageEditor.module.scss';
 import { ImageEditorPenSize } from './ImageEditorPenSize';
+import { Layer, Image, Stage } from 'react-konva';
 
 export type ImageEditorProps = {
   file: File;
 };
 
-export const ImageEditor: React.FC<ImageEditorProps> = (
-  props: ImageEditorProps
-) => {
+const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
   const {
     canvasWidth,
     canvasHeight,
-    drawCanvasRef,
+    // drawCanvasRef,
+    image,
     imageAreaRef,
-    imageCanvasRef,
+    // imageCanvasRef,
     imageWidth,
     imageHeight,
     onMouseDown,
@@ -76,35 +76,37 @@ export const ImageEditor: React.FC<ImageEditorProps> = (
             max-w-[80%]
             overflow-auto
           "
-          style={{
-            width: `${canvasWidth}px`,
-            height: `${canvasHeight}px`,
-          }}
+          style={
+            canvasWidth > 0
+              ? {
+                  width: `${canvasWidth}px`,
+                  height: `${canvasHeight}px`,
+                }
+              : {}
+          }
         >
           <div className="relative">
-            <canvas
-              ref={drawCanvasRef}
-              className="absolute inset-0 z-20 cursor-crosshair"
-              style={{
-                width: `${canvasWidth}px`,
-                height: `${canvasHeight}px`,
-              }}
-              width={imageWidth}
-              height={imageHeight}
-              onMouseDown={onMouseDown}
-              onMouseMove={onMouseMove}
-              onMouseUp={onMouseUp}
-            ></canvas>
-            <canvas
-              ref={imageCanvasRef}
-              className="absolute inset-0 z-10 cursor-crosshair"
-              style={{
-                width: `${canvasWidth}px`,
-                height: `${canvasHeight}px`,
-              }}
-              width={imageWidth}
-              height={imageHeight}
-            ></canvas>
+            <Stage width={canvasWidth} height={canvasHeight}>
+              <Layer
+                // ref={drawCanvasRef}
+                className="absolute inset-0 z-20 cursor-crosshair"
+                onMouseDown={onMouseDown}
+                onMouseMove={onMouseMove}
+                onMouseUp={onMouseUp}
+              ></Layer>
+              <Layer
+                // ref={imageCanvasRef}
+                className="absolute inset-0 z-10 cursor-crosshair"
+              >
+                {image && (
+                  <Image
+                    image={image}
+                    width={canvasWidth}
+                    height={canvasHeight}
+                  />
+                )}
+              </Layer>
+            </Stage>
           </div>
         </div>
       </div>
@@ -155,3 +157,5 @@ export const ImageEditor: React.FC<ImageEditorProps> = (
     </div>
   );
 };
+
+export default ImageEditor;
