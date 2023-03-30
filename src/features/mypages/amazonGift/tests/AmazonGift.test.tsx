@@ -1,105 +1,149 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { render, screen, act, waitFor } from '@testing-library/react';
+import { render, screen, act, waitFor, cleanup } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
 import { AmazonGift } from '../AmazonGift';
 
+const priceListMock = [1000, 3000, 5000, 10000];
+
+jest.mock('@/features/mypages/pointHistory/useFetchCurrentPoint', () => ({
+  useFetchCurrentPoint: jest.fn(() => {
+    return {
+      currentPoint: 3500,
+    };
+  }),
+}));
+
+jest.mock('@/features/mypages/amazonGift/useFetchAmazonGift', () => ({
+  useFetchAmazonGift: jest.fn(() => {
+    return {
+      amazonGifts: [
+        {
+          uid: 66,
+          created_date: '2023-03-20T13:51:41',
+          status: 'CONFIRMED',
+          size: 1000,
+          request_id: 'Mediistg0000000066',
+          last_displayed_date: null,
+        },
+        {
+          uid: 65,
+          created_date: '2023-03-13T22:06:05',
+          status: 'UNCONFIRMED',
+          size: 1000,
+          request_id: 'Mediistg0000000065',
+          last_displayed_date: null,
+        },
+        {
+          uid: 63,
+          created_date: '2023-02-20T15:55:32',
+          status: 'CONFIRMED',
+          size: 1000,
+          request_id: 'Mediistg0000000063',
+          last_displayed_date: null,
+        },
+      ],
+    };
+  }),
+}));
+
+const getRender = async () => {
+  await act(() => {
+    render(
+      <RecoilRoot>
+        <AmazonGift />
+      </RecoilRoot>
+    );
+  });
+};
+
+afterEach(() => cleanup());
+
 describe('AmazonGiftComponent', () => {
-  test.todo(
-    'Need to implement: should price button is selected the exchange button must be enabled.'
-  );
-  // test('should price button is selected the exchange button must be enabled.', async () => {
-  //   await act(() => {
-  //     render(
-  //       <RecoilRoot>
-  //         <AmazonGift />
-  //       </RecoilRoot>
-  //     );
-  //   });
+  test('Mediiポイントが表示されること', async () => {
+    getRender();
+    const mediiPointText = screen.getByTestId('txt-current-point');
+    expect(mediiPointText.textContent).toBe('3500');
+  });
 
-  //   const exchangeBtn = screen.getByTestId('btn-exchange');
-  //   expect(exchangeBtn).toBeDisabled();
+  test('金額交換ボタンが表示されること', async () => {
+    getRender();
+    priceListMock.forEach((price) => {
+      const selectBtn = screen.getByTestId(`btn-select-${price}`);
+      expect(selectBtn).toBeInTheDocument();
+    });
+  });
 
-  //   const selectBtn = screen.getByTestId('btn-select-1000');
-  //   expect(selectBtn).toBeEnabled();
-  //   await act(async () => {
-  //     userEvent.click(selectBtn);
-  //   });
+  test('3000円までのボタンがアクティブでそれ以外は非アクティブになっていること', async () => {
+    getRender();
 
-  //   await waitFor(() => {
-  //     expect(exchangeBtn).toBeEnabled();
-  //   });
-  // });
+    const selectBtn1000 = screen.getByTestId('btn-select-1000');
+    expect(selectBtn1000).toBeEnabled();
 
-  test.todo('Need to implement: should exchange button click to show dialog');
-  // test('should exchange button click to show dialog', async () => {
-  //   await act(() => {
-  //     render(
-  //       <RecoilRoot>
-  //         <AmazonGift />
-  //       </RecoilRoot>
-  //     );
-  //   });
+    const selectBtn3000 = screen.getByTestId('btn-select-3000');
+    expect(selectBtn3000).toBeEnabled();
 
-  //   const exchangeBtn = screen.getByTestId('btn-exchange');
-  //   expect(exchangeBtn).toBeDisabled();
+    const selectBtn5000 = screen.getByTestId('btn-select-5000');
+    expect(selectBtn5000).toBeDisabled();
 
-  //   const selectBtn = screen.getByTestId('btn-select-1000');
-  //   expect(selectBtn).toBeEnabled();
-  //   await act(async () => {
-  //     userEvent.click(selectBtn);
-  //   });
+    const selectBtn10000 = screen.getByTestId('btn-select-10000');
+    expect(selectBtn10000).toBeDisabled();
+  });
 
-  //   await waitFor(() => {
-  //     expect(exchangeBtn).toBeEnabled();
-  //   });
+  test('有効な金額交換ボタンをクリックするとAmazonギフトに交換するボタンがアクティブになること', async () => {
+    getRender();
 
-  //   await act(async () => {
-  //     userEvent.click(exchangeBtn);
-  //   });
+    const btnExchange = screen.getByTestId('btn-exchange');
+    expect(btnExchange).toBeDisabled();
 
-  //   const exchangeDialog = screen.getByTestId('amazon-gift-exchange-dialog');
-  //   expect(exchangeDialog).toBeInTheDocument();
-  // });
+    const selectBtn = screen.getByTestId('btn-select-3000');
+    await act(async () => {
+      userEvent.click(selectBtn);
+    });
 
-  test.todo('Need to implement: ポイント交換が実行できること');
-  // test('ポイント交換が実行できること', async () => {
-  //   await act(() => {
-  //     render(
-  //       <RecoilRoot>
-  //         <AmazonGift />
-  //       </RecoilRoot>
-  //     );
-  //   });
+    expect(btnExchange).toBeEnabled();
+  });
 
-  //   const exchangeBtn = screen.getByTestId('btn-exchange');
-  //   expect(exchangeBtn).toBeDisabled();
+  test('Amazonギフトに交換するボタンクリックするとダイアログが表示されること', async () => {
+    getRender();
 
-  //   const selectBtn = screen.getByTestId('btn-select-1000');
-  //   expect(selectBtn).toBeEnabled();
-  //   await act(async () => {
-  //     userEvent.click(selectBtn);
-  //   });
+    const selectBtn = screen.getByTestId('btn-select-1000');
+    await act(async () => {
+      userEvent.click(selectBtn);
+    });
 
-  //   await waitFor(() => {
-  //     expect(exchangeBtn).toBeEnabled();
-  //   });
+    const btnExchange = screen.getByTestId('btn-exchange');
+    await act(async () => {
+      userEvent.click(btnExchange);
+    });
 
-  //   await act(async () => {
-  //     userEvent.click(exchangeBtn);
-  //   });
+    const dialog = screen.getByTestId('amazon-gift-exchange-dialog');
+    expect(dialog).toBeInTheDocument();
+  });
 
-  //   const exchangeDialog = screen.getByTestId('amazon-gift-exchange-dialog');
-  //   expect(exchangeDialog).toBeInTheDocument();
+  test('ポイント交換が実行できること', async () => {
+    getRender();
 
-  //   const execExchangeBtn = screen.getByTestId('btn-exec-exchange');
-  //   await act(async () => {
-  //     userEvent.click(execExchangeBtn);
-  //   });
+    const selectBtn = screen.getByTestId('btn-select-1000');
+    await act(async () => {
+      userEvent.click(selectBtn);
+    });
 
-  //   await waitFor(() => {
-  //     const txtExchangeCompleted = screen.getByTestId('txt-exchange-completed');
-  //     expect(txtExchangeCompleted).toBeInTheDocument();
-  //   });
-  // });
+    const btnExchange = screen.getByTestId('btn-exchange');
+    await act(async () => {
+      userEvent.click(btnExchange);
+    });
+
+    const execExchangeBtn = screen.getByTestId('btn-exec-exchange');
+    await act(async () => {
+      userEvent.click(execExchangeBtn);
+    });
+
+    await waitFor(() => {
+      const txtExchangeCompleted = screen.getByTestId('txt-exchange-completed');
+      expect(txtExchangeCompleted).toBeInTheDocument();
+    });
+  });
+
+  test.todo('Amazonギフト一覧が表示されること');
 });

@@ -23,6 +23,7 @@ export type UseAmazonGiftType = {
   showGiftCode: (requestId: string, pinCode: string) => void;
   resendPinCode: (requestId: string) => void;
   closeCodeComfirmDialog: () => void;
+  getExchangeStatusTitle: (status: string) => string;
 };
 
 export const useAmazonGift = (): UseAmazonGiftType => {
@@ -159,6 +160,15 @@ export const useAmazonGift = (): UseAmazonGiftType => {
     }));
   };
 
+  const getExchangeStatusTitle = (status: string): string => {
+    if (status === 'CONFIRMED') {
+      return '発行済み';
+    } else if (status === 'UNCONFIRMED') {
+      return '発行作業中';
+    }
+    return '';
+  };
+
   return {
     priceList: [1000, 3000, 5000, 10000],
     currentPoint: currentPoint || 0,
@@ -173,5 +183,6 @@ export const useAmazonGift = (): UseAmazonGiftType => {
     showGiftCode,
     resendPinCode,
     closeCodeComfirmDialog,
+    getExchangeStatusTitle,
   };
 };
