@@ -97,26 +97,38 @@ const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
               onMouseDown={onMouseDown}
               onMouseMove={onMouseMove}
               onMouseUp={onMouseUp}
+              style={{ zIndex: 2, position: 'absolute' }}
             >
               <Layer
                 className="absolute inset-0 z-10 cursor-crosshair"
-                style={{ zIndex: 2 }}
                 ref={drawCanvasRef}
               >
                 {[...lines, drawingPoints].map((line, index) => (
-                  <>
-                    <Line
-                      points={line}
-                      key={index}
-                      stroke={lineColor}
-                      fill={lineColor}
-                      strokeWidth={lineWidth / 2}
-                      lineCap="round"
-                    />
-                  </>
+                  <Line
+                    points={line}
+                    key={index}
+                    stroke={lineColor}
+                    fill={lineColor}
+                    strokeWidth={lineWidth / 2}
+                    lineCap="round"
+                  />
                 ))}
               </Layer>
             </Stage>
+            {image && (
+              <img
+                src={image.src}
+                style={{
+                  width: `${canvasWidth}px`,
+                  height: `${canvasHeight}px`,
+                  left: 0,
+                  top: 0,
+                  zIndex: 1,
+                }}
+                className="absolute"
+                onDragStart={() => false}
+              />
+            )}
           </div>
         </div>
       </div>
