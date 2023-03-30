@@ -5,51 +5,30 @@ import { RecoilRoot } from 'recoil';
 import { NotifySettings } from '../NotifySettings';
 
 describe('NotifySettings', () => {
-  test.todo(
-    'Need to implement: 新着メッセージ通知のラジオボタンが選択できること'
-  );
-  // test('新着メッセージ通知のラジオボタンが選択できること', async () => {
-  //   await act(() => {
-  //     render(
-  //       <RecoilRoot>
-  //         <NotifySettings />
-  //       </RecoilRoot>
-  //     );
-  //   });
+  test('ラジオボタンが選択できること', async () => {
+    await act(() => {
+      render(
+        <RecoilRoot>
+          <NotifySettings />
+        </RecoilRoot>
+      );
+    });
 
-  //   const radios = screen.getAllByTestId('radio-new-notify');
+    const radios = screen.getAllByRole('radio');
 
-  //   expect(radios[0]).not.toBeChecked(); // メール・プッシュ
-  //   act(() => userEvent.click(radios[0]));
-  //   expect(radios[0]).toBeChecked();
+    act(() => userEvent.click(radios[0]));
+    expect(radios[0]).toBeChecked();
 
-  //   expect(radios[1]).not.toBeChecked(); // メール
-  //   act(() => userEvent.click(radios[1]));
-  //   expect(radios[1]).toBeChecked();
+    act(() => userEvent.click(radios[1]));
+    expect(radios[1]).toBeChecked();
 
-  //   expect(radios[2]).not.toBeChecked(); // プッシュ
-  //   act(() => userEvent.click(radios[2]));
-  //   expect(radios[2]).toBeChecked();
-  // });
+    act(() => userEvent.click(radios[2]));
+    expect(radios[2]).toBeChecked();
 
-  test.todo('Need to implement: お知らせメールのラジオボタンが選択できること');
-  // test('お知らせメールのラジオボタンが選択できること', async () => {
-  //   await act(() => {
-  //     render(
-  //       <RecoilRoot>
-  //         <NotifySettings />
-  //       </RecoilRoot>
-  //     );
-  //   });
+    act(() => userEvent.click(radios[3]));
+    expect(radios[3]).toBeChecked();
 
-  //   const radios = screen.getAllByTestId('radio-seminar-notify');
-
-  //   expect(radios[0]).not.toBeChecked(); // 受け取る
-  //   act(() => userEvent.click(radios[0]));
-  //   expect(radios[0]).toBeChecked();
-
-  //   expect(radios[1]).not.toBeChecked(); // 受け取らない
-  //   act(() => userEvent.click(radios[1]));
-  //   expect(radios[1]).toBeChecked();
-  // });
+    act(() => userEvent.click(radios[4]));
+    expect(radios[4]).toBeChecked();
+  });
 });
