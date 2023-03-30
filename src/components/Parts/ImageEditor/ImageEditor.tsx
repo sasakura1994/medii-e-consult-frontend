@@ -97,6 +97,7 @@ const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
               onMouseDown={onMouseDown}
               onMouseMove={onMouseMove}
               onMouseUp={onMouseUp}
+              onMouseOut={onMouseUp}
               style={{ zIndex: 2, position: 'absolute' }}
             >
               <Layer
