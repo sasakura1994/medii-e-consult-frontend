@@ -3,16 +3,18 @@ import styles from './Profile.module.scss';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import { useClipboard } from '@/hooks/useClipboard';
-import { useEditProfile } from './useEditProfile';
+import { useProfile } from './useProfile';
 import { UrlPublish } from './UrlPublish';
 import { Detail } from './Detail';
 import { Edit } from './Edit';
+import { Modal } from '@/components/Parts/Modal/Modal';
 
 export const Profile: React.FC = () => {
   const accountId = 'AC10-6226-9933-69'; // TODO: ログイン情報から取得する
   const clipboardUrl = `${process.env.WEB_SERVER_URL}/NewChatRoom?target_account_id=${accountId}`;
   const { isError, clipboard } = useClipboard(clipboardUrl);
-  const { editProfileScreen } = useEditProfile();
+  const { editProfileScreen, showModal, setShowModal } = useProfile();
+  const [showOtherModal, setOtherModal] = React.useState(false); // TODO: テスト用のステートなので動作確認後削除する
 
   return (
     <>
@@ -20,7 +22,7 @@ export const Profile: React.FC = () => {
 
       <div className={styles.edit_profile}>
         <Detail />
-        <Edit />
+        <Edit setShowModal={setShowModal} />
       </div>
 
       {editProfileScreen.isEditOpen && (
@@ -74,6 +76,30 @@ export const Profile: React.FC = () => {
             : 'bg-toast-success text-white text-center py-2 shadow-md'
         }
       />
+
+      {/* TODO: モーダルは仮実装となるので、適宜中身を実装する */}
+      <Modal isShow={showModal} setShowModal={setShowModal}>
+        <div className="h-32 w-64 rounded-md bg-white p-4">
+          <h2 className="mb-3">モーダル</h2>
+
+          <div className="text-center">
+            <button
+              type="button"
+              className="rounded border border-solid border-primary px-4 py-2"
+              onClick={() => setOtherModal(true)}
+            >
+              open other modal
+            </button>
+          </div>
+        </div>
+      </Modal>
+
+      {/* TODO: このモーダルはサンプルとして実装しているので、確認後削除する */}
+      <Modal isShow={showOtherModal} setShowModal={setOtherModal}>
+        <div className="h-48 w-80 rounded-md bg-red-300 p-4">
+          <h2 className="mb-3">別のモーダル</h2>
+        </div>
+      </Modal>
     </>
   );
 };

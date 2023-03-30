@@ -15,8 +15,8 @@ export type UseNotifySettingsType = {
 };
 
 export const useNotifySettings = (): UseNotifySettingsType => {
-  const [profile, setProfile] = useRecoilState(profileState);
-  const { isLoading, profile: profileData } = useFetchProfile();
+  const [profile, setProfileData] = useRecoilState(profileState);
+  const { profile: profileData } = useFetchProfile();
   const { isSuccess, isError, updateProfile } = useUpdateProfile();
 
   /**
@@ -36,21 +36,6 @@ export const useNotifySettings = (): UseNotifySettingsType => {
       toast('通知設定を変更しました');
     }
   }, [isSuccess]);
-
-  /**
-   * プロフィールデータの状態管理
-   */
-  React.useEffect(() => {
-    if (isLoading && !profileData) {
-      return;
-    }
-
-    // Recoil のデフォルト値がここで swr から取得したモックに差し変わる
-    setProfile((oldValues) => ({
-      ...oldValues,
-      ...profileData,
-    }));
-  }, [isLoading, profileData]);
 
   /**
    * 新着メッセージ通知の選択処理
@@ -85,12 +70,12 @@ export const useNotifySettings = (): UseNotifySettingsType => {
           break;
       }
 
-      setProfile((oldValues: ProfileEntityType) => ({
+      setProfileData((oldValues: ProfileEntityType) => ({
         ...oldValues,
         ...notifyNewFlags,
       }));
     },
-    [setProfile]
+    [setProfileData]
   );
 
   /**
@@ -111,12 +96,12 @@ export const useNotifySettings = (): UseNotifySettingsType => {
           break;
       }
 
-      setProfile((oldValues: ProfileEntityType) => ({
+      setProfileData((oldValues: ProfileEntityType) => ({
         ...oldValues,
         not_seminar_mail_target: notifySeminarFlags,
       }));
     },
-    [setProfile]
+    [setProfileData]
   );
 
   /**
@@ -125,6 +110,20 @@ export const useNotifySettings = (): UseNotifySettingsType => {
   const update = () => {
     updateProfile(profile);
   };
+
+  /**
+   * プロフィールをフェッチできたらグローバルステートに保持する
+   * Note:
+   *       ログイン時（useLogin）にもステートに値がセットされているが、
+   *       ログイン後はリダイレクトが走って中身が消えてしまうので、一旦ここで再セットするようにしている
+   */
+  React.useEffect(() => {
+    if (!profileData) return;
+    setProfileData((oldValues: ProfileEntityType) => ({
+      ...oldValues,
+      ...profileData,
+    }));
+  }, [profileData]);
 
   return {
     profile,
