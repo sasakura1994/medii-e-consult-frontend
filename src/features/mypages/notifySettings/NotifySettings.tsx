@@ -25,7 +25,11 @@ export const NotifySettings: React.FC = () => {
                 <Radio
                   value="mail-push"
                   name="new_notify"
-                  checked={profile?.is_mail_notify && profile?.is_push_notify}
+                  checked={
+                    profile?.is_mail_notify && profile?.is_push_notify
+                      ? true
+                      : false
+                  }
                   id="mail-push"
                   label="メール・プッシュ通知両方受け取る"
                   onChange={changeNotifyNew}
@@ -35,7 +39,11 @@ export const NotifySettings: React.FC = () => {
                 <Radio
                   value="mail"
                   name="new_notify"
-                  checked={profile?.is_mail_notify && !profile?.is_push_notify}
+                  checked={
+                    profile?.is_mail_notify && !profile?.is_push_notify
+                      ? true
+                      : false
+                  }
                   id="mail"
                   label="メール通知"
                   onChange={changeNotifyNew}
@@ -45,7 +53,11 @@ export const NotifySettings: React.FC = () => {
                 <Radio
                   value="push"
                   name="new_notify"
-                  checked={!profile?.is_mail_notify && profile?.is_push_notify}
+                  checked={
+                    !profile?.is_mail_notify && profile?.is_push_notify
+                      ? true
+                      : false
+                  }
                   id="push"
                   label="プッシュ通知（パソコン／アプリ版）"
                   onChange={changeNotifyNew}
@@ -64,7 +76,7 @@ export const NotifySettings: React.FC = () => {
                 <Radio
                   value="permit"
                   name="seminar_notify"
-                  checked={!profile?.not_seminar_mail_target}
+                  checked={!profile?.not_seminar_mail_target ? true : false}
                   id="permit"
                   label="プッシュ通知（パソコン／アプリ版）"
                   onChange={changeNotifySeminar}
@@ -74,7 +86,7 @@ export const NotifySettings: React.FC = () => {
                 <Radio
                   value="deny"
                   name="seminar_notify"
-                  checked={profile?.not_seminar_mail_target}
+                  checked={profile?.not_seminar_mail_target ? true : false}
                   id="deny"
                   label="メール通知を受け取らない"
                   onChange={changeNotifySeminar}

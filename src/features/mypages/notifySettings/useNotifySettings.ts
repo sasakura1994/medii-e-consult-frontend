@@ -1,7 +1,7 @@
 import React from 'react';
 import { toast } from 'react-toastify';
 import { profileState } from '@/globalStates/profileState';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { useUpdateProfile } from '@/hooks/api/doctor/useUpdateProfile';
 import type { ProfileEntityType } from '@/types/entities/profileEntity';
@@ -15,8 +15,8 @@ export type UseNotifySettingsType = {
 };
 
 export const useNotifySettings = (): UseNotifySettingsType => {
-  const setProfile = useSetRecoilState(profileState);
-  const { profile } = useFetchProfile();
+  const [profile, setProfileData] = useRecoilState(profileState);
+  const { profile: profileData } = useFetchProfile();
   const { isSuccess, isError, updateProfile } = useUpdateProfile();
 
   /**
@@ -70,12 +70,12 @@ export const useNotifySettings = (): UseNotifySettingsType => {
           break;
       }
 
-      setProfile((oldValues: ProfileEntityType) => ({
+      setProfileData((oldValues: ProfileEntityType) => ({
         ...oldValues,
         ...notifyNewFlags,
       }));
     },
-    [setProfile]
+    [setProfileData]
   );
 
   /**
@@ -96,12 +96,12 @@ export const useNotifySettings = (): UseNotifySettingsType => {
           break;
       }
 
-      setProfile((oldValues: ProfileEntityType) => ({
+      setProfileData((oldValues: ProfileEntityType) => ({
         ...oldValues,
         not_seminar_mail_target: notifySeminarFlags,
       }));
     },
-    [setProfile]
+    [setProfileData]
   );
 
   /**
@@ -110,6 +110,20 @@ export const useNotifySettings = (): UseNotifySettingsType => {
   const update = () => {
     updateProfile(profile);
   };
+
+  /**
+   * プロフィールをフェッチできたらグローバルステートに保持する
+   * Note:
+   *       ログイン時（useLogin）にもステートに値がセットされているが、
+   *       ログイン後はリダイレクトが走って中身が消えてしまうので、一旦ここで再セットするようにしている
+   */
+  React.useEffect(() => {
+    if (!profileData) return;
+    setProfileData((oldValues: ProfileEntityType) => ({
+      ...oldValues,
+      ...profileData,
+    }));
+  }, [profileData]);
 
   return {
     profile,
