@@ -1,17 +1,12 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { Layer } from 'react-konva';
 import { KonvaEventObject } from 'konva/lib/Node';
 import React from 'react';
 import { ImageEditorProps } from './ImageEditor';
 
-type Point = {
-  x: number;
-  y: number;
-};
-
 type LineWidthType = 'thin' | 'normal' | 'thick';
 
 export const useImageEditor = (props: ImageEditorProps) => {
-  const [oldPoint, setOldPoint] = React.useState<Point>();
   const [isDown, setIsDown] = React.useState(false);
   const [scale, setScale] = React.useState(1.0);
   const [minScale, setMinScale] = React.useState(0.0);
@@ -20,10 +15,11 @@ export const useImageEditor = (props: ImageEditorProps) => {
   const [lineBaseWidth, setLineBaseWidth] = React.useState(50);
   const [lineWidthType, setLineWidthType] =
     React.useState<LineWidthType>('normal');
-  const [drawingPoints, setDrawingPoints] = React.useState<Point[]>([]);
-  const [lines, setLines] = React.useState<Point[][]>([]);
+  const [drawingPoints, setDrawingPoints] = React.useState<number[]>([]);
+  const [lines, setLines] = React.useState<number[][]>([]);
   const [image, setImage] = React.useState<HTMLImageElement>();
   const imageAreaRef = React.useRef<HTMLDivElement>(null);
+  const drawCanvasRef = React.useRef(null);
   const canvasWidth = Math.floor(imageWidth * scale);
   const canvasHeight = Math.floor(imageHeight * scale);
   const lineWidth = React.useMemo(() => {
@@ -81,13 +77,8 @@ export const useImageEditor = (props: ImageEditorProps) => {
 
   const onMouseDown = React.useCallback((e: KonvaEventObject<MouseEvent>) => {
     setIsDown(true);
-    // const rect = drawCanvasRef.current!.getBoundingClientRect();
-    // setDrawingPoints([
-    //   {
-    //     x: e.evt.clientX - rect.left,
-    //     y: e.evt.clientY - rect.top,
-    //   },
-    // ]);
+    const pos = e.target.getPosition();
+    setDrawingPoints([e.evt.offsetX - pos.x, e.evt.offsetY - pos.y]);
   }, []);
 
   const onMouseMove = React.useCallback(
@@ -97,14 +88,12 @@ export const useImageEditor = (props: ImageEditorProps) => {
       }
 
       setIsDown(true);
-      // const rect = drawCanvasRef.current!.getBoundingClientRect();
-      // setDrawingPoints((drawingPoints) => [
-      //   ...drawingPoints,
-      //   {
-      //     x: e.evt.clientX - rect.left,
-      //     y: e.evt.clientY - rect.top,
-      //   },
-      // ]);
+      const pos = e.target.getPosition();
+      setDrawingPoints((drawingPoints) => [
+        ...drawingPoints,
+        e.evt.offsetX - pos.x,
+        e.evt.offsetY - pos.y,
+      ]);
     },
     [isDown]
   );
@@ -121,12 +110,15 @@ export const useImageEditor = (props: ImageEditorProps) => {
   return {
     canvasWidth,
     canvasHeight,
-    // drawCanvasRef,
+    drawCanvasRef,
+    drawingPoints,
     image,
     imageAreaRef,
     // imageCanvasRef,
     imageWidth,
     imageHeight,
+    lines,
+    lineWidth,
     onMouseDown,
     onMouseMove,
     onMouseUp,

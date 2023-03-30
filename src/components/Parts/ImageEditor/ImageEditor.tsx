@@ -2,7 +2,9 @@ import React from 'react';
 import { useImageEditor } from './useImageEditor';
 import styles from './ImageEditor.module.scss';
 import { ImageEditorPenSize } from './ImageEditorPenSize';
-import { Layer, Image, Stage } from 'react-konva';
+import { Layer, Line, Image, Stage, Circle } from 'react-konva';
+
+const lineColor = '#F5847D';
 
 export type ImageEditorProps = {
   file: File;
@@ -12,12 +14,15 @@ const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
   const {
     canvasWidth,
     canvasHeight,
-    // drawCanvasRef,
+    drawCanvasRef,
+    drawingPoints,
     image,
     imageAreaRef,
     // imageCanvasRef,
     imageWidth,
     imageHeight,
+    lines,
+    lineWidth,
     onMouseDown,
     onMouseMove,
     onMouseUp,
@@ -86,25 +91,30 @@ const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
           }
         >
           <div className="relative">
-            <Stage width={canvasWidth} height={canvasHeight}>
+            <Stage
+              width={canvasWidth}
+              height={canvasHeight}
+              onMouseDown={onMouseDown}
+              onMouseMove={onMouseMove}
+              onMouseUp={onMouseUp}
+            >
               <Layer
-                // ref={drawCanvasRef}
-                className="absolute inset-0 z-20 cursor-crosshair"
-                onMouseDown={onMouseDown}
-                onMouseMove={onMouseMove}
-                onMouseUp={onMouseUp}
-              ></Layer>
-              <Layer
-                // ref={imageCanvasRef}
                 className="absolute inset-0 z-10 cursor-crosshair"
+                style={{ zIndex: 2 }}
+                ref={drawCanvasRef}
               >
-                {image && (
-                  <Image
-                    image={image}
-                    width={canvasWidth}
-                    height={canvasHeight}
-                  />
-                )}
+                {[...lines, drawingPoints].map((line, index) => (
+                  <>
+                    <Line
+                      points={line}
+                      key={index}
+                      stroke={lineColor}
+                      fill={lineColor}
+                      strokeWidth={lineWidth / 2}
+                      lineCap="round"
+                    />
+                  </>
+                ))}
               </Layer>
             </Stage>
           </div>
