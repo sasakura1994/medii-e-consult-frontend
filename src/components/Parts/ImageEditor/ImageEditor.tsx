@@ -4,13 +4,24 @@ import styles from './ImageEditor.module.scss';
 import { ImageEditorPenSize } from './ImageEditorPenSize';
 
 export type ImageEditorProps = {
-  file?: File;
+  file: File;
 };
 
 export const ImageEditor: React.FC<ImageEditorProps> = (
   props: ImageEditorProps
 ) => {
-  useImageEditor(props);
+  const {
+    canvasWidth,
+    canvasHeight,
+    drawCanvasRef,
+    imageAreaRef,
+    imageCanvasRef,
+    imageWidth,
+    imageHeight,
+    onMouseDown,
+    onMouseMove,
+    onMouseUp,
+  } = useImageEditor(props);
 
   return (
     <div
@@ -55,7 +66,48 @@ export const ImageEditor: React.FC<ImageEditorProps> = (
         justify-center
         overflow-hidden
         "
-      ></div>
+      >
+        <div
+          ref={imageAreaRef}
+          className="
+            h-[80%]
+            max-h-[80%]
+            w-[80%]
+            max-w-[80%]
+            overflow-auto
+          "
+          style={{
+            width: `${canvasWidth}px`,
+            height: `${canvasHeight}px`,
+          }}
+        >
+          <div className="relative">
+            <canvas
+              ref={drawCanvasRef}
+              className="absolute inset-0 z-20 cursor-crosshair"
+              style={{
+                width: `${canvasWidth}px`,
+                height: `${canvasHeight}px`,
+              }}
+              width={imageWidth}
+              height={imageHeight}
+              onMouseDown={onMouseDown}
+              onMouseMove={onMouseMove}
+              onMouseUp={onMouseUp}
+            ></canvas>
+            <canvas
+              ref={imageCanvasRef}
+              className="absolute inset-0 z-10 cursor-crosshair"
+              style={{
+                width: `${canvasWidth}px`,
+                height: `${canvasHeight}px`,
+              }}
+              width={imageWidth}
+              height={imageHeight}
+            ></canvas>
+          </div>
+        </div>
+      </div>
       <div
         className="
           flex

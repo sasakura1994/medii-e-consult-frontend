@@ -20,7 +20,11 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
     errorMessage,
     childAge,
     confirmInput,
+    editingImage,
     formData,
+    imageInput,
+    onSelectImage,
+    resetImageInput,
     selectConsultMessageTemplate,
     setAgeRangeWrapper,
     setChildAgeWrapper,
@@ -166,7 +170,17 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
               }
             />
             <div className="mt-3 flex items-center gap-2">
-              <button type="button">参考画像追加</button>
+              <input
+                type="file"
+                name="file"
+                ref={imageInput}
+                className="hidden"
+                onClick={() => resetImageInput()}
+                onChange={onSelectImage}
+              />
+              <button type="button" onClick={() => imageInput.current?.click()}>
+                参考画像追加
+              </button>
               <div className="text-[11px] text-block-gray">
                 画像・動画・Word・PDF等を含むあらゆるファイル形式に対応しています
               </div>
@@ -200,7 +214,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
           </div>
         </form>
       </div>
-      <ImageEditor />
+      {editingImage && <ImageEditor file={editingImage} />}
     </>
   );
 };
