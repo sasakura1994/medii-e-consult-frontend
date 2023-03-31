@@ -9,6 +9,7 @@ const lineColor = '#F5847D';
 
 export type ImageEditorProps = {
   file: File;
+  onClose: () => void;
 };
 
 const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
@@ -127,6 +128,17 @@ const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
               </Layer>
             </Stage>
           </div>
+        </div>
+        <div className="ml-5 h-[80%] max-h-[80%]">
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              props.onClose();
+            }}
+          >
+            <img src="/icons/close.svg" className="h-10 w-10" />
+          </a>
         </div>
       </div>
       <div

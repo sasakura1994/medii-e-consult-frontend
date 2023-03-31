@@ -39,6 +39,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
     selectConsultMessageTemplate,
     setAgeRangeWrapper,
     setChildAgeWrapper,
+    setEditingImage,
     setFormData,
   } = props;
 
@@ -225,7 +226,12 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
           </div>
         </form>
       </div>
-      {editingImage && <ImageEditorComponent file={editingImage} />}
+      {editingImage && (
+        <ImageEditorComponent
+          file={editingImage}
+          onClose={() => setEditingImage(undefined)}
+        />
+      )}
     </>
   );
 };

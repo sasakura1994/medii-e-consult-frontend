@@ -163,6 +163,7 @@ export const useNewChatRoom = () => {
     setAgeRange,
     setAgeRangeWrapper,
     setChildAgeWrapper,
+    setEditingImage,
     setFormData,
     submit,
   };

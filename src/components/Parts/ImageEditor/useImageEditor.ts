@@ -59,7 +59,6 @@ export const useImageEditor = (props: ImageEditorProps) => {
     }
 
     const imageAreaRect = imageAreaRef.current.getBoundingClientRect();
-    console.log(imageAreaRect);
 
     const reader = new FileReader();
     reader.onload = (args) => {
