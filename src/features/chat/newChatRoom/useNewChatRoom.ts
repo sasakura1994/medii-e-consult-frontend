@@ -2,6 +2,7 @@ import {
   PostChatRoomResponseData,
   usePostChatRoom,
 } from '@/hooks/api/chat/usePostChatRoom';
+import { usePostDraftImage } from '@/hooks/api/chat/usePostDraftImage';
 import { NewChatRoomEntity } from '@/types/entities/chat/NewChatRoomEntity';
 import React from 'react';
 
@@ -22,7 +23,10 @@ export const useNewChatRoom = () => {
   const [editingImage, setEditingImage] = React.useState<File>();
   const [isSending, setIsSending] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState('');
+
   const { createNewChatRoom } = usePostChatRoom();
+  const { createDraftImage } = usePostDraftImage();
+
   const imageInput = React.useRef<HTMLInputElement>(null);
 
   const setAgeRangeWrapper = React.useCallback(
@@ -141,10 +145,19 @@ export const useNewChatRoom = () => {
         return;
       }
 
-      // await this.addImage(files[0])
+      await addFile(files[0]);
     },
     []
   );
+
+  const onImageEdited = React.useCallback((file: File) => {
+    setEditingImage(undefined);
+    addFile(file);
+  }, []);
+
+  const addFile = React.useCallback(async (file: File) => {
+    await createDraftImage(file);
+  }, []);
 
   return {
     ageRange,
@@ -157,6 +170,7 @@ export const useNewChatRoom = () => {
     imageInput,
     isSending,
     mode,
+    onImageEdited,
     onSelectImage,
     resetImageInput,
     selectConsultMessageTemplate,

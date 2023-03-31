@@ -2,6 +2,7 @@
 import { KonvaEventObject } from 'konva/lib/Node';
 import React from 'react';
 import { ImageEditorProps } from './ImageEditor';
+import Konva from 'konva';
 
 type LineWidthType = 'thin' | 'normal' | 'thick';
 
@@ -26,6 +27,7 @@ export const useImageEditor = (props: ImageEditorProps) => {
   const [image, setImage] = React.useState<HTMLImageElement>();
 
   const imageAreaRef = React.useRef<HTMLDivElement>(null);
+  const stageRef = React.useRef<Konva.Stage>(null);
 
   const canvasWidth = Math.floor(imageWidth * scale);
   const canvasHeight = Math.floor(imageHeight * scale);
@@ -155,6 +157,20 @@ export const useImageEditor = (props: ImageEditorProps) => {
     [minScale]
   );
 
+  const onSubmit = React.useCallback(() => {
+    const dataURL = stageRef.current!.toDataURL();
+
+    const bin = window.atob(dataURL.replace(/^.*,/, ''));
+    const buffer = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) {
+      buffer[i] = bin.charCodeAt(i);
+    }
+    const resultFile = new File([buffer.buffer], 'image.jpg', {
+      type: 'image/jpeg',
+    });
+    props.onSubmit(resultFile);
+  }, [stageRef.current]);
+
   return {
     allScaledLines,
     canvasWidth,
@@ -169,9 +185,11 @@ export const useImageEditor = (props: ImageEditorProps) => {
     onMouseDown,
     onMouseMove,
     onMouseUp,
+    onSubmit,
     scale,
     setIsLineWidthSettingShown,
     setLineWidthType,
+    stageRef,
     undo,
   };
 };

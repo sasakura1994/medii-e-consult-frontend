@@ -34,6 +34,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
     editingImage,
     formData,
     imageInput,
+    onImageEdited,
     onSelectImage,
     resetImageInput,
     selectConsultMessageTemplate,
@@ -229,6 +230,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
       {editingImage && (
         <ImageEditorComponent
           file={editingImage}
+          onSubmit={onImageEdited}
           onClose={() => setEditingImage(undefined)}
         />
       )}

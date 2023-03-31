@@ -9,6 +9,7 @@ const lineColor = '#F5847D';
 
 export type ImageEditorProps = {
   file: File;
+  onSubmit: (file: File) => void;
   onClose: () => void;
 };
 
@@ -26,9 +27,11 @@ const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
     onMouseDown,
     onMouseMove,
     onMouseUp,
+    onSubmit,
     setIsLineWidthSettingShown,
     setLineWidthType,
     scale,
+    stageRef,
     undo,
   } = useImageEditor(props);
 
@@ -64,7 +67,7 @@ const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
         >
           &lt; 戻る
         </a>
-        <button>アップロード</button>
+        <button onClick={onSubmit}>アップロード</button>
       </div>
       <div
         className="
@@ -96,6 +99,7 @@ const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
         >
           <div className="relative">
             <Stage
+              ref={stageRef}
               width={canvasWidth}
               height={canvasHeight}
               onMouseDown={onMouseDown}
@@ -216,7 +220,9 @@ const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
           </div>
         </div>
         <div className="hidden shrink-0 grow-0 lg:block">
-          <button type="button">アップロード</button>
+          <button type="button" onClick={onSubmit}>
+            アップロード
+          </button>
         </div>
       </div>
     </div>
