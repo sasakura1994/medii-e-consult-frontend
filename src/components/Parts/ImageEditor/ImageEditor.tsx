@@ -21,11 +21,15 @@ const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
     // imageCanvasRef,
     imageWidth,
     imageHeight,
+    isLineWidthSettingShown,
     lines,
     lineWidth,
+    lineWidthType,
     onMouseDown,
     onMouseMove,
     onMouseUp,
+    setIsLineWidthSettingShown,
+    setLineWidthType,
   } = useImageEditor(props);
 
   return (
@@ -104,16 +108,18 @@ const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
                 className="absolute inset-0 z-10 cursor-crosshair"
                 ref={drawCanvasRef}
               >
-                {[...lines, drawingPoints].map((line, index) => (
-                  <Line
-                    points={line}
-                    key={index}
-                    stroke={lineColor}
-                    fill={lineColor}
-                    strokeWidth={lineWidth / 2}
-                    lineCap="round"
-                  />
-                ))}
+                {[...lines, { points: drawingPoints, lineWidth }].map(
+                  (line, index) => (
+                    <Line
+                      points={line.points}
+                      key={index}
+                      stroke={lineColor}
+                      fill={lineColor}
+                      strokeWidth={line.lineWidth * 2}
+                      lineCap="round"
+                    />
+                  )
+                )}
               </Layer>
             </Stage>
             {image && (
@@ -163,14 +169,41 @@ const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
             "
           >
             <img src="/icons/circle_back.svg" />
-            <img src="/icons/circle_pen.svg" />
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setIsLineWidthSettingShown(
+                  (isLineWidthSettingShown) => !isLineWidthSettingShown
+                );
+              }}
+            >
+              <img src="/icons/circle_pen.svg" />
+            </a>
             <img src="/icons/circle_plus.svg" />
             <img src="/icons/circle_minus.svg" />
-            <div className={styles['pen-select']}>
-              <ImageEditorPenSize>小</ImageEditorPenSize>
-              <ImageEditorPenSize selected>中</ImageEditorPenSize>
-              <ImageEditorPenSize>大</ImageEditorPenSize>
-            </div>
+            {isLineWidthSettingShown && (
+              <div className={styles['pen-select']}>
+                <ImageEditorPenSize
+                  onClick={() => setLineWidthType('thin')}
+                  selected={lineWidthType === 'thin'}
+                >
+                  小
+                </ImageEditorPenSize>
+                <ImageEditorPenSize
+                  onClick={() => setLineWidthType('normal')}
+                  selected={lineWidthType === 'normal'}
+                >
+                  中
+                </ImageEditorPenSize>
+                <ImageEditorPenSize
+                  onClick={() => setLineWidthType('thick')}
+                  selected={lineWidthType === 'thick'}
+                >
+                  大
+                </ImageEditorPenSize>
+              </div>
+            )}
           </div>
         </div>
         <div className="hidden shrink-0 grow-0 lg:block">

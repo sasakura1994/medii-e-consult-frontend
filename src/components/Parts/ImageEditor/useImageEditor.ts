@@ -1,10 +1,14 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { Layer } from 'react-konva';
 import { KonvaEventObject } from 'konva/lib/Node';
 import React from 'react';
 import { ImageEditorProps } from './ImageEditor';
 
 type LineWidthType = 'thin' | 'normal' | 'thick';
+
+type Line = {
+  points: number[];
+  lineWidth: number;
+};
 
 export const useImageEditor = (props: ImageEditorProps) => {
   const [isDown, setIsDown] = React.useState(false);
@@ -15,8 +19,10 @@ export const useImageEditor = (props: ImageEditorProps) => {
   const [lineBaseWidth, setLineBaseWidth] = React.useState(50);
   const [lineWidthType, setLineWidthType] =
     React.useState<LineWidthType>('normal');
+  const [isLineWidthSettingShown, setIsLineWidthSettingShown] =
+    React.useState(false);
   const [drawingPoints, setDrawingPoints] = React.useState<number[]>([]);
-  const [lines, setLines] = React.useState<number[][]>([]);
+  const [lines, setLines] = React.useState<Line[]>([]);
   const [image, setImage] = React.useState<HTMLImageElement>();
   const imageAreaRef = React.useRef<HTMLDivElement>(null);
   const drawCanvasRef = React.useRef(null);
@@ -103,9 +109,10 @@ export const useImageEditor = (props: ImageEditorProps) => {
       return;
     }
 
-    setLines((lines) => [...lines, drawingPoints]);
+    setLines((lines) => [...lines, { lineWidth, points: drawingPoints }]);
+    setDrawingPoints([]);
     setIsDown(false);
-  }, [isDown, drawingPoints]);
+  }, [isDown, drawingPoints, lineWidth]);
 
   return {
     canvasWidth,
@@ -119,9 +126,13 @@ export const useImageEditor = (props: ImageEditorProps) => {
     imageHeight,
     lines,
     lineWidth,
+    lineWidthType,
+    isLineWidthSettingShown,
     onMouseDown,
     onMouseMove,
     onMouseUp,
     scale,
+    setIsLineWidthSettingShown,
+    setLineWidthType,
   };
 };
