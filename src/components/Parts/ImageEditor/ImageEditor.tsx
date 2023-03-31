@@ -13,24 +13,21 @@ export type ImageEditorProps = {
 
 const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
   const {
+    allScaledLines,
     canvasWidth,
     canvasHeight,
-    drawCanvasRef,
-    drawingPoints,
+    changeScale,
     image,
     imageAreaRef,
-    // imageCanvasRef,
-    imageWidth,
-    imageHeight,
     isLineWidthSettingShown,
     lines,
-    lineWidth,
     lineWidthType,
     onMouseDown,
     onMouseMove,
     onMouseUp,
     setIsLineWidthSettingShown,
     setLineWidthType,
+    scale,
     undo,
   } = useImageEditor(props);
 
@@ -106,10 +103,7 @@ const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
               onMouseOut={onMouseUp}
               style={{ zIndex: 2, position: 'absolute' }}
             >
-              <Layer
-                className="absolute inset-0 z-10 cursor-crosshair"
-                ref={drawCanvasRef}
-              >
+              <Layer className="absolute inset-0 z-10 cursor-crosshair">
                 {image && (
                   <Image
                     image={image}
@@ -119,18 +113,17 @@ const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
                     height={canvasHeight}
                   />
                 )}
-                {[...lines, { points: drawingPoints, lineWidth }].map(
-                  (line, index) => (
-                    <Line
-                      points={line.points}
-                      key={index}
-                      stroke={lineColor}
-                      fill={lineColor}
-                      strokeWidth={line.lineWidth * 2}
-                      lineCap="round"
-                    />
-                  )
-                )}
+                {allScaledLines.map((line, index) => (
+                  <Line
+                    points={line.points}
+                    key={index}
+                    stroke={lineColor}
+                    fill={lineColor}
+                    strokeWidth={line.lineWidth * 2}
+                    lineCap="round"
+                    lineJoin="round"
+                  />
+                ))}
               </Layer>
             </Stage>
           </div>
@@ -180,15 +173,11 @@ const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
             />
             <ImageEditorToolButton
               src="/icons/circle_plus.svg"
-              onClick={() => {
-                return;
-              }}
+              onClick={() => changeScale(scale * 1.2)}
             />
             <ImageEditorToolButton
               src="/icons/circle_minus.svg"
-              onClick={() => {
-                return;
-              }}
+              onClick={() => changeScale(scale / 1.2)}
             />
             {isLineWidthSettingShown && (
               <div className={styles['pen-select']}>

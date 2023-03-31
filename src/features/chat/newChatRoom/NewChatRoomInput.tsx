@@ -14,6 +14,7 @@ import ImageEditor, {
   ImageEditorProps,
 } from '@/components/Parts/ImageEditor/ImageEditor';
 import dynamic, { DynamicOptions } from 'next/dynamic';
+// canvasの関係でサーバー時点でimportされているとエラーになるためこうするしかないらしい
 const ImageEditorComponent = dynamic<ImageEditorProps>(
   (() =>
     import(

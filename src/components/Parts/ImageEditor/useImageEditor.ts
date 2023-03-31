@@ -24,10 +24,12 @@ export const useImageEditor = (props: ImageEditorProps) => {
   const [drawingPoints, setDrawingPoints] = React.useState<number[]>([]);
   const [lines, setLines] = React.useState<Line[]>([]);
   const [image, setImage] = React.useState<HTMLImageElement>();
+
   const imageAreaRef = React.useRef<HTMLDivElement>(null);
-  const drawCanvasRef = React.useRef(null);
+
   const canvasWidth = Math.floor(imageWidth * scale);
   const canvasHeight = Math.floor(imageHeight * scale);
+
   const lineWidth = React.useMemo(() => {
     switch (lineWidthType) {
       case 'thin':
@@ -38,6 +40,18 @@ export const useImageEditor = (props: ImageEditorProps) => {
         return lineBaseWidth * 1.8;
     }
   }, [lineWidthType, lineBaseWidth]);
+
+  const allScaledLines = React.useMemo(() => {
+    const allLines = [...lines, { points: drawingPoints, lineWidth }];
+    if (scale === minScale) {
+      return allLines;
+    }
+
+    return allLines.map((line) => ({
+      points: line.points.map((point) => (point * scale) / minScale),
+      lineWidth: (line.lineWidth * scale) / minScale,
+    }));
+  }, [lines, scale, drawingPoints]);
 
   const initialize = React.useCallback(() => {
     if (!imageAreaRef.current) {
@@ -81,11 +95,17 @@ export const useImageEditor = (props: ImageEditorProps) => {
     initialize();
   }, []);
 
-  const onMouseDown = React.useCallback((e: KonvaEventObject<MouseEvent>) => {
-    setIsDown(true);
-    const pos = e.target.getPosition();
-    setDrawingPoints([e.evt.offsetX - pos.x, e.evt.offsetY - pos.y]);
-  }, []);
+  const onMouseDown = React.useCallback(
+    (e: KonvaEventObject<MouseEvent>) => {
+      setIsDown(true);
+      const pos = e.target.getPosition();
+      setDrawingPoints([
+        ((e.evt.offsetX - pos.x) * minScale) / scale,
+        ((e.evt.offsetY - pos.y) * minScale) / scale,
+      ]);
+    },
+    [scale, minScale]
+  );
 
   const onMouseMove = React.useCallback(
     (e: KonvaEventObject<MouseEvent>) => {
@@ -97,39 +117,54 @@ export const useImageEditor = (props: ImageEditorProps) => {
       const pos = e.target.getPosition();
       setDrawingPoints((drawingPoints) => [
         ...drawingPoints,
-        e.evt.offsetX - pos.x,
-        e.evt.offsetY - pos.y,
+        ((e.evt.offsetX - pos.x) * minScale) / scale,
+        ((e.evt.offsetY - pos.y) * minScale) / scale,
       ]);
     },
-    [isDown]
+    [isDown, scale, minScale]
   );
 
-  const onMouseUp = React.useCallback(() => {
-    if (!isDown) {
-      return;
-    }
+  const onMouseUp = React.useCallback(
+    (e: KonvaEventObject<MouseEvent>) => {
+      if (e.evt.type !== 'mouseup' && e.evt.type !== 'mouseout') {
+        // なぜかmousemoveも来て線がちぎれまくるため…
+        return;
+      }
+      if (!isDown) {
+        return;
+      }
 
-    setLines((lines) => [...lines, { lineWidth, points: drawingPoints }]);
-    setDrawingPoints([]);
-    setIsDown(false);
-  }, [isDown, drawingPoints, lineWidth]);
+      setLines((lines) => [...lines, { lineWidth, points: drawingPoints }]);
+      setDrawingPoints([]);
+      setIsDown(false);
+    },
+    [isDown, drawingPoints, lineWidth]
+  );
 
   const undo = React.useCallback(() => {
     setLines((lines) => lines.slice(0, lines.length - 1));
   }, []);
 
+  const changeScale = React.useCallback(
+    (newScale: number) => {
+      if (minScale > newScale) {
+        newScale = minScale;
+      }
+
+      setScale(newScale);
+    },
+    [minScale]
+  );
+
   return {
+    allScaledLines,
     canvasWidth,
     canvasHeight,
-    drawCanvasRef,
+    changeScale,
     drawingPoints,
     image,
     imageAreaRef,
-    // imageCanvasRef,
-    imageWidth,
-    imageHeight,
     lines,
-    lineWidth,
     lineWidthType,
     isLineWidthSettingShown,
     onMouseDown,
