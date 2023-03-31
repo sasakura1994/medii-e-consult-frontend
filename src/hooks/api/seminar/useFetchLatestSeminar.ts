@@ -14,9 +14,9 @@ export const useFetchLatestSeminar = (): UseFetchLatestSeminarType => {
   const {
     isLoading,
     error,
-    data: latestSeminar,
-  } = useAuthenticatedSWR<SeminarEntityType>(endpoint);
-
+    data,
+  } = useAuthenticatedSWR<{ seminar: SeminarEntityType; }>(endpoint);
+  const latestSeminar = data?.seminar;
   return {
     isLoading,
     error,
