@@ -3,6 +3,7 @@ import { useImageEditor } from './useImageEditor';
 import styles from './ImageEditor.module.scss';
 import { ImageEditorPenSize } from './ImageEditorPenSize';
 import { Layer, Line, Image, Stage, Circle } from 'react-konva';
+import { ImageEditorToolButton } from './ImageEditorToolButton';
 
 const lineColor = '#F5847D';
 
@@ -30,6 +31,7 @@ const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
     onMouseUp,
     setIsLineWidthSettingShown,
     setLineWidthType,
+    undo,
   } = useImageEditor(props);
 
   return (
@@ -168,20 +170,31 @@ const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
               gap-8
             "
           >
-            <img src="/icons/circle_back.svg" />
-            <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
+            <ImageEditorToolButton
+              src="/icons/circle_back.svg"
+              isDisabled={lines.length === 0}
+              onClick={undo}
+            />
+            <ImageEditorToolButton
+              src="/icons/circle_pen.svg"
+              onClick={() =>
                 setIsLineWidthSettingShown(
                   (isLineWidthSettingShown) => !isLineWidthSettingShown
-                );
+                )
+              }
+            />
+            <ImageEditorToolButton
+              src="/icons/circle_plus.svg"
+              onClick={() => {
+                return;
               }}
-            >
-              <img src="/icons/circle_pen.svg" />
-            </a>
-            <img src="/icons/circle_plus.svg" />
-            <img src="/icons/circle_minus.svg" />
+            />
+            <ImageEditorToolButton
+              src="/icons/circle_minus.svg"
+              onClick={() => {
+                return;
+              }}
+            />
             {isLineWidthSettingShown && (
               <div className={styles['pen-select']}>
                 <ImageEditorPenSize

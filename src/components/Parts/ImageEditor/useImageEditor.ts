@@ -114,6 +114,10 @@ export const useImageEditor = (props: ImageEditorProps) => {
     setIsDown(false);
   }, [isDown, drawingPoints, lineWidth]);
 
+  const undo = React.useCallback(() => {
+    setLines((lines) => lines.slice(0, lines.length - 1));
+  }, []);
+
   return {
     canvasWidth,
     canvasHeight,
@@ -134,5 +138,6 @@ export const useImageEditor = (props: ImageEditorProps) => {
     scale,
     setIsLineWidthSettingShown,
     setLineWidthType,
+    undo,
   };
 };
