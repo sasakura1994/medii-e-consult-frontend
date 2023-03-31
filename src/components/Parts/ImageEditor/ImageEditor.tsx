@@ -2,7 +2,7 @@ import React from 'react';
 import { useImageEditor } from './useImageEditor';
 import styles from './ImageEditor.module.scss';
 import { ImageEditorPenSize } from './ImageEditorPenSize';
-import { Layer, Line, Image, Stage, Circle } from 'react-konva';
+import { Layer, Line, Image, Stage } from 'react-konva';
 import { ImageEditorToolButton } from './ImageEditorToolButton';
 
 const lineColor = '#F5847D';
@@ -110,6 +110,15 @@ const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
                 className="absolute inset-0 z-10 cursor-crosshair"
                 ref={drawCanvasRef}
               >
+                {image && (
+                  <Image
+                    image={image}
+                    x={0}
+                    y={0}
+                    width={canvasWidth}
+                    height={canvasHeight}
+                  />
+                )}
                 {[...lines, { points: drawingPoints, lineWidth }].map(
                   (line, index) => (
                     <Line
@@ -124,20 +133,6 @@ const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
                 )}
               </Layer>
             </Stage>
-            {image && (
-              <img
-                src={image.src}
-                style={{
-                  width: `${canvasWidth}px`,
-                  height: `${canvasHeight}px`,
-                  left: 0,
-                  top: 0,
-                  zIndex: 1,
-                }}
-                className="absolute"
-                onDragStart={() => false}
-              />
-            )}
           </div>
         </div>
       </div>
