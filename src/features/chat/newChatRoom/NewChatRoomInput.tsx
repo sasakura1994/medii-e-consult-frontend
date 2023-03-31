@@ -29,6 +29,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
   const {
     ageRange,
     errorMessage,
+    chatDraftImages,
     childAge,
     confirmInput,
     editingImage,
@@ -198,6 +199,27 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                 画像・動画・Word・PDF等を含むあらゆるファイル形式に対応しています
               </div>
             </div>
+            {chatDraftImages.length > 0 && (
+              <div className="mt-4 flex flex-col gap-5">
+                {chatDraftImages.map((chatDraftImage) => (
+                  <div
+                    className="flex items-center gap-4"
+                    key={chatDraftImage.chat_draft_image_id}
+                  >
+                    <div className="w-full grow">
+                      {chatDraftImage.is_image ? (
+                        <img src={chatDraftImage.url} className="max-w-full" />
+                      ) : (
+                        <></>
+                      )}
+                    </div>
+                    <div className="shrink-0 grow-0">
+                      <img src="/icons/close.png" width="16" height="16" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
             <div className="my-6 text-center">
               <button type="submit">プレビュー</button>
             </div>

@@ -1,8 +1,10 @@
+import { useGetChatDraftImages } from '@/hooks/api/chat/useGetChatDraftImages';
 import {
   PostChatRoomResponseData,
   usePostChatRoom,
 } from '@/hooks/api/chat/usePostChatRoom';
 import { usePostDraftImage } from '@/hooks/api/chat/usePostDraftImage';
+import { ChatDraftImageEntity } from '@/types/entities/chat/ChatDraftImageEntity';
 import { NewChatRoomEntity } from '@/types/entities/chat/NewChatRoomEntity';
 import React from 'react';
 
@@ -21,13 +23,36 @@ export const useNewChatRoom = () => {
   const [ageRange, setAgeRange] = React.useState<AgeRange>('');
   const [childAge, setChildAge] = React.useState<string>('');
   const [editingImage, setEditingImage] = React.useState<File>();
+  const [chatDraftImages, setChatDraftImages] = React.useState<
+    ChatDraftImageEntity[]
+  >([]);
   const [isSending, setIsSending] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState('');
 
   const { createNewChatRoom } = usePostChatRoom();
   const { createDraftImage } = usePostDraftImage();
+  const { getChatDraftImages } = useGetChatDraftImages();
 
   const imageInput = React.useRef<HTMLInputElement>(null);
+
+  const initialize = React.useCallback(() => {
+    loadChatDraftImages();
+  }, []);
+
+  React.useEffect(() => {
+    initialize();
+  }, []);
+
+  const loadChatDraftImages = React.useCallback(async () => {
+    const response = await getChatDraftImages().catch((error) => {
+      console.error(error);
+      return null;
+    });
+    if (!response) {
+      return;
+    }
+    setChatDraftImages(response.data.chat_draft_images);
+  }, []);
 
   const setAgeRangeWrapper = React.useCallback(
     (age: AgeRange) => {
@@ -157,12 +182,14 @@ export const useNewChatRoom = () => {
 
   const addFile = React.useCallback(async (file: File) => {
     await createDraftImage(file);
+    await loadChatDraftImages();
   }, []);
 
   return {
     ageRange,
     backToInput,
     childAge,
+    chatDraftImages,
     confirmInput,
     editingImage,
     errorMessage,
