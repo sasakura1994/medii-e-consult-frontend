@@ -28,6 +28,7 @@ type Props = ReturnType<typeof useNewChatRoom>;
 export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
   const {
     ageRange,
+    deleteChatDraftImageById,
     errorMessage,
     chatDraftImages,
     childAge,
@@ -199,7 +200,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                 画像・動画・Word・PDF等を含むあらゆるファイル形式に対応しています
               </div>
             </div>
-            {chatDraftImages.length > 0 && (
+            {chatDraftImages && chatDraftImages.length > 0 && (
               <div className="mt-4 flex flex-col gap-5">
                 {chatDraftImages.map((chatDraftImage) => (
                   <div
@@ -214,7 +215,17 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                       )}
                     </div>
                     <div className="shrink-0 grow-0">
-                      <img src="/icons/close.png" width="16" height="16" />
+                      <a
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          deleteChatDraftImageById(
+                            chatDraftImage.chat_draft_image_id
+                          );
+                        }}
+                      >
+                        <img src="/icons/close.png" width="16" height="16" />
+                      </a>
                     </div>
                   </div>
                 ))}

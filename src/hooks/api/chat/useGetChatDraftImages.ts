@@ -1,19 +1,26 @@
-import { useAxios } from '@/hooks/network/useAxios';
+import { useAuthenticatedSWR } from '@/hooks/network/useAuthenticatedSWR';
 import { ChatDraftImageEntity } from '@/types/entities/chat/ChatDraftImageEntity';
-import React from 'react';
+
+const endpoint = '/api/chat_draft_image/chat_draft_images';
 
 export type GetChatDraftImagesResponseData = {
   chat_draft_images: ChatDraftImageEntity[];
 };
 
-export const useGetChatDraftImages = () => {
-  const { axios } = useAxios();
+type Args = {
+  isNeed: boolean;
+};
 
-  const getChatDraftImages = React.useCallback(() => {
-    return axios.get<GetChatDraftImagesResponseData>(
-      '/api/chat_draft_image/chat_draft_images'
+export const useGetChatDraftImages = (args: Args) => {
+  const { isLoading, error, data, mutate } =
+    useAuthenticatedSWR<GetChatDraftImagesResponseData>(
+      args.isNeed ? endpoint : null
     );
-  }, [axios]);
 
-  return { getChatDraftImages };
+  return {
+    isLoading,
+    error,
+    mutate,
+    chatDraftImages: data?.chat_draft_images,
+  };
 };
