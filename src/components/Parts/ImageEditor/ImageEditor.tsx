@@ -64,6 +64,10 @@ const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
         <a
           href="#"
           className="my-auto ml-2 inline-block text-lg font-semibold text-white"
+          onClick={(e) => {
+            e.preventDefault();
+            props.onClose();
+          }}
         >
           &lt; 戻る
         </a>
@@ -133,7 +137,7 @@ const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
             </Stage>
           </div>
         </div>
-        <div className="ml-5 h-[80%] max-h-[80%]">
+        <div className="ml-5 hidden h-[80%] max-h-[80%] lg:block">
           <a
             href="#"
             onClick={(e) => {
