@@ -28,6 +28,9 @@ const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
     onMouseMove,
     onMouseUp,
     onSubmit,
+    onTouchEnd,
+    onTouchMove,
+    onTouchStart,
     setIsLineWidthSettingShown,
     setLineWidthType,
     scale,
@@ -110,6 +113,9 @@ const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
               onMouseMove={onMouseMove}
               onMouseUp={onMouseUp}
               onMouseOut={onMouseUp}
+              onTouchEnd={onTouchEnd}
+              onTouchStart={onTouchStart}
+              onTouchMove={onTouchMove}
               style={{ zIndex: 2, position: 'absolute' }}
             >
               <Layer className="absolute inset-0 z-10 cursor-crosshair">

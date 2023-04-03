@@ -99,6 +99,19 @@ export const useImageEditor = (props: ImageEditorProps) => {
     initialize();
   }, []);
 
+  const onTouchStart = React.useCallback((e: KonvaEventObject<TouchEvent>) => {
+    if (e.evt.touches.length === 1) {
+      const rect = (e.evt.target as HTMLCanvasElement).getBoundingClientRect();
+      onMouseDown({
+        target: e.target,
+        evt: {
+          offsetX: e.evt.touches[0].clientX - rect.left,
+          offsetY: e.evt.touches[0].clientY - rect.top,
+        },
+      } as KonvaEventObject<MouseEvent>);
+    }
+  }, []);
+
   const onMouseDown = React.useCallback(
     (e: KonvaEventObject<MouseEvent>) => {
       setIsDown(true);
@@ -110,6 +123,19 @@ export const useImageEditor = (props: ImageEditorProps) => {
     },
     [scale, minScale]
   );
+
+  const onTouchMove = React.useCallback((e: KonvaEventObject<TouchEvent>) => {
+    if (e.evt.touches.length === 1) {
+      const rect = (e.evt.target as HTMLCanvasElement).getBoundingClientRect();
+      onMouseMove({
+        target: e.target,
+        evt: {
+          offsetX: e.evt.touches[0].clientX - rect.left,
+          offsetY: e.evt.touches[0].clientY - rect.top,
+        },
+      } as KonvaEventObject<MouseEvent>);
+    }
+  }, []);
 
   const onMouseMove = React.useCallback(
     (e: KonvaEventObject<MouseEvent>) => {
@@ -127,28 +153,37 @@ export const useImageEditor = (props: ImageEditorProps) => {
     [isDown, scale, minScale]
   );
 
+  const drawEnd = React.useCallback(() => {
+    if (!isDown) {
+      return;
+    }
+
+    const currentDrawingPoints =
+      drawingPoints.length === 2
+        ? [...drawingPoints, ...drawingPoints]
+        : drawingPoints;
+    setLines((lines) => [
+      ...lines,
+      { lineWidth, points: currentDrawingPoints },
+    ]);
+    setDrawingPoints([]);
+    setIsDown(false);
+  }, [isDown, drawingPoints, lineWidth]);
+
+  const onTouchEnd = React.useCallback(() => {
+    drawEnd();
+  }, [drawEnd]);
+
   const onMouseUp = React.useCallback(
     (e: KonvaEventObject<MouseEvent>) => {
       if (e.evt.type !== 'mouseup' && e.evt.type !== 'mouseout') {
         // なぜかmousemoveも来て線がちぎれまくるため…
         return;
       }
-      if (!isDown) {
-        return;
-      }
 
-      const currentDrawingPoints =
-        drawingPoints.length === 2
-          ? [...drawingPoints, ...drawingPoints]
-          : drawingPoints;
-      setLines((lines) => [
-        ...lines,
-        { lineWidth, points: currentDrawingPoints },
-      ]);
-      setDrawingPoints([]);
-      setIsDown(false);
+      drawEnd();
     },
-    [isDown, drawingPoints, lineWidth]
+    [drawEnd]
   );
 
   const undo = React.useCallback(() => {
@@ -194,6 +229,9 @@ export const useImageEditor = (props: ImageEditorProps) => {
     onMouseMove,
     onMouseUp,
     onSubmit,
+    onTouchEnd,
+    onTouchMove,
+    onTouchStart,
     scale,
     setIsLineWidthSettingShown,
     setLineWidthType,
