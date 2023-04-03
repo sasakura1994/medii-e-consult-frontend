@@ -44,7 +44,11 @@ export const useImageEditor = (props: ImageEditorProps) => {
   }, [lineWidthType, lineBaseWidth]);
 
   const allScaledLines = React.useMemo(() => {
-    const allLines = [...lines, { points: drawingPoints, lineWidth }];
+    const currentDrawingPoints =
+      drawingPoints.length === 2
+        ? [...drawingPoints, ...drawingPoints]
+        : drawingPoints;
+    const allLines = [...lines, { points: currentDrawingPoints, lineWidth }];
     if (scale === minScale) {
       return allLines;
     }
@@ -133,7 +137,14 @@ export const useImageEditor = (props: ImageEditorProps) => {
         return;
       }
 
-      setLines((lines) => [...lines, { lineWidth, points: drawingPoints }]);
+      const currentDrawingPoints =
+        drawingPoints.length === 2
+          ? [...drawingPoints, ...drawingPoints]
+          : drawingPoints;
+      setLines((lines) => [
+        ...lines,
+        { lineWidth, points: currentDrawingPoints },
+      ]);
       setDrawingPoints([]);
       setIsDown(false);
     },
