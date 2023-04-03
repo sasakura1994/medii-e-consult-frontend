@@ -163,7 +163,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
             コンサル文
           </NewChatRoomFormLabel>
           <div className="mt-6 text-xs font-bold">テンプレートを反映</div>
-          <div className="mt-4 flex flex-row gap-6">
+          <div className="mt-4 flex flex-row flex-wrap gap-x-6">
             {consultMessageTemplates.map((consultMessageTemplate) => (
               <Radio
                 key={consultMessageTemplate.title}
