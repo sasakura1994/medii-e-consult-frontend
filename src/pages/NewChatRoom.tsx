@@ -11,7 +11,7 @@ const NewChatRoomPage: NextPageWithLayout = () => {
   const { mode } = newChatRoom;
 
   return (
-    <Card className="py-4 px-4 lg:px-0">
+    <Card className="py-4 px-8 lg:px-0">
       {mode === 'input' ? (
         <NewChatRoomInput {...newChatRoom} />
       ) : (

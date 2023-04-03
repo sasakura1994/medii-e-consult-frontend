@@ -4,6 +4,7 @@ import styles from './ImageEditor.module.scss';
 import { ImageEditorPenSize } from './ImageEditorPenSize';
 import { Layer, Line, Image, Stage } from 'react-konva';
 import { ImageEditorToolButton } from './ImageEditorToolButton';
+import { PrimaryButton } from '../Button/PrimaryButton';
 
 const lineColor = '#F5847D';
 
@@ -66,7 +67,7 @@ const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
       >
         <a
           href="#"
-          className="my-auto ml-2 inline-block text-lg font-semibold text-white"
+          className="my-auto ml-2 inline-block grow text-lg font-semibold text-white"
           onClick={(e) => {
             e.preventDefault();
             props.onClose();
@@ -74,7 +75,9 @@ const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
         >
           &lt; 戻る
         </a>
-        <button onClick={onSubmit}>アップロード</button>
+        <div className="mr-2 grow-0">
+          <PrimaryButton onClick={onSubmit}>アップロード</PrimaryButton>
+        </div>
       </div>
       <div
         className="
@@ -229,10 +232,10 @@ const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
             )}
           </div>
         </div>
-        <div className="hidden shrink-0 grow-0 lg:block">
-          <button type="button" onClick={onSubmit}>
+        <div className="hidden shrink-0 grow-0 pr-2 lg:block">
+          <PrimaryButton type="button" onClick={onSubmit}>
             アップロード
-          </button>
+          </PrimaryButton>
         </div>
       </div>
     </div>

@@ -8,6 +8,7 @@ import { UrlPublish } from './UrlPublish';
 import { Detail } from './Detail';
 import { Edit } from './Edit';
 import { Modal } from '@/components/Parts/Modal/Modal';
+import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 
 export const Profile: React.FC = () => {
   const accountId = 'AC10-6226-9933-69'; // TODO: ログイン情報から取得する
@@ -26,23 +27,11 @@ export const Profile: React.FC = () => {
       </div>
 
       {editProfileScreen.isEditOpen && (
-        <button
-          type="button"
-          className="mx-auto
-                     block
-                     rounded-full
-                     bg-primary
-                     py-[7px] px-8
-                     font-bold
-                     text-white
-                     drop-shadow-button"
-          data-testid="btn-profile-regist"
-          onClick={() => {
-            console.log('プロフィール登録');
-          }}
-        >
-          プロフィール登録
-        </button>
+        <>
+          <PrimaryButton dataTestId="btn-profile-regist">
+            プロフィール登録
+          </PrimaryButton>
+        </>
       )}
 
       <div className="mt-12 text-center lg:pb-20">

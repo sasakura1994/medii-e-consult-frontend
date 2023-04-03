@@ -14,6 +14,8 @@ import ImageEditor, {
   ImageEditorProps,
 } from '@/components/Parts/ImageEditor/ImageEditor';
 import dynamic, { DynamicOptions } from 'next/dynamic';
+import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
+import { OutlinedSquareButton } from '@/components/Parts/Button/OutlinedSquareButton';
 // canvasの関係でサーバー時点でimportされているとエラーになるためこうするしかないらしい
 const ImageEditorComponent = dynamic<ImageEditorProps>(
   (() =>
@@ -193,9 +195,12 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                 onClick={() => resetImageInput()}
                 onChange={onSelectImage}
               />
-              <button type="button" onClick={() => imageInput.current?.click()}>
+              <OutlinedSquareButton
+                type="button"
+                onClick={() => imageInput.current?.click()}
+              >
                 参考画像追加
-              </button>
+              </OutlinedSquareButton>
               <div className="text-[11px] text-block-gray">
                 画像・動画・Word・PDF等を含むあらゆるファイル形式に対応しています
               </div>
@@ -232,14 +237,16 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
               </div>
             )}
             <div className="my-6 text-center">
-              <button type="submit">プレビュー</button>
+              <PrimaryButton type="submit" className="my-6 w-[60%]">
+                プレビュー
+              </PrimaryButton>
             </div>
             {errorMessage !== '' && (
               <ErrorMessage className="text-center">
                 {errorMessage}
               </ErrorMessage>
             )}
-            <div className="mt-6">
+            <div className="mt-12">
               <CheckBox
                 name="publishment_accepted"
                 label="コンサル事例としての掲載を許可する。"
