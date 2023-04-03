@@ -14,7 +14,7 @@ type Line = {
 export const useImageEditor = (props: ImageEditorProps) => {
   const [isDown, setIsDown] = React.useState(false);
   const [scale, setScale] = React.useState(1.0);
-  const [minScale, setMinScale] = React.useState(0.0);
+  const [minScale, setMinScale] = React.useState(1.0);
   const [imageWidth, setImageWidth] = React.useState(0);
   const [imageHeight, setImageHeight] = React.useState(0);
   const [lineBaseWidth, setLineBaseWidth] = React.useState(50);
@@ -53,7 +53,7 @@ export const useImageEditor = (props: ImageEditorProps) => {
       points: line.points.map((point) => (point * scale) / minScale),
       lineWidth: (line.lineWidth * scale) / minScale,
     }));
-  }, [lines, scale, drawingPoints]);
+  }, [lines, scale, drawingPoints, lineWidth, minScale]);
 
   const initialize = React.useCallback(() => {
     if (!imageAreaRef.current) {
@@ -80,7 +80,6 @@ export const useImageEditor = (props: ImageEditorProps) => {
         setImageHeight(height);
         const wScale = imageAreaRect.width / width;
         const hScale = imageAreaRect.height / height;
-        console.log({ imageAreaRectW: imageAreaRect.width, width, wScale });
         const scale = Math.min(hScale, wScale);
         setScale(scale);
         setLineBaseWidth(Math.min(width, height) * 0.05);
@@ -114,7 +113,6 @@ export const useImageEditor = (props: ImageEditorProps) => {
         return;
       }
 
-      setIsDown(true);
       const pos = e.target.getPosition();
       setDrawingPoints((drawingPoints) => [
         ...drawingPoints,
@@ -176,7 +174,6 @@ export const useImageEditor = (props: ImageEditorProps) => {
     canvasWidth,
     canvasHeight,
     changeScale,
-    drawingPoints,
     image,
     imageAreaRef,
     lines,
