@@ -67,28 +67,32 @@ export const Profile: React.FC = () => {
       />
 
       {/* TODO: モーダルは仮実装となるので、適宜中身を実装する */}
-      <Modal isShow={showModal} setShowModal={setShowModal}>
-        <div className="h-32 w-64 rounded-md bg-white p-4">
-          <h2 className="mb-3">モーダル</h2>
+      {showModal && (
+        <Modal setShowModal={setShowModal}>
+          <div className="h-32 w-64 rounded-md bg-white p-4">
+            <h2 className="mb-3">モーダル</h2>
 
-          <div className="text-center">
-            <button
-              type="button"
-              className="rounded border border-solid border-primary px-4 py-2"
-              onClick={() => setOtherModal(true)}
-            >
-              open other modal
-            </button>
+            <div className="text-center">
+              <button
+                type="button"
+                className="rounded border border-solid border-primary px-4 py-2"
+                onClick={() => setOtherModal(true)}
+              >
+                open other modal
+              </button>
+            </div>
           </div>
-        </div>
-      </Modal>
+        </Modal>
+      )}
 
       {/* TODO: このモーダルはサンプルとして実装しているので、確認後削除する */}
-      <Modal isShow={showOtherModal} setShowModal={setOtherModal}>
-        <div className="h-48 w-80 rounded-md bg-red-300 p-4">
-          <h2 className="mb-3">別のモーダル</h2>
-        </div>
-      </Modal>
+      {showOtherModal && (
+        <Modal setShowModal={setOtherModal}>
+          <div className="h-48 w-80 rounded-md bg-red-300 p-4">
+            <h2 className="mb-3">別のモーダル</h2>
+          </div>
+        </Modal>
+      )}
     </>
   );
 };

@@ -8,7 +8,7 @@ import { useFetchPrefecture } from '@/hooks/api/prefecture/useFetchPrefecture';
 import { useFetchHospital } from '@/hooks/api/hospital/useFetchHospital';
 import type { ProfileEntityType } from '@/types/entities/profileEntity';
 import type { EmailEntityType } from '@/types/entities/emailEntity';
-import type { MedicalSpecialityEntityType } from '@/types/entities/medicalSpecialityEntity';
+import type { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 import type { PrefectureEntityType } from '@/types/entities/prefectureEntity';
 import type { HospitalEntityType } from '@/types/entities/hospitalEntity';
 import type { EditProfileScreenStateType } from './editProfileScreenState';
@@ -16,7 +16,7 @@ import type { EditProfileScreenStateType } from './editProfileScreenState';
 export type UseProfile = {
   profile: ProfileEntityType | undefined;
   email: EmailEntityType | undefined;
-  medicalSpeciality: MedicalSpecialityEntityType[] | undefined;
+  medicalSpeciality: MedicalSpecialityEntity[] | undefined;
   prefecture: PrefectureEntityType[] | undefined;
   hospital: HospitalEntityType | undefined;
   editProfileScreen: EditProfileScreenStateType;

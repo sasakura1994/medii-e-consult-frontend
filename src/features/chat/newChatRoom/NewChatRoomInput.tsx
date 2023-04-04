@@ -16,6 +16,7 @@ import ImageEditor, {
 import dynamic, { DynamicOptions } from 'next/dynamic';
 import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 import { OutlinedSquareButton } from '@/components/Parts/Button/OutlinedSquareButton';
+import { MedicalSpecialitiesSelectDialog } from '@/components/MedicalSpeciality/MedicalSpecialitiesSelectDialog';
 // canvasの関係でサーバー時点でimportされているとエラーになるためこうするしかないらしい
 const ImageEditorComponent = dynamic<ImageEditorProps>(
   (() =>
@@ -38,6 +39,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
     editingImage,
     formData,
     imageInput,
+    isMedicalSpecialitiesSelectDialogShown,
     onImageEdited,
     onSelectImage,
     resetImageInput,
@@ -46,6 +48,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
     setChildAgeWrapper,
     setEditingImage,
     setFormData,
+    setIsMedicalSpecialitiesSelectDialogShown,
   } = props;
 
   return (
@@ -66,6 +69,19 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                 value="FREE"
                 onChange={() => setFormData({ ...formData, room_type: 'FREE' })}
               />
+              {formData.room_type === 'FREE' && (
+                <div className="mt-2 flex items-center gap-2">
+                  <OutlinedSquareButton
+                    type="button"
+                    onClick={() =>
+                      setIsMedicalSpecialitiesSelectDialogShown(true)
+                    }
+                  >
+                    診療科を指定
+                  </OutlinedSquareButton>
+                  <div>未選択</div>
+                </div>
+              )}
             </div>
             <div>
               <NewChatRoomRoomType
@@ -272,6 +288,12 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
           file={editingImage}
           onSubmit={onImageEdited}
           onClose={() => setEditingImage(undefined)}
+        />
+      )}
+      {isMedicalSpecialitiesSelectDialogShown && (
+        <MedicalSpecialitiesSelectDialog
+          setShowModal={setIsMedicalSpecialitiesSelectDialogShown}
+          test="aaa"
         />
       )}
     </>

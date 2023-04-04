@@ -25,6 +25,10 @@ export const useNewChatRoom = () => {
   const [editingImage, setEditingImage] = React.useState<File>();
   const [isSending, setIsSending] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState('');
+  const [
+    isMedicalSpecialitiesSelectDialogShown,
+    setIsMedicalSpecialitiesSelectDialogShown,
+  ] = React.useState(false);
 
   const { createNewChatRoom } = usePostChatRoom();
   const { createDraftImage } = usePostDraftImage();
@@ -193,6 +197,7 @@ export const useNewChatRoom = () => {
     errorMessage,
     formData,
     imageInput,
+    isMedicalSpecialitiesSelectDialogShown,
     isSending,
     mode,
     onImageEdited,
@@ -204,6 +209,7 @@ export const useNewChatRoom = () => {
     setChildAgeWrapper,
     setEditingImage,
     setFormData,
+    setIsMedicalSpecialitiesSelectDialogShown,
     submit,
   };
 };

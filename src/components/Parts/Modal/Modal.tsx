@@ -1,14 +1,14 @@
 import React from 'react';
 
-type PropsType = {
+export type ModalPropsType = {
   children: React.ReactNode;
-  isShow: boolean;
   guard?: boolean;
+  width?: number;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export const Modal: React.FC<PropsType> = (props) => {
-  const { children, isShow, guard, setShowModal } = props;
+export const Modal: React.FC<ModalPropsType> = (props) => {
+  const { children, guard, setShowModal, width } = props;
 
   const hideModal = (e: React.MouseEvent<HTMLDivElement>) => {
     if (guard) return;
@@ -19,17 +19,16 @@ export const Modal: React.FC<PropsType> = (props) => {
       setShowModal(false);
     }
   };
-
-  if (!isShow) {
-    return null;
-  }
-
   return (
     <div
-      className="modal fixed top-0 left-0 flex h-screen w-screen flex-col items-center justify-center bg-black/20"
+      className="modal fixed top-0 left-0 z-[200] flex h-screen w-screen flex-col items-center justify-center bg-black/20"
       onClick={hideModal}
     >
-      <div className="modal-content" role="dialog">
+      <div
+        className="rounded border border-[#d5d5d5] bg-white"
+        role="dialog"
+        style={{ width: `${width}px` }}
+      >
         {children}
       </div>
     </div>

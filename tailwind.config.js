@@ -8,6 +8,7 @@ module.exports = {
         primary: '#5c6bc0',
         error: '#f27474',
         strong: '#f5847d',
+        bg: '#eff3f6',
         'toast-success': '#3f51b5',
         'toast-error': '#f27474',
         'login-container-frame': '#ddd',
