@@ -293,7 +293,10 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
       {isMedicalSpecialitiesSelectDialogShown && (
         <MedicalSpecialitiesSelectDialog
           setShowModal={setIsMedicalSpecialitiesSelectDialogShown}
-          test="aaa"
+          defaultSelectedMedicalSpecialities={[]}
+          onChange={(values) => {
+            return;
+          }}
         />
       )}
     </>

@@ -5,21 +5,22 @@ import type { MedicalSpecialityEntity } from '@/types/entities/medicalSpeciality
 export type UseFetchMedicalSpecialityType = {
   isLoading: boolean;
   error: AxiosError | undefined;
-  medicalSpeciality: MedicalSpecialityEntity[] | undefined;
+  medicalSpecialities: MedicalSpecialityEntity[] | undefined;
 };
 
 const endpoint = '/api/medical_category/medical_specialities';
 
-export const useFetchMedicalSpeciality = (): UseFetchMedicalSpecialityType => {
-  const {
-    isLoading,
-    error,
-    data: medicalSpeciality,
-  } = useAuthenticatedSWR<MedicalSpecialityEntity[]>(endpoint);
+export const useFetchMedicalSpecialities =
+  (): UseFetchMedicalSpecialityType => {
+    const {
+      isLoading,
+      error,
+      data: medicalSpecialities,
+    } = useAuthenticatedSWR<MedicalSpecialityEntity[]>(endpoint);
 
-  return {
-    isLoading,
-    error,
-    medicalSpeciality,
+    return {
+      isLoading,
+      error,
+      medicalSpecialities,
+    };
   };
-};
