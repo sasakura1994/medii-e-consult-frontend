@@ -3,7 +3,7 @@ import { useRecoilState } from 'recoil';
 import { editProfileScreenState } from './editProfileScreenState';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { useFetchEmail } from '@/hooks/api/account/useFetchEmail';
-import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpeciality';
+import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { useFetchPrefecture } from '@/hooks/api/prefecture/useFetchPrefecture';
 import { useFetchHospital } from '@/hooks/api/hospital/useFetchHospital';
 import type { ProfileEntityType } from '@/types/entities/profileEntity';

@@ -1,8 +1,8 @@
-import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpeciality';
 import { useFetchMedicalSpecialityCategories } from '@/hooks/api/medicalCategoryCategory/useFetchMedicalSpecialityCategories';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 import React from 'react';
 import { MedicalSpecialitiesSelectDialogProps } from './MedicalSpecialitiesSelectDialog';
+import { useFetchMedicalSpecialitiesWithContract } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialitiesWithContract';
 
 export const useMedicalSpecialitiesSelectDialog = (
   props: MedicalSpecialitiesSelectDialogProps
@@ -17,7 +17,7 @@ export const useMedicalSpecialitiesSelectDialog = (
     );
 
   const { medicalSpecialityCategories } = useFetchMedicalSpecialityCategories();
-  const { medicalSpecialities } = useFetchMedicalSpecialities();
+  const { medicalSpecialities } = useFetchMedicalSpecialitiesWithContract();
 
   const selectedSpecialityCodes = React.useMemo(
     () =>
@@ -76,10 +76,6 @@ export const useMedicalSpecialitiesSelectDialog = (
           )
         );
       } else {
-        if (selectedSpecialityCodes.length >= 4) {
-          return;
-        }
-
         setSelectedMedicalSpecialities((selectedMedicalSpecialities) => [
           ...selectedMedicalSpecialities,
           toggledMedicalSpeciality,
@@ -101,11 +97,24 @@ export const useMedicalSpecialitiesSelectDialog = (
     [selectedSpecialityCodes]
   );
 
+  const getMedicalSpecialityCategory = React.useCallback(
+    (medicalSpecialityCategoryId: string) =>
+      medicalSpecialityCategories?.find(
+        (medicalSpecialityCategory) =>
+          medicalSpecialityCategory.id === medicalSpecialityCategoryId
+      ),
+    [medicalSpecialityCategories]
+  );
+
   return {
     getMedicalSpecialitiesForCategory,
+    getMedicalSpecialityCategory,
     isCategoryOpened,
     isMedicalSpecialitySelected,
     medicalSpecialityCategories,
+    medicalSpecialities,
+    selectedMedicalSpecialities,
+    setSelectedMedicalSpecialities,
     toggleCategory,
     toggleMedicalSpeciality,
   };
