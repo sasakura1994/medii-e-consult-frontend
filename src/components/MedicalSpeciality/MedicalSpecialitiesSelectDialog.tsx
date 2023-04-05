@@ -12,7 +12,8 @@ type Props = Pick<ModalPropsType, 'setShowModal'> & {
 export const MedicalSpecialitiesSelectDialog: React.FC<Props> = ({
   setShowModal,
 }: Props) => {
-  const { medicalSpecialityCategories } = useMedicalSpecialitiesSelectDialog();
+  const { isCategoryOpened, medicalSpecialityCategories, toggleCategory } =
+    useMedicalSpecialitiesSelectDialog();
 
   return (
     <Modal setShowModal={setShowModal} width={740}>
@@ -29,7 +30,8 @@ export const MedicalSpecialitiesSelectDialog: React.FC<Props> = ({
             <MedicalSpecialityCategorySelect
               key={medicalSpecialityCategory.id}
               medicalSpecialityCategory={medicalSpecialityCategory}
-              isSelected={false}
+              isSelected={isCategoryOpened(medicalSpecialityCategory.id)}
+              onClick={() => toggleCategory(medicalSpecialityCategory.id)}
               selectedCount={0}
             />
           ))}
