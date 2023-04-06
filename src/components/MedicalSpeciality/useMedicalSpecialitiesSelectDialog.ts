@@ -106,11 +106,27 @@ export const useMedicalSpecialitiesSelectDialog = (
     [medicalSpecialityCategories]
   );
 
+  const moveSelectedMedicalSpeciality = React.useCallback(
+    (dragIndex: number, hoverIndex: number) => {
+      setSelectedMedicalSpecialities((selectedMedicalSpecialities) => {
+        const copy = [...selectedMedicalSpecialities];
+        const dragging = copy.splice(dragIndex, 1);
+        return [
+          ...copy.slice(0, hoverIndex),
+          dragging[0],
+          ...copy.slice(hoverIndex),
+        ];
+      });
+    },
+    []
+  );
+
   return {
     getMedicalSpecialitiesForCategory,
     getMedicalSpecialityCategory,
     isCategoryOpened,
     isMedicalSpecialitySelected,
+    moveSelectedMedicalSpeciality,
     medicalSpecialityCategories,
     medicalSpecialities,
     selectedMedicalSpecialities,

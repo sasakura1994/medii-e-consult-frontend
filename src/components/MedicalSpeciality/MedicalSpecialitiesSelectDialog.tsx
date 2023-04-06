@@ -7,6 +7,8 @@ import { MedicalSpecialityCategorySelect } from './MedicalSpecialityCategorySele
 import { CheckBox } from '../Parts/Form/CheckBox';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 import { OutlinedSquareButton } from '../Parts/Button/OutlinedSquareButton';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import { SelectedMedicalSpeciality } from './SelectedMedicalSpeciality';
 
 export type MedicalSpecialitiesSelectDialogProps = Pick<
@@ -27,6 +29,7 @@ export const MedicalSpecialitiesSelectDialog: React.FC<
     isCategoryOpened,
     isMedicalSpecialitySelected,
     medicalSpecialityCategories,
+    moveSelectedMedicalSpeciality,
     medicalSpecialities,
     selectedMedicalSpecialities,
     setSelectedMedicalSpecialities,
@@ -97,20 +100,23 @@ export const MedicalSpecialitiesSelectDialog: React.FC<
               </div>
             </div>
             <div className="mt-6 flex flex-col gap-[10px]">
-              {selectedMedicalSpecialities.map((medicalSpeciality, index) => (
-                <SelectedMedicalSpeciality
-                  key={medicalSpeciality.speciality_code}
-                  index={index}
-                  medicalSpeciality={medicalSpeciality}
-                  medicalSpecialityCategory={
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                    getMedicalSpecialityCategory(
-                      medicalSpeciality.medical_speciality_category_id
-                    )!
-                  }
-                  onDelete={() => toggleMedicalSpeciality(medicalSpeciality)}
-                />
-              ))}
+              <DndProvider backend={HTML5Backend}>
+                {selectedMedicalSpecialities.map((medicalSpeciality, index) => (
+                  <SelectedMedicalSpeciality
+                    key={medicalSpeciality.speciality_code}
+                    index={index}
+                    medicalSpeciality={medicalSpeciality}
+                    medicalSpecialityCategory={
+                      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                      getMedicalSpecialityCategory(
+                        medicalSpeciality.medical_speciality_category_id
+                      )!
+                    }
+                    onDelete={() => toggleMedicalSpeciality(medicalSpeciality)}
+                    moveItem={moveSelectedMedicalSpeciality}
+                  />
+                ))}
+              </DndProvider>
             </div>
           </div>
         )}
