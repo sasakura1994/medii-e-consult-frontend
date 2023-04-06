@@ -7,9 +7,7 @@ import { MedicalSpecialityCategorySelect } from './MedicalSpecialityCategorySele
 import { CheckBox } from '../Parts/Form/CheckBox';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 import { OutlinedSquareButton } from '../Parts/Button/OutlinedSquareButton';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { SelectedMedicalSpeciality } from './SelectedMedicalSpeciality';
+import { SelectedMedicalSpecialities } from './SelectedMedicalSpecialities';
 
 export type MedicalSpecialitiesSelectDialogProps = Pick<
   ModalPropsType,
@@ -25,7 +23,6 @@ export const MedicalSpecialitiesSelectDialog: React.FC<
   const { setShowModal } = props;
   const {
     getMedicalSpecialitiesForCategory,
-    getMedicalSpecialityCategory,
     isCategoryOpened,
     isMedicalSpecialitySelected,
     medicalSpecialityCategories,
@@ -33,6 +30,7 @@ export const MedicalSpecialitiesSelectDialog: React.FC<
     medicalSpecialities,
     selectedMedicalSpecialities,
     setSelectedMedicalSpecialities,
+    submit,
     toggleCategory,
     toggleMedicalSpeciality,
   } = useMedicalSpecialitiesSelectDialog(props);
@@ -99,29 +97,19 @@ export const MedicalSpecialitiesSelectDialog: React.FC<
                 </OutlinedSquareButton>
               </div>
             </div>
-            <div className="mt-6 flex flex-col gap-[10px]">
-              <DndProvider backend={HTML5Backend}>
-                {selectedMedicalSpecialities.map((medicalSpeciality, index) => (
-                  <SelectedMedicalSpeciality
-                    key={medicalSpeciality.speciality_code}
-                    index={index}
-                    medicalSpeciality={medicalSpeciality}
-                    medicalSpecialityCategory={
-                      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                      getMedicalSpecialityCategory(
-                        medicalSpeciality.medical_speciality_category_id
-                      )!
-                    }
-                    onDelete={() => toggleMedicalSpeciality(medicalSpeciality)}
-                    moveItem={moveSelectedMedicalSpeciality}
-                  />
-                ))}
-              </DndProvider>
-            </div>
+            <SelectedMedicalSpecialities
+              medicalSpecialities={selectedMedicalSpecialities}
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+              medicalSpecialityCategories={medicalSpecialityCategories!}
+              onDelete={toggleMedicalSpeciality}
+              moveSelectedMedicalSpeciality={moveSelectedMedicalSpeciality}
+            />
           </div>
         )}
         <div className="mt-10">
-          <PrimaryButton type="button">この診療科で指定</PrimaryButton>
+          <PrimaryButton type="button" onClick={submit}>
+            この診療科で指定
+          </PrimaryButton>
         </div>
       </div>
     </Modal>

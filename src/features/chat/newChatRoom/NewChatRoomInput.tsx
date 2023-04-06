@@ -17,6 +17,7 @@ import dynamic, { DynamicOptions } from 'next/dynamic';
 import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 import { OutlinedSquareButton } from '@/components/Parts/Button/OutlinedSquareButton';
 import { MedicalSpecialitiesSelectDialog } from '@/components/MedicalSpeciality/MedicalSpecialitiesSelectDialog';
+import { SelectedMedicalSpecialities } from '@/components/MedicalSpeciality/SelectedMedicalSpecialities';
 // canvasの関係でサーバー時点でimportされているとエラーになるためこうするしかないらしい
 const ImageEditorComponent = dynamic<ImageEditorProps>(
   (() =>
@@ -33,6 +34,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
     ageRange,
     deleteChatDraftImageById,
     errorMessage,
+    changeMedicalSpecialities,
     chatDraftImages,
     childAge,
     confirmInput,
@@ -40,15 +42,20 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
     formData,
     imageInput,
     isMedicalSpecialitiesSelectDialogShown,
+    medicalSpecialities,
+    medicalSpecialityCategories,
+    moveSelectedMedicalSpeciality,
     onImageEdited,
     onSelectImage,
     resetImageInput,
     selectConsultMessageTemplate,
+    selectedMedicalSpecialities,
     setAgeRangeWrapper,
     setChildAgeWrapper,
     setEditingImage,
     setFormData,
     setIsMedicalSpecialitiesSelectDialogShown,
+    setSelectedMedicalSpecialities,
   } = props;
 
   return (
@@ -70,17 +77,50 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                 onChange={() => setFormData({ ...formData, room_type: 'FREE' })}
               />
               {formData.room_type === 'FREE' && (
-                <div className="mt-2 flex items-center gap-2">
-                  <OutlinedSquareButton
-                    type="button"
-                    onClick={() =>
-                      setIsMedicalSpecialitiesSelectDialogShown(true)
-                    }
-                  >
-                    診療科を指定
-                  </OutlinedSquareButton>
-                  <div>未選択</div>
-                </div>
+                <>
+                  <div className="mt-2 flex items-center gap-2">
+                    <OutlinedSquareButton
+                      type="button"
+                      onClick={() =>
+                        setIsMedicalSpecialitiesSelectDialogShown(true)
+                      }
+                    >
+                      診療科を指定
+                    </OutlinedSquareButton>
+                    {selectedMedicalSpecialities.length === 0 ? (
+                      <div>未選択</div>
+                    ) : (
+                      <div>
+                        選択数：{selectedMedicalSpecialities.length}/
+                        {medicalSpecialities?.length}
+                      </div>
+                    )}
+                  </div>
+                  {selectedMedicalSpecialities.length > 0 && (
+                    <div className="my-6">
+                      <SelectedMedicalSpecialities
+                        medicalSpecialities={selectedMedicalSpecialities}
+                        medicalSpecialityCategories={
+                          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                          medicalSpecialityCategories!
+                        }
+                        onDelete={(medicalSpeciality) =>
+                          setSelectedMedicalSpecialities(
+                            (selectedMedicalSpecialities) =>
+                              selectedMedicalSpecialities.filter(
+                                (existingMedicalSpeciality) =>
+                                  medicalSpeciality.speciality_code !==
+                                  existingMedicalSpeciality.speciality_code
+                              )
+                          )
+                        }
+                        moveSelectedMedicalSpeciality={
+                          moveSelectedMedicalSpeciality
+                        }
+                      />
+                    </div>
+                  )}
+                </>
               )}
             </div>
             <div>
@@ -293,10 +333,8 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
       {isMedicalSpecialitiesSelectDialogShown && (
         <MedicalSpecialitiesSelectDialog
           setShowModal={setIsMedicalSpecialitiesSelectDialogShown}
-          defaultSelectedMedicalSpecialities={[]}
-          onChange={(values) => {
-            return;
-          }}
+          defaultSelectedMedicalSpecialities={selectedMedicalSpecialities}
+          onChange={changeMedicalSpecialities}
         />
       )}
     </>

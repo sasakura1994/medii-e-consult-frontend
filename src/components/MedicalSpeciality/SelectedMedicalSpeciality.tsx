@@ -40,7 +40,7 @@ export const SelectedMedicalSpeciality: React.FC<
         </div>
         <div className="flex grow items-center text-sm">
           <div>
-            {medicalSpeciality.name}（{medicalSpecialityCategory.name}）
+            {medicalSpeciality.name}（{medicalSpecialityCategory?.name}）
           </div>
         </div>
       </div>

@@ -7,13 +7,14 @@ import { useFetchMedicalSpecialitiesWithContract } from '@/hooks/api/medicalCate
 export const useMedicalSpecialitiesSelectDialog = (
   props: MedicalSpecialitiesSelectDialogProps
 ) => {
+  const { defaultSelectedMedicalSpecialities, onChange } = props;
   const [
     openingMedicalSpecialityCategoryIds,
     setOpeningMedicalSpecialityCategoryIds,
   ] = React.useState<string[]>([]);
   const [selectedMedicalSpecialities, setSelectedMedicalSpecialities] =
     React.useState<MedicalSpecialityEntity[]>(
-      props.defaultSelectedMedicalSpecialities
+      defaultSelectedMedicalSpecialities
     );
 
   const { medicalSpecialityCategories } = useFetchMedicalSpecialityCategories();
@@ -97,15 +98,6 @@ export const useMedicalSpecialitiesSelectDialog = (
     [selectedSpecialityCodes]
   );
 
-  const getMedicalSpecialityCategory = React.useCallback(
-    (medicalSpecialityCategoryId: string) =>
-      medicalSpecialityCategories?.find(
-        (medicalSpecialityCategory) =>
-          medicalSpecialityCategory.id === medicalSpecialityCategoryId
-      ),
-    [medicalSpecialityCategories]
-  );
-
   const moveSelectedMedicalSpeciality = React.useCallback(
     (dragIndex: number, hoverIndex: number) => {
       setSelectedMedicalSpecialities((selectedMedicalSpecialities) => {
@@ -121,9 +113,12 @@ export const useMedicalSpecialitiesSelectDialog = (
     []
   );
 
+  const submit = React.useCallback(() => {
+    onChange(selectedMedicalSpecialities);
+  }, [selectedMedicalSpecialities]);
+
   return {
     getMedicalSpecialitiesForCategory,
-    getMedicalSpecialityCategory,
     isCategoryOpened,
     isMedicalSpecialitySelected,
     moveSelectedMedicalSpeciality,
@@ -131,6 +126,7 @@ export const useMedicalSpecialitiesSelectDialog = (
     medicalSpecialities,
     selectedMedicalSpecialities,
     setSelectedMedicalSpecialities,
+    submit,
     toggleCategory,
     toggleMedicalSpeciality,
   };

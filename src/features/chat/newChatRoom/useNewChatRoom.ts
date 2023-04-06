@@ -5,7 +5,10 @@ import {
   usePostChatRoom,
 } from '@/hooks/api/chat/usePostChatRoom';
 import { usePostDraftImage } from '@/hooks/api/chat/usePostDraftImage';
+import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
+import { useFetchMedicalSpecialityCategories } from '@/hooks/api/medicalCategoryCategory/useFetchMedicalSpecialityCategories';
 import { NewChatRoomEntity } from '@/types/entities/chat/NewChatRoomEntity';
+import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 import React from 'react';
 
 type AgeRange = string | 'child';
@@ -22,6 +25,8 @@ export const useNewChatRoom = () => {
   });
   const [ageRange, setAgeRange] = React.useState<AgeRange>('');
   const [childAge, setChildAge] = React.useState<string>('');
+  const [selectedMedicalSpecialities, setSelectedMedicalSpecialities] =
+    React.useState<MedicalSpecialityEntity[]>([]);
   const [editingImage, setEditingImage] = React.useState<File>();
   const [isSending, setIsSending] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState('');
@@ -32,6 +37,8 @@ export const useNewChatRoom = () => {
 
   const { createNewChatRoom } = usePostChatRoom();
   const { createDraftImage } = usePostDraftImage();
+  const { medicalSpecialities } = useFetchMedicalSpecialities();
+  const { medicalSpecialityCategories } = useFetchMedicalSpecialityCategories();
   const { chatDraftImages, mutate: mutateGetChatDraftImages } =
     useGetChatDraftImages({ isNeed: true });
   const { deleteChatDraftImage } = useDeleteChatDraftImage();
@@ -186,10 +193,34 @@ export const useNewChatRoom = () => {
     []
   );
 
+  const changeMedicalSpecialities = React.useCallback(
+    (medicalSpecialities: MedicalSpecialityEntity[]) => {
+      setSelectedMedicalSpecialities(medicalSpecialities);
+      setIsMedicalSpecialitiesSelectDialogShown(false);
+    },
+    []
+  );
+
+  const moveSelectedMedicalSpeciality = React.useCallback(
+    (dragIndex: number, hoverIndex: number) => {
+      setSelectedMedicalSpecialities((selectedMedicalSpecialities) => {
+        const copy = [...selectedMedicalSpecialities];
+        const dragging = copy.splice(dragIndex, 1);
+        return [
+          ...copy.slice(0, hoverIndex),
+          dragging[0],
+          ...copy.slice(hoverIndex),
+        ];
+      });
+    },
+    []
+  );
+
   return {
     ageRange,
     backToInput,
     childAge,
+    changeMedicalSpecialities,
     chatDraftImages,
     confirmInput,
     deleteChatDraftImageById,
@@ -199,17 +230,22 @@ export const useNewChatRoom = () => {
     imageInput,
     isMedicalSpecialitiesSelectDialogShown,
     isSending,
+    medicalSpecialities,
+    medicalSpecialityCategories,
     mode,
+    moveSelectedMedicalSpeciality,
     onImageEdited,
     onSelectImage,
     resetImageInput,
     selectConsultMessageTemplate,
+    selectedMedicalSpecialities,
     setAgeRange,
     setAgeRangeWrapper,
     setChildAgeWrapper,
     setEditingImage,
     setFormData,
     setIsMedicalSpecialitiesSelectDialogShown,
+    setSelectedMedicalSpecialities,
     submit,
   };
 };
