@@ -9,12 +9,10 @@ import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntit
 import { OutlinedSquareButton } from '../Parts/Button/OutlinedSquareButton';
 import { SelectedMedicalSpecialities } from './SelectedMedicalSpecialities';
 
-export type MedicalSpecialitiesSelectDialogProps = Pick<
-  ModalPropsType,
-  'setShowModal'
-> & {
+export type MedicalSpecialitiesSelectDialogProps = {
   defaultSelectedMedicalSpecialities: MedicalSpecialityEntity[];
   onChange: (medicalSpecialities: MedicalSpecialityEntity[]) => void;
+  setShowModal: (isShow: boolean) => void;
 };
 
 export const MedicalSpecialitiesSelectDialog: React.FC<
