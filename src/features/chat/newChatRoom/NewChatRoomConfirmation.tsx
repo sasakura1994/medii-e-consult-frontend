@@ -16,7 +16,7 @@ export const NewChatRoomConfirmation: React.FC<Props> = (props: Props) => {
         E-コンサル ルーム プレビュー
       </h1>
       <div className="mx-auto mb-10 lg:w-[80%]">
-        <div className="my-8 text-center text-sm text-[#f5847d]">
+        <div className="text-strong my-8 text-center text-sm">
           &lt;注意&gt;本サービスを通して得た専門的知見に基づくアドバイスは、
           質問医である担当医師の判断・責任でご活用ください
         </div>

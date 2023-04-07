@@ -1,0 +1,26 @@
+.pen-select {
+  z-index: 3;
+  position: absolute;
+  display: inline-flex;
+  margin: 1.5em 0;
+  padding: 7px 21px;
+  min-width: 120px;
+  max-width: 100%;
+  color: #ffffff;
+  font-size: 16px;
+  background: #ffffff;
+  border-radius: 4px;
+  top: -102px;
+  left: -10px;
+  overflow: visible;
+  gap: 1.4em;
+}
+.pen-select:before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -15px;
+  border: 15px solid transparent;
+  border-top: 15px solid #ffffff;
+}

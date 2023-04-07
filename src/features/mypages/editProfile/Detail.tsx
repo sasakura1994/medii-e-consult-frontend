@@ -1,6 +1,7 @@
 import React from 'react';
 import { useProfile } from './useProfile';
 import { CaptionWithBody } from '@/components/Parts/CaptionWithBody';
+import { OutlinedSquareButton } from '@/components/Parts/Button/OutlinedSquareButton';
 
 export const Detail: React.FC = () => {
   const {
@@ -23,23 +24,13 @@ export const Detail: React.FC = () => {
         <h2 className="text-2xl leading-8" data-testid="h-edit-profile-detail">
           プロフィール
         </h2>
-        <button
+        <OutlinedSquareButton
           type="button"
-          className="inline-block
-                     rounded
-                     border
-                     border-solid
-                     border-[#999999]
-                     bg-white
-                     px-2
-                     py-2
-                     text-sm
-                     leading-none"
           onClick={openEdit}
-          data-testid="btn-profile-edit"
+          dataTestId="btn-profile-edit"
         >
           プロフィールを編集
-        </button>
+        </OutlinedSquareButton>
       </div>
 
       <div className="mb-10">

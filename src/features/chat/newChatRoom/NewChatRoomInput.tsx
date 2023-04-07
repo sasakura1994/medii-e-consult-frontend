@@ -10,19 +10,41 @@ import { consultMessageTemplates } from '@/data/chatRoom';
 import { ExpandTextArea } from '@/components/Parts/Form/ExpandTextArea';
 import { CheckBox } from '@/components/Parts/Form/CheckBox';
 import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
+import ImageEditor, {
+  ImageEditorProps,
+} from '@/components/Parts/ImageEditor/ImageEditor';
+import dynamic, { DynamicOptions } from 'next/dynamic';
+import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
+import { OutlinedSquareButton } from '@/components/Parts/Button/OutlinedSquareButton';
+// canvasの関係でサーバー時点でimportされているとエラーになるためこうするしかないらしい
+const ImageEditorComponent = dynamic<ImageEditorProps>(
+  (() =>
+    import(
+      '@/components/Parts/ImageEditor/ImageEditor'
+    )) as DynamicOptions<ImageEditorProps>,
+  { ssr: false }
+) as typeof ImageEditor;
 
 type Props = ReturnType<typeof useNewChatRoom>;
 
 export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
   const {
     ageRange,
+    deleteChatDraftImageById,
     errorMessage,
+    chatDraftImages,
     childAge,
     confirmInput,
+    editingImage,
     formData,
+    imageInput,
+    onImageEdited,
+    onSelectImage,
+    resetImageInput,
     selectConsultMessageTemplate,
     setAgeRangeWrapper,
     setChildAgeWrapper,
+    setEditingImage,
     setFormData,
   } = props;
 
@@ -143,7 +165,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
             コンサル文
           </NewChatRoomFormLabel>
           <div className="mt-6 text-xs font-bold">テンプレートを反映</div>
-          <div className="mt-4 flex flex-row gap-6">
+          <div className="mt-4 flex flex-row flex-wrap gap-x-6">
             {consultMessageTemplates.map((consultMessageTemplate) => (
               <Radio
                 key={consultMessageTemplate.title}
@@ -165,20 +187,66 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
               }
             />
             <div className="mt-3 flex items-center gap-2">
-              <button type="button">参考画像追加</button>
+              <input
+                type="file"
+                name="file"
+                ref={imageInput}
+                className="hidden"
+                onClick={() => resetImageInput()}
+                onChange={onSelectImage}
+              />
+              <OutlinedSquareButton
+                type="button"
+                onClick={() => imageInput.current?.click()}
+              >
+                参考画像追加
+              </OutlinedSquareButton>
               <div className="text-[11px] text-block-gray">
                 画像・動画・Word・PDF等を含むあらゆるファイル形式に対応しています
               </div>
             </div>
+            {chatDraftImages && chatDraftImages.length > 0 && (
+              <div className="mt-4 flex flex-col gap-5">
+                {chatDraftImages.map((chatDraftImage) => (
+                  <div
+                    className="flex items-center gap-4"
+                    key={chatDraftImage.chat_draft_image_id}
+                  >
+                    <div className="w-full grow">
+                      {chatDraftImage.is_image ? (
+                        <img src={chatDraftImage.url} className="max-w-full" />
+                      ) : (
+                        <></>
+                      )}
+                    </div>
+                    <div className="shrink-0 grow-0">
+                      <a
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          deleteChatDraftImageById(
+                            chatDraftImage.chat_draft_image_id
+                          );
+                        }}
+                      >
+                        <img src="/icons/close.png" width="16" height="16" />
+                      </a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
             <div className="my-6 text-center">
-              <button type="submit">プレビュー</button>
+              <PrimaryButton type="submit" className="my-6 w-[60%]">
+                プレビュー
+              </PrimaryButton>
             </div>
             {errorMessage !== '' && (
               <ErrorMessage className="text-center">
                 {errorMessage}
               </ErrorMessage>
             )}
-            <div className="mt-6">
+            <div className="mt-12">
               <CheckBox
                 name="publishment_accepted"
                 label="コンサル事例としての掲載を許可する。"
@@ -199,6 +267,13 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
           </div>
         </form>
       </div>
+      {editingImage && (
+        <ImageEditorComponent
+          file={editingImage}
+          onSubmit={onImageEdited}
+          onClose={() => setEditingImage(undefined)}
+        />
+      )}
     </>
   );
 };

@@ -1,7 +1,10 @@
+import { useDeleteChatDraftImage } from '@/hooks/api/chat/useDeleteChatDraftImage';
+import { useGetChatDraftImages } from '@/hooks/api/chat/useGetChatDraftImages';
 import {
   PostChatRoomResponseData,
   usePostChatRoom,
 } from '@/hooks/api/chat/usePostChatRoom';
+import { usePostDraftImage } from '@/hooks/api/chat/usePostDraftImage';
 import { NewChatRoomEntity } from '@/types/entities/chat/NewChatRoomEntity';
 import React from 'react';
 
@@ -19,9 +22,17 @@ export const useNewChatRoom = () => {
   });
   const [ageRange, setAgeRange] = React.useState<AgeRange>('');
   const [childAge, setChildAge] = React.useState<string>('');
+  const [editingImage, setEditingImage] = React.useState<File>();
   const [isSending, setIsSending] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState('');
+
   const { createNewChatRoom } = usePostChatRoom();
+  const { createDraftImage } = usePostDraftImage();
+  const { chatDraftImages, mutate: mutateGetChatDraftImages } =
+    useGetChatDraftImages({ isNeed: true });
+  const { deleteChatDraftImage } = useDeleteChatDraftImage();
+
+  const imageInput = React.useRef<HTMLInputElement>(null);
 
   const setAgeRangeWrapper = React.useCallback(
     (age: AgeRange) => {
@@ -119,19 +130,79 @@ export const useNewChatRoom = () => {
     }
   }, [formData]);
 
+  const resetImageInput = React.useCallback(() => {
+    if (imageInput.current) {
+      imageInput.current.value = '';
+    }
+  }, [imageInput]);
+
+  const onSelectImage = React.useCallback(
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
+      e.preventDefault();
+      if (!e.target.files || e.target.files.length === 0) {
+        return;
+      }
+
+      const files = e.target.files;
+
+      if (files[0].type.match(/^image\//)) {
+        setEditingImage(files[0]);
+        return;
+      }
+
+      await addFile(files[0]);
+    },
+    []
+  );
+
+  const onImageEdited = React.useCallback((file: File) => {
+    setEditingImage(undefined);
+    addFile(file);
+  }, []);
+
+  const addFile = React.useCallback(async (file: File) => {
+    await createDraftImage(file);
+    mutateGetChatDraftImages();
+  }, []);
+
+  const deleteChatDraftImageById = React.useCallback(
+    async (chatDraftImageId: string) => {
+      const response = await deleteChatDraftImage(chatDraftImageId).catch(
+        (error) => {
+          console.error(error);
+          return null;
+        }
+      );
+      if (!response) {
+        alert('エラーが発生しました。');
+        return;
+      }
+      mutateGetChatDraftImages();
+    },
+    []
+  );
+
   return {
     ageRange,
     backToInput,
     childAge,
+    chatDraftImages,
     confirmInput,
+    deleteChatDraftImageById,
+    editingImage,
     errorMessage,
     formData,
+    imageInput,
     isSending,
     mode,
+    onImageEdited,
+    onSelectImage,
+    resetImageInput,
     selectConsultMessageTemplate,
     setAgeRange,
     setAgeRangeWrapper,
     setChildAgeWrapper,
+    setEditingImage,
     setFormData,
     submit,
   };
