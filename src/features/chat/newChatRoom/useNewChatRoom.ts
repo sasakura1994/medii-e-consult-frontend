@@ -8,6 +8,7 @@ import { usePostDraftImage } from '@/hooks/api/chat/usePostDraftImage';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { useFetchMedicalSpecialityCategories } from '@/hooks/api/medicalCategoryCategory/useFetchMedicalSpecialityCategories';
 import { NewChatRoomEntity } from '@/types/entities/chat/NewChatRoomEntity';
+import { DoctorEntity } from '@/types/entities/doctorEntity';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 import React from 'react';
 
@@ -28,12 +29,15 @@ export const useNewChatRoom = () => {
   const [selectedMedicalSpecialities, setSelectedMedicalSpecialities] =
     React.useState<MedicalSpecialityEntity[]>([]);
   const [editingImage, setEditingImage] = React.useState<File>();
+  const [doctor, setDoctor] = React.useState<DoctorEntity>();
   const [isSending, setIsSending] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState('');
   const [
     isMedicalSpecialitiesSelectDialogShown,
     setIsMedicalSpecialitiesSelectDialogShown,
   ] = React.useState(false);
+  const [isDoctorSearchModalShow, setIsDoctorSearchModalShow] =
+    React.useState(false);
 
   const { createNewChatRoom } = usePostChatRoom();
   const { createDraftImage } = usePostDraftImage();
@@ -224,10 +228,12 @@ export const useNewChatRoom = () => {
     chatDraftImages,
     confirmInput,
     deleteChatDraftImageById,
+    doctor,
     editingImage,
     errorMessage,
     formData,
     imageInput,
+    isDoctorSearchModalShow,
     isMedicalSpecialitiesSelectDialogShown,
     isSending,
     medicalSpecialities,
@@ -242,8 +248,10 @@ export const useNewChatRoom = () => {
     setAgeRange,
     setAgeRangeWrapper,
     setChildAgeWrapper,
+    setDoctor,
     setEditingImage,
     setFormData,
+    setIsDoctorSearchModalShow,
     setIsMedicalSpecialitiesSelectDialogShown,
     setSelectedMedicalSpecialities,
     submit,

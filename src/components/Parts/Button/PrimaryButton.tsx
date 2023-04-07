@@ -5,6 +5,7 @@ type Props = {
   className?: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   dataTestId?: string;
+  size?: 'lg';
   type?: 'button' | 'submit' | 'reset';
 };
 
@@ -13,6 +14,7 @@ export const PrimaryButton: React.FC<Props> = ({
   className,
   onClick,
   dataTestId,
+  size,
   type,
 }: Props) => {
   return (
@@ -23,7 +25,7 @@ export const PrimaryButton: React.FC<Props> = ({
         block
         rounded-full
         bg-primary
-        py-2
+        ${size === 'lg' ? 'py-[14px]' : 'py-2'}
         px-8
         font-bold
         text-white
