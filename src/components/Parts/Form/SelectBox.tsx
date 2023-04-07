@@ -29,6 +29,7 @@ export const SelectBox: React.FC<PropsType> = (props) => {
 
   return (
     <div className={styles.select_box}>
+      {/* @todo マークを消せるようにしたいがstyled componentにするタイミングで */}
       <select
         name={name}
         value={value}
