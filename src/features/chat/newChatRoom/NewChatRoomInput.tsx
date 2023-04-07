@@ -149,7 +149,13 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                   >
                     専門医検索
                   </OutlinedSquareButton>
-                  <div>未選択</div>
+                  {doctor ? (
+                    <div>
+                      {doctor.last_name} {doctor.first_name} 先生
+                    </div>
+                  ) : (
+                    <div>未選択</div>
+                  )}
                 </div>
               </>
             )}

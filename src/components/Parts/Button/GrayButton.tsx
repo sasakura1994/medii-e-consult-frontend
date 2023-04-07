@@ -9,7 +9,7 @@ type Props = {
   type?: 'button' | 'submit' | 'reset';
 };
 
-export const PrimaryButton: React.FC<Props> = ({
+export const GrayButton: React.FC<Props> = ({
   children,
   className,
   onClick,
@@ -24,9 +24,9 @@ export const PrimaryButton: React.FC<Props> = ({
         mx-auto
         block
         rounded-full
-        bg-primary
+        bg-block-gray
         ${size === 'lg' ? 'py-[14px]' : 'py-2'}
-        ${className?.match(/px-/) ? '' : 'px-8'}
+        px-8
         font-bold
         text-white
         drop-shadow-button

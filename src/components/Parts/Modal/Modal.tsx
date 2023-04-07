@@ -4,8 +4,7 @@ import { useModal } from './useModal';
 export type ModalPropsType = {
   children: React.ReactNode;
   className?: string;
-  guard?: boolean;
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowModal?: (isShow: boolean) => void;
 };
 
 export const Modal: React.FC<ModalPropsType> = (props) => {

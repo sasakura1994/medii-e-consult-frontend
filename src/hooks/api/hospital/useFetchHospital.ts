@@ -1,11 +1,11 @@
 import { useAuthenticatedSWR } from '@/hooks/network/useAuthenticatedSWR';
 import type { AxiosError } from 'axios';
-import type { HospitalEntityType } from '@/types/entities/hospitalEntity';
+import type { HospitalEntity } from '@/types/entities/hospitalEntity';
 
 export type UseFetchHospitalType = {
   isLoading: boolean;
   error: AxiosError | undefined;
-  hospital: HospitalEntityType | undefined;
+  hospital: HospitalEntity | undefined;
 };
 
 const endpoint = '/api/hospital/hospital_by_id';
@@ -17,8 +17,8 @@ export const useFetchHospital = (
     isLoading,
     error,
     data: hospital,
-  } = useAuthenticatedSWR<HospitalEntityType>(
-    `${endpoint}?hospital_id=${hospitalId}`
+  } = useAuthenticatedSWR<HospitalEntity>(
+    hospitalId ? `${endpoint}?hospital_id=${hospitalId}` : null
   );
 
   return {

@@ -3,6 +3,7 @@ import {
   useSearchDoctor,
 } from '@/hooks/api/doctor/useSearchDoctor';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
+import { DoctorEntity } from '@/types/entities/doctorEntity';
 import React from 'react';
 
 export const useDoctorSearchModal = () => {
@@ -10,6 +11,7 @@ export const useDoctorSearchModal = () => {
   const [specialityCode, setSpecialityCode] = React.useState('');
   const [searchConditions, setSearchConditions] =
     React.useState<SearchDoctorConditions>();
+  const [doctor, setDoctor] = React.useState<DoctorEntity>();
 
   const { doctors } = useSearchDoctor(searchConditions);
   const { medicalSpecialities } = useFetchMedicalSpecialities();
@@ -32,10 +34,12 @@ export const useDoctorSearchModal = () => {
 
   return {
     applySearchConditions,
+    doctor,
     doctors,
     experienceYears,
     getMedicalSpecialityName,
     medicalSpecialities,
+    setDoctor,
     setSpecialityCode,
     setExperienceYears,
     specialityCode,
