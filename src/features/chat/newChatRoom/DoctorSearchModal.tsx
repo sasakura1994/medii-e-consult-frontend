@@ -43,10 +43,8 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = (
               <div>担当科</div>
               <div className="mt-1">
                 <MedicalSpecialitySelectButton
-                  specialityCode=""
-                  onChange={() => {
-                    return;
-                  }}
+                  specialityCode={specialityCode}
+                  onChange={setSpecialityCode}
                 />
               </div>
             </div>

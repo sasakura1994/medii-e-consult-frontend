@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, ModalPropsType } from '../Parts/Modal/Modal';
+import { Modal } from '../Parts/Modal/Modal';
 import { ModalTitleWithCloseButton } from '../Parts/Modal/ModalTitleWithCloseButton';
 import { PrimaryButton } from '../Parts/Button/PrimaryButton';
 import { useMedicalSpecialitiesSelectDialog } from './useMedicalSpecialitiesSelectDialog';
