@@ -73,12 +73,23 @@ export const useMedicalSpecialitiesSelectDialog = (
     []
   );
 
+  const getSelectedCountForCategory = React.useCallback(
+    (medicalSpecialityCategoryId: string) =>
+      selectedMedicalSpecialities.filter(
+        (medicalSpeciality) =>
+          medicalSpeciality.medical_speciality_category_id ===
+          medicalSpecialityCategoryId
+      ).length,
+    [selectedMedicalSpecialities]
+  );
+
   const submit = React.useCallback(() => {
     onChange(selectedMedicalSpecialities);
   }, [selectedMedicalSpecialities]);
 
   return {
     getMedicalSpecialitiesForCategory,
+    getSelectedCountForCategory,
     isCategoryOpened,
     isMedicalSpecialitySelected,
     moveSelectedMedicalSpeciality,

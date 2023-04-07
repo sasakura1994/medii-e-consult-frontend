@@ -41,7 +41,17 @@ export const MedicalSpecialitySelectDialog: React.FC<
                 medicalSpecialityCategory={medicalSpecialityCategory}
                 isSelected={isCategoryOpened(medicalSpecialityCategory.id)}
                 onClick={() => toggleCategory(medicalSpecialityCategory.id)}
-                selectedCount={0}
+                selectedCount={
+                  getMedicalSpecialitiesForCategory(
+                    medicalSpecialityCategory.id
+                  )
+                    .map(
+                      (medicalSpeciality) => medicalSpeciality.speciality_code
+                    )
+                    .includes(selectedSpecialityCode)
+                    ? 1
+                    : 0
+                }
               />
               {isCategoryOpened(medicalSpecialityCategory.id) && (
                 <div className="my-4 grid grid-cols-2 gap-y-4 text-sm lg:mx-4 lg:grid-cols-3">
