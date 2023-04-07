@@ -1,35 +1,28 @@
 import React from 'react';
+import { useModal } from './useModal';
 
-type PropsType = {
+export type ModalPropsType = {
   children: React.ReactNode;
-  isShow: boolean;
+  className?: string;
   guard?: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export const Modal: React.FC<PropsType> = (props) => {
-  const { children, isShow, guard, setShowModal } = props;
-
-  const hideModal = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (guard) return;
-
-    const targetElem = e.target as HTMLDivElement;
-
-    if (targetElem.closest('[role="dialog"]') === null) {
-      setShowModal(false);
-    }
-  };
-
-  if (!isShow) {
-    return null;
-  }
+export const Modal: React.FC<ModalPropsType> = (props) => {
+  const { children, className } = props;
+  const { hideModal, modalRef } = useModal(props);
 
   return (
     <div
-      className="modal fixed top-0 left-0 flex h-screen w-screen flex-col items-center justify-center bg-black/20"
+      ref={modalRef}
+      className="modal fixed top-0 left-0 z-[200] h-screen w-screen overflow-y-auto bg-black/20"
       onClick={hideModal}
     >
-      <div className="modal-content" role="dialog">
+      <div
+        className={`rounded border border-[#d5d5d5] bg-white ${className} z-[210] mx-auto my-10`}
+        role="dialog"
+        onClick={(e) => e.stopPropagation()}
+      >
         {children}
       </div>
     </div>

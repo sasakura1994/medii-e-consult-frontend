@@ -25,9 +25,9 @@ export const OutlinedSquareButton: React.FC<Props> = ({
         border-solid
         border-[#999999]
         bg-white
-        p-2
+        px-2
+        py-1
         text-sm
-        leading-none
         ${className}
       `}
       data-testid={dataTestId}
