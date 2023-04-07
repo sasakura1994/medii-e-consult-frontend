@@ -5,15 +5,7 @@ import { useLogin } from '@/hooks/useLogin';
 import { useRouter } from 'next/router';
 import AppleSignin from 'react-apple-signin-auth';
 import Link from 'next/link';
-
-const TextField = (props: JSX.IntrinsicElements['input']) => {
-  return (
-    <input
-      className="mb-4 h-12 w-80 rounded border border-solid border-text-field-frame p-4"
-      {...props}
-    />
-  );
-};
+import { TextField } from '@/components/Parts/Form/TextField';
 
 const GuideLink = ({ children, href }: { children: string; href: string }) => {
   return (
@@ -32,38 +24,43 @@ const Login: NextPage = () => {
   }, [token]);
   return (
     <div className="mb-12 md:mt-6">
-      <div className="mx-auto flex max-w-login-container flex-col items-center border border-solid border-login-container-frame bg-white py-4">
-        <h1 className="my-6 text-center text-2xl">E-コンサルにログイン</h1>
-        <TextField
-          placeholder="メールアドレス"
-          type="email"
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-        />
-        <TextField
-          placeholder="パスワード"
-          type="password"
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-        />
-        <div className="mt-2">
-          <GuideLink href="/registration">新規登録はこちら</GuideLink>
-        </div>
-        <div className="mt-2">
-          <GuideLink href="/password-reset-request">
-            パスワードを忘れた場合はこちら
-          </GuideLink>
-        </div>
-        <div>
-          <button
-            onClick={() => login()}
-            className="my-4 rounded-full bg-primary py-2 px-14 text-white drop-shadow-[0_4px_10px_rgba(92,107,192,.3)]"
-          >
-            ログイン
-          </button>
-        </div>
+      <div className="mx-auto flex max-w-login-container flex-col items-center border border-solid border-login-container-frame bg-white pt-4 pb-8">
+        <h1 className="my-7 text-center text-2xl">E-コンサルにログイン</h1>
+        <form onSubmit={login} className="flex w-[308px] flex-col items-center">
+          <TextField
+            placeholder="メールアドレス"
+            type="email"
+            name="mail_address"
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
+          <TextField
+            placeholder="パスワード"
+            type="password"
+            name="password"
+            className="mt-5"
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />
+          <div className="mt-2">
+            <GuideLink href="/registration">新規登録はこちら</GuideLink>
+          </div>
+          <div className="mt-2">
+            <GuideLink href="/password-reset-request">
+              パスワードを忘れた場合はこちら
+            </GuideLink>
+          </div>
+          <div>
+            <button
+              type="submit"
+              className="my-4 rounded-full bg-primary py-2 px-14 text-white drop-shadow-[0_4px_10px_rgba(92,107,192,.3)]"
+            >
+              ログイン
+            </button>
+          </div>
+        </form>
         <div>
           <AppleSignin
             authOptions={{

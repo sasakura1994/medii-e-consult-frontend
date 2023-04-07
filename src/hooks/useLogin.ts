@@ -11,7 +11,7 @@ export type UseLoginType = {
   setPassword: React.Dispatch<React.SetStateAction<string>>;
   errorMessage: string;
   setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
-  login: () => void;
+  login: (e: React.FormEvent<HTMLFormElement>) => void;
   profile?: ProfileEntityType | null;
   token: string;
 };
@@ -23,7 +23,9 @@ export const useLogin = (): UseLoginType => {
   const [profile, setProfile] = useRecoilState(profileState);
   const [token, setToken] = React.useState('');
 
-  const login = async () => {
+  const login = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     try {
       const apiClient = createApiClient({ contentType: 'application/json' });
       const url = `${process.env.ENDPOINT_URL}/api/doctor/login`;
