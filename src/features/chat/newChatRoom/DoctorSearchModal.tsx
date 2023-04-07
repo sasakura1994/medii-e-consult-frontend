@@ -7,6 +7,7 @@ import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 import { DoctorEntity } from '@/types/entities/doctorEntity';
 import { DoctorProfileModal } from '@/components/Doctor/DoctorProfileModal';
 import { GrayButton } from '@/components/Parts/Button/GrayButton';
+import { MedicalSpecialitySelectButton } from '@/components/MedicalSpeciality/MedicalSpecialitySelectButton';
 
 export type DoctorSearchModalProps = {
   onChange: (doctor: DoctorEntity) => void;
@@ -40,23 +41,39 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = (
           <div className="mt-10 flex gap-4">
             <div className="flex-1">
               <div>担当科</div>
+              <div className="mt-1">
+                <MedicalSpecialitySelectButton
+                  specialityCode=""
+                  onChange={() => {
+                    return;
+                  }}
+                />
+              </div>
             </div>
             <div className="flex-1">
               <div>専門医経験年数</div>
-              <SelectBox
-                name="experience_years"
-                value={experienceYears}
-                onChange={(e) => setExperienceYears(e.target.value)}
-              >
-                <option value="">専門医経験年数を選択</option>
-                {[...Array(99)]
-                  .map((_, i) => i + 1)
-                  .map((year) => (
-                    <option value={year} key={year}>
-                      {year}年以上
-                    </option>
-                  ))}
-              </SelectBox>
+              <div className="mt-1">
+                <SelectBox
+                  name="experience_years"
+                  value={experienceYears}
+                  onChange={(e) => setExperienceYears(e.target.value)}
+                  className="bg-no-repeat"
+                  style={{
+                    backgroundImage: 'url(/icons/pull_down.svg)',
+                    backgroundSize: '16px 16px',
+                    backgroundPosition: 'right 16px center',
+                  }}
+                >
+                  <option value="">専門医経験年数を選択</option>
+                  {[...Array(99)]
+                    .map((_, i) => i + 1)
+                    .map((year) => (
+                      <option value={year} key={year}>
+                        {year}年以上
+                      </option>
+                    ))}
+                </SelectBox>
+              </div>
             </div>
           </div>
           <div className="mt-6">
