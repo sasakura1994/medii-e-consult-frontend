@@ -47,7 +47,7 @@ export const HeaderSubMenu: React.FC = () => {
             </Tooltip>
           </li>
           <li className={styles.header_submenu__item}>
-            <Link href="/">
+            <Link href="/seminar">
               <a className={styles.header_submenu__link}>
                 <span
                   className={`${styles.header_submenu__link_text} ${styles.header_submenu__link_text___seminar}`}
