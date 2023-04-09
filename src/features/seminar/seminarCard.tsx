@@ -7,7 +7,7 @@ type Props = {
 
 export const SeminarCard: React.FC<Props> = ({ seminar }: Props) => {
   return (
-    <div className="rounded-2xl shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
+    <div className="rounded-2xl shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] border bg-white">
       <a className="block p-6" href={`/seminar/${seminar.seminar_id}`}>
         <div className="w-full">
           <img src={seminar.image_url} className="w-full" />
