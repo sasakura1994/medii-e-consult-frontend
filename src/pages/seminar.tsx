@@ -163,7 +163,7 @@ const Login: NextPage = () => {
             </div>
             <button
               onClick={() => setShowModal(true)}
-              className="text-xm mt-4 rounded-md bg-primary py-4 px-4 text-white md:ml-10 md:mt-0 w-full md:w-auto"
+              className="text-xm mt-4 w-full rounded-md bg-primary py-4 px-4 text-white md:ml-10 md:mt-0 md:w-auto"
             >
               チ ケットを獲得するには?
             </button>
@@ -175,7 +175,10 @@ const Login: NextPage = () => {
               ))}
             </div>
           </div>
-          <a href="/seminar/archives" className="my-10 inline-flex items-center rounded-full border border-primary px-6 py-3 text-sm text-primary">
+          <a
+            href="/seminar/archives"
+            className="my-10 inline-flex items-center rounded-full border border-primary px-6 py-3 text-sm text-primary"
+          >
             すべてのアーカイブ動画を見る
             <img src="/icons/arrow_right.svg" className="ml-2 inline h-3 " />
           </a>

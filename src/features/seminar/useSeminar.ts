@@ -10,8 +10,7 @@ export type UseSeminar = {
   ticketCount: ticketCountEntity | undefined;
 };
 
-export const useSeminar = (): UseSeminar =>
-{
+export const useSeminar = (): UseSeminar => {
   const { seminars } = useFetchSeminars();
   const { latestSeminar } = useFetchLatestSeminar();
   const { ticketCount } = useFetchTicketCount();

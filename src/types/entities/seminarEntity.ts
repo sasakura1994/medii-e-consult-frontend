@@ -1,4 +1,4 @@
-import { SeminarReviewEntityType } from "./seminarReviewEntity";
+import { SeminarReviewEntityType } from './seminarReviewEntity';
 
 export type SeminarEntityType = {
   uid: number;
