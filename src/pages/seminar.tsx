@@ -1,28 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import type { NextPage } from 'next';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
 import { useSeminar } from '@/features/seminar/useSeminar';
 import { SeminarEntityType } from '@/types/entities/seminarEntity';
 import { SeminarCard } from '@/features/seminar/seminarCard';
 import { Modal } from '@/components/Parts/Modal/Modal';
-
-const TextField = (props: JSX.IntrinsicElements['input']) => {
-  return (
-    <input
-      className="mb-4 h-12 w-80 rounded border border-solid border-text-field-frame p-4"
-      {...props}
-    />
-  );
-};
-
-const GuideLink = ({ children, href }: { children: string; href: string }) => {
-  return (
-    <Link href={href}>
-      <a className="text-sm text-guide-link underline">{children}</a>
-    </Link>
-  );
-};
 
 const getSeminarDateTime = (seminar: SeminarEntityType) => {
   if (!seminar) return '';
@@ -102,13 +83,20 @@ const Login: NextPage = () => {
                 <div className="w-full md:w-auto">
                   <p>
                     <span className="pr-4 font-bold text-primary">日時</span>
-                    {getSeminarDateTime(latestSeminar!)}
+                    {latestSeminar !== undefined
+                      ? getSeminarDateTime(latestSeminar)
+                      : ''}
                   </p>
                 </div>
                 <div>
                   <a
-                    href={googleCalendarUrl(latestSeminar!)}
+                    href={
+                      latestSeminar !== undefined
+                        ? googleCalendarUrl(latestSeminar)
+                        : ''
+                    }
                     target="_blank"
+                    rel="noreferrer"
                     className="mb-2 flex items-center rounded-lg border border-solid py-2 px-4"
                   >
                     <img src="/images/seminar/google_calendar.png" />
@@ -120,7 +108,10 @@ const Login: NextPage = () => {
                 <div>
                   <p>
                     <span className="pr-4 font-bold text-primary">講師</span>{' '}
-                    {latestSeminar?.doctor_name}先生
+                    {latestSeminar?.doctor_name !== undefined
+                      ? latestSeminar.doctor_name
+                      : ''}
+                    先生
                   </p>
                 </div>
               </div>
@@ -131,7 +122,9 @@ const Login: NextPage = () => {
                       セミナー概要
                     </span>
                     <br />
-                    {latestSeminar?.description}
+                    {latestSeminar?.description !== undefined
+                      ? latestSeminar.description
+                      : ''}
                   </p>
                 </div>
               </div>
@@ -171,7 +164,7 @@ const Login: NextPage = () => {
           <div>
             <div className="grid grid-cols-[1fr] gap-4 md:grid-cols-[1fr_1fr]">
               {seminars?.slice(0, 2).map((seminar) => (
-                <SeminarCard seminar={seminar} />
+                <SeminarCard seminar={seminar} key={seminar.seminar_id} />
               ))}
             </div>
           </div>
