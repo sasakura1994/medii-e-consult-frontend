@@ -103,14 +103,64 @@ const Login: NextPage = () =>
               </button>
             </a>
             <div className="flex flex-col items-center">
-              <div className="bg-[#e2e7ff] flex items-center">
+              <div className="flex items-center bg-[#e2e7ff]">
                 <div className="flex h-20 w-20 items-center justify-center rounded-full bg-primary">
                   <img src="/images/seminar/video.svg" />
                 </div>
                 <p>{latestSeminar?.subject}</p>
               </div>
             </div>
+            <div>
+              <div className="flex justify-between">
+                <div>
+                  <p>日時 {getSeminarDateTime(latestSeminar!)}</p>
+                </div>
+                <div>
+                  <a href={googleCalendarUrl(latestSeminar!)} target="_blank">
+                    <img src="/images/seminar/google_calendar.png" />
+                    <div>Googleカレンダーに登録</div>
+                  </a>
+                </div>
+              </div>
+              <div className="flex justify-between">
+                <div>
+                  <p>講師 {latestSeminar?.doctor_name}</p>
+                </div>
+              </div>
+              <div className="flex justify-between">
+                <div>
+                  <p>セミナー概要 {latestSeminar?.description}</p>
+                </div>
+              </div>
+            </div>
           </div>
+        </div>
+        <div className="mt-64 flex w-[960px] flex-col items-center rounded-lg  bg-white px-20 pb-20 pt-20 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
+          <h2 className="h-32 w-[460px] bg-[url('/images/seminar/list_fukidashi.svg')] bg-contain bg-no-repeat px-14 pt-6 text-center text-3xl text-[#6c6c6c]">
+            セミナーアーカイブ動画
+          </h2>
+          <div className="flex">
+            <div>
+              <div>
+                <img src="/images/seminar/ticket.png" />
+              </div>
+            </div>
+            <a>チケットを獲得するには？</a>
+          </div>
+          <div>
+            <div className="grid grid-cols-[1fr_1fr] gap-4">
+              {seminars?.slice(0, 2).map((seminar) => (
+                <SeminarCard seminar={seminar} />
+              ))}
+            </div>
+          </div>
+          <a className="rounded-full text-primary border border-primary px-6 py-3 text-sm inline-flex items-center my-10">
+            すべてのアーカイブ動画を見る
+            <img src="/icons/arrow_right.svg" className="ml-2 inline h-3 " />
+          </a>
+          <p className="text-sm">
+            ※アーカイブ動画に表示している医師の方々の経歴などの情報は、セミナー当時のものとなっております。
+          </p>
         </div>
       </div>
     </div>
