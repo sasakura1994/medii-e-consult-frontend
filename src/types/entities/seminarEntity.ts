@@ -9,13 +9,13 @@ export type SeminarEntityType = {
   doctor_name: string;
   doctor_profile: string;
   is_consult_available: boolean;
-  seminar_date: Date;
-  seminar_start_time: Date;
-  seminar_end_time: Date;
+  seminar_date: string;
+  seminar_start_time: string;
+  seminar_end_time: string;
   movie_url: string;
   zoom_url: string;
   image_url: string;
-  created_at: Date;
-  updated_at: Date;
+  created_at: string;
+  updated_at: string;
   seminar_reviews: SeminarReviewEntityType[];
 };
