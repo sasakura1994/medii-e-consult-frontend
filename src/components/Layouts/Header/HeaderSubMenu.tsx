@@ -107,7 +107,7 @@ export const HeaderSubMenu: React.FC = () => {
       <nav className={styles.header_subnav_sp}>
         <ul className={styles.header_submenu_sp}>
           <li className={styles.header_submenu_sp__item}>
-            <Link href="/">
+            <Link href="/seminar">
               <a
                 className={`${styles.header_submenu_sp__link} ${styles.header_submenu_sp__link___seminar}`}
               >
