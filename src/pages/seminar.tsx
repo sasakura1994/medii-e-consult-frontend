@@ -184,6 +184,22 @@ const Login: NextPage = () => {
           </p>
         </div>
       </div>
+      <Modal isShow={showModal} setShowModal={setShowModal}>
+        <div className="align-center relative flex flex-col bg-white px-6 py-4 md:py-20 md:px-28">
+          <img
+            onClick={() => setShowModal(false)}
+            src="/icons/close_primary.svg"
+            className="absolute right-4 top-4 md:right-10 md:top-14"
+          />
+          <h3 className="text-center text-2xl text-primary">チケットとは?</h3>
+          <p className="py-10">
+            チケットとはセミナー動画アーカイブを閲覧するために必要なものです。
+            <br />
+            E-コンサルで相談するとセミナーチケット1枚獲得できます。
+          </p>
+          <img src="/images/seminar/about_ticket_pc.png" />
+        </div>
+      </Modal>
     </div>
   );
 };
