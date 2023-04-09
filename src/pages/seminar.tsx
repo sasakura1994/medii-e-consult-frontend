@@ -6,6 +6,9 @@ import { useRouter } from 'next/router';
 import AppleSignin from 'react-apple-signin-auth';
 import Link from 'next/link';
 import { useSeminar } from '@/features/seminar/useSeminar';
+import { SeminarEntityType } from '@/types/entities/seminarEntity';
+import { SeminarCard } from '@/features/seminar/seminarCard';
+import { useProfile } from '@/features/mypages/editProfile/useProfile';
 
 const TextField = (props: JSX.IntrinsicElements['input']) => {
   return (
@@ -23,17 +26,61 @@ const GuideLink = ({ children, href }: { children: string; href: string }) => {
     </Link>
   );
 };
-const Login: NextPage = () => {
+
+const getSeminarDateTime = ( seminar: SeminarEntityType ) =>
+{
+  if (!seminar) return '';
+  const [year, month, day] = seminar.seminar_date
+    .substring(0, 10)
+    .split(/-/) as string[];
+  const seminarDate = new Date(seminar.seminar_date);
+  const dayOfWeek = ['日', '月', '火', '水', '木', '金', '土'][
+    seminarDate.getDay() as number
+  ];
+  return (
+    `${Number(year)}年${Number(month)}月${Number(day)}日(${dayOfWeek}) ` +
+    seminar.seminar_start_time.substring(0, 5) +
+    '-' +
+    seminar.seminar_end_time.substring(0, 5)
+  );
+};
+
+const googleCalendarUrl = ( seminar: SeminarEntityType ) =>
+{
+  if (!seminar) return '';
+  const date = seminar.seminar_date.substring(0, 11);
+  const start = encodeURIComponent(
+    (date + seminar.seminar_start_time).replace(/[-:]/g, '')
+  );
+  const end = encodeURIComponent(
+    (date + seminar.seminar_end_time).replace(/[-:]/g, '')
+  );
+  return `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
+    seminar.subject
+  )}&dates=${start}/${end}&details=${encodeURIComponent(
+    seminar.description
+  )}&location=${encodeURIComponent(seminar.zoom_url)}`;
+};
+const Login: NextPage = () =>
+{
+  const { profile } = useProfile();
   const { seminars, latestSeminar, ticketCount } = useSeminar();
   console.log( latestSeminar );
   const router = useRouter();
+  useEffect( () =>
+  {
+    if ( !profile )
+    {
+      router.push('/login')
+    }
+  }, [profile])
   return (
     <div className="bg-covermb-12 bg-[url('/images/seminar/SP_back.png')] md:bg-[url('/images/seminar/PC_back.png')]">
-      <div className="flex flex-col items-center py-4 pt-10">
+      <div className="m-auto flex w-[960px] flex-col items-center py-4 pt-10">
         <h2 className="h-24  w-60 bg-[url('/images/seminar/heading_fukidashi.svg')] bg-contain bg-no-repeat px-6 pt-4 text-3xl text-[#6c6c6c]">
           最新セミナー
         </h2>
-        <div className="relative mt-64 w-[960px] rounded-lg  bg-white pt-40 pb-20">
+        <div className="relative mt-64 w-[960px] rounded-lg  bg-white pt-40 pb-20 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
           <div className="absolute top-[-264px] flex w-full justify-center">
             <img
               src={latestSeminar?.image_url}
