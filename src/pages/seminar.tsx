@@ -86,7 +86,9 @@ const Login: NextPage = () => {
               <div className="flex-reverse flex flex-col flex-col-reverse items-center justify-between border-b py-4 md:flex-row">
                 <div className="w-full md:w-auto">
                   <p>
-                    <span className="pr-4 font-bold text-primary">日時</span>
+                    <span className="pr-4 text-2xl text-primary md:text-lg">
+                      日時
+                    </span>
                     {latestSeminar !== undefined
                       ? getSeminarDateTime(latestSeminar)
                       : ''}
@@ -102,7 +104,7 @@ const Login: NextPage = () => {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <OutlinedSquareButton className="mb-2 flex items-center rounded-lg border-inherit py-2 px-4">
+                    <OutlinedSquareButton className="mb-2 flex items-center rounded-lg border-inherit py-2 px-8 font-bold">
                       <img src="/images/seminar/google_calendar.png" />
                       <div>Googleカレンダーに登録</div>
                     </OutlinedSquareButton>
@@ -112,7 +114,9 @@ const Login: NextPage = () => {
               <div className="border-b py-4">
                 <div>
                   <p>
-                    <span className="pr-4 font-bold text-primary">講師</span>{' '}
+                    <span className="pr-4 text-2xl text-primary md:text-lg md:font-bold">
+                      講師
+                    </span>{' '}
                     {latestSeminar?.doctor_name !== undefined
                       ? latestSeminar.doctor_name
                       : ''}
@@ -123,7 +127,7 @@ const Login: NextPage = () => {
               <div className="pt-4">
                 <div>
                   <p>
-                    <span className="pr-4 font-bold text-primary">
+                    <span className="pr-4 text-2xl text-primary md:text-lg">
                       セミナー概要
                     </span>
                     <br />
