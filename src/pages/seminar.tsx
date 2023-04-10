@@ -38,7 +38,8 @@ const googleCalendarUrl = (seminar: SeminarEntityType) => {
     seminar.description
   )}&location=${encodeURIComponent(seminar.zoom_url)}`;
 };
-const Login: NextPage = () => {
+
+const Seminar: NextPage = () => {
   const { seminars, latestSeminar, ticketCount } = useSeminar();
   const [showModal, setShowModal] = React.useState(false);
   return (
@@ -211,4 +212,4 @@ const Login: NextPage = () => {
   );
 };
 
-export default Login;
+export default Seminar;
