@@ -144,7 +144,7 @@ const Seminar: NextPage = () => {
         </div>
         <div
           id="archive"
-          className="md:mt-10 flex w-full flex-col items-center rounded-lg px-8 pb-20 md:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] md:max-w-[960px] md:bg-white md:px-20 md:pt-20"
+          className="md:mt-10 flex w-full flex-col items-center rounded-lg px-7 pb-20 md:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] md:max-w-[960px] md:bg-white md:px-20 md:pt-20"
         >
           <h2 className="md:h-32 max-w-[460px] bg-contain bg-no-repeat py-8 md:pt-6 md:pb-0 text-center text-lg text-[#6c6c6c] md:bg-[url('/images/seminar/list_fukidashi.svg')] md:px-14 md:text-3xl">
             セミナーアーカイブ動画
