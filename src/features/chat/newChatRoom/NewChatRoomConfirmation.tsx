@@ -3,6 +3,8 @@ import { useNewChatRoom } from '@/features/chat/newChatRoom/useNewChatRoom';
 import { NewChatRoomConfirmationLabel } from './NewChatRoomConfirmationLabel';
 import { NewChatRoomConfirmationValue } from './NewChatRoomConfirmationValue';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
+import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
+import { GrayButton } from '@/components/Parts/Button/GrayButton';
 
 type Props = ReturnType<typeof useNewChatRoom>;
 
@@ -16,7 +18,7 @@ export const NewChatRoomConfirmation: React.FC<Props> = (props: Props) => {
         E-コンサル ルーム プレビュー
       </h1>
       <div className="mx-auto mb-10 lg:w-[80%]">
-        <div className="text-strong my-8 text-center text-sm">
+        <div className="my-8 text-center text-sm text-strong">
           &lt;注意&gt;本サービスを通して得た専門的知見に基づくアドバイスは、
           質問医である担当医師の判断・責任でご活用ください
         </div>
@@ -39,18 +41,26 @@ export const NewChatRoomConfirmation: React.FC<Props> = (props: Props) => {
         </div>
         <div className="mt-8 text-center">
           {!isSending ? (
-            <>
+            <div className="mx-auto w-3/5">
               <div>
-                <button type="button" onClick={() => backToInput()}>
+                <GrayButton
+                  type="button"
+                  onClick={() => backToInput()}
+                  className="w-full"
+                >
                   編集
-                </button>
+                </GrayButton>
               </div>
               <div className="mt-4">
-                <button type="button" onClick={() => submit()}>
+                <PrimaryButton
+                  type="button"
+                  onClick={() => submit()}
+                  className="w-full"
+                >
                   E-コンサルを開始
-                </button>
+                </PrimaryButton>
               </div>
-            </>
+            </div>
           ) : (
             <SpinnerBorder />
           )}
