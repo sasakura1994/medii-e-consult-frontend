@@ -12,7 +12,7 @@ export const SeminarCard: React.FC<Props> = ({ seminar }: Props) => {
         <div className="w-full">
           <img src={seminar.image_url} className="w-full" />
           <div className="relative w-full rounded-md bg-[#f5847d] p-2 text-white mt-8">
-            <p className="pl-8 text-center">閲覧にチケット1枚が必要です</p>
+            <p className="pl-10 md:pl-8 text-center text-sm md:text-base">閲覧にチケット1枚が必要です</p>
             <div className="absolute bottom-0 left-2 top-0 m-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#f5847d]">
               <img src="/images/seminar/key_locked.svg" />
             </div>
