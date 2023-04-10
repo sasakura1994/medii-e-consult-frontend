@@ -39,7 +39,7 @@ const googleCalendarUrl = (seminar: SeminarEntityType) => {
 };
 const Login: NextPage = () => {
   const { seminars, latestSeminar, ticketCount } = useSeminar();
-  const [showModal, setShowModal] = React.useState(false);
+  const [, setShowModal] = React.useState(false);
   return (
     <div className="mb-12 bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat md:bg-[url('/images/seminar/PC_back.png')]">
       <div className="m-auto flex max-w-[960px] flex-col items-center py-4 pt-10">
@@ -180,7 +180,7 @@ const Login: NextPage = () => {
           </p>
         </div>
       </div>
-      <Modal isShow={showModal} setShowModal={setShowModal}>
+      <Modal setShowModal={setShowModal}>
         <div className="align-center relative flex flex-col bg-white px-6 py-4 md:py-20 md:px-28">
           <img
             onClick={() => setShowModal(false)}
