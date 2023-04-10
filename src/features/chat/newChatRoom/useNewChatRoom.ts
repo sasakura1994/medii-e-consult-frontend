@@ -220,10 +220,16 @@ export const useNewChatRoom = () => {
     []
   );
 
+  const changeDoctor = React.useCallback((doctor: DoctorEntity) => {
+    setDoctor(doctor);
+    setFormData({ ...formData, target_doctor: doctor.account_id });
+  }, []);
+
   return {
     ageRange,
     backToInput,
     childAge,
+    changeDoctor,
     changeMedicalSpecialities,
     chatDraftImages,
     confirmInput,
@@ -248,7 +254,6 @@ export const useNewChatRoom = () => {
     setAgeRange,
     setAgeRangeWrapper,
     setChildAgeWrapper,
-    setDoctor,
     setEditingImage,
     setFormData,
     setIsDoctorSearchModalShow,

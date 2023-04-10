@@ -35,6 +35,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
     ageRange,
     deleteChatDraftImageById,
     errorMessage,
+    changeDoctor,
     changeMedicalSpecialities,
     chatDraftImages,
     childAge,
@@ -55,7 +56,6 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
     selectedMedicalSpecialities,
     setAgeRangeWrapper,
     setChildAgeWrapper,
-    setDoctor,
     setEditingImage,
     setFormData,
     setIsDoctorSearchModalShow,
@@ -365,7 +365,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
         <DoctorSearchModal
           onChange={(doctor) => {
             setIsDoctorSearchModalShow(false);
-            setDoctor(doctor);
+            changeDoctor(doctor);
           }}
           setShowModal={setIsDoctorSearchModalShow}
         />
