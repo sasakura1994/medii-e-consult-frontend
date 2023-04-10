@@ -3,7 +3,7 @@ import { ticketCountEntity } from '@/types/entities/ticketCountEntity';
 import React from 'react';
 
 type Props = {
-    ticketCount: ticketCountEntity;
+    ticketCount: ticketCountEntity | undefined;
 };
 
 export const SeminarArchiveHeader: React.FC<Props> = ( { ticketCount }: Props ) =>
