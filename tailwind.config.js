@@ -6,8 +6,10 @@ module.exports = {
     extend: {
       colors: {
         primary: '#5c6bc0',
+        'primary-light': '#e2e7ff',
         error: '#f27474',
-        danger: '#f5847d',
+        strong: '#f5847d',
+        bg: '#eff3f6',
         'toast-success': '#3f51b5',
         'toast-error': '#f27474',
         'login-container-frame': '#ddd',

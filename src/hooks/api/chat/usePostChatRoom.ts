@@ -1,5 +1,4 @@
 import { useAxios } from '@/hooks/network/useAxios';
-import { createApiClient } from '@/libs/apiClient';
 import { NewChatRoomEntity } from '@/types/entities/chat/NewChatRoomEntity';
 import React from 'react';
 

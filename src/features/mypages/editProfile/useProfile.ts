@@ -3,12 +3,12 @@ import { useRecoilState } from 'recoil';
 import { editProfileScreenState } from './editProfileScreenState';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { useFetchEmail } from '@/hooks/api/account/useFetchEmail';
-import { useFetchMedicalSpeciality } from '@/hooks/api/medicalCategory/useFetchMedicalSpeciality';
+import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { useFetchPrefecture } from '@/hooks/api/prefecture/useFetchPrefecture';
 import { useFetchHospital } from '@/hooks/api/hospital/useFetchHospital';
 import type { ProfileEntityType } from '@/types/entities/profileEntity';
 import type { EmailEntityType } from '@/types/entities/emailEntity';
-import type { MedicalSpecialityEntityType } from '@/types/entities/medicalSpecialityEntity';
+import type { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 import type { PrefectureEntityType } from '@/types/entities/prefectureEntity';
 import type { HospitalEntityType } from '@/types/entities/hospitalEntity';
 import type { EditProfileScreenStateType } from './editProfileScreenState';
@@ -16,7 +16,7 @@ import type { EditProfileScreenStateType } from './editProfileScreenState';
 export type UseProfile = {
   profile: ProfileEntityType | undefined;
   email: EmailEntityType | undefined;
-  medicalSpeciality: MedicalSpecialityEntityType[] | undefined;
+  medicalSpeciality: MedicalSpecialityEntity[] | undefined;
   prefecture: PrefectureEntityType[] | undefined;
   hospital: HospitalEntityType | undefined;
   editProfileScreen: EditProfileScreenStateType;
@@ -32,7 +32,7 @@ export type UseProfile = {
 export const useProfile = (): UseProfile => {
   const { profile } = useFetchProfile();
   const { email } = useFetchEmail();
-  const { medicalSpeciality } = useFetchMedicalSpeciality();
+  const { medicalSpecialities } = useFetchMedicalSpecialities();
   const { prefecture } = useFetchPrefecture();
   const { hospital } = useFetchHospital(profile?.hospital_id);
 
@@ -52,14 +52,14 @@ export const useProfile = (): UseProfile => {
 
   const getMedicalSpecialityNameByCode = React.useCallback(
     (code: string | undefined): string | undefined => {
-      if (!code || !medicalSpeciality) return undefined;
+      if (!code || !medicalSpecialities) return undefined;
 
-      const matched = medicalSpeciality.find(
+      const matched = medicalSpecialities.find(
         (ms) => ms.speciality_code === code
       );
       return matched?.name;
     },
-    [medicalSpeciality]
+    [medicalSpecialities]
   );
 
   const getPrefectureNameByCode = React.useCallback(
@@ -75,7 +75,7 @@ export const useProfile = (): UseProfile => {
   return {
     profile,
     email,
-    medicalSpeciality,
+    medicalSpeciality: medicalSpecialities,
     prefecture,
     hospital,
     editProfileScreen,

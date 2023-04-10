@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './AmazonGift.module.scss';
+import { dateFormat } from '@/libs/date';
 import { useAmazonGift } from './useAmazonGift';
 import { useFetchAmazonGift } from './useFetchAmazonGift';
 import { usePostAmazonGiftPinCode } from './usePostAmazonGiftPinCode';
@@ -14,6 +15,7 @@ export const AmazonGift: React.FC = () => {
     isSelectEnabled,
     selectPrice,
     exchangeConfirm,
+    getExchangeStatusTitle,
   } = useAmazonGift();
   const { amazonGifts } = useFetchAmazonGift();
   const { requestPinCode } = usePostAmazonGiftPinCode();
@@ -27,7 +29,12 @@ export const AmazonGift: React.FC = () => {
             data-testid="txt-point-balance"
           >
             Mediiポイント残高
-            <span className="mx-2 font-semibold">{currentPoint}</span>
+            <span
+              className="mx-2 font-semibold"
+              data-testid="txt-current-point"
+            >
+              {currentPoint}
+            </span>
             ポイント
           </p>
         </div>
@@ -102,9 +109,11 @@ export const AmazonGift: React.FC = () => {
             <tbody>
               {amazonGifts?.map((amazonGift) => (
                 <tr key={amazonGift.uid}>
-                  <td>発行作業中</td>
-                  <td>1000 円</td>
-                  <td className="text-right">2023/02/28</td>
+                  <td>{getExchangeStatusTitle(amazonGift.status)}</td>
+                  <td>{amazonGift.size} 円</td>
+                  <td className="text-right">
+                    {dateFormat(amazonGift.created_date, 'YYYY/M/D')}
+                  </td>
                   <td>
                     {amazonGift.status === 'CONFIRMED' && (
                       <button

@@ -1,8 +1,14 @@
+import { useDeleteChatDraftImage } from '@/hooks/api/chat/useDeleteChatDraftImage';
+import { useGetChatDraftImages } from '@/hooks/api/chat/useGetChatDraftImages';
 import {
   PostChatRoomResponseData,
   usePostChatRoom,
 } from '@/hooks/api/chat/usePostChatRoom';
+import { usePostDraftImage } from '@/hooks/api/chat/usePostDraftImage';
+import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
+import { useFetchMedicalSpecialityCategories } from '@/hooks/api/medicalCategoryCategory/useFetchMedicalSpecialityCategories';
 import { NewChatRoomEntity } from '@/types/entities/chat/NewChatRoomEntity';
+import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 import React from 'react';
 
 type AgeRange = string | 'child';
@@ -19,9 +25,25 @@ export const useNewChatRoom = () => {
   });
   const [ageRange, setAgeRange] = React.useState<AgeRange>('');
   const [childAge, setChildAge] = React.useState<string>('');
+  const [selectedMedicalSpecialities, setSelectedMedicalSpecialities] =
+    React.useState<MedicalSpecialityEntity[]>([]);
+  const [editingImage, setEditingImage] = React.useState<File>();
   const [isSending, setIsSending] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState('');
+  const [
+    isMedicalSpecialitiesSelectDialogShown,
+    setIsMedicalSpecialitiesSelectDialogShown,
+  ] = React.useState(false);
+
   const { createNewChatRoom } = usePostChatRoom();
+  const { createDraftImage } = usePostDraftImage();
+  const { medicalSpecialities } = useFetchMedicalSpecialities();
+  const { medicalSpecialityCategories } = useFetchMedicalSpecialityCategories();
+  const { chatDraftImages, mutate: mutateGetChatDraftImages } =
+    useGetChatDraftImages({ isNeed: true });
+  const { deleteChatDraftImage } = useDeleteChatDraftImage();
+
+  const imageInput = React.useRef<HTMLInputElement>(null);
 
   const setAgeRangeWrapper = React.useCallback(
     (age: AgeRange) => {
@@ -119,20 +141,111 @@ export const useNewChatRoom = () => {
     }
   }, [formData]);
 
+  const resetImageInput = React.useCallback(() => {
+    if (imageInput.current) {
+      imageInput.current.value = '';
+    }
+  }, [imageInput]);
+
+  const onSelectImage = React.useCallback(
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
+      e.preventDefault();
+      if (!e.target.files || e.target.files.length === 0) {
+        return;
+      }
+
+      const files = e.target.files;
+
+      if (files[0].type.match(/^image\//)) {
+        setEditingImage(files[0]);
+        return;
+      }
+
+      await addFile(files[0]);
+    },
+    []
+  );
+
+  const onImageEdited = React.useCallback((file: File) => {
+    setEditingImage(undefined);
+    addFile(file);
+  }, []);
+
+  const addFile = React.useCallback(async (file: File) => {
+    await createDraftImage(file);
+    mutateGetChatDraftImages();
+  }, []);
+
+  const deleteChatDraftImageById = React.useCallback(
+    async (chatDraftImageId: string) => {
+      const response = await deleteChatDraftImage(chatDraftImageId).catch(
+        (error) => {
+          console.error(error);
+          return null;
+        }
+      );
+      if (!response) {
+        alert('エラーが発生しました。');
+        return;
+      }
+      mutateGetChatDraftImages();
+    },
+    []
+  );
+
+  const changeMedicalSpecialities = React.useCallback(
+    (medicalSpecialities: MedicalSpecialityEntity[]) => {
+      setSelectedMedicalSpecialities(medicalSpecialities);
+      setIsMedicalSpecialitiesSelectDialogShown(false);
+    },
+    []
+  );
+
+  const moveSelectedMedicalSpeciality = React.useCallback(
+    (dragIndex: number, hoverIndex: number) => {
+      setSelectedMedicalSpecialities((selectedMedicalSpecialities) => {
+        const copy = [...selectedMedicalSpecialities];
+        const dragging = copy.splice(dragIndex, 1);
+        return [
+          ...copy.slice(0, hoverIndex),
+          dragging[0],
+          ...copy.slice(hoverIndex),
+        ];
+      });
+    },
+    []
+  );
+
   return {
     ageRange,
     backToInput,
     childAge,
+    changeMedicalSpecialities,
+    chatDraftImages,
     confirmInput,
+    deleteChatDraftImageById,
+    editingImage,
     errorMessage,
     formData,
+    imageInput,
+    isMedicalSpecialitiesSelectDialogShown,
     isSending,
+    medicalSpecialities,
+    medicalSpecialityCategories,
     mode,
+    moveSelectedMedicalSpeciality,
+    onImageEdited,
+    onSelectImage,
+    resetImageInput,
     selectConsultMessageTemplate,
+    selectedMedicalSpecialities,
     setAgeRange,
     setAgeRangeWrapper,
     setChildAgeWrapper,
+    setEditingImage,
     setFormData,
+    setIsMedicalSpecialitiesSelectDialogShown,
+    setSelectedMedicalSpecialities,
     submit,
   };
 };

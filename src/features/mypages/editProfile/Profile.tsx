@@ -8,6 +8,7 @@ import { UrlPublish } from './UrlPublish';
 import { Detail } from './Detail';
 import { Edit } from './Edit';
 import { Modal } from '@/components/Parts/Modal/Modal';
+import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 
 export const Profile: React.FC = () => {
   const accountId = 'AC10-6226-9933-69'; // TODO: ログイン情報から取得する
@@ -26,23 +27,11 @@ export const Profile: React.FC = () => {
       </div>
 
       {editProfileScreen.isEditOpen && (
-        <button
-          type="button"
-          className="mx-auto
-                     block
-                     rounded-full
-                     bg-primary
-                     py-[7px] px-8
-                     font-bold
-                     text-white
-                     drop-shadow-button"
-          data-testid="btn-profile-regist"
-          onClick={() => {
-            console.log('プロフィール登録');
-          }}
-        >
-          プロフィール登録
-        </button>
+        <>
+          <PrimaryButton dataTestId="btn-profile-regist">
+            プロフィール登録
+          </PrimaryButton>
+        </>
       )}
 
       <div className="mt-12 text-center lg:pb-20">
@@ -78,28 +67,32 @@ export const Profile: React.FC = () => {
       />
 
       {/* TODO: モーダルは仮実装となるので、適宜中身を実装する */}
-      <Modal isShow={showModal} setShowModal={setShowModal}>
-        <div className="h-32 w-64 rounded-md bg-white p-4">
-          <h2 className="mb-3">モーダル</h2>
+      {showModal && (
+        <Modal setShowModal={setShowModal}>
+          <div className="h-32 w-64 rounded-md bg-white p-4">
+            <h2 className="mb-3">モーダル</h2>
 
-          <div className="text-center">
-            <button
-              type="button"
-              className="rounded border border-solid border-primary px-4 py-2"
-              onClick={() => setOtherModal(true)}
-            >
-              open other modal
-            </button>
+            <div className="text-center">
+              <button
+                type="button"
+                className="rounded border border-solid border-primary px-4 py-2"
+                onClick={() => setOtherModal(true)}
+              >
+                open other modal
+              </button>
+            </div>
           </div>
-        </div>
-      </Modal>
+        </Modal>
+      )}
 
       {/* TODO: このモーダルはサンプルとして実装しているので、確認後削除する */}
-      <Modal isShow={showOtherModal} setShowModal={setOtherModal}>
-        <div className="h-48 w-80 rounded-md bg-red-300 p-4">
-          <h2 className="mb-3">別のモーダル</h2>
-        </div>
-      </Modal>
+      {showOtherModal && (
+        <Modal setShowModal={setOtherModal}>
+          <div className="h-48 w-80 rounded-md bg-red-300 p-4">
+            <h2 className="mb-3">別のモーダル</h2>
+          </div>
+        </Modal>
+      )}
     </>
   );
 };
