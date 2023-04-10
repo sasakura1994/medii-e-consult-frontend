@@ -11,8 +11,7 @@ export const SeminarArchiveHeader: React.FC<Props> = ( { ticketCount }: Props ) 
   const [showModal, setShowModal] = React.useState(false);
   return (
     <div
-      id="archive"
-      className="mt-10 flex w-full flex-col items-center rounded-lg px-8 pb-20 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] md:max-w-[960px] md:bg-white md:px-20 md:pt-20"
+      className=" flex w-full flex-col items-center rounded-lg md:max-w-[960px] md:bg-white"
     >
       <h2 className="h-32 w-[460px] bg-contain bg-no-repeat px-14 pt-6 text-center text-lg text-[#6c6c6c] md:bg-[url('/images/seminar/list_fukidashi.svg')] md:text-3xl">
         セミナーアーカイブ動画
