@@ -4,6 +4,8 @@ import { useSeminar } from '@/features/seminar/useSeminar';
 import { SeminarEntityType } from '@/types/entities/seminarEntity';
 import { SeminarCard } from '@/features/seminar/seminarCard';
 import { Modal } from '@/components/Parts/Modal/Modal';
+import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
+import { OutlinedSquareButton } from '@/components/Parts/Button/OutlinedSquareButton';
 
 const getSeminarDateTime = (seminar: SeminarEntityType) => {
   if (!seminar) return '';
@@ -39,7 +41,7 @@ const googleCalendarUrl = (seminar: SeminarEntityType) => {
 };
 const Login: NextPage = () => {
   const { seminars, latestSeminar, ticketCount } = useSeminar();
-  const [, setShowModal] = React.useState(false);
+  const [showModal, setShowModal] = React.useState(false);
   return (
     <div className="mb-12 bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat md:bg-[url('/images/seminar/PC_back.png')]">
       <div className="m-auto flex max-w-[960px] flex-col items-center py-4 pt-10">
@@ -97,10 +99,11 @@ const Login: NextPage = () => {
                     }
                     target="_blank"
                     rel="noreferrer"
-                    className="mb-2 flex items-center rounded-lg border border-solid py-2 px-4"
                   >
-                    <img src="/images/seminar/google_calendar.png" />
-                    <div>Googleカレンダーに登録</div>
+                    <OutlinedSquareButton className="flex items-center border-inherit py-2 px-4 rounded-lg mb-2">
+                      <img src="/images/seminar/google_calendar.png" />
+                      <div>Googleカレンダーに登録</div>
+                    </OutlinedSquareButton>
                   </a>
                 </div>
               </div>
@@ -180,22 +183,24 @@ const Login: NextPage = () => {
           </p>
         </div>
       </div>
-      <Modal setShowModal={setShowModal}>
-        <div className="align-center relative flex flex-col bg-white px-6 py-4 md:py-20 md:px-28">
-          <img
-            onClick={() => setShowModal(false)}
-            src="/icons/close_primary.svg"
-            className="absolute right-4 top-4 md:right-10 md:top-14"
-          />
-          <h3 className="text-center text-2xl text-primary">チケットとは?</h3>
-          <p className="py-10">
-            チケットとはセミナー動画アーカイブを閲覧するために必要なものです。
-            <br />
-            E-コンサルで相談するとセミナーチケット1枚獲得できます。
-          </p>
-          <img src="/images/seminar/about_ticket_pc.png" />
-        </div>
-      </Modal>
+      {showModal && (
+        <Modal setShowModal={setShowModal}>
+          <div className="align-center relative flex flex-col bg-white px-6 py-4 md:py-20 md:px-28">
+            <img
+              onClick={() => setShowModal(false)}
+              src="/icons/close_primary.svg"
+              className="absolute right-4 top-4 md:right-10 md:top-14"
+            />
+            <h3 className="text-center text-2xl text-primary">チケットとは?</h3>
+            <p className="py-10">
+              チケットとはセミナー動画アーカイブを閲覧するために必要なものです。
+              <br />
+              E-コンサルで相談するとセミナーチケット1枚獲得できます。
+            </p>
+            <img src="/images/seminar/about_ticket_pc.png" />
+          </div>
+        </Modal>
+      )}
     </div>
   );
 };
