@@ -52,12 +52,12 @@ const Login: NextPage = () => {
           <div className="absolute top-[-100px] flex w-full justify-center px-4  md:top-[-264px]">
             <img
               src={latestSeminar?.image_url}
-              className="aspect-video max-h-[405px] w-full max-w-none md:w-[719px]"
+              className="drop-shadow-[0_4px_4px_rgba(0,0,0,.25)] md:drop-shadow-none md:shadow-[20px_27px_0_0_rgb(221,221,221)] aspect-video max-h-[405px] w-full max-w-none md:w-[719px]"
             />
           </div>
           <div className="flex flex-col items-center bg-white px-8 md:px-32">
             <a>
-              <button className="my-2 rounded-lg bg-primary py-4 px-14 text-2xl font-bold text-white">
+              <button className="mb-2 mt-6 rounded-lg bg-primary py-4 px-14 text-2xl font-bold text-white">
                 ZOOMセミナーへ
                 <img
                   src="/images/seminar/main_button_arrow.svg"
@@ -100,7 +100,7 @@ const Login: NextPage = () => {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <OutlinedSquareButton className="flex items-center border-inherit py-2 px-4 rounded-lg mb-2">
+                    <OutlinedSquareButton className="mb-2 flex items-center rounded-lg border-inherit py-2 px-4">
                       <img src="/images/seminar/google_calendar.png" />
                       <div>Googleカレンダーに登録</div>
                     </OutlinedSquareButton>
