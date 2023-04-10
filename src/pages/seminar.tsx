@@ -45,7 +45,8 @@ const Seminar: NextPage = () => {
   return (
     <div className="pb-12 bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat md:bg-[url('/images/seminar/PC_back.png')]">
       <div className="m-auto flex max-w-[960px] flex-col items-center py-4 pt-10">
-        <h2 className="h-32  w-72 bg-contain bg-no-repeat px-12 pt-0 text-center text-lg text-[#6c6c6c] md:bg-[url('/images/seminar/heading_fukidashi.svg')] md:pt-6 md:text-3xl">
+        <h2 className="h-32  w-72 bg-contain bg-no-repeat px-12 pt-0 text-center text-lg text-[#6c6c6c] 
+        md:bg-[url('/images/seminar/heading_fukidashi.svg')] md:pt-6 md:text-3xl">
           最新セミナー
         </h2>
         <div className="mt-30 relative w-full bg-white pt-24 pb-20  md:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] md:mt-64 md:w-[960px] md:rounded-lg md:pt-40">
