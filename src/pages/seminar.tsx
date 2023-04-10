@@ -52,7 +52,7 @@ const Seminar: NextPage = () => {
         <div className="mt-30 relative w-full bg-white pt-24 pb-20  md:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] md:mt-64 md:w-[960px] md:rounded-lg md:pt-40">
           <div className="absolute top-[-100px] flex w-full justify-center px-6  md:top-[-264px]">
             <img
-              src={latestSeminar?.image_url}
+              src={latestSeminar && latestSeminar.image_url}
               className="aspect-video max-h-[405px] w-full max-w-none drop-shadow-[0_4px_4px_rgba(0,0,0,.25)] md:w-[719px] md:shadow-[20px_27px_0_0_rgb(221,221,221)] md:drop-shadow-none"
             />
           </div>
@@ -167,9 +167,8 @@ const Seminar: NextPage = () => {
             </div>
             <button
               onClick={() => setShowModal(true)}
-              className="text-xm mt-4 w-full rounded-md bg-primary py-4 px-4 text-white md:ml-10 md:mt-0 md:w-auto"
-            >
-              チ ケットを獲得するには?
+              className="text-xm mt-4 w-full rounded-md bg-primary py-4 px-4 text-white md:ml-10 md:mt-0 md:w-auto">
+              チケットを獲得するには?
             </button>
           </div>
           <div>
@@ -193,7 +192,7 @@ const Seminar: NextPage = () => {
       </div>
       {showModal && (
         <Modal setShowModal={setShowModal}>
-          <div className="align-center relative flex flex-col bg-white px-6 py-4 md:py-20 md:px-28">
+          <div className="align-center items-center relative flex flex-col bg-white px-6 py-4 md:py-20 md:px-28">
             <img
               onClick={() => setShowModal(false)}
               src="/icons/close_primary.svg"
