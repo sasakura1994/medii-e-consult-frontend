@@ -9,8 +9,8 @@ export type UsePagenationType = {
 };
 
 export const usePagenation = (initialMax: number): UsePagenationType => {
-  const [ current, setCurrent ] = React.useState( 1 );
-  const [max,] = React.useState(initialMax);
+  const [current, setCurrent] = React.useState(1);
+  const [max] = React.useState(initialMax);
 
   const next = () => setCurrent((prev) => (prev < max ? prev + 1 : prev));
   const back = () => setCurrent((prev) => (1 < prev ? prev - 1 : prev));

@@ -8,17 +8,19 @@ import { usePagenation } from '@/hooks/usePagenation';
 const Login: NextPage = () => {
   const { seminars, ticketCount } = useSeminar();
   const numberPerPage = 6;
-  console.log( seminars );
+  console.log(seminars);
   const pageCount =
-    seminars !== undefined ? Math.floor(seminars.length / numberPerPage) + 1 : 0;
+    seminars !== undefined
+      ? Math.floor(seminars.length / numberPerPage) + 1
+      : 0;
   const { current, move } = usePagenation(pageCount);
-  console.log( current );
-  const startNumber = ( current - 1 ) * numberPerPage; 
+  console.log(current);
+  const startNumber = (current - 1) * numberPerPage;
   const endNumber = current * numberPerPage - 1;
   const total = seminars !== undefined ? seminars.length : 0;
-  console.log( startNumber );
+  console.log(startNumber);
   return (
-    <div className="mb-12 bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat md:bg-[url('/images/seminar/PC_back.png')] pt-10">
+    <div className="mb-12 bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat pt-10 md:bg-[url('/images/seminar/PC_back.png')]">
       <div className="mx-auto flex w-full flex-col items-center rounded-lg px-8 pb-20 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] md:max-w-[960px] md:bg-white md:px-20 md:pt-14">
         <SeminarArchiveHeader ticketCount={ticketCount} />
         <p className="w-full pb-4">
@@ -47,7 +49,10 @@ const Login: NextPage = () => {
           <div className="flex gap-4">
             {[...Array(pageCount)].map((_, i) =>
               i + 1 == current ? (
-                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-white" key={i}>
+                <div
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-white"
+                  key={i}
+                >
                   <p>{i + 1}</p>
                 </div>
               ) : (
@@ -69,7 +74,7 @@ const Login: NextPage = () => {
         <div className="block w-48 md:hidden">
           <a
             href="/seminar/archives"
-            className="my-2 md:my-10  inline-flex items-center rounded-full border border-primary bg-white px-10 py-3 text-center text-sm text-primary"
+            className="my-2 inline-flex  items-center rounded-full border border-primary bg-white px-10 py-3 text-center text-sm text-primary md:my-10"
           >
             <img src="/icons/arrow_left.svg" className="mr-2 inline h-3" />
             TOPへ戻る
