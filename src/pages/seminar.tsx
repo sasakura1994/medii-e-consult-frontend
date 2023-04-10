@@ -42,39 +42,42 @@ const Login: NextPage = () => {
   const { seminars, latestSeminar, ticketCount } = useSeminar();
   const [showModal, setShowModal] = React.useState(false);
   return (
-    <div className="mb-12 bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat md:bg-[url('/images/seminar/PC_back.png')]">
+    <div className="pb-12 bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat md:bg-[url('/images/seminar/PC_back.png')]">
       <div className="m-auto flex max-w-[960px] flex-col items-center py-4 pt-10">
         <h2 className="h-32  w-72 bg-contain bg-no-repeat px-12 pt-0 text-center text-lg text-[#6c6c6c] md:bg-[url('/images/seminar/heading_fukidashi.svg')] md:pt-6 md:text-3xl">
           最新セミナー
         </h2>
-        <div className="mt-30 relative w-full bg-white pt-40  pb-20 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] md:mt-64 md:w-[960px] md:rounded-lg">
-          <div className="absolute top-[-100px] flex w-full justify-center px-4  md:top-[-264px]">
+        <div className="mt-30 relative w-full bg-white pt-24 pb-20  md:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] md:mt-64 md:w-[960px] md:rounded-lg md:pt-40">
+          <div className="absolute top-[-100px] flex w-full justify-center px-6  md:top-[-264px]">
             <img
               src={latestSeminar?.image_url}
-              className="drop-shadow-[0_4px_4px_rgba(0,0,0,.25)] md:drop-shadow-none md:shadow-[20px_27px_0_0_rgb(221,221,221)] aspect-video max-h-[405px] w-full max-w-none md:w-[719px]"
+              className="aspect-video max-h-[405px] w-full max-w-none drop-shadow-[0_4px_4px_rgba(0,0,0,.25)] md:w-[719px] md:shadow-[20px_27px_0_0_rgb(221,221,221)] md:drop-shadow-none"
             />
           </div>
           <div className="flex flex-col items-center bg-white px-8 md:px-32">
-            <a>
-              <button className="mb-2 mt-6 rounded-lg bg-primary py-4 px-14 text-2xl font-bold text-white">
+            <a className="w-full">
+              <button className="relative mb-2 mt-6 w-full rounded-lg bg-primary py-3 text-lg font-bold text-white md:py-4 md:px-14 md:text-2xl">
                 ZOOMセミナーへ
                 <img
                   src="/images/seminar/main_button_arrow.svg"
-                  className="ml-2 inline"
+                  className="absolute right-4 top-3 ml-2 inline h-6 md:static md:h-auto"
                 />
               </button>
             </a>
             <a href="/seminar#archive">
-              <button className="my-2 rounded-lg border border-[#7acadc] bg-[#f2f9ff] py-5 px-14 text-primary">
+              <button className="mt-2 mb-4 rounded-lg border border-[#7acadc] bg-[#f2f9ff] py-4 px-14 text-primary md:py-5">
                 過去のセミナー動画はこちら
               </button>
             </a>
             <div className="flex w-full flex-col items-center">
               <div className="flex w-full items-center justify-center rounded-md bg-[#e2e7ff] py-4">
-                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-primary">
-                  <img src="/images/seminar/video.svg" />
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary md:h-20 md:w-20">
+                  <img
+                    src="/images/seminar/video.svg"
+                    className="w-[19px] md:w-auto"
+                  />
                 </div>
-                <p className="pl-4 text-xl font-bold text-primary">
+                <p className="pl-4 font-bold text-primary md:text-xl">
                   {latestSeminar?.subject}
                 </p>
               </div>
