@@ -179,12 +179,12 @@ const Login: NextPage = () => {
           </div>
           <a
             href="/seminar/archives"
-            className="my-10 inline-flex items-center rounded-full border border-primary px-6 py-3 text-sm text-primary"
+            className="my-10 inline-flex items-center rounded-full border border-primary px-6 py-3 text-sm text-primary bg-white"
           >
             すべてのアーカイブ動画を見る
             <img src="/icons/arrow_right.svg" className="ml-2 inline h-3 " />
           </a>
-          <p className="text-sm">
+          <p className="text-sm text-center">
             ※アーカイブ動画に表示している医師の方々の経歴などの情報は、セミナー当時のものとなっております。
           </p>
         </div>
