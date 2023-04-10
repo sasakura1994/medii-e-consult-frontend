@@ -18,10 +18,10 @@ const Login: NextPage = () => {
   const total = seminars !== undefined ? seminars.length : 0;
   console.log( startNumber );
   return (
-    <div className="mb-12 bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat md:bg-[url('/images/seminar/PC_back.png')]">
-      <div className="mx-auto flex w-full flex-col items-center rounded-lg px-8 pb-20 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] md:max-w-[960px] md:bg-white md:px-20 md:pt-20">
+    <div className="mb-12 bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat md:bg-[url('/images/seminar/PC_back.png')] pt-10">
+      <div className="mx-auto flex w-full flex-col items-center rounded-lg px-8 pb-20 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] md:max-w-[960px] md:bg-white md:px-20 md:pt-14">
         <SeminarArchiveHeader ticketCount={ticketCount} />
-        <p className="w-full">
+        <p className="w-full pb-4">
           <span className="font-bold">
             {startNumber + 1} ~ {total > endNumber + 1 ? endNumber + 1 : total}
           </span>
@@ -44,7 +44,7 @@ const Login: NextPage = () => {
               TOPへ戻る
             </a>
           </div>
-          <div className="flex">
+          <div className="flex gap-4">
             {[...Array(pageCount)].map((_, i) =>
               i + 1 == current ? (
                 <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-white" key={i}>
