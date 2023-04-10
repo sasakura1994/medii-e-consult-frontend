@@ -1,21 +1,17 @@
 import React from 'react';
 import type { NextPage } from 'next';
 import { useSeminar } from '@/features/seminar/useSeminar';
-import { SeminarEntityType } from '@/types/entities/seminarEntity';
 import { SeminarCard } from '@/features/seminar/seminarCard';
-import { Modal } from '@/components/Parts/Modal/Modal';
-import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
-import { OutlinedSquareButton } from '@/components/Parts/Button/OutlinedSquareButton';
 import { SeminarArchiveHeader } from '@/features/seminar/seminarArchiveHeader';
 import { usePagenation } from '@/hooks/usePagenation';
 
 const Login: NextPage = () => {
-  const { seminars, latestSeminar, ticketCount } = useSeminar();
+  const { seminars, ticketCount } = useSeminar();
   const numberPerPage = 6;
   console.log( seminars );
   const pageCount =
     seminars !== undefined ? Math.floor(seminars.length / numberPerPage) + 1 : 0;
-  const { current, max, next, back, move } = usePagenation(pageCount);
+  const { current, move } = usePagenation(pageCount);
   console.log( current );
   const startNumber = ( current - 1 ) * numberPerPage; 
   const endNumber = current * numberPerPage - 1;
@@ -51,11 +47,12 @@ const Login: NextPage = () => {
           <div className="flex">
             {[...Array(pageCount)].map((_, i) =>
               i + 1 == current ? (
-                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-white">
+                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-white" key={i}>
                   <p>{i + 1}</p>
                 </div>
               ) : (
                 <div
+                  key={i}
                   onClick={() => {
                     move(i + 1);
                     window.scrollTo({ top: 0, behavior: 'smooth' });
