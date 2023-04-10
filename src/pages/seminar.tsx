@@ -66,7 +66,7 @@ const Login: NextPage = () => {
               </button>
             </a>
             <a href="/seminar#archive">
-              <button className="my-2 rounded-lg border border-[#7acadc] bg-[#f2f9ff] py-4 px-14 text-primary">
+              <button className="my-2 rounded-lg border border-[#7acadc] bg-[#f2f9ff] py-5 px-14 text-primary">
                 過去のセミナー動画はこちら
               </button>
             </a>
@@ -138,7 +138,7 @@ const Login: NextPage = () => {
           id="archive"
           className="mt-10 flex w-full flex-col items-center rounded-lg px-8 pb-20 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] md:max-w-[960px] md:bg-white md:px-20 md:pt-20"
         >
-          <h2 className="h-32 w-[460px] bg-contain bg-no-repeat px-14 pt-6 text-center text-lg text-[#6c6c6c] md:bg-[url('/images/seminar/list_fukidashi.svg')] md:text-3xl">
+          <h2 className="h-32 max-w-[460px] bg-contain bg-no-repeat md:px-14 pt-6 text-center text-lg text-[#6c6c6c] md:bg-[url('/images/seminar/list_fukidashi.svg')] md:text-3xl">
             セミナーアーカイブ動画
           </h2>
           <div className="mb-6 flex flex-col items-center justify-center md:flex-row">
