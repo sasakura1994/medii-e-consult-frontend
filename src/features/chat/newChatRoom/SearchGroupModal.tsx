@@ -19,10 +19,13 @@ export const SearchGroupModal: React.FC<SearchGroupModalProps> = (
 ) => {
   const { onChange, setShowModal } = props;
   const {
+    getMedicalSpecialityNames,
+    group,
     groups,
     isLoadingGroups,
     search,
     searchConditions,
+    setGroup,
     setSearchConditions,
   } = useSearchGroupModal();
 
@@ -108,6 +111,36 @@ export const SearchGroupModal: React.FC<SearchGroupModalProps> = (
               <>検索結果 {groups?.length} 件</>
             )}
           </div>
+          {!isLoadingGroups && groups && (
+            <div className="mt-6 h-[200px] overflow-auto">
+              <table className="min-w-full text-sm">
+                <thead className="border-y border-y-heading-line text-left text-block-gray">
+                  <tr>
+                    <th className="py-3 font-normal">エリア・施設名</th>
+                    <th className="py-3 font-normal">対象疾患</th>
+                    <th className="py-3 font-normal">診療科目</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {groups.map((group) => (
+                    <tr
+                      key={group.group_id}
+                      className="hover:bg-primary-light"
+                      onClick={() => setGroup(group)}
+                    >
+                      <td className="whitespace-nowrap py-3">{group.area}</td>
+                      <td className="whitespace-nowrap py-3">
+                        {group.disease}
+                      </td>
+                      <td className="whitespace-pre-wrap break-words py-3">
+                        {getMedicalSpecialityNames(group)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </Modal>
     </>

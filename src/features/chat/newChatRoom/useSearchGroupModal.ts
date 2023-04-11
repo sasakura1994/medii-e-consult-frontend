@@ -3,7 +3,8 @@ import {
   useSearchGroup,
 } from '@/hooks/api/group/useSearchGroup';
 import { useFetchMedicalSpecialitiesWithContract } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialitiesWithContract';
-import React from 'react';
+import { GroupEntity } from '@/types/entities/GroupEntity';
+import React, { useCallback } from 'react';
 
 export const useSearchGroupModal = () => {
   const [searchConditions, setSearchConditions] =
@@ -15,6 +16,7 @@ export const useSearchGroupModal = () => {
     });
   const [decidedSearchConditions, setDecidedSearchConditions] =
     React.useState<SearchGroupConditions>(searchConditions);
+  const [group, setGroup] = React.useState<GroupEntity>();
 
   const { medicalSpecialities } = useFetchMedicalSpecialitiesWithContract();
   const { groups, isLoading: isLoadingGroups } = useSearchGroup(
@@ -25,12 +27,34 @@ export const useSearchGroupModal = () => {
     setDecidedSearchConditions(searchConditions);
   }, [searchConditions]);
 
+  const getMedicalSpecialityNames = useCallback(
+    (group: GroupEntity) => {
+      if (!medicalSpecialities) {
+        return '';
+      }
+      return Object.keys(group.speciality_counts)
+        .map(
+          (specialityCode) =>
+            medicalSpecialities.find(
+              (medicalSpeciality) =>
+                medicalSpeciality.speciality_code === specialityCode
+            )?.name
+        )
+        .filter((name) => name !== undefined)
+        .join('\n');
+    },
+    [medicalSpecialities]
+  );
+
   return {
+    getMedicalSpecialityNames,
+    group,
     groups,
     isLoadingGroups,
     medicalSpecialities,
     search,
     searchConditions,
+    setGroup,
     setSearchConditions,
   };
 };
