@@ -206,7 +206,7 @@ const Seminar: NextPage = () => {
       </div>
       {showModal && (
         <Modal setShowModal={setShowModal} className="lg:w-[800px]">
-          <div className="align-center relative flex flex-col items-center bg-white px-6 py-4 lg:lgpy-20 lg:px-28">
+          <div className="align-center relative flex flex-col items-center bg-white px-6 py-4 lg:py-20 lg:px-28">
             <img
               onClick={() => setShowModal(false)}
               src="/icons/close_primary.svg"
@@ -218,7 +218,8 @@ const Seminar: NextPage = () => {
               <br />
               E-コンサルで相談するとセミナーチケット1枚獲得できます。
             </p>
-            <img src="/images/seminar/about_ticket_pc.png" />
+            <img className="hidden md:block" src="/images/seminar/about_ticket_pc.png" />
+            <img className="md:hidden" src="/images/seminar/about_ticket_sp.png" />
           </div>
         </Modal>
       )}
