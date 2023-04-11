@@ -12,7 +12,7 @@ export type UseFetchMedicalSpecialityCategoriesType = {
   medicalSpecialityCategories?: MedicalSpecialityCategoryEntity[];
 };
 
-const endpoint = '/api/medical_category/medical_speciality_categories';
+const endpoint = '/medical_category/medical_speciality_categories';
 
 export const useFetchMedicalSpecialityCategories =
   (): UseFetchMedicalSpecialityCategoriesType => {

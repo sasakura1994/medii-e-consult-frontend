@@ -19,6 +19,7 @@ import { OutlinedSquareButton } from '@/components/Parts/Button/OutlinedSquareBu
 import { MedicalSpecialitiesSelectDialog } from '@/components/MedicalSpeciality/MedicalSpecialitiesSelectDialog';
 import { SelectedMedicalSpecialities } from '@/components/MedicalSpeciality/SelectedMedicalSpecialities';
 import { DoctorSearchModal } from './DoctorSearchModal';
+import { SearchGroupModal } from './SearchGroupModal';
 // canvasの関係でサーバー時点でimportされているとエラーになるためこうするしかないらしい
 const ImageEditorComponent = dynamic<ImageEditorProps>(
   (() =>
@@ -44,8 +45,9 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
     editingImage,
     formData,
     imageInput,
-    isDoctorSearchModalShow,
+    isDoctorSearchModalShown,
     isMedicalSpecialitiesSelectDialogShown,
+    isSearchGroupModalShown,
     medicalSpecialities,
     medicalSpecialityCategories,
     moveSelectedMedicalSpeciality,
@@ -58,8 +60,9 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
     setChildAgeWrapper,
     setEditingImage,
     setFormData,
-    setIsDoctorSearchModalShow,
+    setIsDoctorSearchModalShown,
     setIsMedicalSpecialitiesSelectDialogShown,
+    setIsSearchGroupModalShown,
     setSelectedMedicalSpecialities,
   } = props;
 
@@ -145,7 +148,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                 <div className="my-2 flex items-center gap-2">
                   <OutlinedSquareButton
                     type="button"
-                    onClick={() => setIsDoctorSearchModalShow(true)}
+                    onClick={() => setIsDoctorSearchModalShown(true)}
                   >
                     専門医検索
                   </OutlinedSquareButton>
@@ -172,6 +175,25 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                 }
               />
             </div>
+            {formData.room_type === 'GROUP' && (
+              <>
+                <div className="my-2 flex items-center gap-2">
+                  <OutlinedSquareButton
+                    type="button"
+                    onClick={() => setIsSearchGroupModalShown(true)}
+                  >
+                    グループ検索
+                  </OutlinedSquareButton>
+                  {doctor ? (
+                    <div>
+                      {doctor.last_name} {doctor.first_name} 先生
+                    </div>
+                  ) : (
+                    <div>未選択</div>
+                  )}
+                </div>
+              </>
+            )}
           </div>
           <NewChatRoomFormLabel className="mt-4">患者情報</NewChatRoomFormLabel>
           <div className="flex gap-2">
@@ -361,13 +383,22 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
           onChange={changeMedicalSpecialities}
         />
       )}
-      {isDoctorSearchModalShow && (
+      {isDoctorSearchModalShown && (
         <DoctorSearchModal
           onChange={(doctor) => {
-            setIsDoctorSearchModalShow(false);
+            setIsDoctorSearchModalShown(false);
             changeDoctor(doctor);
           }}
-          setShowModal={setIsDoctorSearchModalShow}
+          setShowModal={setIsDoctorSearchModalShown}
+        />
+      )}
+      {isSearchGroupModalShown && (
+        <SearchGroupModal
+          onChange={(doctor) => {
+            setIsSearchGroupModalShown(false);
+            changeDoctor(doctor);
+          }}
+          setShowModal={setIsSearchGroupModalShown}
         />
       )}
     </>

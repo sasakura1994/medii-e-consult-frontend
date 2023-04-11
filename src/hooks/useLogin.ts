@@ -28,7 +28,7 @@ export const useLogin = (): UseLoginType => {
 
     try {
       const apiClient = createApiClient({ contentType: 'application/json' });
-      const url = `${process.env.ENDPOINT_URL}/api/doctor/login`;
+      const url = `${process.env.ENDPOINT_URL}/doctor/login`;
 
       const res = await apiClient.post(url, {
         mail_address: email,

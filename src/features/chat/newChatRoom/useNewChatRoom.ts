@@ -36,7 +36,9 @@ export const useNewChatRoom = () => {
     isMedicalSpecialitiesSelectDialogShown,
     setIsMedicalSpecialitiesSelectDialogShown,
   ] = React.useState(false);
-  const [isDoctorSearchModalShow, setIsDoctorSearchModalShow] =
+  const [isDoctorSearchModalShown, setIsDoctorSearchModalShown] =
+    React.useState(false);
+  const [isSearchGroupModalShown, setIsSearchGroupModalShown] =
     React.useState(false);
 
   const { createNewChatRoom } = usePostChatRoom();
@@ -239,8 +241,9 @@ export const useNewChatRoom = () => {
     errorMessage,
     formData,
     imageInput,
-    isDoctorSearchModalShow,
+    isDoctorSearchModalShown,
     isMedicalSpecialitiesSelectDialogShown,
+    isSearchGroupModalShown,
     isSending,
     medicalSpecialities,
     medicalSpecialityCategories,
@@ -256,8 +259,9 @@ export const useNewChatRoom = () => {
     setChildAgeWrapper,
     setEditingImage,
     setFormData,
-    setIsDoctorSearchModalShow,
+    setIsDoctorSearchModalShown,
     setIsMedicalSpecialitiesSelectDialogShown,
+    setIsSearchGroupModalShown,
     setSelectedMedicalSpecialities,
     submit,
   };

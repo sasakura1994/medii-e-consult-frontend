@@ -6,7 +6,7 @@ export type SearchDoctorConditions = {
   speciality: string;
 };
 
-export type UseFetchProfileType = {
+export type UseSearchDoctorType = {
   isLoading: boolean;
   error?: Error;
   doctors?: DoctorEntity[];
@@ -14,7 +14,7 @@ export type UseFetchProfileType = {
 
 export const useSearchDoctor = (
   conditions?: SearchDoctorConditions
-): UseFetchProfileType => {
+): UseSearchDoctorType => {
   const endpoint = conditions
     ? `/api/doctor/search_doctor?speciality=${conditions.speciality}&experience_years=${conditions.experienceYears}`
     : undefined;
