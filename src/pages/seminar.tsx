@@ -59,12 +59,12 @@ const Seminar: NextPage = () => {
             />
           </div>
           <div className="flex flex-col items-center bg-white px-8 md:px-32">
-            <a className="w-full">
-              <button className="relative mb-2 mt-6 w-full rounded-lg bg-primary py-3 text-lg font-bold text-white md:py-4 md:px-14 md:text-2xl">
+            <a className="w-full md:w-auto">
+              <button className="relative mb-2 mt-6 w-full rounded-lg bg-primary py-3 text-base font-bold text-white md:w-auto md:py-4 md:px-12 md:text-2xl">
                 ZOOMセミナーへ
                 <img
                   src="/images/seminar/main_button_arrow.svg"
-                  className="absolute right-4 top-3 ml-2 inline h-6 md:static md:h-auto"
+                  className="absolute right-4 top-3 ml-2 inline h-6 md:static  md:ml-6"
                 />
               </button>
             </a>
@@ -89,7 +89,7 @@ const Seminar: NextPage = () => {
             <div className="w-full  text-lg">
               <div className="flex-reverse flex flex-col flex-col-reverse items-center justify-between border-b py-4 md:flex-row">
                 <div className="w-full md:w-auto">
-                  <p>
+                  <p className="text-base md:text-lg">
                     <span className="pr-4 text-2xl text-primary md:text-lg">
                       日時
                     </span>
@@ -110,14 +110,14 @@ const Seminar: NextPage = () => {
                   >
                     <OutlinedSquareButton className="mb-2 flex items-center rounded-lg border-inherit py-2 px-8 font-bold">
                       <img src="/images/seminar/google_calendar.png" />
-                      <div>Googleカレンダーに登録</div>
+                      <p className="ml-4">Googleカレンダーに登録</p>
                     </OutlinedSquareButton>
                   </a>
                 </div>
               </div>
               <div className="border-b py-4">
                 <div>
-                  <p>
+                  <p className="text-base md:text-lg">
                     <span className="pr-4 text-2xl text-primary md:text-lg md:font-bold">
                       講師
                     </span>{' '}
@@ -130,7 +130,7 @@ const Seminar: NextPage = () => {
               </div>
               <div className="pt-4">
                 <div>
-                  <p>
+                  <p className="text-base md:text-lg">
                     <span className="pr-4 text-2xl text-primary md:text-lg">
                       セミナー概要
                     </span>
@@ -154,16 +154,27 @@ const Seminar: NextPage = () => {
           <div className="mb-6 flex flex-col items-center justify-center md:flex-row">
             <div>
               <div className="relative">
-                <div className="absolute top-0 left-0 right-0 bottom-0 rounded-3xl border border-[#c4c4c4] bg-white blur-xs"></div>
+                <div className="absolute top-0 left-0 right-0 bottom-0 rounded-xl border border-[#c4c4c4] bg-white blur-xs md:rounded-3xl"></div>
                 <div className="relative flex items-center p-6">
                   <img src="/images/seminar/ticket.png" />
-                  <p className="pl-2 md:text-2xl">
+                  <p className="hidden pl-2 md:block md:text-2xl">
                     現在のチケット所持枚数
                     <span className="pl-2 text-4xl font-bold text-[#f5847d]">
                       {ticketCount?.ticket_count}
                       <span className="text-lg">枚</span>
                     </span>
                   </p>
+                  <div className="flex md:hidden">
+                    <p className="pl-2 pr-2 md:text-2xl">
+                      現在のチケット所持
+                      <br />
+                      枚数
+                    </p>
+                    <p className="pl-2 text-4xl font-bold text-[#f5847d]">
+                      {ticketCount?.ticket_count}
+                      <span className="text-lg">枚</span>
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -183,7 +194,7 @@ const Seminar: NextPage = () => {
           </div>
           <a
             href="/seminar/archives"
-            className="my-10 inline-flex items-center rounded-full border border-primary bg-white px-6 py-3 text-sm text-primary"
+            className="my-6 inline-flex items-center rounded-full border border-primary bg-white px-8 py-2 text-[11px] text-primary md:my-10 md:px-6 md:py-3 md:text-sm"
           >
             すべてのアーカイブ動画を見る
             <img src="/icons/arrow_right.svg" className="ml-2 inline h-3 " />
@@ -194,7 +205,7 @@ const Seminar: NextPage = () => {
         </div>
       </div>
       {showModal && (
-        <Modal setShowModal={setShowModal}>
+        <Modal setShowModal={setShowModal} className="md:w-[800px]">
           <div className="align-center relative flex flex-col items-center bg-white px-6 py-4 md:py-20 md:px-28">
             <img
               onClick={() => setShowModal(false)}
