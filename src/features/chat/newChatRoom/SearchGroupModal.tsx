@@ -2,15 +2,16 @@ import React from 'react';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import { ModalTitleWithCloseButton } from '@/components/Parts/Modal/ModalTitleWithCloseButton';
 import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
-import { DoctorEntity } from '@/types/entities/doctorEntity';
 import { MedicalSpecialitySelectButton } from '@/components/MedicalSpeciality/MedicalSpecialitySelectButton';
 import { SearchGroupModalLabelAndInput } from './SearchGroupModalLabelAndInput';
 import { TextField } from '@/components/Parts/Form/TextField';
 import { useSearchGroupModal } from './useSearchGroupModal';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
+import { GroupDetailModal } from './GroupDetailModal';
+import { GroupEntity } from '@/types/entities/GroupEntity';
 
 export type SearchGroupModalProps = {
-  onChange: (doctor: DoctorEntity) => void;
+  onChange: (doctor: GroupEntity) => void;
   setShowModal: (isShow: boolean) => void;
 };
 
@@ -143,6 +144,13 @@ export const SearchGroupModal: React.FC<SearchGroupModalProps> = (
           )}
         </div>
       </Modal>
+      {group && (
+        <GroupDetailModal
+          group={group}
+          onSubmit={() => onChange(group)}
+          setShowModal={() => setGroup(undefined)}
+        />
+      )}
     </>
   );
 };

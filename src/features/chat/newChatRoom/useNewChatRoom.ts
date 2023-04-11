@@ -7,6 +7,7 @@ import {
 import { usePostDraftImage } from '@/hooks/api/chat/usePostDraftImage';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { useFetchMedicalSpecialityCategories } from '@/hooks/api/medicalCategoryCategory/useFetchMedicalSpecialityCategories';
+import { GroupEntity } from '@/types/entities/GroupEntity';
 import { NewChatRoomEntity } from '@/types/entities/chat/NewChatRoomEntity';
 import { DoctorEntity } from '@/types/entities/doctorEntity';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
@@ -30,6 +31,7 @@ export const useNewChatRoom = () => {
     React.useState<MedicalSpecialityEntity[]>([]);
   const [editingImage, setEditingImage] = React.useState<File>();
   const [doctor, setDoctor] = React.useState<DoctorEntity>();
+  const [group, setGroup] = React.useState<GroupEntity>();
   const [isSending, setIsSending] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState('');
   const [
@@ -222,16 +224,28 @@ export const useNewChatRoom = () => {
     []
   );
 
-  const changeDoctor = React.useCallback((doctor: DoctorEntity) => {
-    setDoctor(doctor);
-    setFormData({ ...formData, target_doctor: doctor.account_id });
-  }, []);
+  const changeDoctor = React.useCallback(
+    (doctor: DoctorEntity) => {
+      setDoctor(doctor);
+      setFormData({ ...formData, target_doctor: doctor.account_id });
+    },
+    [formData]
+  );
+
+  const changeGroup = React.useCallback(
+    (group: GroupEntity) => {
+      setGroup(group);
+      setFormData({ ...formData, group_id: group.group_id });
+    },
+    [formData]
+  );
 
   return {
     ageRange,
     backToInput,
     childAge,
     changeDoctor,
+    changeGroup,
     changeMedicalSpecialities,
     chatDraftImages,
     confirmInput,
@@ -240,6 +254,7 @@ export const useNewChatRoom = () => {
     editingImage,
     errorMessage,
     formData,
+    group,
     imageInput,
     isDoctorSearchModalShown,
     isMedicalSpecialitiesSelectDialogShown,

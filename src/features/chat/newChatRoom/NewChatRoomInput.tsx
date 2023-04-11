@@ -37,6 +37,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
     deleteChatDraftImageById,
     errorMessage,
     changeDoctor,
+    changeGroup,
     changeMedicalSpecialities,
     chatDraftImages,
     childAge,
@@ -44,6 +45,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
     doctor,
     editingImage,
     formData,
+    group,
     imageInput,
     isDoctorSearchModalShown,
     isMedicalSpecialitiesSelectDialogShown,
@@ -184,13 +186,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                   >
                     グループ検索
                   </OutlinedSquareButton>
-                  {doctor ? (
-                    <div>
-                      {doctor.last_name} {doctor.first_name} 先生
-                    </div>
-                  ) : (
-                    <div>未選択</div>
-                  )}
+                  {group ? <div>{group.group_name}</div> : <div>未選択</div>}
                 </div>
               </>
             )}
@@ -394,9 +390,9 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
       )}
       {isSearchGroupModalShown && (
         <SearchGroupModal
-          onChange={(doctor) => {
+          onChange={(group) => {
             setIsSearchGroupModalShown(false);
-            changeDoctor(doctor);
+            changeGroup(group);
           }}
           setShowModal={setIsSearchGroupModalShown}
         />
