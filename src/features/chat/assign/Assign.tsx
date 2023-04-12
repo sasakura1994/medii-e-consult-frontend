@@ -1,17 +1,22 @@
 import { Card } from '@/components/Parts/Card/Card';
 import React from 'react';
 import { AssignLabelAndContent } from './AssignLabelAndContent';
-import { useAssign } from './useAssign';
 import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
 import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 import { GrayButton } from '@/components/Parts/Button/GrayButton';
+import Link from 'next/link';
 
 type Props = {
   chatRoom: ChatRoomEntity;
   images: string[];
+  onConfirm: () => void;
 };
 
-export const Assign: React.FC<Props> = ({ chatRoom, images }: Props) => {
+export const Assign: React.FC<Props> = ({
+  chatRoom,
+  images,
+  onConfirm,
+}: Props) => {
   return (
     <Card className="px-4 py-8 lg:px-20 lg:py-8" spNoBorder>
       <div className="text-center text-2xl font-bold">E-コンサル依頼内容</div>
@@ -42,10 +47,18 @@ export const Assign: React.FC<Props> = ({ chatRoom, images }: Props) => {
         </AssignLabelAndContent>
       )}
       <div className="mx-auto mt-[60px] flex w-4/5 flex-col gap-10 lg:w-full lg:flex-row-reverse lg:gap-6">
-        <PrimaryButton className="w-full flex-1">
+        <PrimaryButton
+          type="button"
+          className="w-full flex-1"
+          onClick={onConfirm}
+        >
           E-コンサルに回答する
         </PrimaryButton>
-        <GrayButton className="w-full flex-1">依頼を断る</GrayButton>
+        <Link href="/chat">
+          <GrayButton type="button" className="w-full flex-1">
+            依頼を断る
+          </GrayButton>
+        </Link>
       </div>
     </Card>
   );

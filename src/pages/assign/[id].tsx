@@ -3,13 +3,29 @@ import { MyPageLayout } from '@/components/Layouts/MyPageLayout';
 import type { NextPageWithLayout } from '@/pages/_app';
 import { Assign } from '@/features/chat/assign/Assign';
 import { useAssign } from '@/features/chat/assign/useAssign';
+import { AssignConfirmationModal } from '@/features/chat/assign/AssignConfirmationModal';
 
 const AssignPage: NextPageWithLayout = () => {
   const useAssignData = useAssign();
-  const { chatRoom, images } = useAssignData;
+  const { assign, chatRoom, images, isConfirming, setIsConfirming } =
+    useAssignData;
 
   return (
-    <>{chatRoom && <Assign chatRoom={chatRoom} images={images || []} />}</>
+    <>
+      {chatRoom && (
+        <Assign
+          chatRoom={chatRoom}
+          images={images || []}
+          onConfirm={() => setIsConfirming(true)}
+        />
+      )}
+      {isConfirming && (
+        <AssignConfirmationModal
+          setShowModal={setIsConfirming}
+          onSubmit={assign}
+        />
+      )}
+    </>
   );
 };
 
