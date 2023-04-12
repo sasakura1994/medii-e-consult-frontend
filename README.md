@@ -2,7 +2,7 @@
 
 ### Execution environment
 
-- Node version: 16.19.0
+- Node version: 18.14.0
 - npm version: 8.19.3
 
 ### Install & starting
