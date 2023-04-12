@@ -8,6 +8,7 @@ import { DoctorEntity } from '@/types/entities/doctorEntity';
 import { DoctorProfileModal } from '@/components/Doctor/DoctorProfileModal';
 import { GrayButton } from '@/components/Parts/Button/GrayButton';
 import { MedicalSpecialitySelectButton } from '@/components/MedicalSpeciality/MedicalSpecialitySelectButton';
+import { useDoctor } from '@/hooks/useDoctor';
 
 export type DoctorSearchModalProps = {
   onChange: (doctor: DoctorEntity) => void;
@@ -29,6 +30,7 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = (
     setExperienceYears,
     specialityCode,
   } = useDoctorSearchModal();
+  const { calculateExperienceYear } = useDoctor();
 
   return (
     <>
@@ -108,7 +110,9 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = (
                     <div className="flex-1">
                       {getMedicalSpecialityName(doctor.speciality_1)}
                     </div>
-                    <div className="shrink grow-[0.3] basis-0">2 年目</div>
+                    <div className="shrink grow-[0.3] basis-0">
+                      {calculateExperienceYear(doctor.qualified_year)} 年目
+                    </div>
                   </div>
                 </a>
               ))}
