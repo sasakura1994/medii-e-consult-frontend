@@ -8,7 +8,7 @@ export type UseFetchSeminarsType = {
   seminars: SeminarEntityType[] | undefined;
 };
 
-const endpoint = '/api/seminar';
+const endpoint = '/seminar';
 
 export const useFetchSeminars = (): UseFetchSeminarsType => {
   const { isLoading, error, data } = useAuthenticatedSWR<{

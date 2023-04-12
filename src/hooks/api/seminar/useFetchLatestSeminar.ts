@@ -8,7 +8,7 @@ export type UseFetchLatestSeminarType = {
   latestSeminar: SeminarEntityType | undefined;
 };
 
-const endpoint = '/api/seminar/latest';
+const endpoint = '/seminar/latest';
 
 export const useFetchLatestSeminar = (): UseFetchLatestSeminarType => {
   const { isLoading, error, data } = useAuthenticatedSWR<{
