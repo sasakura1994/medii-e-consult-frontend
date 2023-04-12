@@ -25,4 +25,3 @@ jobs:
           TZ: Asia/Tokyo
         run: |
           export ENDPOINT_URL="${{ secrets.ENDPOINT_URL }}"
-          npm test

@@ -1,5 +1,12 @@
 /** @type {import('next').NextConfig} */
 
+const rewrites = process.env.IS_AMPLIFY ? [
+  {
+    source: `/api/:path*`,
+    destination: `${process.env.ENDPOINT_URL}/:path*`,
+  },
+] : [];
+
 const nextConfig = {
   reactStrictMode: true,
   env: {
@@ -9,12 +16,7 @@ const nextConfig = {
   },
   async rewrites() {
     // 現状"/api"で始まってしまっているものが多いので、"/api"が来たら"/api"を削除するようにしている
-    return [
-      {
-        source: `/api/:path*`,
-        destination: `${process.env.ENDPOINT_URL}/:path*`,
-      }
-    ];
+    return rewrites
   },
 };
 
