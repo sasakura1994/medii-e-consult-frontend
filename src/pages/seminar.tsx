@@ -155,26 +155,17 @@ const Seminar: NextPage = () => {
             <div>
               <div className="relative">
                 <div className="absolute top-0 left-0 right-0 bottom-0 rounded-xl border border-[#c4c4c4] bg-white blur-xs lg:rounded-3xl"></div>
-                <div className="relative flex items-center p-6">
+                <div className="relative flex items-center gap-[10px] p-5">
                   <img src="/images/seminar/ticket.png" />
-                  <p className="hidden pl-2 lg:block lg:text-2xl">
-                    現在のチケット所持枚数
-                    <span className="pl-2 text-4xl font-bold text-[#f5847d]">
-                      {ticketCount?.ticket_count}
-                      <span className="text-lg">枚</span>
-                    </span>
-                  </p>
-                  <div className="flex lg:hidden">
-                    <p className="pl-2 pr-2 lg:text-2xl">
-                      現在のチケット所持
-                      <br />
-                      枚数
-                    </p>
-                    <p className="pl-2 text-4xl font-bold text-[#f5847d]">
-                      {ticketCount?.ticket_count}
-                      <span className="text-lg">枚</span>
-                    </p>
+                  <div>
+                    現在のチケット所持
+                    <br className="inline lg:hidden" />
+                    枚数
                   </div>
+                  <span className="pl-2 text-[32px] font-bold text-[#f5847d]">
+                    {ticketCount?.ticket_count}
+                    <span className="text-base">枚</span>
+                  </span>
                 </div>
               </div>
             </div>
@@ -218,8 +209,14 @@ const Seminar: NextPage = () => {
               <br />
               E-コンサルで相談するとセミナーチケット1枚獲得できます。
             </p>
-            <img className="hidden md:block" src="/images/seminar/about_ticket_pc.png" />
-            <img className="md:hidden" src="/images/seminar/about_ticket_sp.png" />
+            <img
+              className="hidden md:block"
+              src="/images/seminar/about_ticket_pc.png"
+            />
+            <img
+              className="md:hidden"
+              src="/images/seminar/about_ticket_sp.png"
+            />
           </div>
         </Modal>
       )}
