@@ -7,8 +7,15 @@ import { AssignConfirmationModal } from '@/features/chat/assign/AssignConfirmati
 
 const AssignPage: NextPageWithLayout = () => {
   const useAssignData = useAssign();
-  const { assign, chatRoom, images, isConfirming, setIsConfirming } =
-    useAssignData;
+  const {
+    assign,
+    chatRoom,
+    errorMessage,
+    images,
+    isConfirming,
+    isSending,
+    setIsConfirming,
+  } = useAssignData;
 
   return (
     <>
@@ -21,8 +28,10 @@ const AssignPage: NextPageWithLayout = () => {
       )}
       {isConfirming && (
         <AssignConfirmationModal
-          setShowModal={setIsConfirming}
+          errorMessage={errorMessage}
+          isSending={isSending}
           onSubmit={assign}
+          setShowModal={setIsConfirming}
         />
       )}
     </>
