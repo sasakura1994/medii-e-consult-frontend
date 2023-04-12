@@ -12,16 +12,16 @@ export const SeminarCard: React.FC<Props> = ({ seminar }: Props) => {
         <div className="w-full">
           <img src={seminar.image_url} className="w-full" />
           <div className="relative mt-8 w-full rounded-md bg-[#f5847d] p-2 text-white">
-            <p className="pl-10 text-center text-sm md:pl-8 md:text-base">
+            <p className="pl-10 text-center text-sm lg:pl-8 lg:text-base">
               閲覧にチケット1枚が必要です
             </p>
             <div className="absolute bottom-0 left-2 top-0 m-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#f5847d]">
               <img src="/images/seminar/key_locked.svg" />
             </div>
           </div>
-          <div className="mx-3">
+          <div className="lg:mx-3">
             <p className="mt-4 h-12 font-bold">{seminar.subject}</p>
-            <dl className="mt-6 mb-4 grid grid-cols-[3rem_auto] gap-x-2 gap-y-4 text-sm">
+            <dl className="grid grid-cols-[3rem_auto] gap-x-2 text-sm lg:mt-6 lg:mb-4 lg:gap-y-4">
               <dt className="pr-4 font-bold text-primary">講師</dt>
               <dd className="text-sm">{seminar.doctor_name}先生</dd>
               <dt className="pr-4 font-bold text-primary">概要</dt>

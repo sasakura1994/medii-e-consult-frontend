@@ -26,7 +26,7 @@ export const HeaderSubMenu: React.FC = () => {
                 menus={[
                   {
                     text: 'E-コンサルの使い方',
-                    link: '/',
+                    link: '/HowToUse',
                     icon: <img src="/icons/help.svg" />,
                   },
                   {
