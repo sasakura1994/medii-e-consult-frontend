@@ -1,0 +1,22 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - nvm install 16.19.0
+        - nvm use 16.19.0
+        - export WEB_SERVER_URL=https://${AWS_BRANCH}.${AWS_APP_ID}.amplifyapp.com
+        - npm ci
+    build:
+      commands:
+        - npm run build
+  artifacts:
+    baseDirectory: .next
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
+  environment:
+    variables:
+      ENDPOINT_URL: 'https://stg-consult-api.medii.jp'
