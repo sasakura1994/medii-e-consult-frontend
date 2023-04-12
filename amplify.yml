@@ -3,8 +3,8 @@ frontend:
   phases:
     preBuild:
       commands:
-        - nvm install 18.14.0
-        - nvm use 18.14.0
+        - nvm install 16.19.0
+        - nvm use 16.19.0
         - export WEB_SERVER_URL=https://${AWS_BRANCH}.${AWS_APP_ID}.amplifyapp.com
         - npm ci
     build:
