@@ -1,0 +1,22 @@
+export type ChatMemberEntity = {
+  account_id: string;
+  doctor_id: string;
+  last_name: string;
+  first_name: string;
+  last_name_hira: string;
+  first_name_hira: string;
+  hospital_prefecture_name: string;
+  hospital_bed_count: number;
+  hospital_name: string;
+  is_hospital_doctor: boolean;
+  qualified_year: number;
+  speciality_1: string;
+  speciality_2: string;
+  speciality_3: string;
+  speciality_4: string;
+  expertise: string;
+  qualification: string;
+  graduated_university: string;
+  read_until: number;
+  last_read_date: string;
+};
