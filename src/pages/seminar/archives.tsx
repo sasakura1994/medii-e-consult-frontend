@@ -21,7 +21,7 @@ const Login: NextPage = () => {
   console.log(startNumber);
   return (
     <div className="mb-12 bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat pt-10 md:bg-[url('/images/seminar/PC_back.png')]">
-      <div className="mx-auto flex w-full flex-col items-center rounded-lg px-8 pb-20 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] md:max-w-[960px] md:bg-white md:px-20 md:pt-14">
+      <div className="mx-auto flex w-full flex-col items-center rounded-lg px-6 pb-20 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] md:max-w-[960px] md:bg-white md:px-20 md:pt-14">
         <SeminarArchiveHeader ticketCount={ticketCount} />
         <p className="w-full pb-4">
           <span className="font-bold">
@@ -71,16 +71,16 @@ const Login: NextPage = () => {
           </div>
           <div className="hidden w-48 md:block"></div>
         </div>
-        <div className="block w-48 md:hidden">
+        <div className="block md:w-48 md:hidden">
           <a
             href="/seminar/archives"
-            className="my-2 inline-flex  items-center rounded-full border border-primary bg-white px-10 py-3 text-center text-sm text-primary md:my-10"
+            className="my-2 inline-flex  items-center rounded-full border border-primary bg-white px-14 md:px-10 py-4 md:py-3 text-center text-sm text-primary md:my-10"
           >
             <img src="/icons/arrow_left.svg" className="mr-2 inline h-3" />
             TOPへ戻る
           </a>
         </div>
-        <p className="text-sm">
+        <p className="text-sm text-center">
           ※アーカイブ動画に表示している医師の方々の経歴などの情報は、セミナー当時のものとなっております。
         </p>
       </div>
