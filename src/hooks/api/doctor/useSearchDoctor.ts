@@ -16,7 +16,7 @@ export const useSearchDoctor = (
   conditions?: SearchDoctorConditions
 ): UseFetchProfileType => {
   const endpoint = conditions
-    ? `/api/doctor/search_doctor?speciality=${conditions.speciality}&experience_years=${conditions.experienceYears}`
+    ? `/api/doctor/search_doctor?speciality=${conditions.speciality}&experiance_years=${conditions.experienceYears}`
     : undefined;
 
   const {
