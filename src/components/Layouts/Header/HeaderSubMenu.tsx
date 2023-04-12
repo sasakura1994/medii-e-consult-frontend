@@ -26,7 +26,7 @@ export const HeaderSubMenu: React.FC = () => {
                 menus={[
                   {
                     text: 'E-コンサルの使い方',
-                    link: '/',
+                    link: '/HowToUse',
                     icon: <img src="/icons/help.svg" />,
                   },
                   {
@@ -47,7 +47,7 @@ export const HeaderSubMenu: React.FC = () => {
             </Tooltip>
           </li>
           <li className={styles.header_submenu__item}>
-            <Link href="/">
+            <Link href="/seminar">
               <a className={styles.header_submenu__link}>
                 <span
                   className={`${styles.header_submenu__link_text} ${styles.header_submenu__link_text___seminar}`}
@@ -107,7 +107,7 @@ export const HeaderSubMenu: React.FC = () => {
       <nav className={styles.header_subnav_sp}>
         <ul className={styles.header_submenu_sp}>
           <li className={styles.header_submenu_sp__item}>
-            <Link href="/">
+            <Link href="/seminar">
               <a
                 className={`${styles.header_submenu_sp__link} ${styles.header_submenu_sp__link___seminar}`}
               >

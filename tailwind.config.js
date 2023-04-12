@@ -33,7 +33,13 @@ module.exports = {
       dropShadow: {
         button: '0 4px 10px rgba(92,107,192,0.3)',
       },
+      fontFamily: {
+        'sans': ['Noto Sans JP', 'Avenir', 'Helvetica', 'Arial', 'sans-serif'],
+      },
+      blur: {
+        xs: '2px',
+      },
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/line-clamp')],
 };
