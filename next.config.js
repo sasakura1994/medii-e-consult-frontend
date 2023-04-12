@@ -1,13 +1,5 @@
 /** @type {import('next').NextConfig} */
 
-// local環境の時はCORS対策のためにWEB_SERVER_URLへのリクエストをENDPOINT_URLへリバースプロキシする
-const rewrites = process.env.NODE_ENV === 'development' ? [
-  {
-    source: '/api/:path*',
-    destination: `${process.env.ENDPOINT_URL}/api/:path*`,
-  },
-] : [];
-
 const nextConfig = {
   reactStrictMode: true,
   env: {
@@ -16,7 +8,13 @@ const nextConfig = {
     ENDPOINT_URL: process.env.NODE_ENV === 'development' ? process.env.WEB_SERVER_URL : process.env.ENDPOINT_URL,
   },
   async rewrites() {
-    return rewrites
+    // 現状"/api"で始まってしまっているものが多いので、"/api"が来たら"/api"を削除するようにしている
+    return [
+      {
+        source: `/api/:path*`,
+        destination: `${process.env.ENDPOINT_URL}/:path*`,
+      }
+    ];
   },
 };
 
