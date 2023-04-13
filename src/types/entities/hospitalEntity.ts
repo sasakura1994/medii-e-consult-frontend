@@ -1,4 +1,4 @@
-export type HospitalEntityType = {
+export type HospitalEntity = {
   uid: number;
   hospital_id: string;
   hospital_guid: string;

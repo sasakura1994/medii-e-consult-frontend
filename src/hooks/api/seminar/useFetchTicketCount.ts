@@ -8,7 +8,7 @@ export type UseFetchTicketCountType = {
   ticketCount: ticketCountEntity | undefined;
 };
 
-const endpoint = '/api/seminar/ticket_count';
+const endpoint = '/seminar/ticket_count';
 
 export const useFetchTicketCount = (): UseFetchTicketCountType => {
   const {

@@ -18,6 +18,7 @@ import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 import { OutlinedSquareButton } from '@/components/Parts/Button/OutlinedSquareButton';
 import { MedicalSpecialitiesSelectDialog } from '@/components/MedicalSpeciality/MedicalSpecialitiesSelectDialog';
 import { SelectedMedicalSpecialities } from '@/components/MedicalSpeciality/SelectedMedicalSpecialities';
+import { DoctorSearchModal } from './DoctorSearchModal';
 // canvasの関係でサーバー時点でimportされているとエラーになるためこうするしかないらしい
 const ImageEditorComponent = dynamic<ImageEditorProps>(
   (() =>
@@ -34,13 +35,16 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
     ageRange,
     deleteChatDraftImageById,
     errorMessage,
+    changeDoctor,
     changeMedicalSpecialities,
     chatDraftImages,
     childAge,
     confirmInput,
+    doctor,
     editingImage,
     formData,
     imageInput,
+    isDoctorSearchModalShow,
     isMedicalSpecialitiesSelectDialogShown,
     medicalSpecialities,
     medicalSpecialityCategories,
@@ -54,6 +58,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
     setChildAgeWrapper,
     setEditingImage,
     setFormData,
+    setIsDoctorSearchModalShow,
     setIsMedicalSpecialitiesSelectDialogShown,
     setSelectedMedicalSpecialities,
   } = props;
@@ -135,6 +140,25 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                 }
               />
             </div>
+            {formData.room_type === 'BY_NAME' && (
+              <>
+                <div className="my-2 flex items-center gap-2">
+                  <OutlinedSquareButton
+                    type="button"
+                    onClick={() => setIsDoctorSearchModalShow(true)}
+                  >
+                    専門医検索
+                  </OutlinedSquareButton>
+                  {doctor ? (
+                    <div>
+                      {doctor.last_name} {doctor.first_name} 先生
+                    </div>
+                  ) : (
+                    <div>未選択</div>
+                  )}
+                </div>
+              </>
+            )}
             <div>
               <NewChatRoomRoomType
                 id="room-type-group"
@@ -335,6 +359,15 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
           setShowModal={setIsMedicalSpecialitiesSelectDialogShown}
           defaultSelectedMedicalSpecialities={selectedMedicalSpecialities}
           onChange={changeMedicalSpecialities}
+        />
+      )}
+      {isDoctorSearchModalShow && (
+        <DoctorSearchModal
+          onChange={(doctor) => {
+            setIsDoctorSearchModalShow(false);
+            changeDoctor(doctor);
+          }}
+          setShowModal={setIsDoctorSearchModalShow}
         />
       )}
     </>

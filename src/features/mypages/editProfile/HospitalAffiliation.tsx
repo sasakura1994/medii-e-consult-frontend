@@ -20,14 +20,9 @@ export const HospitalAffiliation: React.FC = () => {
     <div className="mb-10">
       <h3 className="mb-4 text-primary">■ 所属病院</h3>
 
-      <div className="mb-4">
-        <SelectBox
-          name="prefecture_code"
-          id="prefecture_code"
-          className="!w-72"
-          label="勤務先病院の所在地"
-          required={true}
-        >
+      <div className="mb-4 w-72">
+        <Label label="勤務先病院の所在地" required id="prefecture_code" />
+        <SelectBox name="prefecture_code" id="prefecture_code" required>
           {prefectures.map((prefecture) => (
             <option value={prefecture.value} key={prefecture.value}>
               {prefecture.name}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, ModalPropsType } from '../Parts/Modal/Modal';
+import { Modal } from '../Parts/Modal/Modal';
 import { ModalTitleWithCloseButton } from '../Parts/Modal/ModalTitleWithCloseButton';
 import { PrimaryButton } from '../Parts/Button/PrimaryButton';
 import { useMedicalSpecialitiesSelectDialog } from './useMedicalSpecialitiesSelectDialog';
@@ -9,12 +9,10 @@ import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntit
 import { OutlinedSquareButton } from '../Parts/Button/OutlinedSquareButton';
 import { SelectedMedicalSpecialities } from './SelectedMedicalSpecialities';
 
-export type MedicalSpecialitiesSelectDialogProps = Pick<
-  ModalPropsType,
-  'setShowModal'
-> & {
+export type MedicalSpecialitiesSelectDialogProps = {
   defaultSelectedMedicalSpecialities: MedicalSpecialityEntity[];
   onChange: (medicalSpecialities: MedicalSpecialityEntity[]) => void;
+  setShowModal: (isShow: boolean) => void;
 };
 
 export const MedicalSpecialitiesSelectDialog: React.FC<
@@ -23,6 +21,7 @@ export const MedicalSpecialitiesSelectDialog: React.FC<
   const { setShowModal } = props;
   const {
     getMedicalSpecialitiesForCategory,
+    getSelectedCountForCategory,
     isCategoryOpened,
     isMedicalSpecialitySelected,
     medicalSpecialityCategories,
@@ -53,7 +52,9 @@ export const MedicalSpecialitiesSelectDialog: React.FC<
                 medicalSpecialityCategory={medicalSpecialityCategory}
                 isSelected={isCategoryOpened(medicalSpecialityCategory.id)}
                 onClick={() => toggleCategory(medicalSpecialityCategory.id)}
-                selectedCount={0}
+                selectedCount={getSelectedCountForCategory(
+                  medicalSpecialityCategory.id
+                )}
               />
               {isCategoryOpened(medicalSpecialityCategory.id) && (
                 <div className="my-4 grid grid-cols-2 gap-y-4 text-sm lg:mx-4 lg:grid-cols-3">
@@ -97,13 +98,14 @@ export const MedicalSpecialitiesSelectDialog: React.FC<
                 </OutlinedSquareButton>
               </div>
             </div>
-            <SelectedMedicalSpecialities
-              medicalSpecialities={selectedMedicalSpecialities}
-              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-              medicalSpecialityCategories={medicalSpecialityCategories!}
-              onDelete={toggleMedicalSpeciality}
-              moveSelectedMedicalSpeciality={moveSelectedMedicalSpeciality}
-            />
+            {medicalSpecialityCategories && (
+              <SelectedMedicalSpecialities
+                medicalSpecialities={selectedMedicalSpecialities}
+                medicalSpecialityCategories={medicalSpecialityCategories}
+                onDelete={toggleMedicalSpeciality}
+                moveSelectedMedicalSpeciality={moveSelectedMedicalSpeciality}
+              />
+            )}
           </div>
         )}
         <div className="mt-10">

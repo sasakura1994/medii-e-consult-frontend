@@ -10,7 +10,7 @@ import type { ProfileEntityType } from '@/types/entities/profileEntity';
 import type { EmailEntityType } from '@/types/entities/emailEntity';
 import type { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 import type { PrefectureEntityType } from '@/types/entities/prefectureEntity';
-import type { HospitalEntityType } from '@/types/entities/hospitalEntity';
+import type { HospitalEntity } from '@/types/entities/hospitalEntity';
 import type { EditProfileScreenStateType } from './editProfileScreenState';
 
 export type UseProfile = {
@@ -18,7 +18,7 @@ export type UseProfile = {
   email: EmailEntityType | undefined;
   medicalSpeciality: MedicalSpecialityEntity[] | undefined;
   prefecture: PrefectureEntityType[] | undefined;
-  hospital: HospitalEntityType | undefined;
+  hospital: HospitalEntity | undefined;
   editProfileScreen: EditProfileScreenStateType;
   showModal: boolean;
   openEdit: () => void;

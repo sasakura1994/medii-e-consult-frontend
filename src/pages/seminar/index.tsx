@@ -183,8 +183,14 @@ const Seminar: NextPage = () => {
               <br />
               E-コンサルで相談するとセミナーチケット1枚獲得できます。
             </p>
-            <img className="hidden md:block" src="/images/seminar/about_ticket_pc.png" />
-            <img className="md:hidden" src="/images/seminar/about_ticket_sp.png" />
+            <img
+              className="hidden md:block"
+              src="/images/seminar/about_ticket_pc.png"
+            />
+            <img
+              className="md:hidden"
+              src="/images/seminar/about_ticket_sp.png"
+            />
           </div>
         </Modal>
       )}

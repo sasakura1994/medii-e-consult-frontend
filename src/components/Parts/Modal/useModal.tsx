@@ -2,8 +2,10 @@ import React from 'react';
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
 import { ModalPropsType } from './Modal';
 
+let modalCount = 0;
+
 export const useModal = (props: ModalPropsType) => {
-  const { guard, setShowModal } = props;
+  const { setShowModal } = props;
   const modalRef = React.useRef(null);
 
   React.useEffect(() => {
@@ -11,16 +13,25 @@ export const useModal = (props: ModalPropsType) => {
       return;
     }
 
-    disableBodyScroll(modalRef.current);
-    return () => clearAllBodyScrollLocks();
+    if (modalCount === 0) {
+      disableBodyScroll(modalRef.current);
+    }
+
+    modalCount += 1;
+
+    return () => {
+      modalCount -= 1;
+      console.log(modalCount);
+      if (modalCount === 0) {
+        clearAllBodyScrollLocks();
+      }
+    };
   }, [modalRef]);
 
   const hideModal = () => {
-    if (guard) {
-      return;
+    if (setShowModal) {
+      setShowModal(false);
     }
-
-    setShowModal(false);
   };
 
   return { hideModal, modalRef };
