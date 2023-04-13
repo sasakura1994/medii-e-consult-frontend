@@ -1,14 +1,18 @@
 import React from 'react';
-import type { NextPage } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 import { useSeminar } from '@/features/seminar/useSeminar';
 import { SeminarEntityType } from '@/types/entities/seminarEntity';
 import { SeminarCard } from '@/features/seminar/seminarCard';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import { OutlinedSquareButton } from '@/components/Parts/Button/OutlinedSquareButton';
 import { SeminarArchiveHeader } from '@/features/seminar/seminarArchiveHeader';
+import { useRouter } from 'next/router';
+import { UseSeminarDetail } from '@/features/seminar/useSeminarDetail';
+import { Duplex } from 'stream';
 
 const getSeminarDateTime = (seminar: SeminarEntityType) => {
-  if (!seminar) return '';
+  if ( !seminar ) return '';
+  console.log( seminar );
   const [year, month, day] = seminar.seminar_date
     .substring(0, 10)
     .split(/-/) as string[];
