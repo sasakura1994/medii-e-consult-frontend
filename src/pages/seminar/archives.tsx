@@ -20,8 +20,8 @@ const Login: NextPage = () => {
   const total = seminars !== undefined ? seminars.length : 0;
   console.log(startNumber);
   return (
-    <div className="mb-12 bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat pt-10 md:bg-[url('/images/seminar/PC_back.png')]">
-      <div className="mx-auto flex w-full flex-col items-center rounded-lg px-6 pb-20 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] md:max-w-[960px] md:bg-white md:px-20 md:pt-14">
+    <div className="mb-12 bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat pt-10 lg:bg-[url('/images/seminar/PC_back.png')]">
+      <div className="mx-auto flex w-full flex-col items-center rounded-lg px-6 pb-20 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] lg:max-w-[960px] lg:bg-white lg:px-20 lg:pt-14">
         <SeminarArchiveHeader ticketCount={ticketCount} />
         <p className="w-full pb-4">
           <span className="font-bold">
@@ -30,14 +30,14 @@ const Login: NextPage = () => {
           件を表示 / 全<span className="font-bold">{total}</span>件
         </p>
         <div>
-          <div className="grid grid-cols-[1fr] gap-4 md:grid-cols-[1fr_1fr]">
+          <div className="grid grid-cols-[1fr] gap-4 lg:grid-cols-[1fr_1fr]">
             {seminars?.slice(startNumber, endNumber + 1).map((seminar) => (
               <SeminarCard seminar={seminar} key={seminar.seminar_id} />
             ))}
           </div>
         </div>
-        <div className="my-4 flex w-full items-center justify-center md:justify-between">
-          <div className="hidden w-48 md:block">
+        <div className="my-4 flex w-full items-center justify-center lg:justify-between">
+          <div className="hidden w-48 lg:block">
             <a
               href="/seminar/archives"
               className="my-10  inline-flex items-center rounded-full border border-primary px-10 py-3 text-center text-sm text-primary "
@@ -69,12 +69,12 @@ const Login: NextPage = () => {
               )
             )}
           </div>
-          <div className="hidden w-48 md:block"></div>
+          <div className="hidden w-48 lg:block"></div>
         </div>
-        <div className="block md:w-48 md:hidden">
+        <div className="block lg:w-48 lg:hidden">
           <a
             href="/seminar/archives"
-            className="my-2 inline-flex  items-center rounded-full border border-primary bg-white px-14 md:px-10 py-4 md:py-3 text-center text-sm text-primary md:my-10"
+            className="my-2 inline-flex  items-center rounded-full border border-primary bg-white px-14 lg:px-10 py-4 lg:py-3 text-center text-sm text-primary lg:my-10"
           >
             <img src="/icons/arrow_left.svg" className="mr-2 inline h-3" />
             TOPへ戻る
