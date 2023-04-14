@@ -1,5 +1,8 @@
 import { useRouter } from 'next/router';
-import { useFetchChatRoom } from './../../../hooks/api/chat/useFetchChatRoom';
+import {
+  useFetchChatRoom,
+  FetchChatRoomResponseData,
+} from './../../../hooks/api/chat/useFetchChatRoom';
 import React from 'react';
 import { usePostAssign } from '@/hooks/api/chat/usePostAssign';
 
@@ -19,6 +22,18 @@ export const useAssign = () => {
   const fetchChatRoomResult = useFetchChatRoom(id);
   const { data: fetchChatRoomResultData } = fetchChatRoomResult || {};
   const { chat_room: chatRoom, images } = fetchChatRoomResultData || {};
+
+  React.useEffect(() => {
+    if (!fetchChatRoomResultData) {
+      return;
+    }
+
+    // 自身がアサインされてる場合はチャットページに飛ばす
+    if (fetchChatRoomResultData.assigned_to_me) {
+      router.push(`/chat?chat_room_id=${id}`);
+      return;
+    }
+  }, [fetchChatRoomResultData]);
 
   const assign = React.useCallback(async () => {
     if (!id) {

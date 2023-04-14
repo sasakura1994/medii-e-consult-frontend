@@ -55,7 +55,7 @@ export const AssignConfirmationModal: React.FC<Props> = ({
               )}
             </>
           ) : (
-            <div className="flex justify-center">
+            <div className="mt-8 flex justify-center">
               <SpinnerBorder />
             </div>
           )}

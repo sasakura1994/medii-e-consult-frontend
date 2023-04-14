@@ -19,7 +19,12 @@ export const Assign: React.FC<Props> = ({
 }: Props) => {
   return (
     <Card className="px-4 py-8 lg:px-20 lg:py-8" spNoBorder>
-      <div className="text-center text-2xl font-bold">E-コンサル依頼内容</div>
+      <div
+        data-testid="assign-assign"
+        className="text-center text-2xl font-bold"
+      >
+        E-コンサル依頼内容
+      </div>
       <div className="py-8 text-center text-sm text-strong">
         &lt;注意&gt;本サービスを通してご提供頂いた専門的知見に基づくアドバイスは、
         質問医の判断で活用するものとして同意を頂いた上で本サービスをご活用頂いております

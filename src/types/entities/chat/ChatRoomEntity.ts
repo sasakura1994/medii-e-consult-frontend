@@ -2,10 +2,18 @@ export type ChatRoomType = 'FREE' | 'BY_NAME' | 'GROUP';
 
 export type ChatRoomGender = 'man' | 'woman';
 
+export type ChatRoomStatus =
+  | 'CREATED'
+  | 'ACTIVE'
+  | 'TEMP_RESOLVED'
+  | 'RESOLVED'
+  | 'CLOSED'
+  | 'REOPEN';
+
 export type ChatRoomEntity = {
   chat_room_id: string;
   owner_account_id: string;
-  status: string;
+  status: ChatRoomStatus;
   title: string;
   content: string;
   latest_message_uid: number;

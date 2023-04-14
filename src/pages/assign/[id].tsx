@@ -4,6 +4,7 @@ import type { NextPageWithLayout } from '@/pages/_app';
 import { Assign } from '@/features/chat/assign/Assign';
 import { useAssign } from '@/features/chat/assign/useAssign';
 import { AssignConfirmationModal } from '@/features/chat/assign/AssignConfirmationModal';
+import { AlreadyAssigned } from '@/features/chat/assign/AlreadyAssigned';
 
 const AssignPage: NextPageWithLayout = () => {
   const useAssignData = useAssign();
@@ -19,13 +20,16 @@ const AssignPage: NextPageWithLayout = () => {
 
   return (
     <>
-      {chatRoom && (
-        <Assign
-          chatRoom={chatRoom}
-          images={images || []}
-          onConfirm={() => setIsConfirming(true)}
-        />
-      )}
+      {chatRoom &&
+        (chatRoom.status === 'CREATED' ? (
+          <Assign
+            chatRoom={chatRoom}
+            images={images || []}
+            onConfirm={() => setIsConfirming(true)}
+          />
+        ) : (
+          <AlreadyAssigned chatRoom={chatRoom} />
+        ))}
       {isConfirming && (
         <AssignConfirmationModal
           errorMessage={errorMessage}
