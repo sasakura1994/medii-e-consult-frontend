@@ -7,7 +7,7 @@ import { usePagenation } from '@/hooks/usePagenation';
 
 const Login: NextPage = () => {
   const { seminars, ticketCount } = useSeminar();
-  const numberPerPage = 6;
+  const numberPerPage = 8;
   console.log(seminars);
   const pageCount =
     seminars !== undefined
