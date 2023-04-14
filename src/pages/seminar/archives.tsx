@@ -8,17 +8,14 @@ import { usePagenation } from '@/hooks/usePagenation';
 const Login: NextPage = () => {
   const { seminars, ticketCount } = useSeminar();
   const numberPerPage = 8;
-  console.log(seminars);
   const pageCount =
     seminars !== undefined
       ? Math.floor(seminars.length / numberPerPage) + 1
       : 0;
   const { current, move } = usePagenation(pageCount);
-  console.log(current);
   const startNumber = (current - 1) * numberPerPage;
   const endNumber = current * numberPerPage - 1;
   const total = seminars !== undefined ? seminars.length : 0;
-  console.log(startNumber);
   return (
     <div className="mb-12 bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat pt-10 lg:bg-[url('/images/seminar/PC_back.png')]">
       <div className="mx-auto flex w-full flex-col items-center rounded-lg px-6 pb-20 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] lg:max-w-[960px] lg:bg-white lg:px-20 lg:pt-14">
