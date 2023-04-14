@@ -5,7 +5,7 @@ import { SeminarCard } from '@/features/seminar/seminarCard';
 import { SeminarArchiveHeader } from '@/features/seminar/seminarArchiveHeader';
 import { usePagenation } from '@/hooks/usePagenation';
 
-const Login: NextPage = () => {
+const Archives: NextPage = () => {
   const { seminars, ticketCount } = useSeminar();
   const numberPerPage = 8;
   const pageCount =
@@ -85,4 +85,4 @@ const Login: NextPage = () => {
   );
 };
 
-export default Login;
+export default Archives;
