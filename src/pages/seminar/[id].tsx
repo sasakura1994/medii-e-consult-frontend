@@ -9,6 +9,7 @@ import { SeminarArchiveHeader } from '@/features/seminar/seminarArchiveHeader';
 import { useRouter } from 'next/router';
 import { UseSeminarDetail } from '@/features/seminar/useSeminarDetail';
 import { Duplex } from 'stream';
+import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 
 const getSeminarDateTime = (seminar: SeminarEntityType) => {
   if ( !seminar ) return '';
@@ -36,11 +37,23 @@ const Seminar: NextPage = () =>
   const [showModal, setShowModal] = React.useState(false);
   return (
     <div className="bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat pb-12 pt-10 lg:bg-[url('/images/seminar/PC_back.png')]">
-      <div className="mx-auto flex w-full flex-col items-center rounded-lg px-6 pb-20 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] md:max-w-[960px] md:bg-white md:px-20 md:pt-14">
+      <div className="mx-auto w-full rounded-2xl px-6 pb-20 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] lg:max-w-[960px] lg:bg-white lg:p-10">
         <img
           src={seminar && seminar.image_url}
-          className="aspect-video max-h-[405px] w-full max-w-none drop-shadow-[0_4px_4px_rgba(0,0,0,.25)] lg:w-[719px] lg:shadow-[20px_27px_0_0_rgb(221,221,221)] lg:drop-shadow-none"
+          className="aspect-video w-full"
         />
+        <div>
+          <div>
+            <p>チケットを一枚消費して動画を閲覧可能です</p>
+          </div>
+          <div>
+            <p>
+              現在のチケット所持枚数 {ticketCount && ticketCount.ticket_count}{' '}
+              枚
+            </p>
+          </div>
+          <PrimaryButton>動画を閲覧する</PrimaryButton>
+        </div>
         <div className="flex flex-col items-center bg-white px-8 lg:px-32">
           <a className="w-full lg:w-auto">
             <button className="relative mb-2 mt-6 w-full rounded-lg bg-primary py-3 text-base font-bold text-white lg:w-auto lg:py-4 lg:px-12 lg:text-2xl">
@@ -106,6 +119,9 @@ const Seminar: NextPage = () =>
                 </p>
               </div>
             </div>
+            <a href={ `/newChatRoom?target_account_id=${seminar?.account_id}` }>
+              <PrimaryButton>この先生にE-コンサルで相談をする</PrimaryButton>
+            </a>
           </div>
         </div>
       </div>
@@ -147,11 +163,11 @@ const Seminar: NextPage = () =>
               E-コンサルで相談するとセミナーチケット1枚獲得できます。
             </p>
             <img
-              className="hidden md:block"
+              className="hidden lg:block"
               src="/images/seminar/about_ticket_pc.png"
             />
             <img
-              className="md:hidden"
+              className="lg:hidden"
               src="/images/seminar/about_ticket_sp.png"
             />
           </div>
