@@ -10,7 +10,7 @@ export const SeminarCard: React.FC<Props> = ({ seminar }: Props) => {
     <div className="rounded-2xl border bg-white shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
       <a className="block p-6" href={`/seminar/${seminar.seminar_id}`}>
         <div className="w-full">
-          <img src={seminar.image_url} className="w-full" />
+          <img src={seminar.image_url} className="aspect-video w-full" />
           <div className="relative mt-8 w-full rounded-md bg-[#f5847d] p-2 text-white">
             <p className="pl-10 text-center text-sm lg:pl-8 lg:text-base">
               閲覧にチケット1枚が必要です
