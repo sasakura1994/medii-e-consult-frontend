@@ -73,7 +73,7 @@ const Login: NextPage = () => {
         </div>
         <div className="block lg:w-48 lg:hidden">
           <a
-            href="/seminar/archives"
+            href="/seminar"
             className="my-2 inline-flex  items-center rounded-full border border-primary bg-white px-14 lg:px-10 py-4 lg:py-3 text-center text-sm text-primary lg:my-10"
           >
             <img src="/icons/arrow_left.svg" className="mr-2 inline h-3" />
