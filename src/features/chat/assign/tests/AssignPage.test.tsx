@@ -53,7 +53,7 @@ describe('Assign', () => {
       typeof useFetchChatRoom
     >;
     const data: FetchChatRoomResponseData = {
-      chat_room: { status: 'ACTIVE' },
+      chat_room: { status: 'ACTIVE', title: '10代 女性 難病' },
     } as FetchChatRoomResponseData;
     useFetchChatRoomMock.useFetchChatRoom.mockReturnValue({
       data,
@@ -80,7 +80,7 @@ describe('Assign', () => {
     >;
     const data: FetchChatRoomResponseData = {
       assigned_to_me: true,
-      chat_room: { status: 'ACTIVE' },
+      chat_room: { status: 'ACTIVE', title: '10代 女性 難病' },
     } as FetchChatRoomResponseData;
     useFetchChatRoomMock.useFetchChatRoom.mockReturnValue({
       data,
