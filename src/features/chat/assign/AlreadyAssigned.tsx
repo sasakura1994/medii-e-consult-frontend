@@ -7,8 +7,6 @@ type Props = {
 };
 
 export const AlreadyAssigned: React.FC<Props> = ({ chatRoom }: Props) => {
-  const parts = chatRoom.title.split(/ /);
-
   return (
     <div data-testid="assign-already-assigned" className="bg-white py-8">
       <Container className="px-8">
@@ -24,12 +22,8 @@ export const AlreadyAssigned: React.FC<Props> = ({ chatRoom }: Props) => {
         </div>
         <div className="mt-4 flex justify-center">
           <div className="rounded border border-[#dddddd] py-2 px-[46px] text-center">
-            <div className="text-sm font-bold">{parts[parts.length - 1]}</div>
-            {parts.length >= 3 && (
-              <div className="mt-[1px] text-sm">
-                {parts.slice(0, 2).join(' ')}
-              </div>
-            )}
+            <div className="text-sm font-bold">{chatRoom.disease_name}</div>
+            <div className="mt-[1px] text-sm">{chatRoom.short_title}</div>
             <div className="tetx-block-gray mt-[1px] text-[11px]">
               ※平均回答時間：45分
             </div>
