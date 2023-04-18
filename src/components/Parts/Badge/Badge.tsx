@@ -11,8 +11,8 @@ export const Badge: React.FC<PropsType> = (props) => {
   return (
     <span
       className={`
-        rounded-full
         bg-danger
+        rounded-full
         text-center
         text-white
         ${className}
