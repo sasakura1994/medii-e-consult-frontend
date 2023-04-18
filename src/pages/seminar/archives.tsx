@@ -46,7 +46,7 @@ const Archives: NextPage = () =>
             </a>
           </div>
           <div className="flex gap-4">
-            {[...Array(pageCount)].map((_, i) =>
+            {[...Array(maxPage)].map((_, i) =>
               i + 1 == current ? (
                 <div
                   className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-white"
