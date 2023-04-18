@@ -8,15 +8,19 @@ export type UseSeminar = {
   seminars: SeminarEntityType[] | undefined;
   latestSeminar: SeminarEntityType | undefined;
   ticketCount: ticketCountEntity | undefined;
+  maxPage: number | undefined;
+  allItemsCount: number | undefined;
 };
 
-export const useSeminar = (): UseSeminar => {
-  const { seminars } = useFetchSeminars();
+export const useSeminar = (currentPage?: number): UseSeminar => {
+  const { seminars, maxPage, allItemsCount } = useFetchSeminars(currentPage);
   const { latestSeminar } = useFetchLatestSeminar();
   const { ticketCount } = useFetchTicketCount();
   return {
     seminars,
     latestSeminar,
     ticketCount,
+    maxPage,
+    allItemsCount,
   };
 };

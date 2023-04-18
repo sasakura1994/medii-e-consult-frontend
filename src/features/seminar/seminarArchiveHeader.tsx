@@ -11,14 +11,29 @@ export const SeminarArchiveHeader: React.FC<Props> = ({
 }: Props) => {
   const [showModal, setShowModal] = React.useState(false);
   return (
-    <div className="flex w-full flex-col items-center rounded-lg pb-2 pt-4 md:pt-11 md:max-w-[960px] md:bg-white md:pt-0">
-      <h2 className="max-w-[460px] bg-contain bg-no-repeat py-8 text-center text-lg text-[#6c6c6c] md:h-32 md:bg-[url('/images/seminar/list_fukidashi.svg')] md:px-14 md:pt-6 md:pb-0 md:text-3xl">
+    <div className="flex w-full flex-col items-center rounded-lg pb-2 pt-4 md:max-w-[960px] md:bg-white md:pt-11 md:pt-0">
+      <h2
+        className="
+      max-w-[460px]
+      bg-contain
+      bg-no-repeat
+      py-8
+      text-center
+      text-lg
+      text-[#6c6c6c]
+      md:h-32
+      md:bg-[url('/images/seminar/list_fukidashi.svg')]
+      md:px-14
+      md:pt-6
+      md:pb-0
+      md:text-3xl"
+      >
         セミナーアーカイブ動画
       </h2>
       <div className="mb-2 flex w-full flex-col items-center justify-center md:flex-row">
         <div>
           <div className="relative">
-            <div className="absolute top-0 left-0 right-0 bottom-0 rounded-lg md:rounded-3xl border border-[#c4c4c4] bg-white blur-xs"></div>
+            <div className="absolute right-0 bottom-0 top-0 left-0 rounded-lg border border-[#c4c4c4] bg-white blur-xs md:rounded-3xl"></div>
             <div className="relative flex items-center p-5 md:p-6">
               <img src="/images/seminar/ticket.png" />
               <p className="hidden pl-2 lg:block lg:text-2xl">
@@ -63,8 +78,14 @@ export const SeminarArchiveHeader: React.FC<Props> = ({
               <br />
               E-コンサルで相談するとセミナーチケット1枚獲得できます。
             </p>
-            <img className="hidden md:block" src="/images/seminar/about_ticket_pc.png" />
-            <img className="md:hidden" src="/images/seminar/about_ticket_sp.png" />
+            <img
+              className="hidden md:block"
+              src="/images/seminar/about_ticket_pc.png"
+            />
+            <img
+              className="md:hidden"
+              src="/images/seminar/about_ticket_sp.png"
+            />
           </div>
         </Modal>
       )}
