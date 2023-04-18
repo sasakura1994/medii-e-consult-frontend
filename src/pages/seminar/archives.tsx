@@ -55,31 +55,31 @@ const Archives: NextPage = () =>
                   <p>{i + 1}</p>
                 </div>
               ) : (
-                <div
+                <Link
                   key={i}
+                  href={`/seminar/archives?page=${i + 1}`}
                   onClick={() => {
-                    move(i + 1);
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    // window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
                   className="flex h-9 w-9 items-center justify-center rounded-full text-block-gray"
                 >
                   <p>{i + 1}</p>
-                </div>
+                </Link>
               )
             )}
           </div>
           <div className="hidden w-48 lg:block"></div>
         </div>
-        <div className="block lg:w-48 lg:hidden">
+        <div className="block lg:hidden lg:w-48">
           <a
             href="/seminar"
-            className="my-2 inline-flex  items-center rounded-full border border-primary bg-white px-14 lg:px-10 py-4 lg:py-3 text-center text-sm text-primary lg:my-10"
+            className="my-2 inline-flex  items-center rounded-full border border-primary bg-white px-14 py-4 text-center text-sm text-primary lg:my-10 lg:px-10 lg:py-3"
           >
             <img src="/icons/arrow_left.svg" className="mr-2 inline h-3" />
             TOPへ戻る
           </a>
         </div>
-        <p className="text-sm text-center">
+        <p className="text-center text-sm">
           ※アーカイブ動画に表示している医師の方々の経歴などの情報は、セミナー当時のものとなっております。
         </p>
       </div>
