@@ -149,7 +149,7 @@ const Seminar: NextPage = () => {
           id="archive"
           className="flex w-full flex-col items-center rounded-lg px-7 pb-20 lg:mt-10 lg:max-w-[960px] lg:bg-white lg:px-20 lg:pt-20 lg:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
         >
-          <SeminarArchiveHeader ticketCount={ticketCount}/>
+          <SeminarArchiveHeader ticketCount={ticketCount} />
           <div>
             <div className="grid grid-cols-[1fr] gap-4 lg:grid-cols-[1fr_1fr]">
               {seminars?.slice(0, 2).map((seminar) => (

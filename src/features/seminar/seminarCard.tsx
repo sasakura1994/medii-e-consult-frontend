@@ -21,7 +21,11 @@ export const SeminarCard: React.FC<Props> = ({ seminar }: Props) => {
                 ? '閲覧可能です'
                 : '閲覧にチケット1枚が必要です'}
             </p>
-            <div className={ `absolute bottom-0 left-2 top-0 m-auto flex h-14 w-14 items-center justify-center rounded-full ${ seminar.movie_url ? 'bg-primary' : 'bg-[#f5847d]'}` }>
+            <div
+              className={`absolute top-0 bottom-0 left-2 m-auto flex h-14 w-14 items-center justify-center rounded-full ${
+                seminar.movie_url ? 'bg-primary' : 'bg-[#f5847d]'
+              }`}
+            >
               <img src="/images/seminar/key_locked.svg" />
             </div>
           </div>

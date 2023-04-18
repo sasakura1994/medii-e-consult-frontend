@@ -6,8 +6,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useSeminar } from '@/features/seminar/useSeminar';
 
-const Archives: NextPage = () =>
-{
+const Archives: NextPage = () => {
   const router = useRouter();
   let { page } = router.query;
   const current = page === undefined ? 1 : Number(page);
@@ -55,11 +54,8 @@ const Archives: NextPage = () =>
                   <p>{i + 1}</p>
                 </div>
               ) : (
-                <a className="flex h-9 w-9 items-center justify-center rounded-full text-slate-400 font-bold">
-                  <Link
-                    key={i}
-                    href={`/seminar/archives?page=${i + 1}`}
-                  >
+                <a className="flex h-9 w-9 items-center justify-center rounded-full font-bold text-slate-400">
+                  <Link key={i} href={`/seminar/archives?page=${i + 1}`}>
                     <p>{i + 1}</p>
                   </Link>
                 </a>

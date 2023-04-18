@@ -12,7 +12,9 @@ export type UseFetchSeminarsType = {
 
 const endpoint = '/seminar?page=';
 
-export const useFetchSeminars = ( currentPage ?: number): UseFetchSeminarsType => {
+export const useFetchSeminars = (
+  currentPage?: number
+): UseFetchSeminarsType => {
   const { isLoading, error, data } = useAuthenticatedSWR<{
     seminars: SeminarEntityType[];
     max_page: number;
