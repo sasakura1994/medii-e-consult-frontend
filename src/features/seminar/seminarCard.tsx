@@ -11,11 +11,17 @@ export const SeminarCard: React.FC<Props> = ({ seminar }: Props) => {
       <a className="block p-6" href={`/seminar/${seminar.seminar_id}`}>
         <div className="w-full">
           <img src={seminar.image_url} className="aspect-video w-full" />
-          <div className="relative mt-8 w-full rounded-md bg-[#f5847d] p-2 text-white">
+          <div
+            className={`relative mt-8 w-full rounded-md ${
+              seminar.movie_url ? 'bg-primary' : 'bg-[#f5847d]'
+            } p-2 text-white`}
+          >
             <p className="pl-10 text-center text-sm lg:pl-8 lg:text-base">
-              閲覧にチケット1枚が必要です
+              {seminar.movie_url
+                ? '閲覧可能です'
+                : '閲覧にチケット1枚が必要です'}
             </p>
-            <div className="absolute bottom-0 left-2 top-0 m-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#f5847d]">
+            <div className={ `absolute bottom-0 left-2 top-0 m-auto flex h-14 w-14 items-center justify-center rounded-full ${ seminar.movie_url ? 'bg-primary' : 'bg-[#f5847d]'}` }>
               <img src="/images/seminar/key_locked.svg" />
             </div>
           </div>
