@@ -45,7 +45,7 @@ const Archives: NextPage = () =>
               TOPへ戻る
             </a>
           </div>
-          <div className="flex gap-4">
+          <div className="flex items-center gap-3">
             {[...Array(maxPage)].map((_, i) =>
               i + 1 == current ? (
                 <div
@@ -55,16 +55,14 @@ const Archives: NextPage = () =>
                   <p>{i + 1}</p>
                 </div>
               ) : (
-                <Link
-                  key={i}
-                  href={`/seminar/archives?page=${i + 1}`}
-                  onClick={() => {
-                    // window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }}
-                  className="flex h-9 w-9 items-center justify-center rounded-full text-block-gray"
-                >
-                  <p>{i + 1}</p>
-                </Link>
+                <a className="flex h-9 w-9 items-center justify-center rounded-full text-slate-400 font-bold">
+                  <Link
+                    key={i}
+                    href={`/seminar/archives?page=${i + 1}`}
+                  >
+                    <p>{i + 1}</p>
+                  </Link>
+                </a>
               )
             )}
           </div>
