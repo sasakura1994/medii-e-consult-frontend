@@ -47,4 +47,5 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   );
 };
 
+App.getInitialProps = async () => ({ pageProps: {} });
 export default App;
