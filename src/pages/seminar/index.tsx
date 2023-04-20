@@ -5,6 +5,7 @@ import { SeminarEntityType } from '@/types/entities/seminarEntity';
 import { SeminarCard } from '@/features/seminar/seminarCard';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import { OutlinedSquareButton } from '@/components/Parts/Button/OutlinedSquareButton';
+import { SeminarArchiveHeader } from '@/features/seminar/seminarArchiveHeader';
 
 const getSeminarDateTime = (seminar: SeminarEntityType) => {
   if (!seminar) return '';
@@ -148,34 +149,7 @@ const Seminar: NextPage = () => {
           id="archive"
           className="flex w-full flex-col items-center rounded-lg px-7 pb-20 lg:mt-10 lg:max-w-[960px] lg:bg-white lg:px-20 lg:pt-20 lg:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
         >
-          <h2 className="max-w-[460px] bg-contain bg-no-repeat py-8 text-center text-lg text-[#6c6c6c] lg:h-32 lg:bg-[url('/images/seminar/list_fukidashi.svg')] lg:px-14 lg:pt-6 lg:pb-0 lg:text-3xl">
-            セミナーアーカイブ動画
-          </h2>
-          <div className="mb-6 flex flex-col items-center justify-center lg:flex-row">
-            <div>
-              <div className="relative">
-                <div className="absolute top-0 left-0 right-0 bottom-0 rounded-xl border border-[#c4c4c4] bg-white blur-xs lg:rounded-3xl"></div>
-                <div className="relative flex items-center gap-[10px] p-5">
-                  <img src="/images/seminar/ticket.png" />
-                  <div>
-                    現在のチケット所持
-                    <br className="inline lg:hidden" />
-                    枚数
-                  </div>
-                  <span className="pl-2 text-[32px] font-bold text-[#f5847d]">
-                    {ticketCount?.ticket_count}
-                    <span className="text-base">枚</span>
-                  </span>
-                </div>
-              </div>
-            </div>
-            <button
-              onClick={() => setShowModal(true)}
-              className="text-xm mt-4 w-full rounded-md bg-primary py-4 px-4 text-white lg:ml-10 lg:mt-0 lg:w-auto"
-            >
-              チケットを獲得するには?
-            </button>
-          </div>
+          <SeminarArchiveHeader ticketCount={ticketCount} />
           <div>
             <div className="grid grid-cols-[1fr] gap-4 lg:grid-cols-[1fr_1fr]">
               {seminars?.slice(0, 2).map((seminar) => (
