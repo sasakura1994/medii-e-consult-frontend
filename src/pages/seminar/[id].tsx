@@ -176,6 +176,18 @@ const Seminar: NextPage = () =>
             />
           </div>
         </Modal>
+      ) }
+      { isTicketConfirmDialogShown && (
+        <Modal setShowModal={ setIsTicketConfirmDialogShown } className="lg:w-[800px]">
+          <div>
+            <h1>チケット使用の確認</h1>
+            <p>アーカイブ動画閲覧にチケット1枚を使用します。</p>
+            <div>
+              <PrimaryButton>キャンセル</PrimaryButton>
+              <PrimaryButton onClick={() => useTicket()}>使用する</PrimaryButton>
+            </div>
+          </div>
+        </Modal>
       )}
     </div>
   );
