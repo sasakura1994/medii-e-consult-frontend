@@ -3,6 +3,12 @@ import React, { useState } from 'react';
 
 export type UseUseTicketType = {
   useTicket: () => Promise<string>;
+  isTicketConfirmDialogShown: boolean;
+  setIsTicketConfirmDialogShown: React.Dispatch<React.SetStateAction<boolean>>;
+  isSendingUsingTicketRequest: boolean;
+  setIsSendingUsingTicketRequest: React.Dispatch<React.SetStateAction<boolean>>;
+  isTicketNotEnoughDialogShown: boolean;
+  setIsTicketNotEnoughDialogShown: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const endpoint = (id: string ) =>`/seminar/${id}/use_ticket`;
@@ -19,10 +25,11 @@ export const useUseTicket= (id: string): UseUseTicketType => {
         endpoint(id),
       ).catch( ( error ) =>
       {
-        if (error.response.data.code === -20) {
+        console.log( error );
+        if (error.status === -20) {
           setIsTicketNotEnoughDialogShown(true);
         } else {
-          alert(error.response.data.message || 'エラーが発生しました');
+          alert(error.message || 'エラーが発生しました');
         }
       } );
       if ( response )
@@ -36,5 +43,5 @@ export const useUseTicket= (id: string): UseUseTicketType => {
     [axios]
   );
 
-  return { useTicket };
+  return { useTicket, isTicketConfirmDialogShown, isSendingUsingTicketRequest, isTicketNotEnoughDialogShown, setIsTicketConfirmDialogShown, setIsSendingUsingTicketRequest, setIsTicketNotEnoughDialogShown};
 };

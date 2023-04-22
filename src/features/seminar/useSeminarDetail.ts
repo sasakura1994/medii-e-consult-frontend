@@ -10,18 +10,38 @@ export type UseSeminarDetail = {
   randomSeminars: SeminarEntityType[] | undefined;
   seminar: SeminarEntityType | undefined;
   ticketCount: ticketCountEntity | undefined;
-  useTicket: () => Promise<string>
+  useTicket: () => Promise<string>;
+  isTicketConfirmDialogShown: boolean;
+  setIsTicketConfirmDialogShown: React.Dispatch<React.SetStateAction<boolean>>;
+  isSendingUsingTicketRequest: boolean;
+  setIsSendingUsingTicketRequest: React.Dispatch<React.SetStateAction<boolean>>;
+  isTicketNotEnoughDialogShown: boolean;
+  setIsTicketNotEnoughDialogShown: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const UseSeminarDetail = (id: string): UseSeminarDetail => {
   const { seminar } = useFetchSeminar( id );
   const { seminars: randomSeminars } = useFetchRandomSeminars( id );
-  const { useTicket } = useUseTicket(id);
+  const {
+    useTicket,
+    isTicketConfirmDialogShown,
+    isSendingUsingTicketRequest,
+    isTicketNotEnoughDialogShown,
+    setIsTicketConfirmDialogShown,
+    setIsSendingUsingTicketRequest,
+    setIsTicketNotEnoughDialogShown,
+  } = useUseTicket(id);
   const { ticketCount } = useFetchTicketCount();
   return {
     seminar,
     randomSeminars,
     ticketCount,
     useTicket,
+    isTicketConfirmDialogShown,
+    isSendingUsingTicketRequest,
+    isTicketNotEnoughDialogShown,
+    setIsTicketConfirmDialogShown,
+    setIsSendingUsingTicketRequest,
+    setIsTicketNotEnoughDialogShown,
   };
 };

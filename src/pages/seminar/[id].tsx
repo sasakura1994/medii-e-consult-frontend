@@ -1,14 +1,11 @@
 import React from 'react';
-import type { GetServerSideProps, NextPage } from 'next';
-import { useSeminar } from '@/features/seminar/useSeminar';
+import type { NextPage } from 'next';
 import { SeminarEntityType } from '@/types/entities/seminarEntity';
 import { SeminarCard } from '@/features/seminar/seminarCard';
 import { Modal } from '@/components/Parts/Modal/Modal';
-import { OutlinedSquareButton } from '@/components/Parts/Button/OutlinedSquareButton';
 import { SeminarArchiveHeader } from '@/features/seminar/seminarArchiveHeader';
 import { useRouter } from 'next/router';
 import { UseSeminarDetail } from '@/features/seminar/useSeminarDetail';
-import { Duplex } from 'stream';
 import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 
 const getSeminarDateTime = (seminar: SeminarEntityType) => {
@@ -33,7 +30,14 @@ const Seminar: NextPage = () =>
 {
   const router = useRouter();
   const { id } = router.query;
-  const { randomSeminars, seminar, ticketCount } = UseSeminarDetail(id as string);
+  console.log( id );
+  const { randomSeminars, seminar, ticketCount, useTicket,
+    isTicketConfirmDialogShown,
+    isSendingUsingTicketRequest,
+    isTicketNotEnoughDialogShown,
+    setIsTicketConfirmDialogShown,
+    setIsSendingUsingTicketRequest,
+    setIsTicketNotEnoughDialogShown, } = UseSeminarDetail(id as string);
   const [showModal, setShowModal] = React.useState(false);
   return (
     <div className="bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat pb-12 pt-10 lg:bg-[url('/images/seminar/PC_back.png')]">
@@ -52,7 +56,7 @@ const Seminar: NextPage = () =>
               枚
             </p>
           </div>
-          <PrimaryButton>動画を閲覧する</PrimaryButton>
+          <PrimaryButton onClick={() => setIsTicketConfirmDialogShown(true)}>動画を閲覧する</PrimaryButton>
         </div>
         <div className="flex flex-col items-center bg-white px-8 lg:px-32">
           <a className="w-full lg:w-auto">
