@@ -42,10 +42,17 @@ const Seminar: NextPage = () =>
   return (
     <div className="bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat pb-12 pt-10 lg:bg-[url('/images/seminar/PC_back.png')]">
       <div className="mx-auto w-full rounded-2xl px-6 pb-20 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] lg:max-w-[960px] lg:bg-white lg:p-10">
-        <img
-          src={seminar && seminar.image_url}
+        { seminar?.movie_url ?
+        <iframe
+          src={ seminar.movie_url }
+          title="YouTube video player"
           className="aspect-video w-full"
-        />
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen></iframe> :
+          <img
+          src={ seminar && seminar.image_url }
+          className="aspect-video w-full"
+        /> }
         <div>
           <div>
             <p>チケットを一枚消費して動画を閲覧可能です</p>
