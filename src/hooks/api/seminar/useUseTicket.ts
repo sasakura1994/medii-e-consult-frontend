@@ -7,8 +7,6 @@ export type UseUseTicketType = {
   useTicket: () => Promise<void>;
   isTicketConfirmDialogShown: boolean;
   setIsTicketConfirmDialogShown: React.Dispatch<React.SetStateAction<boolean>>;
-  isSendingUsingTicketRequest: boolean;
-  setIsSendingUsingTicketRequest: React.Dispatch<React.SetStateAction<boolean>>;
   isTicketNotEnoughDialogShown: boolean;
   setIsTicketNotEnoughDialogShown: React.Dispatch<React.SetStateAction<boolean>>;
 };
@@ -23,17 +21,19 @@ export const useUseTicket= (id: string, mutate: KeyedMutator<SeminarResponse>): 
 
   const useTicket = React.useCallback(async () =>
   {
+    if (isSendingUsingTicketRequest)
+    {
+      return;
+    }
+    setIsSendingUsingTicketRequest(true)
     const response = await axios.post<{ movie_url: string; }>(
       endpoint( id ),
     ).catch( ( error ) =>
     {
-      console.log( error );
-      if ( error.status === -20 )
-      {
-        setIsTicketNotEnoughDialogShown( true );
-      } else
-      {
-        alert( error.message || 'エラーが発生しました' );
+      if (error.response.data.code === -20) {
+        setIsTicketNotEnoughDialogShown(true)
+      } else {
+        alert(error.message || 'エラーが発生しました');
       }
     } );
     if ( response )
@@ -44,5 +44,5 @@ export const useUseTicket= (id: string, mutate: KeyedMutator<SeminarResponse>): 
     }
   }, [axios]);
 
-  return { useTicket, isTicketConfirmDialogShown, isSendingUsingTicketRequest, isTicketNotEnoughDialogShown, setIsTicketConfirmDialogShown, setIsSendingUsingTicketRequest, setIsTicketNotEnoughDialogShown};
+  return { useTicket, isTicketConfirmDialogShown, isTicketNotEnoughDialogShown, setIsTicketConfirmDialogShown, setIsTicketNotEnoughDialogShown};
 };

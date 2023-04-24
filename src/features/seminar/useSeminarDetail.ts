@@ -14,8 +14,6 @@ export type UseSeminarDetail = {
   useTicket: () => Promise<void>;
   isTicketConfirmDialogShown: boolean;
   setIsTicketConfirmDialogShown: React.Dispatch<React.SetStateAction<boolean>>;
-  isSendingUsingTicketRequest: boolean;
-  setIsSendingUsingTicketRequest: React.Dispatch<React.SetStateAction<boolean>>;
   isTicketNotEnoughDialogShown: boolean;
   setIsTicketNotEnoughDialogShown: React.Dispatch<React.SetStateAction<boolean>>;
 };
@@ -26,10 +24,8 @@ export const UseSeminarDetail = (id: string): UseSeminarDetail => {
   const {
     useTicket,
     isTicketConfirmDialogShown,
-    isSendingUsingTicketRequest,
     isTicketNotEnoughDialogShown,
     setIsTicketConfirmDialogShown,
-    setIsSendingUsingTicketRequest,
     setIsTicketNotEnoughDialogShown,
   } = useUseTicket(id, mutate);
   const { ticketCount } = useFetchTicketCount();
@@ -40,10 +36,8 @@ export const UseSeminarDetail = (id: string): UseSeminarDetail => {
     ticketCount,
     useTicket,
     isTicketConfirmDialogShown,
-    isSendingUsingTicketRequest,
     isTicketNotEnoughDialogShown,
     setIsTicketConfirmDialogShown,
-    setIsSendingUsingTicketRequest,
     setIsTicketNotEnoughDialogShown,
   };
 };
