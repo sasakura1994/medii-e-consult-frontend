@@ -1,5 +1,5 @@
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useUploadDocument } from '@/hooks/api/doctor/useUploadDocument';
 type DoctorNumberFormProps = {
   setSelected: React.Dispatch<React.SetStateAction<string>>;
@@ -7,7 +7,7 @@ type DoctorNumberFormProps = {
 
 const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
   const { profile } = useFetchProfile();
-  const { uploadDocument } = useUploadDocument();
+  const { uploadDocument, isSuccess } = useUploadDocument();
   const [doctorNumber, setDoctorNumber] = useState('');
   const [doctorLicenseYear, setDoctorLicenseYear] = useState('');
   const [doctorLicenseMonth, setDoctorLicenseMonth] = useState('');
@@ -17,6 +17,18 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
     min: 1900,
     max: 9999,
   });
+
+  const isUpdatePrepared = useMemo(() => {
+    if (
+      doctorNumber &&
+      doctorLicenseYear &&
+      doctorLicenseMonth &&
+      doctorLicenseDay
+    ) {
+      return true;
+    }
+    return false;
+  }, [doctorNumber, doctorLicenseYear, doctorLicenseMonth, doctorLicenseDay]);
 
   const convertToYear = (year: string) => {
     switch (era) {
@@ -45,6 +57,7 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
     }
   };
 
+  // 西暦・和暦が切り替えられる度にバリデーションも分ける
   useEffect(() => {
     convertToYear(doctorLicenseYear);
   }, [era]);
@@ -76,20 +89,27 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
     profile,
   ]);
 
+  useEffect(() => {
+    if (isSuccess) {
+      setSelected('completed');
+    }
+  }, [isSuccess]);
+
   return (
     <form
       onSubmit={(e) => {
         submit();
         e.preventDefault();
       }}
+      className="w-full"
     >
       <div className="border-1 rounded-xs mt-10 -mb-10 w-full border bg-white lg:mb-0 lg:px-16 lg:pb-6">
-        <div className="mt-6 mb-6">
-          <div className="relative flex text-center text-2xl font-bold lg:mt-10">
-            <div className="cursor-pointer">
+        <div className="mx-2 mt-6 mb-6">
+          <div className="relative flex text-left text-2xl font-bold lg:mt-10 lg:text-center">
+            <div className="hidden cursor-pointer lg:block">
               <img src="/icons/arrow_left.svg" className="mt-1.5 h-3 w-3" />
               <div
-                className="absolute top-0 left-0 pl-4 text-base"
+                className="absolute top-0 left-0 pl-4 text-base "
                 onClick={() => {
                   setSelected('');
                 }}
@@ -102,7 +122,7 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
           <div className="mt-10 px-6  text-center lg:px-0">
             医師番号と医師免許の取得年月日を入力してください
           </div>
-          <div className="mt-5 ml-5 text-center font-bold lg:mt-10 lg:ml-0 lg:text-left">
+          <div className="mt-5 text-left font-bold  lg:mt-10">
             医籍番号 (6桁の数字)
           </div>
           <input
@@ -120,7 +140,7 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
               }
             }}
           />
-          <div className="mt-3 text-center font-bold lg:mt-3 lg:ml-0 lg:text-left">
+          <div className="mt-3 text-left font-bold lg:mt-3 lg:ml-0">
             医師免許取得日(西暦)
           </div>
           <div className="mt-2 flex">
@@ -188,10 +208,14 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
           </div>
         </div>
       </div>
-      <div className="flex justify-center">
+      <div className="mt-7 flex justify-center lg:mt-0">
         <input
           type="submit"
-          className="my-10 cursor-pointer rounded-full bg-btn-gray px-10 pt-1.5 pb-2 font-bold text-white shadow-lg"
+          className={
+            isUpdatePrepared
+              ? ' my-10 cursor-pointer rounded-full bg-primary px-10 pt-1.5 pb-2 font-bold text-white shadow-lg'
+              : ' my-10 cursor-pointer rounded-full bg-btn-gray px-10 pt-1.5 pb-2 font-bold text-white shadow-lg'
+          }
           value="登録を完了する"
         />
       </div>
