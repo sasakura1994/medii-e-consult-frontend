@@ -1,16 +1,88 @@
-import React from 'react';
-
+import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useUploadDocument } from '@/hooks/api/doctor/useUploadDocument';
 type DoctorNumberFormProps = {
   setSelected: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
-  const [doctorNumber, setDoctorNumber] = React.useState('');
-  const [doctorLicenseYear, setDoctorLicenseYear] = React.useState('');
-  const [doctorLicenseMonth, setDoctorLicenseMonth] = React.useState('');
-  const [doctorLicenseDay, setDoctorLicenseDay] = React.useState('');
+  const { profile } = useFetchProfile();
+  const { uploadDocument } = useUploadDocument();
+  const [doctorNumber, setDoctorNumber] = useState('');
+  const [doctorLicenseYear, setDoctorLicenseYear] = useState('');
+  const [doctorLicenseMonth, setDoctorLicenseMonth] = useState('');
+  const [doctorLicenseDay, setDoctorLicenseDay] = useState('');
+  const [era, setEra] = useState('year');
+  const [yearValidation, setYearValidation] = useState({
+    min: 1900,
+    max: 9999,
+  });
+
+  const convertToYear = (year: string) => {
+    switch (era) {
+      case 'year':
+        setYearValidation({ min: 1900, max: 9999 });
+        return year;
+      case 'showa': {
+        setYearValidation({ min: 1, max: 64 });
+        const showaYear = parseInt(year, 10) + 1925;
+        return String(showaYear);
+      }
+      case 'heisei': {
+        setYearValidation({ min: 1, max: 31 });
+        const heiseiYear = parseInt(year, 10) + 1988;
+        return String(heiseiYear);
+      }
+      case 'reiwa': {
+        setYearValidation({ min: 1, max: 99 });
+        const reiwaYear = parseInt(year, 10) + 2018;
+        return String(reiwaYear);
+      }
+      default: {
+        setYearValidation({ min: 1900, max: 9999 });
+        return year;
+      }
+    }
+  };
+
+  useEffect(() => {
+    convertToYear(doctorLicenseYear);
+  }, [era]);
+
+  useEffect(() => {
+    if (profile) {
+      setDoctorNumber(profile.doctor_number);
+      setDoctorLicenseYear(profile.doctor_qualified_year.toString());
+      setDoctorLicenseMonth(profile.doctor_qualified_month.toString());
+      setDoctorLicenseDay(profile.doctor_qualified_day.toString());
+    }
+  }, [profile]);
+
+  const submit = useCallback(() => {
+    if (profile) {
+      const year = convertToYear(doctorLicenseYear);
+      const newProfile = Object.assign({}, profile);
+      newProfile.doctor_number = doctorNumber;
+      newProfile.doctor_qualified_year = Number(year);
+      newProfile.doctor_qualified_month = Number(doctorLicenseMonth);
+      newProfile.doctor_qualified_day = Number(doctorLicenseDay);
+      uploadDocument(newProfile);
+    }
+  }, [
+    doctorNumber,
+    doctorLicenseYear,
+    doctorLicenseMonth,
+    doctorLicenseDay,
+    profile,
+  ]);
+
   return (
-    <form>
+    <form
+      onSubmit={(e) => {
+        submit();
+        e.preventDefault();
+      }}
+    >
       <div className="border-1 rounded-xs mt-10 -mb-10 w-full border bg-white lg:mb-0 lg:px-16 lg:pb-6">
         <div className="mt-6 mb-6">
           <div className="relative flex text-center text-2xl font-bold lg:mt-10">
@@ -55,8 +127,12 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
             <select
               required
               className="h-12 w-20 rounded-md border border-gray-400 px-2"
+              onChange={(e) => {
+                const value = e.target.value;
+                setEra(value);
+              }}
             >
-              <option value="seireki">西暦</option>
+              <option value="year">西暦</option>
               <option value="showa">昭和</option>
               <option value="heisei">平成</option>
               <option value="reiwa">令和</option>
@@ -64,12 +140,11 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
             <input
               type="number"
               placeholder="-"
-              defaultValue={2019}
               value={doctorLicenseYear}
               className="ml-2 h-12 w-32 rounded-md border border-gray-400 px-2"
               required
-              min={1900}
-              max={5000}
+              min={yearValidation.min}
+              max={yearValidation.max}
               onChange={(e) => {
                 const value = e.target.value;
                 if (value.length <= 4) {
@@ -80,7 +155,6 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
             <div className="ml-1 mt-5">年</div>
             <input
               type="number"
-              defaultValue={4}
               value={doctorLicenseMonth}
               placeholder="-"
               className="ml-10 h-12 w-20 rounded-md border border-gray-400 px-2"
@@ -97,7 +171,6 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
             <div className="ml-1 mt-5">月</div>
             <input
               type="number"
-              defaultValue={1}
               value={doctorLicenseDay}
               placeholder="-"
               className="ml-2 h-12 w-20 rounded-md border border-gray-400 px-2"

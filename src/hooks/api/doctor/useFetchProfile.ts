@@ -1,7 +1,7 @@
 import { useAuthenticatedSWR } from '@/hooks/network/useAuthenticatedSWR';
 import type { ProfileEntityType } from '@/types/entities/profileEntity';
 
-const endpoint = '/api/doctor/profile';
+const endpoint = '/doctor/profile';
 
 export type UseFetchProfileType = {
   isLoading: boolean;
