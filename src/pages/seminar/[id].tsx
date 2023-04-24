@@ -7,6 +7,7 @@ import { SeminarArchiveHeader } from '@/features/seminar/seminarArchiveHeader';
 import { useRouter } from 'next/router';
 import { UseSeminarDetail } from '@/features/seminar/useSeminarDetail';
 import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
+import { SeminarConfirmModal } from '@/components/Parts/Modal/SeminarConfirmModal';
 
 const getSeminarDateTime = (seminar: SeminarEntityType) => {
   if ( !seminar ) return '';
@@ -33,26 +34,27 @@ const Seminar: NextPage = () =>
   console.log( id );
   const { randomSeminars, seminar, ticketCount, useTicket,
     isTicketConfirmDialogShown,
-    isSendingUsingTicketRequest,
     isTicketNotEnoughDialogShown,
     setIsTicketConfirmDialogShown,
-    setIsSendingUsingTicketRequest,
     setIsTicketNotEnoughDialogShown, } = UseSeminarDetail(id as string);
   const [showModal, setShowModal] = React.useState(false);
   return (
     <div className="bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat pb-12 pt-10 lg:bg-[url('/images/seminar/PC_back.png')]">
       <div className="mx-auto w-full rounded-2xl px-6 pb-20 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] lg:max-w-[960px] lg:bg-white lg:p-10">
-        { seminar?.movie_url ?
-        <iframe
-          src={ seminar.movie_url }
-          title="YouTube video player"
-          className="aspect-video w-full"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen></iframe> :
+        {seminar?.movie_url ? (
+          <iframe
+            src={seminar.movie_url}
+            title="YouTube video player"
+            className="aspect-video w-full"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        ) : (
           <img
-          src={ seminar && seminar.image_url }
-          className="aspect-video w-full"
-        /> }
+            src={seminar && seminar.image_url}
+            className="aspect-video w-full"
+          />
+        )}
         <div>
           <div>
             <p>チケットを一枚消費して動画を閲覧可能です</p>
@@ -63,7 +65,9 @@ const Seminar: NextPage = () =>
               枚
             </p>
           </div>
-          <PrimaryButton onClick={() => setIsTicketConfirmDialogShown(true)}>動画を閲覧する</PrimaryButton>
+          <PrimaryButton onClick={() => setIsTicketConfirmDialogShown(true)}>
+            動画を閲覧する
+          </PrimaryButton>
         </div>
         <div className="flex flex-col items-center bg-white px-8 lg:px-32">
           <a className="w-full lg:w-auto">
@@ -130,7 +134,7 @@ const Seminar: NextPage = () =>
                 </p>
               </div>
             </div>
-            <a href={ `/newChatRoom?target_account_id=${seminar?.account_id}` }>
+            <a href={`/newChatRoom?target_account_id=${seminar?.account_id}`}>
               <PrimaryButton>この先生にE-コンサルで相談をする</PrimaryButton>
             </a>
           </div>
@@ -183,18 +187,32 @@ const Seminar: NextPage = () =>
             />
           </div>
         </Modal>
-      ) }
-      { isTicketConfirmDialogShown && (
-        <Modal setShowModal={ setIsTicketConfirmDialogShown } className="lg:w-[800px]">
-          <div>
-            <h1>チケット使用の確認</h1>
-            <p>アーカイブ動画閲覧にチケット1枚を使用します。</p>
-            <div>
-              <PrimaryButton>キャンセル</PrimaryButton>
-              <PrimaryButton onClick={() => useTicket()}>使用する</PrimaryButton>
-            </div>
-          </div>
-        </Modal>
+      )}
+      {isTicketConfirmDialogShown && (
+        <SeminarConfirmModal
+          setShowModal={setIsTicketConfirmDialogShown}
+          className="lg:w-[800px]"
+          title="チケット使用の確認"
+          labelText="使用する"
+          onSubmit={() => useTicket()}
+        >
+          <p>アーカイブ動画閲覧にチケット1枚を使用します。</p>
+        </SeminarConfirmModal>
+      )}
+      {isTicketNotEnoughDialogShown && (
+        <SeminarConfirmModal
+          setShowModal={setIsTicketConfirmDialogShown}
+          className="lg:w-[800px]"
+          title="チケットが不足しています"
+          labelText="E-コンサルへ"
+          onSubmit={() => router.push('/newChatRoom')}
+        >
+          <p className="font-bold">
+            アーカイブ動画閲覧にチケット1枚が必要です。
+            <br />
+            E-コンサルを依頼するとチケットが 1枚獲得できます。
+          </p>
+        </SeminarConfirmModal>
       )}
     </div>
   );
