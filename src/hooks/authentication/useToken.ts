@@ -1,5 +1,5 @@
 import React from 'react';
-import { getAuthToken } from '@/libs/localStrage';
+import { getAuthToken } from '@/libs/cookie';
 
 export const useToken = (): string => {
   const [token, setToken] = React.useState('');

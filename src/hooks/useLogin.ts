@@ -3,6 +3,7 @@ import { createApiClient } from '@/libs/apiClient';
 import type { ProfileEntityType } from '@/types/entities/profileEntity';
 import { useRecoilState } from 'recoil';
 import { profileState } from '@/globalStates/profileState';
+import { setAuthToken } from '@/libs/cookie';
 
 export type UseLoginType = {
   email: string;
@@ -44,7 +45,7 @@ export const useLogin = (): UseLoginType => {
         throw new Error(res.data.message);
       }
 
-      localStorage.setItem('token', res.data.jwt_token);
+      setAuthToken(res.data.jwt_token);
       setToken(res.data.jwt_token);
       setProfile((oldValues) => ({
         ...oldValues,

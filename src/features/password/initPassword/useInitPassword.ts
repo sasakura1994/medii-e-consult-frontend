@@ -1,5 +1,6 @@
 import { usePostSetPassword } from '@/hooks/api/account/usePostSetPassword';
 import { usePasswordInput } from '@/hooks/form/usePasswordInput';
+import { setAuthToken } from '@/libs/cookie';
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -60,7 +61,7 @@ export const useInitPassword = () => {
         return;
       }
 
-      localStorage.setItem('token', response.data.jwt_token);
+      setAuthToken(response.data.jwt_token);
       // @todo Vueの時はヘッダと一緒にプロフィールが読み込まれるがこちらではここでglobalStateにセットする
       router.push('/EditProfile?registerMode=true');
     },
