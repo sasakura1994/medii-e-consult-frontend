@@ -1,8 +1,18 @@
-import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { useUploadDocument } from '@/hooks/api/doctor/useUploadDocument';
+
 type DoctorNumberFormProps = {
   setSelected: React.Dispatch<React.SetStateAction<string>>;
+};
+
+type Era = 'year' | 'showa' | 'heisei' | 'reiwa';
+
+const eraOffsets: { [key in Era]: number } = {
+  year: 0,
+  showa: 1925,
+  heisei: 1988,
+  reiwa: 2018,
 };
 
 const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
@@ -12,9 +22,9 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
   const [doctorLicenseYear, setDoctorLicenseYear] = useState('');
   const [doctorLicenseMonth, setDoctorLicenseMonth] = useState('');
   const [doctorLicenseDay, setDoctorLicenseDay] = useState('');
-  const [era, setEra] = useState('year');
-  const [yearValidation, setYearValidation] = useState({
-    min: 1900,
+  const [era, setEra] = useState<Era>('year');
+  const [validation, setValidation] = useState({
+    min: 1,
     max: 9999,
   });
 
@@ -30,50 +40,60 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
     return false;
   }, [doctorNumber, doctorLicenseYear, doctorLicenseMonth, doctorLicenseDay]);
 
-  const convertToYear = (year: string) => {
-    switch (era) {
-      case 'year':
-        setYearValidation({ min: 1900, max: 9999 });
-        return year;
+  const convertYear = (year: string, fromEra: Era, toEra: Era) => {
+    if (!year) return '';
+    const adjustedYear = Number(year) + eraOffsets[fromEra] - eraOffsets[toEra];
+    switch (toEra) {
+      case 'year': {
+        setValidation({
+          min: 1,
+          max: 9999,
+        });
+        return adjustedYear > 0 ? String(adjustedYear) : '';
+      }
       case 'showa': {
-        setYearValidation({ min: 1, max: 64 });
-        const showaYear = parseInt(year, 10) + 1925;
-        return String(showaYear);
+        setValidation({
+          min: 1,
+          max: 64,
+        });
+        return adjustedYear > 0 && adjustedYear <= 64
+          ? String(adjustedYear)
+          : '';
       }
       case 'heisei': {
-        setYearValidation({ min: 1, max: 31 });
-        const heiseiYear = parseInt(year, 10) + 1988;
-        return String(heiseiYear);
+        setValidation({
+          min: 1,
+          max: 31,
+        });
+        return adjustedYear > 0 && adjustedYear <= 31
+          ? String(adjustedYear)
+          : '';
       }
       case 'reiwa': {
-        setYearValidation({ min: 1, max: 99 });
-        const reiwaYear = parseInt(year, 10) + 2018;
-        return String(reiwaYear);
+        setValidation({
+          min: 1,
+          max: 99,
+        });
+        return adjustedYear > 0 ? String(adjustedYear) : '';
       }
-      default: {
-        setYearValidation({ min: 1900, max: 9999 });
-        return year;
-      }
+      default:
+        return '';
     }
   };
 
-  // 西暦・和暦が切り替えられる度にバリデーションも分ける
-  useEffect(() => {
-    convertToYear(doctorLicenseYear);
-  }, [era]);
+  const handleEraChange = (eraStr: string) => {
+    const value = eraStr as Era;
+    console.log(era);
+    console.log(value);
 
-  useEffect(() => {
-    if (profile) {
-      setDoctorNumber(profile.doctor_number);
-      setDoctorLicenseYear(profile.doctor_qualified_year.toString());
-      setDoctorLicenseMonth(profile.doctor_qualified_month.toString());
-      setDoctorLicenseDay(profile.doctor_qualified_day.toString());
-    }
-  }, [profile]);
+    const year = convertYear(doctorLicenseYear, era, value);
+    setEra(value);
+    setDoctorLicenseYear(String(year));
+  };
 
   const submit = useCallback(() => {
     if (profile) {
-      const year = convertToYear(doctorLicenseYear);
+      const year = convertYear(doctorLicenseYear, era, 'year');
       const newProfile = Object.assign({}, profile);
       newProfile.doctor_number = doctorNumber;
       newProfile.doctor_qualified_year = Number(year);
@@ -87,6 +107,7 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
     doctorLicenseMonth,
     doctorLicenseDay,
     profile,
+    era,
   ]);
 
   useEffect(() => {
@@ -148,14 +169,7 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
               required
               className="h-12 w-20 rounded-md border border-gray-400 px-2"
               onChange={(e) => {
-                const value = e.target.value;
-                setEra(value);
-                if (value === 'year') {
-                  const year = convertToYear(doctorLicenseYear);
-                  setDoctorLicenseYear(year);
-                } else {
-                  setDoctorLicenseYear('');
-                }
+                handleEraChange(e.target.value);
               }}
             >
               <option value="year">西暦</option>
@@ -169,8 +183,8 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
               value={doctorLicenseYear}
               className="ml-2 h-12 w-32 rounded-md border border-gray-400 px-2"
               required
-              min={yearValidation.min}
-              max={yearValidation.max}
+              min={validation.min}
+              max={validation.max}
               onChange={(e) => {
                 const value = e.target.value;
                 if (value.length <= 4) {
