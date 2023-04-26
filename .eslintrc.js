@@ -17,6 +17,7 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint', 'prefer-arrow'],
   rules: {
+    "max-len": ["warn", { "code": 120 }],
     'prefer-arrow/prefer-arrow-functions': [
       'warn',
       {
