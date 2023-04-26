@@ -150,6 +150,12 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
               onChange={(e) => {
                 const value = e.target.value;
                 setEra(value);
+                if (value === 'year') {
+                  const year = convertToYear(doctorLicenseYear);
+                  setDoctorLicenseYear(year);
+                } else {
+                  setDoctorLicenseYear('');
+                }
               }}
             >
               <option value="year">西暦</option>
