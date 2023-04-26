@@ -12,8 +12,9 @@ const DocumentInputCompleted: React.FC<DocumentInputCompletedProps> = ({
 
   useEffect(() => {
     const timeout = setTimeout(() => {
+      // TODO: ここではTopに遷移しているが、実際にはTop以外の画面に遷移する可能性もある
       router.push('/Top');
-    }, 3000);
+    }, 5000);
 
     return () => clearTimeout(timeout);
   }, []);
