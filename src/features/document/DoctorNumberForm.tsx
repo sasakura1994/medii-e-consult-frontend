@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { useUploadDocument } from '@/hooks/api/doctor/useUploadDocument';
 
@@ -17,8 +17,9 @@ const eraOffsets: { [key in Era]: number } = {
 
 const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
   const { profile } = useFetchProfile();
-  const { uploadDocument, isSuccess } = useUploadDocument();
+  const { uploadDocument, isSuccess, error } = useUploadDocument();
   const [doctorNumber, setDoctorNumber] = useState('');
+  const [inputYear, setInputYear] = useState('');
   const [doctorLicenseYear, setDoctorLicenseYear] = useState('');
   const [doctorLicenseMonth, setDoctorLicenseMonth] = useState('');
   const [doctorLicenseDay, setDoctorLicenseDay] = useState('');
@@ -80,41 +81,56 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
         return '';
     }
   };
+  useEffect(() => {
+    if (inputYear) {
+      const year = convertYear(inputYear, era, 'year');
+      setDoctorLicenseYear(year.toString());
+    }
+  }, [era, inputYear]);
+
+  useEffect(() => {
+    if (doctorLicenseYear) {
+      const newYear = convertYear(doctorLicenseYear, 'year', era);
+      setInputYear(newYear);
+    }
+  }, [doctorLicenseYear, era]);
 
   const handleEraChange = (eraStr: string) => {
     const value = eraStr as Era;
-    console.log(era);
-    console.log(value);
-
-    const year = convertYear(doctorLicenseYear, era, value);
+    const year = convertYear(inputYear, era, value);
     setEra(value);
-    setDoctorLicenseYear(String(year));
+
+    setInputYear(String(year));
   };
 
-  const submit = useCallback(() => {
+  const submit = () => {
     if (profile) {
-      const year = convertYear(doctorLicenseYear, era, 'year');
+      const year = convertYear(inputYear, era, 'year');
       const newProfile = Object.assign({}, profile);
       newProfile.doctor_number = doctorNumber;
       newProfile.doctor_qualified_year = Number(year);
       newProfile.doctor_qualified_month = Number(doctorLicenseMonth);
       newProfile.doctor_qualified_day = Number(doctorLicenseDay);
+      newProfile.confimation_type = 'number';
       uploadDocument(newProfile);
     }
-  }, [
-    doctorNumber,
-    doctorLicenseYear,
-    doctorLicenseMonth,
-    doctorLicenseDay,
-    profile,
-    era,
-  ]);
+  };
 
   useEffect(() => {
     if (isSuccess) {
       setSelected('completed');
     }
-  }, [isSuccess]);
+  }, [isSuccess, setSelected]);
+
+  useEffect(() => {
+    if (profile) {
+      setDoctorNumber(profile.doctor_number);
+      setDoctorLicenseYear(profile.doctor_qualified_year.toString());
+      setInputYear(profile.doctor_qualified_year.toString());
+      setDoctorLicenseMonth(profile.doctor_qualified_month.toString());
+      setDoctorLicenseDay(profile.doctor_qualified_day.toString());
+    }
+  }, [profile]);
 
   return (
     <form
@@ -180,7 +196,7 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
             <input
               type="number"
               placeholder="-"
-              value={doctorLicenseYear}
+              value={inputYear}
               className="ml-2 h-12 w-32 rounded-md border border-gray-400 px-2"
               required
               min={validation.min}
@@ -188,7 +204,7 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
               onChange={(e) => {
                 const value = e.target.value;
                 if (value.length <= 4) {
-                  setDoctorLicenseYear(value);
+                  setInputYear(value);
                 }
               }}
             />
@@ -228,6 +244,11 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
           </div>
         </div>
       </div>
+      {error && (
+        <div className="mt-5 text-center text-base font-bold text-red-500">
+          {error}
+        </div>
+      )}
       <div className="mt-7 flex justify-center lg:mt-0">
         <input
           type="submit"

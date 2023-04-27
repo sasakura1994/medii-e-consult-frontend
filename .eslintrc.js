@@ -15,7 +15,7 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['react', '@typescript-eslint', 'prefer-arrow'],
+  plugins: ['react',"react-hooks", '@typescript-eslint', 'prefer-arrow'],
   rules: {
     "max-len": ["warn", { "code": 120 }],
     'prefer-arrow/prefer-arrow-functions': [
@@ -27,6 +27,8 @@ module.exports = {
       },
     ],
     'react/prop-types': 'off', // TS で型を縛ってるので props の厳密な検証は不要
+    "react-hooks/rules-of-hooks": "warn",
+    "react-hooks/exhaustive-deps": "warn"
   },
   // ESLint の除外ファイル
   ignorePatterns: [

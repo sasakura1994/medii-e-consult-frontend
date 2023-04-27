@@ -17,7 +17,7 @@ const DocumentInputCompleted: React.FC<DocumentInputCompletedProps> = ({
     }, 5000);
 
     return () => clearTimeout(timeout);
-  }, []);
+  }, [router]);
 
   return (
     <div className="border-1 rounded-xs mt-10 -mb-10 w-full border bg-white pb-5 lg:mb-0 lg:px-16 lg:pb-6">

@@ -9,6 +9,7 @@ export type UseUploadDocument = {
   isError: boolean;
   isSuccess: boolean;
   uploadDocument: (data: ProfileEntityType | undefined) => void;
+  error: string | null;
 };
 
 export const useUploadDocument = (): UseUploadDocument => {
@@ -16,11 +17,12 @@ export const useUploadDocument = (): UseUploadDocument => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const uploadDocument = (data: ProfileEntityType | undefined) => {
     if (!data) return;
 
-    setIsLoading(false);
+    setIsLoading(true);
     setIsError(false);
     setIsSuccess(false);
 
@@ -33,7 +35,8 @@ export const useUploadDocument = (): UseUploadDocument => {
         setIsLoading(false);
         setIsError(false);
       })
-      .catch(() => {
+      .catch((error) => {
+        setError(error.message);
         setIsLoading(false);
         setIsError(true);
       });
@@ -44,5 +47,6 @@ export const useUploadDocument = (): UseUploadDocument => {
     isError,
     isSuccess,
     uploadDocument,
+    error,
   };
 };
