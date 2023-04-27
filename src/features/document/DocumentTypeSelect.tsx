@@ -2,11 +2,11 @@ import React from 'react';
 import DocumentTypeSelectButton from './DocumentTypeSelectButton';
 
 type DocumentTypeSelectProps = {
-  onSelect: (value: string) => void;
+  setSelected: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const DocumentTypeSelect: React.FC<DocumentTypeSelectProps> = ({
-  onSelect,
+  setSelected,
 }) => {
   return (
     <div className="mt-6 mb-6">
@@ -25,7 +25,7 @@ const DocumentTypeSelect: React.FC<DocumentTypeSelectProps> = ({
             <DocumentTypeSelectButton
               text="医師番号を入力"
               image="/icons/doctor.svg"
-              onClick={() => onSelect('number')}
+              onClick={() => setSelected('number')}
             >
               医師番号・取得年を直接入力します
             </DocumentTypeSelectButton>
@@ -34,7 +34,7 @@ const DocumentTypeSelect: React.FC<DocumentTypeSelectProps> = ({
             <DocumentTypeSelectButton
               text="医師免許証の登録"
               image="/icons/doctor_id1.svg"
-              onClick={() => onSelect('document')}
+              onClick={() => setSelected('document')}
             >
               医師免許証画像をアップロードします
             </DocumentTypeSelectButton>
@@ -43,7 +43,7 @@ const DocumentTypeSelect: React.FC<DocumentTypeSelectProps> = ({
             <DocumentTypeSelectButton
               text="Mediiにおまかせ"
               image="/icons/medii.svg"
-              onClick={() => onSelect('auto')}
+              onClick={() => setSelected('auto')}
             >
               入力された情報を元にMediiが医師資格確認を行います
             </DocumentTypeSelectButton>
