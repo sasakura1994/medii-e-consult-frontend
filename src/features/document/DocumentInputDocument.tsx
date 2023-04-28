@@ -55,8 +55,6 @@ const DocumentInputDocument: React.FC<DocumentInputDocumentProps> = ({
     }
   };
 
-  // };
-
   useEffect(() => {
     if (isSuccess) {
       setIsSending(false);
