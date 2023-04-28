@@ -158,12 +158,15 @@ const Seminar: NextPage = () => {
               ))}
             </div>
           </div>
-          <Link
-            href="/seminar/archives"
-            className="my-6 inline-flex items-center rounded-full border border-primary bg-white px-8 py-2 text-[11px] text-primary lg:my-10 lg:px-6 lg:py-3 lg:text-sm"
-          >
-            すべてのアーカイブ動画を見る
-            <img src="/icons/arrow_right.svg" className="ml-2 inline h-3 " />
+          <Link href="/seminar/archives">
+            <div
+              className="my-6 inline-flex items-center rounded-full border
+               border-primary bg-white px-8 py-2 text-[11px] text-primary
+             lg:my-10 lg:px-6 lg:py-3 lg:text-sm"
+            >
+              すべてのアーカイブ動画を見る
+              <img src="/icons/arrow_right.svg" className="ml-2 inline h-3 " />
+            </div>
           </Link>
           <p className="text-center text-sm">
             ※アーカイブ動画に表示している医師の方々の経歴などの情報は、セミナー当時のものとなっております。

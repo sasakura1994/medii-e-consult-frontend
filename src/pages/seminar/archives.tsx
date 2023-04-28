@@ -36,12 +36,14 @@ const Archives: NextPage = () => {
         </div>
         <div className="my-4 flex w-full items-center justify-center lg:justify-between">
           <div className="hidden w-48 lg:block">
-            <Link
-              href="/seminar/archives"
-              className="my-10  inline-flex items-center rounded-full border border-primary px-10 py-3 text-center text-sm text-primary "
-            >
-              <img src="/icons/arrow_left.svg" className="mr-2 inline h-3" />
-              TOPへ戻る
+            <Link href="/seminar/archives">
+              <div
+                className="my-10  inline-flex items-center rounded-full border
+               border-primary px-10 py-3 text-center text-sm text-primary "
+              >
+                <img src="/icons/arrow_left.svg" className="mr-2 inline h-3" />
+                TOPへ戻る
+              </div>
             </Link>
           </div>
           <div className="flex items-center gap-3">
@@ -68,12 +70,14 @@ const Archives: NextPage = () => {
           <div className="hidden w-48 lg:block"></div>
         </div>
         <div className="block lg:hidden lg:w-48">
-          <Link
-            href="/seminar"
-            className="my-2 inline-flex  items-center rounded-full border border-primary bg-white px-14 py-4 text-center text-sm text-primary lg:my-10 lg:px-10 lg:py-3"
-          >
-            <img src="/icons/arrow_left.svg" className="mr-2 inline h-3" />
-            TOPへ戻る
+          <Link href="/seminar">
+            <div
+              className="my-2 inline-flex  items-center rounded-full border border-primary
+             bg-white px-14 py-4 text-center text-sm text-primary lg:my-10 lg:px-10 lg:py-3"
+            >
+              <img src="/icons/arrow_left.svg" className="mr-2 inline h-3" />
+              TOPへ戻る
+            </div>
           </Link>
         </div>
         <p className="text-center text-sm">
