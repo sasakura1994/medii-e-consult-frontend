@@ -11,7 +11,7 @@ const DocumentInputDocument: React.FC<DocumentInputDocumentProps> = ({
 }) => {
   const { profile } = useFetchProfile();
   const [imageSource, setImageSource] = useState('');
-  const { uploadDocument, isSuccess, error } = useUploadDocument();
+  const { uploadDocument, isSuccess } = useUploadDocument();
   const [errorMessage, setErrorMessage] = useState('');
   const [isSending, setIsSending] = useState(false);
   const fileSelectorRef = useRef<HTMLInputElement>(null);
@@ -46,16 +46,9 @@ const DocumentInputDocument: React.FC<DocumentInputDocumentProps> = ({
       if (isSending || !imageSource) {
         return;
       }
-
       setIsSending(true);
-
-      // if (fileSelectorRef.current?.files && fileSelectorRef.current?.files?.[0]) {
-      // const postParam = new FormData();
-      // postParam.append('document', fileSelectorRef.current?.files?.[0] || '');
-
       const newProfile = Object.assign({}, profile);
       newProfile.document = fileSelectorRef.current?.files?.[0] || undefined;
-      // newProfile.document_file_path = '';
       uploadDocument(newProfile);
     } else {
       setErrorMessage('ファイルの種類が不正です');
@@ -77,7 +70,11 @@ const DocumentInputDocument: React.FC<DocumentInputDocumentProps> = ({
         <div className="mx-2 mt-6 mb-6">
           <div className="relative flex text-left text-2xl font-bold lg:mt-10 lg:text-center">
             <div className="hidden cursor-pointer lg:block">
-              <img src="/icons/arrow_left.svg" className="mt-1.5 h-3 w-3" />
+              <img
+                src="/icons/arrow_left.svg"
+                className="mt-1.5 h-3 w-3"
+                alt=""
+              />
               <div
                 className="absolute top-0 left-0 pl-4 text-base"
                 onClick={() => {
@@ -109,6 +106,7 @@ const DocumentInputDocument: React.FC<DocumentInputDocumentProps> = ({
                 src={imageSource}
                 id="accountDocumentImage"
                 className="w-full"
+                alt=""
               />
             )}
           </div>
@@ -123,6 +121,7 @@ const DocumentInputDocument: React.FC<DocumentInputDocumentProps> = ({
           <img
             src="/images/document/license_sample.png"
             className="mt-6 max-w-full"
+            alt=""
           />
           <div className="mt-1 text-center">＜画像例＞</div>
         </div>
