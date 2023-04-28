@@ -21,7 +21,7 @@ export const SeminarConfirmModal: React.FC<ModalPropsType> = ( props ) =>
         <h1>{ title }</h1>
         {children}
         <div>
-          <PrimaryButton>キャンセル</PrimaryButton>
+          <PrimaryButton onClick={ () => setShowModal( false ) }>キャンセル</PrimaryButton>
           <PrimaryButton onClick={ () => onSubmit && onSubmit() }>{ labelText }</PrimaryButton>
         </div>
       </div>
