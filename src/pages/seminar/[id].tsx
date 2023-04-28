@@ -8,6 +8,11 @@ import { useRouter } from 'next/router';
 import { UseSeminarDetail } from '@/features/seminar/useSeminarDetail';
 import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 import { SeminarConfirmModal } from '@/components/Parts/Modal/SeminarConfirmModal';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination, Navigation } from 'swiper';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 
 const getSeminarDateTime = (seminar: SeminarEntityType) => {
   if ( !seminar ) return '';
@@ -37,7 +42,8 @@ const Seminar: NextPage = () =>
     isTicketNotEnoughDialogShown,
     setIsTicketConfirmDialogShown,
     setIsTicketNotEnoughDialogShown, } = UseSeminarDetail(id as string);
-  const [showModal, setShowModal] = React.useState(false);
+  const [ showModal, setShowModal ] = React.useState( false );
+  const [swiperRef, setSwiperRef] = React.useState(null);
   return (
     <div className="bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat pb-12 pt-10 lg:bg-[url('/images/seminar/PC_back.png')]">
       <div className="mx-auto w-full rounded-2xl px-6 pb-20 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] lg:max-w-[960px] lg:bg-white lg:p-10">
@@ -127,39 +133,41 @@ const Seminar: NextPage = () =>
             </a>
             {seminar && seminar?.seminar_reviews.length > 0 && (
               <div>
-                <h2 className="text-primary font-bold text-2xl pb-4 pt-10">セミナー参加者からの感想</h2>
-                {
-                  seminar.seminar_reviews.map( ( review ) => (
-                    <div className="bg-slate-100 rounded-md px-4 py-6 mb-4"><p>{review.body}</p></div>
-                  ))
-                }
+                <h2 className="pb-4 pt-10 text-2xl font-bold text-primary">
+                  セミナー参加者からの感想
+                </h2>
+                {seminar.seminar_reviews.map((review) => (
+                  <div className="mb-4 rounded-md bg-slate-100 px-4 py-6">
+                    <p>{review.body}</p>
+                  </div>
+                ))}
               </div>
             )}
           </div>
         </div>
       </div>
-      <div
-        id="archive"
-        className="mx-auto flex w-full flex-col items-center rounded-lg px-7 pb-20 lg:mt-10 lg:max-w-[960px] lg:bg-white lg:px-20 lg:pt-20 lg:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
-      >
-        <SeminarArchiveHeader ticketCount={ticketCount} />
-        <div>
-          <div className="grid grid-cols-[1fr] gap-4 lg:grid-cols-[1fr_1fr]">
-            {randomSeminars?.slice(0, 2).map((seminar) => (
-              <SeminarCard seminar={seminar} key={seminar.seminar_id} />
-            ))}
-          </div>
-        </div>
-        <a
-          href="/seminar/archives"
-          className="my-6 inline-flex items-center rounded-full border border-primary bg-white px-8 py-2 text-[11px] text-primary lg:my-10 lg:px-6 lg:py-3 lg:text-sm"
+      <div>
+        <h2 className="text-center text-2xl mt-32 mb-8">その他の公開されている<br className="md:hidden" />セミナー動画アーカイブ</h2>
+        <Swiper
+          onSwiper={setSwiperRef}
+          slidesPerView={3}
+          centeredSlides={true}
+          spaceBetween={150}
+          pagination={{
+            type: 'custom',
+          }}
+          navigation={true}
+          modules={[Pagination, Navigation]}
+          className="mySwiper"
         >
-          すべてのアーカイブ動画を見る
-          <img src="/icons/arrow_right.svg" className="ml-2 inline h-3 " />
-        </a>
-        <p className="text-center text-sm">
-          ※アーカイブ動画に表示している医師の方々の経歴などの情報は、セミナー当時のものとなっております。
-        </p>
+          {randomSeminars?.map((seminar) => (
+            <SwiperSlide>
+              <div className="mb-3">
+                <SeminarCard seminar={seminar} key={seminar.seminar_id} />
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
       {showModal && (
         <Modal setShowModal={setShowModal} className="lg:w-[800px]">
