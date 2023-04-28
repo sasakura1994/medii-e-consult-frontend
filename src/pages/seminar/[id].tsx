@@ -55,36 +55,24 @@ const Seminar: NextPage = () =>
             className="aspect-video w-full"
           />
         )}
-        <div>
+        {!seminar?.movie_url && (
           <div>
-            <p>チケットを一枚消費して動画を閲覧可能です</p>
+            <div>
+              <p>チケットを一枚消費して動画を閲覧可能です</p>
+            </div>
+            <div>
+              <p>
+                現在のチケット所持枚数 {ticketCount && ticketCount.ticket_count}{' '}
+                枚
+              </p>
+            </div>
+            <PrimaryButton onClick={() => setIsTicketConfirmDialogShown(true)}>
+              動画を閲覧する
+            </PrimaryButton>
           </div>
-          <div>
-            <p>
-              現在のチケット所持枚数 {ticketCount && ticketCount.ticket_count}{' '}
-              枚
-            </p>
-          </div>
-          <PrimaryButton onClick={() => setIsTicketConfirmDialogShown(true)}>
-            動画を閲覧する
-          </PrimaryButton>
-        </div>
-        <div className="flex flex-col items-center bg-white px-8 lg:px-32">
-          <a className="w-full lg:w-auto">
-            <button className="relative mb-2 mt-6 w-full rounded-lg bg-primary py-3 text-base font-bold text-white lg:w-auto lg:py-4 lg:px-12 lg:text-2xl">
-              ZOOMセミナーへ
-              <img
-                src="/images/seminar/main_button_arrow.svg"
-                className="absolute right-4 top-3 ml-2 inline h-6 lg:static  lg:ml-6"
-              />
-            </button>
-          </a>
-          <a href="/seminar#archive">
-            <button className="mt-2 mb-4 rounded-lg border border-[#7acadc] bg-[#f2f9ff] py-4 px-14 text-primary lg:py-5">
-              過去のセミナー動画はこちら
-            </button>
-          </a>
-          <div className="flex w-full flex-col items-center">
+        )}
+        <div className="flex flex-col items-center bg-white px-8 lg:px-[60px]">
+          <div className="mt-4 flex w-full flex-col items-center">
             <div className="flex w-full items-center justify-center rounded-md bg-[#e2e7ff] py-4">
               <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary lg:h-20 lg:w-20">
                 <img
