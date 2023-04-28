@@ -125,12 +125,22 @@ const Seminar: NextPage = () =>
             <a href={`/newChatRoom?target_account_id=${seminar?.account_id}`}>
               <PrimaryButton>この先生にE-コンサルで相談をする</PrimaryButton>
             </a>
+            {seminar && seminar?.seminar_reviews.length > 0 && (
+              <div>
+                <h2 className="text-primary font-bold text-2xl pb-4 pt-10">セミナー参加者からの感想</h2>
+                {
+                  seminar.seminar_reviews.map( ( review ) => (
+                    <div className="bg-slate-100 rounded-md px-4 py-6 mb-4"><p>{review.body}</p></div>
+                  ))
+                }
+              </div>
+            )}
           </div>
         </div>
       </div>
       <div
         id="archive"
-        className="flex w-full flex-col items-center rounded-lg px-7 pb-20 lg:mt-10 lg:max-w-[960px] lg:bg-white lg:px-20 lg:pt-20 lg:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
+        className="mx-auto flex w-full flex-col items-center rounded-lg px-7 pb-20 lg:mt-10 lg:max-w-[960px] lg:bg-white lg:px-20 lg:pt-20 lg:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
       >
         <SeminarArchiveHeader ticketCount={ticketCount} />
         <div>
