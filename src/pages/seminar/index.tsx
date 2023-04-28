@@ -6,6 +6,7 @@ import { SeminarCard } from '@/features/seminar/seminarCard';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import { OutlinedSquareButton } from '@/components/Parts/Button/OutlinedSquareButton';
 import { SeminarArchiveHeader } from '@/features/seminar/seminarArchiveHeader';
+import Link from 'next/link';
 
 const getSeminarDateTime = (seminar: SeminarEntityType) => {
   if (!seminar) return '';
@@ -47,7 +48,7 @@ const Seminar: NextPage = () => {
     <div className="bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat pb-12 lg:bg-[url('/images/seminar/PC_back.png')]">
       <div className="m-auto flex max-w-[960px] flex-col items-center py-4 pt-10">
         <h2
-          className="h-32  w-72 bg-contain bg-no-repeat px-12 pt-0 text-center text-lg text-[#6c6c6c] 
+          className="h-32  w-72 bg-contain bg-no-repeat px-12 pt-0 text-center text-lg text-[#6c6c6c]
         lg:bg-[url('/images/seminar/heading_fukidashi.svg')] lg:pt-6 lg:text-3xl"
         >
           最新セミナー
@@ -69,11 +70,11 @@ const Seminar: NextPage = () => {
                 />
               </button>
             </a>
-            <a href="/seminar#archive">
+            <Link href="/seminar#archive">
               <button className="mt-2 mb-4 rounded-lg border border-[#7acadc] bg-[#f2f9ff] py-4 px-14 text-primary lg:py-5">
                 過去のセミナー動画はこちら
               </button>
-            </a>
+            </Link>
             <div className="flex w-full flex-col items-center">
               <div className="flex w-full items-center justify-center rounded-md bg-[#e2e7ff] py-4">
                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary lg:h-20 lg:w-20">
@@ -157,13 +158,13 @@ const Seminar: NextPage = () => {
               ))}
             </div>
           </div>
-          <a
+          <Link
             href="/seminar/archives"
             className="my-6 inline-flex items-center rounded-full border border-primary bg-white px-8 py-2 text-[11px] text-primary lg:my-10 lg:px-6 lg:py-3 lg:text-sm"
           >
             すべてのアーカイブ動画を見る
             <img src="/icons/arrow_right.svg" className="ml-2 inline h-3 " />
-          </a>
+          </Link>
           <p className="text-center text-sm">
             ※アーカイブ動画に表示している医師の方々の経歴などの情報は、セミナー当時のものとなっております。
           </p>
