@@ -13,7 +13,6 @@ const DocumentInputDocument: React.FC<DocumentInputDocumentProps> = ({
   const [imageSource, setImageSource] = useState('');
   const { uploadDocument } = useUploadDocument();
   const [errorMessage, setErrorMessage] = useState('');
-  const [isSent, setIsSent] = useState(false);
   const fileSelectorRef = useRef<HTMLInputElement>(null);
 
   const openFileSelector = () => {
@@ -46,23 +45,15 @@ const DocumentInputDocument: React.FC<DocumentInputDocumentProps> = ({
       if (!imageSource) {
         return;
       }
-      setIsSent(false);
       const newProfile = Object.assign({}, profile);
       newProfile.document = fileSelectorRef.current?.files?.[0] || undefined;
       uploadDocument(newProfile).then(() => {
-        setIsSent(true);
+        setSelected('completed');
       });
     } else {
       setErrorMessage('ファイルの種類が不正です');
     }
   };
-
-  useEffect(() => {
-    if (isSent) {
-      setSelected('completed');
-      setIsSent(false);
-    }
-  }, [isSent, setSelected]);
 
   return (
     <form onSubmit={submit}>
