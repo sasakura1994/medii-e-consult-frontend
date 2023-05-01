@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { useUploadDocument } from '@/hooks/api/doctor/useUploadDocument';
+import { useSelectedFile } from './useSelectedFile';
 
 type DocumentInputDocumentProps = {
   setSelected: React.Dispatch<React.SetStateAction<string>>;
@@ -10,33 +11,15 @@ const DocumentInputDocument: React.FC<DocumentInputDocumentProps> = ({
   setSelected,
 }) => {
   const { profile } = useFetchProfile();
-  const [imageSource, setImageSource] = useState('');
+  const {
+    imageSource,
+    onFileSelected,
+    setImageSource,
+    openFileSelector,
+    fileSelectorRef,
+  } = useSelectedFile();
   const { uploadDocument } = useUploadDocument();
   const [errorMessage, setErrorMessage] = useState('');
-  const fileSelectorRef = useRef<HTMLInputElement>(null);
-
-  const openFileSelector = () => {
-    fileSelectorRef.current?.click();
-  };
-
-  useEffect(() => {
-    if (profile) {
-      setImageSource(profile.document_file_path);
-    }
-  }, [profile]);
-
-  const selectedFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    if (e.target.files && e.target.files.length > 0) {
-      const file = e.target.files[0];
-
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setImageSource(e.target?.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,6 +37,12 @@ const DocumentInputDocument: React.FC<DocumentInputDocumentProps> = ({
       setErrorMessage('ファイルの種類が不正です');
     }
   };
+
+  useEffect(() => {
+    if (profile) {
+      setImageSource(profile.document_file_path);
+    }
+  }, [profile, setImageSource]);
 
   return (
     <form onSubmit={submit}>
@@ -103,7 +92,7 @@ const DocumentInputDocument: React.FC<DocumentInputDocumentProps> = ({
           </div>
           <input
             ref={fileSelectorRef}
-            onChange={selectedFile}
+            onChange={onFileSelected}
             accept="image/*"
             type="file"
             name="file"
