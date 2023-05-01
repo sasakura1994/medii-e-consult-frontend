@@ -1,48 +1,19 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
-import { useUploadDocument } from '@/hooks/api/doctor/useUploadDocument';
-import { useSelectedFile } from './useSelectedFile';
+import React from 'react';
+import { useDocumentInputDocument } from './useDocumentInputDocument';
 
 type DocumentInputDocumentProps = {
   setSelected: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const DocumentInputDocument: React.FC<DocumentInputDocumentProps> = ({
-  setSelected,
-}) => {
-  const { profile } = useFetchProfile();
+const DocumentInputDocument = ({ setSelected }: DocumentInputDocumentProps) => {
   const {
     imageSource,
     onFileSelected,
-    setImageSource,
     openFileSelector,
     fileSelectorRef,
-  } = useSelectedFile();
-  const { uploadDocument } = useUploadDocument();
-  const [errorMessage, setErrorMessage] = useState('');
-
-  const submit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!profile) return;
-    if (fileSelectorRef.current?.files?.[0]) {
-      if (!imageSource) {
-        return;
-      }
-      const newProfile = Object.assign({}, profile);
-      newProfile.document = fileSelectorRef.current?.files?.[0] || undefined;
-      uploadDocument(newProfile).then(() => {
-        setSelected('completed');
-      });
-    } else {
-      setErrorMessage('ファイルの種類が不正です');
-    }
-  };
-
-  useEffect(() => {
-    if (profile) {
-      setImageSource(profile.document_file_path);
-    }
-  }, [profile, setImageSource]);
+    errorMessage,
+    submit,
+  } = useDocumentInputDocument({ setSelected });
 
   return (
     <form onSubmit={submit}>
