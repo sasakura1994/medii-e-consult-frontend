@@ -32,7 +32,7 @@ export const useDocumentInputDocument = ({
   const [errorMessage, setErrorMessage] = useState('');
 
   const submit = useCallback(
-    (e: React.FormEvent) => {
+    async (e: React.FormEvent) => {
       e.preventDefault();
       if (!profile) return;
       if (fileSelectorRef.current?.files?.[0]) {
@@ -41,9 +41,10 @@ export const useDocumentInputDocument = ({
         }
         const newProfile = Object.assign({}, profile);
         newProfile.document = fileSelectorRef.current?.files?.[0] || undefined;
-        uploadDocument(newProfile).then(() => {
-          setSelected('completed');
+        await uploadDocument(newProfile).catch((e) => {
+          setErrorMessage(e.message);
         });
+        setSelected('completed');
       } else {
         setErrorMessage('ファイルの種類が不正です');
       }

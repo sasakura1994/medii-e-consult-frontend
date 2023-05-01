@@ -104,7 +104,7 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
     setInputYear(String(year));
   };
 
-  const submit = () => {
+  const submit = async () => {
     if (profile) {
       const year = convertYear(inputYear, era, 'year');
       const newProfile = Object.assign({}, profile);
@@ -113,13 +113,10 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
       newProfile.doctor_qualified_month = Number(doctorLicenseMonth);
       newProfile.doctor_qualified_day = Number(doctorLicenseDay);
       newProfile.confimation_type = 'number';
-      uploadDocument(newProfile)
-        .then(() => {
-          setSelected('completed');
-        })
-        .catch((e) => {
-          setErrorMessage(e.message);
-        });
+      await uploadDocument(newProfile).catch((e) => {
+        setErrorMessage(e.message);
+      });
+      setSelected('completed');
     }
   };
 
