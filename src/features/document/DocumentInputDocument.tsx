@@ -84,7 +84,7 @@ const DocumentInputDocument: React.FC<DocumentInputDocumentProps> = ({
             </div>
             <div className="mx-auto">医師免許証の登録</div>
           </div>
-          <div className="mt-10 ml-4 text-center lg:px-0">
+          <div className="mt-10 text-center lg:px-0">
             医師免許証画像をアップロードしてください
           </div>
 
