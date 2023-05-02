@@ -22,12 +22,16 @@ export const useToken = (): UseToken => {
     const storageToken = getAuthToken();
     setToken(storageToken || '');
     setIsTokenInitialized(true);
+    // 初期化のため
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const setTokenAndMarkInitialized = React.useCallback((token: string) => {
     setAuthToken(token);
     setToken(token);
     setIsTokenInitialized(true);
+    // setのみのため
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return { token, isTokenInitialized, setTokenAndMarkInitialized };
