@@ -1,5 +1,5 @@
 import React from 'react';
-import { getAuthToken } from '@/libs/cookie';
+import { getAuthToken, setAuthToken } from '@/libs/cookie';
 import { useRecoilState } from 'recoil';
 import {
   isTokenInitializedState,
@@ -25,6 +25,7 @@ export const useToken = (): UseToken => {
   }, []);
 
   const setTokenAndMarkInitialized = React.useCallback((token: string) => {
+    setAuthToken(token);
     setToken(token);
     setIsTokenInitialized(true);
   }, []);

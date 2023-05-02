@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react';
-import { createApiClient } from '@/libs/apiClient';
 import type { ProfileEntity } from '@/types/entities/profileEntity';
 import { useRecoilState } from 'recoil';
 import { profileState } from '@/globalStates/profileState';
-import { setAuthToken } from '@/libs/cookie';
 import { useToken } from './authentication/useToken';
 import { usePostLogin } from './api/doctor/usePostLogin';
 import { useRouter } from 'next/router';
@@ -65,7 +63,6 @@ export const useLogin = (): UseLoginType => {
         return;
       }
 
-      setAuthToken(res.data.jwt_token!);
       setTokenAndMarkInitialized(res.data.jwt_token!);
       setProfile(res.data.doctor!);
       localStorage.removeItem(loginRedirectUrlKey);
