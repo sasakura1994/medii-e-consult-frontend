@@ -68,6 +68,7 @@ export const useLogin = (): UseLoginType => {
       setAuthToken(res.data.jwt_token!);
       setTokenAndMarkInitialized(res.data.jwt_token!);
       setProfile(res.data.doctor!);
+      localStorage.removeItem(loginRedirectUrlKey);
 
       router.push(redirectUrl === '' ? 'top' : redirectUrl);
     },
