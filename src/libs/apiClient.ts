@@ -52,9 +52,11 @@ export const redirectToLoginPage = () => {
   // 外部ドメイン経由の場合は常にExternalディレクトリに展開されるので、リダイレクト時には除去
   const redirectParam =
     '?redirect=' +
-    window.location.pathname.replace(
-      process.env.WEB_EXTERNAL_SUB_DIR as string,
-      ''
+    encodeURIComponent(
+      window.location.pathname.replace(
+        process.env.WEB_EXTERNAL_SUB_DIR as string,
+        ''
+      )
     ) +
     window.location.search;
   window.location.href = loginPageUrl + redirectParam;
