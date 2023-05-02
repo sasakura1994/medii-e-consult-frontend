@@ -7,16 +7,27 @@ import Link from 'next/link';
 import { TextField } from '@/components/Parts/Form/TextField';
 import { PublicLayout } from '@/components/Layouts/PublicLayout';
 
-const GuideLink = ({ children, href }: { children: string; href: string }) => {
+const GuideLink = ({
+  children,
+  href,
+  onClick,
+}: {
+  children: string;
+  href: string;
+  onClick: React.MouseEventHandler<HTMLAnchorElement>;
+}) => {
   return (
     <Link href={href}>
-      <a className="text-sm text-guide-link underline">{children}</a>
+      <a className="text-sm text-guide-link underline" onClick={onClick}>
+        {children}
+      </a>
     </Link>
   );
 };
 
 const Login: NextPageWithLayout = () => {
-  const { setEmail, setPassword, login, errorMessage } = useLogin();
+  const { setEmail, setPassword, login, errorMessage, saveRedirectUrl } =
+    useLogin();
 
   return (
     <div className="mb-12 md:mt-6">
@@ -55,10 +66,12 @@ const Login: NextPageWithLayout = () => {
             }}
           />
           <div className="mt-2">
-            <GuideLink href="/registration">新規登録はこちら</GuideLink>
+            <GuideLink href="/registration" onClick={saveRedirectUrl}>
+              新規登録はこちら
+            </GuideLink>
           </div>
           <div className="mt-2">
-            <GuideLink href="/password-reset-request">
+            <GuideLink href="/password-reset-request" onClick={saveRedirectUrl}>
               パスワードを忘れた場合はこちら
             </GuideLink>
           </div>

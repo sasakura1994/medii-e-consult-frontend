@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createApiClient } from '@/libs/apiClient';
 import type { ProfileEntity } from '@/types/entities/profileEntity';
 import { useRecoilState } from 'recoil';
@@ -7,6 +7,8 @@ import { setAuthToken } from '@/libs/cookie';
 import { useToken } from './authentication/useToken';
 import { usePostLogin } from './api/doctor/usePostLogin';
 import { useRouter } from 'next/router';
+
+export const loginRedirectUrlKey = 'Login:redirectUrl';
 
 type Query = {
   redirect?: string;
@@ -21,17 +23,33 @@ export type UseLoginType = {
   setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
   login: (e: React.FormEvent<HTMLFormElement>) => void;
   profile?: ProfileEntity | null;
+  saveRedirectUrl: () => void;
   token: string;
 };
 
 export const useLogin = (): UseLoginType => {
   const router = useRouter();
+  const { redirect } = router.query as Query;
+  const [redirectUrl, setRedirectUrl] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [errorMessage, setErrorMessage] = React.useState('');
   const [profile, setProfile] = useRecoilState(profileState);
   const { token, setTokenAndMarkInitialized } = useToken();
   const { login: postLogin } = usePostLogin();
+
+  useEffect(() => {
+    if (redirect) {
+      setRedirectUrl(redirect);
+      localStorage.removeItem(loginRedirectUrlKey);
+      return;
+    }
+
+    const savedRedirectUrl = localStorage.getItem(loginRedirectUrlKey);
+    if (savedRedirectUrl) {
+      setRedirectUrl(savedRedirectUrl);
+    }
+  }, [redirect]);
 
   const login = React.useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
@@ -51,12 +69,25 @@ export const useLogin = (): UseLoginType => {
       setTokenAndMarkInitialized(res.data.jwt_token!);
       setProfile(res.data.doctor!);
 
-      const { redirect } = router.query as Query;
-
-      router.push(redirect || 'top');
+      router.push(redirectUrl === '' ? 'top' : redirectUrl);
     },
-    [email, password]
+    [
+      email,
+      password,
+      postLogin,
+      redirectUrl,
+      router,
+      setProfile,
+      setTokenAndMarkInitialized,
+    ]
   );
+
+  const saveRedirectUrl = React.useCallback(() => {
+    if (redirect) {
+      console.log('saved redirect url');
+      localStorage.setItem(loginRedirectUrlKey, redirect);
+    }
+  }, [redirect]);
 
   return {
     email,
@@ -67,6 +98,7 @@ export const useLogin = (): UseLoginType => {
     setErrorMessage,
     login,
     profile,
+    saveRedirectUrl,
     token,
   };
 };
