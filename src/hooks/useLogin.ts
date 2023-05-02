@@ -85,7 +85,6 @@ export const useLogin = (): UseLoginType => {
 
   const saveRedirectUrl = React.useCallback(() => {
     if (redirect) {
-      console.log('saved redirect url');
       localStorage.setItem(loginRedirectUrlKey, redirect);
     }
   }, [redirect]);
