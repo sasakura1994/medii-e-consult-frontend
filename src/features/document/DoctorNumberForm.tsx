@@ -1,34 +1,29 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { useUploadDocument } from '@/hooks/api/doctor/useUploadDocument';
+import { useEraConverter } from './useEraConverter';
 
 type DoctorNumberFormProps = {
-  setSelected: React.Dispatch<React.SetStateAction<string>>;
-};
-
-type Era = 'year' | 'showa' | 'heisei' | 'reiwa';
-
-const eraOffsets: { [key in Era]: number } = {
-  year: 0,
-  showa: 1925,
-  heisei: 1988,
-  reiwa: 2018,
+  setSelected: React.Dispatch<
+    React.SetStateAction<'' | 'number' | 'document' | 'auto' | 'completed'>
+  >;
 };
 
 const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
   const { profile } = useFetchProfile();
   const { uploadDocument, isSuccess, error } = useUploadDocument();
   const [doctorNumber, setDoctorNumber] = useState('');
-  const [inputYear, setInputYear] = useState('');
   const [doctorLicenseYear, setDoctorLicenseYear] = useState('');
   const [doctorLicenseMonth, setDoctorLicenseMonth] = useState('');
   const [doctorLicenseDay, setDoctorLicenseDay] = useState('');
-  const [era, setEra] = useState<Era>('year');
-  const [validation, setValidation] = useState({
-    min: 1,
-    max: 9999,
-  });
-
+  const {
+    inputYear,
+    convertYear,
+    era,
+    setInputYear,
+    validation,
+    handleEraChange,
+  } = useEraConverter();
   const isUpdatePrepared = useMemo(() => {
     if (
       doctorNumber &&
@@ -41,67 +36,19 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
     return false;
   }, [doctorNumber, doctorLicenseYear, doctorLicenseMonth, doctorLicenseDay]);
 
-  const convertYear = (year: string, fromEra: Era, toEra: Era) => {
-    if (!year) return '';
-    const adjustedYear = Number(year) + eraOffsets[fromEra] - eraOffsets[toEra];
-    switch (toEra) {
-      case 'year': {
-        setValidation({
-          min: 1,
-          max: 9999,
-        });
-        return adjustedYear > 0 ? String(adjustedYear) : '';
-      }
-      case 'showa': {
-        setValidation({
-          min: 1,
-          max: 64,
-        });
-        return adjustedYear > 0 && adjustedYear <= 64
-          ? String(adjustedYear)
-          : '';
-      }
-      case 'heisei': {
-        setValidation({
-          min: 1,
-          max: 31,
-        });
-        return adjustedYear > 0 && adjustedYear <= 31
-          ? String(adjustedYear)
-          : '';
-      }
-      case 'reiwa': {
-        setValidation({
-          min: 1,
-          max: 99,
-        });
-        return adjustedYear > 0 ? String(adjustedYear) : '';
-      }
-      default:
-        return '';
-    }
-  };
   useEffect(() => {
     if (inputYear) {
       const year = convertYear(inputYear, era, 'year');
       setDoctorLicenseYear(year.toString());
     }
-  }, [era, inputYear]);
+  }, [convertYear, era, inputYear]);
 
   useEffect(() => {
     if (doctorLicenseYear) {
       const newYear = convertYear(doctorLicenseYear, 'year', era);
       setInputYear(newYear);
     }
-  }, [doctorLicenseYear, era]);
-
-  const handleEraChange = (eraStr: string) => {
-    const value = eraStr as Era;
-    const year = convertYear(inputYear, era, value);
-    setEra(value);
-
-    setInputYear(String(year));
-  };
+  }, [convertYear, doctorLicenseYear, era, setInputYear]);
 
   const submit = () => {
     if (profile) {

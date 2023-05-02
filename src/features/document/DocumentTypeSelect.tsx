@@ -2,7 +2,9 @@ import React from 'react';
 import DocumentTypeSelectButton from './DocumentTypeSelectButton';
 
 type DocumentTypeSelectProps = {
-  setSelected: React.Dispatch<React.SetStateAction<string>>;
+  setSelected: React.Dispatch<
+    React.SetStateAction<'' | 'number' | 'document' | 'auto' | 'completed'>
+  >;
 };
 
 const DocumentTypeSelect: React.FC<DocumentTypeSelectProps> = ({

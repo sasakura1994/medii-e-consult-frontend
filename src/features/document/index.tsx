@@ -3,9 +3,12 @@ import RegistrationProgress from './RegistrationProgress';
 import DocumentTypeSelect from './DocumentTypeSelect';
 import DoctorNumberForm from './DoctorNumberForm';
 import DocumentInputCompleted from './DocumentInputCompleted';
+import DocumentInputAuto from './DocumentInputAuto';
 
 export const Document = () => {
-  const [selected, setSelected] = useState('');
+  const [selected, setSelected] = useState<
+    'number' | 'document' | 'auto' | 'completed' | ''
+  >('');
   const [mode, setMode] = useState<'edit' | 'document' | 'completed'>(
     'document'
   );
@@ -29,6 +32,7 @@ export const Document = () => {
       )}
       {selected === 'number' && <DoctorNumberForm setSelected={setSelected} />}
       {selected === 'completed' && <DocumentInputCompleted isInvited={false} />}
+      {selected === 'auto' && <DocumentInputAuto setSelected={setSelected} />}
     </div>
   );
 };
