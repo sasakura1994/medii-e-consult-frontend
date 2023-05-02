@@ -25,8 +25,9 @@ describe('PasswordResetRequest', () => {
       );
     });
 
-    userEvent.type(screen.getByRole('textbox'), 'dummy@example.com');
-
+    await act(() =>
+      userEvent.type(screen.getByRole('textbox'), 'dummy@example.com')
+    );
     await act(() => {
       userEvent.click(screen.getByRole('button'));
     });
