@@ -3,12 +3,15 @@ import { getAuthToken, setAuthToken } from '@/libs/cookie';
 import { useRecoilState } from 'recoil';
 import {
   isTokenInitializedState,
+  isTokenRefreshedState,
   tokenState,
 } from '@/globalStates/profileState';
 
 type UseToken = {
   token: string;
   isTokenInitialized: boolean;
+  isTokenRefreshed: boolean;
+  setIsTokenRefreshed: (isTokenRefreshed: boolean) => void;
   setTokenAndMarkInitialized: (token: string) => void;
 };
 
@@ -16,6 +19,9 @@ export const useToken = (): UseToken => {
   const [token, setToken] = useRecoilState(tokenState);
   const [isTokenInitialized, setIsTokenInitialized] = useRecoilState(
     isTokenInitializedState
+  );
+  const [isTokenRefreshed, setIsTokenRefreshed] = useRecoilState(
+    isTokenRefreshedState
   );
 
   React.useEffect(() => {
@@ -34,5 +40,11 @@ export const useToken = (): UseToken => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return { token, isTokenInitialized, setTokenAndMarkInitialized };
+  return {
+    token,
+    isTokenInitialized,
+    isTokenRefreshed,
+    setIsTokenRefreshed,
+    setTokenAndMarkInitialized,
+  };
 };

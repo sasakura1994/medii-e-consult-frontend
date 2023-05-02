@@ -7,7 +7,13 @@ import { useRefreshToken } from '../api/doctor/useRefreshToken';
  * 認証が必要なページに配置する
  */
 export const useAuthenticationOnPage = () => {
-  const { token, isTokenInitialized, setTokenAndMarkInitialized } = useToken();
+  const {
+    token,
+    isTokenInitialized,
+    isTokenRefreshed,
+    setIsTokenRefreshed,
+    setTokenAndMarkInitialized,
+  } = useToken();
   const { refreshToken: getRefreshToken } = useRefreshToken();
 
   const tokenIsEmpty = token === '';
@@ -24,7 +30,8 @@ export const useAuthenticationOnPage = () => {
     }
 
     setTokenAndMarkInitialized(response.data.jwt_token!);
-  }, [getRefreshToken, setTokenAndMarkInitialized]);
+    setIsTokenRefreshed(true);
+  }, [getRefreshToken, setIsTokenRefreshed, setTokenAndMarkInitialized]);
 
   React.useEffect(() => {
     if (!isTokenInitialized) {
@@ -36,8 +43,12 @@ export const useAuthenticationOnPage = () => {
       return;
     }
 
+    if (isTokenRefreshed) {
+      return;
+    }
+
     refreshToken();
     // トークン関連の状態が変わったときだけ再実行
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tokenIsEmpty, isTokenInitialized]);
+  }, [tokenIsEmpty, isTokenInitialized, isTokenRefreshed]);
 };
