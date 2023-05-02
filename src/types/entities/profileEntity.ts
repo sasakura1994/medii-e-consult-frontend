@@ -1,4 +1,4 @@
-export type ProfileEntityType = {
+export type ProfileEntity = {
   commedical_speciality: string;
   document_file_path: string;
   is_commedical: number;

@@ -19,7 +19,7 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
-const App = ({ Component, pageProps }: AppPropsWithLayout) => {
+const AppInner = ({ Component, pageProps }: AppPropsWithLayout) => {
   const { fetcher } = useFetcher();
   const getLayout =
     Component.getLayout ||
@@ -32,18 +32,24 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
 
   return (
     <CookiesProvider>
-      <RecoilRoot>
-        <SWRConfig
-          value={{
-            fetcher,
-            revalidateOnFocus: false,
-            revalidateOnReconnect: false,
-          }}
-        >
-          {getLayout(<Component {...pageProps} />)}
-        </SWRConfig>
-      </RecoilRoot>
+      <SWRConfig
+        value={{
+          fetcher,
+          revalidateOnFocus: false,
+          revalidateOnReconnect: false,
+        }}
+      >
+        {getLayout(<Component {...pageProps} />)}
+      </SWRConfig>
     </CookiesProvider>
+  );
+};
+
+const App = (props: AppPropsWithLayout) => {
+  return (
+    <RecoilRoot>
+      <AppInner {...props} />
+    </RecoilRoot>
   );
 };
 

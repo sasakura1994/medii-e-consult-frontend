@@ -1,9 +1,16 @@
 import React from 'react';
 import { createApiClient } from '@/libs/apiClient';
-import type { ProfileEntityType } from '@/types/entities/profileEntity';
+import type { ProfileEntity } from '@/types/entities/profileEntity';
 import { useRecoilState } from 'recoil';
 import { profileState } from '@/globalStates/profileState';
 import { setAuthToken } from '@/libs/cookie';
+import { useToken } from './authentication/useToken';
+import { usePostLogin } from './api/doctor/usePostLogin';
+import { useRouter } from 'next/router';
+
+type Query = {
+  redirect?: string;
+};
 
 export type UseLoginType = {
   email: string;
@@ -13,49 +20,44 @@ export type UseLoginType = {
   errorMessage: string;
   setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
   login: (e: React.FormEvent<HTMLFormElement>) => void;
-  profile?: ProfileEntityType | null;
+  profile?: ProfileEntity | null;
   token: string;
 };
 
 export const useLogin = (): UseLoginType => {
+  const router = useRouter();
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [errorMessage, setErrorMessage] = React.useState('');
   const [profile, setProfile] = useRecoilState(profileState);
-  const [token, setToken] = React.useState('');
+  const { token, setTokenAndMarkInitialized } = useToken();
+  const { login: postLogin } = usePostLogin();
 
-  const login = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const login = React.useCallback(
+    async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
 
-    try {
-      const apiClient = createApiClient({ contentType: 'application/json' });
-      const url = `${process.env.ENDPOINT_URL}/doctor/login`;
-
-      const res = await apiClient.post(url, {
-        mail_address: email,
-        password: password,
+      const res = await postLogin(email, password).catch((error) => {
+        console.error(error);
+        setErrorMessage(error.response.data?.message || 'エラーが発生しました');
+        return null;
       });
 
-      console.log('res', res.data);
-
       if (!res) {
-        throw new Error('エラーが発生しました');
-      }
-      if (res.data.code === -1) {
-        throw new Error(res.data.message);
+        return;
       }
 
-      setAuthToken(res.data.jwt_token);
-      setToken(res.data.jwt_token);
-      setProfile((oldValues) => ({
-        ...oldValues,
-        ...res.data.doctor,
-      }));
-    } catch (e: unknown) {
-      const error = e as Error;
-      setErrorMessage(error.message);
-    }
-  };
+      setAuthToken(res.data.jwt_token!);
+      setTokenAndMarkInitialized(res.data.jwt_token!);
+      setProfile(res.data.doctor!);
+
+      const { redirect } = router.query as Query;
+
+      router.push(redirect || 'top');
+    },
+    [email, password]
+  );
+
   return {
     email,
     setEmail,

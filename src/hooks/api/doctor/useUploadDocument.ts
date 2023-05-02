@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAxios } from '@/hooks/network/useAxios';
-import type { ProfileEntityType } from '@/types/entities/profileEntity';
+import type { ProfileEntity } from '@/types/entities/profileEntity';
 
 const endpoint = '/doctor/upload_document';
 
@@ -8,7 +8,7 @@ export type UseUploadDocument = {
   isLoading: boolean;
   isError: boolean;
   isSuccess: boolean;
-  uploadDocument: (data: ProfileEntityType | undefined) => void;
+  uploadDocument: (data: ProfileEntity | undefined) => void;
   error: string | null;
 };
 
@@ -19,7 +19,7 @@ export const useUploadDocument = (): UseUploadDocument => {
   const [isError, setIsError] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const uploadDocument = (data: ProfileEntityType | undefined) => {
+  const uploadDocument = (data: ProfileEntity | undefined) => {
     if (!data) return;
 
     setIsLoading(true);
