@@ -146,7 +146,7 @@ const Seminar: NextPage = () =>
                   セミナー参加者からの感想
                 </h2>
                 {seminar.seminar_reviews.map((review) => (
-                  <div className="mb-4 rounded-md bg-slate-100 px-4 py-6">
+                  <div className="mb-4 rounded-md bg-slate-100 px-4 py-6" key={review.id}>
                     <p>{review.body}</p>
                   </div>
                 ))}
@@ -181,7 +181,7 @@ const Seminar: NextPage = () =>
           className="mySwiper"
         >
           {randomSeminars?.map((seminar) => (
-            <SwiperSlide>
+            <SwiperSlide key={seminar.uid}>
               <div className="mb-3">
                 <SeminarCard seminar={seminar} key={seminar.seminar_id} />
               </div>
