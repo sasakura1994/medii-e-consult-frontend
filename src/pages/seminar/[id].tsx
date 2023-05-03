@@ -9,7 +9,8 @@ import { UseSeminarDetail } from '@/features/seminar/useSeminarDetail';
 import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 import { SeminarConfirmModal } from '@/components/Parts/Modal/SeminarConfirmModal';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Navigation } from 'swiper';
+import { Pagination, Navigation, } from 'swiper';
+import { Swiper as SwiperType } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
@@ -43,7 +44,7 @@ const Seminar: NextPage = () =>
     setIsTicketConfirmDialogShown,
     setIsTicketNotEnoughDialogShown, } = UseSeminarDetail(id as string);
   const [ showModal, setShowModal ] = React.useState( false );
-  const [swiperRef, setSwiperRef] = React.useState(null);
+  const [swiperRef, setSwiperRef] = React.useState<SwiperType | null>(null);
   return (
     <div className="bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat pb-12 pt-10 lg:bg-[url('/images/seminar/PC_back.png')]">
       <div className="mx-auto w-full rounded-2xl px-6 pb-20 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] lg:max-w-[960px] lg:bg-white lg:p-10">
@@ -115,16 +116,18 @@ const Seminar: NextPage = () =>
                 </p>
               </div>
             </div>
-            <div className="pt-4">
+            <div className="pt-8">
               <div>
                 <p className="text-base lg:text-lg">
-                  <span className="pr-4 text-2xl text-primary lg:text-lg">
+                  <span className="pr-4 text-2xl text-primary lg:text-2xl font-bold">
                     セミナー概要
                   </span>
                   <br />
-                  {seminar?.description !== undefined
-                    ? seminar.description
-                    : ''}
+                  <span className="">
+                    {seminar?.description !== undefined
+                      ? seminar.description
+                        : '' }
+                  </span>
                 </p>
               </div>
             </div>
@@ -149,7 +152,7 @@ const Seminar: NextPage = () =>
       <div>
         <h2 className="text-center text-2xl mt-32 mb-8">その他の公開されている<br className="md:hidden" />セミナー動画アーカイブ</h2>
         <Swiper
-          onSwiper={setSwiperRef}
+          onSwiper={(swiper) => setSwiperRef(swiper)}
           slidesPerView={3}
           centeredSlides={true}
           spaceBetween={150}
