@@ -3,7 +3,6 @@ import type { NextPage } from 'next';
 import { SeminarEntityType } from '@/types/entities/seminarEntity';
 import { SeminarCard } from '@/features/seminar/seminarCard';
 import { Modal } from '@/components/Parts/Modal/Modal';
-import { SeminarArchiveHeader } from '@/features/seminar/seminarArchiveHeader';
 import { useRouter } from 'next/router';
 import { UseSeminarDetail } from '@/features/seminar/useSeminarDetail';
 import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
