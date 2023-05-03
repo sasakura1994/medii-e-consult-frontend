@@ -9,7 +9,7 @@ import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 import { SeminarConfirmModal } from '@/components/Parts/Modal/SeminarConfirmModal';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation, } from 'swiper';
-import { Swiper as SwiperType } from 'swiper';
+import { type Swiper as SwiperRef } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
@@ -43,7 +43,7 @@ const Seminar: NextPage = () =>
     setIsTicketConfirmDialogShown,
     setIsTicketNotEnoughDialogShown, } = UseSeminarDetail(id as string);
   const [ showModal, setShowModal ] = React.useState( false );
-  const [ swiperRef, setSwiperRef ] = React.useState<SwiperType | null>( null );
+  const [ , setSwiperRef ] = React.useState<SwiperRef | null>( null );
   return (
     <div className="bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat pb-12 pt-32 lg:pt-10 lg:bg-[url('/images/seminar/PC_back.png')]">
       <div className="mx-auto w-full lg:rounded-2xl pb-20 pt-36 lg:max-w-[960px] lg:bg-white lg:p-10 lg:px-10 lg:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] bg-white relative">
