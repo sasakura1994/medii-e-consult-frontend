@@ -10,7 +10,9 @@ export type UseFetchRandomSeminarsType = {
 
 const endpoint = '/seminar/random_list?except_seminar_id=';
 
-export const useFetchRandomSeminars = (id: string): UseFetchRandomSeminarsType => {
+export const useFetchRandomSeminars = (
+  id: string
+): UseFetchRandomSeminarsType => {
   const { isLoading, error, data } = useAuthenticatedSWR<{
     seminars: SeminarEntityType[];
   }>(endpoint + id);

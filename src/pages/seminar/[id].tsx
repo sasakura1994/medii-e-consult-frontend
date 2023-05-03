@@ -8,15 +8,15 @@ import { UseSeminarDetail } from '@/features/seminar/useSeminarDetail';
 import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 import { SeminarConfirmModal } from '@/components/Parts/Modal/SeminarConfirmModal';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Navigation, } from 'swiper';
+import { Pagination, Navigation } from 'swiper';
 import { type Swiper as SwiperRef } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
 const getSeminarDateTime = (seminar: SeminarEntityType) => {
-  if ( !seminar ) return '';
-  console.log( seminar );
+  if (!seminar) return '';
+  console.log(seminar);
   const [year, month, day] = seminar.seminar_date
     .substring(0, 10)
     .split(/-/) as string[];
@@ -32,23 +32,27 @@ const getSeminarDateTime = (seminar: SeminarEntityType) => {
   );
 };
 
-const Seminar: NextPage = () =>
-{
+const Seminar: NextPage = () => {
   const router = useRouter();
   const { id } = router.query;
-  console.log( id );
-  const { randomSeminars, seminar, ticketCount, useTicket,
+  console.log(id);
+  const {
+    randomSeminars,
+    seminar,
+    ticketCount,
+    useTicket,
     isTicketConfirmDialogShown,
     isTicketNotEnoughDialogShown,
     setIsTicketConfirmDialogShown,
-    setIsTicketNotEnoughDialogShown, } = UseSeminarDetail(id as string);
-  const [ showModal, setShowModal ] = React.useState( false );
-  const [ , setSwiperRef ] = React.useState<SwiperRef | null>( null );
+    setIsTicketNotEnoughDialogShown,
+  } = UseSeminarDetail(id as string);
+  const [showModal, setShowModal] = React.useState(false);
+  const [, setSwiperRef] = React.useState<SwiperRef | null>(null);
   return (
-    <div className="bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat pb-12 pt-32 lg:pt-10 lg:bg-[url('/images/seminar/PC_back.png')]">
-      <div className="mx-auto w-full lg:rounded-2xl pb-20 pt-36 lg:max-w-[960px] lg:bg-white lg:p-10 lg:px-10 lg:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] bg-white relative">
+    <div className="bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat pb-12 pt-32 lg:bg-[url('/images/seminar/PC_back.png')] lg:pt-10">
+      <div className="relative mx-auto w-full bg-white pb-20 pt-36 lg:max-w-[960px] lg:rounded-2xl lg:bg-white lg:p-10 lg:px-10 lg:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
         {seminar?.movie_url ? (
-          <div className="px-[27px] lg:px-0 absolute lg:static top-[-79px]">
+          <div className="absolute top-[-79px] px-[27px] lg:static lg:px-0">
             <iframe
               src={seminar.movie_url}
               title="YouTube video player"
@@ -146,7 +150,10 @@ const Seminar: NextPage = () =>
                   セミナー参加者からの感想
                 </h2>
                 {seminar.seminar_reviews.map((review) => (
-                  <div className="mb-4 rounded-md bg-slate-100 px-4 py-6" key={review.id}>
+                  <div
+                    className="mb-4 rounded-md bg-slate-100 px-4 py-6"
+                    key={review.id}
+                  >
                     <p>{review.body}</p>
                   </div>
                 ))}

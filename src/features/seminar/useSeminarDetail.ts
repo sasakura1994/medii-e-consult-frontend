@@ -15,12 +15,14 @@ export type UseSeminarDetail = {
   isTicketConfirmDialogShown: boolean;
   setIsTicketConfirmDialogShown: React.Dispatch<React.SetStateAction<boolean>>;
   isTicketNotEnoughDialogShown: boolean;
-  setIsTicketNotEnoughDialogShown: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsTicketNotEnoughDialogShown: React.Dispatch<
+    React.SetStateAction<boolean>
+  >;
 };
 
 export const UseSeminarDetail = (id: string): UseSeminarDetail => {
-  const { seminar, mutate } = useFetchSeminar( id );
-  const { seminars: randomSeminars } = useFetchRandomSeminars( id );
+  const { seminar, mutate } = useFetchSeminar(id);
+  const { seminars: randomSeminars } = useFetchRandomSeminars(id);
   const {
     useTicket,
     isTicketConfirmDialogShown,
