@@ -43,18 +43,20 @@ const Seminar: NextPage = () =>
     setIsTicketConfirmDialogShown,
     setIsTicketNotEnoughDialogShown, } = UseSeminarDetail(id as string);
   const [ showModal, setShowModal ] = React.useState( false );
-  const [swiperRef, setSwiperRef] = React.useState<SwiperType | null>(null);
+  const [ swiperRef, setSwiperRef ] = React.useState<SwiperType | null>( null );
   return (
-    <div className="bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat pb-12 pt-10 lg:bg-[url('/images/seminar/PC_back.png')]">
-      <div className="mx-auto w-full rounded-2xl px-6 pb-20 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] lg:max-w-[960px] lg:bg-white lg:p-10">
+    <div className="bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat pb-12 pt-32 lg:pt-10 lg:bg-[url('/images/seminar/PC_back.png')]">
+      <div className="mx-auto w-full lg:rounded-2xl pb-20 pt-36 lg:max-w-[960px] lg:bg-white lg:p-10 lg:px-10 lg:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] bg-white relative">
         {seminar?.movie_url ? (
-          <iframe
-            src={seminar.movie_url}
-            title="YouTube video player"
-            className="aspect-video w-full"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
+          <div className="px-[27px] lg:px-0 absolute lg:static top-[-79px]">
+            <iframe
+              src={seminar.movie_url}
+              title="YouTube video player"
+              className="aspect-video w-full"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
         ) : (
           <img
             src={seminar && seminar.image_url}
@@ -77,7 +79,7 @@ const Seminar: NextPage = () =>
             </PrimaryButton>
           </div>
         )}
-        <div className="flex flex-col items-center bg-white px-8 lg:px-[60px]">
+        <div className="flex flex-col items-center bg-white px-7 lg:px-[60px]">
           <div className="mt-4 flex w-full flex-col items-center">
             <div className="flex w-full items-center justify-center rounded-md bg-[#e2e7ff] py-4">
               <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary lg:h-20 lg:w-20">
@@ -86,7 +88,7 @@ const Seminar: NextPage = () =>
                   className="w-[19px] lg:w-auto"
                 />
               </div>
-              <p className="pl-4 font-bold text-primary lg:text-xl">
+              <p className="pl-4 font-bold text-primary lg:text-2xl">
                 {seminar && seminar.subject}
               </p>
             </div>
