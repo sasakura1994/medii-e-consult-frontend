@@ -156,12 +156,23 @@ const Seminar: NextPage = () =>
         </div>
       </div>
       <div>
-        <h2 className="text-center text-2xl mt-32 mb-8">その他の公開されている<br className="md:hidden" />セミナー動画アーカイブ</h2>
+        <h2 className="mt-32 mb-8 text-center text-2xl">
+          その他の公開されている
+          <br className="md:hidden" />
+          セミナー動画アーカイブ
+        </h2>
         <Swiper
           onSwiper={(swiper) => setSwiperRef(swiper)}
-          slidesPerView={3}
+          slidesPerView={1}
+          initialSlide={1}
           centeredSlides={true}
-          spaceBetween={150}
+          spaceBetween={100}
+          breakpoints={{
+            1024: {
+              slidesPerView: 4,
+              spaceBetween: 280,
+            },
+          }}
           pagination={{
             type: 'custom',
           }}
