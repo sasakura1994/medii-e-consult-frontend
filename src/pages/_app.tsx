@@ -1,5 +1,6 @@
 import React from 'react';
 import '@/styles/globals.scss';
+import '@/styles/swiperjs-custom.scss';
 import 'react-toastify/dist/ReactToastify.css';
 import { SWRConfig } from 'swr';
 import { useFetcher } from '@/hooks/network/useFetcher';
