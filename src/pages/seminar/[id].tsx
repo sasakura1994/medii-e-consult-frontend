@@ -119,21 +119,26 @@ const Seminar: NextPage = () =>
             </div>
             <div className="pt-8">
               <div>
-                <p className="text-base lg:text-lg">
-                  <span className="pr-4 text-2xl text-primary lg:text-2xl font-bold">
-                    セミナー概要
-                  </span>
-                  <br />
-                  <span className="">
-                    {seminar?.description !== undefined
-                      ? seminar.description
-                        : '' }
-                  </span>
+                <p className="pr-4 text-2xl font-bold text-primary lg:text-2xl">
+                  セミナー概要
+                </p>
+                <p className="pt-4 pb-8 text-base">
+                  {seminar?.description !== undefined
+                    ? seminar.description
+                    : ''}
                 </p>
               </div>
             </div>
+            <div className="rounded-lg border p-4 text-base">
+              <p className="pb-2">{seminar && seminar?.doctor_name}先生</p>
+              <p className="text-primary">
+                {seminar && seminar?.doctor_profile}
+              </p>
+            </div>
             <a href={`/newChatRoom?target_account_id=${seminar?.account_id}`}>
-              <PrimaryButton>この先生にE-コンサルで相談をする</PrimaryButton>
+              <PrimaryButton className="mt-8 text-left">
+                この先生にE-コンサルで相談をする
+              </PrimaryButton>
             </a>
             {seminar && seminar?.seminar_reviews.length > 0 && (
               <div>
