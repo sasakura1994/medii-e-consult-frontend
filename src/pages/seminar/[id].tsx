@@ -227,7 +227,7 @@ const Seminar: NextPage = () =>
       )}
       {isTicketNotEnoughDialogShown && (
         <SeminarConfirmModal
-          setShowModal={setIsTicketConfirmDialogShown}
+          setShowModal={setIsTicketNotEnoughDialogShown}
           className="lg:w-[800px]"
           title="チケットが不足しています"
           labelText="E-コンサルへ"
