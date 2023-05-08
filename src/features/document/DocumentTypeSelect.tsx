@@ -41,7 +41,7 @@ const DocumentTypeSelect: React.FC<DocumentTypeSelectProps> = ({
               医師免許証画像をアップロードします
             </DocumentTypeSelectButton>
           </div>
-          <div className="text-center text-sm  lg:text-left">
+          <div className="text-center text-sm lg:text-left">
             <DocumentTypeSelectButton
               text="Mediiにおまかせ"
               image="/icons/medii.svg"

@@ -86,11 +86,15 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
       }}
       className="w-full"
     >
-      <div className="border-1 rounded-xs mt-10 -mb-10 w-full border bg-white lg:mb-0 lg:px-16 lg:pb-6">
+      <div className="border-1 rounded-xs mt-10 w-full border bg-white lg:px-16  lg:pb-6">
         <div className="mx-2 mt-6 mb-6">
           <div className="relative flex text-left text-2xl font-bold lg:mt-10 lg:text-center">
             <div className="hidden cursor-pointer lg:block">
-              <img src="/icons/arrow_left.svg" className="mt-1.5 h-3 w-3" />
+              <img
+                src="/icons/arrow_left.svg"
+                className="mt-1.5 h-3 w-3"
+                alt="arrow_left"
+              />
               <div
                 className="absolute top-0 left-0 pl-4 text-base "
                 onClick={() => {
@@ -195,13 +199,13 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
           {errorMessage}
         </div>
       )}
-      <div className="mt-7 flex justify-center lg:mt-0">
+      <div className="mt-7 -mb-10 flex justify-center lg:mt-0 lg:mb-0">
         <input
           type="submit"
           className={
             isUpdatePrepared
-              ? ' my-10 cursor-pointer rounded-full bg-primary px-10 pt-1.5 pb-2 font-bold text-white shadow-lg'
-              : ' my-10 cursor-pointer rounded-full bg-btn-gray px-10 pt-1.5 pb-2 font-bold text-white shadow-lg'
+              ? 'cursor-pointer rounded-full bg-primary px-10 pt-1.5 pb-2 font-bold text-white shadow-lg lg:my-10'
+              : 'cursor-pointer rounded-full bg-btn-gray px-10 pt-1.5 pb-2 font-bold text-white shadow-lg lg:my-10'
           }
           value="登録を完了する"
         />

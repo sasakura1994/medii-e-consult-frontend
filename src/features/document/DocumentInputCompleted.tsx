@@ -26,9 +26,9 @@ const DocumentInputCompleted: React.FC<DocumentInputCompletedProps> = ({
           Medii利用の準備が整いました
         </div>
         <div className="mx-auto mb-12 flex max-w-xs items-center justify-between">
-          <img src="/icons/doctor2.svg" className="h-auto w-24" />
-          <img src="/icons/medii.svg" className="h-auto w-16" />
-          <img src="/icons/doctor3.svg" className="h-auto w-24" />
+          <img src="/icons/doctor2.svg" className="h-auto w-24" alt="doctor2" />
+          <img src="/icons/medii.svg" className="h-auto w-16" alt="medii" />
+          <img src="/icons/doctor3.svg" className="h-auto w-24" alt="doctor3" />
         </div>
         {!isInvited && (
           <div className="mb-8">

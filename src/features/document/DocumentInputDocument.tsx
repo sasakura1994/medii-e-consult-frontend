@@ -84,7 +84,7 @@ const DocumentInputDocument = ({ setSelected }: DocumentInputDocumentProps) => {
           {errorMessage}
         </div>
       )}
-      <div className="mt-7 flex justify-center lg:mt-0">
+      <div className="mt-7 -mb-20 flex justify-center lg:mb-0 lg:mt-0">
         <input
           type="submit"
           className={
