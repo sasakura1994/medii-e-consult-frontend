@@ -8,8 +8,8 @@ export const useUploadDocument = () => {
   const { axios } = useAxios('multipart/form-data');
 
   const uploadDocument = useCallback(
-    (data: ProfileEntityType) => {
-      return axios.post<ProfileEntityType>(endpoint, data);
+    (data: ProfileEntity) => {
+      return axios.post<ProfileEntity>(endpoint, data);
     },
     [axios]
   );
