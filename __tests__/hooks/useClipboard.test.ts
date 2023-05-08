@@ -1,4 +1,4 @@
-import { renderHook, waitFor } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
 import { toast } from 'react-toastify';
 import { useClipboard } from '@/hooks/useClipboard';
 
@@ -38,7 +38,7 @@ describe('useClipboard', () => {
 
   test('should copy the URL to the clipboard', async () => {
     const { result } = renderHook(() => useClipboard(clipboardUrl));
-    result.current.clipboard();
+    await act(() => result.current.clipboard());
     await waitFor(() => {
       // テスト環境でクリップボードに書き込めないため、
       // navigator.clipboard.writeText が呼び出されたことだけを確認する
@@ -49,7 +49,7 @@ describe('useClipboard', () => {
   test('should show a toast message if one is provided', async () => {
     const successMessage = 'Successfully copied.';
     const { result } = renderHook(() => useClipboard(clipboardUrl));
-    result.current.clipboard(successMessage);
+    await act(() => result.current.clipboard(successMessage));
     await waitFor(() => {
       // テスト環境で toast ライブラリが機能しないため、
       // toast が呼び出されたことだけを確認する
@@ -63,7 +63,7 @@ describe('useClipboard', () => {
       throw new Error('Copy failed');
     });
     const { result } = renderHook(() => useClipboard(clipboardUrl));
-    result.current.clipboard();
+    await act(() => result.current.clipboard());
     await waitFor(() => {
       // エラーが発生した場合、toast にエラーメッセージが表示されることを確認する
       expect(toast).toHaveBeenCalledWith('コピーに失敗しました。');

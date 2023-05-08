@@ -1,30 +1,51 @@
-import React, { useEffect } from 'react';
-import type { NextPage } from 'next';
+import React from 'react';
+import type { NextPageWithLayout } from '@/pages/_app';
 import { AiFillApple } from 'react-icons/ai';
 import { useLogin } from '@/hooks/useLogin';
-import { useRouter } from 'next/router';
 import AppleSignin from 'react-apple-signin-auth';
 import Link from 'next/link';
 import { TextField } from '@/components/Parts/Form/TextField';
+import { PublicLayout } from '@/components/Layouts/PublicLayout';
 
-const GuideLink = ({ children, href }: { children: string; href: string }) => {
+const GuideLink = ({
+  children,
+  href,
+  onClick,
+}: {
+  children: string;
+  href: string;
+  onClick: React.MouseEventHandler<HTMLAnchorElement>;
+}) => {
   return (
     <Link href={href}>
-      <a className="text-sm text-guide-link underline">{children}</a>
+      <a className="text-sm text-guide-link underline" onClick={onClick}>
+        {children}
+      </a>
     </Link>
   );
 };
-const Login: NextPage = () => {
-  const { setEmail, setPassword, login, token, errorMessage } = useLogin();
-  const router = useRouter();
-  useEffect(() => {
-    if (token !== '') {
-      router.replace((router.query.redirect as string) ?? '/top');
-    }
-  }, [token]);
+
+const Login: NextPageWithLayout = () => {
+  const { setEmail, setPassword, login, errorMessage, saveRedirectUrl } =
+    useLogin();
+
   return (
     <div className="mb-12 md:mt-6">
-      <div className="mx-auto flex max-w-login-container flex-col items-center border border-solid border-login-container-frame bg-white pt-4 pb-8">
+      <div
+        className="
+          mx-auto
+          flex
+          max-w-login-container
+          flex-col
+          items-center
+          border
+          border-solid
+          border-login-container-frame
+          bg-white
+          pt-4
+          pb-8
+        "
+      >
         <h1 className="my-7 text-center text-2xl">E-コンサルにログイン</h1>
         <form onSubmit={login} className="flex w-[308px] flex-col items-center">
           <TextField
@@ -45,17 +66,27 @@ const Login: NextPage = () => {
             }}
           />
           <div className="mt-2">
-            <GuideLink href="/registration">新規登録はこちら</GuideLink>
+            <GuideLink href="/registration" onClick={saveRedirectUrl}>
+              新規登録はこちら
+            </GuideLink>
           </div>
           <div className="mt-2">
-            <GuideLink href="/password-reset-request">
+            <GuideLink href="/password-reset-request" onClick={saveRedirectUrl}>
               パスワードを忘れた場合はこちら
             </GuideLink>
           </div>
           <div>
             <button
               type="submit"
-              className="my-4 rounded-full bg-primary py-2 px-14 text-white drop-shadow-[0_4px_10px_rgba(92,107,192,.3)]"
+              className="
+                my-4
+                rounded-full
+                bg-primary
+                py-2
+                px-14
+                text-white
+                drop-shadow-[0_4px_10px_rgba(92,107,192,.3)]
+              "
             >
               ログイン
             </button>
@@ -89,6 +120,10 @@ const Login: NextPage = () => {
       )}
     </div>
   );
+};
+
+Login.getLayout = (page: React.ReactElement) => {
+  return <PublicLayout>{page}</PublicLayout>;
 };
 
 export default Login;

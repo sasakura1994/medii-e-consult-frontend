@@ -4,7 +4,7 @@ module.exports = {
     es2021: true,
   },
   extends: [
-    "next/core-web-vitals",
+    'next/core-web-vitals',
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
@@ -18,8 +18,8 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint', 'prefer-arrow'],
   rules: {
-    "max-len": ["warn", { "code": 120 }],
-    "@next/next/no-img-element": "off",
+    'max-len': ['warn', { code: 120 }],
+    '@next/next/no-img-element': 'off',
     'prefer-arrow/prefer-arrow-functions': [
       'warn',
       {
