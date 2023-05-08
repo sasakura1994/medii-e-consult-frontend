@@ -1,11 +1,10 @@
 import React from 'react';
 
 import { useDocumentInputAuto } from './useDocumentInputAuto';
+import { DocumentSelected } from '.';
 
 type DocumentInputAutoProps = {
-  setSelected: React.Dispatch<
-    React.SetStateAction<'' | 'number' | 'document' | 'auto' | 'completed'>
-  >;
+  setSelected: React.Dispatch<React.SetStateAction<DocumentSelected>>;
 };
 
 const DocumentInputAuto: React.FC<DocumentInputAutoProps> = ({

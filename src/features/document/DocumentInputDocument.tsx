@@ -1,10 +1,9 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { useDocumentInputDocument } from './useDocumentInputDocument';
+import { DocumentSelected } from '.';
 
 type DocumentInputDocumentProps = {
-  setSelected: Dispatch<
-    SetStateAction<'' | 'number' | 'document' | 'auto' | 'completed'>
-  >;
+  setSelected: Dispatch<SetStateAction<DocumentSelected>>;
 };
 
 const DocumentInputDocument = ({ setSelected }: DocumentInputDocumentProps) => {

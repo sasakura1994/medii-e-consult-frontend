@@ -8,11 +8,10 @@ import {
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { useUploadDocument } from '@/hooks/api/doctor/useUploadDocument';
 import { useSelectedFile } from './useSelectedFile';
+import { DocumentSelected } from '.';
 
 type UseDocumentInputDocumentProps = {
-  setSelected: Dispatch<
-    SetStateAction<'' | 'number' | 'document' | 'auto' | 'completed'>
-  >;
+  setSelected: Dispatch<SetStateAction<DocumentSelected>>;
 };
 
 type UseDocumentInputDocument = {

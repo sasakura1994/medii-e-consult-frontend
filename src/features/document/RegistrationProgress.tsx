@@ -1,15 +1,15 @@
 import React from 'react';
 
-type ModeType = 'edit' | 'document' | 'completed';
+export type DocumentMode = 'edit' | 'document' | 'completed';
 
 type RegistrationProgressProps = {
-  mode: ModeType;
+  mode: DocumentMode;
 };
 
 const RegistrationProgress: React.FC<RegistrationProgressProps> = ({
   mode,
 }) => {
-  const getArrowImage = (currentMode: ModeType) => {
+  const getArrowImage = (currentMode: DocumentMode) => {
     switch (true) {
       case mode === currentMode:
         return '/icons/arrow_right_alt_primary.svg';

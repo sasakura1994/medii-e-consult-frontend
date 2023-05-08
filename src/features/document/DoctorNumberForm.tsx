@@ -2,11 +2,10 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useUploadDocument } from '@/hooks/api/doctor/useUploadDocument';
 import { useEraConverter } from '../../hooks/useEraConverter';
 import { useProfile } from '@/hooks/useProfile';
+import { DocumentSelected } from '.';
 
 type DoctorNumberFormProps = {
-  setSelected: React.Dispatch<
-    React.SetStateAction<'' | 'number' | 'document' | 'auto' | 'completed'>
-  >;
+  setSelected: React.Dispatch<React.SetStateAction<DocumentSelected>>;
 };
 
 const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {

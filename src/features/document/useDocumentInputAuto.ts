@@ -10,11 +10,10 @@ import { useEraConverter } from '@/hooks/useEraConverter';
 import { useProfile } from '@/hooks/useProfile';
 import { HospitalEntity } from '@/types/entities/hospitalEntity';
 import { ProfileEntity } from '@/types/entities/profileEntity';
+import { DocumentSelected } from '.';
 
 type UseDocumentInputAutoProps = {
-  setSelected: Dispatch<
-    SetStateAction<'' | 'number' | 'document' | 'auto' | 'completed'>
-  >;
+  setSelected: Dispatch<SetStateAction<DocumentSelected>>;
 };
 
 type UseDocumentInputAuto = {

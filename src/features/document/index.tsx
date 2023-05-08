@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import RegistrationProgress from './RegistrationProgress';
+import RegistrationProgress, { DocumentMode } from './RegistrationProgress';
 import DocumentTypeSelect from './DocumentTypeSelect';
 import DoctorNumberForm from './DoctorNumberForm';
 import DocumentInputCompleted from './DocumentInputCompleted';
 import DocumentInputAuto from './DocumentInputAuto';
 import DocumentInputDocument from './DocumentInputDocument';
 
+export type DocumentSelected =
+  | ''
+  | 'number'
+  | 'document'
+  | 'auto'
+  | 'completed';
+
 export const Document = () => {
-  const [selected, setSelected] = useState<
-    'number' | 'document' | 'auto' | 'completed' | ''
-  >('');
-  const [mode, setMode] = useState<'edit' | 'document' | 'completed'>(
-    'document'
-  );
+  const [selected, setSelected] = useState<DocumentSelected>('');
+  const [mode, setMode] = useState<DocumentMode>('document');
 
   useEffect(() => {
     if (selected === 'completed') {
