@@ -1,10 +1,7 @@
 import React from 'react';
 import { getAuthToken, setAuthToken } from '@/libs/cookie';
 import { useRecoilState } from 'recoil';
-import {
-  isTokenInitializedState,
-  tokenState,
-} from '@/globalStates/profileState';
+import { isTokenInitializedState, tokenState } from '@/globalStates/auth';
 
 type UseToken = {
   token: string;
