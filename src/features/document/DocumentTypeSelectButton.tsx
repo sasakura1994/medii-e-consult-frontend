@@ -21,7 +21,7 @@ const DocumentTypeSelectButton: React.FC<DocumentTypeSelectButtonProps> = ({
          py-3 shadow-md hover:shadow-lg lg:mx-0 lg:flex-col lg:py-5"
         >
           <div className="mx-2 flex h-12 items-center justify-center lg:mr-0">
-            <img src={image} alt="type_select_image" />
+            <img src={image} alt="" />
           </div>
           <div className="mt-3 flex items-center justify-center pb-2 lg:pb-0">
             <div className="flex justify-center text-sm text-primary">

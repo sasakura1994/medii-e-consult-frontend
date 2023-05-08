@@ -34,7 +34,7 @@ const RegistrationProgress: React.FC<RegistrationProgressProps> = ({
         <br className="lg:hidden" />
         登録
       </div>
-      <img src={getArrowImage('edit')} className="mx-1.5 lg:mx-3" alt="arrow" />
+      <img src={getArrowImage('edit')} className="mx-1.5 lg:mx-3" alt="" />
       <div
         className={`flex h-14 w-24 items-center justify-center rounded border-2 bg-white
         text-center text-sm font-bold lg:h-12 lg:w-40 lg:text-base ${
@@ -49,11 +49,7 @@ const RegistrationProgress: React.FC<RegistrationProgressProps> = ({
         <br className="lg:hidden" />
         確認
       </div>
-      <img
-        className="mx-1.5 lg:mx-3"
-        src={getArrowImage('document')}
-        alt="arrow"
-      />
+      <img className="mx-1.5 lg:mx-3" src={getArrowImage('document')} alt="" />
       <div
         className={`flex h-14 w-24 items-center justify-center rounded border-2 bg-white
         text-center text-sm font-bold lg:h-12 lg:w-40 lg:text-base ${
