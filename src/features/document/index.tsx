@@ -4,6 +4,7 @@ import DocumentTypeSelect from './DocumentTypeSelect';
 import DoctorNumberForm from './DoctorNumberForm';
 import DocumentInputCompleted from './DocumentInputCompleted';
 import DocumentInputAuto from './DocumentInputAuto';
+import DocumentInputDocument from './DocumentInputDocument';
 
 export const Document = () => {
   const [selected, setSelected] = useState<
@@ -31,6 +32,9 @@ export const Document = () => {
         </div>
       )}
       {selected === 'number' && <DoctorNumberForm setSelected={setSelected} />}
+      {selected === 'document' && (
+        <DocumentInputDocument setSelected={setSelected} />
+      )}
       {selected === 'completed' && <DocumentInputCompleted isInvited={false} />}
       {selected === 'auto' && <DocumentInputAuto setSelected={setSelected} />}
     </div>
