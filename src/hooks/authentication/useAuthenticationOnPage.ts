@@ -29,7 +29,7 @@ export const useAuthenticationOnPage = () => {
       return;
     }
 
-    setTokenAndMarkInitialized(response.data.jwt_token!);
+    setTokenAndMarkInitialized(response.data.jwt_token);
     setIsTokenRefreshed(true);
   }, [getRefreshToken, setIsTokenRefreshed, setTokenAndMarkInitialized]);
 

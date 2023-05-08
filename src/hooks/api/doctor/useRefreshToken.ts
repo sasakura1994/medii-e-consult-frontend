@@ -3,7 +3,7 @@ import React from 'react';
 
 export type PostLoginResponseData = {
   code: number;
-  jwt_token?: string;
+  jwt_token: string;
 };
 
 export const useRefreshToken = () => {
