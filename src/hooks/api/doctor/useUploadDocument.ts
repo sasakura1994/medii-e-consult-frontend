@@ -1,52 +1,18 @@
-import { useState } from 'react';
+import { useCallback } from 'react';
 import { useAxios } from '@/hooks/network/useAxios';
 import type { ProfileEntity } from '@/types/entities/profileEntity';
 
 const endpoint = '/doctor/upload_document';
 
-export type UseUploadDocument = {
-  isLoading: boolean;
-  isError: boolean;
-  isSuccess: boolean;
-  uploadDocument: (data: ProfileEntity | undefined) => void;
-  error: string | null;
-};
-
-export const useUploadDocument = (): UseUploadDocument => {
+export const useUploadDocument = () => {
   const { axios } = useAxios('multipart/form-data');
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  const uploadDocument = (data: ProfileEntity | undefined) => {
-    if (!data) return;
+  const uploadDocument = useCallback(
+    (data: ProfileEntityType) => {
+      return axios.post<ProfileEntityType>(endpoint, data);
+    },
+    [axios]
+  );
 
-    setIsLoading(true);
-    setIsError(false);
-    setIsSuccess(false);
-
-    axios
-      .post(endpoint, data)
-      .then((res) => {
-        if (res.status === 200 || res.status === 201) {
-          setIsSuccess(true);
-        }
-        setIsLoading(false);
-        setIsError(false);
-      })
-      .catch((error) => {
-        setError(error.message);
-        setIsLoading(false);
-        setIsError(true);
-      });
-  };
-
-  return {
-    isLoading,
-    isError,
-    isSuccess,
-    uploadDocument,
-    error,
-  };
+  return { uploadDocument };
 };

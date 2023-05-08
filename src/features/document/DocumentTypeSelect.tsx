@@ -9,11 +9,11 @@ const DocumentTypeSelect: React.FC<DocumentTypeSelectProps> = ({
   setSelected,
 }) => {
   return (
-    <div className="mt-6 mb-6">
+    <div className="px-6 py-4">
       <div className="text-center text-2xl font-bold lg:mt-10">
         医師資格確認
       </div>
-      <div className="mt-10 px-6 text-left lg:px-0">
+      <div className="mt-6 text-left lg:px-0">
         Mediiは医師および医学生のみご利用いただけます
       </div>
       <div className="mt-5 ml-5 text-center font-bold lg:mt-10 lg:ml-0 lg:text-left">

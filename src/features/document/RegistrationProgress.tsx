@@ -24,7 +24,7 @@ const RegistrationProgress: React.FC<RegistrationProgressProps> = ({
     <div className="flex items-center justify-center">
       <div
         className={`flex h-14 w-24 items-center justify-center rounded border-2 bg-white
-         text-center text-xs font-bold lg:h-12 lg:w-40 lg:text-sm ${
+         text-center text-sm font-bold lg:h-12 lg:w-40 lg:text-base ${
            mode === 'edit'
              ? 'border-primary text-primary'
              : 'border-gray-400 text-gray-400'
@@ -34,10 +34,10 @@ const RegistrationProgress: React.FC<RegistrationProgressProps> = ({
         <br className="lg:hidden" />
         登録
       </div>
-      <img src={getArrowImage('edit')} className="mx-2 lg:mx-3" />
+      <img src={getArrowImage('edit')} className="mx-1.5 lg:mx-3" alt="arrow" />
       <div
         className={`flex h-14 w-24 items-center justify-center rounded border-2 bg-white
-        text-center text-xs font-bold lg:h-12 lg:w-40 lg:text-sm ${
+        text-center text-sm font-bold lg:h-12 lg:w-40 lg:text-base ${
           mode === 'document'
             ? 'border-primary text-primary'
             : mode === 'edit'
@@ -45,12 +45,18 @@ const RegistrationProgress: React.FC<RegistrationProgressProps> = ({
             : 'border-gray-400 text-gray-400'
         }`}
       >
-        医師資格確認
+        医師資格
+        <br className="lg:hidden" />
+        確認
       </div>
-      <img className="mx-2 lg:mx-3" src={getArrowImage('document')} />
+      <img
+        className="mx-1.5 lg:mx-3"
+        src={getArrowImage('document')}
+        alt="arrow"
+      />
       <div
         className={`flex h-14 w-24 items-center justify-center rounded border-2 bg-white
-        text-center text-xs font-bold lg:h-12 lg:w-40 lg:text-sm ${
+        text-center text-sm font-bold lg:h-12 lg:w-40 lg:text-base ${
           mode === 'completed'
             ? 'border-primary text-primary'
             : 'border-gray-300 text-gray-300'
