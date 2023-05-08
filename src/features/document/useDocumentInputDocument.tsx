@@ -47,7 +47,7 @@ export const useDocumentInputDocument = ({
         if (!imageSource) {
           return;
         }
-        const newProfile = Object.assign({}, profile);
+        const newProfile = { ...profile };
         newProfile.document = fileSelectorRef.current?.files?.[0] || undefined;
         await uploadDocument(newProfile).catch((e) => {
           setErrorMessage(e.message);

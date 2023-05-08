@@ -55,7 +55,7 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
   const submit = async () => {
     if (profile) {
       const year = convertYear(inputYear, era, 'year');
-      const newProfile = Object.assign({}, profile);
+      const newProfile = { ...profile };
       newProfile.doctor_number = doctorNumber;
       newProfile.doctor_qualified_year = Number(year);
       newProfile.doctor_qualified_month = Number(doctorLicenseMonth);

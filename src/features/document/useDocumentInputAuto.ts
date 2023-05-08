@@ -76,7 +76,7 @@ export const useDocumentInputAuto = ({
   const submit = useCallback(async () => {
     if (profile) {
       const year = convertYear(inputYear, era, 'year');
-      const newProfile = Object.assign({}, profile);
+      const newProfile = { ...profile };
       newProfile.doctor_qualified_year = Number(year);
       newProfile.confimation_type = 'auto';
       newProfile.tel = tel;
