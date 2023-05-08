@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 
-type Era = 'year' | 'showa' | 'heisei' | 'reiwa';
+export type Era = 'year' | 'showa' | 'heisei' | 'reiwa';
 
 const eraOffsets: { [key in Era]: number } = {
   year: 0,

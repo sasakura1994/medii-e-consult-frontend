@@ -2,6 +2,7 @@ import React from 'react';
 
 import { useDocumentInputAuto } from './useDocumentInputAuto';
 import { DocumentSelected } from '.';
+import { Era } from '@/hooks/useEraConverter';
 
 type DocumentInputAutoProps = {
   setSelected: React.Dispatch<React.SetStateAction<DocumentSelected>>;
@@ -21,8 +22,9 @@ const DocumentInputAuto: React.FC<DocumentInputAutoProps> = ({
     setTel,
     tel,
     inputYear,
-    setInputYear,
     doctorLicenseYear,
+    handleInputYearToSeireki,
+    handleDoctorLicenseYearToJapaneseEraYear,
   } = useDocumentInputAuto({ setSelected });
   return (
     <form
@@ -106,6 +108,7 @@ const DocumentInputAuto: React.FC<DocumentInputAutoProps> = ({
             className="h-12 w-20 rounded-md border border-gray-400 px-2"
             onChange={(e) => {
               handleEraChange(e.target.value);
+              handleDoctorLicenseYearToJapaneseEraYear(e.target.value as Era);
             }}
           >
             <option value="year">西暦</option>
@@ -124,7 +127,7 @@ const DocumentInputAuto: React.FC<DocumentInputAutoProps> = ({
             onChange={(e) => {
               const value = e.target.value;
               if (value.length <= 4) {
-                setInputYear(value);
+                handleInputYearToSeireki(value);
               }
             }}
           />

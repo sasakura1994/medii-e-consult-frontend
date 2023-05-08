@@ -6,7 +6,7 @@ import {
   SetStateAction,
 } from 'react';
 import { useUploadDocument } from '@/hooks/api/doctor/useUploadDocument';
-import { useEraConverter } from '@/hooks/useEraConverter';
+import { Era, useEraConverter } from '@/hooks/useEraConverter';
 import { useProfile } from '@/hooks/useProfile';
 import { HospitalEntity } from '@/types/entities/hospitalEntity';
 import { ProfileEntity } from '@/types/entities/profileEntity';
@@ -30,8 +30,9 @@ type UseDocumentInputAuto = {
   tel: string;
   setTel: Dispatch<SetStateAction<string>>;
   inputYear: string;
-  setInputYear: Dispatch<SetStateAction<string>>;
   doctorLicenseYear: string;
+  handleInputYearToSeireki: (value: string) => void;
+  handleDoctorLicenseYearToJapaneseEraYear: (currentEra: Era) => void;
 };
 
 export const useDocumentInputAuto = ({
@@ -51,26 +52,30 @@ export const useDocumentInputAuto = ({
     handleEraChange,
   } = useEraConverter();
 
+  const handleInputYearToSeireki = useCallback(
+    (value: string) => {
+      setInputYear(value);
+      const year = convertYear(value, era, 'year');
+      setDoctorLicenseYear(year.toString());
+    },
+    [convertYear, era, setInputYear]
+  );
+
+  const handleDoctorLicenseYearToJapaneseEraYear = useCallback(
+    (currentEra: Era) => {
+      const newYear = convertYear(doctorLicenseYear, 'year', currentEra);
+
+      setInputYear(newYear);
+    },
+    [convertYear, doctorLicenseYear, setInputYear]
+  );
+
   useEffect(() => {
     if (profile) {
       setInputYear(profile.doctor_qualified_year.toString());
       setTel(profile.tel);
     }
-  }, [profile, setInputYear]);
-
-  useEffect(() => {
-    if (inputYear) {
-      const year = convertYear(inputYear, era, 'year');
-      setDoctorLicenseYear(year.toString());
-    }
-  }, [convertYear, era, inputYear]);
-
-  useEffect(() => {
-    if (doctorLicenseYear) {
-      const newYear = convertYear(doctorLicenseYear, 'year', era);
-      setInputYear(newYear);
-    }
-  }, [convertYear, doctorLicenseYear, era, setInputYear]);
+  }, [profile, setInputYear, setTel]);
 
   const submit = useCallback(async () => {
     if (profile) {
@@ -97,7 +102,8 @@ export const useDocumentInputAuto = ({
     tel,
     setTel,
     inputYear,
-    setInputYear,
     doctorLicenseYear,
+    handleInputYearToSeireki,
+    handleDoctorLicenseYearToJapaneseEraYear,
   };
 };

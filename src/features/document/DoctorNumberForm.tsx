@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useUploadDocument } from '@/hooks/api/doctor/useUploadDocument';
-import { useEraConverter } from '../../hooks/useEraConverter';
+import { useEraConverter, Era } from '../../hooks/useEraConverter';
 import { useProfile } from '@/hooks/useProfile';
 import { DocumentSelected } from '.';
 
@@ -37,19 +37,23 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
     return false;
   }, [doctorNumber, doctorLicenseYear, doctorLicenseMonth, doctorLicenseDay]);
 
-  useEffect(() => {
-    if (inputYear) {
-      const year = convertYear(inputYear, era, 'year');
+  const handleInputYearToSeireki = useCallback(
+    (value: string) => {
+      setInputYear(value);
+      const year = convertYear(value, era, 'year');
       setDoctorLicenseYear(year.toString());
-    }
-  }, [convertYear, era, inputYear]);
+    },
+    [convertYear, era, setInputYear]
+  );
 
-  useEffect(() => {
-    if (doctorLicenseYear) {
-      const newYear = convertYear(doctorLicenseYear, 'year', era);
+  const handleDoctorLicenseYearToJapaneseEraYear = useCallback(
+    (currentEra: Era) => {
+      const newYear = convertYear(doctorLicenseYear, 'year', currentEra);
+
       setInputYear(newYear);
-    }
-  }, [convertYear, doctorLicenseYear, era, setInputYear]);
+    },
+    [convertYear, doctorLicenseYear, setInputYear]
+  );
 
   const submit = async () => {
     if (profile) {
@@ -135,6 +139,7 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
               className="h-12 w-20 rounded-md border border-gray-400 px-2"
               onChange={(e) => {
                 handleEraChange(e.target.value);
+                handleDoctorLicenseYearToJapaneseEraYear(e.target.value as Era);
               }}
             >
               <option value="year">西暦</option>
@@ -153,7 +158,7 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
               onChange={(e) => {
                 const value = e.target.value;
                 if (value.length <= 4) {
-                  setInputYear(value);
+                  handleInputYearToSeireki(value);
                 }
               }}
             />
