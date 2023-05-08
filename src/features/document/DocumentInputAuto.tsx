@@ -33,7 +33,7 @@ const DocumentInputAuto: React.FC<DocumentInputAutoProps> = ({
     >
       <div
         className="border-1 rounded-xs mt-5 -mb-10 w-full border bg-white
-       px-6 pt-4 pb-10 lg:mt-10 lg:mb-0 lg:px-20 lg:py-4"
+       px-6 pt-4 pb-10 lg:mt-10 lg:mb-0 lg:px-20"
       >
         <div className="relative mt-7 flex text-left text-2xl font-bold lg:mt-7 lg:text-center">
           <div className="hidden cursor-pointer lg:block">
