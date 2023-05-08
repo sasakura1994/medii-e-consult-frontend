@@ -17,7 +17,8 @@ const eraOffsets: { [key in Era]: number } = {
 
 const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
   const { profile } = useFetchProfile();
-  const { uploadDocument, isSuccess, error } = useUploadDocument();
+  const { uploadDocument } = useUploadDocument();
+  const [errorMessage, setErrorMessage] = useState('');
   const [doctorNumber, setDoctorNumber] = useState('');
   const [inputYear, setInputYear] = useState('');
   const [doctorLicenseYear, setDoctorLicenseYear] = useState('');
@@ -103,7 +104,7 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
     setInputYear(String(year));
   };
 
-  const submit = () => {
+  const submit = async () => {
     if (profile) {
       const year = convertYear(inputYear, era, 'year');
       const newProfile = Object.assign({}, profile);
@@ -112,15 +113,12 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
       newProfile.doctor_qualified_month = Number(doctorLicenseMonth);
       newProfile.doctor_qualified_day = Number(doctorLicenseDay);
       newProfile.confimation_type = 'number';
-      uploadDocument(newProfile);
-    }
-  };
-
-  useEffect(() => {
-    if (isSuccess) {
+      await uploadDocument(newProfile).catch((e) => {
+        setErrorMessage(e.message);
+      });
       setSelected('completed');
     }
-  }, [isSuccess, setSelected]);
+  };
 
   useEffect(() => {
     if (profile) {
@@ -244,9 +242,9 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
           </div>
         </div>
       </div>
-      {error && (
+      {errorMessage && (
         <div className="mt-5 text-center text-base font-bold text-red-500">
-          {error}
+          {errorMessage}
         </div>
       )}
       <div className="mt-7 flex justify-center lg:mt-0">

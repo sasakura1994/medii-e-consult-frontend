@@ -4,6 +4,7 @@ module.exports = {
     es2021: true,
   },
   extends: [
+    "next/core-web-vitals",
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
@@ -15,9 +16,10 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['react',"react-hooks", '@typescript-eslint', 'prefer-arrow'],
+  plugins: ['react', '@typescript-eslint', 'prefer-arrow'],
   rules: {
     "max-len": ["warn", { "code": 120 }],
+    "@next/next/no-img-element": "off",
     'prefer-arrow/prefer-arrow-functions': [
       'warn',
       {
@@ -27,8 +29,6 @@ module.exports = {
       },
     ],
     'react/prop-types': 'off', // TS で型を縛ってるので props の厳密な検証は不要
-    "react-hooks/rules-of-hooks": "warn",
-    "react-hooks/exhaustive-deps": "warn"
   },
   // ESLint の除外ファイル
   ignorePatterns: [

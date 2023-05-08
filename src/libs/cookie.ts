@@ -11,7 +11,6 @@ export const getAuthToken = (): string | null => {
   );
   if (!accessTokenCookie) return null;
   const accessToken = accessTokenCookie.split('=')[1];
-  console.log('accessToken', accessToken);
 
   return accessToken || null;
 };
