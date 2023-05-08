@@ -9,7 +9,7 @@ import { useUploadDocument } from '@/hooks/api/doctor/useUploadDocument';
 import { useEraConverter } from '@/hooks/useEraConverter';
 import { useProfile } from '@/hooks/useProfile';
 import { HospitalEntity } from '@/types/entities/hospitalEntity';
-import { ProfileEntityType } from '@/types/entities/profileEntity';
+import { ProfileEntity } from '@/types/entities/profileEntity';
 
 type UseDocumentInputAutoProps = {
   setSelected: Dispatch<
@@ -18,7 +18,7 @@ type UseDocumentInputAutoProps = {
 };
 
 type UseDocumentInputAuto = {
-  profile: ProfileEntityType | undefined;
+  profile: ProfileEntity | undefined;
   errorMessage: string;
   submit: () => Promise<void>;
   validation: {
