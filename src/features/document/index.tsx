@@ -27,7 +27,7 @@ export const Document = () => {
         <RegistrationProgress mode={mode} />
       </div>
       {selected === '' && (
-        <div className="border-1 rounded-xs mt-10 -mb-10 w-full border bg-white lg:mb-0 lg:px-16 lg:pb-6">
+        <div className="border-1 rounded-xs mt-10 -mb-20 w-full border bg-white lg:mb-0 lg:px-16">
           <DocumentTypeSelect setSelected={setSelected} />
         </div>
       )}
