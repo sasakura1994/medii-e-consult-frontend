@@ -1,17 +1,31 @@
 import React from 'react';
-import { getAuthToken } from '@/libs/cookie';
+import { getAuthToken, setAuthToken } from '@/libs/cookie';
+import { useRecoilState } from 'recoil';
+import { isTokenInitializedState, tokenState } from '@/globalStates/auth';
 
-export const useToken = (): string => {
-  const [token, setToken] = React.useState('');
+type UseToken = {
+  token: string;
+  isTokenInitialized: boolean;
+  setTokenAndMarkInitialized: (token: string) => void;
+};
+
+export const useToken = (): UseToken => {
+  const [token, setToken] = useRecoilState(tokenState);
+  const [isTokenInitialized, setIsTokenInitialized] = useRecoilState(
+    isTokenInitializedState
+  );
 
   React.useEffect(() => {
-    if (typeof window === 'undefined') {
-      return;
-    }
-
     const storageToken = getAuthToken();
     setToken(storageToken || '');
-  }, [token, typeof window]);
+    setIsTokenInitialized(true);
+  }, []);
 
-  return token;
+  const setTokenAndMarkInitialized = React.useCallback((token: string) => {
+    setAuthToken(token);
+    setToken(token);
+    setIsTokenInitialized(true);
+  }, []);
+
+  return { token, isTokenInitialized, setTokenAndMarkInitialized };
 };

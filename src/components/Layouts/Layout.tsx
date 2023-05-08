@@ -2,6 +2,7 @@ import React from 'react';
 import { Header } from '@/components/Layouts/Header/Header';
 import { HeaderSimple } from '@/components/Layouts/Header/HeaderSimple';
 import { FooterSpMenu } from '@/components/Commons/FooterSpMenu';
+import { useAuthenticationOnPage } from '@/hooks/authentication/useAuthenticationOnPage';
 
 type HeaderFigureType = 'default' | 'simple';
 
@@ -12,6 +13,7 @@ type PropsType = {
 
 export const Layout = (props: PropsType) => {
   const { children, headerFigure } = props;
+  useAuthenticationOnPage();
 
   return (
     <>

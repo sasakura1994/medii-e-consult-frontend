@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './MyPageLayout.module.scss';
 import { Header } from '@/components/Layouts/Header/Header';
 import { FooterSpMenu } from '@/components/Commons/FooterSpMenu';
+import { useAuthenticationOnPage } from '@/hooks/authentication/useAuthenticationOnPage';
 
 type PropsType = {
   children: React.ReactNode;
@@ -9,6 +10,7 @@ type PropsType = {
 
 export const MyPageLayout = (props: PropsType) => {
   const { children } = props;
+  useAuthenticationOnPage();
 
   return (
     <>

@@ -31,8 +31,10 @@ describe('PasswordReset', () => {
       );
     });
 
-    userEvent.type(screen.getByLabelText('first_password'), '11111111');
-    userEvent.type(screen.getByLabelText('second_password'), '11111111');
+    await act(() => {
+      userEvent.type(screen.getByLabelText('first_password'), '11111111');
+      userEvent.type(screen.getByLabelText('second_password'), '11111111');
+    });
 
     await act(() => {
       userEvent.click(screen.getByRole('button'));

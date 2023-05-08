@@ -54,15 +54,17 @@ export const Assign: React.FC<Props> = ({
       <div className="mx-auto mt-[60px] flex w-4/5 flex-col gap-10 lg:w-full lg:flex-row-reverse lg:gap-6">
         <PrimaryButton
           type="button"
-          className="w-full flex-1"
+          className="w-full flex-1 px-0"
           onClick={onConfirm}
         >
           E-コンサルに回答する
         </PrimaryButton>
         <Link href="/chat">
-          <GrayButton type="button" className="w-full flex-1">
-            依頼を断る
-          </GrayButton>
+          <a className="block w-full flex-1">
+            <GrayButton type="button" className="w-full">
+              依頼を断る
+            </GrayButton>
+          </a>
         </Link>
       </div>
     </Card>
