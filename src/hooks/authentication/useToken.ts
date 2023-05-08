@@ -5,7 +5,7 @@ import {
   isTokenInitializedState,
   isTokenRefreshedState,
   tokenState,
-} from '@/globalStates/profileState';
+} from '@/globalStates/auth';
 
 type UseToken = {
   token: string;

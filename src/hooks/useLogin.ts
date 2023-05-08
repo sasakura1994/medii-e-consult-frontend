@@ -63,8 +63,8 @@ export const useLogin = (): UseLoginType => {
         return;
       }
 
-      setTokenAndMarkInitialized(res.data.jwt_token!);
-      setProfile(res.data.doctor!);
+      setTokenAndMarkInitialized(res.data.jwt_token);
+      setProfile(res.data.doctor);
       localStorage.removeItem(loginRedirectUrlKey);
 
       router.push(redirectUrl === '' ? 'top' : redirectUrl);

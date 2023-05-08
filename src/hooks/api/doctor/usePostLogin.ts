@@ -5,8 +5,8 @@ import React from 'react';
 export type PostLoginResponseData = {
   code: number;
   message?: string;
-  jwt_token?: string;
-  doctor?: ProfileEntity;
+  jwt_token: string;
+  doctor: ProfileEntity;
 };
 
 export const usePostLogin = () => {
