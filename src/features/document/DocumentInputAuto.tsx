@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useProfile } from '../../hooks/useProfile';
 import { useEraConverter } from '../../hooks/useEraConverter';
+import { useUploadDocument } from '@/hooks/api/doctor/useUploadDocument';
 
 type DocumentInputAutoProps = {
   setSelected: React.Dispatch<
@@ -11,9 +12,11 @@ type DocumentInputAutoProps = {
 const DocumentInputAuto: React.FC<DocumentInputAutoProps> = ({
   setSelected,
 }) => {
-  const { profile, getPrefectureNameByCode } = useProfile();
+  const { profile, getPrefectureNameByCode, hospital } = useProfile();
   const [tel, setTel] = useState('');
   const [doctorLicenseYear, setDoctorLicenseYear] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const { uploadDocument } = useUploadDocument();
   const {
     inputYear,
     convertYear,
@@ -24,10 +27,11 @@ const DocumentInputAuto: React.FC<DocumentInputAutoProps> = ({
   } = useEraConverter();
 
   useEffect(() => {
-    if (profile && profile.tel) {
+    if (profile) {
+      setInputYear(profile.doctor_qualified_year.toString());
       setTel(profile.tel);
     }
-  }, [profile]);
+  }, [profile, setInputYear]);
 
   useEffect(() => {
     if (inputYear) {
@@ -43,12 +47,35 @@ const DocumentInputAuto: React.FC<DocumentInputAutoProps> = ({
     }
   }, [convertYear, doctorLicenseYear, era, setInputYear]);
 
+  const submit = useCallback(async () => {
+    if (profile) {
+      const year = convertYear(inputYear, era, 'year');
+      const newProfile = Object.assign({}, profile);
+      newProfile.doctor_qualified_year = Number(year);
+      newProfile.confimation_type = 'auto';
+      newProfile.tel = tel;
+      await uploadDocument(newProfile).catch((e) => {
+        setErrorMessage(e.message);
+      });
+      setSelected('completed');
+    }
+  }, [profile, convertYear, inputYear, era, tel, uploadDocument, setSelected]);
+
   return (
-    <form>
+    <form
+      onSubmit={(e) => {
+        submit();
+        e.preventDefault();
+      }}
+    >
       <div className="border-1 rounded-xs mt-10 w-full border bg-white px-6 pt-4 lg:mb-0 lg:px-20 lg:pt-4 lg:pb-6">
         <div className="relative mt-5 flex text-left text-2xl font-bold lg:mt-10 lg:text-center">
           <div className="hidden cursor-pointer lg:block">
-            <img src="/icons/arrow_left.svg" className="mt-1.5 h-3 w-3" />
+            <img
+              src="/icons/arrow_left.svg"
+              className="mt-1.5 h-3 w-3"
+              alt="arrow_left"
+            />
             <div
               className="absolute top-0 left-0 pl-4 text-base"
               onClick={() => {
@@ -75,7 +102,7 @@ const DocumentInputAuto: React.FC<DocumentInputAutoProps> = ({
           ご連絡先
         </div>
         <div className="mt-6 text-left font-bold">勤務先病院名</div>
-        <div className="text-left">{profile?.graduated_university}</div>
+        <div className="text-left">{hospital?.hospital_name}</div>
         <div className="mt-4 text-left font-bold">勤務先病院の所在地</div>
         <div className="text-left">
           {getPrefectureNameByCode(profile?.prefecture_code)}
@@ -137,6 +164,22 @@ const DocumentInputAuto: React.FC<DocumentInputAutoProps> = ({
           />
           <div className="ml-1 mt-5">年</div>
         </div>
+      </div>
+      {errorMessage && (
+        <div className="mt-5 text-center text-base font-bold text-red-400">
+          {errorMessage}
+        </div>
+      )}
+      <div className="mt-7 flex justify-center lg:mt-0">
+        <input
+          type="submit"
+          className={
+            doctorLicenseYear
+              ? ' my-10 cursor-pointer rounded-full bg-primary px-10 pt-1.5 pb-2 font-bold text-white shadow-lg'
+              : ' my-10 cursor-pointer rounded-full bg-btn-gray px-10 pt-1.5 pb-2 font-bold text-white shadow-lg'
+          }
+          value="登録を完了する"
+        />
       </div>
     </form>
   );
