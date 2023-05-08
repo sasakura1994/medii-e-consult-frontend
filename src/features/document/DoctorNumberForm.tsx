@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { useUploadDocument } from '@/hooks/api/doctor/useUploadDocument';
-import { useEraConverter } from './useEraConverter';
+import { useEraConverter } from '../../hooks/useEraConverter';
+import { useProfile } from '@/hooks/useProfile';
 
 type DoctorNumberFormProps = {
   setSelected: React.Dispatch<
@@ -10,7 +10,7 @@ type DoctorNumberFormProps = {
 };
 
 const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
-  const { profile } = useFetchProfile();
+  const { profile } = useProfile();
   const { uploadDocument, isSuccess, error } = useUploadDocument();
   const [doctorNumber, setDoctorNumber] = useState('');
   const [doctorLicenseYear, setDoctorLicenseYear] = useState('');
@@ -77,7 +77,7 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
       setDoctorLicenseMonth(profile.doctor_qualified_month.toString());
       setDoctorLicenseDay(profile.doctor_qualified_day.toString());
     }
-  }, [profile]);
+  }, [profile, setInputYear]);
 
   return (
     <form

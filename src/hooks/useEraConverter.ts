@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 
 type Era = 'year' | 'showa' | 'heisei' | 'reiwa';
 

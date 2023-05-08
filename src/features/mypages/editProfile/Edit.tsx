@@ -1,5 +1,5 @@
 import React from 'react';
-import { useProfile } from './useProfile';
+import { useProfile } from '../../../hooks/useProfile';
 import { UserInfo } from './UserInfo';
 import { MedicalCareer } from './MedicalCareer';
 import { HospitalAffiliation } from './HospitalAffiliation';
