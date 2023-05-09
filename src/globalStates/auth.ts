@@ -9,3 +9,8 @@ export const isTokenInitializedState = atom<boolean>({
   key: 'isTokenInitialized',
   default: false,
 });
+
+export const isTokenRefreshedState = atom<boolean>({
+  key: 'isTokenRefreshed',
+  default: false,
+});
