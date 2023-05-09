@@ -70,7 +70,9 @@ const DocumentInputAuto: React.FC<DocumentInputAutoProps> = ({
           ご連絡先
         </div>
         <div className="mt-6 text-left font-bold">勤務先病院名</div>
-        <div className="text-left">{hospital?.hospital_name}</div>
+        <div className="text-left">
+          {hospital?.hospital_name ?? profile?.hospital_name}
+        </div>
         <div className="mt-4 text-left font-bold">勤務先病院の所在地</div>
         <div className="text-left">
           {getPrefectureNameByCode(profile?.prefecture_code)}
