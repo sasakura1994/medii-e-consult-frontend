@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { useDocumentInputDocument } from './useDocumentInputDocument';
+import { DocumentSelected } from '.';
 
 type DocumentInputDocumentProps = {
-  setSelected: React.Dispatch<React.SetStateAction<string>>;
+  setSelected: Dispatch<SetStateAction<DocumentSelected>>;
 };
 
 const DocumentInputDocument = ({ setSelected }: DocumentInputDocumentProps) => {
@@ -82,7 +83,7 @@ const DocumentInputDocument = ({ setSelected }: DocumentInputDocumentProps) => {
           {errorMessage}
         </div>
       )}
-      <div className="mt-7 flex justify-center lg:mt-0">
+      <div className="mt-7 -mb-20 flex justify-center lg:mb-0 lg:mt-0">
         <input
           type="submit"
           className={

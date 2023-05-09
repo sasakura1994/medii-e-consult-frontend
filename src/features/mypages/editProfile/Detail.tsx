@@ -1,5 +1,5 @@
 import React from 'react';
-import { useProfile } from './useProfile';
+import { useProfile } from '../../../hooks/useProfile';
 import { CaptionWithBody } from '@/components/Parts/CaptionWithBody';
 import { OutlinedSquareButton } from '@/components/Parts/Button/OutlinedSquareButton';
 

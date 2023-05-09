@@ -1,10 +1,17 @@
-import { useState, useEffect, useCallback } from 'react';
+import {
+  useState,
+  useEffect,
+  useCallback,
+  Dispatch,
+  SetStateAction,
+} from 'react';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { useUploadDocument } from '@/hooks/api/doctor/useUploadDocument';
 import { useSelectedFile } from './useSelectedFile';
+import { DocumentSelected } from '.';
 
 type UseDocumentInputDocumentProps = {
-  setSelected: React.Dispatch<React.SetStateAction<string>>;
+  setSelected: Dispatch<SetStateAction<DocumentSelected>>;
 };
 
 type UseDocumentInputDocument = {
@@ -39,7 +46,7 @@ export const useDocumentInputDocument = ({
         if (!imageSource) {
           return;
         }
-        const newProfile = Object.assign({}, profile);
+        const newProfile = { ...profile };
         newProfile.document = fileSelectorRef.current?.files?.[0] || undefined;
         await uploadDocument(newProfile).catch((e) => {
           setErrorMessage(e.message);

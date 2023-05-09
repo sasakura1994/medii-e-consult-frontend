@@ -1,15 +1,15 @@
 import React from 'react';
 
-type ModeType = 'edit' | 'document' | 'completed';
+export type DocumentMode = 'edit' | 'document' | 'completed';
 
 type RegistrationProgressProps = {
-  mode: ModeType;
+  mode: DocumentMode;
 };
 
 const RegistrationProgress: React.FC<RegistrationProgressProps> = ({
   mode,
 }) => {
-  const getArrowImage = (currentMode: ModeType) => {
+  const getArrowImage = (currentMode: DocumentMode) => {
     switch (true) {
       case mode === currentMode:
         return '/icons/arrow_right_alt_primary.svg';
@@ -34,7 +34,7 @@ const RegistrationProgress: React.FC<RegistrationProgressProps> = ({
         <br className="lg:hidden" />
         登録
       </div>
-      <img src={getArrowImage('edit')} className="mx-1.5 lg:mx-3" alt="arrow" />
+      <img src={getArrowImage('edit')} className="mx-1.5 lg:mx-3" alt="" />
       <div
         className={`flex h-14 w-24 items-center justify-center rounded border-2 bg-white
         text-center text-sm font-bold lg:h-12 lg:w-40 lg:text-base ${
@@ -49,11 +49,7 @@ const RegistrationProgress: React.FC<RegistrationProgressProps> = ({
         <br className="lg:hidden" />
         確認
       </div>
-      <img
-        className="mx-1.5 lg:mx-3"
-        src={getArrowImage('document')}
-        alt="arrow"
-      />
+      <img className="mx-1.5 lg:mx-3" src={getArrowImage('document')} alt="" />
       <div
         className={`flex h-14 w-24 items-center justify-center rounded border-2 bg-white
         text-center text-sm font-bold lg:h-12 lg:w-40 lg:text-base ${

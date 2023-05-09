@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import RegistrationProgress from './RegistrationProgress';
+import RegistrationProgress, { DocumentMode } from './RegistrationProgress';
 import DocumentTypeSelect from './DocumentTypeSelect';
 import DoctorNumberForm from './DoctorNumberForm';
 import DocumentInputCompleted from './DocumentInputCompleted';
+import DocumentInputAuto from './DocumentInputAuto';
 import DocumentInputDocument from './DocumentInputDocument';
 
+export type DocumentSelected =
+  | ''
+  | 'number'
+  | 'document'
+  | 'auto'
+  | 'completed';
+
 export const Document = () => {
-  const [selected, setSelected] = useState('');
-  const [mode, setMode] = useState<'edit' | 'document' | 'completed'>(
-    'document'
-  );
+  const [selected, setSelected] = useState<DocumentSelected>('');
+  const [mode, setMode] = useState<DocumentMode>('document');
 
   useEffect(() => {
     if (selected === 'completed') {
@@ -24,7 +30,7 @@ export const Document = () => {
         <RegistrationProgress mode={mode} />
       </div>
       {selected === '' && (
-        <div className="border-1 rounded-xs mt-10 -mb-10 w-full border bg-white lg:mb-0 lg:px-16 lg:pb-6">
+        <div className="border-1 rounded-xs mt-10 -mb-20 w-full border bg-white lg:px-20 lg:pb-7">
           <DocumentTypeSelect setSelected={setSelected} />
         </div>
       )}
@@ -33,6 +39,7 @@ export const Document = () => {
         <DocumentInputDocument setSelected={setSelected} />
       )}
       {selected === 'completed' && <DocumentInputCompleted isInvited={false} />}
+      {selected === 'auto' && <DocumentInputAuto setSelected={setSelected} />}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRecoilState } from 'recoil';
-import { editProfileScreenState } from './editProfileScreenState';
+import { editProfileScreenState } from '../features/mypages/editProfile/editProfileScreenState';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { useFetchEmail } from '@/hooks/api/account/useFetchEmail';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
@@ -11,7 +11,7 @@ import type { EmailEntityType } from '@/types/entities/emailEntity';
 import type { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 import type { PrefectureEntityType } from '@/types/entities/prefectureEntity';
 import type { HospitalEntity } from '@/types/entities/hospitalEntity';
-import type { EditProfileScreenStateType } from './editProfileScreenState';
+import type { EditProfileScreenStateType } from '../features/mypages/editProfile/editProfileScreenState';
 
 export type UseProfile = {
   profile: ProfileEntity | undefined;
