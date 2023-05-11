@@ -70,6 +70,7 @@ const App = (props: AppPropsWithLayout) => {
       window.location.href = url;
     }
   }, []);
+
   useEffect(() => {
     router.events.on('routeChangeStart', handleStart);
 
