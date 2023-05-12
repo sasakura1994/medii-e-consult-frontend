@@ -68,6 +68,7 @@ const App = (props: AppPropsWithLayout) => {
       ].includes(url)
     ) {
       window.location.href = url;
+      throw "Don't change route";
     }
   }, []);
 
