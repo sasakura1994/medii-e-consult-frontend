@@ -70,7 +70,9 @@ const App = (props: AppPropsWithLayout) => {
         ].includes(url)
       ) {
         console.log('routeChangeStart', url);
-        router.events.emit('routeChangeError');
+        router.events.emit('routeChangeError', 'redirecting...', url, {
+          shallow: false,
+        });
         window.location.href = url;
         throw url;
       }
