@@ -48,32 +48,31 @@ const AppInner = ({ Component, pageProps }: AppPropsWithLayout) => {
 
 const App = (props: AppPropsWithLayout) => {
   const router = useRouter();
-
+  const handleStart = (url: string) => {
+    if (
+      [
+        '/',
+        '/Top',
+        '/affiliate',
+        '/AmazonGift',
+        '/Document',
+        '/EditProfile',
+        '/HowToUse',
+        '/InitPassword',
+        '/login',
+        '/NewChatRoom',
+        '/NotifySettings',
+        '/PasswordReset',
+        '/PasswordResetRequest',
+        '/PointHistory',
+        '/registration',
+      ].includes(url)
+    ) {
+      window.location.href = url;
+      throw 'routeChange aborted.';
+    }
+  };
   useEffect(() => {
-    const handleStart = (url: string) => {
-      if (
-        [
-          '/',
-          '/Top',
-          '/affiliate',
-          '/AmazonGift',
-          '/Document',
-          '/EditProfile',
-          '/HowToUse',
-          '/InitPassword',
-          '/login',
-          '/NewChatRoom',
-          '/NotifySettings',
-          '/PasswordReset',
-          '/PasswordResetRequest',
-          '/PointHistory',
-          '/registration',
-        ].includes(url)
-      ) {
-        window.location.href = url;
-        throw 'routeChange aborted.';
-      }
-    };
     router.events.on('routeChangeStart', handleStart);
 
     return () => {
