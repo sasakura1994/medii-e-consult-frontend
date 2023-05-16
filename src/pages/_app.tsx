@@ -71,8 +71,11 @@ const App = (props: AppPropsWithLayout) => {
         ].includes(url)
       ) {
         console.log('routeChangeStart', url);
+        router.events.emit('routeChangeError', 'routeChange aborted.', url, {
+          shallow: false,
+        });
         window.location.href = url;
-        throw url;
+        // throw 'routeChange aborted.';
       }
     };
     router.events.on('routeChangeStart', handleStart);
