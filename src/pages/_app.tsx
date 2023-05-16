@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import '@/styles/globals.scss';
 import 'react-toastify/dist/ReactToastify.css';
 import { SWRConfig } from 'swr';
@@ -48,8 +48,9 @@ const AppInner = ({ Component, pageProps }: AppPropsWithLayout) => {
 
 const App = (props: AppPropsWithLayout) => {
   const router = useRouter();
-  const handleStart = useCallback(
-    async (url: string) => {
+
+  useEffect(() => {
+    const handleStart = (url: string) => {
       if (
         [
           '/',
@@ -76,17 +77,13 @@ const App = (props: AppPropsWithLayout) => {
         window.location.href = url;
         throw url;
       }
-    },
-    [router]
-  );
-
-  useEffect(() => {
+    };
     router.events.on('routeChangeStart', handleStart);
 
     return () => {
       router.events.off('routeChangeStart', handleStart);
     };
-  }, [handleStart, router.events]);
+  }, [router]);
 
   return (
     <RecoilRoot>
