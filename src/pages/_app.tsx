@@ -48,31 +48,35 @@ const AppInner = ({ Component, pageProps }: AppPropsWithLayout) => {
 
 const App = (props: AppPropsWithLayout) => {
   const router = useRouter();
-  const handleStart = useCallback(async (url: string) => {
-    if (
-      [
-        '/',
-        '/affiliate',
-        '/AmazonGift',
-        '/Document',
-        '/EditProfile',
-        '/HowToUse',
-        '/InitPassword',
-        '/login',
-        '/NewChatRoom',
-        '/NotifySettings',
-        '/PasswordReset',
-        '/PasswordResetRequest',
-        '/PointHistory',
-        '/registration',
-      ].includes(url)
-    ) {
-      alert('routeChangeStartのイベントをトリガーしました:' + url);
-
-      window.location.href = url;
-      throw url;
-    }
-  }, []);
+  const handleStart = useCallback(
+    async (url: string) => {
+      if (
+        [
+          '/',
+          '/Top',
+          '/affiliate',
+          '/AmazonGift',
+          '/Document',
+          '/EditProfile',
+          '/HowToUse',
+          '/InitPassword',
+          '/login',
+          '/NewChatRoom',
+          '/NotifySettings',
+          '/PasswordReset',
+          '/PasswordResetRequest',
+          '/PointHistory',
+          '/registration',
+        ].includes(url)
+      ) {
+        console.log('routeChangeStart', url);
+        router.events.emit('routeChangeError');
+        window.location.href = url;
+        throw url;
+      }
+    },
+    [router]
+  );
 
   useEffect(() => {
     router.events.on('routeChangeStart', handleStart);
