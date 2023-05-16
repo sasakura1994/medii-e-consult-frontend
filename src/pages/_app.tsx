@@ -67,6 +67,8 @@ const App = (props: AppPropsWithLayout) => {
         '/registration',
       ].includes(url)
     ) {
+      alert('routeChangeStartのイベントをトリガーしました:' + url);
+
       window.location.href = url;
       throw url;
     }
