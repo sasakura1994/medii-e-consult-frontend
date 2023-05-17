@@ -25,11 +25,11 @@ const ConsultExamplesPage: NextPage = () => {
 
   return (
     <Container>
-      <Card className="mt-10 py-10 pl-[90px] pr-[80px]">
+      <Card className="px-5 py-10 lg:mt-10 lg:pl-[90px] lg:pr-[80px]">
         <h2 className="mb-10 text-center text-2xl">コンサル事例集</h2>
         {data && (
           <>
-            <ConsultExampleListSeparator />
+            <ConsultExampleListSeparator className="hidden lg:block" />
             {data.list.map((consultExample) => (
               <>
                 <Link
@@ -77,10 +77,10 @@ const ConsultExamplesPage: NextPage = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="mt-3 font-bold line-clamp-1">
+                      <div className="mt-2 font-bold line-clamp-1 lg:mt-3">
                         {consultExample.title}
                       </div>
-                      <div className="mt-3 flex justify-between">
+                      <div className="mt-4 flex justify-between lg:mt-3">
                         <div>
                           {consultExample.age !== null && (
                             <>
