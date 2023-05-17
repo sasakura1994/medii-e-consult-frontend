@@ -28,15 +28,15 @@ export const usePasswordResetRequest = () => {
         setErrorMessage('エラーが発生しました');
         return;
       }
-
-      if (response.data.code !== 1) {
-        setErrorMessage(response.data.message);
+      if (response.status !== 204) {
+        const errorMessage = response.data.message || 'エラーが発生しました';
+        setErrorMessage(errorMessage);
         return;
       }
 
       setIsCompleted(true);
     },
-    [mailAddress]
+    [mailAddress, requestResetPassword]
   );
 
   return {
