@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { ConsultExampleTag } from '@/features/consultExample/ConsultExampleTag';
 import { useMedicalSpeciality } from '@/hooks/medicalSpeciality/useMedicalSpeciality';
+import { ConsultExampleFirstAnswerTime } from '@/features/consultExample/ConsultExampleFirstAnswerTime';
 
 type Query = {
   page?: string;
@@ -42,6 +43,13 @@ const ConsultExamplesPage: NextPage = () => {
                                 consultExample.speciality_code
                               ) || ''}
                         </ConsultExampleTag>
+                        {consultExample.first_answer_minutes > 0 && (
+                          <ConsultExampleFirstAnswerTime
+                            firstAnswerMinutes={
+                              consultExample.first_answer_minutes
+                            }
+                          />
+                        )}
                       </div>
                     </div>
                   </div>
