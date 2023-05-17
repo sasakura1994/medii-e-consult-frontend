@@ -31,13 +31,15 @@ export const HeaderSubMenu: React.FC = () => {
                   },
                   {
                     text: 'よくある質問',
-                    link: '/',
+                    link: 'https://tayori.com/faq/4cb3c7c0fd09ab493d1efcbf01dcf76729c62202',
                     icon: <img src="/icons/faq.svg" />,
+                    openInNewTab: true,
                   },
                   {
                     text: 'お問合わせ',
-                    link: '/',
+                    link: 'https://tayori.com/form/62897c986d36f5b573fec1a04508f24b70b11fe6',
                     icon: <img src="/icons/contact.svg" />,
+                    openInNewTab: true,
                   },
                 ]}
                 style={{
@@ -47,7 +49,7 @@ export const HeaderSubMenu: React.FC = () => {
             </Tooltip>
           </li>
           <li className={styles.header_submenu__item}>
-            <Link href="/seminar">
+            <Link href="/Seminar">
               <a className={styles.header_submenu__link}>
                 <span
                   className={`${styles.header_submenu__link_text} ${styles.header_submenu__link_text___seminar}`}
