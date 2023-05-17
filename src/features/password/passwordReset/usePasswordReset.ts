@@ -42,14 +42,19 @@ export const usePasswordReset = () => {
         return;
       }
 
-      if (response.data.code !== 1) {
+      if (response.status !== 204) {
         setErrorMessage(response.data.message);
         return;
       }
 
       setIsCompleted(true);
     },
-    [passwordInput.firstPassword, passwordInput.secondPassword]
+    [
+      passwordInput.firstPassword,
+      passwordInput.secondPassword,
+      query.token,
+      resetPassword,
+    ]
   );
 
   return {

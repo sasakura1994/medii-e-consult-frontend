@@ -7,6 +7,7 @@ import { usePasswordReset } from '@/features/password/passwordReset/usePasswordR
 import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 import Link from 'next/link';
+import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 
 const PasswordResetPage: NextPageWithLayout = () => {
   const {
@@ -59,7 +60,9 @@ const PasswordResetPage: NextPageWithLayout = () => {
                   )}
                   <div className="my-6 text-center">
                     {!isSending ? (
-                      <button type="submit">パスワード設定</button>
+                      <PrimaryButton type="submit">
+                        パスワード設定
+                      </PrimaryButton>
                     ) : (
                       <div className="mt-4 text-center">
                         <SpinnerBorder />
