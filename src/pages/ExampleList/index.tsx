@@ -9,6 +9,8 @@ import Link from 'next/link';
 import { ConsultExampleTag } from '@/features/consultExample/ConsultExampleTag';
 import { useMedicalSpeciality } from '@/hooks/medicalSpeciality/useMedicalSpeciality';
 import { ConsultExampleFirstAnswerTime } from '@/features/consultExample/ConsultExampleFirstAnswerTime';
+import { dateFormat } from '@/libs/date';
+import { useConsultExample } from '@/hooks/api/consultExample/useConsultExample';
 
 type Query = {
   page?: string;
@@ -19,6 +21,7 @@ const ConsultExamplesPage: NextPage = () => {
   const { page } = router.query as Query;
   const { data } = useFetchConsultExamples(page ? Number(page) : undefined);
   const { getMedicalSpecialityName } = useMedicalSpeciality();
+  const { getAgeText, getGenderText } = useConsultExample();
 
   return (
     <Container>
@@ -34,7 +37,7 @@ const ConsultExamplesPage: NextPage = () => {
                   href={`/example/${consultExample.example_id}`}
                 >
                   <a>
-                    <div>
+                    <div className="text-sm hover:opacity-60">
                       <div className="flex justify-between">
                         <div className="flex gap-2">
                           <ConsultExampleTag>
@@ -52,7 +55,7 @@ const ConsultExamplesPage: NextPage = () => {
                             />
                           )}
                         </div>
-                        <div className="flex items-center text-sm">
+                        <div className="flex items-center">
                           <img
                             src="/icons/good_out.svg"
                             width="24"
@@ -73,6 +76,35 @@ const ConsultExamplesPage: NextPage = () => {
                             {consultExample.all_comment_count}
                           </div>
                         </div>
+                      </div>
+                      <div className="mt-3 font-bold line-clamp-1">
+                        {consultExample.title}
+                      </div>
+                      <div className="mt-3 flex justify-between">
+                        <div>
+                          {consultExample.age !== null && (
+                            <>
+                              <span>{getAgeText(consultExample.age)}</span>{' '}
+                            </>
+                          )}
+                          <span>
+                            {getGenderText(
+                              consultExample.gender,
+                              consultExample.age
+                            )}
+                          </span>{' '}
+                          <span>{consultExample.disease_name}</span>
+                        </div>
+                        <div>
+                          事例公開日：
+                          {dateFormat(
+                            consultExample.published_date,
+                            'YYYY/M/D'
+                          )}
+                        </div>
+                      </div>
+                      <div className="mt-4 text-[#999999]">
+                        {consultExample.background}
                       </div>
                     </div>
                   </a>
