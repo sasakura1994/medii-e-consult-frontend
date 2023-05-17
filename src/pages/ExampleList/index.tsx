@@ -33,26 +33,49 @@ const ConsultExamplesPage: NextPage = () => {
                   key={consultExample.example_id}
                   href={`/example/${consultExample.example_id}`}
                 >
-                  <div>
-                    <div className="flex justify-between">
-                      <div className="flex gap-2">
-                        <ConsultExampleTag>
-                          {consultExample.speciality_code === ''
-                            ? consultExample.category_name
-                            : getMedicalSpecialityName(
-                                consultExample.speciality_code
-                              ) || ''}
-                        </ConsultExampleTag>
-                        {consultExample.first_answer_minutes > 0 && (
-                          <ConsultExampleFirstAnswerTime
-                            firstAnswerMinutes={
-                              consultExample.first_answer_minutes
-                            }
+                  <a>
+                    <div>
+                      <div className="flex justify-between">
+                        <div className="flex gap-2">
+                          <ConsultExampleTag>
+                            {consultExample.speciality_code === ''
+                              ? consultExample.category_name
+                              : getMedicalSpecialityName(
+                                  consultExample.speciality_code
+                                ) || ''}
+                          </ConsultExampleTag>
+                          {consultExample.first_answer_minutes > 0 && (
+                            <ConsultExampleFirstAnswerTime
+                              firstAnswerMinutes={
+                                consultExample.first_answer_minutes
+                              }
+                            />
+                          )}
+                        </div>
+                        <div className="flex items-center text-sm">
+                          <img
+                            src="/icons/good_out.svg"
+                            width="24"
+                            height="24"
+                            alt="いいねの数"
                           />
-                        )}
+                          <div className="ml-1">
+                            {consultExample.all_like_count}
+                          </div>
+                          <img
+                            src="/icons/comment.svg"
+                            width="24"
+                            height="24"
+                            className="ml-4 block"
+                            alt="コメントの数"
+                          />
+                          <div className="ml-1">
+                            {consultExample.all_comment_count}
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </a>
                 </Link>
                 <ConsultExampleListSeparator key={consultExample.example_id} />
               </>
