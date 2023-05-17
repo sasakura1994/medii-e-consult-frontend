@@ -29,7 +29,7 @@ export const usePasswordResetRequest = () => {
         return;
       }
       if (response.status !== 204) {
-        const errorMessage = response.data.message || 'エラーが発生しました';
+        const errorMessage = response.data.message ?? 'エラーが発生しました';
         setErrorMessage(errorMessage);
         return;
       }
