@@ -13,7 +13,9 @@ export const HeaderMenu: React.FC = () => {
           所属グループ
         </HeaderMenuListItem>
         <HeaderMenuListItem href="/">症例バンク</HeaderMenuListItem>
-        <HeaderMenuListItem href="/">コンサル事例集</HeaderMenuListItem>
+        <HeaderMenuListItem href="/ExampleList">
+          コンサル事例集
+        </HeaderMenuListItem>
       </HeaderMenuList>
     </HeaderMenuContainer>
   );
