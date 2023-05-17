@@ -6,6 +6,7 @@ import { TextField } from '@/components/Parts/Form/TextField';
 import { usePasswordResetRequest } from '@/features/password/passwordResetRequest/usePasswordResetRequest';
 import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
+import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 
 const PasswordResetRequestPage: NextPageWithLayout = () => {
   const {
@@ -38,7 +39,7 @@ const PasswordResetRequestPage: NextPageWithLayout = () => {
                   </div>
                   {!isSending ? (
                     <div className="my-6 text-center">
-                      <button type="submit">送信</button>
+                      <PrimaryButton type="submit">送信</PrimaryButton>
                     </div>
                   ) : (
                     <div className="mt-4 text-center">
