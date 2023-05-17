@@ -1,5 +1,4 @@
 import { useAxios } from '@/hooks/network/useAxios';
-import { createApiClient } from '@/libs/apiClient';
 import React from 'react';
 
 type PostRequestResetPasswordRequestData = {
@@ -24,7 +23,7 @@ export const usePostRequestResetPassword = () => {
       };
 
       return axios.post<PostRequestResetPasswordResponseData>(
-        '/api/doctor/request_reset_password',
+        '/doctor/request_reset_password',
         data
       );
     },
