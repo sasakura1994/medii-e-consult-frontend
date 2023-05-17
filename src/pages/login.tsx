@@ -71,7 +71,7 @@ const Login: NextPageWithLayout = () => {
             </GuideLink>
           </div>
           <div className="mt-2">
-            <GuideLink href="/password-reset-request" onClick={saveRedirectUrl}>
+            <GuideLink href="/PasswordResetRequest" onClick={saveRedirectUrl}>
               パスワードを忘れた場合はこちら
             </GuideLink>
           </div>
