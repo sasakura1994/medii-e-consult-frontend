@@ -6,6 +6,7 @@ type MenuType = {
   text: string;
   link: string;
   icon?: React.ReactNode;
+  openInNewTab?: boolean;
 };
 
 type MenuListType = {
@@ -28,9 +29,13 @@ export const TooltipSpMenu: React.FC<PropsType> = (props) => {
         <ul className={styles.tooltip_sp_menu}>
           {menus.mypage.map((menu, index) => (
             <li className={styles.tooltip_sp_menu__item} key={index}>
-              <Link href={menu.link}>
+              <Link href={menu.openInNewTab ? menu.link : ''}>
                 <a
                   onClick={() => {
+                    if (menu.openInNewTab) {
+                      window.open(menu.link, '_blank');
+                      window.focus();
+                    }
                     setControlledVisible
                       ? setControlledVisible(false)
                       : undefined;
