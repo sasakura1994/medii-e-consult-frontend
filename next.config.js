@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 
 const paths = [
-  '/',
   '/Top',
   "/Assign",
   "/Seminar/Archive",
@@ -28,13 +27,7 @@ const result = paths.map((path) => {
       source: regPath,
       destination: lowerPath,
     }
-  } else {
-    return {
-      source: "/:path*",
-      destination: "/:path*",
-    }
   }
-
 });
 
 const nextConfig = {

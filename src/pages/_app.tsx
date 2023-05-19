@@ -50,14 +50,14 @@ const App = (props: AppPropsWithLayout) => {
   const router = useRouter();
   const handleStart = (url: string) => {
     if (
+      url !== '/' &&
       [
-        '/',
         '/Top',
         '/Assign',
         '/Seminar',
         '/Seminar/archive',
         '/Affiliate',
-        '/Amazongift',
+        '/AmazonGift',
         '/Document',
         '/EditProfile',
         '/HowToUse',
