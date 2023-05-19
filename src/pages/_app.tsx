@@ -52,23 +52,26 @@ const App = (props: AppPropsWithLayout) => {
     if (
       [
         '/',
-        '/Top',
+        '/top',
+        '/assign',
+        '/seminar',
+        '/seminar/archive',
         '/affiliate',
-        '/AmazonGift',
-        '/Document',
-        '/EditProfile',
-        '/HowToUse',
-        '/InitPassword',
+        '/amazongift',
+        '/document',
+        '/edit-profile',
+        '/howtouse',
+        '/initpassword',
         '/login',
-        '/NewChatRoom',
-        '/NotifySettings',
-        '/PasswordReset',
-        '/PasswordResetRequest',
-        '/PointHistory',
+        '/newchatroom',
+        '/notifysettings',
+        '/passwordreset',
+        '/passwordresetrequest',
+        '/pointhistory',
         '/registration',
-      ].includes(url)
+      ].includes(url.toLowerCase())
     ) {
-      window.location.href = url;
+      window.location.href = url.toLowerCase();
       throw 'routeChange aborted.';
     }
   };
