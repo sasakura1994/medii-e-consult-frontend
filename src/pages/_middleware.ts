@@ -1,9 +1,9 @@
 import { NextResponse, NextRequest } from 'next/server';
 
 const Middleware = (req: NextRequest) => {
-  if (req.nextUrl.pathname !== req.nextUrl.pathname.toLowerCase()) {
+  if (req.nextUrl.pathname.toLowerCase() !== req.nextUrl.pathname) {
     const url = req.nextUrl.clone();
-    url.pathname = url.pathname.toLowerCase();
+    url.pathname = req.nextUrl.pathname.toLowerCase();
     return NextResponse.redirect(url);
   }
   return NextResponse.next();
