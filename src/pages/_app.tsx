@@ -50,8 +50,8 @@ const App = (props: AppPropsWithLayout) => {
   const router = useRouter();
   const handleStart = (url: string) => {
     if (
-      url !== '/' &&
       [
+        '/',
         '/top',
         '/assign',
         '/seminar',
