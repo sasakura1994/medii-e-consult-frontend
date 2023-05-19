@@ -29,13 +29,9 @@ export const TooltipSpMenu: React.FC<PropsType> = (props) => {
         <ul className={styles.tooltip_sp_menu}>
           {menus.mypage.map((menu, index) => (
             <li className={styles.tooltip_sp_menu__item} key={index}>
-              <Link href={menu.openInNewTab ? menu.link : ''}>
+              <Link href={menu.link}>
                 <a
                   onClick={() => {
-                    if (menu.openInNewTab) {
-                      window.open(menu.link, '_blank');
-                      window.focus();
-                    }
                     setControlledVisible
                       ? setControlledVisible(false)
                       : undefined;
@@ -59,7 +55,11 @@ export const TooltipSpMenu: React.FC<PropsType> = (props) => {
           {menus.service.map((menu, index) => (
             <li className={styles.tooltip_sp_menu__item} key={index}>
               <Link href={menu.link}>
-                <a className={`${styles.tooltip_sp_menu__link}`}>
+                <a
+                  className={`${styles.tooltip_sp_menu__link}`}
+                  target={menu.openInNewTab ? '_blank' : undefined}
+                  rel={menu.openInNewTab ? 'noopener noreferrer' : undefined}
+                >
                   <span className={styles.tooltip_sp_menu__icon}>
                     {menu.icon}
                   </span>
