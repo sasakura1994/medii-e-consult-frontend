@@ -11,6 +11,7 @@ import { useMedicalSpeciality } from '@/hooks/medicalSpeciality/useMedicalSpecia
 import { ConsultExampleFirstAnswerTime } from '@/features/consultExample/ConsultExampleFirstAnswerTime';
 import { dateFormat } from '@/libs/date';
 import { useConsultExample } from '@/hooks/api/consultExample/useConsultExample';
+import { Pagination } from '@/components/Parts/Pagination/Pagination';
 
 type Query = {
   page?: string;
@@ -31,11 +32,8 @@ const ConsultExamplesPage: NextPage = () => {
           <>
             <ConsultExampleListSeparator className="hidden lg:block" />
             {data.list.map((consultExample) => (
-              <>
-                <Link
-                  key={consultExample.example_id}
-                  href={`/example/${consultExample.example_id}`}
-                >
+              <div key={consultExample.example_id}>
+                <Link href={`/example/${consultExample.example_id}`}>
                   <a>
                     <div className="text-sm hover:opacity-60">
                       <div className="flex justify-between">
@@ -109,9 +107,16 @@ const ConsultExamplesPage: NextPage = () => {
                     </div>
                   </a>
                 </Link>
-                <ConsultExampleListSeparator key={consultExample.example_id} />
-              </>
+                <ConsultExampleListSeparator />
+              </div>
             ))}
+            <div className="mt-4">
+              <Pagination
+                page={page ? Number(page) : 1}
+                maxPage={data.max_page}
+                url="/ExampleList"
+              />
+            </div>
           </>
         )}
       </Card>

@@ -5,6 +5,7 @@ export type FetchConsultExamplesResponseData = {
   list: ConsultExampleEntity[];
   count: number;
   limit: number;
+  max_page: number;
 };
 
 export const useFetchConsultExamples = (page?: number) => {

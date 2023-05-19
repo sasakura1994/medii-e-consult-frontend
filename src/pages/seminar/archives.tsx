@@ -5,6 +5,7 @@ import { SeminarArchiveHeader } from '@/features/seminar/seminarArchiveHeader';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useSeminar } from '@/features/seminar/useSeminar';
+import { Pagination } from '@/components/Parts/Pagination/Pagination';
 
 const Archives: NextPage = () => {
   const router = useRouter();
@@ -52,27 +53,13 @@ const Archives: NextPage = () => {
               </a>
             </Link>
           </div>
-          <div className="flex items-center gap-3">
-            {[...Array(maxPage)].map((_, i) =>
-              i + 1 == current ? (
-                <div
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-white"
-                  key={i}
-                >
-                  <p>{i + 1}</p>
-                </div>
-              ) : (
-                <a
-                  key={i}
-                  className="flex h-9 w-9 items-center justify-center rounded-full font-bold text-slate-400"
-                >
-                  <Link href={`/seminar/archives?page=${i + 1}`}>
-                    <a>{i + 1}</a>
-                  </Link>
-                </a>
-              )
-            )}
-          </div>
+          {maxPage && (
+            <Pagination
+              page={current}
+              maxPage={maxPage}
+              url="/seminar/archives"
+            />
+          )}
           <div className="hidden w-48 lg:block"></div>
         </div>
         <div className="block lg:hidden lg:w-48">
