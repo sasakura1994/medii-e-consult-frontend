@@ -52,24 +52,24 @@ const App = (props: AppPropsWithLayout) => {
     if (
       [
         '/',
-        '/top',
-        '/assign',
-        '/seminar',
-        '/seminar/archive',
-        '/affiliate',
-        '/amazongift',
-        '/document',
-        '/edit-profile',
-        '/howtouse',
-        '/initpassword',
-        '/login',
-        '/newchatroom',
-        '/notifysettings',
-        '/passwordreset',
-        '/passwordresetrequest',
-        '/pointhistory',
-        '/registration',
-      ].includes(url.toLowerCase())
+        '/Top',
+        '/Assign',
+        '/Seminar',
+        '/Seminar/archive',
+        '/Affiliate',
+        '/Amazongift',
+        '/Document',
+        '/EditProfile',
+        '/HowToUse',
+        '/InitPassword',
+        '/Login',
+        '/NewChatRoom',
+        '/NotifySettings',
+        '/PasswordReset',
+        '/PasswordResetRequest',
+        '/PointHistory',
+        '/Registration',
+      ].includes(url)
     ) {
       window.location.href = url.toLowerCase();
       throw 'routeChange aborted.';
