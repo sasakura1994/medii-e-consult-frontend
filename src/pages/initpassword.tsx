@@ -155,7 +155,7 @@ const InitPassword: NextPageWithLayout = () => {
         )}
         {isEmailDuplicated && (
           <ErrorMessage className="mt-4 text-center">
-            <Link href="/Login">
+            <Link href="/login">
               <a
                 className="text-inherit underline"
                 style={{ color: '-webkit-link' }}

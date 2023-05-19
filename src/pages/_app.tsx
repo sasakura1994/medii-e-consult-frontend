@@ -62,13 +62,13 @@ const App = (props: AppPropsWithLayout) => {
         '/EditProfile',
         '/HowToUse',
         '/InitPassword',
-        '/Login',
+        '/login',
         '/NewChatRoom',
         '/NotifySettings',
         '/PasswordReset',
         '/PasswordResetRequest',
         '/PointHistory',
-        '/Registration',
+        '/registration',
       ].includes(url)
     ) {
       window.location.href = url.toLowerCase();
