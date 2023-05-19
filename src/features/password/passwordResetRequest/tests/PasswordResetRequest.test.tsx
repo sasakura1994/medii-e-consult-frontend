@@ -2,7 +2,7 @@ import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { render, screen, act } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
-import PasswordResetRequestPage from '@/pages/PasswordResetRequest';
+import PasswordResetRequestPage from '@/pages/passwordresetrequest';
 import { PostRequestResetPasswordResponseData } from '@/hooks/api/account/usePostRequestResetPassword';
 import * as apiClient from '@/libs/apiClient';
 import { AxiosInstance } from 'axios';
