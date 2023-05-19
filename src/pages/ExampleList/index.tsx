@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import type { NextPage } from 'next';
 import { Container } from '@/components/Layouts/Container';
 import { Card } from '@/components/Parts/Card/Card';
@@ -12,6 +12,7 @@ import { ConsultExampleFirstAnswerTime } from '@/features/consultExample/Consult
 import { dateFormat } from '@/libs/date';
 import { useConsultExample } from '@/hooks/api/consultExample/useConsultExample';
 import { Pagination } from '@/components/Parts/Pagination/Pagination';
+import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 
 type Query = {
   page?: string;
@@ -23,6 +24,7 @@ const ConsultExamplesPage: NextPage = () => {
   const { data } = useFetchConsultExamples(page ? Number(page) : undefined);
   const { getMedicalSpecialityName } = useMedicalSpeciality();
   const { getAgeText, getGenderText } = useConsultExample();
+  useEventLog({ name: '/ExampleList' });
 
   return (
     <Container>
