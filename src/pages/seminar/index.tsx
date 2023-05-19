@@ -7,6 +7,7 @@ import { Modal } from '@/components/Parts/Modal/Modal';
 import { OutlinedSquareButton } from '@/components/Parts/Button/OutlinedSquareButton';
 import { SeminarArchiveHeader } from '@/features/seminar/seminarArchiveHeader';
 import Link from 'next/link';
+import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 
 const getSeminarDateTime = (seminar: SeminarEntityType) => {
   if (!seminar) return '';
@@ -44,6 +45,8 @@ const googleCalendarUrl = (seminar: SeminarEntityType) => {
 const Seminar: NextPage = () => {
   const { seminars, latestSeminar, ticketCount } = useSeminar();
   const [showModal, setShowModal] = React.useState(false);
+  useEventLog({ name: '/seminar' });
+
   return (
     <div className="bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat pb-12 lg:bg-[url('/images/seminar/PC_back.png')]">
       <div className="m-auto flex max-w-[960px] flex-col items-center py-4 pt-10">
