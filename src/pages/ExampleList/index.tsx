@@ -38,42 +38,66 @@ const ConsultExamplesPage: NextPage = () => {
                 <Link href={`/example/${consultExample.example_id}`}>
                   <a>
                     <div className="text-sm hover:opacity-60">
-                      <div className="flex justify-between">
+                      <div
+                        className={`flex ${
+                          consultExample.first_answer_minutes > 0
+                            ? 'items-start'
+                            : 'items-center'
+                        } justify-between gap-2 lg:items-center`}
+                      >
                         <div className="flex gap-2">
-                          <ConsultExampleTag>
-                            {consultExample.speciality_code === ''
-                              ? consultExample.category_name
-                              : getMedicalSpecialityName(
-                                  consultExample.speciality_code
-                                ) || ''}
-                          </ConsultExampleTag>
-                          {consultExample.first_answer_minutes > 0 && (
-                            <ConsultExampleFirstAnswerTime
-                              firstAnswerMinutes={
-                                consultExample.first_answer_minutes
-                              }
-                            />
-                          )}
-                        </div>
-                        <div className="flex items-center">
-                          <img
-                            src="/icons/good_out.svg"
-                            width="24"
-                            height="24"
-                            alt="いいねの数"
-                          />
-                          <div className="ml-1">
-                            {consultExample.all_like_count}
+                          <div>
+                            <ConsultExampleTag>
+                              {consultExample.speciality_code === ''
+                                ? consultExample.category_name
+                                : getMedicalSpecialityName(
+                                    consultExample.speciality_code
+                                  ) || ''}
+                            </ConsultExampleTag>
                           </div>
-                          <img
-                            src="/icons/comment.svg"
-                            width="24"
-                            height="24"
-                            className="ml-4 block"
-                            alt="コメントの数"
-                          />
-                          <div className="ml-1">
-                            {consultExample.all_comment_count}
+                        </div>
+                        <div
+                          className="
+                            flex
+                            flex-1
+                            flex-col
+                            items-end
+                            lg:flex-row
+                            lg:items-center
+                            lg:justify-between
+                            "
+                        >
+                          {consultExample.first_answer_minutes > 0 ? (
+                            <div className="mb-4 lg:mb-0">
+                              <ConsultExampleFirstAnswerTime
+                                firstAnswerMinutes={
+                                  consultExample.first_answer_minutes
+                                }
+                              />
+                            </div>
+                          ) : (
+                            <div></div>
+                          )}
+                          <div className="flex items-center">
+                            <img
+                              src="/icons/good_out.svg"
+                              width="24"
+                              height="24"
+                              alt="いいねの数"
+                            />
+                            <div className="ml-1">
+                              {consultExample.all_like_count}
+                            </div>
+                            <img
+                              src="/icons/comment.svg"
+                              width="24"
+                              height="24"
+                              className="ml-4 block"
+                              alt="コメントの数"
+                            />
+                            <div className="ml-1">
+                              {consultExample.all_comment_count}
+                            </div>
                           </div>
                         </div>
                       </div>
