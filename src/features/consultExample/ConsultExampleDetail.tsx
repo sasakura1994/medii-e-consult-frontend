@@ -8,6 +8,7 @@ import { useMedicalSpeciality } from '@/hooks/medicalSpeciality/useMedicalSpecia
 import { ConsultExampleFirstAnswerTime } from './ConsultExampleFirstAnswerTime';
 import { dateFormat } from '@/libs/date';
 import { ConsultExampleActions } from './ConsultExampleActions';
+import { ConsultExampleDetailMessage } from './ConsultExampleDetailMessage';
 
 type Props = {
   consultExample: ConsultExampleDetailEntity;
@@ -83,7 +84,20 @@ export const ConsultExampleDetail: React.FC<Props> = ({
         </div>
         <div className="mt-5">{consultExample.background}</div>
         <div className="mt-4">
-          <ConsultExampleActions consultExample={consultExample} />
+          <ConsultExampleActions
+            likeCount={consultExample.all_like_count}
+            commentCount={consultExample.all_comment_count}
+          />
+        </div>
+      </Card>
+      <Card className="mt-4 px-7 py-10">
+        <div className="flex flex-col gap-8">
+          {consultExampleMessages.map((consultExampleMesasge) => (
+            <ConsultExampleDetailMessage
+              key={consultExampleMesasge.uid}
+              consultExampleMessage={consultExampleMesasge}
+            ></ConsultExampleDetailMessage>
+          ))}
         </div>
       </Card>
     </>

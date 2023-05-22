@@ -2,11 +2,13 @@ import { ConsultExampleDetailEntity } from '@/types/entities/ConsultExampleDetai
 import React from 'react';
 
 type Props = {
-  consultExample: ConsultExampleDetailEntity;
+  likeCount: number;
+  commentCount: number;
 };
 
 export const ConsultExampleActions: React.FC<Props> = ({
-  consultExample,
+  likeCount,
+  commentCount,
 }: Props) => {
   return (
     <div className="flex justify-between bg-bg px-4 py-3">
@@ -29,7 +31,7 @@ export const ConsultExampleActions: React.FC<Props> = ({
           height="18"
           alt="いいねの数"
         />
-        <div className="ml-1">{consultExample.all_like_count}</div>
+        <div className="ml-1">{likeCount}</div>
         <img
           src="/icons/comment.svg"
           width="18"
@@ -37,7 +39,7 @@ export const ConsultExampleActions: React.FC<Props> = ({
           className="ml-4 block"
           alt="コメントの数"
         />
-        <div className="ml-1">{consultExample.all_comment_count}</div>
+        <div className="ml-1">{commentCount}</div>
       </div>
     </div>
   );
