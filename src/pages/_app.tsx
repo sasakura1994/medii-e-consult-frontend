@@ -71,7 +71,7 @@ const App = (props: AppPropsWithLayout) => {
         '/registration',
       ].includes(url.toLowerCase())
     ) {
-      window.location.href = url;
+      window.location.href = url.toLowerCase();
       throw 'routeChange aborted.';
     }
   };
