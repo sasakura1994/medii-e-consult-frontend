@@ -69,7 +69,7 @@ const App = (props: AppPropsWithLayout) => {
         '/passwordresetrequest',
         '/pointhistory',
         '/registration',
-      ].includes(url)
+      ].includes(url.toLowerCase())
     ) {
       window.location.href = url;
       throw 'routeChange aborted.';
