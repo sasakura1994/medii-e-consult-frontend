@@ -74,10 +74,9 @@ export const useLogin = (): UseLoginType => {
         localStorage.removeItem(loginRedirectUrlKey);
 
         router.push(redirectUrl === '' ? 'top' : redirectUrl);
-      } else {
-        setErrorMessage('エラーが発生しました');
         return;
       }
+      setErrorMessage('エラーが発生しました');
     },
     [
       email,
