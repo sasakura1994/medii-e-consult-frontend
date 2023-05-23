@@ -4,7 +4,7 @@ import React from 'react';
 import { ConsultExampleTag } from './ConsultExampleTag';
 import { useMedicalSpeciality } from '@/hooks/medicalSpeciality/useMedicalSpeciality';
 import { ConsultExampleFirstAnswerTime } from './ConsultExampleFirstAnswerTime';
-import { useConsultExample } from '@/hooks/api/consultExample/useConsultExample';
+import { useConsultExample } from '@/features/consultExample/useConsultExample';
 import { dateFormat } from '@/libs/date';
 
 type Props = {

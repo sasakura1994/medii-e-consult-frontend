@@ -3,7 +3,7 @@ import { ConsultExampleDetailEntity } from '@/types/entities/ConsultExampleDetai
 import { ConsultExampleMessageEntity } from '@/types/entities/ConsultExampleMessageEntity';
 import React from 'react';
 import { ConsultExampleTag } from './ConsultExampleTag';
-import { useConsultExample } from '@/hooks/api/consultExample/useConsultExample';
+import { useConsultExample } from '@/features/consultExample/useConsultExample';
 import { useMedicalSpeciality } from '@/hooks/medicalSpeciality/useMedicalSpeciality';
 import { ConsultExampleFirstAnswerTime } from './ConsultExampleFirstAnswerTime';
 import { dateFormat } from '@/libs/date';
@@ -87,6 +87,11 @@ export const ConsultExampleDetail: React.FC<Props> = ({
           <ConsultExampleActions
             likeCount={consultExample.all_like_count}
             commentCount={consultExample.all_comment_count}
+            isLiked={consultExample.is_liked}
+            onLike={() => true}
+            onUnlike={() => true}
+            onComment={() => true}
+            onShowComments={() => true}
           />
         </div>
       </Card>

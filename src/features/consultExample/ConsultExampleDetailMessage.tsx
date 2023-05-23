@@ -44,6 +44,11 @@ export const ConsultExampleDetailMessage: React.FC<Props> = ({
           <ConsultExampleActions
             likeCount={consultExampleMessage.like_count}
             commentCount={consultExampleMessage.comment_count}
+            isLiked={consultExampleMessage.is_liked}
+            onLike={() => true}
+            onUnlike={() => true}
+            onComment={() => true}
+            onShowComments={() => true}
           />
         </div>
       </div>

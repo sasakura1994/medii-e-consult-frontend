@@ -1,20 +1,36 @@
-import { ConsultExampleDetailEntity } from '@/types/entities/ConsultExampleDetailEntity';
 import React from 'react';
 
 type Props = {
   likeCount: number;
   commentCount: number;
+  isLiked: boolean;
+  onLike: () => void;
+  onUnlike: () => void;
+  onComment: () => void;
+  onShowComments: () => void;
 };
 
 export const ConsultExampleActions: React.FC<Props> = ({
   likeCount,
   commentCount,
+  isLiked,
+  onLike,
+  onUnlike,
 }: Props) => {
   return (
     <div className="flex justify-between bg-bg px-4 py-3">
       <div className="flex items-center text-sm">
-        <img src="/icons/good_out.svg" width="24" height="24" alt="" />
-        <div className="ml-1">いいね</div>
+        <a
+          href="#"
+          className="flex items-center"
+          onClick={(e) => {
+            e.preventDefault();
+            (isLiked ? onUnlike : onLike)();
+          }}
+        >
+          <img src="/icons/good_out.svg" width="24" height="24" alt="" />
+          <div className="ml-1">いいね</div>
+        </a>
         <img
           src="/icons/comment.svg"
           width="24"
