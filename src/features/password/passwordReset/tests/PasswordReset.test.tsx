@@ -6,7 +6,7 @@ import { RecoilRoot } from 'recoil';
 import * as apiClient from '@/libs/apiClient';
 import { AxiosInstance } from 'axios';
 import { PostResetPasswordResponseData } from '@/hooks/api/account/usePostPasswordReset';
-import PasswordResetPage from '@/pages/PasswordReset';
+import PasswordResetPage from '@/pages/passwordreset';
 
 jest.mock('@/libs/apiClient');
 jest.mock('next/router', () => ({

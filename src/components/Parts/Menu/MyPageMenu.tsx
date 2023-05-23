@@ -21,8 +21,8 @@ export const MyPageMenu: React.FC = () => {
       <ul className={styles.mypage_menu}>
         <li
           className={getActiveMenuItemStyle(router.pathname, [
-            '/EditProfile',
-            '/Document',
+            '/editprofile',
+            '/document',
           ])}
         >
           <Link href="/EditProfile">
@@ -32,7 +32,7 @@ export const MyPageMenu: React.FC = () => {
           </Link>
         </li>
         <li
-          className={getActiveMenuItemStyle(router.pathname, ['/PointHistory'])}
+          className={getActiveMenuItemStyle(router.pathname, ['/pointhistory'])}
         >
           <Link href="/PointHistory">
             <a className={styles.mypage_menu__link}>
@@ -41,7 +41,7 @@ export const MyPageMenu: React.FC = () => {
           </Link>
         </li>
         <li
-          className={getActiveMenuItemStyle(router.pathname, ['/AmazonGift'])}
+          className={getActiveMenuItemStyle(router.pathname, ['/amazongift'])}
         >
           <Link href="/AmazonGift">
             <a className={styles.mypage_menu__link}>
@@ -49,7 +49,7 @@ export const MyPageMenu: React.FC = () => {
             </a>
           </Link>
         </li>
-        <li className={getActiveMenuItemStyle(router.pathname, ['/Affiliate'])}>
+        <li className={getActiveMenuItemStyle(router.pathname, ['/affiliate'])}>
           <Link href="/Affiliate">
             <a className={styles.mypage_menu__link}>
               <span>医師紹介</span>
@@ -58,7 +58,7 @@ export const MyPageMenu: React.FC = () => {
         </li>
         <li
           className={getActiveMenuItemStyle(router.pathname, [
-            '/NotifySettings',
+            '/notifysettings',
           ])}
         >
           <Link href="/NotifySettings">
