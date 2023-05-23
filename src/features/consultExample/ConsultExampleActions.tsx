@@ -23,7 +23,7 @@ export const ConsultExampleActions: React.FC<Props> = ({
     <div className="flex justify-between bg-bg px-4 py-3">
       <div className="flex items-center text-sm">
         <a
-          href="#"
+          href={likeOrUnlike ? '#' : undefined}
           className="flex items-center"
           onClick={(e) => {
             e.preventDefault();

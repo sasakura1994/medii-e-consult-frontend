@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
-import {
-  useFetchChatRoom,
-  FetchChatRoomResponseData,
-} from './../../../hooks/api/chat/useFetchChatRoom';
+import { useFetchChatRoom } from './../../../hooks/api/chat/useFetchChatRoom';
 import React from 'react';
 import { usePostAssign } from '@/hooks/api/chat/usePostAssign';
+import { useFetchInduceConsultExampleId } from '@/hooks/api/consultExample/useFetchInduceConsultExample';
+import { useFetchConsultExampleMessages } from '@/hooks/api/consultExample/useFetchConsultExampleMessages';
+import { useFetchConsultExample } from '@/hooks/api/consultExample/useFetchConsultExample';
 
 type Query = {
   id?: string;
@@ -23,6 +23,13 @@ export const useAssign = () => {
   const { data: fetchChatRoomResultData } = fetchChatRoomResult || {};
   const { chat_room: chatRoom, images } = fetchChatRoomResultData || {};
 
+  const consultExampleId = useFetchInduceConsultExampleId({
+    isFetch: chatRoom !== undefined && chatRoom.status !== 'CREATED',
+  });
+  const { data: consultExample } = useFetchConsultExample(consultExampleId);
+  const { data: consultExampleMessages } =
+    useFetchConsultExampleMessages(consultExampleId);
+
   React.useEffect(() => {
     if (!fetchChatRoomResultData) {
       return;
@@ -33,7 +40,7 @@ export const useAssign = () => {
       router.push(`/chat?chat_room_id=${id}`);
       return;
     }
-  }, [fetchChatRoomResultData]);
+  }, [fetchChatRoomResultData, id, router]);
 
   const assign = React.useCallback(async () => {
     if (!id) {
@@ -62,11 +69,13 @@ export const useAssign = () => {
     }
 
     router.push(`/chat?chat_room_id=${id}`);
-  }, [id]);
+  }, [id, isSending, postAssign, router]);
 
   return {
     assign,
     chatRoom,
+    consultExample,
+    consultExampleMessages,
     errorMessage,
     images,
     isConfirming,
