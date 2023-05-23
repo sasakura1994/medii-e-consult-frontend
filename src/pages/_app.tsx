@@ -10,6 +10,9 @@ import { Layout } from '@/components/Layouts/Layout';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
+import { GoogleTagManager } from '@/components/Layouts/GoogleTagManager';
+import Script from 'next/script';
+import { useToken } from '@/hooks/authentication/useToken';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
@@ -22,6 +25,8 @@ type AppPropsWithLayout = AppProps & {
 
 const AppInner = ({ Component, pageProps }: AppPropsWithLayout) => {
   const { fetcher } = useFetcher();
+  const { accountId, isTokenInitialized } = useToken();
+
   const getLayout =
     Component.getLayout ||
     ((page) => (
@@ -33,6 +38,23 @@ const AppInner = ({ Component, pageProps }: AppPropsWithLayout) => {
 
   return (
     <CookiesProvider>
+      {/* GTMタグだけ先に描画されるのを避けるため必ず両方同時にチェック */}
+      {(isTokenInitialized || accountId) && (
+        <>
+          {accountId && (
+            <Script
+              id="gtm-data-layer"
+              dangerouslySetInnerHTML={{
+                __html: `
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({ account_id: '${accountId}' })
+            `,
+              }}
+            />
+          )}
+          <GoogleTagManager />
+        </>
+      )}
       <SWRConfig
         value={{
           fetcher,
@@ -52,23 +74,26 @@ const App = (props: AppPropsWithLayout) => {
     if (
       [
         '/',
-        '/Top',
+        '/top',
+        '/assign',
+        '/seminar',
+        '/seminar/archive',
         '/affiliate',
-        '/AmazonGift',
-        '/Document',
-        '/EditProfile',
-        '/HowToUse',
-        '/InitPassword',
+        '/amazongift',
+        '/document',
+        '/editprofile',
+        '/howtouse',
+        '/initpassword',
         '/login',
-        '/NewChatRoom',
-        '/NotifySettings',
-        '/PasswordReset',
-        '/PasswordResetRequest',
-        '/PointHistory',
+        '/newchatroom',
+        '/notifysettings',
+        '/passwordreset',
+        '/passwordresetrequest',
+        '/pointhistory',
         '/registration',
-      ].includes(url)
+      ].includes(url.toLowerCase())
     ) {
-      window.location.href = url;
+      window.location.href = url.toLowerCase();
       throw 'routeChange aborted.';
     }
   };

@@ -9,7 +9,7 @@ import { CheckBox } from '@/components/Parts/Form/CheckBox';
 import Link from 'next/link';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 
-const InitPasswordPage: NextPageWithLayout = () => {
+const InitPassword: NextPageWithLayout = () => {
   const {
     errorMessage,
     firstPassword,
@@ -155,7 +155,7 @@ const InitPasswordPage: NextPageWithLayout = () => {
         )}
         {isEmailDuplicated && (
           <ErrorMessage className="mt-4 text-center">
-            <Link href="/Login">
+            <Link href="/login">
               <a
                 className="text-inherit underline"
                 style={{ color: '-webkit-link' }}
@@ -177,8 +177,8 @@ const InitPasswordPage: NextPageWithLayout = () => {
   );
 };
 
-InitPasswordPage.getLayout = (page: React.ReactElement) => {
+InitPassword.getLayout = (page: React.ReactElement) => {
   return <PublicLayout>{page}</PublicLayout>;
 };
 
-export default InitPasswordPage;
+export default InitPassword;
