@@ -28,13 +28,15 @@ export const ConsultExampleDetail: React.FC<Props> = ({
 
   return (
     <>
-      <Card className="p-10">
+      <Card className="px-5 py-10 lg:px-10">
         <div className="flex gap-2">
-          <ConsultExampleTag>
-            {getMedicalSpecialityName(consultExample.speciality_code) ||
-              consultExample.category_name}
-          </ConsultExampleTag>
-          <div className="flex flex-1 lg:justify-between">
+          <div>
+            <ConsultExampleTag>
+              {getMedicalSpecialityName(consultExample.speciality_code) ||
+                consultExample.category_name}
+            </ConsultExampleTag>
+          </div>
+          <div className="flex flex-1 flex-col items-end gap-4 lg:flex-row lg:items-center lg:justify-between lg:gap-0">
             {consultExample.first_answer_minutes > 0 ? (
               <ConsultExampleFirstAnswerTime
                 firstAnswerMinutes={consultExample.first_answer_minutes}
@@ -42,8 +44,16 @@ export const ConsultExampleDetail: React.FC<Props> = ({
             ) : (
               <div></div>
             )}
-            <div className="flex items-center text-sm text-primary">
+            <div className="flex items-center text-sm lg:text-primary">
               <img
+                className="lg:hidden"
+                src="/icons/good_out.svg"
+                width="24"
+                height="24"
+                alt="いいねの数"
+              />
+              <img
+                className="hidden lg:block"
                 src="/icons/good_out_primary.svg"
                 width="24"
                 height="24"
@@ -51,10 +61,17 @@ export const ConsultExampleDetail: React.FC<Props> = ({
               />
               <div className="ml-1">{consultExample.all_like_count}</div>
               <img
+                src="/icons/comment.svg"
+                width="24"
+                height="24"
+                className="ml-4 block lg:hidden"
+                alt="コメントの数"
+              />
+              <img
                 src="/icons/comment_primary.svg"
                 width="24"
                 height="24"
-                className="ml-4 block"
+                className="ml-4 hidden lg:block"
                 alt="コメントの数"
               />
               <div className="ml-1">{consultExample.all_comment_count}</div>
@@ -62,7 +79,7 @@ export const ConsultExampleDetail: React.FC<Props> = ({
           </div>
         </div>
         <div className="mt-4 text-2xl font-bold">{consultExample.title}</div>
-        <div className="mt-10 flex justify-between text-sm">
+        <div className="mt-5 flex flex-col justify-between text-sm lg:mt-10 lg:flex-row">
           <div className="flex gap-1">
             {consultExample.age !== null && (
               <div>{getAgeText(consultExample.age)}</div>

@@ -22,7 +22,7 @@ const ConsultExamplePage: NextPage = () => {
   useEventLog({ name: `/example/${id}` });
 
   return (
-    <Container className="py-6">
+    <Container className="lg:py-6">
       {consultExample && consultExampleMessages && (
         <ConsultExampleDetail
           consultExample={consultExample}
