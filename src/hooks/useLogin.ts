@@ -55,7 +55,7 @@ export const useLogin = (): UseLoginType => {
 
       const res = await postLogin(email, password).catch((error) => {
         console.error(error);
-        setErrorMessage(error.response.data?.message || 'エラーが発生しました');
+        setErrorMessage(error.message || 'エラーが発生しました');
         return null;
       });
 
@@ -63,11 +63,18 @@ export const useLogin = (): UseLoginType => {
         return;
       }
 
-      setTokenAndMarkInitialized(res.data.jwt_token);
-      setProfile(res.data.doctor);
-      localStorage.removeItem(loginRedirectUrlKey);
+      if (res.data.code !== 1) {
+        setErrorMessage(res.data.message || 'エラーが発生しました');
+        return;
+      }
 
-      router.push(redirectUrl === '' ? 'top' : redirectUrl);
+      if (res.data.jwt_token) {
+        setTokenAndMarkInitialized(res.data.jwt_token);
+        setProfile(res.data.doctor);
+        localStorage.removeItem(loginRedirectUrlKey);
+
+        router.push(redirectUrl === '' ? 'top' : redirectUrl);
+      }
     },
     [
       email,
