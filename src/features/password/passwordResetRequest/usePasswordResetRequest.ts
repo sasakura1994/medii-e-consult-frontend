@@ -10,6 +10,7 @@ export const usePasswordResetRequest = () => {
 
   const sendPasswordResetRequest = React.useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
+      let errorMessage = '';
       e.preventDefault();
 
       setIsSending(true);
@@ -18,19 +19,18 @@ export const usePasswordResetRequest = () => {
       const response = await requestResetPassword(mailAddress).catch(
         (error) => {
           console.error(error);
-          return null;
+          errorMessage = error.message ?? 'エラーが発生しました';
+          setErrorMessage(errorMessage);
+          return error.response;
         }
       );
 
       setIsSending(false);
 
-      if (!response) {
-        setErrorMessage('エラーが発生しました');
-        return;
-      }
-      if (response.status !== 204) {
-        const errorMessage = response.data.message ?? 'エラーが発生しました';
-        setErrorMessage(errorMessage);
+      if (!response) return;
+
+      if (response.status !== 204 && !errorMessage) {
+        setErrorMessage(response.data.message ?? 'エラーが発生しました');
         return;
       }
 

@@ -14,6 +14,7 @@ const PasswordResetPage: NextPageWithLayout = () => {
     firstPassword,
     isCompleted,
     isPasswordNotMatched,
+    errorMessage,
     isSending,
     isTokenExists,
     onSubmit,
@@ -30,7 +31,7 @@ const PasswordResetPage: NextPageWithLayout = () => {
             <h1 className="text-center text-2xl">Medii パスワードリセット</h1>
             <form onSubmit={onSubmit}>
               <div className="mt-4 flex  justify-center">
-                <div>
+                <div className="mx-auto w-52">
                   <div className="font-bold">パスワード</div>
                   <div className="mt-1">
                     <TextField
@@ -67,6 +68,11 @@ const PasswordResetPage: NextPageWithLayout = () => {
                       <div className="mt-4 text-center">
                         <SpinnerBorder />
                       </div>
+                    )}
+                    {errorMessage !== '' && (
+                      <ErrorMessage className="text-center">
+                        {errorMessage}
+                      </ErrorMessage>
                     )}
                   </div>
                 </div>

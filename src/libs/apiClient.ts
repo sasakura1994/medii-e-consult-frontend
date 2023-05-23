@@ -114,6 +114,14 @@ const handleApiError = (apiClient: AxiosInstance) => {
         });
       }
 
+      if (error.isAxiosError && error.response?.data?.message) {
+        const errorMessage = error.response.data.message;
+        return Promise.reject<ApiErrorType>({
+          ...errorObj,
+          message: errorMessage,
+        });
+      }
+
       return Promise.reject<ApiErrorType>({
         ...errorObj,
         message: 'ネットワークエラー',
