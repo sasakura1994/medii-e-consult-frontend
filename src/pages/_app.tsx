@@ -74,14 +74,12 @@ const App = (props: AppPropsWithLayout) => {
     if (
       [
         '/',
-        '/top',
-        '/assign',
-        '/seminar',
-        '/seminar/archive',
         '/affiliate',
         '/amazongift',
+        '/assign',
         '/document',
         '/editprofile',
+        '/examplelist',
         '/howtouse',
         '/initpassword',
         '/login',
@@ -91,6 +89,9 @@ const App = (props: AppPropsWithLayout) => {
         '/passwordresetrequest',
         '/pointhistory',
         '/registration',
+        '/seminar',
+        '/seminar/archive',
+        '/top',
       ].includes(url.toLowerCase())
     ) {
       window.location.href = url.toLowerCase();
