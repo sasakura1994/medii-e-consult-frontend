@@ -4,8 +4,8 @@ type Props = {
   likeCount: number;
   commentCount: number;
   isLiked: boolean;
-  onLike: () => void;
-  onUnlike: () => void;
+  onLike?: () => void;
+  onUnlike?: () => void;
   onComment: () => void;
   onShowComments: () => void;
 };
@@ -17,6 +17,8 @@ export const ConsultExampleActions: React.FC<Props> = ({
   onLike,
   onUnlike,
 }: Props) => {
+  const likeOrUnlike = isLiked ? onUnlike : onLike;
+
   return (
     <div className="flex justify-between bg-bg px-4 py-3">
       <div className="flex items-center text-sm">
@@ -25,10 +27,17 @@ export const ConsultExampleActions: React.FC<Props> = ({
           className="flex items-center"
           onClick={(e) => {
             e.preventDefault();
-            (isLiked ? onUnlike : onLike)();
+            if (likeOrUnlike) {
+              likeOrUnlike();
+            }
           }}
         >
-          <img src="/icons/good_out.svg" width="24" height="24" alt="" />
+          <img
+            src={isLiked ? '/icons/good_fill.svg' : '/icons/good_out.svg'}
+            width="24"
+            height="24"
+            alt=""
+          />
           <div className="ml-1">いいね</div>
         </a>
         <img

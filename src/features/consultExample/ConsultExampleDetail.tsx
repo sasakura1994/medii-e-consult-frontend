@@ -13,11 +13,15 @@ import { ConsultExampleDetailMessage } from './ConsultExampleDetailMessage';
 type Props = {
   consultExample: ConsultExampleDetailEntity;
   consultExampleMessages: ConsultExampleMessageEntity[];
+  onLike?: () => void;
+  onUnlike?: () => void;
 };
 
 export const ConsultExampleDetail: React.FC<Props> = ({
   consultExample,
   consultExampleMessages,
+  onLike,
+  onUnlike,
 }: Props) => {
   const { getMedicalSpecialityName } = useMedicalSpeciality();
   const { getAgeText, getGenderText } = useConsultExample();
@@ -88,8 +92,8 @@ export const ConsultExampleDetail: React.FC<Props> = ({
             likeCount={consultExample.all_like_count}
             commentCount={consultExample.all_comment_count}
             isLiked={consultExample.is_liked}
-            onLike={() => true}
-            onUnlike={() => true}
+            onLike={onLike}
+            onUnlike={onUnlike}
             onComment={() => true}
             onShowComments={() => true}
           />

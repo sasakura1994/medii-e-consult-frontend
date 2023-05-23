@@ -13,7 +13,12 @@ type Query = {
 const ConsultExamplePage: NextPage = () => {
   const router = useRouter();
   const { id } = router.query as Query;
-  const { consultExample, consultExampleMessages } = useConsultExamplePage(id);
+  const {
+    consultExample,
+    consultExampleMessages,
+    likeAndMutate,
+    unlikeAndMutate,
+  } = useConsultExamplePage(id);
   useEventLog({ name: `/example/${id}` });
 
   return (
@@ -22,6 +27,8 @@ const ConsultExamplePage: NextPage = () => {
         <ConsultExampleDetail
           consultExample={consultExample}
           consultExampleMessages={consultExampleMessages}
+          onLike={likeAndMutate}
+          onUnlike={unlikeAndMutate}
         />
       )}
     </Container>
