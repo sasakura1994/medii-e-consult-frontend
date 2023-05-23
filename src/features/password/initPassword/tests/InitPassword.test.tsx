@@ -6,8 +6,9 @@ import { RecoilRoot } from 'recoil';
 import * as apiClient from '@/libs/apiClient';
 import { AxiosInstance } from 'axios';
 import { PostResetPasswordResponseData } from '@/hooks/api/account/usePostPasswordReset';
-import InitPasswordPage from '@/pages/InitPassword';
+
 import { useRouter } from 'next/router';
+import InitPassword from '@/pages/initpassword';
 
 jest.mock('@/libs/apiClient');
 jest.mock('next/router');
@@ -32,7 +33,7 @@ describe('InitPassword', () => {
     await act(() => {
       render(
         <RecoilRoot>
-          <InitPasswordPage />
+          <InitPassword />
         </RecoilRoot>
       );
     });

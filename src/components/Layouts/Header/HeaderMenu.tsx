@@ -8,12 +8,14 @@ export const HeaderMenu: React.FC = () => {
     <HeaderMenuContainer>
       {/* PC Menu */}
       <HeaderMenuList>
-        <HeaderMenuListItem href="/">コンサル一覧</HeaderMenuListItem>
-        <HeaderMenuListItem href="/" badgeText="NEW">
-          所属グループ
+        <HeaderMenuListItem href="/Chat">コンサル一覧</HeaderMenuListItem>
+        <HeaderMenuListItem href="/Group">所属グループ</HeaderMenuListItem>
+        <HeaderMenuListItem href={process.env.CASE_BANK_URL ?? '/'}>
+          症例バンク
         </HeaderMenuListItem>
-        <HeaderMenuListItem href="/">症例バンク</HeaderMenuListItem>
-        <HeaderMenuListItem href="/">コンサル事例集</HeaderMenuListItem>
+        <HeaderMenuListItem href="/ExampleList">
+          コンサル事例集
+        </HeaderMenuListItem>
       </HeaderMenuList>
     </HeaderMenuContainer>
   );
