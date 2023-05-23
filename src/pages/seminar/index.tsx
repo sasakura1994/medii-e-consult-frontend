@@ -7,6 +7,7 @@ import { Modal } from '@/components/Parts/Modal/Modal';
 import { OutlinedSquareButton } from '@/components/Parts/Button/OutlinedSquareButton';
 import { SeminarArchiveHeader } from '@/features/seminar/seminarArchiveHeader';
 import Link from 'next/link';
+import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 
 const getSeminarDateTime = (seminar: SeminarEntityType) => {
   if (!seminar) return '';
@@ -44,6 +45,8 @@ const googleCalendarUrl = (seminar: SeminarEntityType) => {
 const Seminar: NextPage = () => {
   const { seminars, latestSeminar, ticketCount } = useSeminar();
   const [showModal, setShowModal] = React.useState(false);
+  useEventLog({ name: '/seminar' });
+
   return (
     <div className="bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat pb-12 lg:bg-[url('/images/seminar/PC_back.png')]">
       <div className="m-auto flex max-w-[960px] flex-col items-center py-4 pt-10">
@@ -53,7 +56,7 @@ const Seminar: NextPage = () => {
         >
           最新セミナー
         </h2>
-        <div className="mt-30 relative w-full bg-white pt-24 pb-20  lg:mt-64 lg:w-[960px] lg:rounded-lg lg:pt-40 lg:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
+        <div className="mt-30 relative w-full bg-white pb-20 pt-24  lg:mt-64 lg:w-[960px] lg:rounded-lg lg:pt-40 lg:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
           <div className="absolute top-[-100px] flex w-full justify-center px-6  lg:top-[-264px]">
             <img
               src={latestSeminar && latestSeminar.image_url}
@@ -62,7 +65,7 @@ const Seminar: NextPage = () => {
           </div>
           <div className="flex flex-col items-center bg-white px-8 lg:px-32">
             <a className="w-full lg:w-auto">
-              <button className="relative mb-2 mt-6 w-full rounded-lg bg-primary py-3 text-base font-bold text-white lg:w-auto lg:py-4 lg:px-12 lg:text-2xl">
+              <button className="relative mb-2 mt-6 w-full rounded-lg bg-primary py-3 text-base font-bold text-white lg:w-auto lg:px-12 lg:py-4 lg:text-2xl">
                 ZOOMセミナーへ
                 <img
                   src="/images/seminar/main_button_arrow.svg"
@@ -71,7 +74,7 @@ const Seminar: NextPage = () => {
               </button>
             </a>
             <Link href="/seminar#archive">
-              <button className="mt-2 mb-4 rounded-lg border border-[#7acadc] bg-[#f2f9ff] py-4 px-14 text-primary lg:py-5">
+              <button className="mb-4 mt-2 rounded-lg border border-[#7acadc] bg-[#f2f9ff] px-14 py-4 text-primary lg:py-5">
                 過去のセミナー動画はこちら
               </button>
             </Link>
@@ -110,7 +113,7 @@ const Seminar: NextPage = () => {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <OutlinedSquareButton className="mb-2 flex items-center rounded-lg border-inherit py-2 px-8 font-bold">
+                    <OutlinedSquareButton className="mb-2 flex items-center rounded-lg border-inherit px-8 py-2 font-bold">
                       <img src="/images/seminar/google_calendar.png" />
                       <p className="ml-4">Googleカレンダーに登録</p>
                     </OutlinedSquareButton>
@@ -159,14 +162,20 @@ const Seminar: NextPage = () => {
             </div>
           </div>
           <Link href="/seminar/archives">
-            <div
-              className="my-6 inline-flex items-center rounded-full border
+            <a className="my-6 inline-block lg:my-10">
+              <div
+                className="inline-flex items-center rounded-full border
                border-primary bg-white px-8 py-2 text-[11px] text-primary
-             lg:my-10 lg:px-6 lg:py-3 lg:text-sm"
-            >
-              すべてのアーカイブ動画を見る
-              <img src="/icons/arrow_right.svg" className="ml-2 inline h-3 " />
-            </div>
+             lg:px-6 lg:py-3 lg:text-sm"
+              >
+                すべてのアーカイブ動画を見る
+                <img
+                  src="/icons/arrow_right.svg"
+                  className="ml-2 inline h-3"
+                  alt=""
+                />
+              </div>
+            </a>
           </Link>
           <p className="text-center text-sm">
             ※アーカイブ動画に表示している医師の方々の経歴などの情報は、セミナー当時のものとなっております。
@@ -175,7 +184,7 @@ const Seminar: NextPage = () => {
       </div>
       {showModal && (
         <Modal setShowModal={setShowModal} className="lg:w-[800px]">
-          <div className="align-center relative flex flex-col items-center bg-white px-6 py-4 lg:py-20 lg:px-28">
+          <div className="align-center relative flex flex-col items-center bg-white px-6 py-4 lg:px-28 lg:py-20">
             <img
               onClick={() => setShowModal(false)}
               src="/icons/close_primary.svg"
