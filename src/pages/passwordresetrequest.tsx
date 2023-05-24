@@ -26,8 +26,8 @@ const PasswordResetRequestPage: NextPageWithLayout = () => {
             <h1 className="text-center text-2xl">Medii パスワードリセット</h1>
             <form onSubmit={sendPasswordResetRequest}>
               <div className="mt-4 flex justify-center">
-                <div>
-                  <div className="font-bold">メールアドレス</div>
+                <div className='mx-auto w-52'>
+                  <div className="font-bold text-left">メールアドレス</div>
                   <div className="mt-1">
                     <TextField
                       name="mail_address"
