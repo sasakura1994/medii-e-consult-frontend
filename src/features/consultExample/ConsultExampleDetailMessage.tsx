@@ -41,6 +41,7 @@ export const ConsultExampleDetailMessage: React.FC<Props> = ({
                 : 'rounded-b-2xl rounded-tr-2xl bg-bg'
             }
           `}
+          data-testid="message"
         >
           {consultExampleMessage.message.trim()}
         </div>

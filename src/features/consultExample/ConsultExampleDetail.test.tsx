@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render, screen, act } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import * as useMedicalSpeciality from '@/hooks/medicalSpeciality/useMedicalSpeciality';
 import { ConsultExampleDetail } from './ConsultExampleDetail';
 import { ConsultExampleDetailEntity } from '@/types/entities/ConsultExampleDetailEntity';
