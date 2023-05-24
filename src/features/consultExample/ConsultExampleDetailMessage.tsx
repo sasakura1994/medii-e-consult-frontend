@@ -16,7 +16,7 @@ export const ConsultExampleDetailMessage: React.FC<Props> = ({
 
   return (
     <div className={`flex flex-col ${alignItems}`}>
-      <div className={`flex w-4/5 flex-col ${alignItems}`}>
+      <div className={`flex w-[85%] flex-col lg:w-4/5 ${alignItems}`}>
         <div className="text-sm font-bold">
           {consultExampleMessage.doctor_name === ''
             ? consultExampleMessage.account_type === 'doctor'

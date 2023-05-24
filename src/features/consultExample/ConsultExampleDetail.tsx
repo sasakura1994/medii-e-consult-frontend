@@ -116,7 +116,7 @@ export const ConsultExampleDetail: React.FC<Props> = ({
           />
         </div>
       </Card>
-      <Card className="mt-4 px-7 py-10">
+      <Card className="mt-4 px-4 pb-[80px] pt-10 lg:px-7 lg:pb-10">
         <div className="flex flex-col gap-8">
           {consultExampleMessages.map((consultExampleMesasge) => (
             <ConsultExampleDetailMessage
