@@ -15,6 +15,8 @@ type Props = {
   consultExampleMessages: ConsultExampleMessageEntity[];
   onLike?: () => void;
   onUnlike?: () => void;
+  onLikeMessage?: (consultExampleMessageId: number) => void;
+  onUnlikeMessage?: (consultExampleMessageId: number) => void;
 };
 
 export const ConsultExampleDetail: React.FC<Props> = ({
@@ -22,6 +24,8 @@ export const ConsultExampleDetail: React.FC<Props> = ({
   consultExampleMessages,
   onLike,
   onUnlike,
+  onLikeMessage,
+  onUnlikeMessage,
 }: Props) => {
   const { getMedicalSpecialityName } = useMedicalSpeciality();
   const { getAgeText, getGenderText } = useConsultExample();
@@ -122,6 +126,8 @@ export const ConsultExampleDetail: React.FC<Props> = ({
             <ConsultExampleDetailMessage
               key={consultExampleMesasge.uid}
               consultExampleMessage={consultExampleMesasge}
+              onLike={onLikeMessage}
+              onUnlike={onUnlikeMessage}
             ></ConsultExampleDetailMessage>
           ))}
         </div>

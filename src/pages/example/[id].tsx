@@ -17,7 +17,9 @@ const ConsultExamplePage: NextPage = () => {
     consultExample,
     consultExampleMessages,
     likeAndMutate,
+    likeMessageAndMutate,
     unlikeAndMutate,
+    unlikeMessageAndMutate,
   } = useConsultExamplePage(id);
   useEventLog({ name: `/example/${id}` });
 
@@ -29,6 +31,8 @@ const ConsultExamplePage: NextPage = () => {
           consultExampleMessages={consultExampleMessages}
           onLike={likeAndMutate}
           onUnlike={unlikeAndMutate}
+          onLikeMessage={likeMessageAndMutate}
+          onUnlikeMessage={unlikeMessageAndMutate}
         />
       )}
     </Container>

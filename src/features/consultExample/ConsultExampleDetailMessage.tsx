@@ -4,10 +4,14 @@ import { ConsultExampleActions } from './ConsultExampleActions';
 
 type Props = {
   consultExampleMessage: ConsultExampleMessageEntity;
+  onLike?: (consultExampleMessageId: number) => void;
+  onUnlike?: (consultExampleMessageId: number) => void;
 };
 
 export const ConsultExampleDetailMessage: React.FC<Props> = ({
   consultExampleMessage,
+  onLike,
+  onUnlike,
 }: Props) => {
   const alignItems =
     consultExampleMessage.account_type === 'doctor'
@@ -46,8 +50,12 @@ export const ConsultExampleDetailMessage: React.FC<Props> = ({
             commentCount={consultExampleMessage.comment_count}
             isLiked={consultExampleMessage.is_liked}
             isShortOnMobile
-            onLike={() => true}
-            onUnlike={() => true}
+            onLike={
+              onLike ? () => onLike(consultExampleMessage.uid) : undefined
+            }
+            onUnlike={
+              onUnlike ? () => onUnlike(consultExampleMessage.uid) : undefined
+            }
             onComment={() => true}
             onShowComments={() => true}
           />
