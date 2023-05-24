@@ -40,11 +40,12 @@ export const ConsultExampleDetailMessage: React.FC<Props> = ({
         >
           {consultExampleMessage.message.trim()}
         </div>
-        <div className="mt-2 w-full">
+        <div className="mt-2 lg:w-full">
           <ConsultExampleActions
             likeCount={consultExampleMessage.like_count}
             commentCount={consultExampleMessage.comment_count}
             isLiked={consultExampleMessage.is_liked}
+            isShortOnMobile
             onLike={() => true}
             onUnlike={() => true}
             onComment={() => true}

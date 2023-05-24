@@ -4,6 +4,7 @@ type Props = {
   likeCount: number;
   commentCount: number;
   isLiked: boolean;
+  isShortOnMobile?: boolean;
   onLike?: () => void;
   onUnlike?: () => void;
   onComment: () => void;
@@ -14,14 +15,25 @@ export const ConsultExampleActions: React.FC<Props> = ({
   likeCount,
   commentCount,
   isLiked,
+  isShortOnMobile = false,
   onLike,
   onUnlike,
 }: Props) => {
   const likeOrUnlike = isLiked ? onUnlike : onLike;
 
   return (
-    <div className="flex justify-between bg-bg px-4 py-3">
-      <div className="flex items-center text-sm">
+    <div
+      className={`flex justify-between  ${
+        isShortOnMobile
+          ? 'flex-col items-end gap-2 lg:flex-row lg:items-center lg:gap-0 lg:bg-bg lg:px-4 lg:py-3'
+          : 'bg-bg px-4 py-3'
+      }`}
+    >
+      <div
+        className={`flex items-center text-sm ${
+          isShortOnMobile ? 'bg-bg bg-none px-4 py-3 lg:px-0 lg:py-0' : ''
+        }`}
+      >
         <a
           href={likeOrUnlike ? '#' : undefined}
           className="flex items-center"
