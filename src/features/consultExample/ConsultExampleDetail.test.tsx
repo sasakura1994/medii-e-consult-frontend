@@ -7,6 +7,26 @@ import { ConsultExampleDetailEntity } from '@/types/entities/ConsultExampleDetai
 
 jest.mock('@/hooks/medicalSpeciality/useMedicalSpeciality');
 
+const baseConsultExample: ConsultExampleDetailEntity = {
+  example_id: '',
+  gender: 'man',
+  title: '',
+  category_name: '',
+  speciality_code: '',
+  age: null,
+  background: '',
+  disease_name: '',
+  like_count: 0,
+  comment_count: 0,
+  all_like_count: 0,
+  all_comment_count: 0,
+  first_answer_minutes: 70,
+  published_date: '',
+  consultant_date: null,
+  created_date: '',
+  is_liked: false,
+};
+
 describe('ConsultExampleDetail', () => {
   beforeEach(() => {
     const useMedicalSpecialityMock = useMedicalSpeciality as jest.Mocked<
@@ -19,33 +39,15 @@ describe('ConsultExampleDetail', () => {
 
   test('初回回答時間がある', async () => {
     const consultExample: ConsultExampleDetailEntity = {
-      example_id: '',
-      gender: 'man',
-      title: '',
-      category_name: '',
-      speciality_code: '',
-      age: null,
-      background: '',
-      disease_name: '',
-      like_count: 0,
-      comment_count: 0,
-      all_like_count: 0,
-      all_comment_count: 0,
-      first_answer_minutes: 70,
-      published_date: '',
-      consultant_date: null,
-      created_date: '',
-      is_liked: false,
+      ...baseConsultExample,
     };
 
-    await act(() => {
-      render(
-        <ConsultExampleDetail
-          consultExample={consultExample}
-          consultExampleMessages={[]}
-        />
-      );
-    });
+    await render(
+      <ConsultExampleDetail
+        consultExample={consultExample}
+        consultExampleMessages={[]}
+      />
+    );
 
     const firstAnswerMinutesText = screen.getByText('初回回答まで');
     expect(firstAnswerMinutesText).toBeInTheDocument();
@@ -53,33 +55,16 @@ describe('ConsultExampleDetail', () => {
 
   test('初回回答時間がない', async () => {
     const consultExample: ConsultExampleDetailEntity = {
-      example_id: '',
-      gender: 'man',
-      title: '',
-      category_name: '',
-      speciality_code: '',
-      age: null,
-      background: '',
-      disease_name: '',
-      like_count: 0,
-      comment_count: 0,
-      all_like_count: 0,
-      all_comment_count: 0,
+      ...baseConsultExample,
       first_answer_minutes: 0,
-      published_date: '',
-      consultant_date: null,
-      created_date: '',
-      is_liked: false,
     };
 
-    await act(() => {
-      render(
-        <ConsultExampleDetail
-          consultExample={consultExample}
-          consultExampleMessages={[]}
-        />
-      );
-    });
+    await render(
+      <ConsultExampleDetail
+        consultExample={consultExample}
+        consultExampleMessages={[]}
+      />
+    );
 
     const firstAnswerMinutesText = screen.queryByText('初回回答まで');
     expect(firstAnswerMinutesText).not.toBeInTheDocument();
@@ -87,33 +72,16 @@ describe('ConsultExampleDetail', () => {
 
   test('グループではない場合', async () => {
     const consultExample: ConsultExampleDetailEntity = {
-      example_id: '',
-      gender: 'man',
-      title: '',
-      category_name: '',
+      ...baseConsultExample,
       speciality_code: 'not empty',
-      age: null,
-      background: '',
-      disease_name: '',
-      like_count: 0,
-      comment_count: 0,
-      all_like_count: 0,
-      all_comment_count: 0,
-      first_answer_minutes: 0,
-      published_date: '',
-      consultant_date: null,
-      created_date: '',
-      is_liked: false,
     };
 
-    await act(() => {
-      render(
-        <ConsultExampleDetail
-          consultExample={consultExample}
-          consultExampleMessages={[]}
-        />
-      );
-    });
+    await render(
+      <ConsultExampleDetail
+        consultExample={consultExample}
+        consultExampleMessages={[]}
+      />
+    );
 
     const specialityText = screen.getByText('内科');
     expect(specialityText).toBeInTheDocument();
@@ -121,37 +89,69 @@ describe('ConsultExampleDetail', () => {
 
   test('グループの場合', async () => {
     const consultExample: ConsultExampleDetailEntity = {
-      example_id: '',
-      gender: 'man',
-      title: '',
+      ...baseConsultExample,
       category_name: 'グループ1',
-      speciality_code: '',
-      age: null,
-      background: '',
-      disease_name: '',
-      like_count: 0,
-      comment_count: 0,
-      all_like_count: 0,
-      all_comment_count: 0,
-      first_answer_minutes: 0,
-      published_date: '',
-      consultant_date: null,
-      created_date: '',
-      is_liked: false,
     };
 
-    await act(() => {
-      render(
-        <ConsultExampleDetail
-          consultExample={consultExample}
-          consultExampleMessages={[]}
-        />
-      );
-    });
+    await render(
+      <ConsultExampleDetail
+        consultExample={consultExample}
+        consultExampleMessages={[]}
+      />
+    );
 
     const groupText = screen.getByText('グループ1');
     expect(groupText).toBeInTheDocument();
     const specialityText = screen.queryByText('内科');
     expect(specialityText).not.toBeInTheDocument();
+  });
+
+  test('いいねされている', async () => {
+    const consultExample: ConsultExampleDetailEntity = {
+      ...baseConsultExample,
+      is_liked: true,
+    };
+
+    const { getByAltText } = await render(
+      <ConsultExampleDetail
+        consultExample={consultExample}
+        consultExampleMessages={[]}
+      />
+    );
+
+    const likedButtonIcon = getByAltText('いいね済み');
+    expect(likedButtonIcon).toBeInTheDocument();
+  });
+
+  test('メッセージがいいねされている', async () => {
+    const consultExample: ConsultExampleDetailEntity = {
+      ...baseConsultExample,
+    };
+
+    const { getByAltText } = await render(
+      <ConsultExampleDetail
+        consultExample={consultExample}
+        consultExampleMessages={[
+          {
+            uid: 0,
+            account_type: 'doctor',
+            doctor_name: '',
+            message: '',
+            file_id: '',
+            file_name: '',
+            file_path: '',
+            content_type: '',
+            like_count: 0,
+            comment_count: 0,
+            deleted: 0,
+            created_date: '',
+            is_liked: true,
+          },
+        ]}
+      />
+    );
+
+    const likedButtonIcon = getByAltText('いいね済み');
+    expect(likedButtonIcon).toBeInTheDocument();
   });
 });

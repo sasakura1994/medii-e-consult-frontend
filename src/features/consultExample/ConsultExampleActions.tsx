@@ -48,7 +48,7 @@ export const ConsultExampleActions: React.FC<Props> = ({
             src={isLiked ? '/icons/good_fill.svg' : '/icons/good_out.svg'}
             width="24"
             height="24"
-            alt=""
+            alt={isLiked ? 'いいね済み' : '未いいね'}
           />
           <div className="ml-1">いいね</div>
         </a>
