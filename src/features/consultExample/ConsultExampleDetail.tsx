@@ -36,8 +36,9 @@ export const ConsultExampleDetail: React.FC<Props> = ({
         <div className="flex gap-2">
           <div>
             <ConsultExampleTag>
-              {getMedicalSpecialityName(consultExample.speciality_code) ||
-                consultExample.category_name}
+              {consultExample.speciality_code !== ''
+                ? getMedicalSpecialityName(consultExample.speciality_code)
+                : consultExample.category_name}
             </ConsultExampleTag>
           </div>
           <div className="flex flex-1 flex-col items-end gap-4 lg:flex-row lg:items-center lg:justify-between lg:gap-0">
