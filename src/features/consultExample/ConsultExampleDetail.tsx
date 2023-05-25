@@ -18,6 +18,9 @@ type Props = {
   onComment?: () => void;
   onLikeMessage?: (consultExampleMessageId: number) => void;
   onUnlikeMessage?: (consultExampleMessageId: number) => void;
+  onCommentForMessage?: (
+    consultExampleMessage: ConsultExampleMessageEntity
+  ) => void;
 };
 
 export const ConsultExampleDetail: React.FC<Props> = ({
@@ -28,6 +31,7 @@ export const ConsultExampleDetail: React.FC<Props> = ({
   onComment,
   onLikeMessage,
   onUnlikeMessage,
+  onCommentForMessage,
 }: Props) => {
   const { getMedicalSpecialityName } = useMedicalSpeciality();
   const { getAgeText, getGenderText } = useConsultExample();
@@ -131,6 +135,7 @@ export const ConsultExampleDetail: React.FC<Props> = ({
               consultExampleMessage={consultExampleMesasge}
               onLike={onLikeMessage}
               onUnlike={onUnlikeMessage}
+              onComment={onCommentForMessage}
             ></ConsultExampleDetailMessage>
           ))}
         </div>

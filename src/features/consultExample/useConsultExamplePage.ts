@@ -4,9 +4,14 @@ import { useFetchConsultExampleMessages } from '@/hooks/api/consultExample/useFe
 import { useCallback, useState } from 'react';
 import { CreateConsultExampleCommentData } from './ConsultExampleCommentModal';
 import { usePostConsultExampleComment } from '@/hooks/api/consultExample/usePostConsultExampleComment';
+import { ConsultExampleMessageEntity } from '@/types/entities/ConsultExampleMessageEntity';
 
 export const useConsultExamplePage = (id: string) => {
   const [commentFormMessage, setCommentFormMessage] = useState('');
+  const [
+    consultExampleMessageIdForComment,
+    setConsultExampleMessageIdForComment,
+  ] = useState(0);
   const [isCommentSending, setIsCommentSending] = useState(false);
 
   const { data: consultExample, mutate: mutateConsultExample } =
@@ -50,7 +55,10 @@ export const useConsultExamplePage = (id: string) => {
     [consultExample]
   );
 
-  const closeCommentForm = useCallback(() => setCommentFormMessage(''), []);
+  const closeCommentForm = useCallback(() => {
+    setCommentFormMessage('');
+    setConsultExampleMessageIdForComment(0);
+  }, []);
 
   const createComment = useCallback(
     async (data: CreateConsultExampleCommentData) => {
@@ -77,16 +85,61 @@ export const useConsultExamplePage = (id: string) => {
     [id, mutateConsultExample, postConsultExampleComment]
   );
 
+  const showCommentFormForMessage = useCallback(
+    (consultExampleMessage: ConsultExampleMessageEntity) => {
+      setCommentFormMessage(consultExampleMessage.message);
+      setConsultExampleMessageIdForComment(consultExampleMessage.uid);
+    },
+    []
+  );
+
+  const createCommentForMessage = useCallback(
+    async (data: CreateConsultExampleCommentData) => {
+      setIsCommentSending(true);
+
+      const response = await postConsultExampleComment({
+        ...data,
+        consultExampleId: id,
+        consultExampleMessageId: consultExampleMessageIdForComment,
+      }).catch((error) => {
+        console.error(error);
+        return null;
+      });
+
+      setIsCommentSending(false);
+
+      if (!response) {
+        alert('エラーが発生しました。');
+        return;
+      }
+
+      setCommentFormMessage('');
+      setConsultExampleMessageIdForComment(0);
+      mutateConsultExample();
+      mutateConsultExampleMessages();
+    },
+    [
+      consultExampleMessageIdForComment,
+      id,
+      mutateConsultExample,
+      mutateConsultExampleMessages,
+      postConsultExampleComment,
+    ]
+  );
+
   return {
     closeCommentForm,
     commentFormMessage,
     consultExample,
+    consultExampleMessageIdForComment,
     consultExampleMessages,
     createComment,
+    createCommentForMessage,
     likeAndMutate,
     likeMessageAndMutate,
     isCommentSending,
     showCommentForm,
+    showCommentFormForMessage,
     unlikeAndMutate,
     unlikeMessageAndMutate,
   };

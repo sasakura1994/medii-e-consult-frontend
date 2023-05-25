@@ -19,11 +19,14 @@ const ConsultExamplePage: NextPage = () => {
     commentFormMessage,
     consultExample,
     consultExampleMessages,
+    consultExampleMessageIdForComment,
     createComment,
+    createCommentForMessage,
     likeAndMutate,
     likeMessageAndMutate,
     isCommentSending,
     showCommentForm,
+    showCommentFormForMessage,
     unlikeAndMutate,
     unlikeMessageAndMutate,
   } = useConsultExamplePage(id);
@@ -41,6 +44,7 @@ const ConsultExamplePage: NextPage = () => {
             onLikeMessage={likeMessageAndMutate}
             onUnlikeMessage={unlikeMessageAndMutate}
             onComment={showCommentForm}
+            onCommentForMessage={showCommentFormForMessage}
           />
         )}
       </Container>
@@ -48,7 +52,11 @@ const ConsultExamplePage: NextPage = () => {
         <ConsultExampleCommentModal
           message={commentFormMessage}
           isSending={isCommentSending}
-          onCreate={createComment}
+          onCreate={
+            consultExampleMessageIdForComment === 0
+              ? createComment
+              : createCommentForMessage
+          }
           onClose={closeCommentForm}
         />
       )}

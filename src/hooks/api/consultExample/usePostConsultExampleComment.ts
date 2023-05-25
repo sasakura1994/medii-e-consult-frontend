@@ -6,14 +6,14 @@ type PostConsultExampleCommentArgs = {
   isAnonymous: boolean;
   body: string;
   consultExampleId: string;
-  consultExampleMessageId?: string;
+  consultExampleMessageId?: number;
 };
 
 type PostConsultExampleCommentRequestData = {
   is_anonymous: number;
   body: string;
   example_id: string;
-  example_message_id?: string;
+  example_message_id?: number;
 };
 
 type PostConsultExampleCommentResponseData = {
