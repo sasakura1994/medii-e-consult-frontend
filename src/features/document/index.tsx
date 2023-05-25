@@ -5,7 +5,6 @@ import DoctorNumberForm from './DoctorNumberForm';
 import DocumentInputCompleted from './DocumentInputCompleted';
 import DocumentInputAuto from './DocumentInputAuto';
 import DocumentInputDocument from './DocumentInputDocument';
-import { MyPageMenu } from '@/components/Parts/Menu/MyPageMenu';
 import { Container } from '@/components/Layouts/Container';
 import { CustomHead } from '@/components/Commons/CustomHead';
 import { MyPageLayoutWithoutSpFooterMenu } from '@/components/Layouts/MyPageLayoutWithoutSpFooterMenu';

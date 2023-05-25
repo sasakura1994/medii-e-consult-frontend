@@ -1,11 +1,7 @@
-import { DefaultButton } from '@/components/Parts/Button/DefaultButton';
-import { useRouter } from 'next/router';
 import React from 'react';
-import { Default } from 'react-toastify/dist/utils';
+import { CompleteCard } from './CompletedCard';
 
 const DocumentInputCompleted: React.FC = () => {
-  const router = useRouter();
-
   return (
     <div className="absolute top-0 left-0 right-0 flex items-center justify-center">
       <div className="mx-auto">
@@ -17,36 +13,30 @@ const DocumentInputCompleted: React.FC = () => {
           <br />
           Mediiのすべての機能は無料です。
         </p>
-        <div className="mt-10 flex space-x-2">
-          <div
-            className="mx-auto w-80 rounded-md bg-white p-6 shadow-md"
-            style={{ height: '362px' }}
-          >
-            <div className="mx-auto flex">
-              <p className="my-auto text-center text-lg font-bold">
-                専門医にコンサル
-              </p>
-              <p
-                className="my-auto mx-auto w-24 rounded-md bg-medii-blue-50
-              px-1 py-1 text-center text-xs text-medii-blue"
-              >
-                完全無料・匿名
-              </p>
-            </div>
-            <img
-              className="mx-auto mt-4"
-              src="/images/document/consult.svg"
-              alt="consult"
-            />
-            <p className="mx-auto mt-4 text-left text-sm text-secondary">
-              臨床疑問をエキスパートの医師とチャット形式で相談できます。相談内容に適した医師をMediiがマッチングします。
-            </p>
-            <div className="mt-4 flex space-x-2">
-              <DefaultButton>専門医に相談</DefaultButton>
-              <DefaultButton variant="outline">使い方を見る</DefaultButton>
-            </div>
-          </div>
+        <div className="mt-10 flex space-x-4">
+          <CompleteCard
+            title="専門医にコンサル"
+            label="完全無料・匿名"
+            imageSrc="/images/document/consult.svg"
+            description="臨床疑問をエキスパートの医師とチャット形式で相談できます。相談内容に適した医師をMediiがマッチングします。"
+            buttonSolid="専門医に相談"
+            buttonOutline="使い方を見る"
+          />
+          <CompleteCard
+            title="E-カンファ"
+            label="視聴チケット1枚プレゼント"
+            imageSrc="/images/document/conference.svg"
+            description="専門医の先生をお招きして、各診療科・症例の知見を広く提供するオンラインセミナーを実施しています。"
+            buttonOutline="セミナーを見る"
+          />
+          <CompleteCard
+            title="症例バンク"
+            imageSrc="/images/document/bank.svg"
+            description="論文・ガイドラインだけではわからない、臨床経験から蓄積された知見をスライド形式で閲覧できます。"
+            buttonOutline="症例スライドを見る"
+          />
         </div>
+        <p className=" mt-16">トップページに移動する</p>
       </div>
     </div>
   );
