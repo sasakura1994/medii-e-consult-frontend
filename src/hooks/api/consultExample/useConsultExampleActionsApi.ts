@@ -6,7 +6,7 @@ type LikeRequestData = {
   example_message_id?: number;
 };
 
-export const useConsultExampleActions = () => {
+export const useConsultExampleActionsApi = () => {
   const { axios } = useAxios();
 
   const like = useCallback(

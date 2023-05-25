@@ -9,15 +9,14 @@ import { ConsultExampleFirstAnswerTime } from './ConsultExampleFirstAnswerTime';
 import { dateFormat } from '@/libs/date';
 import { ConsultExampleActions } from './ConsultExampleActions';
 import { ConsultExampleDetailMessage } from './ConsultExampleDetailMessage';
+import { useConsultExampleActionsApi } from '@/hooks/api/consultExample/useConsultExampleActionsApi';
+import { useConsultExampleActions } from './useConsultExampleActions';
 
 type Props = {
   consultExample: ConsultExampleDetailEntity;
   consultExampleMessages: ConsultExampleMessageEntity[];
-  onLike?: () => void;
-  onUnlike?: () => void;
   onComment?: () => void;
-  onLikeMessage?: (consultExampleMessageId: number) => void;
-  onUnlikeMessage?: (consultExampleMessageId: number) => void;
+  onShowComments?: () => void;
   onCommentForMessage?: (
     consultExampleMessage: ConsultExampleMessageEntity
   ) => void;
@@ -26,15 +25,18 @@ type Props = {
 export const ConsultExampleDetail: React.FC<Props> = ({
   consultExample,
   consultExampleMessages,
-  onLike,
-  onUnlike,
   onComment,
-  onLikeMessage,
-  onUnlikeMessage,
+  onShowComments,
   onCommentForMessage,
 }: Props) => {
   const { getMedicalSpecialityName } = useMedicalSpeciality();
   const { getAgeText, getGenderText } = useConsultExample();
+  const {
+    likeAndMutate,
+    likeMessageAndMutate,
+    unlikeAndMutate,
+    unlikeMessageAndMutate,
+  } = useConsultExampleActions(consultExample.example_id);
 
   return (
     <>
@@ -117,13 +119,13 @@ export const ConsultExampleDetail: React.FC<Props> = ({
         <div className="mt-5">{consultExample.background}</div>
         <div className="mt-4">
           <ConsultExampleActions
-            likeCount={consultExample.all_like_count}
-            commentCount={consultExample.all_comment_count}
+            likeCount={consultExample.like_count}
+            commentCount={consultExample.comment_count}
             isLiked={consultExample.is_liked}
-            onLike={onLike}
-            onUnlike={onUnlike}
+            onLike={likeAndMutate}
+            onUnlike={unlikeAndMutate}
             onComment={onComment}
-            onShowComments={() => true}
+            onShowComments={onShowComments}
           />
         </div>
       </Card>
@@ -133,8 +135,8 @@ export const ConsultExampleDetail: React.FC<Props> = ({
             <ConsultExampleDetailMessage
               key={consultExampleMesasge.uid}
               consultExampleMessage={consultExampleMesasge}
-              onLike={onLikeMessage}
-              onUnlike={onUnlikeMessage}
+              onLike={likeMessageAndMutate}
+              onUnlike={unlikeMessageAndMutate}
               onComment={onCommentForMessage}
             ></ConsultExampleDetailMessage>
           ))}

@@ -6,6 +6,7 @@ import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 import { useConsultExamplePage } from '@/features/consultExample/useConsultExamplePage';
 import { ConsultExampleDetail } from '@/features/consultExample/ConsultExampleDetail';
 import { ConsultExampleCommentModal } from '@/features/consultExample/ConsultExampleCommentModal';
+import { ConsultExampleCommentsModal } from '@/features/consultExample/ConsultExampleCommentsModal';
 
 type Query = {
   id: string;
@@ -16,19 +17,19 @@ const ConsultExamplePage: NextPage = () => {
   const { id } = router.query as Query;
   const {
     closeCommentForm,
+    closeCommentsModal,
     commentFormMessage,
     consultExample,
     consultExampleMessages,
     consultExampleMessageIdForComment,
     createComment,
     createCommentForMessage,
-    likeAndMutate,
-    likeMessageAndMutate,
     isCommentSending,
+    messageIdForCommentsModal,
+    messageForCommentsModal,
+    openCommentsModal,
     showCommentForm,
     showCommentFormForMessage,
-    unlikeAndMutate,
-    unlikeMessageAndMutate,
   } = useConsultExamplePage(id);
   useEventLog({ name: `/example/${id}` });
 
@@ -39,12 +40,9 @@ const ConsultExamplePage: NextPage = () => {
           <ConsultExampleDetail
             consultExample={consultExample}
             consultExampleMessages={consultExampleMessages}
-            onLike={likeAndMutate}
-            onUnlike={unlikeAndMutate}
-            onLikeMessage={likeMessageAndMutate}
-            onUnlikeMessage={unlikeMessageAndMutate}
             onComment={showCommentForm}
             onCommentForMessage={showCommentFormForMessage}
+            onShowComments={openCommentsModal}
           />
         )}
       </Container>
@@ -58,6 +56,19 @@ const ConsultExamplePage: NextPage = () => {
               : createCommentForMessage
           }
           onClose={closeCommentForm}
+        />
+      )}
+      {messageIdForCommentsModal !== undefined && consultExample && (
+        <ConsultExampleCommentsModal
+          consultExample={consultExample}
+          message={messageForCommentsModal}
+          isSending={isCommentSending}
+          onCreate={
+            consultExampleMessageIdForComment === 0
+              ? createComment
+              : createCommentForMessage
+          }
+          onClose={closeCommentsModal}
         />
       )}
     </>

@@ -1,4 +1,3 @@
-import { useConsultExampleActions } from '@/hooks/api/consultExample/useConsultExampleActions';
 import { useFetchConsultExample } from '@/hooks/api/consultExample/useFetchConsultExample';
 import { useFetchConsultExampleMessages } from '@/hooks/api/consultExample/useFetchConsultExampleMessages';
 import { useCallback, useState } from 'react';
@@ -12,43 +11,18 @@ export const useConsultExamplePage = (id: string) => {
     consultExampleMessageIdForComment,
     setConsultExampleMessageIdForComment,
   ] = useState(0);
+  /** 閉じている場合はundefined。0の場合は事例自体のコメント  */
+  const [messageIdForCommentsModal, setMessageIdForCommentsModal] = useState<
+    number | undefined
+  >();
+  const [messageForCommentsModal, setMessageForCommentsModal] = useState('');
   const [isCommentSending, setIsCommentSending] = useState(false);
 
   const { data: consultExample, mutate: mutateConsultExample } =
     useFetchConsultExample(id);
   const { data: consultExampleMessages, mutate: mutateConsultExampleMessages } =
     useFetchConsultExampleMessages(id);
-  const { like, likeMessage, unlike, unlikeMessage } =
-    useConsultExampleActions();
   const { postConsultExampleComment } = usePostConsultExampleComment();
-
-  const likeAndMutate = useCallback(async () => {
-    await like(id);
-    mutateConsultExample();
-  }, [id, like, mutateConsultExample]);
-
-  const unlikeAndMutate = useCallback(async () => {
-    await unlike(id);
-    mutateConsultExample();
-  }, [id, unlike, mutateConsultExample]);
-
-  const likeMessageAndMutate = useCallback(
-    async (consultExampleMessageId: number) => {
-      await likeMessage(id, consultExampleMessageId);
-      mutateConsultExample();
-      mutateConsultExampleMessages();
-    },
-    [id, likeMessage, mutateConsultExample, mutateConsultExampleMessages]
-  );
-
-  const unlikeMessageAndMutate = useCallback(
-    async (consultExampleMessageId: number) => {
-      await unlikeMessage(id, consultExampleMessageId);
-      mutateConsultExample();
-      mutateConsultExampleMessages();
-    },
-    [unlikeMessage, id, mutateConsultExample, mutateConsultExampleMessages]
-  );
 
   const showCommentForm = useCallback(
     () => setCommentFormMessage(consultExample?.background ?? ''),
@@ -127,20 +101,29 @@ export const useConsultExamplePage = (id: string) => {
     ]
   );
 
+  const openCommentsModal = useCallback(() => {
+    setMessageIdForCommentsModal(0);
+    setMessageForCommentsModal(consultExample?.background ?? '');
+  }, [consultExample?.background]);
+
+  const closeCommentsModal = useCallback(() => {
+    setMessageIdForCommentsModal(undefined);
+  }, []);
+
   return {
     closeCommentForm,
+    closeCommentsModal,
     commentFormMessage,
     consultExample,
     consultExampleMessageIdForComment,
     consultExampleMessages,
     createComment,
     createCommentForMessage,
-    likeAndMutate,
-    likeMessageAndMutate,
     isCommentSending,
+    messageIdForCommentsModal,
+    messageForCommentsModal,
+    openCommentsModal,
     showCommentForm,
     showCommentFormForMessage,
-    unlikeAndMutate,
-    unlikeMessageAndMutate,
   };
 };
