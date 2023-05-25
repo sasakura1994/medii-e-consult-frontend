@@ -11,6 +11,8 @@ const AssignPage: NextPageWithLayout = () => {
   const {
     assign,
     chatRoom,
+    consultExample,
+    consultExampleMessages,
     errorMessage,
     images,
     isConfirming,
@@ -22,7 +24,7 @@ const AssignPage: NextPageWithLayout = () => {
     <>
       {chatRoom &&
         (chatRoom.status === 'CREATED' ? (
-          <Container className="mt-4 mb-10">
+          <Container className="mb-10 mt-4">
             <Assign
               chatRoom={chatRoom}
               images={images || []}
@@ -30,7 +32,11 @@ const AssignPage: NextPageWithLayout = () => {
             />
           </Container>
         ) : (
-          <AlreadyAssigned chatRoom={chatRoom} />
+          <AlreadyAssigned
+            chatRoom={chatRoom}
+            consultExample={consultExample}
+            consultExampleMessages={consultExampleMessages}
+          />
         ))}
       {isConfirming && (
         <AssignConfirmationModal

@@ -1,16 +1,18 @@
 import { useAxios } from '@/hooks/network/useAxios';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 type Args = {
   name: string;
 };
 
 export const useEventLog = (args: Args) => {
-  const { axios } = useAxios();
+  const { axios, hasToken } = useAxios();
+  const [isSent, setIsSent] = useState(false);
 
   useEffect(() => {
-    axios.post('/event-log', args);
-    // 初期化時のみのため
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (hasToken && !isSent) {
+      setIsSent(true);
+      axios.post('/event-log', args);
+    }
+  }, [args, axios, hasToken, isSent]);
 };
