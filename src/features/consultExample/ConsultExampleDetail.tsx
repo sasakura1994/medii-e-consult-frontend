@@ -15,6 +15,7 @@ type Props = {
   consultExampleMessages: ConsultExampleMessageEntity[];
   onLike?: () => void;
   onUnlike?: () => void;
+  onComment?: () => void;
   onLikeMessage?: (consultExampleMessageId: number) => void;
   onUnlikeMessage?: (consultExampleMessageId: number) => void;
 };
@@ -24,6 +25,7 @@ export const ConsultExampleDetail: React.FC<Props> = ({
   consultExampleMessages,
   onLike,
   onUnlike,
+  onComment,
   onLikeMessage,
   onUnlikeMessage,
 }: Props) => {
@@ -116,7 +118,7 @@ export const ConsultExampleDetail: React.FC<Props> = ({
             isLiked={consultExample.is_liked}
             onLike={onLike}
             onUnlike={onUnlike}
-            onComment={() => true}
+            onComment={onComment}
             onShowComments={() => true}
           />
         </div>

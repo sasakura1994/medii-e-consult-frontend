@@ -7,7 +7,7 @@ type Props = {
   isShortOnMobile?: boolean;
   onLike?: () => void;
   onUnlike?: () => void;
-  onComment: () => void;
+  onComment?: () => void;
   onShowComments: () => void;
 };
 
@@ -18,6 +18,7 @@ export const ConsultExampleActions: React.FC<Props> = ({
   isShortOnMobile = false,
   onLike,
   onUnlike,
+  onComment,
 }: Props) => {
   const likeOrUnlike = isLiked ? onUnlike : onLike;
 
@@ -39,9 +40,7 @@ export const ConsultExampleActions: React.FC<Props> = ({
           className="flex items-center"
           onClick={(e) => {
             e.preventDefault();
-            if (likeOrUnlike) {
-              likeOrUnlike();
-            }
+            likeOrUnlike?.();
           }}
         >
           <img
@@ -52,14 +51,23 @@ export const ConsultExampleActions: React.FC<Props> = ({
           />
           <div className="ml-1">いいね</div>
         </a>
-        <img
-          src="/icons/comment.svg"
-          width="24"
-          height="24"
-          className="ml-4 block"
-          alt=""
-        />
-        <div className="ml-1">コメントする</div>
+        <a
+          href={likeOrUnlike ? '#' : undefined}
+          className="flex items-center"
+          onClick={(e) => {
+            e.preventDefault();
+            onComment?.();
+          }}
+        >
+          <img
+            src="/icons/comment.svg"
+            width="24"
+            height="24"
+            className="ml-4 block"
+            alt=""
+          />
+          <div className="ml-1">コメントする</div>
+        </a>
       </div>
       <div className="flex items-center text-xs">
         <img
