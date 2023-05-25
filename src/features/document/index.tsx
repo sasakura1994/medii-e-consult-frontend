@@ -63,12 +63,13 @@ export const Document = () => {
   return (
     <div>
       <CustomHead />
-      <div className="h-screen bg-white">
-        <Layout headerFigure="logoOnly">
-          <div className="relative h-72 w-full bg-medii-blue-50" />
+
+      <Layout headerFigure="logoOnly">
+        <div className="min-h-screen bg-white">
+          <div className="h-72 bg-medii-blue-50" />
           <DocumentInputCompleted />
-        </Layout>
-      </div>
+        </div>
+      </Layout>
     </div>
   );
 };

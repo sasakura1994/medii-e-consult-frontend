@@ -4,16 +4,16 @@ import { CompleteCard } from './CompletedCard';
 const DocumentInputCompleted: React.FC = () => {
   return (
     <div className="absolute top-0 left-0 right-0 flex items-center justify-center">
-      <div className="mx-auto">
+      <div className="mx-auto px-8">
         <p className="mt-28 text-center text-2xl font-bold text-medii-blue">
           Mediiにようこそ
         </p>
-        <p className="mt-6 text-center text-base">
-          Mediiでは医師の臨床疑問や不安を解消する3つのサービスをご利用いただけます。{' '}
+        <p className="mt-6 text-base lg:text-center">
+          Mediiでは医師の臨床疑問や不安を解消する3つのサービスをご利用いただけます。
           <br />
           Mediiのすべての機能は無料です。
         </p>
-        <div className="mt-10 flex space-x-4">
+        <div className="mt-10 flex flex-col space-y-4 lg:flex-row lg:space-x-4 lg:space-y-0">
           <CompleteCard
             title="専門医にコンサル"
             label="完全無料・匿名"
