@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 type DocumentInputCompletedProps = {
   isInvited: boolean;
@@ -9,15 +9,6 @@ const DocumentInputCompleted: React.FC<DocumentInputCompletedProps> = ({
   isInvited,
 }) => {
   const router = useRouter();
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      // TODO: ここではTopに遷移しているが、実際にはTop以外の画面に遷移する可能性もある
-      router.push('/Top');
-    }, 5000);
-
-    return () => clearTimeout(timeout);
-  }, [router]);
 
   return (
     <div className="border-1 rounded-xs mt-10 -mb-10 w-full border bg-white pb-5 lg:mb-0 lg:px-16 lg:pb-6">
