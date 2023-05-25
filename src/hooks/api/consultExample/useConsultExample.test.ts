@@ -1,6 +1,6 @@
 import 'cross-fetch/polyfill';
 import { renderHook, act } from '@testing-library/react';
-import { useConsultExample } from './useConsultExample';
+import { useConsultExample } from '../../../features/consultExample/useConsultExample';
 
 describe('useConsultExample', () => {
   test('getAgeText', async () => {
