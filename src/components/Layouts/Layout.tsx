@@ -3,8 +3,9 @@ import { Header } from '@/components/Layouts/Header/Header';
 import { HeaderSimple } from '@/components/Layouts/Header/HeaderSimple';
 import { FooterSpMenu } from '@/components/Commons/FooterSpMenu';
 import { useAuthenticationOnPage } from '@/hooks/authentication/useAuthenticationOnPage';
+import { HeaderLogoOnly } from './Header/HeaderLogoOnly';
 
-type HeaderFigureType = 'default' | 'simple';
+type HeaderFigureType = 'default' | 'simple' | 'logoOnly';
 
 type PropsType = {
   children: React.ReactNode;
@@ -18,14 +19,29 @@ export const Layout = (props: PropsType) => {
   return (
     <>
       {!headerFigure || headerFigure === 'default' ? (
-        <Header />
+        <>
+          <Header />
+          <main>{children}</main>
+          <FooterSpMenu />
+        </>
       ) : headerFigure === 'simple' ? (
-        <HeaderSimple />
+        <>
+          <HeaderSimple />
+          <main>{children}</main>
+          <FooterSpMenu />
+        </>
+      ) : headerFigure === 'logoOnly' ? (
+        <>
+          <HeaderLogoOnly />
+          <main>{children}</main>
+        </>
       ) : (
-        <Header />
+        <>
+          <Header />
+          <main>{children}</main>
+          <FooterSpMenu />
+        </>
       )}
-      <main>{children}</main>
-      <FooterSpMenu />
     </>
   );
 };

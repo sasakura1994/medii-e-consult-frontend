@@ -7,6 +7,7 @@ module.exports = {
       colors: {
         primary: '#5c6bc0',
         'primary-light': '#e2e7ff',
+        "secondary": "#667385",
         error: '#f27474',
         strong: '#f5847d',
         bg: '#eff3f6',
@@ -20,6 +21,8 @@ module.exports = {
         'btn-light-gray': '#ccc',
         'block-gray': '#999',
         'heading-line': '#dcdcdc',
+        "medii-blue": "#0758E4",
+        "medii-blue-50": "#F2F7FF",
       },
       fontSize: {
         xxs: '10px',

@@ -9,6 +9,7 @@ import { MyPageMenu } from '@/components/Parts/Menu/MyPageMenu';
 import { Container } from '@/components/Layouts/Container';
 import { CustomHead } from '@/components/Commons/CustomHead';
 import { MyPageLayoutWithoutSpFooterMenu } from '@/components/Layouts/MyPageLayoutWithoutSpFooterMenu';
+import { Layout } from '@/components/Layouts/Layout';
 
 export type DocumentSelected =
   | ''
@@ -33,9 +34,6 @@ export const Document = () => {
         <CustomHead />
         <MyPageLayoutWithoutSpFooterMenu>
           <Container className="mt-4 mb-10">
-            <div className="-mt-12">
-              <MyPageMenu />
-            </div>
             <div className="mt-5 flex h-full w-full flex-col items-center justify-center">
               <h1 className="mb-8 text-2xl font-bold lg:mt-5">
                 Medii 会員登録
@@ -64,11 +62,14 @@ export const Document = () => {
     );
   }
   return (
-    <>
+    <div>
       <CustomHead />
-      <Container className="mt-4 mb-10">
-        <DocumentInputCompleted isInvited={false} />
-      </Container>
-    </>
+      <div className="h-screen bg-white">
+        <Layout headerFigure="logoOnly">
+          <div className="relative h-72 w-full bg-medii-blue-50" />
+          <DocumentInputCompleted />
+        </Layout>
+      </div>
+    </div>
   );
 };
