@@ -36,7 +36,14 @@ const DocumentInputCompleted: React.FC = () => {
             buttonOutline="症例スライドを見る"
           />
         </div>
-        <p className=" mt-16">トップページに移動する</p>
+        <div className="mt-16 mb-4 flex cursor-pointer items-center justify-center space-x-1">
+          <p className="text-base text-secondary">トップページに移動する</p>
+          <img
+            className="mt-0.5 text-secondary"
+            src="icons/arrow_right_short.svg"
+            alt="arrow_right_short"
+          />
+        </div>
       </div>
     </div>
   );

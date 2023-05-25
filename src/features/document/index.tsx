@@ -61,15 +61,14 @@ export const Document = () => {
     );
   }
   return (
-    <div>
+    <>
       <CustomHead />
-
       <Layout headerFigure="logoOnly">
-        <div className="min-h-screen bg-white">
+        <div className="bg-white" style={{ height: '110vh' }}>
           <div className="h-72 bg-medii-blue-50" />
           <DocumentInputCompleted />
         </div>
       </Layout>
-    </div>
+    </>
   );
 };

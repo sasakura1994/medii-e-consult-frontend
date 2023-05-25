@@ -5,7 +5,9 @@ import { HeaderLogo } from './HeaderLogo';
 export const HeaderLogoOnly: React.FC = () => {
   return (
     <HeaderContainer>
-      <HeaderLogo />
+      <div className="z-10">
+        <HeaderLogo />
+      </div>
     </HeaderContainer>
   );
 };
