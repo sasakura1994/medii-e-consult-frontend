@@ -1,5 +1,6 @@
 import React from 'react';
 import { CompleteCard } from './CompletedCard';
+import Link from 'next/link';
 
 const DocumentInputCompleted: React.FC = () => {
   return (
@@ -20,7 +21,9 @@ const DocumentInputCompleted: React.FC = () => {
             imageSrc="/images/document/consult.svg"
             description="臨床疑問をエキスパートの医師とチャット形式で相談できます。相談内容に適した医師をMediiがマッチングします。"
             buttonSolid="専門医に相談"
+            linkSolid="/Chat"
             buttonOutline="使い方を見る"
+            linkOutline="/HowToUse"
           />
           <CompleteCard
             title="E-カンファ"
@@ -28,22 +31,26 @@ const DocumentInputCompleted: React.FC = () => {
             imageSrc="/images/document/conference.svg"
             description="専門医の先生をお招きして、各診療科・症例の知見を広く提供するオンラインセミナーを実施しています。"
             buttonOutline="セミナーを見る"
+            linkOutline="/seminar"
           />
           <CompleteCard
             title="症例バンク"
             imageSrc="/images/document/bank.svg"
             description="論文・ガイドラインだけではわからない、臨床経験から蓄積された知見をスライド形式で閲覧できます。"
             buttonOutline="症例スライドを見る"
+            linkOutline={process.env.CASE_BANK_URL ?? ''}
           />
         </div>
-        <div className="mt-16 mb-4 flex cursor-pointer items-center justify-center space-x-1">
-          <p className="text-base text-secondary">トップページに移動する</p>
-          <img
-            className="mt-0.5 text-secondary"
-            src="icons/arrow_right_short.svg"
-            alt="arrow_right_short"
-          />
-        </div>
+        <Link href="/top">
+          <div className="mt-16 mb-4 flex cursor-pointer items-center justify-center space-x-1">
+            <p className="text-base text-secondary">トップページに移動する</p>
+            <img
+              className="mt-0.5 text-secondary"
+              src="icons/arrow_right_short.svg"
+              alt="arrow_right_short"
+            />
+          </div>
+        </Link>
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 import { DefaultButton } from '@/components/Parts/Button/DefaultButton';
+import Link from 'next/link';
 import React from 'react';
 
 type CompleteCardProps = {
@@ -8,11 +9,21 @@ type CompleteCardProps = {
   description: string;
   buttonSolid?: string;
   buttonOutline?: string;
+  linkSolid?: string;
+  linkOutline?: string;
 };
 
 export const CompleteCard = (props: CompleteCardProps) => {
-  const { title, label, imageSrc, description, buttonSolid, buttonOutline } =
-    props;
+  const {
+    title,
+    label,
+    imageSrc,
+    description,
+    buttonSolid,
+    buttonOutline,
+    linkSolid,
+    linkOutline,
+  } = props;
   return (
     <>
       <div
@@ -37,13 +48,17 @@ export const CompleteCard = (props: CompleteCardProps) => {
           {description}
         </p>
         <div className="mt-6 flex justify-center space-x-2">
-          {buttonSolid && (
-            <DefaultButton width="full">{buttonSolid}</DefaultButton>
+          {buttonSolid && linkSolid && (
+            <Link href={linkSolid}>
+              <DefaultButton width="full">{buttonSolid}</DefaultButton>
+            </Link>
           )}
-          {buttonOutline && (
-            <DefaultButton width="full" variant="outline">
-              {buttonOutline}
-            </DefaultButton>
+          {buttonOutline && linkOutline && (
+            <Link href={linkOutline}>
+              <DefaultButton width="full" variant="outline">
+                {buttonOutline}
+              </DefaultButton>
+            </Link>
           )}
         </div>
       </div>
