@@ -64,10 +64,8 @@ export const Document = () => {
     <>
       <CustomHead />
       <Layout headerFigure="logoOnly">
-        <div className="bg-white" style={{ height: '110vh' }}>
-          <div className="h-72 bg-medii-blue-50" />
-          <DocumentInputCompleted />
-        </div>
+        <div className="h-72 bg-medii-blue-50" />
+        <DocumentInputCompleted />
       </Layout>
     </>
   );
