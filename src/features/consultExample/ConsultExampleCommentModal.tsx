@@ -6,6 +6,7 @@ import { useConsultExampleCommentModal } from './useConsultExampleCommentModal';
 import { ExpandTextArea } from '@/components/Parts/Form/ExpandTextArea';
 import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
+import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
 
 export type CreateConsultExampleCommentData = {
   isAnonymous: boolean;
@@ -13,20 +14,25 @@ export type CreateConsultExampleCommentData = {
 };
 
 type Props = {
+  consultExampleId: string;
   message: string;
-  isSending: boolean;
-  onCreate: (data: CreateConsultExampleCommentData) => void;
   onClose: () => void;
 };
 
 export const ConsultExampleCommentModal: React.FC<Props> = ({
+  consultExampleId,
   message,
-  isSending,
-  onCreate,
   onClose,
 }: Props) => {
-  const { body, isAnonymous, setBody, setIsAnonymous } =
-    useConsultExampleCommentModal();
+  const {
+    body,
+    createComment,
+    isAnonymous,
+    isCommentSending,
+    isCompleted,
+    setBody,
+    setIsAnonymous,
+  } = useConsultExampleCommentModal(consultExampleId);
 
   return (
     <Modal
@@ -42,7 +48,7 @@ export const ConsultExampleCommentModal: React.FC<Props> = ({
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            onCreate({ isAnonymous, body });
+            createComment();
           }}
         >
           <div className="mt-2 flex gap-4">
@@ -78,7 +84,7 @@ export const ConsultExampleCommentModal: React.FC<Props> = ({
             />
           </div>
           <div className="mt-2 flex justify-end">
-            {isSending ? (
+            {isCommentSending ? (
               <SpinnerBorder />
             ) : (
               <PrimaryButton
@@ -90,6 +96,13 @@ export const ConsultExampleCommentModal: React.FC<Props> = ({
               </PrimaryButton>
             )}
           </div>
+          {isCompleted && (
+            <div className="mt-2">
+              <ErrorMessage className="text-center">
+                コメントを投稿しました。
+              </ErrorMessage>
+            </div>
+          )}
         </form>
       </div>
     </Modal>

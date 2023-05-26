@@ -1,11 +1,16 @@
 import { useConsultExampleActionsApi } from '@/hooks/api/consultExample/useConsultExampleActionsApi';
 import { mutateFetchConsultExample } from '@/hooks/api/consultExample/useFetchConsultExample';
 import { mutateFetchConsultExampleMessages } from '@/hooks/api/consultExample/useFetchConsultExampleMessages';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
+import { CreateConsultExampleCommentData } from './ConsultExampleCommentModal';
+import { usePostConsultExampleComment } from '@/hooks/api/consultExample/usePostConsultExampleComment';
 
 export const useConsultExampleActions = (id: string) => {
+  const [isCommentSending, setIsCommentSending] = useState(false);
+
   const { like, likeMessage, unlike, unlikeMessage } =
     useConsultExampleActionsApi();
+  const { postConsultExampleComment } = usePostConsultExampleComment();
 
   const likeAndMutate = useCallback(async () => {
     await like(id);
@@ -35,7 +40,64 @@ export const useConsultExampleActions = (id: string) => {
     [unlikeMessage, id]
   );
 
+  const createCommentAndMutate = useCallback(
+    async (data: CreateConsultExampleCommentData) => {
+      setIsCommentSending(true);
+
+      const response = await postConsultExampleComment({
+        ...data,
+        consultExampleId: id,
+      }).catch((error) => {
+        console.error(error);
+        return null;
+      });
+
+      setIsCommentSending(false);
+
+      if (!response) {
+        alert('エラーが発生しました。');
+        return false;
+      }
+
+      mutateFetchConsultExample(id);
+      return true;
+    },
+    [id, postConsultExampleComment]
+  );
+
+  const createCommentForMessageAndMutate = useCallback(
+    async (
+      consultExampleMessageId: number,
+      data: CreateConsultExampleCommentData
+    ) => {
+      setIsCommentSending(true);
+
+      const response = await postConsultExampleComment({
+        ...data,
+        consultExampleId: id,
+        consultExampleMessageId,
+      }).catch((error) => {
+        console.error(error);
+        return null;
+      });
+
+      setIsCommentSending(false);
+
+      if (!response) {
+        alert('エラーが発生しました。');
+        return;
+      }
+
+      mutateFetchConsultExample(id);
+      mutateFetchConsultExampleMessages(id);
+    },
+    [id, postConsultExampleComment]
+  );
+
   return {
+    createCommentAndMutate,
+    createCommentForMessageAndMutate,
+    isCommentSending,
     likeAndMutate,
     likeMessageAndMutate,
     unlikeAndMutate,

@@ -9,11 +9,7 @@ import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 import { ConsultExampleActions } from './ConsultExampleActions';
 import { ConsultExampleDetailEntity } from '@/types/entities/ConsultExampleDetailEntity';
 import { useConsultExampleActions } from './useConsultExampleActions';
-
-export type CreateConsultExampleCommentData = {
-  isAnonymous: boolean;
-  body: string;
-};
+import { CreateConsultExampleCommentData } from './ConsultExampleCommentModal';
 
 type Props = {
   consultExample: ConsultExampleDetailEntity;

@@ -22,9 +22,6 @@ const ConsultExamplePage: NextPage = () => {
     consultExample,
     consultExampleMessages,
     consultExampleMessageIdForComment,
-    createComment,
-    createCommentForMessage,
-    isCommentSending,
     messageIdForCommentsModal,
     messageForCommentsModal,
     openCommentsModal,
@@ -46,30 +43,23 @@ const ConsultExamplePage: NextPage = () => {
           />
         )}
       </Container>
-      {commentFormMessage !== '' && (
-        <ConsultExampleCommentModal
-          message={commentFormMessage}
-          isSending={isCommentSending}
-          onCreate={
-            consultExampleMessageIdForComment === 0
-              ? createComment
-              : createCommentForMessage
-          }
-          onClose={closeCommentForm}
-        />
-      )}
-      {messageIdForCommentsModal !== undefined && consultExample && (
-        <ConsultExampleCommentsModal
-          consultExample={consultExample}
-          message={messageForCommentsModal}
-          isSending={isCommentSending}
-          onCreate={
-            consultExampleMessageIdForComment === 0
-              ? createComment
-              : createCommentForMessage
-          }
-          onClose={closeCommentsModal}
-        />
+      {consultExample && (
+        <>
+          {commentFormMessage !== '' && (
+            <ConsultExampleCommentModal
+              consultExampleId={consultExample.example_id}
+              message={commentFormMessage}
+              onClose={closeCommentForm}
+            />
+          )}
+          {messageIdForCommentsModal !== undefined && (
+            <ConsultExampleCommentsModal
+              consultExample={consultExample}
+              message={messageForCommentsModal}
+              onClose={closeCommentsModal}
+            />
+          )}
+        </>
       )}
     </>
   );
