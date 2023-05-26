@@ -40,7 +40,7 @@ export const Document = () => {
     }
   }, [router, selected]);
 
-  if (selected !== 'completed') {
+  if (mode !== 'completed') {
     return (
       <>
         <CustomHead />
@@ -73,15 +73,14 @@ export const Document = () => {
       </>
     );
   }
-  if (mode === 'completed') {
-    return (
-      <>
-        <CustomHead />
-        <Layout headerFigure="logoOnly">
-          <div className="h-72 bg-medii-blue-100" />
-          <DocumentInputCompleted />
-        </Layout>
-      </>
-    );
-  }
+
+  return (
+    <>
+      <CustomHead />
+      <Layout headerFigure="logoOnly">
+        <div className="h-72 bg-medii-blue-100" />
+        <DocumentInputCompleted />
+      </Layout>
+    </>
+  );
 };
