@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import RegistrationProgress, { DocumentMode } from './RegistrationProgress';
 import DocumentTypeSelect from './DocumentTypeSelect';
 import DoctorNumberForm from './DoctorNumberForm';
-import DocumentInputCompleted from './DocumentInputCompleted';
 import DocumentInputAuto from './DocumentInputAuto';
 import DocumentInputDocument from './DocumentInputDocument';
 import { Container } from '@/components/Layouts/Container';
-import { CustomHead } from '@/components/Commons/CustomHead';
-import { MyPageLayoutWithoutSpFooterMenu } from '@/components/Layouts/MyPageLayoutWithoutSpFooterMenu';
-import { Layout } from '@/components/Layouts/Layout';
 import { useRouter } from 'next/router';
+import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 
 export type DocumentSelected =
   | ''
@@ -20,10 +17,16 @@ export type DocumentSelected =
 
 export const Document = () => {
   const [selected, setSelected] = useState<DocumentSelected>('');
-  const [mode, setMode] = useState<DocumentMode>('document');
+  const [mode] = useState<DocumentMode>('document');
   const router = useRouter();
+  const { postEventLog } = useEventLog();
 
   const loginRedirectUrlKey = 'Login::RedirectURL';
+
+  const routerPushToWelcomePage = useCallback(async () => {
+    await postEventLog({ name: 'document-complete' });
+    router.push('/welcome');
+  }, [postEventLog, router]);
 
   useEffect(() => {
     if (selected === 'completed' && localStorage) {
@@ -35,52 +38,31 @@ export const Document = () => {
       ) {
         router.push(savedRedirectUrl);
       } else {
-        setMode('completed');
+        routerPushToWelcomePage();
       }
     }
-  }, [router, selected]);
-
-  if (mode !== 'completed') {
-    return (
-      <>
-        <CustomHead />
-        <MyPageLayoutWithoutSpFooterMenu>
-          <Container className="mt-4 mb-10">
-            <div className="mt-5 flex h-full w-full flex-col items-center justify-center">
-              <h1 className="mb-8 text-2xl font-bold lg:mt-5">
-                Medii 会員登録
-              </h1>
-              <div className="lg:w-11/12">
-                <RegistrationProgress mode={mode} />
-              </div>
-              {selected === '' && (
-                <div className="border-1 rounded-xs mt-10 -mb-20 w-full border bg-white lg:px-20 lg:pb-7">
-                  <DocumentTypeSelect setSelected={setSelected} />
-                </div>
-              )}
-              {selected === 'number' && (
-                <DoctorNumberForm setSelected={setSelected} />
-              )}
-              {selected === 'document' && (
-                <DocumentInputDocument setSelected={setSelected} />
-              )}
-              {selected === 'auto' && (
-                <DocumentInputAuto setSelected={setSelected} />
-              )}
-            </div>
-          </Container>
-        </MyPageLayoutWithoutSpFooterMenu>
-      </>
-    );
-  }
+  }, [router, routerPushToWelcomePage, selected]);
 
   return (
-    <>
-      <CustomHead />
-      <Layout headerFigure="logoOnly">
-        <div className="h-72 bg-medii-blue-100" />
-        <DocumentInputCompleted />
-      </Layout>
-    </>
+    <Container className="mt-4 mb-10">
+      <div className="mt-5 flex h-full w-full flex-col items-center justify-center">
+        <h1 className="mb-8 text-2xl font-bold lg:mt-5">Medii 会員登録</h1>
+        <div className="lg:w-11/12">
+          <RegistrationProgress mode={mode} />
+        </div>
+        {selected === '' && (
+          <div className="border-1 rounded-xs mt-10 -mb-20 w-full border bg-white lg:px-20 lg:pb-7">
+            <DocumentTypeSelect setSelected={setSelected} />
+          </div>
+        )}
+        {selected === 'number' && (
+          <DoctorNumberForm setSelected={setSelected} />
+        )}
+        {selected === 'document' && (
+          <DocumentInputDocument setSelected={setSelected} />
+        )}
+        {selected === 'auto' && <DocumentInputAuto setSelected={setSelected} />}
+      </div>
+    </Container>
   );
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Document } from '@/features/document';
 import { NextPageWithLayout } from './_app';
+import { MyPageLayoutWithoutSpFooterMenu } from '@/components/Layouts/MyPageLayoutWithoutSpFooterMenu';
 
 const DocumentPage: NextPageWithLayout = () => {
   return <Document />;
@@ -8,4 +9,6 @@ const DocumentPage: NextPageWithLayout = () => {
 
 export default DocumentPage;
 
-DocumentPage.getLayout = (page) => <>{page}</>;
+DocumentPage.getLayout = (page) => (
+  <MyPageLayoutWithoutSpFooterMenu>{page}</MyPageLayoutWithoutSpFooterMenu>
+);
