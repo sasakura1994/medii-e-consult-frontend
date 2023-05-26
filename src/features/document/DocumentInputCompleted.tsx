@@ -23,7 +23,7 @@ const DocumentInputCompleted: React.FC = () => {
             buttonSolid="専門医に相談"
             linkSolid="/Chat"
             buttonOutline="使い方を見る"
-            linkOutline="/HowToUse"
+            linkOutline="/top?tutorial=true"
           />
           <CompleteCard
             title="E-カンファ"
