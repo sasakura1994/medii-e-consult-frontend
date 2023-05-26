@@ -4,12 +4,24 @@ import { mutateFetchConsultExampleMessages } from '@/hooks/api/consultExample/us
 import { useCallback, useState } from 'react';
 import { CreateConsultExampleCommentData } from './ConsultExampleCommentModal';
 import { usePostConsultExampleComment } from '@/hooks/api/consultExample/usePostConsultExampleComment';
+import { mutateFetchConsultExampleComments } from '@/hooks/api/consultExample/useFetchConsultExampleComments';
+
+type LikeCommentArgs = {
+  consultExampleMessageId?: number;
+  consultExampleCommentId: string;
+};
 
 export const useConsultExampleActions = (id: string) => {
   const [isCommentSending, setIsCommentSending] = useState(false);
 
-  const { like, likeMessage, unlike, unlikeMessage } =
-    useConsultExampleActionsApi();
+  const {
+    like,
+    likeMessage,
+    unlike,
+    unlikeMessage,
+    likeComment,
+    unlikeComment,
+  } = useConsultExampleActionsApi();
   const { postConsultExampleComment } = usePostConsultExampleComment();
 
   const likeAndMutate = useCallback(async () => {
@@ -38,6 +50,26 @@ export const useConsultExampleActions = (id: string) => {
       mutateFetchConsultExampleMessages(id);
     },
     [unlikeMessage, id]
+  );
+
+  const likeCommentAndMutate = useCallback(
+    async (args: LikeCommentArgs) => {
+      await likeComment({ ...args, consultExampleId: id });
+      mutateFetchConsultExample(id);
+      mutateFetchConsultExampleMessages(id);
+      mutateFetchConsultExampleComments(id, args.consultExampleMessageId);
+    },
+    [id, likeComment]
+  );
+
+  const unlikeCommentAndMutate = useCallback(
+    async (args: LikeCommentArgs) => {
+      await unlikeComment({ ...args, consultExampleId: id });
+      mutateFetchConsultExample(id);
+      mutateFetchConsultExampleMessages(id);
+      mutateFetchConsultExampleComments(id, args.consultExampleMessageId);
+    },
+    [id, unlikeComment]
   );
 
   const createCommentAndMutate = useCallback(
@@ -100,8 +132,10 @@ export const useConsultExampleActions = (id: string) => {
     createCommentForMessageAndMutate,
     isCommentSending,
     likeAndMutate,
+    likeCommentAndMutate,
     likeMessageAndMutate,
     unlikeAndMutate,
+    unlikeCommentAndMutate,
     unlikeMessageAndMutate,
   };
 };

@@ -2,14 +2,12 @@ import React from 'react';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import { ModalTitleWithCloseButton } from '@/components/Parts/Modal/ModalTitleWithCloseButton';
 import { Radio } from '@/components/Parts/Form/Radio';
-import { useConsultExampleCommentModal } from './useConsultExampleCommentModal';
 import { ExpandTextArea } from '@/components/Parts/Form/ExpandTextArea';
 import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 import { ConsultExampleActions } from './ConsultExampleActions';
 import { ConsultExampleDetailEntity } from '@/types/entities/ConsultExampleDetailEntity';
 import { useConsultExampleActions } from './useConsultExampleActions';
-import { useFetchConsultExampleComments } from '@/hooks/api/consultExample/useFetchConsultExampleComments';
 import { useDoctor } from '@/hooks/useDoctor';
 import { dateFormat } from '@/libs/date';
 import { useConsultExampleCommentsModal } from './useConsultExampleCommentsModal';
@@ -36,9 +34,12 @@ export const ConsultExampleCommentsModal: React.FC<Props> = ({
     setBody,
     setIsAnonymous,
   } = useConsultExampleCommentsModal(consultExample.example_id);
-  const { likeAndMutate, unlikeAndMutate } = useConsultExampleActions(
-    consultExample.example_id
-  );
+  const {
+    likeAndMutate,
+    unlikeAndMutate,
+    likeCommentAndMutate,
+    unlikeCommentAndMutate,
+  } = useConsultExampleActions(consultExample.example_id);
   const { calculateExperienceYear } = useDoctor();
 
   return (
@@ -93,6 +94,18 @@ export const ConsultExampleCommentsModal: React.FC<Props> = ({
                     isCommentButtonHidden
                     isShowCommentsButtonHidden
                     isLiked={consultExampleComment.is_liked}
+                    onLike={() =>
+                      likeCommentAndMutate({
+                        consultExampleCommentId:
+                          consultExampleComment.consult_example_comment_id,
+                      })
+                    }
+                    onUnlike={() =>
+                      unlikeCommentAndMutate({
+                        consultExampleCommentId:
+                          consultExampleComment.consult_example_comment_id,
+                      })
+                    }
                   />
                 </div>
               </>
