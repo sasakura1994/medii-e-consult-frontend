@@ -12,6 +12,7 @@ import { useConsultExampleActions } from './useConsultExampleActions';
 import { useFetchConsultExampleComments } from '@/hooks/api/consultExample/useFetchConsultExampleComments';
 import { useDoctor } from '@/hooks/useDoctor';
 import { dateFormat } from '@/libs/date';
+import { useConsultExampleCommentsModal } from './useConsultExampleCommentsModal';
 
 type Props = {
   consultExample: ConsultExampleDetailEntity;
@@ -25,7 +26,8 @@ export const ConsultExampleCommentsModal: React.FC<Props> = ({
   onClose,
 }: Props) => {
   const {
-    createComment,
+    consultExampleComments,
+    createCommentAndMutate,
     createCommentForMessage,
     body,
     isAnonymous,
@@ -33,13 +35,10 @@ export const ConsultExampleCommentsModal: React.FC<Props> = ({
     isCompleted,
     setBody,
     setIsAnonymous,
-  } = useConsultExampleCommentModal(consultExample.example_id);
+  } = useConsultExampleCommentsModal(consultExample.example_id);
   const { likeAndMutate, unlikeAndMutate } = useConsultExampleActions(
     consultExample.example_id
   );
-  const { data: fetchConsultExampleCommentsResponseData } =
-    useFetchConsultExampleComments(consultExample.example_id);
-  const { comments } = fetchConsultExampleCommentsResponseData ?? {};
   const { calculateExperienceYear } = useDoctor();
 
   return (
@@ -63,29 +62,37 @@ export const ConsultExampleCommentsModal: React.FC<Props> = ({
           />
         </div>
         <div className="ml-2 mt-2 border-l-[3px] border-[#c4c4c4] pl-6">
-          {comments &&
-            comments.map((comment) => (
+          {consultExampleComments &&
+            consultExampleComments.map((consultExampleComment) => (
               <>
-                <div key={comment.consult_example_comment_id} className="mt-4">
-                  {comment.body}
+                <div
+                  key={consultExampleComment.consult_example_comment_id}
+                  className="mt-4"
+                >
+                  {consultExampleComment.body}
                 </div>
                 <div className="mt-2 flex justify-between text-sm text-[#6c6c6c]">
                   <div>
-                    {comment.is_anonymous
+                    {consultExampleComment.is_anonymous
                       ? '匿名'
-                      : `${comment.doctor_last_name} ${comment.doctor_first_name}`}
-                    （{calculateExperienceYear(comment.qualified_year)}年目{' '}
-                    {comment.speciality}）
+                      : `${consultExampleComment.doctor_last_name} ${consultExampleComment.doctor_first_name}`}
+                    （
+                    {calculateExperienceYear(
+                      consultExampleComment.qualified_year
+                    )}
+                    年目 {consultExampleComment.speciality}）
                   </div>
-                  <div>{dateFormat(comment.created_date, 'YYYY/M/D')}</div>
+                  <div>
+                    {dateFormat(consultExampleComment.created_date, 'YYYY/M/D')}
+                  </div>
                 </div>
                 <div className="mt-3">
                   <ConsultExampleActions
-                    likeCount={comment.like_count}
+                    likeCount={consultExampleComment.like_count}
                     commentCount={0}
                     isCommentButtonHidden
                     isShowCommentsButtonHidden
-                    isLiked={comment.is_liked}
+                    isLiked={consultExampleComment.is_liked}
                   />
                 </div>
               </>
@@ -94,7 +101,7 @@ export const ConsultExampleCommentsModal: React.FC<Props> = ({
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            createComment();
+            createCommentAndMutate();
           }}
         >
           <div className="mt-2 flex gap-4">

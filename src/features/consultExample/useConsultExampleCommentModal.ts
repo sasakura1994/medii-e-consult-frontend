@@ -12,7 +12,7 @@ export const useConsultExampleCommentModal = (consultExampleId: string) => {
     isCommentSending,
   } = useConsultExampleActions(consultExampleId);
 
-  const createComment = useCallback(async () => {
+  const createComment = useCallback(async (): Promise<boolean> => {
     setIsCompleted(false);
 
     const result = await createCommentAndMutate({ isAnonymous, body }).catch(
@@ -23,11 +23,12 @@ export const useConsultExampleCommentModal = (consultExampleId: string) => {
     );
 
     if (!result) {
-      return;
+      return false;
     }
 
     setIsCompleted(true);
     setBody('');
+    return true;
   }, [body, createCommentAndMutate, isAnonymous]);
 
   const createCommentForMessage = useCallback(
