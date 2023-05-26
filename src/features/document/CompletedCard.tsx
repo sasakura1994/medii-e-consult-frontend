@@ -40,25 +40,26 @@ export const CompleteCard = (props: CompleteCardProps) => {
         style={{ height: '362px' }}
       >
         <div className="mx-auto flex">
-          <p className="my-auto mx-auto text-center text-lg font-bold">
+          <p className="my-auto mx-auto text-center text-xl font-bold text-monotone-900">
             {title}
           </p>
           {label && (
             <p
-              className="bg-medii-blue-50 text-medii-blue my-auto mx-auto w-auto
-              rounded-md px-1 py-1 text-center text-xs"
+              className="bg-medii-blue-50 text-medii-blue my-auto mx-auto
+              w-auto rounded-md px-1 py-1 text-center text-xs"
             >
               {label}
             </p>
           )}
         </div>
         <img className="mx-auto mt-4" src={imageSrc} alt="consult" />
-        <p className="mx-auto mt-4 text-left text-sm text-secondary">
+        <p className="mx-auto mt-4 text-left text-md text-monotone-600">
           {description}
         </p>
         <div className="mt-6 flex justify-center space-x-2">
           {buttonSolid && linkSolid && (
             <div
+              className="w-full"
               onClick={async () => {
                 if (logSolid && linkSolid) {
                   await postEventLog({ name: logSolid });
@@ -73,6 +74,7 @@ export const CompleteCard = (props: CompleteCardProps) => {
           )}
           {buttonOutline && linkOutline && (
             <div
+              className="w-full"
               onClick={async () => {
                 if (logOutline && linkOutline) {
                   await postEventLog({ name: logOutline });

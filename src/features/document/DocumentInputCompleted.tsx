@@ -14,10 +14,10 @@ const DocumentInputCompleted: React.FC = () => {
   return (
     <div className="absolute top-0 left-0 right-0 flex items-center justify-center">
       <div className="mx-auto px-8">
-        <p className="mt-28 text-center text-2xl font-bold text-medii-blue">
+        <p className="mt-28 text-center text-xxl font-bold text-medii-blue-700">
           Mediiにようこそ
         </p>
-        <p className="mt-6 text-base lg:text-center">
+        <p className="mt-6 text-md text-monotone-950 lg:text-center">
           Mediiでは医師の臨床疑問や不安を解消する3つのサービスをご利用いただけます。
           <br />
           Mediiのすべての機能は無料です。
@@ -60,9 +60,9 @@ const DocumentInputCompleted: React.FC = () => {
           }}
         >
           <div className="mt-16 mb-4 flex cursor-pointer items-center justify-center space-x-1">
-            <p className="text-base text-secondary">トップページに移動する</p>
+            <p className="text-md text-monotone-600">トップページに移動する</p>
             <img
-              className="mt-0.5 text-secondary"
+              className="mt-0.5 text-monotone-600"
               src="icons/arrow_right_short.svg"
               alt="arrow_right_short"
             />

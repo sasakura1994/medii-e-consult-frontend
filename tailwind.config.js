@@ -9,6 +9,7 @@ module.exports = {
         'high': '0 1px 8px rgba(0, 0, 0, 0.1), 0 1px 16px rgba(0, 0, 0, 0.05);',
       },
       fontSize: {
+        'xxs': '10px',
         'sm': '12px',
         'md': '15px',
         'l': '17px',
@@ -64,9 +65,6 @@ module.exports = {
         "medii-sky-800": "#017182",
         "medii-sky-900": "#015B69",
         "medii-sky-950": "#01454F",
-      },
-      fontSize: {
-        xxs: '10px',
       },
       width: {
         'login-container': '476px',
