@@ -89,6 +89,7 @@ const App = (props: AppPropsWithLayout) => {
         '/passwordresetrequest',
         '/pointhistory',
         '/registration',
+        '/welcome',
         '/seminar',
         '/seminar/archive',
         '/top',
