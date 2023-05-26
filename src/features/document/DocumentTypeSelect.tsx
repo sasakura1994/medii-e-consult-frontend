@@ -35,11 +35,11 @@ const DocumentTypeSelect: React.FC<DocumentTypeSelectProps> = ({
           </div>
           <div className="text-center text-sm lg:text-left">
             <DocumentTypeSelectButton
-              text="医師免許証の登録"
+              text="画像アップロード"
               image="/icons/doctor_id1.svg"
               onClick={() => setSelected('document')}
             >
-              医師免許証画像を
+              医師であることを証明できる画像を
               <br className="hidden lg:block" />
               アップロードします
             </DocumentTypeSelectButton>
