@@ -53,13 +53,13 @@ const ConsultExamplePage: NextPage = () => {
               onClose={closeCommentForm}
             />
           )}
-          {/* {messageIdForCommentsModal !== undefined && (
+          {messageIdForCommentsModal !== undefined && (
             <ConsultExampleCommentsModal
               consultExample={consultExample}
               message={messageForCommentsModal}
               onClose={closeCommentsModal}
             />
-          )} */}
+          )}
         </>
       )}
     </>

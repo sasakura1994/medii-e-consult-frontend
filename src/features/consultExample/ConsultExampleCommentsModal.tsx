@@ -9,28 +9,38 @@ import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 import { ConsultExampleActions } from './ConsultExampleActions';
 import { ConsultExampleDetailEntity } from '@/types/entities/ConsultExampleDetailEntity';
 import { useConsultExampleActions } from './useConsultExampleActions';
-import { CreateConsultExampleCommentData } from './ConsultExampleCommentModal';
+import { useFetchConsultExampleComments } from '@/hooks/api/consultExample/useFetchConsultExampleComments';
+import { useDoctor } from '@/hooks/useDoctor';
+import { dateFormat } from '@/libs/date';
 
 type Props = {
   consultExample: ConsultExampleDetailEntity;
   message: string;
-  isSending: boolean;
-  onCreate: (data: CreateConsultExampleCommentData) => void;
   onClose: () => void;
 };
 
 export const ConsultExampleCommentsModal: React.FC<Props> = ({
   consultExample,
   message,
-  isSending,
-  onCreate,
   onClose,
 }: Props) => {
-  const { body, isAnonymous, setBody, setIsAnonymous } =
-    useConsultExampleCommentModal();
+  const {
+    createComment,
+    createCommentForMessage,
+    body,
+    isAnonymous,
+    isCommentSending,
+    isCompleted,
+    setBody,
+    setIsAnonymous,
+  } = useConsultExampleCommentModal(consultExample.example_id);
   const { likeAndMutate, unlikeAndMutate } = useConsultExampleActions(
     consultExample.example_id
   );
+  const { data: fetchConsultExampleCommentsResponseData } =
+    useFetchConsultExampleComments(consultExample.example_id);
+  const { comments } = fetchConsultExampleCommentsResponseData ?? {};
+  const { calculateExperienceYear } = useDoctor();
 
   return (
     <Modal
@@ -52,11 +62,39 @@ export const ConsultExampleCommentsModal: React.FC<Props> = ({
             onUnlike={unlikeAndMutate}
           />
         </div>
-        <div className="ml-2 mt-2 h-8 border-l-[3px] border-[#c4c4c4]"></div>
+        <div className="ml-2 mt-2 border-l-[3px] border-[#c4c4c4] pl-6">
+          {comments &&
+            comments.map((comment) => (
+              <>
+                <div key={comment.consult_example_comment_id} className="mt-4">
+                  {comment.body}
+                </div>
+                <div className="mt-2 flex justify-between text-sm text-[#6c6c6c]">
+                  <div>
+                    {comment.is_anonymous
+                      ? '匿名'
+                      : `${comment.doctor_last_name} ${comment.doctor_first_name}`}
+                    （{calculateExperienceYear(comment.qualified_year)}年目{' '}
+                    {comment.speciality}）
+                  </div>
+                  <div>{dateFormat(comment.created_date, 'YYYY/M/D')}</div>
+                </div>
+                <div className="mt-3">
+                  <ConsultExampleActions
+                    likeCount={comment.like_count}
+                    commentCount={0}
+                    isCommentButtonHidden
+                    isShowCommentsButtonHidden
+                    isLiked={comment.is_liked}
+                  />
+                </div>
+              </>
+            ))}
+        </div>
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            onCreate({ isAnonymous, body });
+            createComment();
           }}
         >
           <div className="mt-2 flex gap-4">
@@ -92,7 +130,7 @@ export const ConsultExampleCommentsModal: React.FC<Props> = ({
             />
           </div>
           <div className="mt-2 flex justify-end">
-            {isSending ? (
+            {isCommentSending ? (
               <SpinnerBorder />
             ) : (
               <PrimaryButton
