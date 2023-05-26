@@ -1,4 +1,5 @@
-import { DefaultButton } from '@/components/Parts/Button/DefaultButton';
+import PrimaryButton from '@/components/Parts/Button/Primary';
+import TertiaryButton from '@/components/Parts/Button/Tertiary';
 import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -44,8 +45,8 @@ export const CompleteCard = (props: CompleteCardProps) => {
           </p>
           {label && (
             <p
-              className="my-auto mx-auto w-auto rounded-md bg-medii-blue-50
-              px-1 py-1 text-center text-xs text-medii-blue"
+              className="bg-medii-blue-50 text-medii-blue my-auto mx-auto w-auto
+              rounded-md px-1 py-1 text-center text-xs"
             >
               {label}
             </p>
@@ -65,7 +66,9 @@ export const CompleteCard = (props: CompleteCardProps) => {
                 router.push(linkSolid);
               }}
             >
-              <DefaultButton width="full">{buttonSolid}</DefaultButton>
+              <PrimaryButton width="w-full" size="large">
+                {buttonSolid}
+              </PrimaryButton>
             </div>
           )}
           {buttonOutline && linkOutline && (
@@ -77,9 +80,9 @@ export const CompleteCard = (props: CompleteCardProps) => {
                 router.push(linkOutline);
               }}
             >
-              <DefaultButton width="full" variant="outline">
+              <TertiaryButton width="w-full" size="large">
                 {buttonOutline}
-              </DefaultButton>
+              </TertiaryButton>
             </div>
           )}
         </div>
