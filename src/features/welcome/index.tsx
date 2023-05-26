@@ -10,7 +10,6 @@ const Welcome = () => {
   return (
     <>
       <div className="h-72 bg-medii-blue-100" />
-
       <div className="absolute top-0 left-0 right-0 flex items-center justify-center">
         <div className="mx-auto px-8">
           <p className="mt-28 text-center text-xxxl font-bold text-medii-blue-700">
