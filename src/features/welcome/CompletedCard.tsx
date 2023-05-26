@@ -37,7 +37,7 @@ export const CompleteCard = (props: CompleteCardProps) => {
   return (
     <>
       <div
-        className="mx-auto w-80 rounded-md bg-white p-6 shadow-xl"
+        className="mx-auto w-80 rounded-md bg-white p-6 shadow-high"
         style={{ height: '362px' }}
       >
         <div className="mx-auto flex">
