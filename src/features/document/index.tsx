@@ -31,7 +31,7 @@ export const Document = () => {
       if (
         savedRedirectUrl &&
         savedRedirectUrl !== '' &&
-        savedRedirectUrl.toLocaleLowerCase() !== 'top'
+        savedRedirectUrl.toLocaleLowerCase() !== '/top'
       ) {
         router.push(savedRedirectUrl);
       } else {
