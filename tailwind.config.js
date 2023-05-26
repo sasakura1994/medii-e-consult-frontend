@@ -10,10 +10,10 @@ module.exports = {
       },
       fontSize: {
         'xxs': '10px',
-        'sm': '12px',
+        // 'sm': '12px',
         'md': '15px',
         'l': '17px',
-        'xl': '19px',
+        // 'xl': '19px',
         'xxl': '21px',
         'xxxl': '28px',
       },
