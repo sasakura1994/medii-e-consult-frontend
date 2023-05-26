@@ -9,6 +9,7 @@ import { Container } from '@/components/Layouts/Container';
 import { CustomHead } from '@/components/Commons/CustomHead';
 import { MyPageLayoutWithoutSpFooterMenu } from '@/components/Layouts/MyPageLayoutWithoutSpFooterMenu';
 import { Layout } from '@/components/Layouts/Layout';
+import { useRouter } from 'next/router';
 
 export type DocumentSelected =
   | ''
@@ -20,12 +21,24 @@ export type DocumentSelected =
 export const Document = () => {
   const [selected, setSelected] = useState<DocumentSelected>('');
   const [mode, setMode] = useState<DocumentMode>('document');
+  const router = useRouter();
+
+  const loginRedirectUrlKey = 'Login::RedirectURL';
 
   useEffect(() => {
-    if (selected === 'completed') {
-      setMode('completed');
+    if (selected === 'completed' && localStorage) {
+      const savedRedirectUrl = localStorage.getItem(loginRedirectUrlKey);
+      if (
+        savedRedirectUrl &&
+        savedRedirectUrl !== '' &&
+        savedRedirectUrl.toLocaleLowerCase() !== 'top'
+      ) {
+        router.push(savedRedirectUrl);
+      } else {
+        setMode('completed');
+      }
     }
-  }, [selected]);
+  }, [router, selected]);
 
   if (selected !== 'completed') {
     return (
@@ -60,13 +73,15 @@ export const Document = () => {
       </>
     );
   }
-  return (
-    <>
-      <CustomHead />
-      <Layout headerFigure="logoOnly">
-        <div className="h-72 bg-medii-blue-100" />
-        <DocumentInputCompleted />
-      </Layout>
-    </>
-  );
+  if (mode === 'completed') {
+    return (
+      <>
+        <CustomHead />
+        <Layout headerFigure="logoOnly">
+          <div className="h-72 bg-medii-blue-100" />
+          <DocumentInputCompleted />
+        </Layout>
+      </>
+    );
+  }
 };
