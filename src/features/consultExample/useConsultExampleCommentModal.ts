@@ -32,7 +32,7 @@ export const useConsultExampleCommentModal = (consultExampleId: string) => {
   }, [body, createCommentAndMutate, isAnonymous]);
 
   const createCommentForMessage = useCallback(
-    async (consultExampleMessageId: number) => {
+    async (consultExampleMessageId: number): Promise<boolean> => {
       setIsCompleted(false);
 
       const result = await createCommentForMessageAndMutate(
@@ -44,11 +44,12 @@ export const useConsultExampleCommentModal = (consultExampleId: string) => {
       });
 
       if (!result) {
-        return;
+        return false;
       }
 
       setIsCompleted(true);
       setBody('');
+      return true;
     },
     [body, createCommentForMessageAndMutate, isAnonymous]
   );

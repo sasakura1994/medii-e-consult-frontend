@@ -14,29 +14,37 @@ import { useConsultExampleCommentsModal } from './useConsultExampleCommentsModal
 
 type Props = {
   consultExample: ConsultExampleDetailEntity;
+  consultExampleMessageId?: number;
   message: string;
   onClose: () => void;
 };
 
 export const ConsultExampleCommentsModal: React.FC<Props> = ({
   consultExample,
+  consultExampleMessageId,
   message,
   onClose,
 }: Props) => {
   const {
     consultExampleComments,
+    consultExampleMessage,
     createCommentAndMutate,
-    createCommentForMessage,
+    createCommentForMessageAndMutate,
     body,
     isAnonymous,
     isCommentSending,
     isCompleted,
     setBody,
     setIsAnonymous,
-  } = useConsultExampleCommentsModal(consultExample.example_id);
+  } = useConsultExampleCommentsModal(
+    consultExample.example_id,
+    consultExampleMessageId
+  );
   const {
     likeAndMutate,
     unlikeAndMutate,
+    likeMessageAndMutate,
+    unlikeMessageAndMutate,
     likeCommentAndMutate,
     unlikeCommentAndMutate,
   } = useConsultExampleActions(consultExample.example_id);
@@ -53,14 +61,25 @@ export const ConsultExampleCommentsModal: React.FC<Props> = ({
       <div className="px-20 pb-10 pt-5">
         <p>{message}</p>
         <div className="mt-2">
-          <ConsultExampleActions
-            likeCount={consultExample.like_count}
-            commentCount={consultExample.comment_count}
-            isLiked={consultExample.is_liked}
-            isCommentButtonHidden
-            onLike={likeAndMutate}
-            onUnlike={unlikeAndMutate}
-          />
+          {consultExampleMessage ? (
+            <ConsultExampleActions
+              likeCount={consultExampleMessage.like_count}
+              commentCount={consultExampleMessage.comment_count}
+              isLiked={consultExampleMessage.is_liked}
+              isCommentButtonHidden
+              onLike={() => likeMessageAndMutate(consultExampleMessage.uid)}
+              onUnlike={() => unlikeMessageAndMutate(consultExampleMessage.uid)}
+            />
+          ) : (
+            <ConsultExampleActions
+              likeCount={consultExample.like_count}
+              commentCount={consultExample.comment_count}
+              isLiked={consultExample.is_liked}
+              isCommentButtonHidden
+              onLike={likeAndMutate}
+              onUnlike={unlikeAndMutate}
+            />
+          )}
         </div>
         <div className="ml-2 mt-2 border-l-[3px] border-[#c4c4c4] pl-6">
           {consultExampleComments &&
@@ -114,7 +133,11 @@ export const ConsultExampleCommentsModal: React.FC<Props> = ({
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            createCommentAndMutate();
+            if (consultExampleMessageId) {
+              createCommentForMessageAndMutate();
+            } else {
+              createCommentAndMutate();
+            }
           }}
         >
           <div className="mt-2 flex gap-4">

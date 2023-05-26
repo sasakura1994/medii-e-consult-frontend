@@ -9,7 +9,6 @@ import { ConsultExampleFirstAnswerTime } from './ConsultExampleFirstAnswerTime';
 import { dateFormat } from '@/libs/date';
 import { ConsultExampleActions } from './ConsultExampleActions';
 import { ConsultExampleDetailMessage } from './ConsultExampleDetailMessage';
-import { useConsultExampleActionsApi } from '@/hooks/api/consultExample/useConsultExampleActionsApi';
 import { useConsultExampleActions } from './useConsultExampleActions';
 
 type Props = {
@@ -20,6 +19,9 @@ type Props = {
   onCommentForMessage?: (
     consultExampleMessage: ConsultExampleMessageEntity
   ) => void;
+  onShowCommentsForMessage?: (
+    consultExampleMessage: ConsultExampleMessageEntity
+  ) => void;
 };
 
 export const ConsultExampleDetail: React.FC<Props> = ({
@@ -28,6 +30,7 @@ export const ConsultExampleDetail: React.FC<Props> = ({
   onComment,
   onShowComments,
   onCommentForMessage,
+  onShowCommentsForMessage,
 }: Props) => {
   const { getMedicalSpecialityName } = useMedicalSpeciality();
   const { getAgeText, getGenderText } = useConsultExample();
@@ -138,6 +141,7 @@ export const ConsultExampleDetail: React.FC<Props> = ({
               onLike={likeMessageAndMutate}
               onUnlike={unlikeMessageAndMutate}
               onComment={onCommentForMessage}
+              onShowComments={onShowCommentsForMessage}
             ></ConsultExampleDetailMessage>
           ))}
         </div>

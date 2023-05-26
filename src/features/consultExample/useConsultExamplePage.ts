@@ -9,10 +9,10 @@ export const useConsultExamplePage = (id: string) => {
     consultExampleMessageIdForComment,
     setConsultExampleMessageIdForComment,
   ] = useState(0);
-  /** 閉じている場合はundefined。0の場合は事例自体のコメント  */
   const [messageIdForCommentsModal, setMessageIdForCommentsModal] = useState<
     number | undefined
   >();
+  const [isCommentsModalShown, setIsCommentsModalShown] = useState(false);
   const [messageForCommentsModal, setMessageForCommentsModal] = useState('');
 
   const { data: consultExample } = useFetchConsultExample(id);
@@ -37,11 +37,22 @@ export const useConsultExamplePage = (id: string) => {
   );
 
   const openCommentsModal = useCallback(() => {
-    setMessageIdForCommentsModal(0);
+    setIsCommentsModalShown(true);
+    setMessageIdForCommentsModal(undefined);
     setMessageForCommentsModal(consultExample?.background ?? '');
   }, [consultExample?.background]);
 
+  const openCommentsModalForMessage = useCallback(
+    (consultExampleMessage: ConsultExampleMessageEntity) => {
+      setIsCommentsModalShown(true);
+      setMessageIdForCommentsModal(consultExampleMessage.uid);
+      setMessageForCommentsModal(consultExampleMessage.message);
+    },
+    []
+  );
+
   const closeCommentsModal = useCallback(() => {
+    setIsCommentsModalShown(false);
     setMessageIdForCommentsModal(undefined);
   }, []);
 
@@ -50,11 +61,13 @@ export const useConsultExamplePage = (id: string) => {
     closeCommentsModal,
     commentFormMessage,
     consultExample,
+    messageIdForCommentsModal,
     consultExampleMessageIdForComment,
     consultExampleMessages,
-    messageIdForCommentsModal,
+    isCommentsModalShown,
     messageForCommentsModal,
     openCommentsModal,
+    openCommentsModalForMessage,
     showCommentForm,
     showCommentFormForMessage,
   };

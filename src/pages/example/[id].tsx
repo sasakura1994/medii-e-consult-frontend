@@ -20,11 +20,13 @@ const ConsultExamplePage: NextPage = () => {
     closeCommentsModal,
     commentFormMessage,
     consultExample,
-    consultExampleMessages,
-    consultExampleMessageIdForComment,
     messageIdForCommentsModal,
+    consultExampleMessageIdForComment,
+    consultExampleMessages,
+    isCommentsModalShown,
     messageForCommentsModal,
     openCommentsModal,
+    openCommentsModalForMessage,
     showCommentForm,
     showCommentFormForMessage,
   } = useConsultExamplePage(id);
@@ -40,6 +42,7 @@ const ConsultExamplePage: NextPage = () => {
             onComment={showCommentForm}
             onCommentForMessage={showCommentFormForMessage}
             onShowComments={openCommentsModal}
+            onShowCommentsForMessage={openCommentsModalForMessage}
           />
         )}
       </Container>
@@ -53,9 +56,10 @@ const ConsultExamplePage: NextPage = () => {
               onClose={closeCommentForm}
             />
           )}
-          {messageIdForCommentsModal !== undefined && (
+          {isCommentsModalShown && (
             <ConsultExampleCommentsModal
               consultExample={consultExample}
+              consultExampleMessageId={messageIdForCommentsModal}
               message={messageForCommentsModal}
               onClose={closeCommentsModal}
             />
