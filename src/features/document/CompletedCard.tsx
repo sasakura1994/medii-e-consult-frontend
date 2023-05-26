@@ -1,5 +1,6 @@
 import PrimaryButton from '@/components/Parts/Button/Primary';
 import TertiaryButton from '@/components/Parts/Button/Tertiary';
+import Label from '@/components/Parts/Label/Label';
 import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -43,14 +44,7 @@ export const CompleteCard = (props: CompleteCardProps) => {
           <p className="my-auto mx-auto text-center text-xl font-bold text-monotone-900">
             {title}
           </p>
-          {label && (
-            <p
-              className="bg-medii-blue-50 text-medii-blue my-auto mx-auto
-              w-auto rounded-md px-1 py-1 text-center text-xs"
-            >
-              {label}
-            </p>
-          )}
+          {label && <Label text={label} />}
         </div>
         <img className="mx-auto mt-4" src={imageSrc} alt="consult" />
         <p className="mx-auto mt-4 text-left text-md text-monotone-600">
