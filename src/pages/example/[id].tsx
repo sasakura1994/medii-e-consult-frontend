@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import type { NextPage } from 'next';
 import { Container } from '@/components/Layouts/Container';
 import { useRouter } from 'next/router';
@@ -21,7 +21,11 @@ const ConsultExamplePage: NextPage = () => {
     unlikeAndMutate,
     unlikeMessageAndMutate,
   } = useConsultExamplePage(id);
-  useEventLog({ name: `/example/${id}` });
+  const { postEventLog } = useEventLog();
+
+  useEffect(() => {
+    postEventLog({ name: `/example/${id}` });
+  }, [id, postEventLog]);
 
   return (
     <Container className="lg:py-6">

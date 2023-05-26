@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { CompleteCard } from './CompletedCard';
-import Link from 'next/link';
+import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
+import { useRouter } from 'next/router';
 
 const DocumentInputCompleted: React.FC = () => {
+  const { postEventLog } = useEventLog();
+  const router = useRouter();
+
+  useEffect(() => {
+    postEventLog({ name: 'document-complete' });
+  }, [postEventLog]);
+
   return (
     <div className="absolute top-0 left-0 right-0 flex items-center justify-center">
       <div className="mx-auto px-8">
@@ -22,8 +30,10 @@ const DocumentInputCompleted: React.FC = () => {
             description="臨床疑問をエキスパートの医師とチャット形式で相談できます。相談内容に適した医師をMediiがマッチングします。"
             buttonSolid="専門医に相談"
             linkSolid="/Chat"
+            logSolid="click-chat"
             buttonOutline="使い方を見る"
             linkOutline="/top?tutorial=true"
+            logOutline="click-tutorial"
           />
           <CompleteCard
             title="E-カンファ"
@@ -32,6 +42,7 @@ const DocumentInputCompleted: React.FC = () => {
             description="専門医の先生をお招きして、各診療科・症例の知見を広く提供するオンラインセミナーを実施しています。"
             buttonOutline="セミナーを見る"
             linkOutline="/seminar"
+            logOutline="click-seminar"
           />
           <CompleteCard
             title="症例バンク"
@@ -39,9 +50,15 @@ const DocumentInputCompleted: React.FC = () => {
             description="論文・ガイドラインだけではわからない、臨床経験から蓄積された知見をスライド形式で閲覧できます。"
             buttonOutline="症例スライドを見る"
             linkOutline={process.env.CASE_BANK_URL ?? ''}
+            logOutline="click-case-bank"
           />
         </div>
-        <Link href="/top">
+        <div
+          onClick={async () => {
+            await postEventLog({ name: 'click-top' });
+            router.push('/top');
+          }}
+        >
           <div className="mt-16 mb-4 flex cursor-pointer items-center justify-center space-x-1">
             <p className="text-base text-secondary">トップページに移動する</p>
             <img
@@ -50,7 +67,7 @@ const DocumentInputCompleted: React.FC = () => {
               alt="arrow_right_short"
             />
           </div>
-        </Link>
+        </div>
       </div>
     </div>
   );

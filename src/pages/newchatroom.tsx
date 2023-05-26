@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { MyPageLayout } from '@/components/Layouts/MyPageLayout';
 import type { NextPageWithLayout } from '@/pages/_app';
 import { Card } from '@/components/Parts/Card/Card';
@@ -9,8 +9,12 @@ import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 
 const NewChatRoomPage: NextPageWithLayout = () => {
   const newChatRoom = useNewChatRoom();
-  useEventLog({ name: '/NewChatRoom' });
+  const { postEventLog } = useEventLog();
   const { mode } = newChatRoom;
+
+  useEffect(() => {
+    postEventLog({ name: '/NewChatRoom' });
+  }, [postEventLog]);
 
   return (
     <Card className="px-8 py-4 lg:px-0">

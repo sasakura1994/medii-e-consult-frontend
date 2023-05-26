@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import type { NextPage } from 'next';
 import { Container } from '@/components/Layouts/Container';
 import { Card } from '@/components/Parts/Card/Card';
@@ -17,7 +17,11 @@ const ConsultExamplesPage: NextPage = () => {
   const router = useRouter();
   const { page } = router.query as Query;
   const { data } = useFetchConsultExamples(page ? Number(page) : undefined);
-  useEventLog({ name: '/ExampleList' });
+  const { postEventLog } = useEventLog();
+
+  useEffect(() => {
+    postEventLog({ name: '/ExampleList' });
+  }, [postEventLog]);
 
   return (
     <Container>

@@ -1,5 +1,6 @@
 import { DefaultButton } from '@/components/Parts/Button/DefaultButton';
-import Link from 'next/link';
+import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 type CompleteCardProps = {
@@ -11,9 +12,14 @@ type CompleteCardProps = {
   buttonOutline?: string;
   linkSolid?: string;
   linkOutline?: string;
+  logSolid?: string;
+  logOutline?: string;
 };
 
 export const CompleteCard = (props: CompleteCardProps) => {
+  const { postEventLog } = useEventLog();
+  const router = useRouter();
+
   const {
     title,
     label,
@@ -23,6 +29,8 @@ export const CompleteCard = (props: CompleteCardProps) => {
     buttonOutline,
     linkSolid,
     linkOutline,
+    logSolid,
+    logOutline,
   } = props;
   return (
     <>
@@ -49,16 +57,30 @@ export const CompleteCard = (props: CompleteCardProps) => {
         </p>
         <div className="mt-6 flex justify-center space-x-2">
           {buttonSolid && linkSolid && (
-            <Link href={linkSolid}>
+            <div
+              onClick={async () => {
+                if (logSolid && linkSolid) {
+                  await postEventLog({ name: logSolid });
+                }
+                router.push(linkSolid);
+              }}
+            >
               <DefaultButton width="full">{buttonSolid}</DefaultButton>
-            </Link>
+            </div>
           )}
           {buttonOutline && linkOutline && (
-            <Link href={linkOutline}>
+            <div
+              onClick={async () => {
+                if (logOutline && linkOutline) {
+                  await postEventLog({ name: logOutline });
+                }
+                router.push(linkOutline);
+              }}
+            >
               <DefaultButton width="full" variant="outline">
                 {buttonOutline}
               </DefaultButton>
-            </Link>
+            </div>
           )}
         </div>
       </div>

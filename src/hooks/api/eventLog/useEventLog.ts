@@ -1,18 +1,27 @@
 import { useAxios } from '@/hooks/network/useAxios';
-import { useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
+
+type EventLog = {
+  postEventLog: (args: Args) => Promise<void>;
+};
 
 type Args = {
   name: string;
 };
 
-export const useEventLog = (args: Args) => {
+export const useEventLog = (): EventLog => {
   const { axios, hasToken } = useAxios();
-  const [isSent, setIsSent] = useState(false);
 
-  useEffect(() => {
-    if (hasToken && !isSent) {
-      setIsSent(true);
-      axios.post('/event-log', args);
-    }
-  }, [args, axios, hasToken, isSent]);
+  const postEventLog = useCallback(
+    async (args: Args) => {
+      if (hasToken) {
+        await axios.post('/event-log', args);
+      }
+    },
+    [axios, hasToken]
+  );
+
+  return {
+    postEventLog,
+  };
 };
