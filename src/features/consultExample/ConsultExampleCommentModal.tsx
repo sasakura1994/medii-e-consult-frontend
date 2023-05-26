@@ -15,18 +15,21 @@ export type CreateConsultExampleCommentData = {
 
 type Props = {
   consultExampleId: string;
+  consultExampleMessageId: number;
   message: string;
   onClose: () => void;
 };
 
 export const ConsultExampleCommentModal: React.FC<Props> = ({
   consultExampleId,
+  consultExampleMessageId,
   message,
   onClose,
 }: Props) => {
   const {
     body,
     createComment,
+    createCommentForMessage,
     isAnonymous,
     isCommentSending,
     isCompleted,
@@ -48,7 +51,11 @@ export const ConsultExampleCommentModal: React.FC<Props> = ({
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            createComment();
+            if (consultExampleMessageId === 0) {
+              createComment();
+            } else {
+              createCommentForMessage(consultExampleMessageId);
+            }
           }}
         >
           <div className="mt-2 flex gap-4">

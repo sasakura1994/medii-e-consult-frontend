@@ -48,17 +48,18 @@ const ConsultExamplePage: NextPage = () => {
           {commentFormMessage !== '' && (
             <ConsultExampleCommentModal
               consultExampleId={consultExample.example_id}
+              consultExampleMessageId={consultExampleMessageIdForComment}
               message={commentFormMessage}
               onClose={closeCommentForm}
             />
           )}
-          {messageIdForCommentsModal !== undefined && (
+          {/* {messageIdForCommentsModal !== undefined && (
             <ConsultExampleCommentsModal
               consultExample={consultExample}
               message={messageForCommentsModal}
               onClose={closeCommentsModal}
             />
-          )}
+          )} */}
         </>
       )}
     </>

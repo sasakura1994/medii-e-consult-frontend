@@ -41,7 +41,7 @@ export const useConsultExampleActions = (id: string) => {
   );
 
   const createCommentAndMutate = useCallback(
-    async (data: CreateConsultExampleCommentData) => {
+    async (data: CreateConsultExampleCommentData): Promise<boolean> => {
       setIsCommentSending(true);
 
       const response = await postConsultExampleComment({
@@ -69,7 +69,7 @@ export const useConsultExampleActions = (id: string) => {
     async (
       consultExampleMessageId: number,
       data: CreateConsultExampleCommentData
-    ) => {
+    ): Promise<boolean> => {
       setIsCommentSending(true);
 
       const response = await postConsultExampleComment({
@@ -85,11 +85,12 @@ export const useConsultExampleActions = (id: string) => {
 
       if (!response) {
         alert('エラーが発生しました。');
-        return;
+        return false;
       }
 
       mutateFetchConsultExample(id);
       mutateFetchConsultExampleMessages(id);
+      return true;
     },
     [id, postConsultExampleComment]
   );
