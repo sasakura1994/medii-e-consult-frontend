@@ -16,7 +16,7 @@ const Primary = (props: PrimaryProps) => {
   return (
     <button
       className={`m-auto flex items-center justify-center rounded-md border bg-medii-blue-base px-3 font-bold text-white
-      hover:bg-button-color-hover active:bg-button-color-active disabled:bg-button-color-disabled
+      hover:bg-button-hover active:bg-button-active disabled:bg-button-disabled
       ${buttonWidth} ${bottunSize}`}
       onClick={onClick}
       disabled={disabled}

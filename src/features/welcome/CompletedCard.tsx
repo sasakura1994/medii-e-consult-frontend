@@ -41,13 +41,13 @@ export const CompleteCard = (props: CompleteCardProps) => {
         style={{ height: '362px' }}
       >
         <div className="mx-auto flex">
-          <p className="my-auto mx-auto text-center text-xl font-bold text-text-color-primary">
+          <p className="my-auto mx-auto text-center text-xl font-bold text-text-primary">
             {title}
           </p>
           {label && <Label text={label} />}
         </div>
         <img className="mx-auto mt-4" src={imageSrc} alt="consult" />
-        <p className="mx-auto mt-4 text-left text-md text-text-color-secondary">
+        <p className="mx-auto mt-4 text-left text-md text-text-secondary">
           {description}
         </p>
         <div className="mt-6 flex justify-center space-x-2">
