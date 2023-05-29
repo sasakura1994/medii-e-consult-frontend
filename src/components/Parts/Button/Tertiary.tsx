@@ -17,7 +17,7 @@ const Tertiary = (props: TertiaryProps) => {
   return (
     <button
       className={`m-auto flex items-center justify-center rounded-md border bg-white px-3 font-bold
-      text-black disabled:text-monotone-200 ${buttonWidth} ${bottunSize}`}
+      text-black disabled:text-text-color-disabled ${buttonWidth} ${bottunSize}`}
       onClick={onClick}
       disabled={disabled}
     >
