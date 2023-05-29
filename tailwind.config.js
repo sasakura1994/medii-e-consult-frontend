@@ -86,6 +86,7 @@ module.exports = {
       },
       width: {
         'login-container': '476px',
+        'lg-breakpoint': '644px',
       },
       maxWidth: {
         'login-container': '476px',

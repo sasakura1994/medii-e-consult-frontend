@@ -13,7 +13,7 @@ export const LayoutLogoOnly = (props: PropsType) => {
   return (
     <>
       <HeaderLogoOnly />
-      <main>{children}</main>
+      <main className="bg-white">{children}</main>
     </>
   );
 };
