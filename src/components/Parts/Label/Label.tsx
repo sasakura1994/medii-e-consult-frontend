@@ -9,7 +9,7 @@ const Label = (props: LabelProps) => {
   return (
     <p
       className="my-auto mx-auto w-auto rounded-md bg-medii-blue-100 px-2 py-1
-    text-center text-xs text-medii-blue-700"
+    text-center text-xs text-medii-blue-base"
     >
       {text}
     </p>
