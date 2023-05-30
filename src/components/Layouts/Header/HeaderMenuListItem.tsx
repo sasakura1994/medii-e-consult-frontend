@@ -19,11 +19,21 @@ export const HeaderMenuListItem: React.FC<Props> = ({
       <Link href={href}>
         <a className="relative block text-[#333333] no-underline">{children}</a>
       </Link>
-      {/*  暫定。他のバッジのパターンがあれば別のやり方のほうが良いかもしれない。
-      もしくはバッジがある場合はこのコンポーネントを使わないなど */}
       {badgeText && (
-        <Badge className="absolute top-[-11px] -left-0.5 w-[33px] text-xxs">
-          {badgeText}
+        <Badge
+          className="
+            absolute
+            right-[-12px]
+            top-[-8px]
+            flex
+            h-[16px]
+            w-[16px]
+            items-center
+            justify-center
+            text-xs
+          "
+        >
+          <div>{badgeText}</div>
         </Badge>
       )}
     </li>
