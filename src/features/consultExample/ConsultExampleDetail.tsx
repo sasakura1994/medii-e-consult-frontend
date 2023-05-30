@@ -22,6 +22,7 @@ type Props = {
   onShowCommentsForMessage?: (
     consultExampleMessage: ConsultExampleMessageEntity
   ) => void;
+  onShowAllComments: () => void;
 };
 
 export const ConsultExampleDetail: React.FC<Props> = ({
@@ -30,6 +31,7 @@ export const ConsultExampleDetail: React.FC<Props> = ({
   onComment,
   onShowComments,
   onCommentForMessage,
+  onShowAllComments,
   onShowCommentsForMessage,
 }: Props) => {
   const { getMedicalSpecialityName } = useMedicalSpeciality();
@@ -76,21 +78,30 @@ export const ConsultExampleDetail: React.FC<Props> = ({
                 alt="いいねの数"
               />
               <div className="ml-1">{consultExample.all_like_count}</div>
-              <img
-                src="/icons/comment.svg"
-                width="24"
-                height="24"
-                className="ml-4 block lg:hidden"
-                alt="コメントの数"
-              />
-              <img
-                src="/icons/comment_primary.svg"
-                width="24"
-                height="24"
-                className="ml-4 hidden lg:block"
-                alt="コメントの数"
-              />
-              <div className="ml-1">{consultExample.all_comment_count}</div>
+              <a
+                href="#"
+                className="flex items-center"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onShowAllComments();
+                }}
+              >
+                <img
+                  src="/icons/comment.svg"
+                  width="24"
+                  height="24"
+                  className="ml-4 block lg:hidden"
+                  alt="コメントの数"
+                />
+                <img
+                  src="/icons/comment_primary.svg"
+                  width="24"
+                  height="24"
+                  className="ml-4 hidden lg:block"
+                  alt="コメントの数"
+                />
+                <div className="ml-1">{consultExample.all_comment_count}</div>
+              </a>
             </div>
           </div>
         </div>

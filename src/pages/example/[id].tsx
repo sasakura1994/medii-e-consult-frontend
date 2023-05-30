@@ -7,6 +7,7 @@ import { useConsultExamplePage } from '@/features/consultExample/useConsultExamp
 import { ConsultExampleDetail } from '@/features/consultExample/ConsultExampleDetail';
 import { ConsultExampleCommentModal } from '@/features/consultExample/ConsultExampleCommentModal';
 import { ConsultExampleCommentsModal } from '@/features/consultExample/ConsultExampleCommentsModal';
+import { ConsultExampleAllCommentsModal } from '@/features/consultExample/ConsultExampleAllCommentsModal';
 
 type Query = {
   id: string;
@@ -23,10 +24,12 @@ const ConsultExamplePage: NextPage = () => {
     messageIdForCommentsModal,
     consultExampleMessageIdForComment,
     consultExampleMessages,
+    isAllCommentsModalShown,
     isCommentsModalShown,
     messageForCommentsModal,
     openCommentsModal,
     openCommentsModalForMessage,
+    setIsAllCommentsModalShown,
     showCommentForm,
     showCommentFormForMessage,
   } = useConsultExamplePage(id);
@@ -43,6 +46,7 @@ const ConsultExamplePage: NextPage = () => {
             onCommentForMessage={showCommentFormForMessage}
             onShowComments={openCommentsModal}
             onShowCommentsForMessage={openCommentsModalForMessage}
+            onShowAllComments={() => setIsAllCommentsModalShown(true)}
           />
         )}
       </Container>
@@ -62,6 +66,12 @@ const ConsultExamplePage: NextPage = () => {
               consultExampleMessageId={messageIdForCommentsModal}
               message={messageForCommentsModal}
               onClose={closeCommentsModal}
+            />
+          )}
+          {isAllCommentsModalShown && (
+            <ConsultExampleAllCommentsModal
+              consultExample={consultExample}
+              onClose={() => setIsAllCommentsModalShown(false)}
             />
           )}
         </>

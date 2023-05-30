@@ -13,6 +13,7 @@ export const useConsultExamplePage = (id: string) => {
     number | undefined
   >();
   const [isCommentsModalShown, setIsCommentsModalShown] = useState(false);
+  const [isAllCommentsModalShown, setIsAllCommentsModalShown] = useState(false);
   const [messageForCommentsModal, setMessageForCommentsModal] = useState('');
 
   const { data: consultExample } = useFetchConsultExample(id);
@@ -64,10 +65,12 @@ export const useConsultExamplePage = (id: string) => {
     messageIdForCommentsModal,
     consultExampleMessageIdForComment,
     consultExampleMessages,
+    isAllCommentsModalShown,
     isCommentsModalShown,
     messageForCommentsModal,
     openCommentsModal,
     openCommentsModalForMessage,
+    setIsAllCommentsModalShown,
     showCommentForm,
     showCommentFormForMessage,
   };
