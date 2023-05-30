@@ -5,12 +5,9 @@ import { Radio } from '@/components/Parts/Form/Radio';
 import { ExpandTextArea } from '@/components/Parts/Form/ExpandTextArea';
 import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
-import { ConsultExampleActions } from './ConsultExampleActions';
 import { ConsultExampleDetailEntity } from '@/types/entities/ConsultExampleDetailEntity';
-import { useConsultExampleActions } from './useConsultExampleActions';
-import { useDoctor } from '@/hooks/useDoctor';
-import { dateFormat } from '@/libs/date';
 import { useConsultExampleCommentsModal } from './useConsultExampleCommentsModal';
+import { ConsultExampleComments } from './ConsultExampleComments';
 
 type Props = {
   consultExample: ConsultExampleDetailEntity;
@@ -33,22 +30,12 @@ export const ConsultExampleCommentsModal: React.FC<Props> = ({
     body,
     isAnonymous,
     isCommentSending,
-    isCompleted,
     setBody,
     setIsAnonymous,
   } = useConsultExampleCommentsModal(
     consultExample.example_id,
     consultExampleMessageId
   );
-  const {
-    likeAndMutate,
-    unlikeAndMutate,
-    likeMessageAndMutate,
-    unlikeMessageAndMutate,
-    likeCommentAndMutate,
-    unlikeCommentAndMutate,
-  } = useConsultExampleActions(consultExample.example_id);
-  const { calculateExperienceYear } = useDoctor();
 
   return (
     <Modal
@@ -59,77 +46,12 @@ export const ConsultExampleCommentsModal: React.FC<Props> = ({
         <ModalTitleWithCloseButton title="コメント一覧" onClose={onClose} />
       </div>
       <div className="px-20 pb-10 pt-5">
-        <p>{message}</p>
-        <div className="mt-2">
-          {consultExampleMessage ? (
-            <ConsultExampleActions
-              likeCount={consultExampleMessage.like_count}
-              commentCount={consultExampleMessage.comment_count}
-              isLiked={consultExampleMessage.is_liked}
-              isCommentButtonHidden
-              onLike={() => likeMessageAndMutate(consultExampleMessage.uid)}
-              onUnlike={() => unlikeMessageAndMutate(consultExampleMessage.uid)}
-            />
-          ) : (
-            <ConsultExampleActions
-              likeCount={consultExample.like_count}
-              commentCount={consultExample.comment_count}
-              isLiked={consultExample.is_liked}
-              isCommentButtonHidden
-              onLike={likeAndMutate}
-              onUnlike={unlikeAndMutate}
-            />
-          )}
-        </div>
-        <div className="ml-2 mt-2 border-l-[3px] border-[#c4c4c4] pl-6">
-          {consultExampleComments &&
-            consultExampleComments.map((consultExampleComment) => (
-              <>
-                <div
-                  key={consultExampleComment.consult_example_comment_id}
-                  className="mt-4"
-                >
-                  {consultExampleComment.body}
-                </div>
-                <div className="mt-2 flex justify-between text-sm text-[#6c6c6c]">
-                  <div>
-                    {consultExampleComment.is_anonymous
-                      ? '匿名'
-                      : `${consultExampleComment.doctor_last_name} ${consultExampleComment.doctor_first_name}`}
-                    （
-                    {calculateExperienceYear(
-                      consultExampleComment.qualified_year
-                    )}
-                    年目 {consultExampleComment.speciality}）
-                  </div>
-                  <div>
-                    {dateFormat(consultExampleComment.created_date, 'YYYY/M/D')}
-                  </div>
-                </div>
-                <div className="mt-3">
-                  <ConsultExampleActions
-                    likeCount={consultExampleComment.like_count}
-                    commentCount={0}
-                    isCommentButtonHidden
-                    isShowCommentsButtonHidden
-                    isLiked={consultExampleComment.is_liked}
-                    onLike={() =>
-                      likeCommentAndMutate({
-                        consultExampleCommentId:
-                          consultExampleComment.consult_example_comment_id,
-                      })
-                    }
-                    onUnlike={() =>
-                      unlikeCommentAndMutate({
-                        consultExampleCommentId:
-                          consultExampleComment.consult_example_comment_id,
-                      })
-                    }
-                  />
-                </div>
-              </>
-            ))}
-        </div>
+        <ConsultExampleComments
+          consultExample={consultExample}
+          consultExampleMessage={consultExampleMessage}
+          consultExampleComments={consultExampleComments || []}
+          message={message}
+        />
         <form
           onSubmit={(e) => {
             e.preventDefault();
