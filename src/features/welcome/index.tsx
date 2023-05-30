@@ -28,10 +28,10 @@ const Welcome = () => {
               description="臨床疑問をエキスパートの医師とチャット形式で相談できます。相談内容に適した医師をMediiがマッチングします。"
               buttonSolid="専門医に相談"
               linkSolid="/NewChatRoom"
-              logSolid="click-chat"
+              logSolid="click-chat-in-welcome"
               buttonOutline="使い方を見る"
               linkOutline="/top?tutorial=true"
-              logOutline="click-tutorial"
+              logOutline="click-tutorial-in-welcome"
             />
             <CompleteCard
               title="E-カンファ"
@@ -40,7 +40,7 @@ const Welcome = () => {
               description="専門医の先生をお招きして、各診療科・症例の知見を広く提供するオンラインセミナーを実施しています。"
               buttonOutline="セミナーを見る"
               linkOutline="/seminar"
-              logOutline="click-seminar"
+              logOutline="click-seminar-in-welcome"
             />
             <CompleteCard
               title="症例バンク"
@@ -48,7 +48,7 @@ const Welcome = () => {
               description="論文・ガイドラインだけではわからない、臨床経験から蓄積された知見をスライド形式で閲覧できます。"
               buttonOutline="症例スライドを見る"
               linkOutline={process.env.CASE_BANK_URL ?? ''}
-              logOutline="click-case-bank"
+              logOutline="click-case-bank-in-welcome"
             />
           </div>
           <div

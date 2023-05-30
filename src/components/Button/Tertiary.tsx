@@ -1,5 +1,5 @@
 import React from 'react';
-type PrimaryProps = {
+type TertiaryProps = {
   width?: string;
   children: React.ReactNode;
   onClick?: () => void;
@@ -8,16 +8,16 @@ type PrimaryProps = {
   disabled?: boolean;
 };
 
-const Primary = (props: PrimaryProps) => {
+const Tertiary = (props: TertiaryProps) => {
   const { width, children, onClick, size, disabled = false } = props;
 
-  const buttonWidth = width ? `w-${width}` : 'w-auto';
+  const buttonWidth = width ? width : 'w-auto';
   const bottunSize = size === 'large' ? 'h-11 text-md' : 'h-9 text-sm';
+
   return (
     <button
-      className={`m-auto flex items-center justify-center rounded-md border bg-medii-blue-base px-3 font-bold text-white
-      hover:bg-button-hover active:bg-button-active disabled:bg-button-disabled
-      ${buttonWidth} ${bottunSize}`}
+      className={`flex items-center justify-center rounded-md border bg-white px-3 font-bold
+      text-black disabled:text-text-disabled ${buttonWidth} ${bottunSize}`}
       onClick={onClick}
       disabled={disabled}
     >
@@ -26,4 +26,4 @@ const Primary = (props: PrimaryProps) => {
   );
 };
 
-export default Primary;
+export default Tertiary;

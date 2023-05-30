@@ -1,5 +1,5 @@
-import PrimaryButton from '@/components/Parts/Button/Primary';
-import TertiaryButton from '@/components/Parts/Button/Tertiary';
+import PrimaryButton from '@/components/Button/Primary';
+import TertiaryButton from '@/components/Button/Tertiary';
 import Label from '@/components/Parts/Label/Label';
 import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 import { useRouter } from 'next/router';
@@ -46,7 +46,7 @@ export const CompleteCard = (props: CompleteCardProps) => {
           </p>
           {label && <Label text={label} />}
         </div>
-        <img className="mx-auto mt-4" src={imageSrc} alt="consult" />
+        <img className="mx-auto mt-4 h-32 w-52" src={imageSrc} alt={title} />
         <p className="mx-auto mt-4 text-left text-md text-text-secondary">
           {description}
         </p>
