@@ -11,14 +11,16 @@ type Args = {
 
 export const useEventLog = (): EventLog => {
   const { axios, hasToken } = useAxios();
+  const [isSent, setIsSent] = useState(false);
 
   const postEventLog = useCallback(
     async (args: Args) => {
-      if (hasToken) {
+      if (hasToken && !isSent) {
+        setIsSent(true);
         await axios.post('/event-log', args);
       }
     },
-    [axios, hasToken]
+    [axios, hasToken, isSent]
   );
 
   return {

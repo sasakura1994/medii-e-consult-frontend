@@ -53,7 +53,7 @@ const Welcome = () => {
           </div>
           <div
             onClick={async () => {
-              await postEventLog({ name: 'click-top' });
+              await postEventLog({ name: 'click-top-in-welcome' });
               router.push('/top');
             }}
           >
