@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import type { NextPage } from 'next';
 import { useSeminar } from '@/features/seminar/useSeminar';
 import { SeminarEntityType } from '@/types/entities/seminarEntity';
@@ -45,11 +45,7 @@ const googleCalendarUrl = (seminar: SeminarEntityType) => {
 const Seminar: NextPage = () => {
   const { seminars, latestSeminar, ticketCount } = useSeminar();
   const [showModal, setShowModal] = React.useState(false);
-  const { postEventLog } = useEventLog();
-
-  useEffect(() => {
-    postEventLog({ name: '/seminar' });
-  }, [postEventLog]);
+  useEventLog({ name: '/seminar' });
 
   return (
     <div className="-mt-10 bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat pb-12 lg:bg-[url('/images/seminar/PC_back.png')]">
