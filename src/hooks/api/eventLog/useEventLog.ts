@@ -6,7 +6,7 @@ type Args = {
 };
 
 type UseEventLog = {
-  postEventLog?: (args: Args) => Promise<void>;
+  postEventLog: (args: Args) => Promise<void>;
 };
 
 export const useEventLog = (args?: Args): UseEventLog => {
