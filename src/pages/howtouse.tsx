@@ -2,7 +2,7 @@ import React from 'react';
 import type { NextPageWithLayout } from '@/pages/_app';
 import { HowToUse } from '@/features/howToUse';
 import { useRouter } from 'next/router';
-import { CustomHead } from '@/components/Commons/CustomHead';
+import { CustomHead } from '@/components/Layouts/Header/CustomHead';
 import { Layout } from '@/components/Layouts/Layout';
 
 const HowToUsePage: NextPageWithLayout = () => {

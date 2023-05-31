@@ -1,8 +1,8 @@
 import React from 'react';
 import { Header } from '@/components/Layouts/Header/Header';
 import { HeaderSimple } from '@/components/Layouts/Header/HeaderSimple';
-import { FooterSpMenu } from '@/components/Commons/FooterSpMenu';
 import { useAuthenticationOnPage } from '@/hooks/authentication/useAuthenticationOnPage';
+import { FooterSpMenu } from './Footer/FooterSpMenu';
 
 type HeaderFigureType = 'default' | 'simple';
 
