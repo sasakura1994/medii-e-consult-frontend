@@ -1,7 +1,7 @@
 import React from 'react';
 import Welcome from '@/features/welcome';
 import { NextPageWithLayout } from './_app';
-import { CustomHead } from '@/components/Commons/CustomHead';
+import { CustomHead } from '@/components/Layouts/Header/CustomHead';
 import { LayoutLogoOnly } from '@/components/Layouts/LayoutLogoOnly';
 
 const WelcomePage: NextPageWithLayout = () => {
