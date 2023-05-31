@@ -72,8 +72,10 @@ export const useDocumentInputAuto = ({
 
   useEffect(() => {
     if (profile) {
-      setInputYear(profile.doctor_qualified_year.toString());
-      setDoctorLicenseYear(profile.doctor_qualified_year.toString());
+      if (profile.doctor_qualified_year !== 9999) {
+        setInputYear(profile.doctor_qualified_year.toString());
+        setDoctorLicenseYear(profile.doctor_qualified_year.toString());
+      }
       setTel(profile.tel);
     }
   }, [profile, setInputYear, setTel]);
