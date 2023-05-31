@@ -22,7 +22,7 @@ type Props = {
   onShowCommentsForMessage?: (
     consultExampleMessage: ConsultExampleMessageEntity
   ) => void;
-  onShowAllComments: () => void;
+  onShowAllComments?: () => void;
 };
 
 export const ConsultExampleDetail: React.FC<Props> = ({
@@ -79,12 +79,16 @@ export const ConsultExampleDetail: React.FC<Props> = ({
               />
               <div className="ml-1">{consultExample.all_like_count}</div>
               <a
-                href="#"
+                href={onShowAllComments ? '#' : undefined}
                 className="flex items-center"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onShowAllComments();
-                }}
+                onClick={
+                  onShowAllComments
+                    ? (e) => {
+                        e.preventDefault();
+                        onShowAllComments();
+                      }
+                    : undefined
+                }
               >
                 <img
                   src="/icons/comment.svg"

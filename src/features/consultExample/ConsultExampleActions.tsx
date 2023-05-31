@@ -58,7 +58,7 @@ export const ConsultExampleActions: React.FC<Props> = ({
         </a>
         {!isCommentButtonHidden && (
           <a
-            href={likeOrUnlike ? '#' : undefined}
+            href={onComment ? '#' : undefined}
             className="flex items-center"
             onClick={(e) => {
               e.preventDefault();
