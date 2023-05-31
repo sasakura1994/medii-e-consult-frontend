@@ -96,10 +96,12 @@ export const useDoctorNumberForm = ({
   useEffect(() => {
     if (profile) {
       setDoctorNumber(profile.doctor_number);
-      setDoctorLicenseYear(profile.doctor_qualified_year.toString());
-      setInputYear(profile.doctor_qualified_year.toString());
-      setDoctorLicenseMonth(profile.doctor_qualified_month.toString());
-      setDoctorLicenseDay(profile.doctor_qualified_day.toString());
+      if (profile.doctor_qualified_year !== 9999) {
+        setDoctorLicenseYear(profile.doctor_qualified_year.toString());
+        setInputYear(profile.doctor_qualified_year.toString());
+        setDoctorLicenseMonth(profile.doctor_qualified_month.toString());
+        setDoctorLicenseDay(profile.doctor_qualified_day.toString());
+      }
     }
   }, [profile, setInputYear]);
 

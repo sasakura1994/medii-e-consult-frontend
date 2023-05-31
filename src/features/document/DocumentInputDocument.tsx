@@ -36,14 +36,19 @@ const DocumentInputDocument = ({ setSelected }: DocumentInputDocumentProps) => {
                 選択へ戻る
               </div>
             </div>
-            <div className="mx-auto">医師免許証の登録</div>
+            <div className="mx-auto">画像アップロード</div>
           </div>
           <div className="mt-10 text-center lg:px-0">
-            医師免許証画像をアップロードしてください
+            医師であることを証明できる画像をアップロードしてください
+          </div>
+          <div className="mt-1 text-center lg:px-0">
+            医師免許証、所属医療機関のIDカード、医師資格証、
+            <br />
+            専門医証明書などが対象です
           </div>
 
           <div className="mt-2 ml-4 text-left text-sm">
-            ※氏名・交付年月日などが記載された、表面をアップロードしてください
+            ※氏名・交付年月日などが記載された面をアップロードしてください
           </div>
 
           <div

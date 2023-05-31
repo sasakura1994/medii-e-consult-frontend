@@ -1,23 +1,14 @@
 import React from 'react';
-import { NextPageWithLayout } from './_app';
 import { Document } from '@/features/document';
-import { MyPageMenu } from '@/components/Parts/Menu/MyPageMenu';
+import { NextPageWithLayout } from './_app';
 import { MyPageLayoutWithoutSpFooterMenu } from '@/components/Layouts/MyPageLayoutWithoutSpFooterMenu';
 
 const DocumentPage: NextPageWithLayout = () => {
-  return (
-    <>
-      <div className="-mt-10">
-        <MyPageMenu />
-      </div>
-      <Document />
-    </>
-  );
+  return <Document />;
 };
 
 export default DocumentPage;
-DocumentPage.getLayout = (page: React.ReactElement) => {
-  return (
-    <MyPageLayoutWithoutSpFooterMenu>{page}</MyPageLayoutWithoutSpFooterMenu>
-  );
-};
+
+DocumentPage.getLayout = (page) => (
+  <MyPageLayoutWithoutSpFooterMenu>{page}</MyPageLayoutWithoutSpFooterMenu>
+);

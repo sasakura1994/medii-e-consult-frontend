@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from './MyPageLayout.module.scss';
 import { HeaderSimple } from './Header/HeaderSimple';
 
 type PropsType = {
@@ -12,8 +11,10 @@ export const PublicLayout = (props: PropsType) => {
   return (
     <>
       <HeaderSimple />
-      <div className={styles.mypage_layout}>
-        <main className={styles.mypage_container}>{children}</main>
+      <div className={'h-full min-h-screen w-full bg-[#eff3f6]'}>
+        <main className={'mx-auto pt-10 pb-20 lg:w-lg-breakpoint lg:pb-0'}>
+          {children}
+        </main>
       </div>
     </>
   );
