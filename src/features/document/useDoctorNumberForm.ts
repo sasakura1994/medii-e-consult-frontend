@@ -94,8 +94,6 @@ export const useDoctorNumberForm = ({
   };
 
   useEffect(() => {
-    console.log(profile);
-
     if (profile) {
       setDoctorNumber(profile.doctor_number);
       if (profile.doctor_qualified_year !== 9999) {
