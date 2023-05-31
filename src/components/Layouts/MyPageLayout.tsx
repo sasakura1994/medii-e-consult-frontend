@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './MyPageLayout.module.scss';
 import { Header } from '@/components/Layouts/Header/Header';
-import { FooterSpMenu } from '@/components/Commons/FooterSpMenu';
 import { useAuthenticationOnPage } from '@/hooks/authentication/useAuthenticationOnPage';
+import { FooterSpMenu } from './Footer/FooterSpMenu';
 
 type PropsType = {
   children: React.ReactNode;
