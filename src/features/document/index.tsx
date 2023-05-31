@@ -40,6 +40,7 @@ export const Document = () => {
       } else {
         routerPushToWelcomePage();
       }
+      localStorage.removeItem(loginRedirectUrlKey);
     }
   }, [router, routerPushToWelcomePage, selected]);
 
