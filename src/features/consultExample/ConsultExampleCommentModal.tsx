@@ -39,13 +39,13 @@ export const ConsultExampleCommentModal: React.FC<Props> = ({
 
   return (
     <Modal
-      className="w-[644px]"
+      className="lg:w-[644px]"
       setShowModal={(isShow) => (isShow ? null : onClose())}
     >
-      <div className="border-b border-b-[#d5d5d5] px-20 pb-6 pt-10">
+      <div className="border-b border-b-[#d5d5d5] p-6 lg:px-20 lg:pb-6 lg:pt-10">
         <ModalTitleWithCloseButton title="コメントする" onClose={onClose} />
       </div>
-      <div className="px-20 pb-10 pt-5">
+      <div className="p-6 lg:px-20 lg:pb-10 lg:pt-5">
         <p>{message}</p>
         <div className="ml-2 mt-2 h-8 border-l-[3px] border-[#c4c4c4]"></div>
         <form

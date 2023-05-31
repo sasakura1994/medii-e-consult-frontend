@@ -19,17 +19,17 @@ export const ConsultExampleAllCommentsModal: React.FC<Props> = ({
 
   return (
     <Modal
-      className="w-[644px]"
+      className="lg:w-[644px]"
       setShowModal={(isShow) => (isShow ? null : onClose())}
     >
-      <div className="border-b border-b-[#d5d5d5] px-20 pb-6 pt-10">
+      <div className="border-b border-b-[#d5d5d5] p-6 lg:px-20 lg:pb-6 lg:pt-10">
         <ModalTitleWithCloseButton
           title="事例内コメント一覧"
           onClose={onClose}
         />
       </div>
       {getCommentsForMessage(0).length > 0 && (
-        <div className="px-20 pb-10 pt-5">
+        <div className="p-6 lg:px-20 lg:pb-10 lg:pt-5">
           <ConsultExampleComments
             consultExample={consultExample}
             consultExampleComments={getCommentsForMessage(0)}
@@ -40,7 +40,7 @@ export const ConsultExampleAllCommentsModal: React.FC<Props> = ({
       {availableConsultExampleMessages.map((consultExampleMessage) => (
         <>
           <hr />
-          <div className="px-20 pb-10 pt-5">
+          <div className="p-6 lg:px-20 lg:pb-10 lg:pt-5">
             <ConsultExampleComments
               consultExample={consultExample}
               consultExampleMessage={consultExampleMessage}
