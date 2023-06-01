@@ -63,7 +63,7 @@ export const useLogin = (): UseLoginType => {
         return;
       }
 
-      if (res.data.code !== 1) {
+      if (res.status !== 200) {
         setErrorMessage(res.data.message || 'エラーが発生しました');
         return;
       }
