@@ -63,11 +63,6 @@ export const useLogin = (): UseLoginType => {
         return;
       }
 
-      if (res.status !== 200) {
-        setErrorMessage(res.data.message || 'エラーが発生しました');
-        return;
-      }
-
       if (res.data.jwt_token) {
         setTokenAndMarkInitialized(res.data.jwt_token);
         setProfile(res.data.doctor);
