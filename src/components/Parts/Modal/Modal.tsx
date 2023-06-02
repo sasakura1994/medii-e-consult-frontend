@@ -18,14 +18,14 @@ export const Modal: React.FC<ModalPropsType> = (props) => {
       className={`modal fixed left-0 top-0 z-[200] h-screen w-screen overflow-y-auto bg-black/20 ${
         props.isCenter === true ? 'flex items-center justify-center' : ''
       }`}
-      onClick={hideModal}
+      onMouseDown={hideModal}
     >
       <div
         className={`rounded border border-[#d5d5d5] bg-white ${className} z-[210] mx-auto ${
           props.isCenter === true ? '' : 'my-10'
         }`}
         role="dialog"
-        onClick={(e) => e.stopPropagation()}
+        onMouseDown={(e) => e.stopPropagation()}
       >
         {children}
       </div>
