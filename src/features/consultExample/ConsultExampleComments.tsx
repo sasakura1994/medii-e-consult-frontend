@@ -88,12 +88,14 @@ export const ConsultExampleComments: React.FC<Props> = ({
                   isLiked={consultExampleComment.is_liked}
                   onLike={() =>
                     likeCommentAndMutate({
+                      consultExampleMessageId: consultExampleMessage?.uid,
                       consultExampleCommentId:
                         consultExampleComment.consult_example_comment_id,
                     })
                   }
                   onUnlike={() =>
                     unlikeCommentAndMutate({
+                      consultExampleMessageId: consultExampleMessage?.uid,
                       consultExampleCommentId:
                         consultExampleComment.consult_example_comment_id,
                     })
