@@ -56,9 +56,8 @@ export const redirectToLoginPage = () => {
       window.location.pathname.replace(
         process.env.WEB_EXTERNAL_SUB_DIR as string,
         ''
-      )
-    ) +
-    window.location.search;
+      ) + window.location.search
+    );
   window.location.href = loginPageUrl + redirectParam;
 };
 
