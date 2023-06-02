@@ -5,7 +5,7 @@ import { SWRConfig } from 'swr';
 import { useFetcher } from '@/hooks/network/useFetcher';
 import { CookiesProvider } from 'react-cookie';
 import { RecoilRoot } from 'recoil';
-import { CustomHead } from '@/components/Commons/CustomHead';
+import { CustomHead } from '@/components/Layouts/Header/CustomHead';
 import { Layout } from '@/components/Layouts/Layout';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
@@ -89,6 +89,7 @@ const App = (props: AppPropsWithLayout) => {
         '/passwordresetrequest',
         '/pointhistory',
         '/registration',
+        '/welcome',
         '/seminar',
         '/seminar/archive',
         '/top',

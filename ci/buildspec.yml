@@ -14,7 +14,11 @@ phases:
   build:
     on-failure: ABORT
     commands:
-      - docker build --build-arg endpoint_url="${ENDPOINT_URL}" --build-arg web_server_url="${WEB_SERVER_URL}" -t ${IMAGE_REPO_NAME} -f docker/Dockerfile .
+      - >
+        docker build --build-arg endpoint_url="${ENDPOINT_URL}"
+        --build-arg web_server_url="${WEB_SERVER_URL}"
+        --build-arg case_bank_url="${CASE_BANK_URL}"
+        -t ${IMAGE_REPO_NAME} -f docker/Dockerfile .
       - docker tag ${IMAGE_REPO_NAME}:latest 811142747210.dkr.ecr.ap-northeast-1.amazonaws.com/${IMAGE_REPO_NAME}:latest
   post_build:
     commands:

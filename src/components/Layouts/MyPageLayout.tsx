@@ -1,8 +1,7 @@
 import React from 'react';
-import styles from './MyPageLayout.module.scss';
 import { Header } from '@/components/Layouts/Header/Header';
-import { FooterSpMenu } from '@/components/Commons/FooterSpMenu';
 import { useAuthenticationOnPage } from '@/hooks/authentication/useAuthenticationOnPage';
+import { FooterSpMenu } from './Footer/FooterSpMenu';
 
 type PropsType = {
   children: React.ReactNode;
@@ -15,8 +14,10 @@ export const MyPageLayout = (props: PropsType) => {
   return (
     <>
       <Header />
-      <div className={styles.mypage_layout}>
-        <main className={styles.mypage_container}>{children}</main>
+      <div className={'h-full min-h-screen w-full bg-[#eff3f6]'}>
+        <main className={'mx-auto pt-10 pb-20 lg:w-lg-breakpoint lg:pb-0'}>
+          {children}
+        </main>
       </div>
       <FooterSpMenu />
     </>

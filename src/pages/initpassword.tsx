@@ -8,6 +8,7 @@ import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
 import { CheckBox } from '@/components/Parts/Form/CheckBox';
 import Link from 'next/link';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
+import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 
 const InitPassword: NextPageWithLayout = () => {
   const {
@@ -137,7 +138,7 @@ const InitPassword: NextPageWithLayout = () => {
           </div>
           <div className="my-6 text-center">
             {!isSending ? (
-              <button type="submit">送信</button>
+              <PrimaryButton type="submit">送信</PrimaryButton>
             ) : (
               <div className="mt-4 text-center">
                 <SpinnerBorder />
