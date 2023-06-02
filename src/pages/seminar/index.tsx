@@ -8,6 +8,8 @@ import { OutlinedSquareButton } from '@/components/Parts/Button/OutlinedSquareBu
 import { SeminarArchiveHeader } from '@/features/seminar/seminarArchiveHeader';
 import Link from 'next/link';
 import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
+import { SeminarFirstConferenceCard } from '@/features/seminar/SeminarFirstConferenceCard';
+import { SeminarConferenceCard } from '@/features/seminar/SeminarConferenceCard';
 
 const getSeminarDateTime = (seminar: SeminarEntityType) => {
   if (!seminar) return '';
@@ -48,110 +50,25 @@ const Seminar: NextPage = () => {
   useEventLog({ name: '/seminar' });
 
   return (
-    <div className="-mt-10 bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat pb-12 lg:bg-[url('/images/seminar/PC_back.png')]">
+    <div
+      className="-mt-10 -mb-20 bg-[url('/images/seminar/SP_back.png')] bg-cover
+     bg-no-repeat lg:bg-[url('/images/seminar/PC_back.png')]"
+    >
       <div className="m-auto flex max-w-[960px] flex-col items-center py-4 pt-10">
-        <h2
-          className="h-32  w-72 bg-contain bg-no-repeat px-12 pt-0 text-center text-lg text-[#6c6c6c]
-        lg:bg-[url('/images/seminar/heading_fukidashi.svg')] lg:pt-6 lg:text-3xl"
-        >
-          最新セミナー
-        </h2>
-        <div className="mt-30 relative w-full bg-white pb-20 pt-24  lg:mt-64 lg:w-[960px] lg:rounded-lg lg:pt-40 lg:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
-          <div className="absolute top-[-100px] flex w-full justify-center px-6  lg:top-[-264px]">
-            <img
-              src={latestSeminar && latestSeminar.image_url}
-              className="aspect-video max-h-[405px] w-full max-w-none drop-shadow-[0_4px_4px_rgba(0,0,0,.25)] lg:w-[719px] lg:shadow-[20px_27px_0_0_rgb(221,221,221)] lg:drop-shadow-none"
-            />
-          </div>
-          <div className="flex flex-col items-center bg-white px-8 lg:px-32">
-            <a className="w-full lg:w-auto">
-              <button className="relative mb-2 mt-6 w-full rounded-lg bg-primary py-3 text-base font-bold text-white lg:w-auto lg:px-12 lg:py-4 lg:text-2xl">
-                ZOOMセミナーへ
-                <img
-                  src="/images/seminar/main_button_arrow.svg"
-                  className="absolute right-4 top-3 ml-2 inline h-6 lg:static  lg:ml-6"
-                />
-              </button>
-            </a>
-            <Link href="/seminar#archive">
-              <button className="mb-4 mt-2 rounded-lg border border-[#7acadc] bg-[#f2f9ff] px-14 py-4 text-primary lg:py-5">
-                過去のセミナー動画はこちら
-              </button>
-            </Link>
-            <div className="flex w-full flex-col items-center">
-              <div className="flex w-full items-center justify-center rounded-md bg-[#e2e7ff] py-4">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary lg:h-20 lg:w-20">
-                  <img
-                    src="/images/seminar/video.svg"
-                    className="w-[19px] lg:w-auto"
-                  />
-                </div>
-                <p className="pl-4 font-bold text-primary lg:text-xl">
-                  {latestSeminar?.subject}
-                </p>
-              </div>
-            </div>
-            <div className="w-full  text-lg">
-              <div className="flex-reverse flex flex-col flex-col-reverse items-center justify-between border-b py-4 lg:flex-row">
-                <div className="w-full lg:w-auto">
-                  <p className="text-base lg:text-lg">
-                    <span className="pr-4 text-2xl text-primary lg:text-lg">
-                      日時
-                    </span>
-                    {latestSeminar !== undefined
-                      ? getSeminarDateTime(latestSeminar)
-                      : ''}
-                  </p>
-                </div>
-                <div>
-                  <a
-                    href={
-                      latestSeminar !== undefined
-                        ? googleCalendarUrl(latestSeminar)
-                        : ''
-                    }
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <OutlinedSquareButton className="mb-2 flex items-center rounded-lg border-inherit px-8 py-2 font-bold">
-                      <img src="/images/seminar/google_calendar.png" />
-                      <p className="ml-4">Googleカレンダーに登録</p>
-                    </OutlinedSquareButton>
-                  </a>
-                </div>
-              </div>
-              <div className="border-b py-4">
-                <div>
-                  <p className="text-base lg:text-lg">
-                    <span className="pr-4 text-2xl text-primary lg:text-lg lg:font-bold">
-                      講師
-                    </span>{' '}
-                    {latestSeminar?.doctor_name !== undefined
-                      ? latestSeminar.doctor_name
-                      : ''}
-                    先生
-                  </p>
-                </div>
-              </div>
-              <div className="pt-4">
-                <div>
-                  <p className="text-base lg:text-lg">
-                    <span className="pr-4 text-2xl text-primary lg:text-lg">
-                      セミナー概要
-                    </span>
-                    <br />
-                    {latestSeminar?.description !== undefined
-                      ? latestSeminar.description
-                      : ''}
-                  </p>
-                </div>
-              </div>
-            </div>
+        <div className="flex h-auto w-full flex-col rounded-lg bg-white px-4 pb-20 shadow-low lg:max-w-[960px] lg:pt-6">
+          <p className="text-xxxl font-bold text-medii-blue-base">
+            最新のセミナー
+          </p>
+          <SeminarFirstConferenceCard />
+          <div className="flex space-x-4">
+            <SeminarConferenceCard />
+            <SeminarConferenceCard />
           </div>
         </div>
+
         <div
-          id="archive"
-          className="flex w-full flex-col items-center rounded-lg px-7 pb-20 lg:mt-10 lg:max-w-[960px] lg:bg-white lg:px-20 lg:pt-20 lg:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
+          className="flex w-full flex-col items-center rounded-lg px-7 pb-20
+         lg:mt-4 lg:max-w-[960px] lg:bg-white lg:px-20 lg:pt-10 lg:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
         >
           <SeminarArchiveHeader ticketCount={ticketCount} />
           <div>
@@ -189,6 +106,7 @@ const Seminar: NextPage = () => {
               onClick={() => setShowModal(false)}
               src="/icons/close_primary.svg"
               className="absolute right-4 top-4 lg:right-10 lg:top-14"
+              alt=""
             />
             <h3 className="text-center text-2xl text-primary">チケットとは?</h3>
             <p className="py-10">
@@ -199,10 +117,12 @@ const Seminar: NextPage = () => {
             <img
               className="hidden md:block"
               src="/images/seminar/about_ticket_pc.png"
+              alt=""
             />
             <img
               className="md:hidden"
               src="/images/seminar/about_ticket_sp.png"
+              alt=""
             />
           </div>
         </Modal>
