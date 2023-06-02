@@ -5,6 +5,7 @@ import { useCallback, useState } from 'react';
 import { CreateConsultExampleCommentData } from './ConsultExampleCommentModal';
 import { usePostConsultExampleComment } from '@/hooks/api/consultExample/usePostConsultExampleComment';
 import { mutateFetchConsultExampleComments } from '@/hooks/api/consultExample/useFetchConsultExampleComments';
+import { mutateFetchConsultExampleAllComments } from '@/hooks/api/consultExample/useFetchConsultExampleAllComments';
 
 type LikeCommentArgs = {
   consultExampleMessageId?: number;
@@ -58,6 +59,7 @@ export const useConsultExampleActions = (id: string) => {
       mutateFetchConsultExample(id);
       mutateFetchConsultExampleMessages(id);
       mutateFetchConsultExampleComments(id, args.consultExampleMessageId);
+      mutateFetchConsultExampleAllComments(id);
     },
     [id, likeComment]
   );
@@ -68,6 +70,7 @@ export const useConsultExampleActions = (id: string) => {
       mutateFetchConsultExample(id);
       mutateFetchConsultExampleMessages(id);
       mutateFetchConsultExampleComments(id, args.consultExampleMessageId);
+      mutateFetchConsultExampleAllComments(id);
     },
     [id, unlikeComment]
   );
