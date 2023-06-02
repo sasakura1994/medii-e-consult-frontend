@@ -8,6 +8,7 @@ import { ConsultExampleDetail } from '@/features/consultExample/ConsultExampleDe
 import { ConsultExampleCommentModal } from '@/features/consultExample/ConsultExampleCommentModal';
 import { ConsultExampleCommentsModal } from '@/features/consultExample/ConsultExampleCommentsModal';
 import { ConsultExampleAllCommentsModal } from '@/features/consultExample/ConsultExampleAllCommentsModal';
+import { ImcompleteProfileModal } from '@/components/Parts/Modal/ImcompleteProfileModal';
 
 type Query = {
   id: string;
@@ -76,6 +77,7 @@ const ConsultExamplePage: NextPage = () => {
           )}
         </>
       )}
+      <ImcompleteProfileModal />
     </>
   );
 };
