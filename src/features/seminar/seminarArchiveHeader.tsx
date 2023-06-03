@@ -11,7 +11,10 @@ export const SeminarArchiveHeader: React.FC<Props> = ({
 }: Props) => {
   const [showModal, setShowModal] = React.useState(false);
   return (
-    <div className="flex w-full flex-col items-center rounded-lg pb-2 pt-4 md:max-w-[960px] md:bg-white md:pt-11 md:pt-0">
+    <div
+      className="flex w-full flex-col items-center rounded-lg pb-2 pt-4
+     md:max-w-[960px] md:bg-white md:pt-0"
+    >
       <h2
         className="
       max-w-[460px]
@@ -33,9 +36,12 @@ export const SeminarArchiveHeader: React.FC<Props> = ({
       <div className="mb-2 flex w-full flex-col items-center justify-center md:flex-row">
         <div>
           <div className="relative">
-            <div className="absolute right-0 bottom-0 top-0 left-0 rounded-lg border border-[#c4c4c4] bg-white blur-xs md:rounded-3xl"></div>
+            <div
+              className="absolute right-0 bottom-0 top-0 left-0 rounded-lg
+            border border-[#c4c4c4] bg-white blur-xs md:rounded-3xl"
+            ></div>
             <div className="relative flex items-center p-5 md:p-6">
-              <img src="/images/seminar/ticket.png" />
+              <img src="/images/seminar/ticket.png" alt="" />
               <p className="hidden pl-2 lg:block lg:text-2xl">
                 現在のチケット所持枚数
                 <span className="pl-2 text-4xl font-bold text-[#f5847d]">
@@ -65,12 +71,16 @@ export const SeminarArchiveHeader: React.FC<Props> = ({
         </button>
       </div>
       {showModal && (
-        <Modal setShowModal={setShowModal}>
-          <div className="align-center relative flex flex-col items-center bg-white px-6 py-4 md:py-20 md:px-28">
+        <Modal setShowModal={setShowModal} className="w-[800px]">
+          <div
+            className="align-center relative mx-auto flex flex-col items-center bg-white px-6 py-4
+          md:py-20 md:px-28"
+          >
             <img
               onClick={() => setShowModal(false)}
               src="/icons/close_primary.svg"
-              className="absolute right-4 top-4 md:right-10 md:top-14"
+              className="absolute right-4 top-4 cursor-pointer md:right-10 md:top-14"
+              alt=""
             />
             <h3 className="text-center text-2xl text-primary">チケットとは?</h3>
             <p className="py-10">
@@ -81,10 +91,12 @@ export const SeminarArchiveHeader: React.FC<Props> = ({
             <img
               className="hidden md:block"
               src="/images/seminar/about_ticket_pc.png"
+              alt=""
             />
             <img
               className="md:hidden"
               src="/images/seminar/about_ticket_sp.png"
+              alt=""
             />
           </div>
         </Modal>

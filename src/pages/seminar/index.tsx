@@ -1,51 +1,17 @@
 import React from 'react';
 import type { NextPage } from 'next';
 import { useSeminar } from '@/features/seminar/useSeminar';
-import { SeminarEntityType } from '@/types/entities/seminarEntity';
 import { SeminarCard } from '@/features/seminar/seminarCard';
 import { Modal } from '@/components/Parts/Modal/Modal';
-import { OutlinedSquareButton } from '@/components/Parts/Button/OutlinedSquareButton';
 import { SeminarArchiveHeader } from '@/features/seminar/seminarArchiveHeader';
 import Link from 'next/link';
 import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 import { SeminarFirstConferenceCard } from '@/features/seminar/SeminarFirstConferenceCard';
 import { SeminarConferenceCard } from '@/features/seminar/SeminarConferenceCard';
-
-const getSeminarDateTime = (seminar: SeminarEntityType) => {
-  if (!seminar) return '';
-  const [year, month, day] = seminar.seminar_date
-    .substring(0, 10)
-    .split(/-/) as string[];
-  const seminarDate = new Date(seminar.seminar_date);
-  const dayOfWeek = ['日', '月', '火', '水', '木', '金', '土'][
-    seminarDate.getDay() as number
-  ];
-  return (
-    `${Number(year)}年${Number(month)}月${Number(day)}日(${dayOfWeek}) ` +
-    seminar.seminar_start_time.substring(0, 5) +
-    '-' +
-    seminar.seminar_end_time.substring(0, 5)
-  );
-};
-
-const googleCalendarUrl = (seminar: SeminarEntityType) => {
-  if (!seminar) return '';
-  const date = seminar.seminar_date.substring(0, 11);
-  const start = encodeURIComponent(
-    (date + seminar.seminar_start_time).replace(/[-:]/g, '')
-  );
-  const end = encodeURIComponent(
-    (date + seminar.seminar_end_time).replace(/[-:]/g, '')
-  );
-  return `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
-    seminar.subject
-  )}&dates=${start}/${end}&details=${encodeURIComponent(
-    seminar.description
-  )}&location=${encodeURIComponent(seminar.zoom_url)}`;
-};
+import SecondaryButton from '@/components/Button/Secondary';
 
 const Seminar: NextPage = () => {
-  const { seminars, latestSeminar, ticketCount } = useSeminar();
+  const { seminars, ticketCount } = useSeminar();
   const [showModal, setShowModal] = React.useState(false);
   useEventLog({ name: '/seminar' });
 
@@ -54,15 +20,28 @@ const Seminar: NextPage = () => {
       className="-mt-10 -mb-20 bg-[url('/images/seminar/SP_back.png')] bg-cover
      bg-no-repeat lg:bg-[url('/images/seminar/PC_back.png')]"
     >
-      <div className="m-auto flex max-w-[960px] flex-col items-center py-4 pt-10">
-        <div className="flex h-auto w-full flex-col rounded-lg bg-white px-4 pb-20 shadow-low lg:max-w-[960px] lg:pt-6">
+      <div className="m-auto flex w-full flex-col items-center py-4 pt-10 lg:w-[960px]">
+        <div className="mb-8 flex h-auto flex-col rounded-lg bg-white px-4 shadow-low lg:max-w-[960px] lg:pt-6">
           <p className="text-xxxl font-bold text-medii-blue-base">
             最新のセミナー
           </p>
-          <SeminarFirstConferenceCard />
-          <div className="flex space-x-4">
-            <SeminarConferenceCard />
-            <SeminarConferenceCard />
+
+          {seminars && <SeminarFirstConferenceCard seminar={seminars[0]} />}
+          <div className="flex flex-col space-x-4 lg:flex-row">
+            {seminars &&
+              seminars.map((seminar, index) => {
+                if (index === 1 || index === 2) {
+                  return (
+                    <div key={seminar.seminar_id}>
+                      <SeminarConferenceCard seminar={seminar} />
+                    </div>
+                  );
+                }
+              })}
+          </div>
+
+          <div className="mx-auto my-6 w-44">
+            <SecondaryButton size="large">過去のセミナー動画へ</SecondaryButton>
           </div>
         </div>
 
