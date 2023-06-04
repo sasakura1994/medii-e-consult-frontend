@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSeminar } from '@/features/seminar/useSeminar';
 import { SeminarCard } from '@/features/seminar/seminarCard';
 import { Modal } from '@/components/Parts/Modal/Modal';
@@ -11,7 +11,7 @@ import { NextPageWithLayout } from '../_app';
 
 const Seminar: NextPageWithLayout = () => {
   const { seminars, ticketCount } = useSeminar();
-  const [showModal, setShowModal] = React.useState(false);
+  const [showModal, setShowModal] = useState(false);
   useEventLog({ name: '/seminar' });
   if (seminars) {
     return (
