@@ -36,7 +36,7 @@ const Seminar: NextPageWithLayout = () => {
               })}
             </div>
 
-            <div className="mx-auto my-6 w-44">
+            <div className="my-6 flex w-auto justify-center">
               <Link href={'/seminar/archives'}>
                 <SecondaryButton size="large">
                   過去のセミナー動画へ

@@ -14,7 +14,7 @@ export const Modal: React.FC<ModalPropsType> = (props) => {
   return (
     <div
       ref={modalRef}
-      className="modal fixed top-0 left-0 z-[200] h-screen w-screen overflow-y-auto bg-black/20"
+      className="modal fixed top-0 left-0 z-[200] h-full w-full overflow-y-auto bg-black/20 lg:h-screen lg:w-screen"
       onClick={hideModal}
     >
       <div

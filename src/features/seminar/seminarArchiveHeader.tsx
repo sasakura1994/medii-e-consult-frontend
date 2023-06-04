@@ -71,21 +71,22 @@ export const SeminarArchiveHeader: React.FC<Props> = ({
         </button>
       </div>
       {showModal && (
-        <Modal setShowModal={setShowModal} className="w-[800px]">
-          <div
-            className="align-center relative mx-auto flex flex-col items-center bg-white px-6 py-4
-          md:py-20 md:px-28"
-          >
+        <Modal
+          setShowModal={setShowModal}
+          className="mt-24 py-6 lg:mt-10 lg:w-[800px]"
+        >
+          <div className="align-center relative mx-auto flex flex-col items-center bg-white px-6 py-4">
             <img
               onClick={() => setShowModal(false)}
               src="/icons/close_primary.svg"
-              className="absolute right-4 top-4 cursor-pointer md:right-10 md:top-14"
+              className="absolute right-4 top-0 cursor-pointer"
               alt=""
             />
             <h3 className="text-center text-2xl text-primary">チケットとは?</h3>
-            <p className="py-10">
+            <p className="pt-10">
               チケットとはセミナー動画アーカイブを閲覧するために必要なものです。
-              <br />
+            </p>
+            <p className="pt-4 pb-10 lg:pt-0">
               E-コンサルで相談するとセミナーチケット1枚獲得できます。
             </p>
             <img
