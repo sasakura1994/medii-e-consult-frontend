@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useSeminar } from '@/features/seminar/useSeminar';
 import { SeminarCard } from '@/features/seminar/seminarCard';
 import { Modal } from '@/components/Parts/Modal/Modal';
@@ -8,11 +8,47 @@ import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 import { SeminarConferenceCard } from '@/features/seminar/SeminarConferenceCard';
 import SecondaryButton from '@/components/Button/Secondary';
 import { NextPageWithLayout } from '../_app';
+import { useProfile } from '@/hooks/useProfile';
+import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 
 const Seminar: NextPageWithLayout = () => {
   const { seminars, ticketCount } = useSeminar();
+  const { profile } = useProfile();
   const [showModal, setShowModal] = useState(false);
   useEventLog({ name: '/seminar' });
+  const modalMsg = useMemo(() => {
+    if (profile) {
+      if (profile.is_imperfect_profile) {
+        return (
+          <p>
+            プロフィール情報が入力されておりません。
+            <br />
+            お手数ですがサービスをご利用頂くためにプロフィール画面のご入力をお願いいたします。
+          </p>
+        );
+      } else if (profile.need_to_send_confimation) {
+        return (
+          <p>
+            確認資料が提出されておりません。
+            <br />
+            お手数ですがサービスをご利用頂くためにプロフィール画面から確認資料をご提出ください。
+          </p>
+        );
+      } else if (profile.status !== 'VERIFIED') {
+        return (
+          <p>
+            現在、ご提出頂いた資料を確認中です。
+            <br />
+            恐れ入りますが確認完了までしばらくお待ち下さい。
+            <br />
+            確認完了次第、メールにてご連絡いたします。
+          </p>
+        );
+      }
+      return null;
+    }
+  }, [profile]);
+
   if (seminars) {
     return (
       <div
@@ -106,6 +142,24 @@ const Seminar: NextPageWithLayout = () => {
                 src="/images/seminar/about_ticket_sp.png"
                 alt=""
               />
+            </div>
+          </Modal>
+        )}
+        {modalMsg && (
+          <Modal
+            isBlockModal
+            setShowModal={setShowModal}
+            className="mt-48 lg:w-[644px]"
+          >
+            <div className="relative flex flex-col items-center rounded-lg bg-white px-6 py-20 lg:px-12 lg:py-10">
+              {modalMsg}
+              <div className="mt-4">
+                <Link href="/editprofile">
+                  <PrimaryButton className="mt-4">
+                    プロフィール画面を開く
+                  </PrimaryButton>
+                </Link>
+              </div>
             </div>
           </Modal>
         )}
