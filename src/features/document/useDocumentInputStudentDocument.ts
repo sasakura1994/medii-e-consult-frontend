@@ -90,10 +90,13 @@ export const useDocumentInputStudentDocument = ({
         newProfile.graduation_year = Number(year);
         newProfile.confimation_type = 'document';
         newProfile.document = fileSelectorRef.current?.files?.[0] || undefined;
-        await uploadDocument(newProfile).catch((e) => {
-          setErrorMessage(e.message);
-        });
-        setSelected('studentCompleted');
+        try {
+          await uploadDocument(newProfile);
+          setSelected('studentCompleted');
+        } catch (e) {
+          const error = e as { message: string };
+          setErrorMessage(error.message);
+        }
       } else {
         setErrorMessage('ファイルの種類が不正です');
       }
