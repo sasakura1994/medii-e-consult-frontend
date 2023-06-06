@@ -87,10 +87,13 @@ export const useDocumentInputAuto = ({
       newProfile.doctor_qualified_year = Number(year);
       newProfile.confimation_type = 'auto';
       newProfile.tel = tel;
-      await uploadDocument(newProfile).catch((e) => {
-        setErrorMessage(e.message);
-      });
-      setSelected('completed');
+      try {
+        await uploadDocument(newProfile);
+        setSelected('completed');
+      } catch (e) {
+        const error = e as { message: string };
+        setErrorMessage(error.message);
+      }
     }
   }, [profile, convertYear, inputYear, era, tel, uploadDocument, setSelected]);
 

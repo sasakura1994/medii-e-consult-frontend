@@ -56,6 +56,10 @@ beforeEach(() => {
   });
 });
 
+afterEach(() => {
+  jest.resetAllMocks();
+});
+
 describe('useDoctorNumberForm', () => {
   beforeEach(() => {
     (useUploadDocument as jest.Mock).mockReturnValue({
@@ -67,7 +71,7 @@ describe('useDoctorNumberForm', () => {
     jest.resetAllMocks();
   });
 
-  test('should handle input change correctly', () => {
+  test('フォームが正常に動作するか', () => {
     const setSelected = jest.fn();
     const { result } = renderHook(() => useDoctorNumberForm({ setSelected }));
 
@@ -84,7 +88,7 @@ describe('useDoctorNumberForm', () => {
     expect(result.current.inputYear).toBe('2000');
   });
 
-  test('should set error message on catch', async () => {
+  test('エラー時にはsetSelectedにcompletedがセットされないこと', async () => {
     (useUploadDocument as jest.Mock).mockReturnValue({
       uploadDocument: jest.fn().mockRejectedValue({ message: 'error' }),
     });
@@ -100,7 +104,7 @@ describe('useDoctorNumberForm', () => {
     expect(setSelected).not.toHaveBeenCalledWith('completed');
   });
 
-  test("should setSelected to 'completed' on successful upload", async () => {
+  test('正常にアップロードできた場合にsetSelectedにcompletedがセットされること', async () => {
     (useUploadDocument as jest.Mock).mockReturnValue({
       uploadDocument: jest.fn().mockResolvedValue({}),
     });
