@@ -10,8 +10,10 @@ import { useUploadDocument } from '@/hooks/api/doctor/useUploadDocument';
 import { useSelectedFile } from './useSelectedFile';
 import { DocumentSelected } from '.';
 import { Era, useEraConverter } from '@/hooks/useEraConverter';
+import router from 'next/router';
 
 type UseDocumentInputStudentDocumentProps = {
+  selected: DocumentSelected;
   setSelected: Dispatch<SetStateAction<DocumentSelected>>;
 };
 
@@ -33,6 +35,7 @@ type UseDocumentInputStudentDocument = {
 };
 
 export const useDocumentInputStudentDocument = ({
+  selected,
   setSelected,
 }: UseDocumentInputStudentDocumentProps): UseDocumentInputStudentDocument => {
   const { profile } = useFetchProfile();
@@ -112,6 +115,15 @@ export const useDocumentInputStudentDocument = ({
       setImageSource(profile.document_file_path);
     }
   }, [profile, setImageSource]);
+
+  useEffect(() => {
+    if (selected !== 'studentCompleted') return;
+    const timeout = setTimeout(() => {
+      router.push('/top');
+    }, 5000);
+
+    return () => clearTimeout(timeout);
+  }, [selected]);
 
   return {
     imageSource,

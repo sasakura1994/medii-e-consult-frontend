@@ -25,7 +25,7 @@ const DocumentInputStudentDocument = ({
     inputYear,
     handleInputYearToSeireki,
     handleGraduationYearToJapaneseEraYear,
-  } = useDocumentInputStudentDocument({ setSelected });
+  } = useDocumentInputStudentDocument({ selected, setSelected });
   if (selected !== 'studentCompleted') {
     return (
       <form onSubmit={submit}>
