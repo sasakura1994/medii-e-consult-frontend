@@ -1,17 +1,19 @@
 import { renderHook, act } from '@testing-library/react';
-import { useDocumentInputStudentDocument } from '../useDocumentInputStudentDocument';
-import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
+import { useDocumentInputDocument } from '../useDocumentInputDocument';
 import { useUploadDocument } from '@/hooks/api/doctor/useUploadDocument';
-import { Era, useEraConverter } from '@/hooks/useEraConverter';
+import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { useSelectedFile } from '../useSelectedFile';
 
-jest.mock('@/hooks/api/doctor/useFetchProfile');
 jest.mock('@/hooks/api/doctor/useUploadDocument');
-jest.mock('@/hooks/useEraConverter');
+jest.mock('@/hooks/api/doctor/useFetchProfile');
 jest.mock('../useSelectedFile');
 
-describe('useDocumentInputStudentDocument', () => {
+describe('useDocumentInputDocument', () => {
   beforeEach(() => {
+    (useUploadDocument as jest.Mock).mockReturnValue({
+      uploadDocument: jest.fn(),
+    });
+
     (useFetchProfile as jest.Mock).mockReturnValue({
       profile: {
         commedical_speciality: 'Test Speciality',
@@ -60,17 +62,6 @@ describe('useDocumentInputStudentDocument', () => {
         questionary_other: null,
       },
     });
-    (useUploadDocument as jest.Mock).mockReturnValue({
-      uploadDocument: jest.fn().mockResolvedValue({ data: {} }),
-    });
-    (useEraConverter as jest.Mock).mockReturnValue({
-      inputYear: '2',
-      convertYear: jest.fn().mockReturnValue('2020'),
-      era: 'reiwa' as Era,
-      setInputYear: jest.fn(),
-      validation: { min: 1900, max: 2099 },
-      handleEraChange: jest.fn(),
-    });
     (useSelectedFile as jest.Mock).mockReturnValue({
       imageSource: 'test',
       onFileSelected: jest.fn(),
@@ -81,28 +72,26 @@ describe('useDocumentInputStudentDocument', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    jest.resetAllMocks();
   });
 
   test('ロード時に正しい値がsetImageSourceにセットされていること', () => {
     const { setImageSource } = renderHook(() => useSelectedFile()).result
       .current;
-    renderHook(() =>
-      useDocumentInputStudentDocument({
-        selected: '',
-        setSelected: jest.fn(),
-      })
-    );
+    const setSelected = jest.fn();
+    renderHook(() => useDocumentInputDocument({ setSelected }));
+
     expect(setImageSource).toHaveBeenCalledWith('path/to/document');
   });
 
-  test('submit時にsetSelectedで"studentCompleted"になること', async () => {
+  test('uploadDocumentに失敗した場合にはcompletedにならないこと', async () => {
+    (useUploadDocument as jest.Mock).mockReturnValue({
+      uploadDocument: jest.fn().mockRejectedValue({ message: 'error' }),
+    });
+
     const setSelected = jest.fn();
     const { submit } = renderHook(() =>
-      useDocumentInputStudentDocument({
-        selected: '',
-        setSelected,
-      })
+      useDocumentInputDocument({ setSelected })
     ).result.current;
 
     await act(async () => {
@@ -112,22 +101,17 @@ describe('useDocumentInputStudentDocument', () => {
       submit(event);
     });
 
-    expect(setSelected).toHaveBeenCalledWith('studentCompleted');
+    expect(setSelected).not.toHaveBeenCalledWith('completed');
   });
 
-  test('uploadDocumentに失敗した場合にはsetSelectedが呼び出されないこと', async () => {
-    const setSelected = jest.fn();
+  test('submit時にsetSelectedでcompletedになること', async () => {
     (useUploadDocument as jest.Mock).mockReturnValue({
-      uploadDocument: jest
-        .fn()
-        .mockReturnValue(Promise.reject({ message: 'error' })),
+      uploadDocument: jest.fn().mockResolvedValue({ data: {} }),
     });
 
+    const setSelected = jest.fn();
     const { submit } = renderHook(() =>
-      useDocumentInputStudentDocument({
-        selected: '',
-        setSelected,
-      })
+      useDocumentInputDocument({ setSelected })
     ).result.current;
 
     await act(async () => {
@@ -137,6 +121,6 @@ describe('useDocumentInputStudentDocument', () => {
       submit(event);
     });
 
-    expect(setSelected).not.toHaveBeenCalledWith('studentCompleted');
+    expect(setSelected).toHaveBeenCalledWith('completed');
   });
 });

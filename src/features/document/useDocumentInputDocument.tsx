@@ -48,10 +48,13 @@ export const useDocumentInputDocument = ({
         }
         const newProfile = { ...profile };
         newProfile.document = fileSelectorRef.current?.files?.[0] || undefined;
-        await uploadDocument(newProfile).catch((e) => {
-          setErrorMessage(e.message);
-        });
-        setSelected('completed');
+        try {
+          await uploadDocument(newProfile);
+          setSelected('completed');
+        } catch (e) {
+          const error = e as { message: string };
+          setErrorMessage(error.message);
+        }
       } else {
         setErrorMessage('ファイルの種類が不正です');
       }
