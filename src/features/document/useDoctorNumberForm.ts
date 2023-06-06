@@ -86,10 +86,14 @@ export const useDoctorNumberForm = ({
       newProfile.doctor_qualified_month = Number(doctorLicenseMonth);
       newProfile.doctor_qualified_day = Number(doctorLicenseDay);
       newProfile.confimation_type = 'number';
-      await uploadDocument(newProfile).catch((e) => {
-        setErrorMessage(e.message);
-      });
-      setSelected('completed');
+      try {
+        await uploadDocument(newProfile);
+        setSelected('completed');
+      } catch (e) {
+        const error = e as { message: string };
+        setErrorMessage(error.message);
+        return;
+      }
     }
   };
 
