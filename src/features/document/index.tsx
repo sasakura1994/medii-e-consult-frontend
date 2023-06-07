@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import RegistrationProgress, { DocumentMode } from './RegistrationProgress';
 import DocumentTypeSelect from './DocumentTypeSelect';
 import DoctorNumberForm from './DoctorNumberForm';
@@ -31,22 +31,25 @@ export const Document = () => {
     await postEventLog({ name: 'document-complete' });
     router.push('/welcome');
   }, [postEventLog, router]);
-
-  useEffect(() => {
-    if (selected === 'completed' && localStorage) {
-      const savedRedirectUrl = localStorage.getItem(loginRedirectUrlKey);
-      if (
-        savedRedirectUrl &&
-        savedRedirectUrl !== '' &&
-        savedRedirectUrl.toLocaleLowerCase() !== '/top'
-      ) {
-        router.push(savedRedirectUrl);
-      } else {
-        routerPushToWelcomePage();
+  const setSelectedWithRedirect = useCallback(
+    (value: DocumentSelected) => {
+      setSelected(value);
+      if (value === 'completed' && localStorage) {
+        const savedRedirectUrl = localStorage.getItem(loginRedirectUrlKey);
+        if (
+          savedRedirectUrl &&
+          savedRedirectUrl !== '' &&
+          savedRedirectUrl.toLocaleLowerCase() !== '/top'
+        ) {
+          router.push(savedRedirectUrl);
+        } else {
+          routerPushToWelcomePage();
+        }
+        localStorage.removeItem(loginRedirectUrlKey);
       }
-      localStorage.removeItem(loginRedirectUrlKey);
-    }
-  }, [router, routerPushToWelcomePage, selected]);
+    },
+    [router, routerPushToWelcomePage]
+  );
 
   if (!profile) return <></>;
 
@@ -77,12 +80,18 @@ export const Document = () => {
           </div>
         )}
         {selected === 'number' && (
-          <DoctorNumberForm setSelected={setSelected} />
+          <DoctorNumberForm setSelectedWithRedirect={setSelectedWithRedirect} />
         )}
         {selected === 'document' && (
-          <DocumentInputDocument setSelected={setSelected} />
+          <DocumentInputDocument
+            setSelectedWithRedirect={setSelectedWithRedirect}
+          />
         )}
-        {selected === 'auto' && <DocumentInputAuto setSelected={setSelected} />}
+        {selected === 'auto' && (
+          <DocumentInputAuto
+            setSelectedWithRedirect={setSelectedWithRedirect}
+          />
+        )}
       </div>
     </Container>
   );

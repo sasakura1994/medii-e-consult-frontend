@@ -5,7 +5,7 @@ import { useState, useCallback, useEffect, useMemo } from 'react';
 import { DocumentSelected } from '.';
 
 type UseDoctorNumberFormProps = {
-  setSelected: React.Dispatch<React.SetStateAction<DocumentSelected>>;
+  setSelectedWithRedirect: (value: DocumentSelected) => void;
 };
 
 type UseDoctorNumberForm = {
@@ -29,7 +29,7 @@ type UseDoctorNumberForm = {
 };
 
 export const useDoctorNumberForm = ({
-  setSelected,
+  setSelectedWithRedirect,
 }: UseDoctorNumberFormProps): UseDoctorNumberForm => {
   const { profile } = useProfile();
 
@@ -88,7 +88,7 @@ export const useDoctorNumberForm = ({
       newProfile.confimation_type = 'number';
       try {
         await uploadDocument(newProfile);
-        setSelected('completed');
+        setSelectedWithRedirect('completed');
       } catch (e) {
         const error = e as { message: string };
         setErrorMessage(error.message);

@@ -78,8 +78,8 @@ describe('useDocumentInputDocument', () => {
   test('ロード時に正しい値がsetImageSourceにセットされていること', () => {
     const { setImageSource } = renderHook(() => useSelectedFile()).result
       .current;
-    const setSelected = jest.fn();
-    renderHook(() => useDocumentInputDocument({ setSelected }));
+    const setSelectedWithRedirect = jest.fn();
+    renderHook(() => useDocumentInputDocument({ setSelectedWithRedirect }));
 
     expect(setImageSource).toHaveBeenCalledWith('path/to/document');
   });
@@ -89,9 +89,9 @@ describe('useDocumentInputDocument', () => {
       uploadDocument: jest.fn().mockRejectedValue({ message: 'error' }),
     });
 
-    const setSelected = jest.fn();
+    const setSelectedWithRedirect = jest.fn();
     const { submit } = renderHook(() =>
-      useDocumentInputDocument({ setSelected })
+      useDocumentInputDocument({ setSelectedWithRedirect })
     ).result.current;
 
     await act(async () => {
@@ -101,7 +101,7 @@ describe('useDocumentInputDocument', () => {
       submit(event);
     });
 
-    expect(setSelected).not.toHaveBeenCalledWith('completed');
+    expect(setSelectedWithRedirect).not.toHaveBeenCalledWith('completed');
   });
 
   test('submit時にsetSelectedでcompletedになること', async () => {
@@ -109,9 +109,9 @@ describe('useDocumentInputDocument', () => {
       uploadDocument: jest.fn().mockResolvedValue({ data: {} }),
     });
 
-    const setSelected = jest.fn();
+    const setSelectedWithRedirect = jest.fn();
     const { submit } = renderHook(() =>
-      useDocumentInputDocument({ setSelected })
+      useDocumentInputDocument({ setSelectedWithRedirect })
     ).result.current;
 
     await act(async () => {
@@ -121,6 +121,6 @@ describe('useDocumentInputDocument', () => {
       submit(event);
     });
 
-    expect(setSelected).toHaveBeenCalledWith('completed');
+    expect(setSelectedWithRedirect).toHaveBeenCalledWith('completed');
   });
 });

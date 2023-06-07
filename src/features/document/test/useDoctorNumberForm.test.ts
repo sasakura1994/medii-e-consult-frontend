@@ -65,8 +65,10 @@ afterEach(() => {
 
 describe('useDoctorNumberForm', () => {
   test('フォームが正常に動作するか', () => {
-    const setSelected = jest.fn();
-    const { result } = renderHook(() => useDoctorNumberForm({ setSelected }));
+    const setSelectedWithRedirect = jest.fn();
+    const { result } = renderHook(() =>
+      useDoctorNumberForm({ setSelectedWithRedirect })
+    );
 
     act(() => {
       result.current.setDoctorNumber('123456');
@@ -86,15 +88,17 @@ describe('useDoctorNumberForm', () => {
       uploadDocument: jest.fn().mockRejectedValue({ message: 'error' }),
     });
 
-    const setSelected = jest.fn();
-    const { result } = renderHook(() => useDoctorNumberForm({ setSelected }));
+    const setSelectedWithRedirect = jest.fn();
+    const { result } = renderHook(() =>
+      useDoctorNumberForm({ setSelectedWithRedirect })
+    );
 
     await act(async () => {
       await result.current.submit();
     });
 
     expect(result.current.errorMessage).toBe('error');
-    expect(setSelected).not.toHaveBeenCalledWith('completed');
+    expect(setSelectedWithRedirect).not.toHaveBeenCalledWith('completed');
   });
 
   test('正常にアップロードできた場合にsetSelectedにcompletedがセットされること', async () => {
@@ -102,13 +106,15 @@ describe('useDoctorNumberForm', () => {
       uploadDocument: jest.fn().mockResolvedValue({}),
     });
 
-    const setSelected = jest.fn();
-    const { result } = renderHook(() => useDoctorNumberForm({ setSelected }));
+    const setSelectedWithRedirect = jest.fn();
+    const { result } = renderHook(() =>
+      useDoctorNumberForm({ setSelectedWithRedirect })
+    );
 
     await act(async () => {
       await result.current.submit();
     });
 
-    expect(setSelected).toHaveBeenCalledWith('completed');
+    expect(setSelectedWithRedirect).toHaveBeenCalledWith('completed');
   });
 });

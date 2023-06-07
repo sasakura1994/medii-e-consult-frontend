@@ -27,8 +27,10 @@ describe('useDocumentInputAuto', () => {
   });
 
   test('インプットが正しくできること', () => {
-    const setSelected = jest.fn();
-    const { result } = renderHook(() => useDocumentInputAuto({ setSelected }));
+    const setSelectedWithRedirect = jest.fn();
+    const { result } = renderHook(() =>
+      useDocumentInputAuto({ setSelectedWithRedirect })
+    );
 
     act(() => {
       result.current.setTel('0987654321');
@@ -44,15 +46,17 @@ describe('useDocumentInputAuto', () => {
       uploadDocument: jest.fn().mockRejectedValue({ message: 'error' }),
     });
 
-    const setSelected = jest.fn();
-    const { result } = renderHook(() => useDocumentInputAuto({ setSelected }));
+    const setSelectedWithRedirect = jest.fn();
+    const { result } = renderHook(() =>
+      useDocumentInputAuto({ setSelectedWithRedirect })
+    );
 
     await act(async () => {
       await result.current.submit();
     });
 
     expect(result.current.errorMessage).toBe('error');
-    expect(setSelected).not.toHaveBeenCalledWith('completed');
+    expect(setSelectedWithRedirect).not.toHaveBeenCalledWith('completed');
   });
 
   test('正常にフォーム送信できた場合にsetSelectedにcompletedがセットされること', async () => {
@@ -60,13 +64,15 @@ describe('useDocumentInputAuto', () => {
       uploadDocument: jest.fn().mockResolvedValue({}),
     });
 
-    const setSelected = jest.fn();
-    const { result } = renderHook(() => useDocumentInputAuto({ setSelected }));
+    const setSelectedWithRedirect = jest.fn();
+    const { result } = renderHook(() =>
+      useDocumentInputAuto({ setSelectedWithRedirect })
+    );
 
     await act(async () => {
       await result.current.submit();
     });
 
-    expect(setSelected).toHaveBeenCalledWith('completed');
+    expect(setSelectedWithRedirect).toHaveBeenCalledWith('completed');
   });
 });

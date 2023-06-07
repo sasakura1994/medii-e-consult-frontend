@@ -1,17 +1,11 @@
-import {
-  useState,
-  useEffect,
-  useCallback,
-  Dispatch,
-  SetStateAction,
-} from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { useUploadDocument } from '@/hooks/api/doctor/useUploadDocument';
 import { useSelectedFile } from './useSelectedFile';
 import { DocumentSelected } from '.';
 
 type UseDocumentInputDocumentProps = {
-  setSelected: Dispatch<SetStateAction<DocumentSelected>>;
+  setSelectedWithRedirect: (value: DocumentSelected) => void;
 };
 
 type UseDocumentInputDocument = {
@@ -24,7 +18,7 @@ type UseDocumentInputDocument = {
 };
 
 export const useDocumentInputDocument = ({
-  setSelected,
+  setSelectedWithRedirect,
 }: UseDocumentInputDocumentProps): UseDocumentInputDocument => {
   const { profile } = useFetchProfile();
   const { uploadDocument } = useUploadDocument();
@@ -50,7 +44,7 @@ export const useDocumentInputDocument = ({
         newProfile.document = fileSelectorRef.current?.files?.[0] || undefined;
         try {
           await uploadDocument(newProfile);
-          setSelected('completed');
+          setSelectedWithRedirect('completed');
         } catch (e) {
           const error = e as { message: string };
           setErrorMessage(error.message);
@@ -59,7 +53,13 @@ export const useDocumentInputDocument = ({
         setErrorMessage('ファイルの種類が不正です');
       }
     },
-    [profile, imageSource, fileSelectorRef, uploadDocument, setSelected]
+    [
+      profile,
+      imageSource,
+      fileSelectorRef,
+      uploadDocument,
+      setSelectedWithRedirect,
+    ]
   );
 
   useEffect(() => {

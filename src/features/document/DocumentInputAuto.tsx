@@ -5,11 +5,11 @@ import { DocumentSelected } from '.';
 import { Era } from '@/hooks/useEraConverter';
 
 type DocumentInputAutoProps = {
-  setSelected: React.Dispatch<React.SetStateAction<DocumentSelected>>;
+  setSelectedWithRedirect: (value: DocumentSelected) => void;
 };
 
 const DocumentInputAuto: React.FC<DocumentInputAutoProps> = ({
-  setSelected,
+  setSelectedWithRedirect,
 }) => {
   const {
     errorMessage,
@@ -25,7 +25,7 @@ const DocumentInputAuto: React.FC<DocumentInputAutoProps> = ({
     doctorLicenseYear,
     handleInputYearToSeireki,
     handleDoctorLicenseYearToJapaneseEraYear,
-  } = useDocumentInputAuto({ setSelected });
+  } = useDocumentInputAuto({ setSelectedWithRedirect });
   return (
     <form
       onSubmit={(e) => {
@@ -48,7 +48,7 @@ const DocumentInputAuto: React.FC<DocumentInputAutoProps> = ({
             <div
               className="absolute top-0 left-0 pl-4 text-base"
               onClick={() => {
-                setSelected('');
+                setSelectedWithRedirect('');
               }}
             >
               選択へ戻る

@@ -4,10 +4,12 @@ import { DocumentSelected } from '.';
 import { useDoctorNumberForm } from './useDoctorNumberForm';
 
 type DoctorNumberFormProps = {
-  setSelected: React.Dispatch<React.SetStateAction<DocumentSelected>>;
+  setSelectedWithRedirect: (value: DocumentSelected) => void;
 };
 
-const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
+const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({
+  setSelectedWithRedirect,
+}) => {
   const {
     doctorNumber,
     setDoctorNumber,
@@ -23,7 +25,7 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
     setDoctorLicenseDay,
     handleInputYearToSeireki,
     handleDoctorLicenseYearToJapaneseEraYear,
-  } = useDoctorNumberForm({ setSelected });
+  } = useDoctorNumberForm({ setSelectedWithRedirect });
 
   return (
     <form
@@ -46,7 +48,7 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
               <div
                 className="absolute top-0 left-0 pl-4 text-base "
                 onClick={() => {
-                  setSelected('');
+                  setSelectedWithRedirect('');
                 }}
               >
                 選択へ戻る
