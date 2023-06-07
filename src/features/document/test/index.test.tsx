@@ -156,9 +156,9 @@ describe('Document', () => {
 
   test('selectedがconmpeteの場合、welcomeページへ遷移すること', async () => {
     await getRender();
-    const auto = screen.getByTestId('number');
-    expect(auto).toBeInTheDocument();
-    userEvent.click(auto);
+    const number = screen.getByTestId('number');
+    expect(number).toBeInTheDocument();
+    userEvent.click(number);
     await waitFor(() => {
       expect(screen.getByTestId('document-input-number')).toBeInTheDocument();
     });
