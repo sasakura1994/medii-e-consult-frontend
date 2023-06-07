@@ -17,7 +17,7 @@ const DocumentInputDocument = ({ setSelected }: DocumentInputDocumentProps) => {
   } = useDocumentInputDocument({ setSelected });
 
   return (
-    <form onSubmit={submit}>
+    <form onSubmit={submit} data-testid="document-input-document">
       <div className="border-1 rounded-xs mt-10 -mb-10 w-full border bg-white px-2 lg:mb-0 lg:px-16 lg:pb-6">
         <div className="mx-2 mt-6 mb-6">
           <div className="relative flex text-left text-2xl font-bold lg:mt-10 lg:text-center">

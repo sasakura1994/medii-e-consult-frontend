@@ -28,7 +28,7 @@ const DocumentInputStudentDocument = ({
   } = useDocumentInputStudentDocument({ selected, setSelected });
   if (selected !== 'studentCompleted') {
     return (
-      <form onSubmit={submit}>
+      <form onSubmit={submit} data-testid="document-input-student-document">
         <div
           className="border-1 rounded-xs mt-10 -mb-10 w-full border bg-white px-2
          lg:mb-0 lg:w-[644px] lg:px-16 lg:pb-6"

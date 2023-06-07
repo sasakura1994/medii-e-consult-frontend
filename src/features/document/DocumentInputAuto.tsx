@@ -32,6 +32,7 @@ const DocumentInputAuto: React.FC<DocumentInputAutoProps> = ({
         submit();
         e.preventDefault();
       }}
+      data-testid="document-input-auto"
     >
       <div
         className="border-1 rounded-xs mt-5 -mb-10 w-full border bg-white

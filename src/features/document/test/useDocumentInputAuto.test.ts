@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react';
+import { renderHook, act, cleanup } from '@testing-library/react';
 import { useDocumentInputAuto } from '../useDocumentInputAuto';
 import { useUploadDocument } from '@/hooks/api/doctor/useUploadDocument';
 import { useProfile } from '@/hooks/useProfile';
@@ -23,7 +23,7 @@ describe('useDocumentInputAuto', () => {
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
+    cleanup();
   });
 
   test('インプットが正しくできること', () => {

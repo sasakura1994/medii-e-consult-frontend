@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react';
+import { renderHook, act, cleanup } from '@testing-library/react';
 import { useDocumentInputStudentDocument } from '../useDocumentInputStudentDocument';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { useUploadDocument } from '@/hooks/api/doctor/useUploadDocument';
@@ -81,7 +81,7 @@ describe('useDocumentInputStudentDocument', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    cleanup();
   });
 
   test('ロード時に正しい値がsetImageSourceにセットされていること', () => {

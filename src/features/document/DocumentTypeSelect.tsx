@@ -24,6 +24,7 @@ const DocumentTypeSelect: React.FC<DocumentTypeSelectProps> = ({
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
           <div className="text-center text-sm lg:text-left">
             <DocumentTypeSelectButton
+              id={'number'}
               text="医師番号を入力"
               image="/icons/doctor.svg"
               onClick={() => setSelected('number')}
@@ -35,6 +36,7 @@ const DocumentTypeSelect: React.FC<DocumentTypeSelectProps> = ({
           </div>
           <div className="text-center text-sm lg:text-left">
             <DocumentTypeSelectButton
+              id={'document'}
               text="画像アップロード"
               image="/icons/doctor_id1.svg"
               onClick={() => setSelected('document')}
@@ -46,6 +48,7 @@ const DocumentTypeSelect: React.FC<DocumentTypeSelectProps> = ({
           </div>
           <div className="text-center text-sm lg:text-left">
             <DocumentTypeSelectButton
+              id={'auto'}
               text="Mediiにおまかせ"
               image="/icons/medii.svg"
               onClick={() => setSelected('auto')}

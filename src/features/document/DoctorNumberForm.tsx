@@ -32,6 +32,7 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
         e.preventDefault();
       }}
       className="w-full"
+      data-testid="document-input-number"
     >
       <div className="border-1 rounded-xs mt-10 w-full border bg-white lg:px-16  lg:pb-6">
         <div className="mx-2 mt-6 mb-6">
@@ -63,6 +64,7 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
             type="text"
             placeholder="000000"
             className="mt-2 h-12 w-32 rounded-md border border-gray-400 px-2"
+            data-testid="document-input-number-form"
             value={doctorNumber}
             required
             minLength={6}
@@ -93,6 +95,7 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
             </select>
             <input
               type="number"
+              data-testid="document-input-number-form-year"
               placeholder="-"
               value={inputYear}
               className="ml-2 h-12 w-32 rounded-md border border-gray-400 px-2"
@@ -109,6 +112,7 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
             <div className="ml-1 mt-5">年</div>
             <input
               type="number"
+              data-testid="document-input-number-form-month"
               value={doctorLicenseMonth}
               placeholder="-"
               className="ml-10 h-12 w-20 rounded-md border border-gray-400 px-2"
@@ -125,6 +129,7 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
             <div className="ml-1 mt-5">月</div>
             <input
               type="number"
+              data-testid="document-input-number-form-day"
               value={doctorLicenseDay}
               placeholder="-"
               className="ml-2 h-12 w-20 rounded-md border border-gray-400 px-2"
@@ -150,6 +155,7 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelected }) => {
       <div className="mt-7 -mb-10 flex justify-center lg:mt-0 lg:mb-0">
         <input
           type="submit"
+          data-testid="document-input-number-form-submit"
           className={
             isUpdatePrepared
               ? 'cursor-pointer rounded-full bg-primary px-10 pt-1.5 pb-2 font-bold text-white shadow-lg lg:my-10'

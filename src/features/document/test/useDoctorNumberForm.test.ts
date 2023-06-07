@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react';
+import { renderHook, act, cleanup } from '@testing-library/react';
 import { useDoctorNumberForm } from '../useDoctorNumberForm';
 import { useUploadDocument } from '@/hooks/api/doctor/useUploadDocument';
 import { useProfile } from '@/hooks/useProfile';
@@ -54,23 +54,16 @@ beforeEach(() => {
       questionary_other: null,
     },
   });
+  (useUploadDocument as jest.Mock).mockReturnValue({
+    uploadDocument: jest.fn(),
+  });
 });
 
 afterEach(() => {
-  jest.resetAllMocks();
+  cleanup();
 });
 
 describe('useDoctorNumberForm', () => {
-  beforeEach(() => {
-    (useUploadDocument as jest.Mock).mockReturnValue({
-      uploadDocument: jest.fn(),
-    });
-  });
-
-  afterEach(() => {
-    jest.resetAllMocks();
-  });
-
   test('フォームが正常に動作するか', () => {
     const setSelected = jest.fn();
     const { result } = renderHook(() => useDoctorNumberForm({ setSelected }));
