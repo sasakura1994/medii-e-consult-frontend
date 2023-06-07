@@ -30,6 +30,7 @@ type UseDocumentInputStudentDocument = {
   };
   handleEraChange: (value: string) => void;
   inputYear: string;
+  graduationYear: string;
   handleInputYearToSeireki: (value: string) => void;
   handleGraduationYearToJapaneseEraYear: (currentEra: Era) => void;
 };
@@ -138,6 +139,7 @@ export const useDocumentInputStudentDocument = ({
     validation,
     handleEraChange,
     inputYear,
+    graduationYear,
     handleInputYearToSeireki,
     handleGraduationYearToJapaneseEraYear,
   };

@@ -2,12 +2,10 @@ import { renderHook, act, cleanup } from '@testing-library/react';
 import { useDocumentInputStudentDocument } from '../useDocumentInputStudentDocument';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { useUploadDocument } from '@/hooks/api/doctor/useUploadDocument';
-import { Era, useEraConverter } from '@/hooks/useEraConverter';
 import { useSelectedFile } from '../useSelectedFile';
 
 jest.mock('@/hooks/api/doctor/useFetchProfile');
 jest.mock('@/hooks/api/doctor/useUploadDocument');
-jest.mock('@/hooks/useEraConverter');
 jest.mock('../useSelectedFile');
 
 describe('useDocumentInputStudentDocument', () => {
@@ -63,14 +61,6 @@ describe('useDocumentInputStudentDocument', () => {
     (useUploadDocument as jest.Mock).mockReturnValue({
       uploadDocument: jest.fn().mockResolvedValue({ data: {} }),
     });
-    (useEraConverter as jest.Mock).mockReturnValue({
-      inputYear: '2',
-      convertYear: jest.fn().mockReturnValue('2020'),
-      era: 'reiwa' as Era,
-      setInputYear: jest.fn(),
-      validation: { min: 1900, max: 2099 },
-      handleEraChange: jest.fn(),
-    });
     (useSelectedFile as jest.Mock).mockReturnValue({
       imageSource: 'test',
       onFileSelected: jest.fn(),
@@ -94,6 +84,25 @@ describe('useDocumentInputStudentDocument', () => {
       })
     );
     expect(setImageSource).toHaveBeenCalledWith('path/to/document');
+  });
+
+  test('インプットが正しくできること', async () => {
+    const { result } = renderHook(() =>
+      useDocumentInputStudentDocument({
+        selected: '',
+        setSelected: jest.fn(),
+      })
+    );
+    act(() => {
+      result.current.handleInputYearToSeireki('2023');
+    });
+    expect(result.current.inputYear).toBe('2023');
+
+    act(() => {
+      result.current.handleGraduationYearToJapaneseEraYear('reiwa');
+    });
+    expect(result.current.inputYear).toBe('5');
+    expect(result.current.graduationYear).toBe('2023');
   });
 
   test('submit時にsetSelectedで"studentCompleted"になること', async () => {

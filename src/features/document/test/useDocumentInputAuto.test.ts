@@ -41,7 +41,7 @@ describe('useDocumentInputAuto', () => {
     expect(result.current.inputYear).toBe('2023');
 
     act(() => {
-      result.current.handleEraChange('reiwa');
+      result.current.handleDoctorLicenseYearToJapaneseEraYear('reiwa');
     });
 
     await waitFor(() => {
