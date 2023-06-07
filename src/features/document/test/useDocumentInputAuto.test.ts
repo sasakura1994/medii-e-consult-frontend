@@ -1,4 +1,4 @@
-import { renderHook, act, cleanup } from '@testing-library/react';
+import { renderHook, act, cleanup, waitFor } from '@testing-library/react';
 import { useDocumentInputAuto } from '../useDocumentInputAuto';
 import { useUploadDocument } from '@/hooks/api/doctor/useUploadDocument';
 import { useProfile } from '@/hooks/useProfile';
@@ -26,7 +26,7 @@ describe('useDocumentInputAuto', () => {
     cleanup();
   });
 
-  test('インプットが正しくできること', () => {
+  test('インプットが正しくできること', async () => {
     const setSelectedWithRedirect = jest.fn();
     const { result } = renderHook(() =>
       useDocumentInputAuto({ setSelectedWithRedirect })
@@ -39,6 +39,15 @@ describe('useDocumentInputAuto', () => {
 
     expect(result.current.tel).toBe('0987654321');
     expect(result.current.inputYear).toBe('2023');
+
+    act(() => {
+      result.current.handleEraChange('reiwa');
+    });
+
+    await waitFor(() => {
+      expect(result.current.inputYear).toBe('5');
+      expect(result.current.doctorLicenseYear).toBe('2023');
+    });
   });
 
   test('エラー時にはsetSelectedにcompletedがセットされないこと', async () => {

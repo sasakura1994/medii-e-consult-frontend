@@ -20,6 +20,7 @@ type UseDoctorNumberForm = {
   };
   handleEraChange: (value: string) => void;
   inputYear: string;
+  doctorLicenseYear: string;
   doctorLicenseMonth: string;
   setDoctorLicenseMonth: React.Dispatch<React.SetStateAction<string>>;
   doctorLicenseDay: string;
@@ -118,6 +119,7 @@ export const useDoctorNumberForm = ({
     validation,
     handleEraChange,
     inputYear,
+    doctorLicenseYear,
     doctorLicenseMonth,
     setDoctorLicenseMonth,
     doctorLicenseDay,

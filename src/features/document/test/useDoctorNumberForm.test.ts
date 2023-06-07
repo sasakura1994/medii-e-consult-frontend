@@ -1,4 +1,4 @@
-import { renderHook, act, cleanup } from '@testing-library/react';
+import { renderHook, act, cleanup, waitFor } from '@testing-library/react';
 import { useDoctorNumberForm } from '../useDoctorNumberForm';
 import { useUploadDocument } from '@/hooks/api/doctor/useUploadDocument';
 import { useProfile } from '@/hooks/useProfile';
@@ -64,7 +64,7 @@ afterEach(() => {
 });
 
 describe('useDoctorNumberForm', () => {
-  test('フォームが正常に動作するか', () => {
+  test('フォームが正常に動作するか', async () => {
     const setSelectedWithRedirect = jest.fn();
     const { result } = renderHook(() =>
       useDoctorNumberForm({ setSelectedWithRedirect })
@@ -74,13 +74,22 @@ describe('useDoctorNumberForm', () => {
       result.current.setDoctorNumber('123456');
       result.current.setDoctorLicenseMonth('11');
       result.current.setDoctorLicenseDay('12');
-      result.current.handleInputYearToSeireki('2000');
+      result.current.handleEraChange('year');
+      result.current.handleInputYearToSeireki('2020');
     });
 
     expect(result.current.doctorNumber).toBe('123456');
     expect(result.current.doctorLicenseMonth).toBe('11');
     expect(result.current.doctorLicenseDay).toBe('12');
-    expect(result.current.inputYear).toBe('2000');
+    expect(result.current.inputYear).toBe('2020');
+
+    act(() => {
+      result.current.handleEraChange('reiwa');
+    });
+    await waitFor(() => {
+      expect(result.current.inputYear).toBe('2');
+      expect(result.current.doctorLicenseYear).toBe('2020');
+    });
   });
 
   test('エラー時にはsetSelectedにcompletedがセットされないこと', async () => {
