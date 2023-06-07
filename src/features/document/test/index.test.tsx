@@ -107,15 +107,19 @@ afterEach(() => {
 describe('Document', () => {
   test('Documentがレンダリングされること', async () => {
     await getRender();
-    const document = screen.getByText('Medii 会員登録');
-    expect(document).toBeInTheDocument();
+    act(() => {
+      const document = screen.getByText('Medii 会員登録');
+      expect(document).toBeInTheDocument();
+    });
   });
 
   test('selectedがdocumentの場合、DocumentInputDocumentがレンダリングされること', async () => {
     await getRender();
-    const document = screen.getByTestId('document');
-    expect(document).toBeInTheDocument();
-    userEvent.click(document);
+    act(() => {
+      const document = screen.getByTestId('document');
+      expect(document).toBeInTheDocument();
+      userEvent.click(document);
+    });
     await waitFor(() => {
       expect(screen.getByTestId('document-input-document')).toBeInTheDocument();
     });
@@ -123,9 +127,11 @@ describe('Document', () => {
 
   test('selectedがnumberの場合、DocumentInputNumberがレンダリングされること', async () => {
     await getRender();
-    const numberDocument = screen.getByTestId('number');
-    expect(numberDocument).toBeInTheDocument();
-    userEvent.click(numberDocument);
+    act(() => {
+      const numberDocument = screen.getByTestId('number');
+      expect(numberDocument).toBeInTheDocument();
+      userEvent.click(numberDocument);
+    });
     await waitFor(() => {
       expect(screen.getByTestId('document-input-number')).toBeInTheDocument();
     });
@@ -133,9 +139,11 @@ describe('Document', () => {
 
   test('selectedがautoの場合、DocumentInputAutoがレンダリングされること', async () => {
     await getRender();
-    const auto = screen.getByTestId('auto');
-    expect(auto).toBeInTheDocument();
-    userEvent.click(auto);
+    act(() => {
+      const auto = screen.getByTestId('auto');
+      expect(auto).toBeInTheDocument();
+      userEvent.click(auto);
+    });
     await waitFor(() => {
       expect(screen.getByTestId('document-input-auto')).toBeInTheDocument();
     });
@@ -156,29 +164,36 @@ describe('Document', () => {
 
   test('selectedがconmpeteの場合、welcomeページへ遷移すること', async () => {
     await getRender();
-    const number = screen.getByTestId('number');
-    expect(number).toBeInTheDocument();
-    userEvent.click(number);
+    await act(async () => {
+      const number = screen.getByTestId('number');
+      expect(number).toBeInTheDocument();
+      userEvent.click(number);
+    });
     await waitFor(() => {
       expect(screen.getByTestId('document-input-number')).toBeInTheDocument();
     });
-    const doctorNumber = screen.getByTestId('document-input-number-form');
 
-    userEvent.type(doctorNumber, '111111');
+    await act(async () => {
+      const doctorNumber = screen.getByTestId('document-input-number-form');
+      userEvent.clear(doctorNumber);
+      userEvent.type(doctorNumber, '111111');
 
-    const year = screen.getByTestId('document-input-number-form-year');
-    userEvent.type(year, '2015');
+      const year = screen.getByTestId('document-input-number-form-year');
+      userEvent.clear(year);
+      userEvent.type(year, '2015');
 
-    const month = screen.getByTestId('document-input-number-form-month');
-    userEvent.type(month, '6');
+      const month = screen.getByTestId('document-input-number-form-month');
+      userEvent.clear(month);
+      userEvent.type(month, '6');
 
-    const day = screen.getByTestId('document-input-number-form-day');
-    userEvent.type(day, '20');
+      const day = screen.getByTestId('document-input-number-form-day');
+      userEvent.clear(day);
+      userEvent.type(day, '20');
 
-    const submit = screen.getByTestId('document-input-number-form-submit');
-    userEvent.click(submit);
+      const submit = screen.getByTestId('document-input-number-form-submit');
+      userEvent.click(submit);
+    });
     await waitFor(() => {
-      console.log(mockRouter.push);
       expect(mockRouter.push).toHaveBeenCalledWith('/welcome');
     });
   });
