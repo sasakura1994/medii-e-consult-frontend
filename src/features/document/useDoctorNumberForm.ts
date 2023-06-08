@@ -5,7 +5,7 @@ import { useState, useCallback, useEffect, useMemo } from 'react';
 import { DocumentSelected } from '.';
 
 type UseDoctorNumberFormProps = {
-  setSelected: React.Dispatch<React.SetStateAction<DocumentSelected>>;
+  setSelectedWithRedirect: (value: DocumentSelected) => void;
 };
 
 type UseDoctorNumberForm = {
@@ -20,6 +20,7 @@ type UseDoctorNumberForm = {
   };
   handleEraChange: (value: string) => void;
   inputYear: string;
+  doctorLicenseYear: string;
   doctorLicenseMonth: string;
   setDoctorLicenseMonth: React.Dispatch<React.SetStateAction<string>>;
   doctorLicenseDay: string;
@@ -29,7 +30,7 @@ type UseDoctorNumberForm = {
 };
 
 export const useDoctorNumberForm = ({
-  setSelected,
+  setSelectedWithRedirect,
 }: UseDoctorNumberFormProps): UseDoctorNumberForm => {
   const { profile } = useProfile();
 
@@ -86,10 +87,14 @@ export const useDoctorNumberForm = ({
       newProfile.doctor_qualified_month = Number(doctorLicenseMonth);
       newProfile.doctor_qualified_day = Number(doctorLicenseDay);
       newProfile.confimation_type = 'number';
-      await uploadDocument(newProfile).catch((e) => {
-        setErrorMessage(e.message);
-      });
-      setSelected('completed');
+      try {
+        await uploadDocument(newProfile);
+        setSelectedWithRedirect('completed');
+      } catch (e) {
+        const error = e as { message: string };
+        setErrorMessage(error.message);
+        return;
+      }
     }
   };
 
@@ -114,6 +119,7 @@ export const useDoctorNumberForm = ({
     validation,
     handleEraChange,
     inputYear,
+    doctorLicenseYear,
     doctorLicenseMonth,
     setDoctorLicenseMonth,
     doctorLicenseDay,

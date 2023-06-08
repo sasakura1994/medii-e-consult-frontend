@@ -1,12 +1,14 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import { useDocumentInputDocument } from './useDocumentInputDocument';
 import { DocumentSelected } from '.';
 
 type DocumentInputDocumentProps = {
-  setSelected: Dispatch<SetStateAction<DocumentSelected>>;
+  setSelectedWithRedirect: (value: DocumentSelected) => void;
 };
 
-const DocumentInputDocument = ({ setSelected }: DocumentInputDocumentProps) => {
+const DocumentInputDocument = ({
+  setSelectedWithRedirect,
+}: DocumentInputDocumentProps) => {
   const {
     imageSource,
     onFileSelected,
@@ -14,10 +16,10 @@ const DocumentInputDocument = ({ setSelected }: DocumentInputDocumentProps) => {
     fileSelectorRef,
     errorMessage,
     submit,
-  } = useDocumentInputDocument({ setSelected });
+  } = useDocumentInputDocument({ setSelectedWithRedirect });
 
   return (
-    <form onSubmit={submit}>
+    <form onSubmit={submit} data-testid="document-input-document">
       <div className="border-1 rounded-xs mt-10 -mb-10 w-full border bg-white px-2 lg:mb-0 lg:px-16 lg:pb-6">
         <div className="mx-2 mt-6 mb-6">
           <div className="relative flex text-left text-2xl font-bold lg:mt-10 lg:text-center">
@@ -30,7 +32,7 @@ const DocumentInputDocument = ({ setSelected }: DocumentInputDocumentProps) => {
               <div
                 className="absolute top-0 left-0 pl-4 text-base"
                 onClick={() => {
-                  setSelected('');
+                  setSelectedWithRedirect('');
                 }}
               >
                 選択へ戻る
