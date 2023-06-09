@@ -21,7 +21,7 @@ export const Seminar = () => {
     if (profile) {
       if (profile.is_imperfect_profile) {
         return (
-          <p>
+          <p data-testid="is-not-enter-profile-modal">
             プロフィール情報が入力されておりません。
             <br />
             お手数ですがサービスをご利用頂くためにプロフィール画面のご入力をお願いいたします。
@@ -29,7 +29,7 @@ export const Seminar = () => {
         );
       } else if (profile.need_to_send_confimation) {
         return (
-          <p>
+          <p data-testid="need-to-send-confimation-modal">
             確認資料が提出されておりません。
             <br />
             お手数ですがサービスをご利用頂くためにプロフィール画面から確認資料をご提出ください。
@@ -37,7 +37,7 @@ export const Seminar = () => {
         );
       } else if (profile.status !== 'VERIFIED') {
         return (
-          <p>
+          <p data-testid="not-verified-modal">
             現在、ご提出頂いた資料を確認中です。
             <br />
             恐れ入りますが確認完了までしばらくお待ち下さい。
@@ -124,6 +124,7 @@ export const Seminar = () => {
           <Modal setShowModal={setShowModal} className="lg:w-[800px]">
             <div className="align-center relative flex flex-col items-center bg-white px-6 py-4 lg:px-28 lg:py-20">
               <img
+                data-testid="close-modal"
                 onClick={() => setShowModal(false)}
                 src="/icons/close_primary.svg"
                 className="absolute right-4 top-4 lg:right-10 lg:top-14"
