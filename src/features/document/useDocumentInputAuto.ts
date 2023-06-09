@@ -13,7 +13,7 @@ import { ProfileEntity } from '@/types/entities/profileEntity';
 import { DocumentSelected } from '.';
 
 type UseDocumentInputAutoProps = {
-  setSelected: Dispatch<SetStateAction<DocumentSelected>>;
+  setSelectedWithRedirect: (value: DocumentSelected) => void;
 };
 
 type UseDocumentInputAuto = {
@@ -36,7 +36,7 @@ type UseDocumentInputAuto = {
 };
 
 export const useDocumentInputAuto = ({
-  setSelected,
+  setSelectedWithRedirect,
 }: UseDocumentInputAutoProps): UseDocumentInputAuto => {
   const { profile, getPrefectureNameByCode, hospital } = useProfile();
   const [tel, setTel] = useState('');
@@ -87,12 +87,23 @@ export const useDocumentInputAuto = ({
       newProfile.doctor_qualified_year = Number(year);
       newProfile.confimation_type = 'auto';
       newProfile.tel = tel;
-      await uploadDocument(newProfile).catch((e) => {
-        setErrorMessage(e.message);
-      });
-      setSelected('completed');
+      try {
+        await uploadDocument(newProfile);
+        setSelectedWithRedirect('completed');
+      } catch (e) {
+        const error = e as { message: string };
+        setErrorMessage(error.message);
+      }
     }
-  }, [profile, convertYear, inputYear, era, tel, uploadDocument, setSelected]);
+  }, [
+    profile,
+    convertYear,
+    inputYear,
+    era,
+    tel,
+    uploadDocument,
+    setSelectedWithRedirect,
+  ]);
 
   return {
     profile,

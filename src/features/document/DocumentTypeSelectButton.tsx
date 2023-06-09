@@ -5,6 +5,7 @@ type DocumentTypeSelectButtonProps = {
   text: string;
   onClick: () => void;
   children: React.ReactNode;
+  id: string;
 };
 
 const DocumentTypeSelectButton: React.FC<DocumentTypeSelectButtonProps> = ({
@@ -12,6 +13,7 @@ const DocumentTypeSelectButton: React.FC<DocumentTypeSelectButtonProps> = ({
   text,
   onClick,
   children,
+  id,
 }) => {
   return (
     <div className="w-full cursor-pointer">
@@ -24,7 +26,10 @@ const DocumentTypeSelectButton: React.FC<DocumentTypeSelectButtonProps> = ({
             <img src={image} alt="" />
           </div>
           <div className="mt-3 flex items-center justify-center pb-2 lg:pb-0">
-            <div className="flex justify-center text-sm text-primary">
+            <div
+              className="flex justify-center text-sm text-primary"
+              data-testid={id}
+            >
               {text}
             </div>
             <img
