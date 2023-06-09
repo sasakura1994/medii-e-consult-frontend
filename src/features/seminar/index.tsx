@@ -46,8 +46,8 @@ export const Seminar = () => {
           </p>
         );
       }
-      return null;
     }
+    return false;
   }, [profile]);
 
   if (seminars) {
@@ -78,10 +78,12 @@ export const Seminar = () => {
             </div>
 
             <div className="my-6 flex w-auto justify-center">
-              <Link href={'/seminar/archives'}>
-                <SecondaryButton size="large">
-                  過去のセミナー動画へ
-                </SecondaryButton>
+              <Link href="/seminar/archives">
+                <a>
+                  <SecondaryButton size="large">
+                    <p>過去のセミナー動画へ</p>
+                  </SecondaryButton>
+                </a>
               </Link>
             </div>
           </div>
@@ -161,9 +163,11 @@ export const Seminar = () => {
               {modalMsg}
               <div className="mt-4">
                 <Link href="/editprofile">
-                  <PrimaryButton className="mt-4">
-                    プロフィール画面を開く
-                  </PrimaryButton>
+                  <a>
+                    <PrimaryButton className="mt-4">
+                      プロフィール画面を開く
+                    </PrimaryButton>
+                  </a>
                 </Link>
               </div>
             </div>
