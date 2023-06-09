@@ -4,7 +4,7 @@ import { SeminarCard } from '@/features/seminar/seminarCard';
 import { SeminarArchiveHeader } from '@/features/seminar/seminarArchiveHeader';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { useSeminar } from '@/features/seminar/useSeminar';
+import { useSeminar } from '@/features/seminar/useSeminars';
 import { Pagination } from '@/components/Parts/Pagination/Pagination';
 
 const Archives: NextPage = () => {
