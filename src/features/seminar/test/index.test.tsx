@@ -113,7 +113,7 @@ const profileData: ProfileEntity = {
   not_seminar_mail_target: false,
   want_to_be_consultant: true,
   assignable: 1,
-  graduation_year: '2003',
+  graduation_year: null,
   use_prefecture: 'Tokyo',
   prefecture_code: '13',
   hospital_id: '1001',
