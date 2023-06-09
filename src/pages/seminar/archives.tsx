@@ -4,7 +4,7 @@ import { SeminarCard } from '@/features/seminar/seminarCard';
 import { SeminarArchiveHeader } from '@/features/seminar/seminarArchiveHeader';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { useSeminar } from '@/features/seminar/useSeminars';
+import { useSeminars } from '@/features/seminar/useSeminars';
 import { Pagination } from '@/components/Parts/Pagination/Pagination';
 
 const Archives: NextPage = () => {
@@ -12,7 +12,8 @@ const Archives: NextPage = () => {
   const { page } = router.query;
   const current = page === undefined ? 1 : Number(page);
   const numberPerPage = 8;
-  const { seminars, ticketCount, maxPage, allItemsCount } = useSeminar(current);
+  const { seminars, ticketCount, maxPage, allItemsCount } =
+    useSeminars(current);
   const startNumber = (current - 1) * numberPerPage;
   const endNumber = current * numberPerPage - 1;
   return (
