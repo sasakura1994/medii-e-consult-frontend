@@ -10,9 +10,11 @@ import SecondaryButton from '@/components/Button/Secondary';
 import { NextPageWithLayout } from '../_app';
 import { useProfile } from '@/hooks/useProfile';
 import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
+import { useFetchUpcomingSeminar } from '@/hooks/api/seminar/useFetchUpcomingSeminar';
 
 const Seminar: NextPageWithLayout = () => {
   const { seminars, ticketCount } = useSeminar();
+  const { seminars: upcomingSeminars } = useFetchUpcomingSeminar();
   const { profile } = useProfile();
   const [showModal, setShowModal] = useState(false);
   useEventLog({ name: '/seminar' });
@@ -61,15 +63,19 @@ const Seminar: NextPageWithLayout = () => {
               最新のセミナー
             </p>
             <div className="flex flex-col flex-wrap justify-start lg:flex-row">
-              {seminars.map((seminar, index) => {
-                if (index < 3) {
-                  return (
-                    <div key={seminar.seminar_id}>
-                      <SeminarConferenceCard index={index} seminar={seminar} />
-                    </div>
-                  );
-                }
-              })}
+              {upcomingSeminars &&
+                upcomingSeminars.map((seminar, index) => {
+                  if (index < 3) {
+                    return (
+                      <div key={seminar.seminar_id}>
+                        <SeminarConferenceCard
+                          index={index}
+                          seminar={seminar}
+                        />
+                      </div>
+                    );
+                  }
+                })}
             </div>
 
             <div className="my-6 flex w-auto justify-center">
