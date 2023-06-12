@@ -21,7 +21,6 @@ export const OutlinedButton: React.FC<Props> = ({
     <button
       type={type}
       className={`
-        mx-auto
         block
         rounded-full
         border

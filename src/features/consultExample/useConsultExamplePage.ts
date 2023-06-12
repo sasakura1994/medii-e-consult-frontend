@@ -1,50 +1,77 @@
-import { useConsultExampleActions } from '@/hooks/api/consultExample/useConsultExampleActions';
 import { useFetchConsultExample } from '@/hooks/api/consultExample/useFetchConsultExample';
 import { useFetchConsultExampleMessages } from '@/hooks/api/consultExample/useFetchConsultExampleMessages';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
+import { ConsultExampleMessageEntity } from '@/types/entities/ConsultExampleMessageEntity';
 
 export const useConsultExamplePage = (id: string) => {
-  const { data: consultExample, mutate: mutateConsultExample } =
-    useFetchConsultExample(id);
-  const { data: consultExampleMessages, mutate: mutateConsultExampleMessages } =
-    useFetchConsultExampleMessages(id);
-  const { like, likeMessage, unlike, unlikeMessage } =
-    useConsultExampleActions();
+  const [commentFormMessage, setCommentFormMessage] = useState('');
+  const [
+    consultExampleMessageIdForComment,
+    setConsultExampleMessageIdForComment,
+  ] = useState(0);
+  const [messageIdForCommentsModal, setMessageIdForCommentsModal] = useState<
+    number | undefined
+  >();
+  const [isCommentsModalShown, setIsCommentsModalShown] = useState(false);
+  const [isAllCommentsModalShown, setIsAllCommentsModalShown] = useState(false);
+  const [messageForCommentsModal, setMessageForCommentsModal] = useState('');
 
-  const likeAndMutate = useCallback(async () => {
-    await like(id);
-    mutateConsultExample();
-  }, [id, like, mutateConsultExample]);
+  const { data: consultExample } = useFetchConsultExample(id);
+  const { data: consultExampleMessages } = useFetchConsultExampleMessages(id);
 
-  const unlikeAndMutate = useCallback(async () => {
-    await unlike(id);
-    mutateConsultExample();
-  }, [id, unlike, mutateConsultExample]);
-
-  const likeMessageAndMutate = useCallback(
-    async (consultExampleMessageId: number) => {
-      await likeMessage(id, consultExampleMessageId);
-      mutateConsultExample();
-      mutateConsultExampleMessages();
-    },
-    [id, likeMessage, mutateConsultExample, mutateConsultExampleMessages]
+  const showCommentForm = useCallback(
+    () => setCommentFormMessage(consultExample?.background ?? ''),
+    [consultExample]
   );
 
-  const unlikeMessageAndMutate = useCallback(
-    async (consultExampleMessageId: number) => {
-      await unlikeMessage(id, consultExampleMessageId);
-      mutateConsultExample();
-      mutateConsultExampleMessages();
+  const closeCommentForm = useCallback(() => {
+    setCommentFormMessage('');
+    setConsultExampleMessageIdForComment(0);
+  }, []);
+
+  const showCommentFormForMessage = useCallback(
+    (consultExampleMessage: ConsultExampleMessageEntity) => {
+      setCommentFormMessage(consultExampleMessage.message);
+      setConsultExampleMessageIdForComment(consultExampleMessage.uid);
     },
-    [unlikeMessage, id, mutateConsultExample, mutateConsultExampleMessages]
+    []
   );
+
+  const openCommentsModal = useCallback(() => {
+    setIsCommentsModalShown(true);
+    setMessageIdForCommentsModal(undefined);
+    setMessageForCommentsModal(consultExample?.background ?? '');
+  }, [consultExample?.background]);
+
+  const openCommentsModalForMessage = useCallback(
+    (consultExampleMessage: ConsultExampleMessageEntity) => {
+      setIsCommentsModalShown(true);
+      setMessageIdForCommentsModal(consultExampleMessage.uid);
+      setMessageForCommentsModal(consultExampleMessage.message);
+    },
+    []
+  );
+
+  const closeCommentsModal = useCallback(() => {
+    setIsCommentsModalShown(false);
+    setMessageIdForCommentsModal(undefined);
+  }, []);
 
   return {
+    closeCommentForm,
+    closeCommentsModal,
+    commentFormMessage,
     consultExample,
+    messageIdForCommentsModal,
+    consultExampleMessageIdForComment,
     consultExampleMessages,
-    likeAndMutate,
-    likeMessageAndMutate,
-    unlikeAndMutate,
-    unlikeMessageAndMutate,
+    isAllCommentsModalShown,
+    isCommentsModalShown,
+    messageForCommentsModal,
+    openCommentsModal,
+    openCommentsModalForMessage,
+    setIsAllCommentsModalShown,
+    showCommentForm,
+    showCommentFormForMessage,
   };
 };

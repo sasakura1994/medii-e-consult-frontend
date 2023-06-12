@@ -1,5 +1,4 @@
-import React, { useMemo } from 'react';
-import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
+import React from 'react';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import Link from 'next/link';
 import { SeminarConferenceCard } from './SeminarConferenceCard';
@@ -7,48 +6,11 @@ import { SeminarArchiveHeader } from './seminarArchiveHeader';
 import { SeminarCard } from './seminarCard';
 import SecondaryButton from '@/components/Button/Secondary';
 import { useSeminar } from './useSeminar';
+import { ImcompleteProfileModal } from '@/components/Parts/Modal/ImcompleteProfileModal';
 
 export const Seminar = () => {
-  const {
-    seminars,
-    upcomingSeminars,
-    ticketCount,
-    profile,
-    showModal,
-    setShowModal,
-  } = useSeminar();
-  const modalMsg = useMemo(() => {
-    if (profile) {
-      if (profile.is_imperfect_profile) {
-        return (
-          <p data-testid="is-not-enter-profile-modal">
-            プロフィール情報が入力されておりません。
-            <br />
-            お手数ですがサービスをご利用頂くためにプロフィール画面のご入力をお願いいたします。
-          </p>
-        );
-      } else if (profile.need_to_send_confimation) {
-        return (
-          <p data-testid="need-to-send-confimation-modal">
-            確認資料が提出されておりません。
-            <br />
-            お手数ですがサービスをご利用頂くためにプロフィール画面から確認資料をご提出ください。
-          </p>
-        );
-      } else if (profile.status !== 'VERIFIED') {
-        return (
-          <p data-testid="not-verified-modal">
-            現在、ご提出頂いた資料を確認中です。
-            <br />
-            恐れ入りますが確認完了までしばらくお待ち下さい。
-            <br />
-            確認完了次第、メールにてご連絡いたします。
-          </p>
-        );
-      }
-    }
-    return false;
-  }, [profile]);
+  const { seminars, upcomingSeminars, ticketCount, showModal, setShowModal } =
+    useSeminar();
 
   if (seminars) {
     return (
@@ -153,26 +115,7 @@ export const Seminar = () => {
             </div>
           </Modal>
         )}
-        {modalMsg && (
-          <Modal
-            isBlockModal
-            setShowModal={setShowModal}
-            className="mt-48 lg:w-[644px]"
-          >
-            <div className="relative flex flex-col items-center rounded-lg bg-white px-6 py-20 lg:px-12 lg:py-10">
-              {modalMsg}
-              <div className="mt-4">
-                <Link href="/editprofile">
-                  <a>
-                    <PrimaryButton className="mt-4">
-                      プロフィール画面を開く
-                    </PrimaryButton>
-                  </a>
-                </Link>
-              </div>
-            </div>
-          </Modal>
-        )}
+        <ImcompleteProfileModal />
       </div>
     );
   }

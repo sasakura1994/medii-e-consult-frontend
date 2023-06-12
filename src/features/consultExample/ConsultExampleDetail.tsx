@@ -9,26 +9,39 @@ import { ConsultExampleFirstAnswerTime } from './ConsultExampleFirstAnswerTime';
 import { dateFormat } from '@/libs/date';
 import { ConsultExampleActions } from './ConsultExampleActions';
 import { ConsultExampleDetailMessage } from './ConsultExampleDetailMessage';
+import { useConsultExampleActions } from './useConsultExampleActions';
 
 type Props = {
   consultExample: ConsultExampleDetailEntity;
   consultExampleMessages: ConsultExampleMessageEntity[];
-  onLike?: () => void;
-  onUnlike?: () => void;
-  onLikeMessage?: (consultExampleMessageId: number) => void;
-  onUnlikeMessage?: (consultExampleMessageId: number) => void;
+  onComment?: () => void;
+  onShowComments?: () => void;
+  onCommentForMessage?: (
+    consultExampleMessage: ConsultExampleMessageEntity
+  ) => void;
+  onShowCommentsForMessage?: (
+    consultExampleMessage: ConsultExampleMessageEntity
+  ) => void;
+  onShowAllComments?: () => void;
 };
 
 export const ConsultExampleDetail: React.FC<Props> = ({
   consultExample,
   consultExampleMessages,
-  onLike,
-  onUnlike,
-  onLikeMessage,
-  onUnlikeMessage,
+  onComment,
+  onShowComments,
+  onCommentForMessage,
+  onShowAllComments,
+  onShowCommentsForMessage,
 }: Props) => {
   const { getMedicalSpecialityName } = useMedicalSpeciality();
   const { getAgeText, getGenderText } = useConsultExample();
+  const {
+    likeAndMutate,
+    likeMessageAndMutate,
+    unlikeAndMutate,
+    unlikeMessageAndMutate,
+  } = useConsultExampleActions(consultExample.example_id);
 
   return (
     <>
@@ -65,21 +78,34 @@ export const ConsultExampleDetail: React.FC<Props> = ({
                 alt="いいねの数"
               />
               <div className="ml-1">{consultExample.all_like_count}</div>
-              <img
-                src="/icons/comment.svg"
-                width="24"
-                height="24"
-                className="ml-4 block lg:hidden"
-                alt="コメントの数"
-              />
-              <img
-                src="/icons/comment_primary.svg"
-                width="24"
-                height="24"
-                className="ml-4 hidden lg:block"
-                alt="コメントの数"
-              />
-              <div className="ml-1">{consultExample.all_comment_count}</div>
+              <a
+                href={onShowAllComments ? '#' : undefined}
+                className="flex items-center"
+                onClick={
+                  onShowAllComments
+                    ? (e) => {
+                        e.preventDefault();
+                        onShowAllComments();
+                      }
+                    : undefined
+                }
+              >
+                <img
+                  src="/icons/comment.svg"
+                  width="24"
+                  height="24"
+                  className="ml-4 block lg:hidden"
+                  alt="コメントの数"
+                />
+                <img
+                  src="/icons/comment_primary.svg"
+                  width="24"
+                  height="24"
+                  className="ml-4 hidden lg:block"
+                  alt="コメントの数"
+                />
+                <div className="ml-1">{consultExample.all_comment_count}</div>
+              </a>
             </div>
           </div>
         </div>
@@ -111,13 +137,13 @@ export const ConsultExampleDetail: React.FC<Props> = ({
         <div className="mt-5">{consultExample.background}</div>
         <div className="mt-4">
           <ConsultExampleActions
-            likeCount={consultExample.all_like_count}
-            commentCount={consultExample.all_comment_count}
+            likeCount={consultExample.like_count}
+            commentCount={consultExample.comment_count}
             isLiked={consultExample.is_liked}
-            onLike={onLike}
-            onUnlike={onUnlike}
-            onComment={() => true}
-            onShowComments={() => true}
+            onLike={likeAndMutate}
+            onUnlike={unlikeAndMutate}
+            onComment={onComment}
+            onShowComments={onShowComments}
           />
         </div>
       </Card>
@@ -127,8 +153,10 @@ export const ConsultExampleDetail: React.FC<Props> = ({
             <ConsultExampleDetailMessage
               key={consultExampleMesasge.uid}
               consultExampleMessage={consultExampleMesasge}
-              onLike={onLikeMessage}
-              onUnlike={onUnlikeMessage}
+              onLike={likeMessageAndMutate}
+              onUnlike={unlikeMessageAndMutate}
+              onComment={onCommentForMessage}
+              onShowComments={onShowCommentsForMessage}
             ></ConsultExampleDetailMessage>
           ))}
         </div>

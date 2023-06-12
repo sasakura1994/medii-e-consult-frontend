@@ -7,6 +7,7 @@ import { SeminarEntityType } from '@/types/entities/seminarEntity';
 import { ticketCountEntity } from '@/types/entities/ticketCountEntity';
 import { act } from 'react-dom/test-utils';
 import userEvent from '@testing-library/user-event';
+import { RecoilRoot } from 'recoil';
 
 jest.mock('../useSeminar');
 
@@ -136,7 +137,11 @@ beforeEach(() => {
   });
 });
 const getRender = async () => {
-  render(<Seminar />);
+  render(
+    <RecoilRoot>
+      <Seminar />
+    </RecoilRoot>
+  );
 };
 
 afterEach(() => {
@@ -148,63 +153,6 @@ describe('Seminar component', () => {
     await getRender();
     act(() => {
       expect(screen.getByText('最新のE-カンファ')).toBeInTheDocument();
-    });
-  });
-
-  test('「プロフィール情報が入力されておりません」が表示されるかテスト', async () => {
-    const profileDataForTest = {
-      ...profileData,
-      is_imperfect_profile: true,
-    };
-    (useSeminar as jest.Mock).mockReturnValue({
-      seminars: seminarData,
-      upcomingSeminars: seminarData,
-      ticketCount: ticketCountData,
-      profile: profileDataForTest,
-      showModal: false,
-      setShowModal: jest.fn(),
-    });
-    await getRender();
-    await waitFor(() => {
-      const elements = screen.getByTestId('is-not-enter-profile-modal');
-      expect(elements).toBeInTheDocument();
-    });
-  });
-
-  test('「確認資料が提出されておりません。」が表示されるかテスト', async () => {
-    const profileDataForTest = {
-      ...profileData,
-      need_to_send_confimation: true,
-    };
-    (useSeminar as jest.Mock).mockReturnValue({
-      seminars: seminarData,
-      upcomingSeminars: seminarData,
-      ticketCount: ticketCountData,
-      profile: profileDataForTest,
-      showModal: false,
-      setShowModal: jest.fn(),
-    });
-    await getRender();
-    await waitFor(() => {
-      const element = screen.getByTestId('need-to-send-confimation-modal');
-      expect(element).toBeInTheDocument();
-    });
-  });
-
-  test('「現在、ご提出頂いた資料を確認中です。」が表示されるかテスト', async () => {
-    const profileDataForTest = { ...profileData, status: 'CREATED' };
-    (useSeminar as jest.Mock).mockReturnValue({
-      seminars: seminarData,
-      upcomingSeminars: seminarData,
-      ticketCount: ticketCountData,
-      profile: profileDataForTest,
-      showModal: false,
-      setShowModal: jest.fn(),
-    });
-    await getRender();
-    await waitFor(() => {
-      const element = screen.getByTestId('not-verified-modal');
-      expect(element).toBeInTheDocument();
     });
   });
 

@@ -5,10 +5,12 @@ type Props = {
   commentCount: number;
   isLiked: boolean;
   isShortOnMobile?: boolean;
+  isCommentButtonHidden?: boolean;
+  isShowCommentsButtonHidden?: boolean;
   onLike?: () => void;
   onUnlike?: () => void;
-  onComment: () => void;
-  onShowComments: () => void;
+  onComment?: () => void;
+  onShowComments?: () => void;
 };
 
 export const ConsultExampleActions: React.FC<Props> = ({
@@ -16,8 +18,12 @@ export const ConsultExampleActions: React.FC<Props> = ({
   commentCount,
   isLiked,
   isShortOnMobile = false,
+  isCommentButtonHidden = false,
+  isShowCommentsButtonHidden = false,
   onLike,
   onUnlike,
+  onComment,
+  onShowComments,
 }: Props) => {
   const likeOrUnlike = isLiked ? onUnlike : onLike;
 
@@ -39,9 +45,7 @@ export const ConsultExampleActions: React.FC<Props> = ({
           className="flex items-center"
           onClick={(e) => {
             e.preventDefault();
-            if (likeOrUnlike) {
-              likeOrUnlike();
-            }
+            likeOrUnlike?.();
           }}
         >
           <img
@@ -52,14 +56,25 @@ export const ConsultExampleActions: React.FC<Props> = ({
           />
           <div className="ml-1">いいね</div>
         </a>
-        <img
-          src="/icons/comment.svg"
-          width="24"
-          height="24"
-          className="ml-4 block"
-          alt=""
-        />
-        <div className="ml-1">コメントする</div>
+        {!isCommentButtonHidden && (
+          <a
+            href={onComment ? '#' : undefined}
+            className="flex items-center"
+            onClick={(e) => {
+              e.preventDefault();
+              onComment?.();
+            }}
+          >
+            <img
+              src="/icons/comment.svg"
+              width="24"
+              height="24"
+              className="ml-4 block"
+              alt=""
+            />
+            <div className="ml-1">コメントする</div>
+          </a>
+        )}
       </div>
       <div className="flex items-center text-xs">
         <img
@@ -69,14 +84,25 @@ export const ConsultExampleActions: React.FC<Props> = ({
           alt="いいねの数"
         />
         <div className="ml-1">{likeCount}</div>
-        <img
-          src="/icons/comment.svg"
-          width="18"
-          height="18"
-          className="ml-4 block"
-          alt="コメントの数"
-        />
-        <div className="ml-1">{commentCount}</div>
+        {!isShowCommentsButtonHidden && (
+          <a
+            className="flex items-center"
+            href={onShowComments ? '#' : undefined}
+            onClick={(e) => {
+              e.preventDefault();
+              onShowComments?.();
+            }}
+          >
+            <img
+              src="/icons/comment.svg"
+              width="18"
+              height="18"
+              className="ml-4 block"
+              alt="コメントの数"
+            />
+            <div className="ml-1">{commentCount}</div>
+          </a>
+        )}
       </div>
     </div>
   );
