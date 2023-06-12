@@ -113,6 +113,26 @@ describe('Document', () => {
     });
   });
 
+  test('is_invitedがtrueの場合、/welcomeに遷移すること', async () => {
+    (useProfile as jest.Mock).mockReturnValue({
+      profile: { is_invited: true },
+    });
+    await getRender();
+    await waitFor(() => {
+      expect(mockRouter.push).toHaveBeenCalledWith('/welcome');
+    });
+  });
+
+  test('is_skip_confirmation_by_utm_sourceがtrueの場合、/welcomeに遷移すること', async () => {
+    (useProfile as jest.Mock).mockReturnValue({
+      profile: { is_invited: true },
+    });
+    await getRender();
+    await waitFor(() => {
+      expect(mockRouter.push).toHaveBeenCalledWith('/welcome');
+    });
+  });
+
   test('selectedがdocumentの場合、DocumentInputDocumentがレンダリングされること', async () => {
     await getRender();
     act(() => {
