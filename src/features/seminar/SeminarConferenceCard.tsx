@@ -44,18 +44,12 @@ export const SeminarConferenceCard = (props: SeminarConferenceCardProps) => {
           src={seminar.image_url}
           className="h-[183px] w-[327px] lg:m-4 lg:h-[237px] lg:w-[424px]"
         />
-        <div className="m-4 ml-0 lg:w-[440px]">
-          <a href={seminar.zoom_url} target="_blank" rel="noreferrer">
-            <PrimaryButton>ZOOMセミナーへ参加</PrimaryButton>
-          </a>
+        <div className="ml-0 w-full lg:m-4 lg:w-[440px]">
           <div className="mt-1 flex items-center">
             <p className="text-md">{dateTime}</p>
-            <div className="ml-5">
-              <a href={googleCalendarUrl} target="_blank" rel="noreferrer">
-                <SecondaryButton>
-                  <div className="mr-1 h-4 w-4 bg-[#D9D9D9]" />
-                  <p>カレンダーに登録</p>
-                </SecondaryButton>
+            <div className="ml-3 w-full lg:ml-5 lg:w-auto">
+              <a href={seminar.zoom_url} target="_blank" rel="noreferrer">
+                <PrimaryButton>Zoom E-カンファに事前登録</PrimaryButton>
               </a>
             </div>
           </div>
@@ -63,7 +57,7 @@ export const SeminarConferenceCard = (props: SeminarConferenceCardProps) => {
           <p
             className={
               !isOpened
-                ? 'mt-1 text-ellipsis text-md line-clamp-3'
+                ? 'mt-1 text-ellipsis text-md line-clamp-4 lg:line-clamp-5'
                 : 'mt-1 text-md'
             }
           >
@@ -92,15 +86,12 @@ export const SeminarConferenceCard = (props: SeminarConferenceCardProps) => {
         className="h-[183px] w-[327px] lg:h-[237px] lg:w-[424px]"
         src={seminar.image_url}
       />
-      <div className="mt-2 h-auto">
+      <div className="mt-2 h-auto w-full">
         <div className="flex items-center">
           <p className="text-md">{dateTime}</p>
-          <div className="ml-5">
-            <a href={googleCalendarUrl} target="_blank" rel="noreferrer">
-              <SecondaryButton>
-                <div className="mr-1 h-4 w-4 bg-[#D9D9D9]" />
-                <p>カレンダーに登録</p>
-              </SecondaryButton>
+          <div className="ml-3 w-full lg:ml-5 lg:w-auto">
+            <a href={seminar.zoom_url} target="_blank" rel="noreferrer">
+              <PrimaryButton>Zoom E-カンファに事前登録</PrimaryButton>
             </a>
           </div>
         </div>
@@ -108,7 +99,7 @@ export const SeminarConferenceCard = (props: SeminarConferenceCardProps) => {
         <p
           className={
             !isOpened
-              ? 'mt-1 h-[45px] text-ellipsis text-md line-clamp-2'
+              ? 'mt-1 text-ellipsis text-md line-clamp-4 lg:line-clamp-3'
               : 'mt-1 min-h-[45px] text-md'
           }
         >
