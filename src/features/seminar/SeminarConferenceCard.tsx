@@ -40,8 +40,8 @@ export const SeminarConferenceCard = (props: SeminarConferenceCardProps) => {
           <p
             className={
               !isOpened
-                ? 'mt-1 text-ellipsis text-md line-clamp-4 lg:line-clamp-5'
-                : 'mt-1 text-md'
+                ? 'mt-1 text-ellipsis whitespace-pre-wrap text-md line-clamp-4 lg:line-clamp-5'
+                : 'mt-1 whitespace-pre-wrap text-md'
             }
           >
             {seminar.description}
@@ -82,8 +82,8 @@ export const SeminarConferenceCard = (props: SeminarConferenceCardProps) => {
         <p
           className={
             !isOpened
-              ? 'mt-1 text-ellipsis text-md line-clamp-4 lg:line-clamp-3'
-              : 'mt-1 min-h-[45px] text-md'
+              ? 'mt-1 text-ellipsis whitespace-pre-wrap text-md line-clamp-4 lg:line-clamp-3'
+              : 'mt-1 min-h-[45px] whitespace-pre-wrap text-md'
           }
         >
           {seminar.description}
