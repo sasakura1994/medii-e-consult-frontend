@@ -12,7 +12,7 @@ const Secondary = (props: SecondaryProps) => {
   const { width, children, onClick, size, disabled = false } = props;
 
   const buttonWidth = width ? `w-${width}` : 'w-auto';
-  const bottunSize = size === 'large' ? 'h-11 text-md' : 'h-9 text-sm';
+  const bottunSize = size === 'large' ? 'h-11 text-md' : 'h-9 text-medii-sm';
   return (
     <button
       className={`flex items-center justify-center rounded-md border border-medii-blue-base

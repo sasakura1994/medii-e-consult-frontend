@@ -147,7 +147,7 @@ describe('Seminar component', () => {
   test('初期表示テスト', async () => {
     await getRender();
     act(() => {
-      expect(screen.getByText('最新のセミナー')).toBeInTheDocument();
+      expect(screen.getByText('最新のE-カンファ')).toBeInTheDocument();
     });
   });
 

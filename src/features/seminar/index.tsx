@@ -59,7 +59,7 @@ export const Seminar = () => {
         <div className="flex w-full flex-col items-center justify-center py-4 pt-10">
           <div className="mb-8 h-auto rounded-lg bg-white pl-6 pt-6 shadow-low lg:max-w-[976px]">
             <p className="text-xxxl font-bold text-medii-blue-base">
-              最新のセミナー
+              最新のE-カンファ
             </p>
             <div className="flex flex-col flex-wrap justify-start lg:flex-row">
               {upcomingSeminars &&
@@ -81,7 +81,7 @@ export const Seminar = () => {
               <Link href="/seminar/archives">
                 <a>
                   <SecondaryButton size="large">
-                    <p>過去のセミナー動画へ</p>
+                    <p>過去のE-カンファ動画へ</p>
                   </SecondaryButton>
                 </a>
               </Link>
