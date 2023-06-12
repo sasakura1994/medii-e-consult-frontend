@@ -55,6 +55,7 @@ export const Document = () => {
 
   if (profile.is_invited || profile.is_skip_confirmation_by_utm_source) {
     router.push('/welcome');
+    return <></>;
   }
 
   if (profile.main_speciality === 'STUDENT') {
