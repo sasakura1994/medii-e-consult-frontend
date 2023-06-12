@@ -1,5 +1,4 @@
 import PrimaryButton from '@/components/Button/Primary';
-import SecondaryButton from '@/components/Button/Secondary';
 import TertiaryButton from '@/components/Button/Tertiary';
 import { SeminarEntityType } from '@/types/entities/seminarEntity';
 import React, { useMemo, useState } from 'react';
@@ -12,22 +11,6 @@ type SeminarConferenceCardProps = {
 export const SeminarConferenceCard = (props: SeminarConferenceCardProps) => {
   const { seminar, index } = props;
   const [isOpened, setIsOpened] = useState(false);
-
-  const googleCalendarUrl = useMemo(() => {
-    if (!seminar) return '';
-    const date = seminar.seminar_date.substring(0, 11);
-    const start = encodeURIComponent(
-      (date + seminar.seminar_start_time).replace(/[-:]/g, '')
-    );
-    const end = encodeURIComponent(
-      (date + seminar.seminar_end_time).replace(/[-:]/g, '')
-    );
-    return `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
-      seminar.subject
-    )}&dates=${start}/${end}&details=${encodeURIComponent(
-      seminar.description
-    )}&location=${encodeURIComponent(seminar.zoom_url)}`;
-  }, [seminar]);
 
   const dateTime = useMemo(() => {
     const seminarDate = new Date(seminar.seminar_date);
