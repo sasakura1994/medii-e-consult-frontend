@@ -21,9 +21,8 @@ export const PrimaryButton: React.FC<Props> = ({
     <button
       type={type}
       className={`
-        mx-auto
         block
-        rounded-full
+        ${className?.match(/rounded/) ? '' : 'rounded-full'}
         bg-primary
         ${size === 'lg' ? 'py-[14px]' : 'py-2'}
         ${className?.match(/px-/) ? '' : 'px-8'}

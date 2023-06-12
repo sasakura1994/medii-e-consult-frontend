@@ -4,6 +4,7 @@ import { useModal } from './useModal';
 export type ModalPropsType = {
   children: React.ReactNode;
   className?: string;
+  isCenter?: boolean;
   setShowModal?: (isShow: boolean) => void;
 };
 
@@ -14,13 +15,17 @@ export const Modal: React.FC<ModalPropsType> = (props) => {
   return (
     <div
       ref={modalRef}
-      className="modal fixed top-0 left-0 z-[200] h-screen w-screen overflow-y-auto bg-black/20"
-      onClick={hideModal}
+      className={`modal fixed left-0 top-0 z-[200] h-screen w-screen overflow-y-auto bg-black/20 ${
+        props.isCenter === true ? 'flex items-center justify-center' : ''
+      }`}
+      onMouseDown={hideModal}
     >
       <div
-        className={`rounded border border-[#d5d5d5] bg-white ${className} z-[210] mx-auto my-10`}
+        className={`rounded border border-[#d5d5d5] bg-white ${className} z-[210] mx-auto ${
+          props.isCenter === true ? '' : 'my-10'
+        }`}
         role="dialog"
-        onClick={(e) => e.stopPropagation()}
+        onMouseDown={(e) => e.stopPropagation()}
       >
         {children}
       </div>

@@ -4,6 +4,7 @@ import { render, screen } from '@testing-library/react';
 import * as useMedicalSpeciality from '@/hooks/medicalSpeciality/useMedicalSpeciality';
 import { ConsultExampleDetail } from './ConsultExampleDetail';
 import { ConsultExampleDetailEntity } from '@/types/entities/ConsultExampleDetailEntity';
+import { RecoilRoot } from 'recoil';
 
 jest.mock('@/hooks/medicalSpeciality/useMedicalSpeciality');
 
@@ -43,10 +44,12 @@ describe('ConsultExampleDetail', () => {
     };
 
     await render(
-      <ConsultExampleDetail
-        consultExample={consultExample}
-        consultExampleMessages={[]}
-      />
+      <RecoilRoot>
+        <ConsultExampleDetail
+          consultExample={consultExample}
+          consultExampleMessages={[]}
+        />
+      </RecoilRoot>
     );
 
     const firstAnswerMinutesText = screen.getByText('初回回答まで');
@@ -60,10 +63,12 @@ describe('ConsultExampleDetail', () => {
     };
 
     await render(
-      <ConsultExampleDetail
-        consultExample={consultExample}
-        consultExampleMessages={[]}
-      />
+      <RecoilRoot>
+        <ConsultExampleDetail
+          consultExample={consultExample}
+          consultExampleMessages={[]}
+        />
+      </RecoilRoot>
     );
 
     const firstAnswerMinutesText = screen.queryByText('初回回答まで');
@@ -77,10 +82,12 @@ describe('ConsultExampleDetail', () => {
     };
 
     await render(
-      <ConsultExampleDetail
-        consultExample={consultExample}
-        consultExampleMessages={[]}
-      />
+      <RecoilRoot>
+        <ConsultExampleDetail
+          consultExample={consultExample}
+          consultExampleMessages={[]}
+        />
+      </RecoilRoot>
     );
 
     const specialityText = screen.getByText('内科');
@@ -94,10 +101,12 @@ describe('ConsultExampleDetail', () => {
     };
 
     await render(
-      <ConsultExampleDetail
-        consultExample={consultExample}
-        consultExampleMessages={[]}
-      />
+      <RecoilRoot>
+        <ConsultExampleDetail
+          consultExample={consultExample}
+          consultExampleMessages={[]}
+        />
+      </RecoilRoot>
     );
 
     const groupText = screen.getByText('グループ1');
@@ -113,10 +122,12 @@ describe('ConsultExampleDetail', () => {
     };
 
     const { getByAltText } = await render(
-      <ConsultExampleDetail
-        consultExample={consultExample}
-        consultExampleMessages={[]}
-      />
+      <RecoilRoot>
+        <ConsultExampleDetail
+          consultExample={consultExample}
+          consultExampleMessages={[]}
+        />
+      </RecoilRoot>
     );
 
     const likedButtonIcon = getByAltText('いいね済み');
@@ -129,26 +140,28 @@ describe('ConsultExampleDetail', () => {
     };
 
     const { getByAltText } = await render(
-      <ConsultExampleDetail
-        consultExample={consultExample}
-        consultExampleMessages={[
-          {
-            uid: 0,
-            account_type: 'doctor',
-            doctor_name: '',
-            message: '',
-            file_id: '',
-            file_name: '',
-            file_path: '',
-            content_type: '',
-            like_count: 0,
-            comment_count: 0,
-            deleted: 0,
-            created_date: '',
-            is_liked: true,
-          },
-        ]}
-      />
+      <RecoilRoot>
+        <ConsultExampleDetail
+          consultExample={consultExample}
+          consultExampleMessages={[
+            {
+              uid: 0,
+              account_type: 'doctor',
+              doctor_name: '',
+              message: '',
+              file_id: '',
+              file_name: '',
+              file_path: '',
+              content_type: '',
+              like_count: 0,
+              comment_count: 0,
+              deleted: 0,
+              created_date: '',
+              is_liked: true,
+            },
+          ]}
+        />
+      </RecoilRoot>
     );
 
     const likedButtonIcon = getByAltText('いいね済み');
