@@ -7,6 +7,7 @@ import { SeminarCard } from './seminarCard';
 import SecondaryButton from '@/components/Button/Secondary';
 import { useSeminar } from './useSeminar';
 import { ImcompleteProfileModal } from '@/components/Parts/Modal/ImcompleteProfileModal';
+import { StyledSeminarBackground } from './styled';
 
 export const Seminar = () => {
   const { seminars, upcomingSeminars, ticketCount, showModal, setShowModal } =
@@ -14,10 +15,7 @@ export const Seminar = () => {
 
   if (seminars) {
     return (
-      <div
-        className="bg-[url('/images/seminar/SP_back.png')] bg-cover
-       bg-no-repeat lg:bg-[url('/images/seminar/PC_back.png')]"
-      >
+      <StyledSeminarBackground className="bg-cover bg-no-repeat">
         <div className="flex w-full flex-col items-center justify-center py-4 pt-10">
           <div className="mb-8 h-auto rounded-lg bg-white pl-6 pt-6 shadow-low lg:max-w-[976px]">
             <p className="text-xxxl font-bold text-medii-blue-base">
@@ -116,7 +114,7 @@ export const Seminar = () => {
           </Modal>
         )}
         <ImcompleteProfileModal />
-      </div>
+      </StyledSeminarBackground>
     );
   }
   return <></>;
