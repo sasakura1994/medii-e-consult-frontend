@@ -84,7 +84,7 @@ const Seminar: NextPage = () => {
 
               <div className="mt-4 text-center">
                 <PrimaryButton
-                  className="py-2 px-4 lg:px-12 lg:pt-3 lg:pb-4 lg:text-2xl mx-auto"
+                  className="mx-auto py-2 px-4 lg:px-12 lg:pt-3 lg:pb-4 lg:text-2xl"
                   onClick={() => setIsTicketConfirmDialogShown(true)}
                 >
                   動画を閲覧する
@@ -95,13 +95,13 @@ const Seminar: NextPage = () => {
           <div className="flex flex-col items-center bg-white px-7 lg:px-[60px]">
             <div className="mt-4 flex w-full flex-col items-center">
               <div className="flex w-full items-center justify-center rounded-md bg-[#e2e7ff] py-4">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary lg:h-20 lg:w-20 m-2">
+                <div className="m-2 flex h-8 w-8 items-center justify-center rounded-full bg-primary lg:h-20 lg:w-20">
                   <img
                     src="/images/seminar/video.svg"
                     className="w-[19px] lg:w-auto"
                   />
                 </div>
-                <p className="lg:pl-4 font-bold text-primary lg:text-2xl flex-1">
+                <p className="flex-1 font-bold text-primary lg:pl-4 lg:text-2xl">
                   {seminar && seminar.subject}
                 </p>
               </div>
@@ -110,7 +110,7 @@ const Seminar: NextPage = () => {
               <div className="flex-reverse flex flex-col-reverse items-center justify-between border-b py-4 lg:flex-row">
                 <div className="w-full lg:w-auto">
                   <p className="text-base lg:text-lg">
-                    <span className="pr-4 text-2xl text-primary lg:text-lg">
+                    <span className="pr-4 text-2xl text-primary lg:text-lg lg:font-bold">
                       日時
                     </span>
                     {seminar && getSeminarDateTime(seminar)}
@@ -119,7 +119,7 @@ const Seminar: NextPage = () => {
               </div>
               <div className="border-b py-4">
                 <div>
-                  <p className="text-base lg:text-lg">
+                  <p className="whitespace-pre-wrap text-base lg:text-lg">
                     <span className="pr-4 text-2xl text-primary lg:text-lg lg:font-bold">
                       講師
                     </span>{' '}
@@ -132,10 +132,10 @@ const Seminar: NextPage = () => {
               </div>
               <div className="pt-8">
                 <div>
-                  <p className="pr-4 text-2xl font-bold text-primary lg:text-2xl">
+                  <p className="whitespace-pre-wrap pr-4 text-2xl font-bold text-primary lg:text-2xl">
                     セミナー概要
                   </p>
-                  <p className="pt-4 pb-8 text-base">
+                  <p className="pt-4 pb-8 text-base ">
                     {seminar?.description !== undefined
                       ? seminar.description
                       : ''}
