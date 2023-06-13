@@ -144,15 +144,21 @@ const Seminar: NextPage = () => {
               </div>
               <div className="rounded-lg border p-4 text-base">
                 <p className="pb-2">{seminar && seminar?.doctor_name}先生</p>
-                <p className="text-primary">
+                <p className="whitespace-pre-wrap text-primary">
                   {seminar && seminar?.doctor_profile}
                 </p>
               </div>
-              <a href={`/newChatRoom?target_account_id=${seminar?.account_id}`}>
-                <PrimaryButton className="mt-8 text-left">
-                  この先生にE-コンサルで相談をする
-                </PrimaryButton>
-              </a>
+              {seminar &&
+                seminar.account_id &&
+                seminar.is_consult_available && (
+                  <a
+                    href={`/newChatRoom?target_account_id=${seminar?.account_id}`}
+                  >
+                    <PrimaryButton className="mt-8 text-left">
+                      この先生にE-コンサルで相談をする
+                    </PrimaryButton>
+                  </a>
+                )}
               {seminar && seminar?.seminar_reviews.length > 0 && (
                 <div>
                   <h2 className="pb-4 pt-10 text-2xl font-bold text-primary">
