@@ -166,7 +166,7 @@ const Seminar: NextPage = () => {
                   </h2>
                   {seminar.seminar_reviews.map((review) => (
                     <div
-                      className="mb-4 rounded-md bg-slate-100 px-4 py-6"
+                      className="mb-4 whitespace-pre-wrap rounded-md bg-slate-100 px-4 py-6"
                       key={review.id}
                     >
                       <p>{review.body}</p>
