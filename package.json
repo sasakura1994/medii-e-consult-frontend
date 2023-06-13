@@ -30,7 +30,6 @@
     "react-popper-tooltip": "^4.4.2",
     "react-toastify": "^9.1.1",
     "recoil": "^0.7.6",
-    "styled-components": "^6.0.0-rc.3",
     "swr": "^2.0.3"
   },
   "devDependencies": {
