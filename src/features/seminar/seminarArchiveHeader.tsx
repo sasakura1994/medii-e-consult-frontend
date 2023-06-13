@@ -26,12 +26,12 @@ export const SeminarArchiveHeader: React.FC<Props> = ({
       text-[#6c6c6c]
       md:h-32
       md:bg-[url('/images/seminar/list_fukidashi.svg')]
-      md:px-14
+      md:px-12
       md:pt-6
       md:pb-0
       md:text-3xl"
       >
-        セミナーアーカイブ動画
+        E-カンファアーカイブ動画
       </h2>
       <div className="mb-2 flex w-full flex-col items-center justify-center md:flex-row">
         <div>

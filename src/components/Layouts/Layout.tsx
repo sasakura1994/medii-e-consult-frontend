@@ -24,7 +24,7 @@ export const Layout = (props: PropsType) => {
       ) : (
         <Header />
       )}
-      <main className="bg-[#eff3f6] pt-10 pb-20">{children}</main>
+      <main>{children}</main>
       <FooterSpMenu />
     </>
   );

@@ -15,7 +15,7 @@ export const Seminar = () => {
   if (seminars) {
     return (
       <div
-        className="-mt-10 -mb-20 bg-[url('/images/seminar/SP_back.png')] bg-cover
+        className="bg-[url('/images/seminar/SP_back.png')] bg-cover
        bg-no-repeat lg:bg-[url('/images/seminar/PC_back.png')]"
       >
         <div className="flex w-full flex-col items-center justify-center py-4 pt-10">
@@ -79,7 +79,7 @@ export const Seminar = () => {
               </a>
             </Link>
             <p className="text-center text-sm">
-              ※アーカイブ動画に表示している医師の方々の経歴などの情報は、セミナー当時のものとなっております。
+              ※アーカイブ動画に表示している医師の方々の経歴などの情報は、E-カンファ当時のものとなっております。
             </p>
           </div>
         </div>
@@ -98,7 +98,7 @@ export const Seminar = () => {
                 チケットとは?
               </h3>
               <p className="py-10">
-                チケットとはセミナー動画アーカイブを閲覧するために必要なものです。
+                チケットとはE-カンファ動画アーカイブを閲覧するために必要なものです。
                 <br />
                 E-コンサルで相談するとセミナーチケット1枚獲得できます。
               </p>
