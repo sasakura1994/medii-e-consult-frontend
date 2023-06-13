@@ -115,4 +115,7 @@ const App = (props: AppPropsWithLayout) => {
   );
 };
 
+// 初回queryのundefined現象を解決する
+App.getInitialProps = async () => ( { pageProps: {} } );
+
 export default App;
