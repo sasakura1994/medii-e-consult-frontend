@@ -27,26 +27,32 @@ export const useUseTicket = (
   const [isTicketNotEnoughDialogShown, setIsTicketNotEnoughDialogShown] =
     useState(false);
 
-  const useTicket = React.useCallback(async () => {
-    if (isSendingUsingTicketRequest) {
+  const useTicket = async () =>
+  {
+    if ( isSendingUsingTicketRequest )
+    {
       return;
     }
-    setIsSendingUsingTicketRequest(true);
+    setIsSendingUsingTicketRequest( true );
     const response = await axios
-      .post<{ movie_url: string }>(endpoint(id))
-      .catch((error) => {
-        if (error.response.data.code === -20) {
-          setIsTicketNotEnoughDialogShown(true);
-        } else {
-          alert(error.message || 'エラーが発生しました');
+      .post<{ movie_url: string; }>( endpoint( id ) )
+      .catch( ( error ) =>
+      {
+        if ( error.response.data.code === -20 )
+        {
+          setIsTicketNotEnoughDialogShown( true );
+        } else
+        {
+          alert( error.message || 'エラーが発生しました' );
         }
-      });
-    if (response) {
-      setIsTicketConfirmDialogShown(false);
-      setIsSendingUsingTicketRequest(false);
+      } );
+    if ( response )
+    {
+      setIsTicketConfirmDialogShown( false );
+      setIsSendingUsingTicketRequest( false );
       mutate();
     }
-  }, [axios]);
+  };
 
   return {
     useTicket,
