@@ -36,7 +36,7 @@ export const SeminarConferenceCard = (props: SeminarConferenceCardProps) => {
               </a>
             </div>
           </div>
-          <p className="mt-3 text-md font-bold">セミナー概要</p>
+          <p className="mt-3 text-md font-bold">概要</p>
           <p
             className={
               !isOpened
@@ -78,7 +78,7 @@ export const SeminarConferenceCard = (props: SeminarConferenceCardProps) => {
             </a>
           </div>
         </div>
-        <p className="mt-3 text-md font-bold">セミナー概要</p>
+        <p className="mt-3 text-md font-bold">概要</p>
         <p
           className={
             !isOpened
