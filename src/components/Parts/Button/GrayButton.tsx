@@ -21,7 +21,6 @@ export const GrayButton: React.FC<Props> = ({
     <button
       type={type}
       className={`
-        mx-auto
         block
         rounded-full
         bg-block-gray

@@ -1,24 +1,16 @@
 import { useAuthenticatedSWR } from '@/hooks/network/useAuthenticatedSWR';
-import type { ProfileEntityType } from '@/types/entities/profileEntity';
+import type { ProfileEntity } from '@/types/entities/profileEntity';
 
-const endpoint = '/api/doctor/profile';
+const endpoint = '/doctor/profile';
 
 export type UseFetchProfileType = {
-  isLoading: boolean;
-  error?: Error;
-  profile?: ProfileEntityType;
+  profile?: ProfileEntity;
 };
 
 export const useFetchProfile = (): UseFetchProfileType => {
-  const {
-    isLoading,
-    error,
-    data: profile,
-  } = useAuthenticatedSWR<ProfileEntityType>(endpoint);
+  const { data: profile } = useAuthenticatedSWR<ProfileEntity>(endpoint);
 
   return {
-    isLoading,
-    error,
     profile,
   };
 };

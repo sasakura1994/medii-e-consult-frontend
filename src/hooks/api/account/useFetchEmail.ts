@@ -8,7 +8,7 @@ export type UseFetchEmailType = {
   data: EmailEntityType | undefined;
 };
 
-const endpoint = '/api/account/email';
+const endpoint = '/account/email';
 
 export const useFetchEmail = () => {
   const {

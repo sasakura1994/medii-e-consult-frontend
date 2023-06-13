@@ -4,10 +4,10 @@ import { profileState } from '@/globalStates/profileState';
 import { useRecoilState } from 'recoil';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { useUpdateProfile } from '@/hooks/api/doctor/useUpdateProfile';
-import type { ProfileEntityType } from '@/types/entities/profileEntity';
+import type { ProfileEntity } from '@/types/entities/profileEntity';
 
 export type UseNotifySettingsType = {
-  profile?: ProfileEntityType;
+  profile?: ProfileEntity;
   isError: boolean;
   changeNotifyNew: (e: React.ChangeEvent<HTMLInputElement>) => void;
   changeNotifySeminar: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -70,7 +70,7 @@ export const useNotifySettings = (): UseNotifySettingsType => {
           break;
       }
 
-      setProfileData((oldValues: ProfileEntityType) => ({
+      setProfileData((oldValues: ProfileEntity) => ({
         ...oldValues,
         ...notifyNewFlags,
       }));
@@ -96,7 +96,7 @@ export const useNotifySettings = (): UseNotifySettingsType => {
           break;
       }
 
-      setProfileData((oldValues: ProfileEntityType) => ({
+      setProfileData((oldValues: ProfileEntity) => ({
         ...oldValues,
         not_seminar_mail_target: notifySeminarFlags,
       }));
@@ -119,7 +119,7 @@ export const useNotifySettings = (): UseNotifySettingsType => {
    */
   React.useEffect(() => {
     if (!profileData) return;
-    setProfileData((oldValues: ProfileEntityType) => ({
+    setProfileData((oldValues: ProfileEntity) => ({
       ...oldValues,
       ...profileData,
     }));

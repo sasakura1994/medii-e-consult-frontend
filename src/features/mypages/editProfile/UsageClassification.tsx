@@ -20,7 +20,7 @@ export const UsageClassification: React.FC = () => {
 
         <ul className="mt-2 pl-4 text-sm">
           <li className="relative pl-4 before:absolute before:left-0 before:content-['※']">
-            コンサル回答には、医師免許証確認による審査が必要です
+            コンサル回答には、審査が必要です
           </li>
           <li className="relative pl-4 before:absolute before:left-0 before:content-['※']">
             E-コンサル回答への対応は任意です

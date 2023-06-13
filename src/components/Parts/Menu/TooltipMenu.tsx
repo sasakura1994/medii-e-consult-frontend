@@ -13,6 +13,7 @@ type MenuType = {
   text: string;
   link: string;
   icon?: React.ReactNode;
+  openInNewTab?: boolean;
 };
 
 type PropsType = {
@@ -64,6 +65,8 @@ export const TooltipMenu: React.FC<PropsType> = (props) => {
             <Link href={menu.link}>
               <a
                 className={getLinkStyle(style)}
+                target={menu.openInNewTab ? '_blank' : undefined}
+                rel={menu.openInNewTab ? 'noopener noreferrer' : undefined}
                 onClick={() => {
                   setControlledVisible
                     ? setControlledVisible(false)

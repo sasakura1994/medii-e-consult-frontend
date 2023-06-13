@@ -22,6 +22,7 @@ export const usePasswordReset = () => {
 
   const onSubmit = React.useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
+      let errorMessage = '';
       e.preventDefault();
       setIsSending(true);
       setErrorMessage('');
@@ -32,24 +33,28 @@ export const usePasswordReset = () => {
         token: query.token || '',
       }).catch((error) => {
         console.error(error);
-        return null;
+        errorMessage = error.message ?? 'エラーが発生しました';
+        setErrorMessage(errorMessage);
+        return error.response;
       });
 
       setIsSending(false);
 
-      if (!response) {
-        setErrorMessage('エラーが発生しました');
-        return;
-      }
+      if (!response) return;
 
-      if (response.data.code !== 1) {
-        setErrorMessage(response.data.message);
+      if (response.status !== 204 && !errorMessage) {
+        setErrorMessage(response.data.message ?? 'エラーが発生しました');
         return;
       }
 
       setIsCompleted(true);
     },
-    [passwordInput.firstPassword, passwordInput.secondPassword]
+    [
+      passwordInput.firstPassword,
+      passwordInput.secondPassword,
+      query.token,
+      resetPassword,
+    ]
   );
 
   return {

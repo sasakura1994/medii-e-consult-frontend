@@ -6,8 +6,9 @@ import { RecoilRoot } from 'recoil';
 import * as apiClient from '@/libs/apiClient';
 import { AxiosInstance } from 'axios';
 import { PostResetPasswordResponseData } from '@/hooks/api/account/usePostPasswordReset';
-import InitPasswordPage from '@/pages/InitPassword';
+
 import { useRouter } from 'next/router';
+import InitPassword from '@/pages/initpassword';
 
 jest.mock('@/libs/apiClient');
 jest.mock('next/router');
@@ -32,16 +33,18 @@ describe('InitPassword', () => {
     await act(() => {
       render(
         <RecoilRoot>
-          <InitPasswordPage />
+          <InitPassword />
         </RecoilRoot>
       );
     });
 
-    userEvent.type(screen.getByLabelText('first_password'), '11111111');
-    userEvent.type(screen.getByLabelText('second_password'), '11111111');
-    userEvent.click(screen.getByTestId('agree-privacy-policy'));
-    userEvent.click(screen.getByTestId('agree-terms-of-use'));
-    userEvent.click(screen.getByTestId('agree-details'));
+    await act(() => {
+      userEvent.type(screen.getByLabelText('first_password'), '11111111');
+      userEvent.type(screen.getByLabelText('second_password'), '11111111');
+      userEvent.click(screen.getByTestId('agree-privacy-policy'));
+      userEvent.click(screen.getByTestId('agree-terms-of-use'));
+      userEvent.click(screen.getByTestId('agree-details'));
+    });
 
     await act(() => {
       userEvent.click(screen.getByRole('button'));

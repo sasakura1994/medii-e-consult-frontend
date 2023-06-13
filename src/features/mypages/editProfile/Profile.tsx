@@ -3,7 +3,7 @@ import styles from './Profile.module.scss';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import { useClipboard } from '@/hooks/useClipboard';
-import { useProfile } from './useProfile';
+import { useProfile } from '../../../hooks/useProfile';
 import { UrlPublish } from './UrlPublish';
 import { Detail } from './Detail';
 import { Edit } from './Edit';

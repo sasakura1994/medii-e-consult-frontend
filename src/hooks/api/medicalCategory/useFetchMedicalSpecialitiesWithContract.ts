@@ -8,7 +8,7 @@ export type UseFetchMedicalSpecialityType = {
   medicalSpecialities: MedicalSpecialityEntity[] | undefined;
 };
 
-const endpoint = '/api/medical_category/medical_specialities_with_contract';
+const endpoint = '/medical_category/medical_specialities_with_contract';
 
 export const useFetchMedicalSpecialitiesWithContract =
   (): UseFetchMedicalSpecialityType => {

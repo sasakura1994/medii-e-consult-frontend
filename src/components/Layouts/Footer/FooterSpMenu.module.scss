@@ -1,0 +1,57 @@
+@import "../../../styles/utilities/variable.scss";
+@import "../../../styles/functions/mixin.scss";
+
+.sp_footer_nav {
+  display: block;
+  @include mq-breakpoint(lg) {
+    display: none;
+  }
+  background-color: #ffffff;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+}
+
+.sp_footer_menu {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #999999;
+
+  &__item {
+    flex: 1;
+    position: relative;
+  }
+
+  &__link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 11px;
+    line-height: 1;
+    padding: 4px 0;
+    position: relative;
+    &::before {
+      content: "";
+      display: block;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      width: 24px;
+      height: 24px;
+      margin-bottom: 6px;
+    }
+
+    &___consult::before {
+      background-image: url("/icons/footer_consult.svg");
+    }
+    &___group::before {
+      background-image: url("/icons/footer_group.svg");
+    }
+    &___example::before {
+      background-image: url("/icons/footer_case.svg");
+    }
+    &___bank::before {
+      background-image: url("/icons/bank.svg");
+    }
+  }
+}

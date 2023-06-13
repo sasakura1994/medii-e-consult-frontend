@@ -5,9 +5,9 @@ import { useRouter } from 'next/router';
 
 const getActiveMenuItemStyle = (
   routePath: string,
-  pathName: string
+  activePaths: string[]
 ): string => {
-  if (routePath === pathName) {
+  if (activePaths.includes(routePath)) {
     return `${styles.mypage_menu__item} ${styles.mypage_menu__item___active}`;
   }
   return styles.mypage_menu__item;
@@ -19,7 +19,12 @@ export const MyPageMenu: React.FC = () => {
   return (
     <nav className={styles.mypage_nav}>
       <ul className={styles.mypage_menu}>
-        <li className={getActiveMenuItemStyle(router.pathname, '/EditProfile')}>
+        <li
+          className={getActiveMenuItemStyle(router.pathname, [
+            '/editprofile',
+            '/document',
+          ])}
+        >
           <Link href="/EditProfile">
             <a className={styles.mypage_menu__link}>
               <span>プロフィール</span>
@@ -27,7 +32,7 @@ export const MyPageMenu: React.FC = () => {
           </Link>
         </li>
         <li
-          className={getActiveMenuItemStyle(router.pathname, '/PointHistory')}
+          className={getActiveMenuItemStyle(router.pathname, ['/pointhistory'])}
         >
           <Link href="/PointHistory">
             <a className={styles.mypage_menu__link}>
@@ -35,14 +40,16 @@ export const MyPageMenu: React.FC = () => {
             </a>
           </Link>
         </li>
-        <li className={getActiveMenuItemStyle(router.pathname, '/AmazonGift')}>
+        <li
+          className={getActiveMenuItemStyle(router.pathname, ['/amazongift'])}
+        >
           <Link href="/AmazonGift">
             <a className={styles.mypage_menu__link}>
               <span className={styles.text_break_sp}>Amazon</span>ギフト
             </a>
           </Link>
         </li>
-        <li className={getActiveMenuItemStyle(router.pathname, '/Affiliate')}>
+        <li className={getActiveMenuItemStyle(router.pathname, ['/affiliate'])}>
           <Link href="/Affiliate">
             <a className={styles.mypage_menu__link}>
               <span>医師紹介</span>
@@ -50,7 +57,9 @@ export const MyPageMenu: React.FC = () => {
           </Link>
         </li>
         <li
-          className={getActiveMenuItemStyle(router.pathname, '/NotifySettings')}
+          className={getActiveMenuItemStyle(router.pathname, [
+            '/notifysettings',
+          ])}
         >
           <Link href="/NotifySettings">
             <a className={styles.mypage_menu__link}>

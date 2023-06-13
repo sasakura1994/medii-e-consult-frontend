@@ -47,6 +47,20 @@ export const createApiClient = (
   return instance;
 };
 
+export const redirectToLoginPage = () => {
+  const loginPageUrl = 'login';
+  // 外部ドメイン経由の場合は常にExternalディレクトリに展開されるので、リダイレクト時には除去
+  const redirectParam =
+    '?redirect=' +
+    encodeURIComponent(
+      window.location.pathname.replace(
+        process.env.WEB_EXTERNAL_SUB_DIR as string,
+        ''
+      ) + window.location.search
+    );
+  window.location.href = loginPageUrl + redirectParam;
+};
+
 const handleApiError = (apiClient: AxiosInstance) => {
   apiClient.interceptors.response.use(
     (response) => response,
@@ -59,6 +73,7 @@ const handleApiError = (apiClient: AxiosInstance) => {
 
       switch (error.response?.status) {
         case 401:
+          redirectToLoginPage();
           return Promise.reject<ApiErrorType>({
             ...errorObj,
             message: '認証に失敗しました',
@@ -92,6 +107,14 @@ const handleApiError = (apiClient: AxiosInstance) => {
 
       if (error.isAxiosError && error.response?.data?.errors) {
         const errorMessage = error.response.data.errors.messages.join('\n');
+        return Promise.reject<ApiErrorType>({
+          ...errorObj,
+          message: errorMessage,
+        });
+      }
+
+      if (error.isAxiosError && error.response?.data?.message) {
+        const errorMessage = error.response.data.message;
         return Promise.reject<ApiErrorType>({
           ...errorObj,
           message: errorMessage,

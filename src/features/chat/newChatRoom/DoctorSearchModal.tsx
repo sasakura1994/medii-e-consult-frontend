@@ -134,7 +134,7 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = (
               className="w-full flex-1 px-6"
               onClick={() => onChange(doctor)}
             >
-              この先生でルームを作成
+              この先生を指定
             </PrimaryButton>
           </div>
         </DoctorProfileModal>

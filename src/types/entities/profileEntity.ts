@@ -1,8 +1,8 @@
-export type ProfileEntityType = {
+export type ProfileEntity = {
   commedical_speciality: string;
   document_file_path: string;
   is_commedical: number;
-  document: string | undefined | null;
+  document: File | undefined | null;
   last_name: string;
   first_name: string;
   last_name_hira: string;
@@ -33,7 +33,7 @@ export type ProfileEntityType = {
   not_seminar_mail_target: boolean;
   want_to_be_consultant: boolean;
   assignable: number;
-  graduation_year: string | undefined | null;
+  graduation_year: number;
   use_prefecture: string | undefined | null;
   prefecture_code: string;
   hospital_id: string;

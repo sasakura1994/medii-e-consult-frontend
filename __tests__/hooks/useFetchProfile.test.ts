@@ -4,7 +4,7 @@ import { server } from '@/mocks/server';
 import { fromNullToUndefined } from '@/libs/apiResponse';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { profileMock } from '@/mocks/profileMock';
-import type { ProfileEntityType } from '@/types/entities/profileEntity';
+import type { ProfileEntity } from '@/types/entities/profileEntity';
 
 const dummyToken = 'test-token';
 
@@ -19,7 +19,7 @@ describe('useFetchProfile', () => {
   //   expect(result.current.profile).toBeUndefined();
   //   expect(result.current.error).toBeUndefined();
 
-  //   const convertedData = fromNullToUndefined<ProfileEntityType>(profileMock);
+  //   const convertedData = fromNullToUndefined<ProfileEntity>(profileMock);
 
   //   await waitFor(() => {
   //     expect(result.current.isLoading).toBe(false);
