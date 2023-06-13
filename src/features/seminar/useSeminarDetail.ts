@@ -4,7 +4,6 @@ import { useFetchTicketCount } from '@/hooks/api/seminar/useFetchTicketCount';
 import { useFetchSeminar } from '@/hooks/api/seminar/useFetchSeminar';
 import { useFetchRandomSeminars } from '@/hooks/api/seminar/useRandomSeminars';
 import { useUseTicket } from '@/hooks/api/seminar/useUseTicket';
-import { AxiosResponse } from 'axios';
 import React from 'react';
 
 export type UseSeminarDetail = {

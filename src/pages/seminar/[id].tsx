@@ -132,10 +132,10 @@ const Seminar: NextPage = () => {
               </div>
               <div className="pt-8">
                 <div>
-                  <p className="whitespace-pre-wrap pr-4 text-2xl font-bold text-primary lg:text-2xl">
+                  <p className=" pr-4 text-2xl font-bold text-primary lg:text-2xl">
                     セミナー概要
                   </p>
-                  <p className="pt-4 pb-8 text-base ">
+                  <p className="whitespace-pre-wrap pt-4 pb-8 text-base">
                     {seminar?.description !== undefined
                       ? seminar.description
                       : ''}
