@@ -8,8 +8,10 @@ import { ticketCountEntity } from '@/types/entities/ticketCountEntity';
 import { act } from 'react-dom/test-utils';
 import userEvent from '@testing-library/user-event';
 import { RecoilRoot } from 'recoil';
+import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 
 jest.mock('../useSeminar');
+jest.mock('@/hooks/api/doctor/useFetchProfile');
 
 const seminarData: SeminarEntityType[] = [
   {
@@ -74,66 +76,20 @@ const ticketCountData: ticketCountEntity = {
   ticket_count: 2,
 };
 
-const profileData: ProfileEntity = {
-  commedical_speciality: 'Cardiology',
-  document_file_path: '/path/to/document',
-  is_commedical: 1,
-  document: null,
-  last_name: 'Tanaka',
-  first_name: 'Taro',
-  last_name_hira: 'たなか',
-  first_name_hira: 'たろう',
-  birthday_year: 1980,
-  birthday_month: 7,
-  birthday_day: 15,
-  main_speciality: 'Cardiology',
-  speciality_2: 'Endocrinology',
-  speciality_3: 'Immunology',
-  speciality_4: 'Nephrology',
-  medical_specialities: [
-    'Cardiology',
-    'Endocrinology',
-    'Immunology',
-    'Nephrology',
-  ],
-  qualification: 'MD',
-  expertise: 'Cardiology',
-  confimation_type: 'Certificate',
-  qualified_year: 2005,
-  doctor_qualified_year: 2007,
-  doctor_qualified_month: 3,
-  doctor_qualified_day: 27,
-  doctor_number: '123456',
-  tel: '123-456-7890',
-  status: 'VERIFIED',
-  need_to_send_confimation: false,
-  is_imperfect_profile: false,
-  is_hospital_doctor: true,
-  is_mail_notify: true,
-  is_push_notify: false,
-  not_seminar_mail_target: false,
-  want_to_be_consultant: true,
-  assignable: 1,
-  graduation_year: null,
-  use_prefecture: 'Tokyo',
-  prefecture_code: '13',
-  hospital_id: '1001',
-  hospital_name: 'Tokyo General Hospital',
-  graduated_university: 'Tokyo Medical University',
-  is_invited: false,
-  is_skip_confirmation_by_utm_source: false,
-  questionary_selected_ids_csv: '1,2,3',
-  questionary_other: 'No other details',
-};
-
 beforeEach(() => {
   (useSeminar as jest.Mock).mockReturnValue({
     seminars: seminarData,
     upcomingSeminars: seminarData,
     ticketCount: ticketCountData,
-    profile: profileData,
     showModal: false,
     setShowModal: jest.fn(),
+  });
+  (useFetchProfile as jest.Mock).mockReturnValue({
+    profile: {
+      is_imperfect_profile: true,
+      main_speciality: 'naika',
+      need_to_send_confimation: true,
+    } as ProfileEntity,
   });
 });
 const getRender = async () => {
@@ -156,13 +112,76 @@ describe('Seminar component', () => {
     });
   });
 
+  test('プロフィール情報が入力されておりません。が表示されるか', async () => {
+    (useFetchProfile as jest.Mock).mockReturnValue({
+      profile: {
+        is_imperfect_profile: true,
+        main_speciality: 'naika',
+        need_to_send_confimation: true,
+      } as ProfileEntity,
+    });
+    await getRender();
+    expect(
+      screen.getByText(/プロフィール情報が入力されておりません。/)
+    ).toBeInTheDocument();
+  });
+
+  test('確認資料が提出されておりません。が表示されるか', async () => {
+    (useFetchProfile as jest.Mock).mockReturnValue({
+      profile: {
+        is_imperfect_profile: false,
+        main_speciality: 'naika',
+        need_to_send_confimation: true,
+      } as ProfileEntity,
+    });
+    await getRender();
+    expect(
+      screen.getByText(/確認資料が提出されておりません。/)
+    ).toBeInTheDocument();
+  });
+
+  test('現在、ご提出頂いた資料を確認中です。が表示されるか', async () => {
+    (useFetchProfile as jest.Mock).mockReturnValue({
+      profile: {
+        is_imperfect_profile: false,
+        main_speciality: 'naika',
+        need_to_send_confimation: false,
+      } as ProfileEntity,
+    });
+    await getRender();
+    expect(
+      screen.getByText(/現在、ご提出頂いた資料を確認中です。/)
+    ).toBeInTheDocument();
+  });
+
+  test('モーダルが表示されないか', async () => {
+    (useFetchProfile as jest.Mock).mockReturnValue({
+      profile: {
+        is_imperfect_profile: false,
+        main_speciality: 'naika',
+        need_to_send_confimation: false,
+        status: 'VERIFIED',
+      } as ProfileEntity,
+    });
+    await getRender();
+    expect(
+      screen.queryByText(/プロフィール情報が入力されておりません。/)
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(/確認資料が提出されておりません。/)
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(/現在、ご提出頂いた資料を確認中です。/)
+    ).not.toBeInTheDocument();
+    expect(screen.getByText('最新のE-カンファ')).toBeInTheDocument();
+  });
+
   test('ボタン押下でモーダルが閉じるかテスト', async () => {
     const setShowModalMock = jest.fn();
     (useSeminar as jest.Mock).mockReturnValue({
       seminars: seminarData,
       upcomingSeminars: seminarData,
       ticketCount: ticketCountData,
-      profile: profileData,
       showModal: true,
       setShowModal: setShowModalMock,
     });

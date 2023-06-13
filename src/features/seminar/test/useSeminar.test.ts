@@ -2,13 +2,10 @@ import { renderHook, act, cleanup } from '@testing-library/react';
 import { useSeminar } from '../useSeminar';
 import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 import { useFetchUpcomingSeminar } from '@/hooks/api/seminar/useFetchUpcomingSeminar';
-import { useProfile } from '@/hooks/useProfile';
 import { useSeminars } from '../useSeminars';
 
 jest.mock('@/hooks/api/eventLog/useEventLog');
 jest.mock('@/hooks/api/seminar/useFetchUpcomingSeminar');
-jest.mock('@/hooks/useProfile');
-jest.mock('../useSeminars');
 jest.mock('../useSeminars');
 
 const mockUseSeminarA = {
@@ -58,9 +55,6 @@ beforeEach(() => {
   (useFetchUpcomingSeminar as jest.Mock).mockReturnValue({
     seminars: [mockUseSeminarA, mockUseSeminarB],
   });
-  (useProfile as jest.Mock).mockReturnValue({
-    profile: { id: 1 },
-  });
   (useSeminars as jest.Mock).mockReturnValue({
     seminars: [mockUseSeminarA],
     ticketCount: 1,
@@ -77,19 +71,16 @@ describe('useSeminar hook', () => {
 
     expect(useEventLog).toHaveBeenCalledWith({ name: '/seminar' });
     expect(useFetchUpcomingSeminar).toHaveBeenCalled();
-    expect(useProfile).toHaveBeenCalled();
     expect(useSeminars).toHaveBeenCalled();
   });
 
   test('モックデータが正常に返ってくるか', () => {
     const mockUpcomingSeminars = [mockUseSeminarA, mockUseSeminarB];
     const mockSeminars = [mockUseSeminarA];
-    const mockProfile = { id: 1 };
     const { result } = renderHook(() => useSeminar());
 
     expect(result.current.upcomingSeminars).toStrictEqual(mockUpcomingSeminars);
     expect(result.current.seminars).toStrictEqual(mockSeminars);
-    expect(result.current.profile).toStrictEqual(mockProfile);
     expect(result.current.ticketCount).toBe(1);
   });
 
