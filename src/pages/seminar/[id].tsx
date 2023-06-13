@@ -40,7 +40,7 @@ const Seminar: NextPage = () => {
     randomSeminars,
     seminar,
     ticketCount,
-    useTicket,
+    consumeTicket,
     isTicketConfirmDialogShown,
     isTicketNotEnoughDialogShown,
     setIsTicketConfirmDialogShown,
@@ -243,7 +243,7 @@ const Seminar: NextPage = () => {
           className="lg:w-[800px]"
           title="チケット使用の確認"
           labelText="使用する"
-          onSubmit={() => useTicket()}
+          onSubmit={() => consumeTicket()}
         >
           <p>アーカイブ動画閲覧にチケット1枚を使用します。</p>
         </SeminarConfirmModal>

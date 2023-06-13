@@ -10,7 +10,7 @@ export type UseSeminarDetail = {
   randomSeminars: SeminarEntityType[] | undefined;
   seminar: SeminarEntityType | undefined;
   ticketCount: ticketCountEntity | undefined;
-  useTicket: () => Promise<void>;
+  consumeTicket: () => Promise<void>;
   isTicketConfirmDialogShown: boolean;
   setIsTicketConfirmDialogShown: React.Dispatch<React.SetStateAction<boolean>>;
   isTicketNotEnoughDialogShown: boolean;
@@ -23,7 +23,7 @@ export const UseSeminarDetail = (id: string): UseSeminarDetail => {
   const { seminar, mutate } = useFetchSeminar(id);
   const { seminars: randomSeminars } = useFetchRandomSeminars(id);
   const {
-    useTicket,
+    consumeTicket,
     isTicketConfirmDialogShown,
     isTicketNotEnoughDialogShown,
     setIsTicketConfirmDialogShown,
@@ -35,7 +35,7 @@ export const UseSeminarDetail = (id: string): UseSeminarDetail => {
     seminar,
     randomSeminars,
     ticketCount,
-    useTicket,
+    consumeTicket,
     isTicketConfirmDialogShown,
     isTicketNotEnoughDialogShown,
     setIsTicketConfirmDialogShown,
