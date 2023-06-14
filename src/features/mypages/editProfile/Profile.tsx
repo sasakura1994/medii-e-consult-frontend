@@ -1,26 +1,17 @@
 import React from 'react';
 import styles from './Profile.module.scss';
-import { toast } from 'react-toastify';
-import { ToastContainer } from 'react-toastify';
-import { useClipboard } from '@/hooks/useClipboard';
 import { useProfile } from '../../../hooks/useProfile';
-import { UrlPublish } from './UrlPublish';
 import { Detail } from './Detail';
 import { Edit } from './Edit';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 
 export const Profile: React.FC = () => {
-  const accountId = 'AC10-6226-9933-69'; // TODO: ログイン情報から取得する
-  const clipboardUrl = `${process.env.WEB_SERVER_URL}/NewChatRoom?target_account_id=${accountId}`;
-  const { isError, clipboard } = useClipboard(clipboardUrl);
   const { editProfileScreen, showModal, setShowModal } = useProfile();
   const [showOtherModal, setOtherModal] = React.useState(false); // TODO: テスト用のステートなので動作確認後削除する
 
   return (
     <>
-      <UrlPublish clipboard={clipboard} />
-
       <div className={styles.edit_profile}>
         <Detail />
         <Edit setShowModal={setShowModal} />
@@ -53,18 +44,6 @@ export const Profile: React.FC = () => {
           </button>
         )}
       </div>
-
-      <ToastContainer
-        hideProgressBar={true}
-        autoClose={2000}
-        position={toast.POSITION.BOTTOM_CENTER}
-        closeButton={false}
-        toastClassName={() =>
-          isError
-            ? 'bg-toast-error text-white text-center py-2 shadow-md'
-            : 'bg-toast-success text-white text-center py-2 shadow-md'
-        }
-      />
 
       {/* TODO: モーダルは仮実装となるので、適宜中身を実装する */}
       {showModal && (
