@@ -9,7 +9,8 @@ import { ProfileDetail } from '@/features/mypages/editProfile/ProfileDetail';
 
 const EditProfilePage: NextPageWithLayout = () => {
   const editProfilePage = useEditProfilePage();
-  const { editProfileMode, isRegisterMode } = editProfilePage;
+  const { editProfileMode, isRegisterMode, setSelectedEditProfileMode } =
+    editProfilePage;
   const { profile } = useFetchProfile();
 
   return (
@@ -18,7 +19,9 @@ const EditProfilePage: NextPageWithLayout = () => {
       <MyPageMenu />
       {!isRegisterMode && profile?.want_to_be_consultant && <UrlPublish />}
       <div className="mt-4">
-        {editProfileMode === 'profile' && <ProfileDetail />}
+        {editProfileMode === 'profile' && (
+          <ProfileDetail onEdit={() => setSelectedEditProfileMode('edit')} />
+        )}
       </div>
     </>
   );
