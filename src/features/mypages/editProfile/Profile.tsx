@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './Profile.module.scss';
 import { useProfile } from '../../../hooks/useProfile';
-import { Detail } from './Detail';
 import { Edit } from './Edit';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
@@ -13,7 +12,6 @@ export const Profile: React.FC = () => {
   return (
     <>
       <div className={styles.edit_profile}>
-        <Detail />
         <Edit setShowModal={setShowModal} />
       </div>
 
@@ -26,21 +24,13 @@ export const Profile: React.FC = () => {
       )}
 
       <div className="mt-12 text-center lg:pb-20">
-        {editProfileScreen.isEditOpen ? (
+        {editProfileScreen.isEditOpen && (
           <button
             type="button"
             className="text-[#0758E4] underline"
             onClick={() => console.log('アカウント削除')}
           >
             アカウントを削除する
-          </button>
-        ) : (
-          <button
-            type="button"
-            className="text-[#999999] underline"
-            onClick={() => console.log('ログアウト')}
-          >
-            ログアウト
           </button>
         )}
       </div>
