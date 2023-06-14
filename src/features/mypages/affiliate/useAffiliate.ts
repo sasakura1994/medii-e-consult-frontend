@@ -1,4 +1,5 @@
-import React from 'react';
+import { useToken } from '@/hooks/authentication/useToken';
+import React, { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 const qrCodeFileName = 'Medii医師紹介QRコード.png';
@@ -9,22 +10,50 @@ export type AffiliateUrlsType = {
 };
 
 export type UseAffiliateType = {
-  isLoading: boolean;
   isError: boolean;
   qrCodeUrl: string;
   downloadQrCode: () => void;
   clipboard: () => void;
+  invitationUrl: string;
 };
 
-export const useAffiliate = (accountId: string): UseAffiliateType => {
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [isError, setIsError] = React.useState(false);
-  const [qrCodeUrl, setQrcodeUrl] = React.useState('');
-  const [clipboardUrl, setClipboardUrl] = React.useState('');
+export const useAffiliate = (): UseAffiliateType => {
+  const { accountId } = useToken();
+  const [isError, setIsError] = useState(false);
+  const [qrCodeUrl, setQrcodeUrl] = useState('');
+  const [invitationUrl, setInvitationUrl] = useState('');
 
-  React.useEffect(() => {
-    fetchQrCode(accountId);
-  }, []);
+  /**
+   * QR コードの取得
+   */
+  const fetchQrCode = useCallback(async () => {
+    setIsError(false);
+
+    try {
+      if (accountId) {
+        const urls = getAffiliateUrls(accountId);
+        const response = await fetch(urls.qrCode, {
+          method: 'GET',
+          headers: {},
+        });
+
+        const buffer = await response.arrayBuffer();
+        const blob = new Blob([buffer]);
+        const url = window.URL.createObjectURL(blob);
+        setQrcodeUrl(url);
+        setInvitationUrl(urls.clipboard);
+      }
+    } catch (e) {
+      setIsError(true);
+      const error = e as Error;
+      console.log('*** error ***', error.message);
+      toast('QRコードの取得に失敗しました');
+    }
+  }, [accountId]);
+
+  useEffect(() => {
+    fetchQrCode();
+  }, [fetchQrCode]);
 
   /**
    * URL の取得
@@ -36,36 +65,6 @@ export const useAffiliate = (accountId: string): UseAffiliateType => {
       qrCode: qrCodeUrl,
       clipboard: url,
     };
-  };
-
-  /**
-   * QR コードの取得
-   */
-  const fetchQrCode = async (accountId: string) => {
-    setIsError(false);
-    setIsLoading(true);
-
-    const urls = getAffiliateUrls(accountId);
-
-    try {
-      const response = await fetch(urls.qrCode, {
-        method: 'GET',
-        headers: {},
-      });
-
-      const buffer = await response.arrayBuffer();
-      const blob = new Blob([buffer]);
-      const url = window.URL.createObjectURL(blob);
-      setQrcodeUrl(url);
-      setClipboardUrl(urls.clipboard);
-      setIsLoading(false);
-    } catch (e: unknown) {
-      const error = e as Error;
-      console.log('*** error ***', error.message);
-      setIsLoading(false);
-      setIsError(true);
-      toast('QRコードの取得に失敗しました');
-    }
   };
 
   /**
@@ -87,19 +86,19 @@ export const useAffiliate = (accountId: string): UseAffiliateType => {
   /**
    * 紹介用 URL のコピー
    */
-  const clipboard = React.useCallback(async () => {
-    if (!clipboardUrl) {
+  const clipboard = useCallback(async () => {
+    if (!invitationUrl) {
       return;
     }
-    await navigator.clipboard.writeText(clipboardUrl);
+    await navigator.clipboard.writeText(invitationUrl);
     toast('紹介用URLをコピーしました');
-  }, [clipboardUrl]);
+  }, [invitationUrl]);
 
   return {
-    isLoading,
     isError,
     qrCodeUrl,
     downloadQrCode,
     clipboard,
+    invitationUrl,
   };
 };

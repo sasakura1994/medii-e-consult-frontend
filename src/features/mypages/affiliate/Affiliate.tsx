@@ -6,27 +6,33 @@ import { useAffiliate } from './useAffiliate';
 import { Card } from '@/components/Parts/Card/Card';
 
 export const Affiliate: React.FC = () => {
-  const accountId = 'AC10-6226-9933-69'; // TODO: ログイン情報から取得する
-  const { isError, qrCodeUrl, downloadQrCode, clipboard } =
-    useAffiliate(accountId);
+  const { isError, qrCodeUrl, downloadQrCode, clipboard, invitationUrl } =
+    useAffiliate();
 
   return (
     <>
-      <Card
-        className="
-        mt-10
-        mb-[49px]
-        px-6
-        py-6
-        lg:mb-10
-        lg:px-[84px]
-        lg:py-10
-      "
-      >
-        <h2 className={styles.affiliate__heading}>医師紹介</h2>
-
-        <div className="mb-8 lg:mb-1">
-          <h3 className={styles.affiliate__sub_heading}>ご紹介URL</h3>
+      <Card className="mt-10 px-6 py-10">
+        <p className="text-left text-xxl font-bold">医師紹介キャンペーン</p>
+        <p className="mt-8 text-l font-bold">ご紹介特典</p>
+        <div className="flex space-x-4 lg:flex-row ">
+          <div className="mt-4 h-[76px] w-[290px] shadow-low">
+            <p className="my-2  text-center text-md font-bold">ご紹介者様</p>
+            <div className="flex items-center justify-center space-x-2">
+              <img src="/icons/seminar_ticket.svg" alt="" />
+              <p className="text-md">セミナー視聴チケット</p>
+            </div>
+          </div>
+          <div className="mt-4 h-[76px] w-[290px] shadow-low ">
+            <p className="my-2 text-center text-md font-bold">
+              ご入会いただいた方
+            </p>
+            <div className="flex items-center justify-center space-x-2">
+              <img src="/icons/point_invitation.svg" alt="" />
+              <p className="text-md">Mediiのポイント(1000pt)</p>
+            </div>
+          </div>
+        </div>
+        <div className="mt-8 mb-8 lg:mb-1">
           <div className="flex flex-wrap justify-center gap-y-5 lg:gap-x-5">
             <div className="h-40 w-40">
               <img src={qrCodeUrl} alt="" className="h-full w-full" />
