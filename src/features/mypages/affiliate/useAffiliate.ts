@@ -59,7 +59,7 @@ export const useAffiliate = (): UseAffiliateType => {
    * URL の取得
    */
   const getAffiliateUrls = (accountId: string): AffiliateUrlsType => {
-    const url = `${process.env.WEB_SERVER_URL}/registration?p=${accountId}`;
+    const url = `${process.env.WEB_SERVER_URL}/invitation?p=${accountId}`;
     const qrCodeUrl = `https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl=${url}`;
     return {
       qrCode: qrCodeUrl,
