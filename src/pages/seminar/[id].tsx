@@ -1,7 +1,7 @@
 import React from 'react';
 import type { NextPage } from 'next';
 import { SeminarEntityType } from '@/types/entities/seminarEntity';
-import { SeminarCard } from '@/features/seminar/seminarCard';
+import { SeminarCard } from '@/features/seminar/SeminarCard';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import { useRouter } from 'next/router';
 import { UseSeminarDetail } from '@/features/seminar/useSeminarDetail';
@@ -186,16 +186,10 @@ const Seminar: NextPage = () => {
         </h2>
         <Swiper
           onSwiper={(swiper) => setSwiperRef(swiper)}
-          slidesPerView={1}
+          slidesPerView="auto"
           initialSlide={1}
           centeredSlides={true}
-          spaceBetween={100}
-          breakpoints={{
-            1024: {
-              slidesPerView: 4,
-              spaceBetween: 280,
-            },
-          }}
+          spaceBetween={20}
           pagination={{
             type: 'custom',
           }}
@@ -204,8 +198,8 @@ const Seminar: NextPage = () => {
           className="mySwiper"
         >
           {randomSeminars?.map((seminar) => (
-            <SwiperSlide key={seminar.uid}>
-              <div className="mb-3">
+            <SwiperSlide key={seminar.uid} style={{ width: '400px' }}>
+              <div>
                 <SeminarCard seminar={seminar} key={seminar.seminar_id} />
               </div>
             </SwiperSlide>
