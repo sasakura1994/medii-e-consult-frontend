@@ -3,7 +3,7 @@ import { Label } from './Label';
 
 export type PropsType = {
   name: string;
-  value?: string;
+  value?: string | number;
   placeholder?: string;
   disabled?: boolean;
   id?: string;

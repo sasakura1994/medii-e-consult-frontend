@@ -1,15 +1,15 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { render, screen, act, waitFor } from '@testing-library/react';
+import { render, screen, act } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
-import { Profile } from '../Profile';
+import { EditProfile } from '../EditProfile';
 
 describe('EditProfile', () => {
   test('編集画面に切り替わること', async () => {
     await act(() => {
       render(
         <RecoilRoot>
-          <Profile />
+          <EditProfile />
         </RecoilRoot>
       );
     });

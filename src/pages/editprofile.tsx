@@ -6,6 +6,7 @@ import { UrlPublish } from '@/features/mypages/editProfile/UrlPublish';
 import { useEditProfilePage } from '@/features/mypages/editProfile/useEditProfilePage';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { ProfileDetail } from '@/features/mypages/editProfile/ProfileDetail';
+import { EditProfile } from '@/features/mypages/editProfile/EditProfile';
 
 const EditProfilePage: NextPageWithLayout = () => {
   const editProfilePage = useEditProfilePage();
@@ -22,6 +23,7 @@ const EditProfilePage: NextPageWithLayout = () => {
         {editProfileMode === 'profile' && (
           <ProfileDetail onEdit={() => setSelectedEditProfileMode('edit')} />
         )}
+        {editProfileMode === 'edit' && <EditProfile />}
       </div>
     </>
   );

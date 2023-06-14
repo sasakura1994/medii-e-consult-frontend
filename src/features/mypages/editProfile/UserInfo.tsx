@@ -1,14 +1,24 @@
 import React from 'react';
 import { TextField } from '@/components/Parts/Form/TextField';
+import { useEditProfile } from './useEditProfile';
 
-export const UserInfo: React.FC = () => {
+type Props = ReturnType<typeof useEditProfile>;
+
+export const UserInfo: React.FC<Props> = ({ profile, setProfile }: Props) => {
+  if (!profile) {
+    return <></>;
+  }
+
   return (
     <div className="mb-10">
       <h3 className="mb-4 text-primary">■ 利用者情報</h3>
       <div className="mb-4 lg:flex lg:gap-6">
         <TextField
           name="last_name"
-          value="蜂谷"
+          value={profile.last_name}
+          onChange={(e) =>
+            setProfile({ ...profile, last_name: e.target.value })
+          }
           disabled={true}
           id="last_name"
           className="mb-4 lg:mb-0"
@@ -17,7 +27,10 @@ export const UserInfo: React.FC = () => {
 
         <TextField
           name="first_name"
-          value="庸正"
+          value={profile.first_name}
+          onChange={(e) =>
+            setProfile({ ...profile, first_name: e.target.value })
+          }
           disabled={true}
           id="first_name"
           label="名"
@@ -27,7 +40,10 @@ export const UserInfo: React.FC = () => {
       <div className="mb-4 lg:flex lg:gap-6">
         <TextField
           name="last_name_hira"
-          value="はちや"
+          value={profile.last_name_hira}
+          onChange={(e) =>
+            setProfile({ ...profile, last_name_hira: e.target.value })
+          }
           disabled={true}
           id="last_name_hira"
           className="mb-4 lg:mb-0"
@@ -36,7 +52,10 @@ export const UserInfo: React.FC = () => {
 
         <TextField
           name="first_name_hira"
-          value="つねまさ"
+          value={profile.first_name_hira}
+          onChange={(e) =>
+            setProfile({ ...profile, first_name_hira: e.target.value })
+          }
           disabled={true}
           id="first_name_hira"
           label="名（かな）"
@@ -50,7 +69,10 @@ export const UserInfo: React.FC = () => {
         <div className="flex gap-3">
           <TextField
             name="birthday_year"
-            value="1978"
+            value={profile.birthday_year}
+            onChange={(e) =>
+              setProfile({ ...profile, birthday_year: e.target.value })
+            }
             disabled={true}
             id="birthday_year"
             className="!w-32 lg:!w-40"
@@ -59,7 +81,10 @@ export const UserInfo: React.FC = () => {
 
           <TextField
             name="birthday_month"
-            value="10"
+            value={profile.birthday_month}
+            onChange={(e) =>
+              setProfile({ ...profile, birthday_month: e.target.value })
+            }
             disabled={true}
             id="birthday_month"
             subscript="月"
@@ -67,7 +92,10 @@ export const UserInfo: React.FC = () => {
 
           <TextField
             name="birthday_day"
-            value="7"
+            value={profile.birthday_day}
+            onChange={(e) =>
+              setProfile({ ...profile, birthday_day: e.target.value })
+            }
             disabled={true}
             id="birthday_day"
             subscript="日"
@@ -81,7 +109,10 @@ export const UserInfo: React.FC = () => {
           id="graduated_university"
           label="卒業大学"
           placeholder="大学名"
-          required={false}
+          value={profile.graduated_university ?? ''}
+          onChange={(e) =>
+            setProfile({ ...profile, graduated_university: e.target.value })
+          }
         />
       </div>
     </div>
