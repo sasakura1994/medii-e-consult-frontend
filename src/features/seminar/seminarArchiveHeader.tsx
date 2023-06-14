@@ -84,10 +84,10 @@ export const SeminarArchiveHeader: React.FC<Props> = ({
             />
             <h3 className="text-center text-2xl text-primary">チケットとは?</h3>
             <p className="pt-10">
-              チケットとはE-カンファ動画アーカイブを閲覧するために必要なものです。
+              チケットとはE-カンファアーカイブ動画を閲覧するために必要なものです。
             </p>
             <p className="pt-4 pb-10 lg:pt-0">
-              E-コンサルで相談するとセミナーチケット1枚獲得できます。
+              E-コンサルで相談するとチケット1枚獲得できます。
             </p>
             <img
               className="hidden md:block"
