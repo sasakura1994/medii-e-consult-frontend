@@ -60,7 +60,7 @@ export const useAffiliate = (): UseAffiliateType => {
    */
   const getAffiliateUrls = (accountId: string): AffiliateUrlsType => {
     const url = `${process.env.WEB_SERVER_URL}/registration?p=${accountId}`;
-    const qrCodeUrl = `https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${url}`;
+    const qrCodeUrl = `https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl=${url}`;
     return {
       qrCode: qrCodeUrl,
       clipboard: url,

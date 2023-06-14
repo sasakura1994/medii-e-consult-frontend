@@ -4,6 +4,8 @@ import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import { useAffiliate } from './useAffiliate';
 import { Card } from '@/components/Parts/Card/Card';
+import SecondaryButton from '@/components/Button/Secondary';
+import TextField from '@/components/TextField/TextField';
 
 export const Affiliate: React.FC = () => {
   const { isError, qrCodeUrl, downloadQrCode, clipboard, invitationUrl } =
@@ -32,19 +34,22 @@ export const Affiliate: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="mt-8 mb-8 lg:mb-1">
-          <div className="flex flex-wrap justify-center gap-y-5 lg:gap-x-5">
-            <div className="h-40 w-40">
-              <img src={qrCodeUrl} alt="" className="h-full w-full" />
+        <p className="mt-8 text-l font-bold">紹介ページURL</p>
+        <div className="flex">
+          <div className="border-r border-border-divider pr-6">
+            <div className="h-[120px] w-[120px]">
+              <img src={qrCodeUrl} alt="" className="" />
             </div>
-            <div className="flex flex-col justify-center gap-y-5">
-              <button
-                type="button"
-                className={styles.affiliate__btn}
-                onClick={downloadQrCode}
-              >
+            <div className="mx-auto w-[120px]">
+              <SecondaryButton width="full" onClick={downloadQrCode}>
                 QRコードを保存
-              </button>
+              </SecondaryButton>
+            </div>
+          </div>
+          <div className="my-auto ml-6 ">
+            <p className="text-md">またはURLを共有</p>
+            <div className="flex flex-col justify-center">
+              <TextField />
               <button
                 type="button"
                 className={styles.affiliate__btn}
