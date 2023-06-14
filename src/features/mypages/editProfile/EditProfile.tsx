@@ -37,6 +37,7 @@ export const EditProfile: React.FC = () => {
 
           <UserInfo {...editProfile} />
           <MedicalCareer
+            {...editProfile}
             setShowModal={() => {
               return;
             }}

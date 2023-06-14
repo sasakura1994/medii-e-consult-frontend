@@ -2,13 +2,18 @@ import React from 'react';
 import { Label } from '@/components/Parts/Form/Label';
 import { TextField } from '@/components/Parts/Form/TextField';
 import { TextArea } from '@/components/Parts/Form/TextArea';
+import { useEditProfile } from './useEditProfile';
 
-type PropsType = {
+type PropsType = ReturnType<typeof useEditProfile> & {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const MedicalCareer: React.FC<PropsType> = (props) => {
-  const { setShowModal } = props;
+  const { profile, setProfile, setShowModal } = props;
+
+  if (!profile) {
+    return <></>;
+  }
 
   return (
     <div className="mb-10">
@@ -17,7 +22,10 @@ export const MedicalCareer: React.FC<PropsType> = (props) => {
       <div className="mb-4 flex gap-6">
         <TextField
           name="doctor_qualified_year"
-          value="1999"
+          value={profile.qualified_year}
+          onChange={(e) =>
+            setProfile({ ...profile, qualified_year: e.target.value })
+          }
           disabled={true}
           id="doctor_qualified_year"
           className="!w-64"
@@ -57,7 +65,7 @@ export const MedicalCareer: React.FC<PropsType> = (props) => {
         <div className="mt-2 rounded border border-solid border-[#e2e7ff] p-4">
           <p className="text-lg font-bold">所属科</p>
           <div className="mt-2 flex items-center justify-between border border-solid border-[#eff3f6]">
-            <div className="flex-initial bg-[#eff3f6] py-2 px-1">
+            <div className="flex-initial bg-[#eff3f6] px-1 py-2">
               <img src="/icons/drag_indicator.svg" alt="" />
             </div>
             <div className="flex-1 pl-4 pr-3 text-sm">
@@ -85,7 +93,7 @@ export const MedicalCareer: React.FC<PropsType> = (props) => {
             </span>
           </p>
           <div className="mt-2 flex items-center justify-between border border-solid border-[#eff3f6]">
-            <div className="flex-initial bg-[#eff3f6] py-2 px-1">
+            <div className="flex-initial bg-[#eff3f6] px-1 py-2">
               <img src="/icons/drag_indicator.svg" alt="" />
             </div>
             <div className="flex-1 pl-4 pr-3 text-sm">
@@ -111,7 +119,10 @@ export const MedicalCareer: React.FC<PropsType> = (props) => {
             id="expertise"
             className="!h-28"
             label="特によく診てきた疾患・領域"
-            required={false}
+            value={profile.expertise}
+            onChange={(e) =>
+              setProfile({ ...profile, expertise: e.target.value })
+            }
           />
         </div>
 
@@ -121,7 +132,10 @@ export const MedicalCareer: React.FC<PropsType> = (props) => {
             id="qualification"
             className="!h-28"
             label="専門医資格"
-            required={false}
+            value={profile.qualification}
+            onChange={(e) =>
+              setProfile({ ...profile, qualification: e.target.value })
+            }
           />
         </div>
       </div>

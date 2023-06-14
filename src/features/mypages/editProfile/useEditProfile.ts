@@ -4,12 +4,15 @@ import { useEffect, useState } from 'react';
 
 export type EditingProfile = Omit<
   ProfileEntity,
-  'birthday_year' | 'birthday_month' | 'birthday_day'
+  'birthday_year' | 'birthday_month' | 'birthday_day' | 'qualified_year'
 > & {
   birthday_year: string;
   birthday_month: string;
   birthday_day: string;
+  qualified_year: string;
 };
+
+const numberToString = (value: number) => (value === 0 ? '' : value.toString());
 
 export const useEditProfile = () => {
   const [profile, setProfile] = useState<EditingProfile>();
@@ -27,18 +30,10 @@ export const useEditProfile = () => {
 
     setProfile({
       ...fetchedProfile,
-      birthday_year:
-        fetchedProfile.birthday_year == 0
-          ? ''
-          : fetchedProfile.birthday_year.toString(),
-      birthday_month:
-        fetchedProfile.birthday_month == 0
-          ? ''
-          : fetchedProfile.birthday_month.toString(),
-      birthday_day:
-        fetchedProfile.birthday_day == 0
-          ? ''
-          : fetchedProfile.birthday_day.toString(),
+      birthday_year: numberToString(fetchedProfile.birthday_year),
+      birthday_month: numberToString(fetchedProfile.birthday_month),
+      birthday_day: numberToString(fetchedProfile.birthday_day),
+      qualified_year: numberToString(fetchedProfile.qualified_year),
     });
     setIsInitialized(true);
   }, [fetchedProfile, isInitialized]);
