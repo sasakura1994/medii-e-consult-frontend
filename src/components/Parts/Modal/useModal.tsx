@@ -21,7 +21,6 @@ export const useModal = (props: ModalPropsType) => {
 
     return () => {
       modalCount -= 1;
-      console.log(modalCount);
       if (modalCount === 0) {
         clearAllBodyScrollLocks();
       }
