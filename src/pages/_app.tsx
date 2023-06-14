@@ -91,7 +91,7 @@ const App = (props: AppPropsWithLayout) => {
         '/registration',
         '/welcome',
         '/seminar',
-        '/seminar/archive',
+        '/seminar/archives',
         '/top',
       ].includes(url.toLowerCase())
     ) {
