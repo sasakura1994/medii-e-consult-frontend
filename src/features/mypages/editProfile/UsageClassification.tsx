@@ -1,7 +1,13 @@
 import React from 'react';
 import { Radio } from '@/components/Parts/Form/Radio';
+import { useEditProfile } from './useEditProfile';
 
-export const UsageClassification: React.FC = () => {
+type Props = ReturnType<typeof useEditProfile>;
+
+export const UsageClassification: React.FC<Props> = ({
+  profile,
+  setProfile,
+}) => {
   return (
     <div className="mb-10">
       <h3 className="mb-4 text-primary">■ E-コンサル利用区分</h3>
@@ -15,6 +21,10 @@ export const UsageClassification: React.FC = () => {
               <span className="font-bold">回答&相談：</span>
               E-コンサルへの回答も行います
             </>
+          }
+          value="1"
+          onChange={() =>
+            setProfile({ ...profile, want_to_be_consultant: true })
           }
         />
 

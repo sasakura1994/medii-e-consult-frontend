@@ -42,8 +42,8 @@ export const EditProfile: React.FC = () => {
               return;
             }}
           />
-          <HospitalAffiliation />
-          <UsageClassification />
+          <HospitalAffiliation {...editProfile} />
+          <UsageClassification {...editProfile} />
         </Card>
 
         <div className="my-6">

@@ -14,5 +14,5 @@ export const usePrefecture = () => {
     [prefecture]
   );
 
-  return { getPrefectureNameByCode };
+  return { getPrefectureNameByCode, prefectures: prefecture };
 };

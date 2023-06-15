@@ -1,51 +1,106 @@
 import React from 'react';
+import AsyncSelect from 'react-select/async';
 import { Label } from '@/components/Parts/Form/Label';
 import { TextField } from '@/components/Parts/Form/TextField';
 import { SelectBox } from '@/components/Parts/Form/SelectBox';
 import { Radio } from '@/components/Parts/Form/Radio';
+import { useEditProfile } from './useEditProfile';
+import { usePrefecture } from '@/hooks/prefecture/usePrefecture';
 
-const prefectures = [
-  { id: 1, value: '', name: '都道府県' },
-  { id: 1, value: '8', name: '茨城県' },
-  { id: 1, value: '9', name: '栃木県' },
-  { id: 1, value: '10', name: '群馬県' },
-  { id: 1, value: '11', name: '埼玉県' },
-  { id: 1, value: '12', name: '千葉県' },
-  { id: 1, value: '13', name: '東京都' },
-  { id: 1, value: '14', name: '神奈川県' },
-];
+type Props = ReturnType<typeof useEditProfile>;
 
-export const HospitalAffiliation: React.FC = () => {
+export const HospitalAffiliation = (props: Props) => {
+  const {
+    hospitalInputType,
+    hospitals,
+    loadHospitals,
+    profile,
+    selectedHospital,
+    setHospitalInputType,
+    setHospitalName,
+    setProfile,
+  } = props;
+  const { prefectures } = usePrefecture();
+
+  if (!profile) {
+    return <></>;
+  }
+
   return (
     <div className="mb-10">
       <h3 className="mb-4 text-primary">■ 所属病院</h3>
 
       <div className="mb-4 w-72">
         <Label label="勤務先病院の所在地" required id="prefecture_code" />
-        <SelectBox name="prefecture_code" id="prefecture_code" required>
-          {prefectures.map((prefecture) => (
-            <option value={prefecture.value} key={prefecture.value}>
-              {prefecture.name}
-            </option>
-          ))}
-        </SelectBox>
+        {prefectures && (
+          <SelectBox
+            name="prefecture_code"
+            id="prefecture_code"
+            value={profile.prefecture_code}
+            onChange={(e) =>
+              setProfile({ ...profile, prefecture_code: e.target.value })
+            }
+            required
+          >
+            {prefectures.map((prefecture) => (
+              <option value={prefecture.code} key={prefecture.code}>
+                {prefecture.name}
+              </option>
+            ))}
+          </SelectBox>
+        )}
       </div>
 
       <div className="mb-4">
         <Label label="現在の勤務先病院名" required={true} id="hospital-data" />
         <Radio
-          name="select_hospital"
+          name="hospital_input_type"
           id="hospital-data"
           label="病院データから選択"
+          value="select"
+          onChange={() => setHospitalInputType('select')}
+          checked={hospitalInputType === 'select'}
         />
-        <SelectBox name="hospital_name" id="hospital_name" className="mt-1">
-          <option value=""></option>
-        </SelectBox>
+        {hospitalInputType === 'select' && (
+          <div className="mt-1">
+            <AsyncSelect
+              loadOptions={loadHospitals}
+              placeholder="病院名"
+              noOptionsMessage={() => '病院名を入力してください。'}
+              value={selectedHospital}
+              onChange={(newValue) =>
+                setProfile({ ...profile, hospital_id: newValue?.value ?? '' })
+              }
+              styles={{
+                control: (styles) => ({
+                  ...styles,
+                  paddingTop: '8px',
+                  paddingBottom: '8px',
+                }),
+              }}
+            />
+          </div>
+        )}
       </div>
 
       <div className="mb-4">
-        <Radio name="select_hospital" id="direct-hospital" label="直接入力" />
-        <TextField name="hospital_name" id="direct-hospital" className="mt-1" />
+        <Radio
+          name="select_hospital"
+          id="direct-hospital"
+          label="直接入力"
+          value="free"
+          onChange={() => setHospitalInputType('free')}
+          checked={hospitalInputType === 'free'}
+        />
+        {hospitalInputType === 'free' && (
+          <TextField
+            name="hospital_input_type"
+            id="direct-hospital"
+            className="mt-1"
+            value={profile.hospital_name}
+            onChange={(e) => setHospitalName(e.target.value)}
+          />
+        )}
       </div>
     </div>
   );
