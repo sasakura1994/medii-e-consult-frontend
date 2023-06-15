@@ -54,7 +54,7 @@ export const Affiliate: React.FC = () => {
                 value={invitationUrl}
               />
               <SecondaryButton onClick={clipboard}>
-                リンクをコピー
+                <p className="whitespace-nowrap">リンクをコピー</p>
               </SecondaryButton>
             </div>
           </div>
