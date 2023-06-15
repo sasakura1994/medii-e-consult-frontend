@@ -74,7 +74,6 @@ export const useAffiliate = (): UseAffiliateType => {
     if (!qrCodeUrl) {
       return;
     }
-
     const link = document.createElement('a');
     link.href = qrCodeUrl;
     link.setAttribute('download', qrCodeFileName);
