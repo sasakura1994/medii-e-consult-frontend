@@ -13,18 +13,18 @@ export const Affiliate: React.FC = () => {
 
   return (
     <>
-      <Card className="b-2 mt-10 px-6 py-10">
+      <Card className="mt-10 px-6 py-10">
         <p className="text-left text-xxl font-bold">医師紹介キャンペーン</p>
         <p className="mt-8 text-l font-bold">ご紹介特典</p>
-        <div className="flex space-x-4 lg:flex-row ">
-          <div className="mt-4 h-[76px] w-[290px] shadow-low">
-            <p className="my-2  text-center text-md font-bold">ご紹介者様</p>
+        <div className="flex flex-col items-center lg:flex-row lg:space-x-4 ">
+          <div className="mt-4 h-[76px] w-[327px] shadow-low lg:w-[290px]">
+            <p className="my-2 text-center text-md font-bold">ご紹介者様</p>
             <div className="flex items-center justify-center space-x-2">
               <img src="/icons/seminar_ticket.svg" alt="" />
               <p className="text-md">セミナー視聴チケット</p>
             </div>
           </div>
-          <div className="mt-4 h-[76px] w-[290px] shadow-low ">
+          <div className="mt-4 h-[76px] w-[327px] shadow-low lg:w-[290px] ">
             <p className="my-2 text-center text-md font-bold">
               ご入会いただいた方
             </p>
@@ -35,21 +35,24 @@ export const Affiliate: React.FC = () => {
           </div>
         </div>
         <p className="mt-8 text-l font-bold">紹介ページURL</p>
-        <div className="flex">
-          <div className="border-r border-border-divider pr-6">
+        <div className="flex flex-col lg:flex-row">
+          <div className="flex border-0 border-border-divider pr-6 lg:flex-col lg:border-r">
             <div className="h-[120px] w-[120px]">
               <img src={qrCodeUrl} alt="" className="" />
             </div>
-            <div className="mx-auto w-[120px]">
+            <div className="my-auto w-[120px] lg:mx-auto">
               <SecondaryButton width="full" onClick={downloadQrCode}>
                 QRコードを保存
               </SecondaryButton>
             </div>
           </div>
-          <div className="my-auto ml-3">
-            <p className="ml-2 text-md">またはURLを共有</p>
+          <div className="my-auto lg:ml-3">
+            <p className="ml-2 mb-1 text-md lg:mb-0">またはURLを共有</p>
             <div className="flex items-center space-x-1">
-              <TextField className="w-[312px]" value={invitationUrl} />
+              <TextField
+                className="flex-grow lg:w-[312px]"
+                value={invitationUrl}
+              />
               <SecondaryButton onClick={clipboard}>
                 リンクをコピー
               </SecondaryButton>
