@@ -8,6 +8,10 @@ export const UsageClassification: React.FC<Props> = ({
   profile,
   setProfile,
 }) => {
+  if (!profile) {
+    return <></>;
+  }
+
   return (
     <div className="mb-10">
       <h3 className="mb-4 text-primary">■ E-コンサル利用区分</h3>
@@ -26,6 +30,7 @@ export const UsageClassification: React.FC<Props> = ({
           onChange={() =>
             setProfile({ ...profile, want_to_be_consultant: true })
           }
+          checked={profile.want_to_be_consultant}
         />
 
         <ul className="mt-2 pl-4 text-sm">
@@ -61,6 +66,11 @@ export const UsageClassification: React.FC<Props> = ({
               E-コンサルでの相談依頼者です
             </>
           }
+          value="0"
+          onChange={() =>
+            setProfile({ ...profile, want_to_be_consultant: false })
+          }
+          checked={!profile.want_to_be_consultant}
         />
       </div>
     </div>
