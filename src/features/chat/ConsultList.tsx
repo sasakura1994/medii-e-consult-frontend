@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { ConsultTitle } from './ConsultTitle';
 
 export const ConsultList = () => {
+  const [isOpenedConultList, setIsOpenedConsultList] = useState(true);
+  const [isOpenedGroupList, setIsOpenedGroupList] = useState(true);
   return (
     <div className="h-screen w-[336px] border border-[#d5d5d5]">
       <div className="flex h-14 items-center bg-primary">
@@ -18,7 +21,10 @@ export const ConsultList = () => {
           <p className="text-sm">解決済み</p>
         </div>
       </div>
-      <div className="flex h-10 cursor-pointer items-center bg-[#f1f1f1] hover:bg-btn-hover-gray">
+      <button
+        className="flex h-10 w-full cursor-pointer items-center bg-[#f1f1f1] hover:bg-btn-hover-gray"
+        onClick={() => setIsOpenedConsultList((prev) => !prev)}
+      >
         <img
           src="/icons/human_single.svg"
           alt=""
@@ -27,43 +33,55 @@ export const ConsultList = () => {
         <p className="text-md font-bold text-text-secondary">
           マンツーマン [3]
         </p>
+        {isOpenedConultList ? (
+          <img
+            src="/icons/arrow_down.svg"
+            alt=""
+            className="ml-auto mr-3 h-4 w-4"
+          />
+        ) : (
+          <img
+            src="/icons/arrow_right.svg"
+            alt=""
+            className="ml-auto mr-3 h-4 w-4"
+          />
+        )}
+      </button>
+      {isOpenedConultList && (
+        <>
+          <ConsultTitle />
+          <ConsultTitle />
+        </>
+      )}
+      <button
+        className="flex h-10 w-full cursor-pointer items-center bg-[#f1f1f1] hover:bg-btn-hover-gray"
+        onClick={() => setIsOpenedGroupList((prev) => !prev)}
+      >
         <img
-          src="/icons/arrow_down.svg"
-          alt=""
-          className="ml-auto mr-3 h-4 w-4"
-        />
-      </div>
-      <div className="h-16 border-b border-[#d5d5d5]">
-        <div className="flex">
-          <p className="mt-2 ml-9 flex-grow text-l font-bold">
-            20代 男性 テスト
-          </p>
-          <p className="mt-3 mr-3 text-xs">6/19 8:22</p>
-        </div>
-        <p className="ml-9 text-[#999999]">test</p>
-      </div>
-      <div className="h-16 border-b border-[#d5d5d5]">
-        <div className="flex">
-          <p className="mt-2 ml-9 flex-grow text-l font-bold">
-            20代 男性 テスト
-          </p>
-          <p className="mt-3 mr-3 text-xs">6/19 8:22</p>
-        </div>
-        <p className="ml-9 text-[#999999]">test</p>
-      </div>
-      <div className="flex h-10 cursor-pointer items-center bg-[#f1f1f1] hover:bg-btn-hover-gray">
-        <img
-          src="/icons/human_single.svg"
+          src="/icons/human_double.svg"
           alt=""
           className="ml-3 mr-3 h-6 w-6"
         />
-        <p className="text-md font-bold text-text-secondary">グループ[0]</p>
-        <img
-          src="/icons/arrow_down.svg"
-          alt=""
-          className="ml-auto mr-3 h-4 w-4"
-        />
-      </div>
+        <p className="text-md font-bold text-text-secondary">グループ[1]</p>
+        {isOpenedGroupList ? (
+          <img
+            src="/icons/arrow_down.svg"
+            alt=""
+            className="ml-auto mr-3 h-4 w-4"
+          />
+        ) : (
+          <img
+            src="/icons/arrow_right.svg"
+            alt=""
+            className="ml-auto mr-3 h-4 w-4"
+          />
+        )}
+      </button>
+      {isOpenedGroupList && (
+        <>
+          <ConsultTitle />
+        </>
+      )}
     </div>
   );
 };
