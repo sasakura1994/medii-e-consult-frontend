@@ -6,12 +6,12 @@ import { NextPageWithLayout } from './_app';
 
 const ChatPage: NextPageWithLayout = () => {
   return (
-    <>
+    <div className="h-screen overflow-hidden">
       <CustomHead />
       <Layout>
         <Chat />
       </Layout>
-    </>
+    </div>
   );
 };
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { ChatList } from './ChatList';
 
 export const ConsultDetail = () => {
   return (
@@ -28,6 +29,7 @@ export const ConsultDetail = () => {
         <p className="text-md font-bold">質問医</p>
         <p className="text-xs">(総合内科・31年目)</p>
       </div>
+      <ChatList />
     </div>
   );
 };

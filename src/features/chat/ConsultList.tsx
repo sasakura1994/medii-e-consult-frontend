@@ -21,67 +21,74 @@ export const ConsultList = () => {
           <p className="text-sm">解決済み</p>
         </div>
       </div>
-      <button
-        className="flex h-10 w-full cursor-pointer items-center bg-[#f1f1f1] hover:bg-btn-hover-gray"
-        onClick={() => setIsOpenedConsultList((prev) => !prev)}
-      >
-        <img
-          src="/icons/human_single.svg"
-          alt=""
-          className="ml-3 mr-3 h-6 w-6"
-        />
-        <p className="text-md font-bold text-text-secondary">
-          マンツーマン [3]
-        </p>
-        {isOpenedConultList ? (
+      <div className="h-full overflow-scroll pb-36">
+        <button
+          className="flex h-10 w-full cursor-pointer items-center bg-[#f1f1f1] hover:bg-btn-hover-gray"
+          onClick={() => setIsOpenedConsultList((prev) => !prev)}
+        >
           <img
-            src="/icons/arrow_down.svg"
+            src="/icons/human_single.svg"
             alt=""
-            className="ml-auto mr-3 h-4 w-4"
+            className="ml-3 mr-3 h-6 w-6"
           />
-        ) : (
-          <img
-            src="/icons/arrow_right.svg"
-            alt=""
-            className="ml-auto mr-3 h-4 w-4"
-          />
+          <p className="text-md font-bold text-text-secondary">
+            マンツーマン [3]
+          </p>
+          {isOpenedConultList ? (
+            <img
+              src="/icons/arrow_down.svg"
+              alt=""
+              className="ml-auto mr-3 h-4 w-4"
+            />
+          ) : (
+            <img
+              src="/icons/arrow_right.svg"
+              alt=""
+              className="ml-auto mr-3 h-4 w-4"
+            />
+          )}
+        </button>
+        {isOpenedConultList && (
+          <>
+            <ConsultTitle />
+            <ConsultTitle />
+            <ConsultTitle />
+            <ConsultTitle />
+            <ConsultTitle />
+            <ConsultTitle />
+            <ConsultTitle />
+          </>
         )}
-      </button>
-      {isOpenedConultList && (
-        <>
-          <ConsultTitle />
-          <ConsultTitle />
-        </>
-      )}
-      <button
-        className="flex h-10 w-full cursor-pointer items-center bg-[#f1f1f1] hover:bg-btn-hover-gray"
-        onClick={() => setIsOpenedGroupList((prev) => !prev)}
-      >
-        <img
-          src="/icons/human_double.svg"
-          alt=""
-          className="ml-3 mr-3 h-6 w-6"
-        />
-        <p className="text-md font-bold text-text-secondary">グループ[1]</p>
-        {isOpenedGroupList ? (
+        <button
+          className="flex h-10 w-full cursor-pointer items-center bg-[#f1f1f1] hover:bg-btn-hover-gray"
+          onClick={() => setIsOpenedGroupList((prev) => !prev)}
+        >
           <img
-            src="/icons/arrow_down.svg"
+            src="/icons/human_double.svg"
             alt=""
-            className="ml-auto mr-3 h-4 w-4"
+            className="ml-3 mr-3 h-6 w-6"
           />
-        ) : (
-          <img
-            src="/icons/arrow_right.svg"
-            alt=""
-            className="ml-auto mr-3 h-4 w-4"
-          />
+          <p className="text-md font-bold text-text-secondary">グループ[1]</p>
+          {isOpenedGroupList ? (
+            <img
+              src="/icons/arrow_down.svg"
+              alt=""
+              className="ml-auto mr-3 h-4 w-4"
+            />
+          ) : (
+            <img
+              src="/icons/arrow_right.svg"
+              alt=""
+              className="ml-auto mr-3 h-4 w-4"
+            />
+          )}
+        </button>
+        {isOpenedGroupList && (
+          <>
+            <ConsultTitle />
+          </>
         )}
-      </button>
-      {isOpenedGroupList && (
-        <>
-          <ConsultTitle />
-        </>
-      )}
+      </div>
     </div>
   );
 };
