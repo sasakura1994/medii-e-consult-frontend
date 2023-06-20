@@ -51,7 +51,13 @@ const Seminar: NextPage = () => {
             className="relative z-20 mx-auto -mt-16 aspect-video w-5/6 shadow-lg lg:mt-0 lg:w-full lg:max-w-[960px] lg:bg-white lg:px-10 lg:pt-0 lg:shadow-none"
           />
         )}
-        <div className="relative mx-auto -mt-24 w-full bg-white pt-28 lg:mt-0 lg:max-w-[960px] lg:rounded-2xl lg:bg-transparent lg:p-10 lg:px-10 lg:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] lg:shadow-none">
+        <div className="relative
+        mx-auto
+        mt-24
+        w-full
+        bg-white
+        pt-28
+        lg:mt-0 lg:max-w-[960px] lg:rounded-2xl lg:bg-transparent lg:p-10 lg:px-10 lg:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] lg:shadow-none">
           {!seminar?.movie_url && (
             <div className="mx-8 mt-4 bg-gray-100 px-2 py-6 lg:mx-0 lg:mt-0">
               <div className="text-center text-sm font-semibold text-gray-500 lg:text-2xl">
