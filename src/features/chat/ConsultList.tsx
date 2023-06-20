@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import { ConsultTitle } from './ConsultTitle';
+import { useFetchChatRoomList } from '@/hooks/api/chat/useFetchChatRoomList';
 
 export const ConsultList = () => {
   const [isOpenedConultList, setIsOpenedConsultList] = useState(true);
   const [isOpenedGroupList, setIsOpenedGroupList] = useState(true);
+  const {
+    data: chatRoomList,
+    error: chatRoomListError,
+    mutate: chatRoomListMutate,
+  } = useFetchChatRoomList({ query: ['FREE', 'BY_NAME', 'GROUP'] });
   return (
     <div className="h-screen w-[336px] border border-[#d5d5d5]">
       <div className="flex h-14 items-center bg-primary">
@@ -48,17 +54,28 @@ export const ConsultList = () => {
             />
           )}
         </button>
-        {isOpenedConultList && (
-          <>
-            <ConsultTitle />
-            <ConsultTitle />
-            <ConsultTitle />
-            <ConsultTitle />
-            <ConsultTitle />
-            <ConsultTitle />
-            <ConsultTitle />
-          </>
-        )}
+        {isOpenedConultList &&
+          chatRoomList &&
+          chatRoomList
+            .filter(
+              (c) =>
+                c.room_type !== 'GROUP' &&
+                (c.status === 'CREATED' ||
+                  c.status === 'ACTIVE' ||
+                  c.status === 'REOPEN')
+            )
+            .map((chatRoom) => {
+              return (
+                <ConsultTitle
+                  key={chatRoom.chat_room_id}
+                  chatRoomId={chatRoom.chat_room_id}
+                  title={chatRoom.title}
+                  latestMessage={chatRoom.latest_message}
+                  lastUpdatedDate={chatRoom.last_updated_date}
+                  ownerAccountId={chatRoom.owner_account_id}
+                />
+              );
+            })}
         <button
           className="flex h-10 w-full cursor-pointer items-center bg-[#f1f1f1] hover:bg-btn-hover-gray"
           onClick={() => setIsOpenedGroupList((prev) => !prev)}
@@ -83,11 +100,28 @@ export const ConsultList = () => {
             />
           )}
         </button>
-        {isOpenedGroupList && (
-          <>
-            <ConsultTitle />
-          </>
-        )}
+        {isOpenedGroupList &&
+          chatRoomList &&
+          chatRoomList
+            .filter(
+              (c) =>
+                c.room_type !== 'GROUP' &&
+                (c.status === 'CREATED' ||
+                  c.status === 'ACTIVE' ||
+                  c.status === 'REOPEN')
+            )
+            .map((chatRoom) => {
+              return (
+                <ConsultTitle
+                  key={chatRoom.chat_room_id}
+                  chatRoomId={chatRoom.chat_room_id}
+                  title={chatRoom.title}
+                  latestMessage={chatRoom.latest_message}
+                  lastUpdatedDate={chatRoom.last_updated_date}
+                  ownerAccountId={chatRoom.owner_account_id}
+                />
+              );
+            })}
       </div>
     </div>
   );
