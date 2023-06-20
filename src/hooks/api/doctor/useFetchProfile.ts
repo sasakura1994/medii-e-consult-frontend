@@ -8,9 +8,7 @@ export type UseFetchProfileType = {
   profile?: ProfileEntity;
 };
 
-export const mutateFetchProfile = () => {
-  mutate(endpoint);
-};
+export const mutateFetchProfile = () => mutate(endpoint);
 
 export const useFetchProfile = (): UseFetchProfileType => {
   const { data: profile } = useAuthenticatedSWR<ProfileEntity>(endpoint);

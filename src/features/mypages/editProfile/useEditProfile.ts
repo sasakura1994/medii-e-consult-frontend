@@ -1,4 +1,5 @@
-import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
+import { mutateFetchProfile, useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
+import { useUpdateProfile } from '@/hooks/api/doctor/useUpdateProfile';
 import { useFetchHospital } from '@/hooks/api/hospital/useFetchHospital';
 import { useSearchHospitals } from '@/hooks/api/hospital/useSearchHospitals';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
@@ -28,15 +29,20 @@ export const useEditProfile = () => {
   const [hospitalInputType, setHospitalInputType] = useState<'free' | 'select'>('select');
   const [hospitalSearchText, setHospitalSearchText] = useState('');
   const [selectedHospital, setSelectedHospital] = useState<Option>();
+  const [isSending, setIsSending] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const { profile: fetchedProfile } = useFetchProfile();
   const { hospital: defaultHospital } = useFetchHospital(isInitialized ? fetchedProfile?.hospital_id : undefined);
   const { hospitals } = useSearchHospitals(profile?.prefecture_code, hospitalSearchText);
+  const { updateProfile } = useUpdateProfile();
 
   const hospitalOptions = useMemo<Option[]>(
     () => hospitals?.map((h) => ({ label: h.hospital_name, value: h.hospital_id })),
     [hospitals]
   );
+
+  const isHospitalDisabled = ['STUDENT', 'SHIKAKOUKUGEKA'].includes(profile?.main_speciality ?? '');
 
   useEffect(() => {
     if (!defaultHospital) {
@@ -105,11 +111,73 @@ export const useEditProfile = () => {
     [profile]
   );
 
+  const submit = useCallback(async () => {
+    setIsSending(true);
+    setErrorMessage('');
+
+    const data = { ...profile };
+
+    if (isHospitalDisabled) {
+      data.hospital_id = '';
+      data.hospital_name = '';
+    } else if (hospitalInputType === 'select') {
+      data.hospital_name = '';
+    } else if (hospitalInputType === 'free') {
+      data.hospital_id = '';
+    }
+
+    // switch (this.radioButtons.new) {
+    //   case 'mail-push':
+    //     data.is_mail_notify = true
+    //     data.is_push_notify = true
+    //     break
+    //   case 'mail':
+    //     data.is_mail_notify = true
+    //     data.is_push_notify = false
+    //     break
+    //   case 'push':
+    //     data.is_mail_notify = false
+    //     data.is_push_notify = true
+    //     break
+    //   default:
+    //     data.is_mail_notify = true
+    //     data.is_push_notify = true
+    // }
+
+    // if (this.radioButtons.seminar === 'permit') {
+    //   data.not_seminar_mail_target = false
+    // } else if (this.radioButtons.seminar === 'deny') {
+    //   data.not_seminar_mail_target = true
+    // }
+
+    const formData = new FormData();
+    Object.keys(data).forEach((key) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      formData.append(key, (data as any)[key]);
+    });
+
+    const response = await updateProfile(formData).catch((error) => {
+      console.error(error);
+      setErrorMessage(error.response.data.message || 'エラーが発生しました');
+      return null;
+    });
+
+    setIsSending(false);
+
+    if (!response) {
+      return;
+    }
+
+    mutateFetchProfile();
+  }, [profile, isHospitalDisabled, hospitalInputType, updateProfile]);
+
   return {
+    errorMessage,
     hospitalInputType,
     hospitalOptions,
     hospitals,
     hospitalSearchText,
+    isSending,
     profile,
     selectedHospital,
     selectHospital,
@@ -118,5 +186,6 @@ export const useEditProfile = () => {
     setHospitalName,
     setHospitalSearchText,
     setProfile,
+    submit,
   };
 };
