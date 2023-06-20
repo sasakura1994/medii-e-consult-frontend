@@ -5,8 +5,8 @@ export const useUpdateProfile = () => {
   const { axios } = useAxios('multipart/form-data');
 
   const updateProfile = useCallback(
-    async (data: FormData) => {
-      await axios.post('/doctor/update_profile', data);
+    (data: FormData) => {
+      return axios.post('/doctor/update_profile', data);
     },
     [axios]
   );

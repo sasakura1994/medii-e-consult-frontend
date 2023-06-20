@@ -4,6 +4,7 @@ import { useFetchHospital } from '@/hooks/api/hospital/useFetchHospital';
 import { useSearchHospitals } from '@/hooks/api/hospital/useSearchHospitals';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 import { ProfileEntity } from '@/types/entities/profileEntity';
+import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 export type EditingProfile = Omit<
@@ -24,6 +25,8 @@ type Option = {
 const numberToString = (value: number) => (value === 0 ? '' : value.toString());
 
 export const useEditProfile = () => {
+  const router = useRouter();
+
   const [profile, setProfile] = useState<EditingProfile>();
   const [isInitialized, setIsInitialized] = useState(false);
   const [hospitalInputType, setHospitalInputType] = useState<'free' | 'select'>('select');
@@ -169,7 +172,8 @@ export const useEditProfile = () => {
     }
 
     mutateFetchProfile();
-  }, [profile, isHospitalDisabled, hospitalInputType, updateProfile]);
+    router.push('/editprofile/completed');
+  }, [profile, isHospitalDisabled, hospitalInputType, updateProfile, router]);
 
   return {
     errorMessage,
