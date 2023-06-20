@@ -3,9 +3,7 @@ import React from 'react';
 import { MedicalSpecialitiesSelectDialogProps } from './MedicalSpecialitiesSelectDialog';
 import { useMedicalSpecialitySelect } from './useMedicalSpecialitySelect';
 
-export const useMedicalSpecialitiesSelectDialog = (
-  props: MedicalSpecialitiesSelectDialogProps
-) => {
+export const useMedicalSpecialitiesSelectDialog = (props: MedicalSpecialitiesSelectDialogProps) => {
   const { defaultSelectedMedicalSpecialities, onChange } = props;
   const {
     getMedicalSpecialitiesForCategory,
@@ -15,31 +13,21 @@ export const useMedicalSpecialitiesSelectDialog = (
     toggleCategory,
   } = useMedicalSpecialitySelect();
 
-  const [selectedMedicalSpecialities, setSelectedMedicalSpecialities] =
-    React.useState<MedicalSpecialityEntity[]>(
-      defaultSelectedMedicalSpecialities
-    );
+  const [selectedMedicalSpecialities, setSelectedMedicalSpecialities] = React.useState<MedicalSpecialityEntity[]>(
+    defaultSelectedMedicalSpecialities
+  );
 
   const selectedSpecialityCodes = React.useMemo(
-    () =>
-      selectedMedicalSpecialities.map(
-        (medicalSpeciality) => medicalSpeciality.speciality_code
-      ),
+    () => selectedMedicalSpecialities.map((medicalSpeciality) => medicalSpeciality.speciality_code),
     [selectedMedicalSpecialities]
   );
 
   const toggleMedicalSpeciality = React.useCallback(
     (toggledMedicalSpeciality: MedicalSpecialityEntity) => {
-      if (
-        selectedSpecialityCodes.includes(
-          toggledMedicalSpeciality.speciality_code
-        )
-      ) {
+      if (selectedSpecialityCodes.includes(toggledMedicalSpeciality.speciality_code)) {
         setSelectedMedicalSpecialities((selectedMedicalSpecialities) =>
           selectedMedicalSpecialities.filter(
-            (medicalSpeciality) =>
-              medicalSpeciality.speciality_code !==
-              toggledMedicalSpeciality.speciality_code
+            (medicalSpeciality) => medicalSpeciality.speciality_code !== toggledMedicalSpeciality.speciality_code
           )
         );
       } else {
@@ -53,39 +41,29 @@ export const useMedicalSpecialitiesSelectDialog = (
   );
 
   const isMedicalSpecialitySelected = React.useCallback(
-    (specialityCode: string) =>
-      selectedSpecialityCodes.includes(specialityCode),
+    (specialityCode: string) => selectedSpecialityCodes.includes(specialityCode),
     [selectedSpecialityCodes]
   );
 
-  const moveSelectedMedicalSpeciality = React.useCallback(
-    (dragIndex: number, hoverIndex: number) => {
-      setSelectedMedicalSpecialities((selectedMedicalSpecialities) => {
-        const copy = [...selectedMedicalSpecialities];
-        const dragging = copy.splice(dragIndex, 1);
-        return [
-          ...copy.slice(0, hoverIndex),
-          dragging[0],
-          ...copy.slice(hoverIndex),
-        ];
-      });
-    },
-    []
-  );
+  const moveSelectedMedicalSpeciality = React.useCallback((dragIndex: number, hoverIndex: number) => {
+    setSelectedMedicalSpecialities((selectedMedicalSpecialities) => {
+      const copy = [...selectedMedicalSpecialities];
+      const dragging = copy.splice(dragIndex, 1);
+      return [...copy.slice(0, hoverIndex), dragging[0], ...copy.slice(hoverIndex)];
+    });
+  }, []);
 
   const getSelectedCountForCategory = React.useCallback(
     (medicalSpecialityCategoryId: string) =>
       selectedMedicalSpecialities.filter(
-        (medicalSpeciality) =>
-          medicalSpeciality.medical_speciality_category_id ===
-          medicalSpecialityCategoryId
+        (medicalSpeciality) => medicalSpeciality.medical_speciality_category_id === medicalSpecialityCategoryId
       ).length,
     [selectedMedicalSpecialities]
   );
 
   const submit = React.useCallback(() => {
     onChange(selectedMedicalSpecialities);
-  }, [selectedMedicalSpecialities]);
+  }, [onChange, selectedMedicalSpecialities]);
 
   return {
     getMedicalSpecialitiesForCategory,

@@ -36,12 +36,7 @@ export const EditProfile: React.FC = () => {
           </h2>
 
           <UserInfo {...editProfile} />
-          <MedicalCareer
-            {...editProfile}
-            setShowModal={() => {
-              return;
-            }}
-          />
+          <MedicalCareer {...editProfile} />
           <HospitalAffiliation {...editProfile} />
           <UsageClassification {...editProfile} />
         </Card>

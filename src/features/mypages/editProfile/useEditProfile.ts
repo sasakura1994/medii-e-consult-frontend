@@ -1,6 +1,7 @@
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { useFetchHospital } from '@/hooks/api/hospital/useFetchHospital';
 import { useSearchHospitals } from '@/hooks/api/hospital/useSearchHospitals';
+import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 import { ProfileEntity } from '@/types/entities/profileEntity';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
@@ -24,24 +25,16 @@ const numberToString = (value: number) => (value === 0 ? '' : value.toString());
 export const useEditProfile = () => {
   const [profile, setProfile] = useState<EditingProfile>();
   const [isInitialized, setIsInitialized] = useState(false);
-  const [hospitalInputType, setHospitalInputType] = useState<'free' | 'select'>(
-    'select'
-  );
+  const [hospitalInputType, setHospitalInputType] = useState<'free' | 'select'>('select');
   const [hospitalSearchText, setHospitalSearchText] = useState('');
   const [selectedHospital, setSelectedHospital] = useState<Option>();
 
   const { profile: fetchedProfile } = useFetchProfile();
-  const { hospital: defaultHospital } = useFetchHospital(
-    isInitialized ? fetchedProfile?.hospital_id : undefined
-  );
-  const { hospitals } = useSearchHospitals(
-    profile?.prefecture_code,
-    hospitalSearchText
-  );
+  const { hospital: defaultHospital } = useFetchHospital(isInitialized ? fetchedProfile?.hospital_id : undefined);
+  const { hospitals } = useSearchHospitals(profile?.prefecture_code, hospitalSearchText);
 
   const hospitalOptions = useMemo<Option[]>(
-    () =>
-      hospitals?.map((h) => ({ label: h.hospital_name, value: h.hospital_id })),
+    () => hospitals?.map((h) => ({ label: h.hospital_name, value: h.hospital_id })),
     [hospitals]
   );
 
@@ -70,11 +63,7 @@ export const useEditProfile = () => {
       birthday_day: numberToString(fetchedProfile.birthday_day),
       qualified_year: numberToString(fetchedProfile.qualified_year),
     });
-    setHospitalInputType(
-      fetchedProfile.hospital_id === '' && fetchedProfile.hospital_name !== ''
-        ? 'free'
-        : 'select'
-    );
+    setHospitalInputType(fetchedProfile.hospital_id === '' && fetchedProfile.hospital_name !== '' ? 'free' : 'select');
     setIsInitialized(true);
   }, [fetchedProfile, isInitialized]);
 
@@ -100,6 +89,22 @@ export const useEditProfile = () => {
     [profile]
   );
 
+  const selectMedicalSpecialities = useCallback(
+    (medicalSpecialities: MedicalSpecialityEntity[]) => {
+      if (!profile) {
+        return;
+      }
+      setProfile({
+        ...profile,
+        main_speciality: medicalSpecialities.length > 0 ? medicalSpecialities[0].speciality_code : '',
+        speciality_2: medicalSpecialities.length > 1 ? medicalSpecialities[1].speciality_code : '',
+        speciality_3: medicalSpecialities.length > 2 ? medicalSpecialities[2].speciality_code : '',
+        speciality_4: medicalSpecialities.length > 3 ? medicalSpecialities[3].speciality_code : '',
+      });
+    },
+    [profile]
+  );
+
   return {
     hospitalInputType,
     hospitalOptions,
@@ -108,6 +113,7 @@ export const useEditProfile = () => {
     profile,
     selectedHospital,
     selectHospital,
+    selectMedicalSpecialities,
     setHospitalInputType,
     setHospitalName,
     setHospitalSearchText,
