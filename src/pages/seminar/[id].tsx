@@ -82,7 +82,7 @@ const Seminar: NextPage = () => {
               </div>
             </div>
           )}
-          <div className="flex flex-col items-center bg-white px-7 lg:px-[60px]">
+          <div className="flex flex-col items-center bg-white px-7 lg:px-[60px] pb-10">
             <div className="mt-4 flex w-full flex-col items-center">
               <div className="flex w-full items-center justify-center rounded-md bg-[#e2e7ff] py-4">
                 <div className="m-2 flex h-8 w-8 items-center justify-center rounded-full bg-primary lg:h-20 lg:w-20">
@@ -144,7 +144,7 @@ const Seminar: NextPage = () => {
                   <a
                     href={`/newChatRoom?target_account_id=${seminar?.account_id}`}
                   >
-                    <PrimaryButton className="mt-8 text-left">
+                    <PrimaryButton className="mt-8 text-left m-auto text-md">
                       この先生にE-コンサルで相談をする
                     </PrimaryButton>
                   </a>
