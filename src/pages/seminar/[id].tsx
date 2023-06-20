@@ -144,7 +144,7 @@ const Seminar: NextPage = () => {
                   <a
                     href={`/newChatRoom?target_account_id=${seminar?.account_id}`}
                   >
-                    <PrimaryButton className="mt-8 text-left m-auto text-md">
+                    <PrimaryButton className="mt-8 text-left m-auto text-sm lg:text-md">
                       この先生にE-コンサルで相談をする
                     </PrimaryButton>
                   </a>
