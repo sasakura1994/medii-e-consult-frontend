@@ -52,7 +52,7 @@ export const HeaderSubMenu: React.FC = () => {
                 <span
                   className={`${styles.header_submenu__link_text} ${styles.header_submenu__link_text___seminar}`}
                 >
-                  セミナー
+                  E-カンファ
                 </span>
               </a>
             </Link>
@@ -111,7 +111,7 @@ export const HeaderSubMenu: React.FC = () => {
               <a
                 className={`${styles.header_submenu_sp__link} ${styles.header_submenu_sp__link___seminar}`}
               >
-                セミナー
+                E-カンファ
               </a>
             </Link>
           </li>
