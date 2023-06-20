@@ -5,11 +5,9 @@ import { useFetchChatRoomList } from '@/hooks/api/chat/useFetchChatRoomList';
 export const ConsultList = () => {
   const [isOpenedConultList, setIsOpenedConsultList] = useState(true);
   const [isOpenedGroupList, setIsOpenedGroupList] = useState(true);
-  const {
-    data: chatRoomList,
-    error: chatRoomListError,
-    mutate: chatRoomListMutate,
-  } = useFetchChatRoomList({ query: ['FREE', 'BY_NAME', 'GROUP'] });
+  const { data: chatRoomList } = useFetchChatRoomList({
+    query: ['FREE', 'BY_NAME', 'GROUP'],
+  });
   return (
     <div className="h-screen w-[336px] border border-[#d5d5d5]">
       <div className="flex h-14 items-center bg-primary">
@@ -38,7 +36,17 @@ export const ConsultList = () => {
             className="ml-3 mr-3 h-6 w-6"
           />
           <p className="text-md font-bold text-text-secondary">
-            マンツーマン [3]
+            マンツーマン [
+            {chatRoomList
+              ? chatRoomList.filter(
+                  (c) =>
+                    c.room_type !== 'GROUP' &&
+                    (c.status === 'CREATED' ||
+                      c.status === 'ACTIVE' ||
+                      c.status === 'REOPEN')
+                ).length
+              : 0}
+            ]
           </p>
           {isOpenedConultList ? (
             <img
@@ -85,7 +93,19 @@ export const ConsultList = () => {
             alt=""
             className="ml-3 mr-3 h-6 w-6"
           />
-          <p className="text-md font-bold text-text-secondary">グループ[1]</p>
+          <p className="text-md font-bold text-text-secondary">
+            グループ[
+            {chatRoomList
+              ? chatRoomList.filter(
+                  (c) =>
+                    c.room_type === 'GROUP' &&
+                    (c.status === 'CREATED' ||
+                      c.status === 'ACTIVE' ||
+                      c.status === 'REOPEN')
+                ).length
+              : 0}
+            ]
+          </p>
           {isOpenedGroupList ? (
             <img
               src="/icons/arrow_down.svg"
@@ -105,7 +125,7 @@ export const ConsultList = () => {
           chatRoomList
             .filter(
               (c) =>
-                c.room_type !== 'GROUP' &&
+                c.room_type === 'GROUP' &&
                 (c.status === 'CREATED' ||
                   c.status === 'ACTIVE' ||
                   c.status === 'REOPEN')

@@ -9,7 +9,7 @@ type ConsultTitleProps = {
 };
 
 export const ConsultTitle = (props: ConsultTitleProps) => {
-  const { chatRoomId, title, latestMessage, lastUpdatedDate } = props;
+  const { title, latestMessage, lastUpdatedDate } = props;
   const date = new Date(lastUpdatedDate);
   const formattedDate = date.toLocaleString(undefined, {
     month: 'numeric',
@@ -20,7 +20,6 @@ export const ConsultTitle = (props: ConsultTitleProps) => {
 
   return (
     <div
-      key={chatRoomId}
       className="h-auto min-h-[64px] cursor-pointer border-b border-[#d5d5d5] pb-2
        hover:bg-primary-light active:bg-primary-light"
     >
