@@ -1,5 +1,5 @@
 import React from 'react';
-import AsyncSelect from 'react-select/async';
+import Select from 'react-select';
 import { Label } from '@/components/Parts/Form/Label';
 import { TextField } from '@/components/Parts/Form/TextField';
 import { SelectBox } from '@/components/Parts/Form/SelectBox';
@@ -12,12 +12,14 @@ type Props = ReturnType<typeof useEditProfile>;
 export const HospitalAffiliation = (props: Props) => {
   const {
     hospitalInputType,
-    hospitals,
-    loadHospitals,
+    hospitalOptions,
+    hospitalSearchText,
     profile,
     selectedHospital,
+    selectHospital,
     setHospitalInputType,
     setHospitalName,
+    setHospitalSearchText,
     setProfile,
   } = props;
   const { prefectures } = usePrefecture();
@@ -63,14 +65,14 @@ export const HospitalAffiliation = (props: Props) => {
         />
         {hospitalInputType === 'select' && (
           <div className="mt-1">
-            <AsyncSelect
-              loadOptions={loadHospitals}
+            <Select
+              options={hospitalOptions}
               placeholder="病院名"
               noOptionsMessage={() => '病院名を入力してください。'}
               value={selectedHospital}
-              onChange={(newValue) =>
-                setProfile({ ...profile, hospital_id: newValue?.value ?? '' })
-              }
+              onChange={(newValue) => selectHospital(newValue)}
+              inputValue={hospitalSearchText}
+              onInputChange={(value) => setHospitalSearchText(value)}
               styles={{
                 control: (styles) => ({
                   ...styles,
