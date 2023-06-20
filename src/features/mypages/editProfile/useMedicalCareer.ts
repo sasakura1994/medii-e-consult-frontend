@@ -2,6 +2,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { MedicalCareerProps } from './MedicalCareer';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 import { useMedicalSpeciality } from '@/hooks/medicalSpeciality/useMedicalSpeciality';
+import { moveItem } from '@/libs/dnd';
 
 export const useMedicalCareer = (props: MedicalCareerProps) => {
   const { profile, selectMedicalSpecialities } = props;
@@ -58,9 +59,7 @@ export const useMedicalCareer = (props: MedicalCareerProps) => {
 
   const moveSelectedMedicalSpeciality = useCallback(
     (dragIndex: number, hoverIndex: number) => {
-      const copy = [...selectedMedicalSpecialities];
-      const dragging = copy.splice(dragIndex, 1);
-      selectMedicalSpecialities([...copy.slice(0, hoverIndex), dragging[0], ...copy.slice(hoverIndex)]);
+      selectMedicalSpecialities(moveItem(selectedMedicalSpecialities, dragIndex, hoverIndex));
     },
     [selectMedicalSpecialities, selectedMedicalSpecialities]
   );

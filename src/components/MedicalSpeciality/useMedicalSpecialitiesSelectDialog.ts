@@ -2,6 +2,7 @@ import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntit
 import React from 'react';
 import { MedicalSpecialitiesSelectDialogProps } from './MedicalSpecialitiesSelectDialog';
 import { useMedicalSpecialitySelect } from './useMedicalSpecialitySelect';
+import { moveItem } from '@/libs/dnd';
 
 export const useMedicalSpecialitiesSelectDialog = (props: MedicalSpecialitiesSelectDialogProps) => {
   const { defaultSelectedMedicalSpecialities, onChange } = props;
@@ -45,13 +46,12 @@ export const useMedicalSpecialitiesSelectDialog = (props: MedicalSpecialitiesSel
     [selectedSpecialityCodes]
   );
 
-  const moveSelectedMedicalSpeciality = React.useCallback((dragIndex: number, hoverIndex: number) => {
-    setSelectedMedicalSpecialities((selectedMedicalSpecialities) => {
-      const copy = [...selectedMedicalSpecialities];
-      const dragging = copy.splice(dragIndex, 1);
-      return [...copy.slice(0, hoverIndex), dragging[0], ...copy.slice(hoverIndex)];
-    });
-  }, []);
+  const moveSelectedMedicalSpeciality = React.useCallback(
+    (dragIndex: number, hoverIndex: number) => {
+      setSelectedMedicalSpecialities(moveItem(selectedMedicalSpecialities, dragIndex, hoverIndex));
+    },
+    [selectedMedicalSpecialities]
+  );
 
   const getSelectedCountForCategory = React.useCallback(
     (medicalSpecialityCategoryId: string) =>
