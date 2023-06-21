@@ -7,6 +7,7 @@ import { useEditProfilePage } from '@/features/mypages/editProfile/useEditProfil
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { ProfileDetail } from '@/features/mypages/editProfile/ProfileDetail';
 import { EditProfile } from '@/features/mypages/editProfile/EditProfile';
+import RegistrationProgress from '@/features/document/RegistrationProgress';
 
 const EditProfilePage: NextPageWithLayout = () => {
   const editProfilePage = useEditProfilePage();
@@ -16,11 +17,20 @@ const EditProfilePage: NextPageWithLayout = () => {
   return (
     <>
       <h1 className="mb-10 text-center text-2xl leading-9">マイページ</h1>
-      <MyPageMenu />
+      {isRegisterMode ? (
+        <>
+          <div className="text-center text-2xl font-bold">Medii 会員登録</div>
+          <div className="my-10">
+            <RegistrationProgress mode="edit" />
+          </div>
+        </>
+      ) : (
+        <MyPageMenu />
+      )}
       {!isRegisterMode && profile?.want_to_be_consultant && <UrlPublish />}
       <div className="mt-4">
         {editProfileMode === 'profile' && <ProfileDetail onEdit={() => setSelectedEditProfileMode('edit')} />}
-        {editProfileMode === 'edit' && <EditProfile />}
+        {editProfileMode === 'edit' && <EditProfile isRegisterMode={isRegisterMode} />}
       </div>
     </>
   );

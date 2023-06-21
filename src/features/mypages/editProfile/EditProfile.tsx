@@ -9,8 +9,13 @@ import { useEditProfile } from './useEditProfile';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
 
-export const EditProfile: React.FC = () => {
-  const editProfile = useEditProfile();
+export type EditProfileProps = {
+  isRegisterMode: boolean;
+};
+
+export const EditProfile = (props: EditProfileProps) => {
+  const { isRegisterMode } = props;
+  const editProfile = useEditProfile(props);
   const { errorMessage, profile, submit } = editProfile;
 
   if (!profile) {
@@ -31,7 +36,7 @@ export const EditProfile: React.FC = () => {
       >
         <Card className="px-4 pb-8 pt-10 lg:px-[84px] lg:py-10">
           <h2 className="mb-6 text-center text-2xl leading-8" data-testid="h-edit-profile-edit">
-            プロフィール
+            {isRegisterMode ? 'プロフィール登録' : 'プロフィール'}
           </h2>
 
           <UserInfo {...editProfile} />

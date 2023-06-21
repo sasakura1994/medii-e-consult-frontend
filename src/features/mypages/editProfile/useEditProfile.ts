@@ -6,6 +6,7 @@ import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntit
 import { ProfileEntity } from '@/types/entities/profileEntity';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { EditProfileProps } from './EditProfile';
 
 export type EditingProfile = Omit<
   ProfileEntity,
@@ -24,7 +25,8 @@ type Option = {
 
 const numberToString = (value: number) => (value === 0 ? '' : value.toString());
 
-export const useEditProfile = () => {
+export const useEditProfile = (props: EditProfileProps) => {
+  const {isRegisterMode} = props
   const router = useRouter();
 
   const [profile, setProfile] = useState<EditingProfile>();
