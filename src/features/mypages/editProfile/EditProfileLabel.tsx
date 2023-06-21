@@ -1,16 +1,16 @@
 import React from 'react';
 
-type PropsType = {
-  label?: string | JSX.Element;
+type Props = {
+  children?: string | JSX.Element;
   required?: boolean;
   id?: string;
 };
 
-export const Label: React.FC<PropsType> = (props) => {
-  const { label, required, id } = props;
+export const EditProfileLabel = (props: Props) => {
+  const { children, required, id } = props;
 
-  if (!label) {
-    return null;
+  if (!children) {
+    return <></>;
   }
 
   return (
@@ -25,7 +25,7 @@ export const Label: React.FC<PropsType> = (props) => {
           任意
         </span>
       )}
-      {label}
+      {children}
     </label>
   );
 };

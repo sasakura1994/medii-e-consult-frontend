@@ -1,10 +1,12 @@
 import React from 'react';
 import { TextField } from '@/components/Parts/Form/TextField';
 import { useEditProfile } from './useEditProfile';
+import { EditProfileProps } from './EditProfile';
+import { EditProfileLabel } from '@/features/mypages/editProfile/EditProfileLabel';
 
-type Props = ReturnType<typeof useEditProfile>;
+type Props = ReturnType<typeof useEditProfile> & EditProfileProps;
 
-export const UserInfo: React.FC<Props> = ({ profile, setProfile }: Props) => {
+export const UserInfo: React.FC<Props> = ({ isRegisterMode, profile, setProfile }: Props) => {
   if (!profile) {
     return <></>;
   }
@@ -13,51 +15,58 @@ export const UserInfo: React.FC<Props> = ({ profile, setProfile }: Props) => {
     <div className="mb-10">
       <h3 className="mb-4 text-primary">■ 利用者情報</h3>
       <div className="mb-4 lg:flex lg:gap-6">
-        <TextField
-          name="last_name"
-          value={profile.last_name}
-          onChange={(e) => setProfile({ ...profile, last_name: e.target.value })}
-          disabled={!isRegisterMode}
-          id="last_name"
-          className="mb-4 lg:mb-0"
-          label="姓"
-        />
+        <div>
+          <EditProfileLabel required={isRegisterMode ? true : undefined}>姓</EditProfileLabel>
+          <TextField
+            name="last_name"
+            value={profile.last_name}
+            onChange={(e) => setProfile({ ...profile, last_name: e.target.value })}
+            disabled={!isRegisterMode}
+            id="last_name"
+            className="mb-4 lg:mb-0"
+            label="姓"
+          />
+        </div>
 
-        <TextField
-          name="first_name"
-          value={profile.first_name}
-          onChange={(e) => setProfile({ ...profile, first_name: e.target.value })}
-          disabled={!isRegisterMode}
-          id="first_name"
-          label="名"
-        />
+        <div>
+          <EditProfileLabel required={isRegisterMode ? true : undefined}>名</EditProfileLabel>
+          <TextField
+            name="first_name"
+            value={profile.first_name}
+            onChange={(e) => setProfile({ ...profile, first_name: e.target.value })}
+            disabled={!isRegisterMode}
+            id="first_name"
+          />
+        </div>
       </div>
 
       <div className="mb-4 lg:flex lg:gap-6">
-        <TextField
-          name="last_name_hira"
-          value={profile.last_name_hira}
-          onChange={(e) => setProfile({ ...profile, last_name_hira: e.target.value })}
-          disabled={!isRegisterMode}
-          id="last_name_hira"
-          className="mb-4 lg:mb-0"
-          label="姓（かな）"
-        />
+        <div>
+          <EditProfileLabel required={isRegisterMode ? true : undefined}>姓（かな）</EditProfileLabel>
+          <TextField
+            name="last_name_hira"
+            value={profile.last_name_hira}
+            onChange={(e) => setProfile({ ...profile, last_name_hira: e.target.value })}
+            disabled={!isRegisterMode}
+            id="last_name_hira"
+            className="mb-4 lg:mb-0"
+          />
+        </div>
 
-        <TextField
-          name="first_name_hira"
-          value={profile.first_name_hira}
-          onChange={(e) => setProfile({ ...profile, first_name_hira: e.target.value })}
-          disabled={!isRegisterMode}
-          id="first_name_hira"
-          label="名（かな）"
-        />
+        <div>
+          <EditProfileLabel required={isRegisterMode ? true : undefined}>名（かな）</EditProfileLabel>
+          <TextField
+            name="first_name_hira"
+            value={profile.first_name_hira}
+            onChange={(e) => setProfile({ ...profile, first_name_hira: e.target.value })}
+            disabled={!isRegisterMode}
+            id="first_name_hira"
+          />
+        </div>
       </div>
 
       <div className="mb-4">
-        <label htmlFor="birthday_year" className="mb-1 block font-bold">
-          生年月日（半角）
-        </label>
+        <EditProfileLabel required={isRegisterMode ? true : undefined}>生年月日（半角）</EditProfileLabel>
         <div className="flex gap-3">
           <TextField
             name="birthday_year"
@@ -90,10 +99,12 @@ export const UserInfo: React.FC<Props> = ({ profile, setProfile }: Props) => {
       </div>
 
       <div className="mb-4">
+        <EditProfileLabel required={isRegisterMode ? false : undefined}>卒業大学</EditProfileLabel>
         <TextField
           name="graduated_university"
           id="graduated_university"
           label="卒業大学"
+          disabled={!isRegisterMode}
           placeholder="大学名"
           value={profile.graduated_university ?? ''}
           onChange={(e) => setProfile({ ...profile, graduated_university: e.target.value })}

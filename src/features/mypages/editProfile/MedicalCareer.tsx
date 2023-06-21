@@ -1,5 +1,5 @@
 import React from 'react';
-import { Label } from '@/components/Parts/Form/Label';
+import { EditProfileLabel } from '@/features/mypages/editProfile/EditProfileLabel';
 import { TextField } from '@/components/Parts/Form/TextField';
 import { TextArea } from '@/components/Parts/Form/TextArea';
 import { useEditProfile } from './useEditProfile';
@@ -42,7 +42,7 @@ export const MedicalCareer = (props: MedicalCareerProps) => {
         </div>
 
         <div className="mb-4">
-          <Label label="所属科" required={true} />
+          <EditProfileLabel required={true}>所属科</EditProfileLabel>
           <button
             type="button"
             className="relative
@@ -78,22 +78,22 @@ export const MedicalCareer = (props: MedicalCareerProps) => {
           />
 
           <div className="mt-4">
+            <EditProfileLabel required={false}>特によく診てきた疾患・領域</EditProfileLabel>
             <TextArea
               name="expertise"
               id="expertise"
               className="!h-28"
-              label="特によく診てきた疾患・領域"
               value={profile.expertise}
               onChange={(e) => setProfile({ ...profile, expertise: e.target.value })}
             />
           </div>
 
           <div className="mt-4">
+            <EditProfileLabel required={false}>専門医資格</EditProfileLabel>
             <TextArea
               name="qualification"
               id="qualification"
               className="!h-28"
-              label="専門医資格"
               value={profile.qualification}
               onChange={(e) => setProfile({ ...profile, qualification: e.target.value })}
             />

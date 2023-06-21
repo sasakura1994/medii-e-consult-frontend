@@ -1,6 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
-import { Label } from '@/components/Parts/Form/Label';
+import { EditProfileLabel } from '@/features/mypages/editProfile/EditProfileLabel';
 import { TextField } from '@/components/Parts/Form/TextField';
 import { SelectBox } from '@/components/Parts/Form/SelectBox';
 import { Radio } from '@/components/Parts/Form/Radio';
@@ -33,15 +33,15 @@ export const HospitalAffiliation = (props: Props) => {
       <h3 className="mb-4 text-primary">■ 所属病院</h3>
 
       <div className="mb-4 w-72">
-        <Label label="勤務先病院の所在地" required id="prefecture_code" />
+        <EditProfileLabel required id="prefecture_code">
+          勤務先病院の所在地
+        </EditProfileLabel>
         {prefectures && (
           <SelectBox
             name="prefecture_code"
             id="prefecture_code"
             value={profile.prefecture_code}
-            onChange={(e) =>
-              setProfile({ ...profile, prefecture_code: e.target.value })
-            }
+            onChange={(e) => setProfile({ ...profile, prefecture_code: e.target.value })}
             required
           >
             {prefectures.map((prefecture) => (
@@ -54,7 +54,9 @@ export const HospitalAffiliation = (props: Props) => {
       </div>
 
       <div className="mb-4">
-        <Label label="現在の勤務先病院名" required={true} id="hospital-data" />
+        <EditProfileLabel required={true} id="hospital-data">
+          現在の勤務先病院名
+        </EditProfileLabel>
         <Radio
           name="hospital_input_type"
           id="hospital-data"

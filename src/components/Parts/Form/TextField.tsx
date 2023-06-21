@@ -1,5 +1,4 @@
 import React from 'react';
-import { Label } from './Label';
 
 export type PropsType = {
   name: string;
@@ -28,7 +27,6 @@ export const TextField: React.FC<PropsType> = (props) => {
     ariaLabel,
     className,
     style,
-    label,
     required,
     subscript,
     type = 'text',
@@ -45,8 +43,6 @@ export const TextField: React.FC<PropsType> = (props) => {
 
   return (
     <div className="w-full">
-      <Label label={label} required={required} id={id} />
-
       <div className="flex items-end">
         <input
           type={type}
@@ -60,7 +56,7 @@ export const TextField: React.FC<PropsType> = (props) => {
           style={style}
           onChange={onChange}
           onBlur={onBlur}
-          required
+          required={required}
         />
         {subscript && <span className="ml-2">{subscript}</span>}
       </div>
