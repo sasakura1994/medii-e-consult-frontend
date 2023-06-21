@@ -9,6 +9,7 @@ import { useEditProfile } from './useEditProfile';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
 import { EditProfileNotification } from './EditProfileNotification';
+import { EditProfileQuestionary } from './EditProfileQuestionary';
 
 export type EditProfileProps = {
   isRegisterMode: boolean;
@@ -47,6 +48,7 @@ export const EditProfile = (props: EditProfileProps) => {
           {isRegisterMode && (
             <>
               <EditProfileNotification {...editProfile} />
+              <EditProfileQuestionary {...editProfile} />
             </>
           )}
         </Card>

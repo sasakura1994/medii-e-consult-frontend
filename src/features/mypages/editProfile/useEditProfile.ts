@@ -47,6 +47,8 @@ export const useEditProfile = (props: EditProfileProps) => {
     [hospitals]
   );
 
+  const selectedQuestionaryItemIds: string[] = profile?.questionary_selected_ids_csv?.split(/,/) ?? [];
+
   const isHospitalDisabled = ['STUDENT', 'SHIKAKOUKUGEKA'].includes(profile?.main_speciality ?? '');
 
   useEffect(() => {
@@ -153,6 +155,31 @@ export const useEditProfile = (props: EditProfileProps) => {
     router.push('/editprofile/completed');
   }, [profile, isHospitalDisabled, hospitalInputType, updateProfile, router]);
 
+  const toggleQuestionaryItem = useCallback(
+    (questionaryItemId: number) => {
+      if (!profile) {
+        return;
+      }
+
+      const idString = questionaryItemId.toString();
+
+      if (selectedQuestionaryItemIds.includes(idString)) {
+        setProfile({
+          ...profile,
+          questionary_selected_ids_csv: selectedQuestionaryItemIds
+            .filter((questionaryItemId) => questionaryItemId !== idString)
+            .join(','),
+        });
+      } else {
+        setProfile({
+          ...profile,
+          questionary_selected_ids_csv: [...selectedQuestionaryItemIds, idString].join(','),
+        });
+      }
+    },
+    [profile, selectedQuestionaryItemIds]
+  );
+
   return {
     errorMessage,
     hospitalInputType,
@@ -164,10 +191,12 @@ export const useEditProfile = (props: EditProfileProps) => {
     selectedHospital,
     selectHospital,
     selectMedicalSpecialities,
+    selectedQuestionaryItemIds,
     setHospitalInputType,
     setHospitalName,
     setHospitalSearchText,
     setProfile,
     submit,
+    toggleQuestionaryItem,
   };
 };

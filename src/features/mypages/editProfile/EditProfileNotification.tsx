@@ -2,9 +2,9 @@ import React from 'react';
 import { useEditProfile } from './useEditProfile';
 import { Radio } from '@/components/Parts/Form/Radio';
 
-export type MedicalCareerProps = ReturnType<typeof useEditProfile>;
+type Props = ReturnType<typeof useEditProfile>;
 
-export const EditProfileNotification = (props: MedicalCareerProps) => {
+export const EditProfileNotification = (props: Props) => {
   const { profile, setProfile } = props;
 
   if (!profile) {
