@@ -34,7 +34,7 @@ const Seminar: NextPage = () => {
   const [, setSwiperRef] = React.useState<SwiperRef | null>(null);
   return (
     <div className="bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat pb-12 pt-32 lg:bg-[url('/images/seminar/PC_back.png')] lg:pt-10">
-      <div className="mx-auto lg:max-w-[960px] lg:rounded-2xl lg:bg-white lg:py-10  lg:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
+      <div className="mx-auto lg:max-w-[960px] lg:rounded-2xl lg:bg-white lg:p-10  lg:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
         {seminar?.movie_url ? (
           <div className="absolute top-[-79px] px-[27px] lg:static lg:px-0">
             <iframe
@@ -48,7 +48,7 @@ const Seminar: NextPage = () => {
         ) : (
           <img
             src={seminar && seminar.image_url}
-            className="relative z-20 mx-auto -mt-16 aspect-video w-5/6 shadow-lg lg:mt-0 lg:w-full lg:max-w-[960px] lg:bg-white lg:px-10 lg:pt-0 lg:shadow-none"
+            className="relative z-20 mx-auto mt-16 aspect-video w-5/6 shadow-lg lg:mt-0 lg:w-full lg:max-w-[960px] lg:bg-white lg:pt-0 lg:shadow-none"
           />
         )}
         <div className="relative
@@ -224,12 +224,11 @@ const Seminar: NextPage = () => {
       {isTicketConfirmDialogShown && (
         <SeminarConfirmModal
           setShowModal={setIsTicketConfirmDialogShown}
-          className="lg:w-[800px]"
           title="チケット使用の確認"
           labelText="使用する"
           onSubmit={() => consumeTicket()}
         >
-          <p>アーカイブ動画閲覧にチケット1枚を使用します。</p>
+          <p className="font-bold text-center my-8">アーカイブ動画閲覧にチケット1枚を使用します。</p>
         </SeminarConfirmModal>
       )}
       {isTicketNotEnoughDialogShown && (
