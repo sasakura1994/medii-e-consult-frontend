@@ -27,7 +27,7 @@ export const EditProfile = (props: EditProfileProps) => {
   }
 
   return (
-    <>
+    <div className="pb-20">
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -39,26 +39,28 @@ export const EditProfile = (props: EditProfileProps) => {
             {isRegisterMode ? 'プロフィール登録' : 'プロフィール'}
           </h2>
 
-          <UserInfo {...editProfile} />
+          <UserInfo {...editProfile} {...props} />
           <MedicalCareer {...editProfile} />
           <HospitalAffiliation {...editProfile} />
           <UsageClassification {...editProfile} />
         </Card>
 
-        {errorMessage !== '' && <ErrorMessage className="mt-2">{errorMessage}</ErrorMessage>}
+        {errorMessage !== '' && <ErrorMessage className="mt-2 text-center">{errorMessage}</ErrorMessage>}
 
         <div className="my-6">
           <PrimaryButton type="submit" dataTestId="btn-profile-regist" className="mx-auto">
-            プロフィール登録
+            {isRegisterMode ? '医師資格確認へ進む' : 'プロフィール登録'}
           </PrimaryButton>
         </div>
       </form>
 
-      <div className="mt-12 text-center lg:pb-20">
-        <button type="button" className="text-[#0758E4] underline" onClick={() => console.log('アカウント削除')}>
-          アカウントを削除する
-        </button>
-      </div>
-    </>
+      {!isRegisterMode && (
+        <div className="mt-12 text-center lg:pb-20">
+          <button type="button" className="text-[#0758E4] underline" onClick={() => console.log('アカウント削除')}>
+            アカウントを削除する
+          </button>
+        </div>
+      )}
+    </div>
   );
 };

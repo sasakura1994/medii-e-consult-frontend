@@ -16,10 +16,8 @@ export const UserInfo: React.FC<Props> = ({ profile, setProfile }: Props) => {
         <TextField
           name="last_name"
           value={profile.last_name}
-          onChange={(e) =>
-            setProfile({ ...profile, last_name: e.target.value })
-          }
-          disabled={true}
+          onChange={(e) => setProfile({ ...profile, last_name: e.target.value })}
+          disabled={!isRegisterMode}
           id="last_name"
           className="mb-4 lg:mb-0"
           label="姓"
@@ -28,10 +26,8 @@ export const UserInfo: React.FC<Props> = ({ profile, setProfile }: Props) => {
         <TextField
           name="first_name"
           value={profile.first_name}
-          onChange={(e) =>
-            setProfile({ ...profile, first_name: e.target.value })
-          }
-          disabled={true}
+          onChange={(e) => setProfile({ ...profile, first_name: e.target.value })}
+          disabled={!isRegisterMode}
           id="first_name"
           label="名"
         />
@@ -41,10 +37,8 @@ export const UserInfo: React.FC<Props> = ({ profile, setProfile }: Props) => {
         <TextField
           name="last_name_hira"
           value={profile.last_name_hira}
-          onChange={(e) =>
-            setProfile({ ...profile, last_name_hira: e.target.value })
-          }
-          disabled={true}
+          onChange={(e) => setProfile({ ...profile, last_name_hira: e.target.value })}
+          disabled={!isRegisterMode}
           id="last_name_hira"
           className="mb-4 lg:mb-0"
           label="姓（かな）"
@@ -53,10 +47,8 @@ export const UserInfo: React.FC<Props> = ({ profile, setProfile }: Props) => {
         <TextField
           name="first_name_hira"
           value={profile.first_name_hira}
-          onChange={(e) =>
-            setProfile({ ...profile, first_name_hira: e.target.value })
-          }
-          disabled={true}
+          onChange={(e) => setProfile({ ...profile, first_name_hira: e.target.value })}
+          disabled={!isRegisterMode}
           id="first_name_hira"
           label="名（かな）"
         />
@@ -70,10 +62,8 @@ export const UserInfo: React.FC<Props> = ({ profile, setProfile }: Props) => {
           <TextField
             name="birthday_year"
             value={profile.birthday_year}
-            onChange={(e) =>
-              setProfile({ ...profile, birthday_year: e.target.value })
-            }
-            disabled={true}
+            onChange={(e) => setProfile({ ...profile, birthday_year: e.target.value })}
+            disabled={!isRegisterMode}
             id="birthday_year"
             className="!w-32 lg:!w-40"
             subscript="年"
@@ -82,10 +72,8 @@ export const UserInfo: React.FC<Props> = ({ profile, setProfile }: Props) => {
           <TextField
             name="birthday_month"
             value={profile.birthday_month}
-            onChange={(e) =>
-              setProfile({ ...profile, birthday_month: e.target.value })
-            }
-            disabled={true}
+            onChange={(e) => setProfile({ ...profile, birthday_month: e.target.value })}
+            disabled={!isRegisterMode}
             id="birthday_month"
             subscript="月"
           />
@@ -93,10 +81,8 @@ export const UserInfo: React.FC<Props> = ({ profile, setProfile }: Props) => {
           <TextField
             name="birthday_day"
             value={profile.birthday_day}
-            onChange={(e) =>
-              setProfile({ ...profile, birthday_day: e.target.value })
-            }
-            disabled={true}
+            onChange={(e) => setProfile({ ...profile, birthday_day: e.target.value })}
+            disabled={!isRegisterMode}
             id="birthday_day"
             subscript="日"
           />
@@ -110,9 +96,7 @@ export const UserInfo: React.FC<Props> = ({ profile, setProfile }: Props) => {
           label="卒業大学"
           placeholder="大学名"
           value={profile.graduated_university ?? ''}
-          onChange={(e) =>
-            setProfile({ ...profile, graduated_university: e.target.value })
-          }
+          onChange={(e) => setProfile({ ...profile, graduated_university: e.target.value })}
         />
       </div>
     </div>
