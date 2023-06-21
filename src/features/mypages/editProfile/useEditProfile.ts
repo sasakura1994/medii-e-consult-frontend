@@ -26,7 +26,7 @@ type Option = {
 const numberToString = (value: number) => (value === 0 ? '' : value.toString());
 
 export const useEditProfile = (props: EditProfileProps) => {
-  const {isRegisterMode} = props
+  const { isRegisterMode } = props;
   const router = useRouter();
 
   const [profile, setProfile] = useState<EditingProfile>();
@@ -130,30 +130,6 @@ export const useEditProfile = (props: EditProfileProps) => {
     } else if (hospitalInputType === 'free') {
       data.hospital_id = '';
     }
-
-    // switch (this.radioButtons.new) {
-    //   case 'mail-push':
-    //     data.is_mail_notify = true
-    //     data.is_push_notify = true
-    //     break
-    //   case 'mail':
-    //     data.is_mail_notify = true
-    //     data.is_push_notify = false
-    //     break
-    //   case 'push':
-    //     data.is_mail_notify = false
-    //     data.is_push_notify = true
-    //     break
-    //   default:
-    //     data.is_mail_notify = true
-    //     data.is_push_notify = true
-    // }
-
-    // if (this.radioButtons.seminar === 'permit') {
-    //   data.not_seminar_mail_target = false
-    // } else if (this.radioButtons.seminar === 'deny') {
-    //   data.not_seminar_mail_target = true
-    // }
 
     const formData = new FormData();
     Object.keys(data).forEach((key) => {

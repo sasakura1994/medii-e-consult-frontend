@@ -8,6 +8,7 @@ import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 import { useEditProfile } from './useEditProfile';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
+import { EditProfileNotification } from './EditProfileNotification';
 
 export type EditProfileProps = {
   isRegisterMode: boolean;
@@ -43,6 +44,11 @@ export const EditProfile = (props: EditProfileProps) => {
           <MedicalCareer {...editProfile} />
           <HospitalAffiliation {...editProfile} />
           <UsageClassification {...editProfile} />
+          {isRegisterMode && (
+            <>
+              <EditProfileNotification {...editProfile} />
+            </>
+          )}
         </Card>
 
         {errorMessage !== '' && <ErrorMessage className="mt-2 text-center">{errorMessage}</ErrorMessage>}
