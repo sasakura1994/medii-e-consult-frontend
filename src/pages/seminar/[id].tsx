@@ -172,7 +172,7 @@ const Seminar: NextPage = () => {
         <h2 className="mt-32 mb-8 text-center text-2xl">
           その他の公開されている
           <br className="md:hidden" />
-          セミナー動画アーカイブ
+          E-カンファアーカイブ動画
         </h2>
         <Swiper
           onSwiper={(swiper) => setSwiperRef(swiper)}
@@ -206,7 +206,7 @@ const Seminar: NextPage = () => {
             />
             <h3 className="text-center text-2xl text-primary">チケットとは?</h3>
             <p className="py-10">
-              チケットとはセミナー動画アーカイブを閲覧するために必要なものです。
+              チケットとはE-カンファアーカイブ動画を閲覧するために必要なものです。
               <br />
               E-コンサルで相談するとセミナーチケット1枚獲得できます。
             </p>
