@@ -119,6 +119,10 @@ export const useEditProfile = (props: EditProfileProps) => {
   );
 
   const submit = useCallback(async () => {
+    if (!profile) {
+      return;
+    }
+
     setIsSending(true);
     setErrorMessage('');
 
@@ -152,8 +156,13 @@ export const useEditProfile = (props: EditProfileProps) => {
     }
 
     mutateFetchProfile();
-    router.push('/editprofile/completed');
-  }, [profile, isHospitalDisabled, hospitalInputType, updateProfile, router]);
+
+    if (isRegisterMode || profile.need_to_send_confimation) {
+      router.push('/document');
+    } else {
+      router.push('/editprofile/completed');
+    }
+  }, [profile, isHospitalDisabled, hospitalInputType, updateProfile, isRegisterMode, router]);
 
   const toggleQuestionaryItem = useCallback(
     (questionaryItemId: number) => {
