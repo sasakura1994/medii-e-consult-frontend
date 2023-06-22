@@ -34,19 +34,18 @@ describe('useDocumentInputAuto', () => {
 
     act(() => {
       result.current.setTel('0987654321');
-      result.current.handleInputYearToSeireki('2023');
+      result.current.setYear(2023);
     });
 
     expect(result.current.tel).toBe('0987654321');
-    expect(result.current.inputYear).toBe('2023');
+    expect(result.current.year).toBe(2023);
 
     act(() => {
-      result.current.handleDoctorLicenseYearToJapaneseEraYear('reiwa');
+      result.current.eraConverter.setEra('reiwa');
     });
 
     await waitFor(() => {
-      expect(result.current.inputYear).toBe('5');
-      expect(result.current.doctorLicenseYear).toBe('2023');
+      expect(result.current.year).toBe(2023);
     });
   });
 
