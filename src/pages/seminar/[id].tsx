@@ -108,11 +108,11 @@ const Seminar: NextPage = () => {
                 </div>
               </div>
               <div className="border-b py-4">
-                <div>
-                  <p className="whitespace-pre-wrap text-base lg:text-lg">
-                    <span className="pr-4 text-2xl text-primary lg:text-lg lg:font-bold">
+                <div className="flex">
+                  <p className="text-base lg:text-lg pr-4 text-2xl text-primary lg:font-bold">
                       講師
-                    </span>{' '}
+                  </p>
+                  <p className="whitespace-pre-wrap text-base lg:text-lg">
                     {seminar?.doctor_name !== undefined
                       ? seminar.doctor_name
                       : ''}
