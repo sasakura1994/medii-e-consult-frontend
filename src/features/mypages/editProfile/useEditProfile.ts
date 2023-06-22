@@ -7,6 +7,7 @@ import { ProfileEntity } from '@/types/entities/profileEntity';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { EditProfileProps } from './EditProfile';
+import { loadLocalStorage, saveLocalStorage } from '@/libs/LocalStorageManager';
 
 const editProfileFormDataKey = 'EditProfile::formData';
 
@@ -67,6 +68,19 @@ export const useEditProfile = (props: EditProfileProps) => {
     });
   }, [defaultHospital]);
 
+  const getDraftProfile = useCallback(() => {
+    if (!isRegisterMode) {
+      return undefined;
+    }
+
+    const draftJson = loadLocalStorage(editProfileFormDataKey);
+    if (!draftJson) {
+      return undefined;
+    }
+
+    return JSON.parse(draftJson);
+  }, [isRegisterMode]);
+
   useEffect(() => {
     if (isInitialized) {
       return;
@@ -75,16 +89,24 @@ export const useEditProfile = (props: EditProfileProps) => {
       return;
     }
 
-    setProfile({
-      ...fetchedProfile,
-      birthday_year: numberToString(fetchedProfile.birthday_year),
-      birthday_month: numberToString(fetchedProfile.birthday_month),
-      birthday_day: numberToString(fetchedProfile.birthday_day),
-      qualified_year: numberToString(fetchedProfile.qualified_year),
-    });
-    setHospitalInputType(fetchedProfile.hospital_id === '' && fetchedProfile.hospital_name !== '' ? 'free' : 'select');
+    const draftProfile = getDraftProfile();
+    const currentProfile = draftProfile ?? fetchedProfile;
+
+    if (draftProfile) {
+      setProfile(draftProfile);
+    } else {
+      setProfile({
+        ...fetchedProfile,
+        birthday_year: numberToString(fetchedProfile.birthday_year),
+        birthday_month: numberToString(fetchedProfile.birthday_month),
+        birthday_day: numberToString(fetchedProfile.birthday_day),
+        qualified_year: numberToString(fetchedProfile.qualified_year),
+      });
+    }
+
+    setHospitalInputType(currentProfile.hospital_id === '' && currentProfile.hospital_name !== '' ? 'free' : 'select');
     setIsInitialized(true);
-  }, [fetchedProfile, isInitialized]);
+  }, [fetchedProfile, getDraftProfile, isInitialized]);
 
   // 下書き保存も同時に行うため基本的にはsetProfileでなくこれを使う
   const setProfileFields = useCallback(
@@ -97,7 +119,7 @@ export const useEditProfile = (props: EditProfileProps) => {
       setProfile(updatedProfile);
 
       if (isRegisterMode) {
-        localStorage.setItem(editProfileFormDataKey, JSON.stringify(updatedProfile));
+        saveLocalStorage(editProfileFormDataKey, JSON.stringify(updatedProfile));
       }
     },
     [isRegisterMode, profile]
