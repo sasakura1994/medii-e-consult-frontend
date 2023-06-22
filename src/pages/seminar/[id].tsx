@@ -33,9 +33,16 @@ const Seminar: NextPage = () => {
   const [showModal, setShowModal] = React.useState(false);
   const [, setSwiperRef] = React.useState<SwiperRef | null>(null);
   return (
-    <div className="bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat pb-12 pt-32 lg:bg-[url('/images/seminar/PC_back.png')] lg:pt-10">
-      <div className="mx-auto lg:max-w-[960px] lg:rounded-2xl lg:bg-white lg:p-10  lg:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
-        {seminar?.movie_url ? (
+    <div className="bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat pb-12 lg:pt-32 lg:bg-[url('/images/seminar/PC_back.png')] lg:pt-10">
+      <div className="mx-auto pt-28 lg:max-w-[960px] lg:rounded-2xl lg:bg-white lg:p-10  lg:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
+        <div className="relative
+        mx-auto
+        pt-32
+        w-full
+        bg-white
+        lg:pt-0
+        lg:mt-0 lg:max-w-[960px] lg:rounded-2xl lg:bg-transparent lg:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] lg:shadow-none">
+          {seminar?.movie_url ? (
           <div className="absolute top-[-79px] px-[27px] lg:static lg:px-0">
             <iframe
               src={seminar.movie_url}
@@ -48,23 +55,16 @@ const Seminar: NextPage = () => {
         ) : (
           <img
             src={seminar && seminar.image_url}
-            className="relative z-20 mx-auto mt-16 aspect-video w-5/6 shadow-lg lg:mt-0 lg:w-full lg:max-w-[960px] lg:bg-white lg:pt-0 lg:shadow-none"
+            className="absolute lg:static right-0 left-0 top-[-79px] z-20 mx-auto aspect-video w-5/6 shadow-lg lg:mt-0 lg:w-full lg:max-w-[960px] lg:bg-white lg:pt-0 lg:shadow-none"
           />
         )}
-        <div className="relative
-        mx-auto
-        mt-24
-        w-full
-        bg-white
-        pt-28
-        lg:mt-0 lg:max-w-[960px] lg:rounded-2xl lg:bg-transparent lg:p-10 lg:px-10 lg:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] lg:shadow-none">
-          {!seminar?.movie_url && (
+          { !seminar?.movie_url && (
             <div className="mx-8 mt-4 bg-gray-100 px-2 py-6 lg:mx-0 lg:mt-0">
               <div className="text-center text-sm font-semibold text-gray-500 lg:text-2xl">
                 チケットを一枚消費して動画を閲覧可能です
               </div>
 
-              <div className="mt-2 flex items-end justify-center text-center text-xl font-semibold text-primary lg:text-2xl">
+              <div className="mt-2 flex items-end justify-center text-center text-base font-semibold text-primary lg:text-2xl">
                 現在のチケット所持枚数
                 <p className="mx-2 text-2xl lg:text-4xl">
                   {ticketCount && ticketCount.ticket_count}
