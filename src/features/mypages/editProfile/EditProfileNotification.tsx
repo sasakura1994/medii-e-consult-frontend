@@ -22,7 +22,11 @@ export const EditProfileNotification = (props: Props) => {
               label="メール・プッシュ通知両方受け取る"
               name="news_notification"
               value="mail-push"
-              checked={profile.is_mail_notify && profile.is_push_notify}
+              checked={
+                (profile.is_mail_notify && profile.is_push_notify) ||
+                // 新規登録で未選択の場合
+                (!profile.is_mail_notify && !profile.is_push_notify)
+              }
               onChange={() => setProfileFields({ ...profile, is_mail_notify: true, is_push_notify: true })}
             />
           </div>

@@ -44,6 +44,7 @@ export const HospitalAffiliation = (props: Props) => {
             onChange={(e) => setProfileFields({ ...profile, prefecture_code: e.target.value })}
             required
           >
+            <option value="">都道府県</option>
             {prefectures.map((prefecture) => (
               <option value={prefecture.code} key={prefecture.code}>
                 {prefecture.name}

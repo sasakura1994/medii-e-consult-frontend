@@ -97,9 +97,9 @@ export const useEditProfile = (props: EditProfileProps) => {
     } else {
       setProfile({
         ...fetchedProfile,
-        birthday_year: numberToString(fetchedProfile.birthday_year),
-        birthday_month: numberToString(fetchedProfile.birthday_month),
-        birthday_day: numberToString(fetchedProfile.birthday_day),
+        birthday_year: fetchedProfile.birthday_year === 9999 ? '' : numberToString(fetchedProfile.birthday_year),
+        birthday_month: fetchedProfile.birthday_year === 9999 ? '' : numberToString(fetchedProfile.birthday_month),
+        birthday_day: fetchedProfile.birthday_year === 9999 ? '' : numberToString(fetchedProfile.birthday_day),
         qualified_year: numberToString(fetchedProfile.qualified_year),
       });
     }
