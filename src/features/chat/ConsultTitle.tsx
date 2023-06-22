@@ -33,7 +33,7 @@ export const ConsultTitle = (props: ConsultTitleProps) => {
         <p className="mt-2 ml-2 flex-grow text-l font-bold">{title}</p>
         <p className="mt-3 mr-3 text-xs">{formattedDate}</p>
       </div>
-      <p className="ml-9 text-sm text-[#999999] line-clamp-2">
+      <p className="ml-9 mr-3 text-sm text-[#999999] line-clamp-2">
         {latestMessage}
       </p>
     </div>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ConsultTitle } from './ConsultTitle';
 import { useFetchChatRoomList } from '@/hooks/api/chat/useFetchChatRoomList';
 import { useFetchUnreadCounts } from '@/hooks/api/chat/useFetchUnreadCounts';
+import Link from 'next/link';
 
 export const ConsultList = () => {
   const [isOpenedConultList, setIsOpenedConsultList] = useState(true);
@@ -10,6 +11,7 @@ export const ConsultList = () => {
     query: ['FREE', 'BY_NAME', 'GROUP'],
   });
   const unreadCountsResponseData = useFetchUnreadCounts();
+
   return (
     <div className="h-screen w-[336px] border border-[#d5d5d5]">
       <div className="flex h-14 items-center bg-primary">
@@ -77,17 +79,26 @@ export const ConsultList = () => {
             )
             .map((chatRoom) => {
               return (
-                <ConsultTitle
+                <Link
                   key={chatRoom.chat_room_id}
-                  isUnreadConsult={unreadCountsResponseData.unread_consult.some(
-                    (c) => c.chat_room_id === chatRoom.chat_room_id
-                  )}
-                  chatRoomId={chatRoom.chat_room_id}
-                  title={chatRoom.title}
-                  latestMessage={chatRoom.latest_message}
-                  lastUpdatedDate={chatRoom.last_updated_date}
-                  ownerAccountId={chatRoom.owner_account_id}
-                />
+                  href={{
+                    pathname: '/chat',
+                    query: { chat_room_id: chatRoom.chat_room_id },
+                  }}
+                >
+                  <a>
+                    <ConsultTitle
+                      isUnreadConsult={unreadCountsResponseData.unread_consult.some(
+                        (c) => c.chat_room_id === chatRoom.chat_room_id
+                      )}
+                      chatRoomId={chatRoom.chat_room_id}
+                      title={chatRoom.title}
+                      latestMessage={chatRoom.latest_message}
+                      lastUpdatedDate={chatRoom.last_updated_date}
+                      ownerAccountId={chatRoom.owner_account_id}
+                    />
+                  </a>
+                </Link>
               );
             })}
         <button
@@ -139,17 +150,26 @@ export const ConsultList = () => {
             )
             .map((chatRoom) => {
               return (
-                <ConsultTitle
+                <Link
                   key={chatRoom.chat_room_id}
-                  chatRoomId={chatRoom.chat_room_id}
-                  isUnreadConsult={unreadCountsResponseData.unread_consult.some(
-                    (c) => c.chat_room_id === chatRoom.chat_room_id
-                  )}
-                  title={chatRoom.title}
-                  latestMessage={chatRoom.latest_message}
-                  lastUpdatedDate={chatRoom.last_updated_date}
-                  ownerAccountId={chatRoom.owner_account_id}
-                />
+                  href={{
+                    pathname: '/chat',
+                    query: { chat_room_id: chatRoom.chat_room_id },
+                  }}
+                >
+                  <a>
+                    <ConsultTitle
+                      chatRoomId={chatRoom.chat_room_id}
+                      isUnreadConsult={unreadCountsResponseData.unread_consult.some(
+                        (c) => c.chat_room_id === chatRoom.chat_room_id
+                      )}
+                      title={chatRoom.title}
+                      latestMessage={chatRoom.latest_message}
+                      lastUpdatedDate={chatRoom.last_updated_date}
+                      ownerAccountId={chatRoom.owner_account_id}
+                    />
+                  </a>
+                </Link>
               );
             })}
       </div>
