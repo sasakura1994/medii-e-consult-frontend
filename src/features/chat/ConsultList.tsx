@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ConsultTitle } from './ConsultTitle';
 import { useFetchChatRoomList } from '@/hooks/api/chat/useFetchChatRoomList';
+import { useFetchUnreadCounts } from '@/hooks/api/chat/useFetchUnreadCounts';
 
 export const ConsultList = () => {
   const [isOpenedConultList, setIsOpenedConsultList] = useState(true);
@@ -8,6 +9,7 @@ export const ConsultList = () => {
   const { data: chatRoomList } = useFetchChatRoomList({
     query: ['FREE', 'BY_NAME', 'GROUP'],
   });
+  const unreadCountsResponseData = useFetchUnreadCounts();
   return (
     <div className="h-screen w-[336px] border border-[#d5d5d5]">
       <div className="flex h-14 items-center bg-primary">
@@ -63,6 +65,7 @@ export const ConsultList = () => {
           )}
         </button>
         {isOpenedConultList &&
+          unreadCountsResponseData &&
           chatRoomList &&
           chatRoomList
             .filter(
@@ -76,6 +79,9 @@ export const ConsultList = () => {
               return (
                 <ConsultTitle
                   key={chatRoom.chat_room_id}
+                  isUnreadConsult={unreadCountsResponseData.unread_consult.some(
+                    (c) => c.chat_room_id === chatRoom.chat_room_id
+                  )}
                   chatRoomId={chatRoom.chat_room_id}
                   title={chatRoom.title}
                   latestMessage={chatRoom.latest_message}
@@ -121,6 +127,7 @@ export const ConsultList = () => {
           )}
         </button>
         {isOpenedGroupList &&
+          unreadCountsResponseData &&
           chatRoomList &&
           chatRoomList
             .filter(
@@ -135,6 +142,9 @@ export const ConsultList = () => {
                 <ConsultTitle
                   key={chatRoom.chat_room_id}
                   chatRoomId={chatRoom.chat_room_id}
+                  isUnreadConsult={unreadCountsResponseData.unread_consult.some(
+                    (c) => c.chat_room_id === chatRoom.chat_room_id
+                  )}
                   title={chatRoom.title}
                   latestMessage={chatRoom.latest_message}
                   lastUpdatedDate={chatRoom.last_updated_date}
