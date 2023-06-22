@@ -6,11 +6,12 @@ import { useEditProfile } from './useEditProfile';
 import { useMedicalCareer } from './useMedicalCareer';
 import { ProfileMedicalSpecialitiesSelectDialog } from '@/components/MedicalSpeciality/ProfileMedicalSpecialitiesSelectDialog';
 import { ProfileMedicalSpecialities } from '@/components/MedicalSpeciality/ProfileMedicalSpecialities';
+import { EditProfileProps } from './EditProfile';
 
-export type MedicalCareerProps = ReturnType<typeof useEditProfile>;
+export type MedicalCareerProps = ReturnType<typeof useEditProfile> & EditProfileProps;
 
 export const MedicalCareer = (props: MedicalCareerProps) => {
-  const { profile, selectMedicalSpecialities, setProfileFields } = props;
+  const { isRegisterMode, profile, selectMedicalSpecialities, setProfileFields } = props;
   const {
     isMedicalSpecialitiesSelectDialogShown,
     moveSelectedMedicalSpeciality,
@@ -28,18 +29,23 @@ export const MedicalCareer = (props: MedicalCareerProps) => {
       <div className="mb-10">
         <h3 className="mb-4 text-primary">■ 医療従事経歴</h3>
 
-        <div className="mb-4 flex gap-6">
-          <TextField
-            name="doctor_qualified_year"
-            value={profile.qualified_year}
-            onChange={(e) => setProfileFields({ ...profile, qualified_year: e.target.value })}
-            disabled={true}
-            id="doctor_qualified_year"
-            className="!w-64"
-            label="医師資格取得年"
-            subscript="年"
-          />
-        </div>
+        {(profile.is_hospital_doctor ||
+          profile.is_invited ||
+          profile.is_skip_confirmation_by_utm_source ||
+          profile.qualified_year !== '') && (
+          <div className="mb-4 flex gap-6">
+            <EditProfileLabel required={true}>医師資格取得年</EditProfileLabel>
+            <TextField
+              name="doctor_qualified_year"
+              value={profile.qualified_year}
+              onChange={(e) => setProfileFields({ ...profile, qualified_year: e.target.value })}
+              disabled={!isRegisterMode}
+              id="doctor_qualified_year"
+              className="!w-64"
+              subscript="年"
+            />
+          </div>
+        )}
 
         <div className="mb-4">
           <EditProfileLabel required={true}>所属科</EditProfileLabel>

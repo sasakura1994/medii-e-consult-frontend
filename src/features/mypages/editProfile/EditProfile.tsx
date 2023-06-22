@@ -42,7 +42,7 @@ export const EditProfile = (props: EditProfileProps) => {
           </h2>
 
           <UserInfo {...editProfile} {...props} />
-          <MedicalCareer {...editProfile} />
+          <MedicalCareer {...editProfile} {...props} />
           <HospitalAffiliation {...editProfile} />
           <UsageClassification {...editProfile} />
           {isRegisterMode && (
