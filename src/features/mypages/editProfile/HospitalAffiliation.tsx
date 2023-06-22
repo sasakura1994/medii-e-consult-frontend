@@ -20,7 +20,7 @@ export const HospitalAffiliation = (props: Props) => {
     setHospitalInputType,
     setHospitalName,
     setHospitalSearchText,
-    setProfile,
+    setProfileFields,
   } = props;
   const { prefectures } = usePrefecture();
 
@@ -41,7 +41,7 @@ export const HospitalAffiliation = (props: Props) => {
             name="prefecture_code"
             id="prefecture_code"
             value={profile.prefecture_code}
-            onChange={(e) => setProfile({ ...profile, prefecture_code: e.target.value })}
+            onChange={(e) => setProfileFields({ ...profile, prefecture_code: e.target.value })}
             required
           >
             {prefectures.map((prefecture) => (

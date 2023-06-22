@@ -6,7 +6,7 @@ import { EditProfileLabel } from '@/features/mypages/editProfile/EditProfileLabe
 
 type Props = ReturnType<typeof useEditProfile> & EditProfileProps;
 
-export const UserInfo: React.FC<Props> = ({ isRegisterMode, profile, setProfile }: Props) => {
+export const UserInfo: React.FC<Props> = ({ isRegisterMode, profile, setProfileFields }: Props) => {
   if (!profile) {
     return <></>;
   }
@@ -20,7 +20,7 @@ export const UserInfo: React.FC<Props> = ({ isRegisterMode, profile, setProfile 
           <TextField
             name="last_name"
             value={profile.last_name}
-            onChange={(e) => setProfile({ ...profile, last_name: e.target.value })}
+            onChange={(e) => setProfileFields({ ...profile, last_name: e.target.value })}
             disabled={!isRegisterMode}
             id="last_name"
             className="mb-4 lg:mb-0"
@@ -33,7 +33,7 @@ export const UserInfo: React.FC<Props> = ({ isRegisterMode, profile, setProfile 
           <TextField
             name="first_name"
             value={profile.first_name}
-            onChange={(e) => setProfile({ ...profile, first_name: e.target.value })}
+            onChange={(e) => setProfileFields({ ...profile, first_name: e.target.value })}
             disabled={!isRegisterMode}
             id="first_name"
           />
@@ -46,7 +46,7 @@ export const UserInfo: React.FC<Props> = ({ isRegisterMode, profile, setProfile 
           <TextField
             name="last_name_hira"
             value={profile.last_name_hira}
-            onChange={(e) => setProfile({ ...profile, last_name_hira: e.target.value })}
+            onChange={(e) => setProfileFields({ ...profile, last_name_hira: e.target.value })}
             disabled={!isRegisterMode}
             id="last_name_hira"
             className="mb-4 lg:mb-0"
@@ -58,7 +58,7 @@ export const UserInfo: React.FC<Props> = ({ isRegisterMode, profile, setProfile 
           <TextField
             name="first_name_hira"
             value={profile.first_name_hira}
-            onChange={(e) => setProfile({ ...profile, first_name_hira: e.target.value })}
+            onChange={(e) => setProfileFields({ ...profile, first_name_hira: e.target.value })}
             disabled={!isRegisterMode}
             id="first_name_hira"
           />
@@ -71,7 +71,7 @@ export const UserInfo: React.FC<Props> = ({ isRegisterMode, profile, setProfile 
           <TextField
             name="birthday_year"
             value={profile.birthday_year}
-            onChange={(e) => setProfile({ ...profile, birthday_year: e.target.value })}
+            onChange={(e) => setProfileFields({ ...profile, birthday_year: e.target.value })}
             disabled={!isRegisterMode}
             id="birthday_year"
             className="!w-32 lg:!w-40"
@@ -81,7 +81,7 @@ export const UserInfo: React.FC<Props> = ({ isRegisterMode, profile, setProfile 
           <TextField
             name="birthday_month"
             value={profile.birthday_month}
-            onChange={(e) => setProfile({ ...profile, birthday_month: e.target.value })}
+            onChange={(e) => setProfileFields({ ...profile, birthday_month: e.target.value })}
             disabled={!isRegisterMode}
             id="birthday_month"
             subscript="月"
@@ -90,7 +90,7 @@ export const UserInfo: React.FC<Props> = ({ isRegisterMode, profile, setProfile 
           <TextField
             name="birthday_day"
             value={profile.birthday_day}
-            onChange={(e) => setProfile({ ...profile, birthday_day: e.target.value })}
+            onChange={(e) => setProfileFields({ ...profile, birthday_day: e.target.value })}
             disabled={!isRegisterMode}
             id="birthday_day"
             subscript="日"
@@ -107,7 +107,7 @@ export const UserInfo: React.FC<Props> = ({ isRegisterMode, profile, setProfile 
           disabled={!isRegisterMode}
           placeholder="大学名"
           value={profile.graduated_university ?? ''}
-          onChange={(e) => setProfile({ ...profile, graduated_university: e.target.value })}
+          onChange={(e) => setProfileFields({ ...profile, graduated_university: e.target.value })}
         />
       </div>
     </div>

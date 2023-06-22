@@ -10,7 +10,7 @@ import { ProfileMedicalSpecialities } from '@/components/MedicalSpeciality/Profi
 export type MedicalCareerProps = ReturnType<typeof useEditProfile>;
 
 export const MedicalCareer = (props: MedicalCareerProps) => {
-  const { profile, selectMedicalSpecialities, setProfile } = props;
+  const { profile, selectMedicalSpecialities, setProfileFields } = props;
   const {
     isMedicalSpecialitiesSelectDialogShown,
     moveSelectedMedicalSpeciality,
@@ -32,7 +32,7 @@ export const MedicalCareer = (props: MedicalCareerProps) => {
           <TextField
             name="doctor_qualified_year"
             value={profile.qualified_year}
-            onChange={(e) => setProfile({ ...profile, qualified_year: e.target.value })}
+            onChange={(e) => setProfileFields({ ...profile, qualified_year: e.target.value })}
             disabled={true}
             id="doctor_qualified_year"
             className="!w-64"
@@ -84,7 +84,7 @@ export const MedicalCareer = (props: MedicalCareerProps) => {
               id="expertise"
               className="!h-28"
               value={profile.expertise}
-              onChange={(e) => setProfile({ ...profile, expertise: e.target.value })}
+              onChange={(e) => setProfileFields({ ...profile, expertise: e.target.value })}
             />
           </div>
 
@@ -95,7 +95,7 @@ export const MedicalCareer = (props: MedicalCareerProps) => {
               id="qualification"
               className="!h-28"
               value={profile.qualification}
-              onChange={(e) => setProfile({ ...profile, qualification: e.target.value })}
+              onChange={(e) => setProfileFields({ ...profile, qualification: e.target.value })}
             />
           </div>
         </div>

@@ -5,7 +5,7 @@ import { Radio } from '@/components/Parts/Form/Radio';
 type Props = ReturnType<typeof useEditProfile>;
 
 export const EditProfileNotification = (props: Props) => {
-  const { profile, setProfile } = props;
+  const { profile, setProfileFields } = props;
 
   if (!profile) {
     return <></>;
@@ -23,7 +23,7 @@ export const EditProfileNotification = (props: Props) => {
               name="news_notification"
               value="mail-push"
               checked={profile.is_mail_notify && profile.is_push_notify}
-              onChange={() => setProfile({ ...profile, is_mail_notify: true, is_push_notify: true })}
+              onChange={() => setProfileFields({ ...profile, is_mail_notify: true, is_push_notify: true })}
             />
           </div>
           <div>
@@ -32,7 +32,7 @@ export const EditProfileNotification = (props: Props) => {
               name="news_notification"
               value="mail"
               checked={profile.is_mail_notify && !profile.is_push_notify}
-              onChange={() => setProfile({ ...profile, is_mail_notify: true, is_push_notify: false })}
+              onChange={() => setProfileFields({ ...profile, is_mail_notify: true, is_push_notify: false })}
             />
           </div>
           <div>
@@ -41,7 +41,7 @@ export const EditProfileNotification = (props: Props) => {
               name="news_notification"
               value="push"
               checked={!profile.is_mail_notify && profile.is_push_notify}
-              onChange={() => setProfile({ ...profile, is_mail_notify: false, is_push_notify: true })}
+              onChange={() => setProfileFields({ ...profile, is_mail_notify: false, is_push_notify: true })}
             />
           </div>
         </div>
@@ -53,7 +53,7 @@ export const EditProfileNotification = (props: Props) => {
               name="not_seminar_mail_target"
               value="false"
               checked={!profile.not_seminar_mail_target}
-              onChange={() => setProfile({ ...profile, not_seminar_mail_target: false })}
+              onChange={() => setProfileFields({ ...profile, not_seminar_mail_target: false })}
             />
           </div>
           <div>
@@ -62,7 +62,7 @@ export const EditProfileNotification = (props: Props) => {
               name="not_seminar_mail_target"
               value="true"
               checked={profile.not_seminar_mail_target}
-              onChange={() => setProfile({ ...profile, not_seminar_mail_target: true })}
+              onChange={() => setProfileFields({ ...profile, not_seminar_mail_target: true })}
             />
           </div>
         </div>

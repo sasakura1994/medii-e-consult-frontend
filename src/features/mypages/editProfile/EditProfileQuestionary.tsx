@@ -8,7 +8,7 @@ import { CheckBox } from '@/components/Parts/Form/CheckBox';
 export type Props = ReturnType<typeof useEditProfile>;
 
 export const EditProfileQuestionary = (props: Props) => {
-  const { profile, selectedQuestionaryItemIds, setProfile, toggleQuestionaryItem } = props;
+  const { profile, selectedQuestionaryItemIds, setProfileFields, toggleQuestionaryItem } = props;
   const { questionaryItems } = useFetchQuestionaryItems();
 
   if (!profile) {
@@ -39,7 +39,7 @@ export const EditProfileQuestionary = (props: Props) => {
             name="questionary_other"
             value={profile.questionary_other ?? ''}
             className="h-[100px]"
-            onChange={(e) => setProfile({ ...profile, questionary_other: e.target.value })}
+            onChange={(e) => setProfileFields({ ...profile, questionary_other: e.target.value })}
           />
         </div>
       </div>

@@ -4,10 +4,7 @@ import { useEditProfile } from './useEditProfile';
 
 type Props = ReturnType<typeof useEditProfile>;
 
-export const UsageClassification: React.FC<Props> = ({
-  profile,
-  setProfile,
-}) => {
+export const UsageClassification: React.FC<Props> = ({ profile, setProfileFields }) => {
   if (!profile) {
     return <></>;
   }
@@ -27,9 +24,7 @@ export const UsageClassification: React.FC<Props> = ({
             </>
           }
           value="1"
-          onChange={() =>
-            setProfile({ ...profile, want_to_be_consultant: true })
-          }
+          onChange={() => setProfileFields({ ...profile, want_to_be_consultant: true })}
           checked={profile.want_to_be_consultant}
         />
 
@@ -67,9 +62,7 @@ export const UsageClassification: React.FC<Props> = ({
             </>
           }
           value="0"
-          onChange={() =>
-            setProfile({ ...profile, want_to_be_consultant: false })
-          }
+          onChange={() => setProfileFields({ ...profile, want_to_be_consultant: false })}
           checked={!profile.want_to_be_consultant}
         />
       </div>

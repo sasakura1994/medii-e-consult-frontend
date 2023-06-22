@@ -8,6 +8,8 @@ import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { EditProfileProps } from './EditProfile';
 
+const editProfileFormDataKey = 'EditProfile::formData';
+
 export type EditingProfile = Omit<
   ProfileEntity,
   'birthday_year' | 'birthday_month' | 'birthday_day' | 'qualified_year'
@@ -29,6 +31,7 @@ export const useEditProfile = (props: EditProfileProps) => {
   const { isRegisterMode } = props;
   const router = useRouter();
 
+  // setProfileはsetProfileFieldsでラップしているので基本使わない
   const [profile, setProfile] = useState<EditingProfile>();
   const [isInitialized, setIsInitialized] = useState(false);
   const [hospitalInputType, setHospitalInputType] = useState<'free' | 'select'>('select');
@@ -47,7 +50,10 @@ export const useEditProfile = (props: EditProfileProps) => {
     [hospitals]
   );
 
-  const selectedQuestionaryItemIds: string[] = profile?.questionary_selected_ids_csv?.split(/,/) ?? [];
+  const selectedQuestionaryItemIds: string[] = useMemo(
+    () => profile?.questionary_selected_ids_csv?.split(/,/) ?? [],
+    [profile?.questionary_selected_ids_csv]
+  );
 
   const isHospitalDisabled = ['STUDENT', 'SHIKAKOUKUGEKA'].includes(profile?.main_speciality ?? '');
 
@@ -80,15 +86,32 @@ export const useEditProfile = (props: EditProfileProps) => {
     setIsInitialized(true);
   }, [fetchedProfile, isInitialized]);
 
+  // 下書き保存も同時に行うため基本的にはsetProfileでなくこれを使う
+  const setProfileFields = useCallback(
+    (data: Partial<EditingProfile>) => {
+      if (!profile) {
+        return;
+      }
+
+      const updatedProfile = { ...profile, ...data };
+      setProfile(updatedProfile);
+
+      if (isRegisterMode) {
+        localStorage.setItem(editProfileFormDataKey, JSON.stringify(updatedProfile));
+      }
+    },
+    [isRegisterMode, profile]
+  );
+
   const setHospitalName = useCallback(
     (hospitalName: string) => {
       if (!profile) {
         return;
       }
-      setProfile({ ...profile, hospital_name: hospitalName });
+      setProfileFields({ ...profile, hospital_name: hospitalName });
       setHospitalInputType('free');
     },
-    [profile]
+    [profile, setProfileFields]
   );
 
   const selectHospital = useCallback(
@@ -96,10 +119,10 @@ export const useEditProfile = (props: EditProfileProps) => {
       if (!profile) {
         return;
       }
-      setProfile({ ...profile, hospital_id: selected?.value ?? '' });
+      setProfileFields({ ...profile, hospital_id: selected?.value ?? '' });
       setSelectedHospital(selected ?? undefined);
     },
-    [profile]
+    [profile, setProfileFields]
   );
 
   const selectMedicalSpecialities = useCallback(
@@ -107,7 +130,7 @@ export const useEditProfile = (props: EditProfileProps) => {
       if (!profile) {
         return;
       }
-      setProfile({
+      setProfileFields({
         ...profile,
         main_speciality: medicalSpecialities.length > 0 ? medicalSpecialities[0].speciality_code : '',
         speciality_2: medicalSpecialities.length > 1 ? medicalSpecialities[1].speciality_code : '',
@@ -115,7 +138,7 @@ export const useEditProfile = (props: EditProfileProps) => {
         speciality_4: medicalSpecialities.length > 3 ? medicalSpecialities[3].speciality_code : '',
       });
     },
-    [profile]
+    [profile, setProfileFields]
   );
 
   const submit = useCallback(async () => {
@@ -173,20 +196,20 @@ export const useEditProfile = (props: EditProfileProps) => {
       const idString = questionaryItemId.toString();
 
       if (selectedQuestionaryItemIds.includes(idString)) {
-        setProfile({
+        setProfileFields({
           ...profile,
           questionary_selected_ids_csv: selectedQuestionaryItemIds
             .filter((questionaryItemId) => questionaryItemId !== idString)
             .join(','),
         });
       } else {
-        setProfile({
+        setProfileFields({
           ...profile,
           questionary_selected_ids_csv: [...selectedQuestionaryItemIds, idString].join(','),
         });
       }
     },
-    [profile, selectedQuestionaryItemIds]
+    [profile, selectedQuestionaryItemIds, setProfileFields]
   );
 
   return {
@@ -204,7 +227,7 @@ export const useEditProfile = (props: EditProfileProps) => {
     setHospitalInputType,
     setHospitalName,
     setHospitalSearchText,
-    setProfile,
+    setProfileFields,
     submit,
     toggleQuestionaryItem,
   };
