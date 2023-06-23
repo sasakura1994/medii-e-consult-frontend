@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import type { ProfileEntity } from '@/types/entities/profileEntity';
-import { useRecoilState } from 'recoil';
-import { profileState } from '@/globalStates/profileState';
 import { useToken } from './authentication/useToken';
 import { usePostLogin } from './api/doctor/usePostLogin';
 import { useRouter } from 'next/router';
+import { mutateFetchProfile } from './api/doctor/useFetchProfile';
 
 export const loginRedirectUrlKey = 'Login:redirectUrl';
 
@@ -12,28 +11,14 @@ type Query = {
   redirect?: string;
 };
 
-export type UseLoginType = {
-  email: string;
-  setEmail: React.Dispatch<React.SetStateAction<string>>;
-  password: string;
-  setPassword: React.Dispatch<React.SetStateAction<string>>;
-  errorMessage: string;
-  setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
-  login: (e: React.FormEvent<HTMLFormElement>) => void;
-  profile?: ProfileEntity | null;
-  saveRedirectUrl: () => void;
-  token: string;
-};
-
-export const useLogin = (): UseLoginType => {
+export const useLogin = () => {
   const router = useRouter();
   const { redirect } = router.query as Query;
   const [redirectUrl, setRedirectUrl] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [errorMessage, setErrorMessage] = React.useState('');
-  const [profile, setProfile] = useRecoilState(profileState);
-  const { token, setTokenAndMarkInitialized } = useToken();
+  const { setTokenAndMarkInitialized } = useToken();
   const { login: postLogin } = usePostLogin();
 
   useEffect(() => {
@@ -65,7 +50,7 @@ export const useLogin = (): UseLoginType => {
 
       if (res.data.jwt_token) {
         setTokenAndMarkInitialized(res.data.jwt_token);
-        setProfile(res.data.doctor);
+        mutateFetchProfile();
         localStorage.removeItem(loginRedirectUrlKey);
 
         router.push(redirectUrl === '' ? 'top' : redirectUrl);
@@ -79,7 +64,6 @@ export const useLogin = (): UseLoginType => {
       postLogin,
       redirectUrl,
       router,
-      setProfile,
       setTokenAndMarkInitialized,
     ]
   );
@@ -91,15 +75,10 @@ export const useLogin = (): UseLoginType => {
   }, [redirect]);
 
   return {
-    email,
     setEmail,
-    password,
     setPassword,
-    errorMessage,
-    setErrorMessage,
     login,
-    profile,
+    errorMessage,
     saveRedirectUrl,
-    token,
   };
 };
