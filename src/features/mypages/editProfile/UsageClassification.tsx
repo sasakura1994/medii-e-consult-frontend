@@ -24,7 +24,7 @@ export const UsageClassification: React.FC<Props> = ({ profile, setProfileFields
             </>
           }
           value="1"
-          onChange={() => setProfileFields({ ...profile, want_to_be_consultant: true })}
+          onChange={() => setProfileFields({ want_to_be_consultant: true })}
           checked={profile.want_to_be_consultant}
         />
 
@@ -62,7 +62,7 @@ export const UsageClassification: React.FC<Props> = ({ profile, setProfileFields
             </>
           }
           value="0"
-          onChange={() => setProfileFields({ ...profile, want_to_be_consultant: false })}
+          onChange={() => setProfileFields({ want_to_be_consultant: false })}
           checked={!profile.want_to_be_consultant}
         />
       </div>

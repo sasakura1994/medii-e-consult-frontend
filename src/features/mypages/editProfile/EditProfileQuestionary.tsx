@@ -39,7 +39,7 @@ export const EditProfileQuestionary = (props: Props) => {
             name="questionary_other"
             value={profile.questionary_other ?? ''}
             className="h-[100px]"
-            onChange={(e) => setProfileFields({ ...profile, questionary_other: e.target.value })}
+            onChange={(e) => setProfileFields({ questionary_other: e.target.value })}
           />
         </div>
       </div>

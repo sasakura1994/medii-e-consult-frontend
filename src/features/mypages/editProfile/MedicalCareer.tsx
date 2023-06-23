@@ -7,6 +7,8 @@ import { useMedicalCareer } from './useMedicalCareer';
 import { ProfileMedicalSpecialitiesSelectDialog } from '@/components/MedicalSpeciality/ProfileMedicalSpecialitiesSelectDialog';
 import { ProfileMedicalSpecialities } from '@/components/MedicalSpeciality/ProfileMedicalSpecialities';
 import { EditProfileProps } from './EditProfile';
+import { YearInput } from '@/components/Parts/Form/YearInput';
+import { useEraConverter } from '@/hooks/useEraConverter';
 
 export type MedicalCareerProps = ReturnType<typeof useEditProfile> & EditProfileProps;
 
@@ -19,6 +21,7 @@ export const MedicalCareer = (props: MedicalCareerProps) => {
     setIsMedicalSpecialitiesSelectDialogShown,
     toggleMedicalSpeciality,
   } = useMedicalCareer(props);
+  const eraConverter = useEraConverter();
 
   if (!profile) {
     return <></>;
@@ -33,17 +36,24 @@ export const MedicalCareer = (props: MedicalCareerProps) => {
           profile.is_invited ||
           profile.is_skip_confirmation_by_utm_source ||
           profile.qualified_year !== '') && (
-          <div className="mb-4 flex gap-6">
+          <div className="mb-4">
             <EditProfileLabel required={true}>医師資格取得年</EditProfileLabel>
-            <TextField
-              name="doctor_qualified_year"
-              value={profile.qualified_year}
-              onChange={(e) => setProfileFields({ ...profile, qualified_year: e.target.value })}
-              disabled={!isRegisterMode}
-              id="doctor_qualified_year"
-              className="!w-64"
-              subscript="年"
-            />
+            {isRegisterMode ? (
+              <YearInput
+                {...eraConverter}
+                value={Number(profile.qualified_year)}
+                onChange={(value) => setProfileFields({ qualified_year: value.toString() })}
+              />
+            ) : (
+              <TextField
+                name="doctor_qualified_year"
+                value={profile.qualified_year}
+                disabled={true}
+                id="doctor_qualified_year"
+                className="!w-64"
+                subscript="年"
+              />
+            )}
           </div>
         )}
 
@@ -90,7 +100,7 @@ export const MedicalCareer = (props: MedicalCareerProps) => {
               id="expertise"
               className="!h-28"
               value={profile.expertise}
-              onChange={(e) => setProfileFields({ ...profile, expertise: e.target.value })}
+              onChange={(e) => setProfileFields({ expertise: e.target.value })}
             />
           </div>
 
@@ -101,7 +111,7 @@ export const MedicalCareer = (props: MedicalCareerProps) => {
               id="qualification"
               className="!h-28"
               value={profile.qualification}
-              onChange={(e) => setProfileFields({ ...profile, qualification: e.target.value })}
+              onChange={(e) => setProfileFields({ qualification: e.target.value })}
             />
           </div>
         </div>

@@ -130,7 +130,7 @@ export const useEditProfile = (props: EditProfileProps) => {
       if (!profile) {
         return;
       }
-      setProfileFields({ ...profile, hospital_name: hospitalName });
+      setProfileFields({ hospital_name: hospitalName });
       setHospitalInputType('free');
     },
     [profile, setProfileFields]
@@ -141,7 +141,7 @@ export const useEditProfile = (props: EditProfileProps) => {
       if (!profile) {
         return;
       }
-      setProfileFields({ ...profile, hospital_id: selected?.value ?? '' });
+      setProfileFields({ hospital_id: selected?.value ?? '' });
       setSelectedHospital(selected ?? undefined);
     },
     [profile, setProfileFields]
@@ -153,7 +153,6 @@ export const useEditProfile = (props: EditProfileProps) => {
         return;
       }
       setProfileFields({
-        ...profile,
         main_speciality: medicalSpecialities.length > 0 ? medicalSpecialities[0].speciality_code : '',
         speciality_2: medicalSpecialities.length > 1 ? medicalSpecialities[1].speciality_code : '',
         speciality_3: medicalSpecialities.length > 2 ? medicalSpecialities[2].speciality_code : '',
@@ -219,14 +218,12 @@ export const useEditProfile = (props: EditProfileProps) => {
 
       if (selectedQuestionaryItemIds.includes(idString)) {
         setProfileFields({
-          ...profile,
           questionary_selected_ids_csv: selectedQuestionaryItemIds
             .filter((questionaryItemId) => questionaryItemId !== idString)
             .join(','),
         });
       } else {
         setProfileFields({
-          ...profile,
           questionary_selected_ids_csv: [...selectedQuestionaryItemIds, idString].join(','),
         });
       }

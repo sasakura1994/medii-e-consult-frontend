@@ -24,7 +24,7 @@ export const UserInfo: React.FC<Props> = ({ isRegisterMode, profile, setProfileF
           <TextField
             name="last_name"
             value={profile.last_name}
-            onChange={(e) => setProfileFields({ ...profile, last_name: e.target.value })}
+            onChange={(e) => setProfileFields({ last_name: e.target.value })}
             disabled={!isRegisterMode}
             id="last_name"
             className="mb-4 lg:mb-0"
@@ -37,7 +37,7 @@ export const UserInfo: React.FC<Props> = ({ isRegisterMode, profile, setProfileF
           <TextField
             name="first_name"
             value={profile.first_name}
-            onChange={(e) => setProfileFields({ ...profile, first_name: e.target.value })}
+            onChange={(e) => setProfileFields({ first_name: e.target.value })}
             disabled={!isRegisterMode}
             id="first_name"
           />
@@ -50,7 +50,7 @@ export const UserInfo: React.FC<Props> = ({ isRegisterMode, profile, setProfileF
           <TextField
             name="last_name_hira"
             value={profile.last_name_hira}
-            onChange={(e) => setProfileFields({ ...profile, last_name_hira: e.target.value })}
+            onChange={(e) => setProfileFields({ last_name_hira: e.target.value })}
             disabled={!isRegisterMode}
             id="last_name_hira"
             className="mb-4 lg:mb-0"
@@ -62,7 +62,7 @@ export const UserInfo: React.FC<Props> = ({ isRegisterMode, profile, setProfileF
           <TextField
             name="first_name_hira"
             value={profile.first_name_hira}
-            onChange={(e) => setProfileFields({ ...profile, first_name_hira: e.target.value })}
+            onChange={(e) => setProfileFields({ first_name_hira: e.target.value })}
             disabled={!isRegisterMode}
             id="first_name_hira"
           />
@@ -76,13 +76,13 @@ export const UserInfo: React.FC<Props> = ({ isRegisterMode, profile, setProfileF
             <YearInput
               {...eraConverter}
               value={Number(profile.birthday_year)}
-              onChange={(value) => setProfileFields({ ...profile, birthday_year: value.toString() })}
+              onChange={(value) => setProfileFields({ birthday_year: value.toString() })}
             />
           ) : (
             <TextField
               name="birthday_year"
               value={profile.birthday_year}
-              onChange={(e) => setProfileFields({ ...profile, birthday_year: e.target.value })}
+              onChange={(e) => setProfileFields({ birthday_year: e.target.value })}
               disabled={!isRegisterMode}
               id="birthday_year"
               className="!w-32 lg:!w-40"
@@ -93,7 +93,7 @@ export const UserInfo: React.FC<Props> = ({ isRegisterMode, profile, setProfileF
           <TextField
             name="birthday_month"
             value={profile.birthday_month}
-            onChange={(e) => setProfileFields({ ...profile, birthday_month: e.target.value })}
+            onChange={(e) => setProfileFields({ birthday_month: e.target.value })}
             disabled={!isRegisterMode}
             id="birthday_month"
             subscript="月"
@@ -102,7 +102,7 @@ export const UserInfo: React.FC<Props> = ({ isRegisterMode, profile, setProfileF
           <TextField
             name="birthday_day"
             value={profile.birthday_day}
-            onChange={(e) => setProfileFields({ ...profile, birthday_day: e.target.value })}
+            onChange={(e) => setProfileFields({ birthday_day: e.target.value })}
             disabled={!isRegisterMode}
             id="birthday_day"
             subscript="日"
@@ -119,7 +119,7 @@ export const UserInfo: React.FC<Props> = ({ isRegisterMode, profile, setProfileF
           disabled={!isRegisterMode}
           placeholder="大学名"
           value={profile.graduated_university ?? ''}
-          onChange={(e) => setProfileFields({ ...profile, graduated_university: e.target.value })}
+          onChange={(e) => setProfileFields({ graduated_university: e.target.value })}
         />
       </div>
     </div>
