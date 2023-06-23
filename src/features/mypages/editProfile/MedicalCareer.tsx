@@ -37,7 +37,7 @@ export const MedicalCareer = (props: MedicalCareerProps) => {
           profile.is_skip_confirmation_by_utm_source ||
           profile.qualified_year !== '') && (
           <div className="mb-4">
-            <EditProfileLabel required={true}>医師資格取得年</EditProfileLabel>
+            <EditProfileLabel required={isRegisterMode ? true : undefined}>医師資格取得年</EditProfileLabel>
             {isRegisterMode ? (
               <YearInput
                 {...eraConverter}
