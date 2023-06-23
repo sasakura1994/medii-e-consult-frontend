@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { useMedicalSpeciality } from '@/hooks/medicalSpeciality/useMedicalSpeciality';
 import { usePrefecture } from '@/hooks/prefecture/usePrefecture';
 import { useProfile } from '@/hooks/useProfile';
+import Link from 'next/link';
 
 type Props = {
   onEdit: () => void;
@@ -22,17 +23,10 @@ export const ProfileDetail: React.FC<Props> = ({ onEdit }: Props) => {
     <>
       <Card className="px-4 pb-8 pt-10 lg:px-[84px] lg:py-10">
         <div className="item mb-10 flex items-center justify-between">
-          <h2
-            className="text-2xl leading-8"
-            data-testid="h-edit-profile-detail"
-          >
+          <h2 className="text-2xl leading-8" data-testid="h-edit-profile-detail">
             プロフィール
           </h2>
-          <OutlinedSquareButton
-            type="button"
-            onClick={onEdit}
-            dataTestId="btn-profile-edit"
-          >
+          <OutlinedSquareButton type="button" onClick={onEdit} dataTestId="btn-profile-edit">
             プロフィールを編集
           </OutlinedSquareButton>
         </div>
@@ -68,9 +62,10 @@ export const ProfileDetail: React.FC<Props> = ({ onEdit }: Props) => {
                   <CaptionWithBody caption="メールアドレス" className="mb-2">
                     {email.mail_address}
                   </CaptionWithBody>
-                  <button
-                    type="button"
-                    className="inline-block
+                  <Link href="/editemail">
+                    <button
+                      type="button"
+                      className="inline-block
                          rounded
                          border
                          border-solid
@@ -80,10 +75,10 @@ export const ProfileDetail: React.FC<Props> = ({ onEdit }: Props) => {
                          py-2
                          text-sm
                          leading-none"
-                    onClick={() => console.log('メールアドレス編集')}
-                  >
-                    メールアドレスを変更
-                  </button>
+                    >
+                      メールアドレスを変更
+                    </button>
+                  </Link>
                 </div>
               )}
             </div>
@@ -103,26 +98,17 @@ export const ProfileDetail: React.FC<Props> = ({ onEdit }: Props) => {
               <div className="mb-6">
                 <p className="mb-2 text-[#999999]">その他（対応可能な科目）</p>
                 {getMedicalSpecialityName(profile.speciality_2) && (
-                  <p className="mb-1">
-                    {getMedicalSpecialityName(profile.speciality_2)}
-                  </p>
+                  <p className="mb-1">{getMedicalSpecialityName(profile.speciality_2)}</p>
                 )}
                 {getMedicalSpecialityName(profile.speciality_3) && (
-                  <p className="mb-1">
-                    {getMedicalSpecialityName(profile.speciality_3)}
-                  </p>
+                  <p className="mb-1">{getMedicalSpecialityName(profile.speciality_3)}</p>
                 )}
                 {getMedicalSpecialityName(profile.speciality_4) && (
-                  <p className="mb-1">
-                    {getMedicalSpecialityName(profile.speciality_4)}
-                  </p>
+                  <p className="mb-1">{getMedicalSpecialityName(profile.speciality_4)}</p>
                 )}
               </div>
 
-              <CaptionWithBody
-                caption="特によく診てきた疾患・領域"
-                className="mb-6"
-              >
+              <CaptionWithBody caption="特によく診てきた疾患・領域" className="mb-6">
                 {profile.expertise}
               </CaptionWithBody>
 
@@ -149,11 +135,7 @@ export const ProfileDetail: React.FC<Props> = ({ onEdit }: Props) => {
 
             <div className="mb-10">
               <h3 className="mb-4 text-primary">■ E-コンサル利用区分</h3>
-              <p>
-                {profile.want_to_be_consultant
-                  ? '回答医&相談（E−コンサルへの回答も行います）'
-                  : '相談医'}
-              </p>
+              <p>{profile.want_to_be_consultant ? '回答医&相談（E−コンサルへの回答も行います）' : '相談医'}</p>
             </div>
           </>
         )}
