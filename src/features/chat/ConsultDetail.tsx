@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { ChatList } from './ChatList';
 import { ChatTextInput } from './ChatTextInput';
 import { useRouter } from 'next/router';
@@ -66,7 +66,9 @@ export const ConsultDetail = () => {
                 <p className="text-xxs">E-コンサル</p>
               )}
               <p className="text-md font-bold">
-                {chatRoomData.members[0] ? (
+                {chatRoomData.chat_room.room_type === 'GROUP' ? (
+                  chatRoomData.members.length + '人の専門医メンバー'
+                ) : chatRoomData.members[0] ? (
                   publishmentStatusData.publishment_accepted ? (
                     chatRoomData.members[0].last_name +
                     ' ' +
@@ -81,11 +83,12 @@ export const ConsultDetail = () => {
                   </p>
                 )}
               </p>
-              {chatRoomData.members[0] && (
-                <p className="text-xs">
-                  ({targetSpeciality?.name}・{experienceYear}年目)
-                </p>
-              )}
+              {chatRoomData.chat_room.room_type !== 'GROUP' &&
+                chatRoomData.members[0] && (
+                  <p className="text-xs">
+                    ({targetSpeciality?.name}・{experienceYear}年目)
+                  </p>
+                )}
             </div>
           </div>
           <div className="flex-grow overflow-auto bg-bg pb-2">
