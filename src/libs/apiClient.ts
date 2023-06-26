@@ -19,9 +19,7 @@ export type ApiErrorType = {
   url?: string;
 };
 
-export const createApiClient = (
-  options: ApiClientOption = {}
-): AxiosInstance => {
+export const createApiClient = (options: ApiClientOption = {}): AxiosInstance => {
   const headers: Header = {
     'content-type': 'application/json',
   };
@@ -53,17 +51,21 @@ export const redirectToLoginPage = () => {
   const redirectParam =
     '?redirect=' +
     encodeURIComponent(
-      window.location.pathname.replace(
-        process.env.WEB_EXTERNAL_SUB_DIR as string,
-        ''
-      ) + window.location.search
+      window.location.pathname.replace(process.env.WEB_EXTERNAL_SUB_DIR as string, '') + window.location.search
     );
   window.location.href = loginPageUrl + redirectParam;
 };
 
 const handleApiError = (apiClient: AxiosInstance) => {
   apiClient.interceptors.response.use(
-    (response) => response,
+    (response) => {
+      //C#のErrorリザルトの場合はエラーを返す
+      if (response.data.code && response.data.code != 1) {
+        //Header.vueの401監視がエラー吐くのでエラー時と型合わせてやる
+        return Promise.reject({ response: response });
+      }
+      return response;
+    },
     (error) => {
       const errorObj = {
         message: '',
