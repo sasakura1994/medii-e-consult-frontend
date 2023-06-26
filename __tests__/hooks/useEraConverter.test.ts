@@ -1,9 +1,9 @@
 import { act, renderHook } from '@testing-library/react';
 import { useEraConverter } from '@/hooks/useEraConverter';
+
 describe('useEraConverter', () => {
   test('初期化テスト', () => {
     const { result } = renderHook(() => useEraConverter());
-    expect(result.current.inputYear).toBe('');
     expect(result.current.era).toBe('year');
     expect(result.current.validation).toEqual({
       min: 1,

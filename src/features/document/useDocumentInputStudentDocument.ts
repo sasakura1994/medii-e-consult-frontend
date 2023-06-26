@@ -1,15 +1,9 @@
-import {
-  useState,
-  useEffect,
-  useCallback,
-  Dispatch,
-  SetStateAction,
-} from 'react';
+import { useState, useEffect, useCallback, Dispatch, SetStateAction } from 'react';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { useUploadDocument } from '@/hooks/api/doctor/useUploadDocument';
 import { useSelectedFile } from './useSelectedFile';
 import { DocumentSelected } from '.';
-import { Era, useEraConverter } from '@/hooks/useEraConverter';
+import { useEraConverter } from '@/hooks/useEraConverter';
 import router from 'next/router';
 
 type UseDocumentInputStudentDocumentProps = {
@@ -17,66 +11,14 @@ type UseDocumentInputStudentDocumentProps = {
   setSelected: Dispatch<SetStateAction<DocumentSelected>>;
 };
 
-type UseDocumentInputStudentDocument = {
-  imageSource: string;
-  onFileSelected: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  openFileSelector: () => void;
-  fileSelectorRef: React.RefObject<HTMLInputElement>;
-  errorMessage: string;
-  submit: (e: React.FormEvent) => void;
-  validation: {
-    min: number;
-    max: number;
-  };
-  handleEraChange: (value: string) => void;
-  inputYear: string;
-  graduationYear: string;
-  handleInputYearToSeireki: (value: string) => void;
-  handleGraduationYearToJapaneseEraYear: (currentEra: Era) => void;
-};
-
-export const useDocumentInputStudentDocument = ({
-  selected,
-  setSelected,
-}: UseDocumentInputStudentDocumentProps): UseDocumentInputStudentDocument => {
+export const useDocumentInputStudentDocument = ({ selected, setSelected }: UseDocumentInputStudentDocumentProps) => {
   const { profile } = useFetchProfile();
   const { uploadDocument } = useUploadDocument();
-  const [graduationYear, setGraduationYear] = useState('');
-  const {
-    imageSource,
-    onFileSelected,
-    setImageSource,
-    openFileSelector,
-    fileSelectorRef,
-  } = useSelectedFile();
-  const {
-    inputYear,
-    convertYear,
-    era,
-    setInputYear,
-    validation,
-    handleEraChange,
-  } = useEraConverter();
+  const [year, setYear] = useState(0);
+  const { imageSource, onFileSelected, setImageSource, openFileSelector, fileSelectorRef } = useSelectedFile();
+  const eraConverter = useEraConverter();
 
   const [errorMessage, setErrorMessage] = useState('');
-
-  const handleInputYearToSeireki = useCallback(
-    (value: string) => {
-      setInputYear(value);
-      const year = convertYear(value, era, 'year');
-      setGraduationYear(year.toString());
-    },
-    [convertYear, era, setInputYear]
-  );
-
-  const handleGraduationYearToJapaneseEraYear = useCallback(
-    (currentEra: Era) => {
-      const newYear = convertYear(graduationYear, 'year', currentEra);
-
-      setInputYear(newYear);
-    },
-    [convertYear, graduationYear, setInputYear]
-  );
 
   const submit = useCallback(
     async (e: React.FormEvent) => {
@@ -86,9 +28,8 @@ export const useDocumentInputStudentDocument = ({
         if (!imageSource) {
           return;
         }
-        const year = convertYear(inputYear, era, 'year');
         const newProfile = { ...profile };
-        newProfile.graduation_year = Number(year);
+        newProfile.graduation_year = year;
         newProfile.confimation_type = 'document';
         newProfile.document = fileSelectorRef.current?.files?.[0] || undefined;
         try {
@@ -102,16 +43,7 @@ export const useDocumentInputStudentDocument = ({
         setErrorMessage('ファイルの種類が不正です');
       }
     },
-    [
-      profile,
-      fileSelectorRef,
-      imageSource,
-      convertYear,
-      inputYear,
-      era,
-      uploadDocument,
-      setSelected,
-    ]
+    [profile, fileSelectorRef, imageSource, year, uploadDocument, setSelected]
   );
 
   useEffect(() => {
@@ -130,17 +62,14 @@ export const useDocumentInputStudentDocument = ({
   }, [selected]);
 
   return {
+    eraConverter,
     imageSource,
     onFileSelected,
     openFileSelector,
     fileSelectorRef,
     errorMessage,
     submit,
-    validation,
-    handleEraChange,
-    inputYear,
-    graduationYear,
-    handleInputYearToSeireki,
-    handleGraduationYearToJapaneseEraYear,
+    year,
+    setYear,
   };
 };

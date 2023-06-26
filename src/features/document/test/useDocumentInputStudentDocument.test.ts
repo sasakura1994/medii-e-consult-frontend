@@ -94,15 +94,14 @@ describe('useDocumentInputStudentDocument', () => {
       })
     );
     act(() => {
-      result.current.handleInputYearToSeireki('2023');
+      result.current.setYear(2023);
     });
-    expect(result.current.inputYear).toBe('2023');
+    expect(result.current.year).toBe(2023);
 
     act(() => {
-      result.current.handleGraduationYearToJapaneseEraYear('reiwa');
+      result.current.eraConverter.setEra('reiwa');
     });
-    expect(result.current.inputYear).toBe('5');
-    expect(result.current.graduationYear).toBe('2023');
+    expect(result.current.year).toBe(2023);
   });
 
   test('submit時にsetSelectedで"studentCompleted"になること', async () => {
