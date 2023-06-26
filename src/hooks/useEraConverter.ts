@@ -9,7 +9,17 @@ const eraOffsets: { [key in Era]: number } = {
   reiwa: 2018,
 };
 
-export const useEraConverter = () => {
+export type UseEraConverter = {
+  era: Era;
+  setEra: (era: Era) => void;
+  validation: {
+    min: number;
+    max: number;
+  };
+  convertYear: (year: string, fromEra: Era, toEra: Era) => string;
+};
+
+export const useEraConverter = (): UseEraConverter => {
   const [era, setEra] = useState<Era>('year');
 
   const validation = useMemo(() => {
@@ -44,9 +54,13 @@ export const useEraConverter = () => {
       case 'year':
         return adjustedYear > 0 ? String(adjustedYear) : '';
       case 'showa':
-        return adjustedYear > 0 && adjustedYear <= 64 ? String(adjustedYear) : '';
+        return adjustedYear > 0 && adjustedYear <= 64
+          ? String(adjustedYear)
+          : '';
       case 'heisei':
-        return adjustedYear > 0 && adjustedYear <= 31 ? String(adjustedYear) : '';
+        return adjustedYear > 0 && adjustedYear <= 31
+          ? String(adjustedYear)
+          : '';
       case 'reiwa':
         return adjustedYear > 0 ? String(adjustedYear) : '';
       default:

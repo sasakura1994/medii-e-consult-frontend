@@ -1,7 +1,7 @@
-import { Era, useEraConverter } from '@/hooks/useEraConverter';
+import { Era, UseEraConverter } from '@/hooks/useEraConverter';
 import React from 'react';
 
-type Props = ReturnType<typeof useEraConverter> & {
+type Props = UseEraConverter & {
   value: number;
   onChange: (value: number) => void;
 };
