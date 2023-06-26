@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import '@/styles/globals.scss';
+import '@/styles/swiperjs-custom.scss';
 import 'react-toastify/dist/ReactToastify.css';
 import { SWRConfig } from 'swr';
 import { useFetcher } from '@/hooks/network/useFetcher';
@@ -113,5 +114,8 @@ const App = (props: AppPropsWithLayout) => {
     </RecoilRoot>
   );
 };
+
+// 初回queryのundefined現象を解決する
+App.getInitialProps = async () => ( { pageProps: {} } );
 
 export default App;

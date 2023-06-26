@@ -1,7 +1,7 @@
 import React from 'react';
 import type { NextPage } from 'next';
-import { SeminarCard } from '@/features/seminar/seminarCard';
-import { SeminarArchiveHeader } from '@/features/seminar/seminarArchiveHeader';
+import { SeminarCard } from '@/features/seminar/SeminarCard';
+import { SeminarArchiveHeader } from '@/features/seminar/SeminarArchiveHeader';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useSeminars } from '@/features/seminar/useSeminars';

@@ -38,7 +38,7 @@ const Welcome = () => {
               label="視聴チケット1枚プレゼント"
               imageSrc="/images/document/conference.svg"
               description="専門医の先生をお招きして、各診療科・症例の知見を広く提供するオンラインセミナーを実施しています。"
-              buttonOutline="セミナーを見る"
+              buttonOutline="E-カンファを見る"
               linkOutline="/seminar"
               logOutline="click-seminar-in-welcome"
             />
