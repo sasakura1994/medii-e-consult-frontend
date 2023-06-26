@@ -1,10 +1,18 @@
-import { useCallback, useMemo, useState } from 'react';
+import { Dispatch, SetStateAction, useCallback, useMemo, useState } from 'react';
 import { MedicalCareerProps } from './MedicalCareer';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 import { useMedicalSpeciality } from '@/hooks/medicalSpeciality/useMedicalSpeciality';
 import { moveItem } from '@/libs/dnd';
 
-export const useMedicalCareer = (props: MedicalCareerProps) => {
+export type UseMedicalCareer = {
+  isMedicalSpecialitiesSelectDialogShown: boolean;
+  moveSelectedMedicalSpeciality: (dragIndex: number, hoverIndex: number) => void;
+  selectedMedicalSpecialities: MedicalSpecialityEntity[];
+  setIsMedicalSpecialitiesSelectDialogShown: Dispatch<SetStateAction<boolean>>;
+  toggleMedicalSpeciality: (toggledMedicalSpeciality: MedicalSpecialityEntity) => void;
+};
+
+export const useMedicalCareer = (props: MedicalCareerProps): UseMedicalCareer => {
   const { profile, selectMedicalSpecialities } = props;
   const [isMedicalSpecialitiesSelectDialogShown, setIsMedicalSpecialitiesSelectDialogShown] = useState(false);
 
