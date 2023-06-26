@@ -7,7 +7,13 @@ type Query = {
 
 type EditProfileMode = 'profile' | 'edit';
 
-export const useEditProfilePage = () => {
+type UseEditProfilePage = {
+  editProfileMode: EditProfileMode;
+  isRegisterMode: boolean;
+  setSelectedEditProfileMode: Dispatch<SetStateAction<EditProfileMode>>;
+};
+
+export const useEditProfilePage = (): UseEditProfilePage => {
   const router = useRouter();
   const query = router.query as Query;
   const [selectedEditProfileMode, setSelectedEditProfileMode] = useState<EditProfileMode>('profile');
