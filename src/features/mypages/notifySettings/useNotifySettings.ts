@@ -4,7 +4,15 @@ import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { useUpdateProfile } from '@/hooks/api/doctor/useUpdateProfile';
 import type { ProfileEntity } from '@/types/entities/profileEntity';
 
-export const useNotifySettings = () => {
+export type UseNotifySettings = {
+  profile?: ProfileEntity;
+  isError: boolean;
+  changeNotifyNew: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  changeNotifySeminar: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  update: () => void;
+};
+
+export const useNotifySettings = (): UseNotifySettings => {
   const [isInitialized, setIsInitialized] = useState(false);
   const [profile, setProfile] = useState<ProfileEntity>();
   const [isError, setIsError] = useState(false);

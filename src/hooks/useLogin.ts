@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import type { ProfileEntity } from '@/types/entities/profileEntity';
 import { useToken } from './authentication/useToken';
 import { usePostLogin } from './api/doctor/usePostLogin';
 import { useRouter } from 'next/router';
@@ -11,7 +10,15 @@ type Query = {
   redirect?: string;
 };
 
-export const useLogin = () => {
+export type UseLogin = {
+  setEmail: React.Dispatch<React.SetStateAction<string>>;
+  setPassword: React.Dispatch<React.SetStateAction<string>>;
+  errorMessage: string;
+  login: (e: React.FormEvent<HTMLFormElement>) => void;
+  saveRedirectUrl: () => void;
+};
+
+export const useLogin = (): UseLogin => {
   const router = useRouter();
   const { redirect } = router.query as Query;
   const [redirectUrl, setRedirectUrl] = React.useState('');
