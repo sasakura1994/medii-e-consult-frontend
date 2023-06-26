@@ -1,10 +1,36 @@
 import { renderHook, act } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
 import { useNotifySettings } from '../useNotifySettings';
-import { UseNotifySettingsType } from '../useNotifySettings';
+import * as useFetchProfileModule from '@/hooks/api/doctor/useFetchProfile';
+import * as useUpdateProfileModule from '@/hooks/api/doctor/useUpdateProfile';
+import { ProfileEntity } from '@/types/entities/profileEntity';
+
+jest.mock('@/hooks/api/doctor/useFetchProfile');
+jest.mock('@/hooks/api/doctor/useUpdateProfile');
+
+type UseNotifySettingsType = ReturnType<typeof useNotifySettings>;
 
 describe('NotifySettings', () => {
+  beforeEach(() => {
+    const useUpdateProfileMock = useUpdateProfileModule as jest.Mocked<
+      typeof useUpdateProfileModule
+    >;
+    useUpdateProfileMock.useUpdateProfile.mockReturnValue({
+      updateProfile: jest.fn().mockResolvedValue({}),
+    });
+  });
+
   test('メール・プッシュ通知両方受け取るを選択した場合に状態が変わること', async () => {
+    const useFetchProfileMock = useFetchProfileModule as jest.Mocked<
+      typeof useFetchProfileModule
+    >;
+    useFetchProfileMock.useFetchProfile.mockReturnValue({
+      profile: {
+        is_mail_notify: false,
+        is_push_notify: false,
+      } as ProfileEntity,
+    });
+
     let hoooResult: { current: UseNotifySettingsType } | undefined;
     await act(() => {
       // useNotifySettings が呼ばれると 非同期（useFetchProfile）が走るので act で処理の完了を待つ
@@ -25,6 +51,16 @@ describe('NotifySettings', () => {
   });
 
   test('メール通知を選択した場合に状態が変わること', async () => {
+    const useFetchProfileMock = useFetchProfileModule as jest.Mocked<
+      typeof useFetchProfileModule
+    >;
+    useFetchProfileMock.useFetchProfile.mockReturnValue({
+      profile: {
+        is_mail_notify: false,
+        is_push_notify: true,
+      } as ProfileEntity,
+    });
+
     let hoooResult: { current: UseNotifySettingsType } | undefined;
     await act(() => {
       hoooResult = renderHook(() => useNotifySettings(), {
@@ -44,6 +80,16 @@ describe('NotifySettings', () => {
   });
 
   test('プッシュ通知を選択した場合に状態が変わること', async () => {
+    const useFetchProfileMock = useFetchProfileModule as jest.Mocked<
+      typeof useFetchProfileModule
+    >;
+    useFetchProfileMock.useFetchProfile.mockReturnValue({
+      profile: {
+        is_mail_notify: true,
+        is_push_notify: false,
+      } as ProfileEntity,
+    });
+
     let hoooResult: { current: UseNotifySettingsType } | undefined;
     await act(() => {
       hoooResult = renderHook(() => useNotifySettings(), {
@@ -63,6 +109,15 @@ describe('NotifySettings', () => {
   });
 
   test('メール通知を受け取るを選択した場合に状態が変わること', async () => {
+    const useFetchProfileMock = useFetchProfileModule as jest.Mocked<
+      typeof useFetchProfileModule
+    >;
+    useFetchProfileMock.useFetchProfile.mockReturnValue({
+      profile: {
+        not_seminar_mail_target: true,
+      } as ProfileEntity,
+    });
+
     let hoooResult: { current: UseNotifySettingsType } | undefined;
     await act(() => {
       hoooResult = renderHook(() => useNotifySettings(), {
@@ -81,6 +136,15 @@ describe('NotifySettings', () => {
   });
 
   test('メール通知を受け取らないを選択した場合に状態が変わること', async () => {
+    const useFetchProfileMock = useFetchProfileModule as jest.Mocked<
+      typeof useFetchProfileModule
+    >;
+    useFetchProfileMock.useFetchProfile.mockReturnValue({
+      profile: {
+        not_seminar_mail_target: false,
+      } as ProfileEntity,
+    });
+
     let hoooResult: { current: UseNotifySettingsType } | undefined;
     await act(() => {
       hoooResult = renderHook(() => useNotifySettings(), {
