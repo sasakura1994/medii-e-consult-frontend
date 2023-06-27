@@ -5,11 +5,14 @@ import { useSearchHospitals } from '@/hooks/api/hospital/useSearchHospitals';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 import { ProfileEntity } from '@/types/entities/profileEntity';
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState } from 'react';
 import { EditProfileProps } from './EditProfile';
 import { loadLocalStorage, saveLocalStorage } from '@/libs/LocalStorageManager';
+import { HospitalEntity } from '@/types/entities/hospitalEntity';
 
 const editProfileFormDataKey = 'EditProfile::formData';
+
+const numberToString = (value: number) => (value === 0 ? '' : value.toString());
 
 export type EditingProfile = Omit<
   ProfileEntity,
@@ -26,16 +29,36 @@ type Option = {
   label: string;
 };
 
-const numberToString = (value: number) => (value === 0 ? '' : value.toString());
+type HospitalInputType = 'free' | 'select';
 
-export const useEditProfile = (props: EditProfileProps) => {
+type UseEditProfile = {
+  errorMessage: string;
+  hospitalInputType: HospitalInputType;
+  hospitalOptions: Option[];
+  hospitals: HospitalEntity[];
+  hospitalSearchText: string;
+  isSending: boolean;
+  profile?: EditingProfile;
+  selectedHospital?: Option;
+  selectHospital: (selected: Option | null) => void;
+  selectMedicalSpecialities: (medicalSpecialities: MedicalSpecialityEntity[]) => void;
+  selectedQuestionaryItemIds: string[];
+  setHospitalInputType: Dispatch<SetStateAction<HospitalInputType>>;
+  setHospitalName: (hospitalName: string) => void;
+  setHospitalSearchText: Dispatch<SetStateAction<string>>;
+  setProfileFields: (data: Partial<EditingProfile>) => void;
+  submit: () => void;
+  toggleQuestionaryItem: (questionaryItemId: number) => void;
+};
+
+export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
   const { isRegisterMode } = props;
   const router = useRouter();
 
   // setProfileはsetProfileFieldsでラップしているので基本使わない
   const [profile, setProfile] = useState<EditingProfile>();
   const [isInitialized, setIsInitialized] = useState(false);
-  const [hospitalInputType, setHospitalInputType] = useState<'free' | 'select'>('select');
+  const [hospitalInputType, setHospitalInputType] = useState<HospitalInputType>('select');
   const [hospitalSearchText, setHospitalSearchText] = useState('');
   const [selectedHospital, setSelectedHospital] = useState<Option>();
   const [isSending, setIsSending] = useState(false);
