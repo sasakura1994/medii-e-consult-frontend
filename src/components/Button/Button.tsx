@@ -40,7 +40,8 @@ const Button = (props: ButtonProps) => {
         font-bold
         ${buttonWidth}
         ${bottunSizes[size]}
-        ${className ?? ''}`}
+        ${className ?? ''}
+      `}
       onClick={onClick}
       disabled={disabled}
     >
