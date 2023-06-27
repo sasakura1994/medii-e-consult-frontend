@@ -1,10 +1,12 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { ChatList } from './ChatList';
 import { ChatTextInput } from './ChatTextInput';
 import { useRouter } from 'next/router';
 import { useFetchChatRoom } from '@/hooks/api/chat/useFetchChatRoom';
 import { useGetPublishmentStatus } from '@/hooks/api/chat/useGetPublishmentStatus';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
+import { useFetchChatList } from '@/hooks/api/chat/useFetchChatList';
+import { useToken } from '@/hooks/authentication/useToken';
 
 export const ConsultDetail = () => {
   const router = useRouter();
@@ -14,6 +16,8 @@ export const ConsultDetail = () => {
     useGetPublishmentStatus(chatRoomIdStr);
   const { data: chatRoomData } = useFetchChatRoom(chatRoomIdStr);
   const { medicalSpecialities } = useFetchMedicalSpecialities();
+  const { data: chatListData } = useFetchChatList(chatRoomIdStr);
+  const { accountId } = useToken();
 
   const targetSpeciality = useMemo(() => {
     if (chatRoomData && medicalSpecialities) {
@@ -34,9 +38,13 @@ export const ConsultDetail = () => {
     }
   }, [chatRoomData]);
 
+  useEffect(() => {
+    console.log(chatListData);
+  }, [chatListData]);
+
   return (
     <>
-      {chatRoomData && publishmentStatusData && (
+      {chatRoomData && publishmentStatusData && accountId && chatListData && (
         <div className="flex h-[calc(100vh-110px)] w-[787px] flex-col border border-[#d5d5d5]">
           <div className="flex-none">
             <div className="mr-2 flex h-14 items-center space-x-1">
@@ -92,7 +100,10 @@ export const ConsultDetail = () => {
             </div>
           </div>
           <div className="flex-grow overflow-auto bg-bg pb-2">
-            <ChatList />
+            <ChatList
+              chatListData={chatListData}
+              currentUserAccountId={accountId}
+            />
           </div>
           <div className="relative top-10 flex-none">
             <ChatTextInput />
