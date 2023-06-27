@@ -1,30 +1,26 @@
 import React from 'react';
+import Button, { ButtonProps } from './Button';
 
-type SecondaryProps = {
-  width?: string;
-  children: React.ReactNode;
-  onClick?: () => void;
-  leftIcon?: React.ReactNode;
-  size?: 'sm' | 'medium';
-  disabled?: boolean;
-};
+type SecondaryProps = ButtonProps;
 
 const SecondaryButton = (props: SecondaryProps) => {
-  const { width, children, onClick, size, disabled = false } = props;
+  const { children, className, ...otherProps } = props;
 
-  const buttonWidth = width ? `w-${width}` : 'w-auto';
-  const bottunSize = size === 'sm' ? 'h-9 text-medii-sm' : 'h-11 text-md';
   return (
-    <button
-      className={`flex items-center justify-center rounded-md border border-medii-blue-base
-        bg-white px-3 font-bold text-medii-blue-base
-        hover:bg-medii-blue-100 active:bg-medii-blue-100 disabled:bg-white
-      ${buttonWidth} ${bottunSize}`}
-      onClick={onClick}
-      disabled={disabled}
+    <Button
+      className={`
+        border-medii-blue-base
+        bg-white
+        text-medii-blue-base
+        hover:bg-medii-blue-100
+        active:bg-medii-blue-100
+        disabled:bg-white
+        ${className ?? ''}
+      `}
+      {...otherProps}
     >
       {children}
-    </button>
+    </Button>
   );
 };
 

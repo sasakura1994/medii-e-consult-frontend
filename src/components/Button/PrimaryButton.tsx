@@ -1,29 +1,25 @@
 import React from 'react';
+import Button, { ButtonProps } from './Button';
 
-type PrimaryProps = {
-  width?: string;
-  children: React.ReactNode;
-  onClick?: () => void;
-  leftIcon?: React.ReactNode;
-  size?: 'medium' | 'sm';
-  disabled?: boolean;
-};
+type PrimaryProps = ButtonProps;
 
 const PrimaryButton = (props: PrimaryProps) => {
-  const { width, children, onClick, size, disabled = false } = props;
+  const { children, className, ...otherProps } = props;
 
-  const buttonWidth = width ? `w-${width}` : 'w-auto';
-  const bottunSize = size === 'sm' ? 'h-9 text-medii-sm' : 'h-11 text-md';
   return (
-    <button
-      className={`flex items-center justify-center rounded-md border bg-medii-blue-base px-3 font-bold text-white
-      hover:bg-button-hover active:bg-button-active disabled:bg-button-disabled
-      ${buttonWidth} ${bottunSize}`}
-      onClick={onClick}
-      disabled={disabled}
+    <Button
+      className={`
+        bg-medii-blue-base
+        text-white
+        hover:bg-button-hover
+        active:bg-button-active
+        disabled:bg-button-disabled
+        ${className ?? ''}
+      `}
+      {...otherProps}
     >
       {children}
-    </button>
+    </Button>
   );
 };
 

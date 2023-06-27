@@ -1,29 +1,23 @@
 import React from 'react';
+import Button, { ButtonProps } from './Button';
 
-type TertiaryProps = {
-  width?: string;
-  children: React.ReactNode;
-  onClick?: () => void;
-  leftIcon?: React.ReactNode;
-  size?: 'sm' | 'medium';
-  disabled?: boolean;
-};
+type TertiaryProps = ButtonProps;
 
 const TertiaryButton = (props: TertiaryProps) => {
-  const { width, children, onClick, size, disabled = false } = props;
-
-  const buttonWidth = width ? width : 'w-auto';
-  const bottunSize = size === 'sm' ? 'h-9 text-medii-sm' : 'h-11 text-md';
+  const { children, className, ...otherProps } = props;
 
   return (
-    <button
-      className={`flex items-center justify-center rounded-md border bg-white px-3 font-bold
-      text-black disabled:text-text-disabled ${buttonWidth} ${bottunSize}`}
-      onClick={onClick}
-      disabled={disabled}
+    <Button
+      className={`
+        bg-white
+        text-black
+        disabled:text-text-disabled
+        ${className ?? ''}
+      `}
+      {...otherProps}
     >
       {children}
-    </button>
+    </Button>
   );
 };
 
