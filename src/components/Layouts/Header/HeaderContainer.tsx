@@ -13,6 +13,7 @@ export const HeaderContainer: React.FC<Props> = ({ children }: Props) => {
           flex
           h-[63px]
           items-center
+          justify-between
           border-b
           border-solid
           border-b-[#d5d5d5]
