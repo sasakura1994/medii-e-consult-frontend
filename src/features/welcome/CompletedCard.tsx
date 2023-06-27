@@ -1,5 +1,5 @@
-import PrimaryButton from '@/components/Button/Primary';
-import TertiaryButton from '@/components/Button/Tertiary';
+import PrimaryButton from '@/components/Button/PrimaryButton';
+import TertiaryButton from '@/components/Button/TertiaryButton';
 import Label from '@/components/Parts/Label/Label';
 import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 import { useRouter } from 'next/router';

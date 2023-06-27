@@ -1,4 +1,5 @@
 import React from 'react';
+
 type TertiaryProps = {
   width?: string;
   children: React.ReactNode;
@@ -8,7 +9,7 @@ type TertiaryProps = {
   disabled?: boolean;
 };
 
-const Tertiary = (props: TertiaryProps) => {
+const TertiaryButton = (props: TertiaryProps) => {
   const { width, children, onClick, size, disabled = false } = props;
 
   const buttonWidth = width ? width : 'w-auto';
@@ -26,4 +27,4 @@ const Tertiary = (props: TertiaryProps) => {
   );
 };
 
-export default Tertiary;
+export default TertiaryButton;
