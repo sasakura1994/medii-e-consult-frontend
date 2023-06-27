@@ -61,7 +61,7 @@ export const CompleteCard = (props: CompleteCardProps) => {
                 router.push(linkSolid);
               }}
             >
-              <PrimaryButton width="full" size="large">
+              <PrimaryButton className="w-full" size="large">
                 {buttonSolid}
               </PrimaryButton>
             </div>
@@ -76,7 +76,7 @@ export const CompleteCard = (props: CompleteCardProps) => {
                 router.push(linkOutline);
               }}
             >
-              <TertiaryButton width="full" size="large">
+              <TertiaryButton className="w-full" size="large">
                 {buttonOutline}
               </TertiaryButton>
             </div>
