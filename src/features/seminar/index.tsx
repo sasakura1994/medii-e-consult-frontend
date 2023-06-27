@@ -42,7 +42,7 @@ export const Seminar = () => {
             <div className="my-6 flex w-auto justify-center">
               <Link href="/seminar/archives">
                 <a>
-                  <SecondaryButton size="large">
+                  <SecondaryButton>
                     <p>過去のE-カンファ動画へ</p>
                   </SecondaryButton>
                 </a>

@@ -32,7 +32,9 @@ export const SeminarConferenceCard = (props: SeminarConferenceCardProps) => {
             <p className="text-md">{dateTime}</p>
             <div className="ml-3 w-full lg:ml-5 lg:w-auto">
               <a href={seminar.zoom_url} target="_blank" rel="noreferrer">
-                <PrimaryButton>Zoom E-カンファに事前登録</PrimaryButton>
+                <PrimaryButton size="sm">
+                  Zoom E-カンファに事前登録
+                </PrimaryButton>
               </a>
             </div>
           </div>
@@ -48,7 +50,7 @@ export const SeminarConferenceCard = (props: SeminarConferenceCardProps) => {
           </p>
           <div className="mt-2 flex justify-center">
             <TertiaryButton
-              size="medium"
+              size="sm"
               onClick={() => {
                 setIsOpened((prev) => !prev);
               }}
