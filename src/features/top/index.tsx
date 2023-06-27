@@ -18,10 +18,14 @@ export const Top = () => {
           </p>
           <Secondary>コンサル事例を見る</Secondary>
         </div>
-        <TopItem />
+        <div className="flex space-x-2 overflow-x-auto py-4">
+          <TopItem />
+          <TopItem />
+          <TopItem />
+        </div>
       </div>
       <div></div>
-      <div className="mx-4 mt-2 w-[296px] lg:mt-0 lg:ml-10 ">
+      <div className="mx-4 mt-2 w-[296px] lg:mt-0 lg:ml-10">
         <div className="flex items-center">
           <p className="flex-grow text-xxl text-text-primary">活用事例</p>
           <button className="text-md text-text-secondary">もっと見る</button>
