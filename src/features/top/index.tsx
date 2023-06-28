@@ -30,7 +30,7 @@ export const Top = () => {
       </div>
       <div className="mt-2 lg:mx-4 lg:mt-0 lg:ml-10 lg:w-[296px]">
         <div className="flex justify-center">
-          <img src="images/top/top-popup.svg" alt="" />
+          <img src="images/top/top-popup.png" alt="" />
         </div>
         <div className="mt-2 rounded-lg bg-bg-secondary p-4">
           <p className="text-xxl font-bold text-text-primary">
