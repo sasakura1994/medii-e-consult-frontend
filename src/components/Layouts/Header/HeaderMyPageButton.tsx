@@ -30,7 +30,7 @@ export const HeaderMyPageButton = () => {
           <HeaderMyPageMenuItem href="/editprofile">
             マイページ
           </HeaderMyPageMenuItem>
-          <HeaderMyPageMenuItem href="/notifysetting">
+          <HeaderMyPageMenuItem href="/notifysettings">
             通知設定
           </HeaderMyPageMenuItem>
           <HeaderMyPageMenuItem href="/affiliate">
