@@ -5,8 +5,8 @@ module.exports = {
   theme: {
     extend: {
       boxShadow: {
-        'low': "0 0 4px rgba(0, 0, 0, 0.2)",
-        'high': '0 1px 8px rgba(0, 0, 0, 0.1), 0 1px 16px rgba(0, 0, 0, 0.05);',
+        'low': '0px 0px 4px 0px rgba(0, 0, 0, 0.20)',
+        'high': '0px 1px 16px 0px rgba(0, 0, 0, 0.05), 0px 1px 8px 0px rgba(0, 0, 0, 0.10);',
       },
       fontSize: {
         'xxs': '10px',

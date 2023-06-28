@@ -4,18 +4,23 @@ import { TopClockHistory } from './TopClockHistory';
 
 export const TopItem = () => {
   return (
-    <div className="h-[191px] min-w-[330px] rounded-lg border border-[#EDEDED] bg-bg-secondary shadow-low">
+    <div className="h-[201px] min-w-[232px] rounded-lg border border-[#EDEDED] shadow-high">
       <div className="p-4">
-        <div className="w-28">
-          <Label text="ICU/集中治療科" color="gray" />
+        <div className="flex items-center space-x-1">
+          <p className="h-6 w-10 rounded-full bg-medii-sky-base px-2 py-0.5 text-center text-medii-sm text-white">
+            新着
+          </p>
+          <TopClockHistory />
         </div>
-        <p className="mt-2 text-md text-text-secondary">異型リンパ球</p>
-        <div className="mt-2 h-[71px]">
-          <p className="text-l font-bold line-clamp-2">
-            Streptpcoccsuagalaciae菌血症・僧帽弁自然弁感染性心内膜の弁破壊進行時の抗菌薬加療期間について
+        <div className="mt-2 h-[107px]">
+          <p className="text-l font-bold line-clamp-4">
+            急性発症の全身の筋肉痛と蕁麻疹が主訴で異型リンパ球出現の女性の鑑別診断
           </p>
         </div>
-        <TopClockHistory />
+
+        <div className="w-28">
+          <Label text="ICU/集中治療科" color="gray" className="font-bold" />
+        </div>
       </div>
     </div>
   );
