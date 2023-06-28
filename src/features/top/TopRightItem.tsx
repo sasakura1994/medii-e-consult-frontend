@@ -2,7 +2,7 @@ import Label from '@/components/Parts/Label/Label';
 import React from 'react';
 import { TopClockHistory } from './TopClockHistory';
 
-export const TopItem = () => {
+export const TopRightItem = () => {
   return (
     <div className="h-[201px] min-w-[232px] rounded-lg border border-[#EDEDED] shadow-high">
       <div className="p-4">
