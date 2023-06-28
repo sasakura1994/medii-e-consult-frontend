@@ -21,9 +21,9 @@ const Button = (props: ButtonProps) => {
   } = props;
 
   const bottunSizes: { [key: string]: string } = {
-    small: 'h-6 text-medii-sm font-bold',
-    medium: 'h-9 text-md font-bold',
-    large: 'h-11 text-md font-semibold',
+    small: 'h-6',
+    medium: 'h-8',
+    large: 'h-10',
   };
   return (
     <button
@@ -34,6 +34,8 @@ const Button = (props: ButtonProps) => {
         rounded-md
         border
         px-3
+        text-md
+        font-bold
         ${bottunSizes[size]}
         ${className ?? ''}
       `}
