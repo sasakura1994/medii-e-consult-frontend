@@ -20,7 +20,7 @@ export const UserConsult = () => {
         </div>
       </div>
 
-      <StyledHiddenScrollBar className="mt-5 flex items-end overflow-x-scroll">
+      <StyledHiddenScrollBar className="mt-5 flex items-end overflow-y-hidden overflow-x-scroll">
         <TopTab text="自分が質問" isActive={false} />
         <TopTab text="回答医 募集中" isActive />
         <TopTab text="自分が回答" isActive={false} isLast />

@@ -5,6 +5,7 @@ import { TopArticle } from './TopArticle';
 import { TopRightItem } from './TopRightItem';
 import { StyledHiddenScrollBar } from './styled';
 import { UserConsult } from './UserConsult';
+import { TopItem } from './TopItem';
 
 export const Top = () => {
   return (
@@ -15,10 +16,26 @@ export const Top = () => {
           ButtonText="変更する"
         />
         <UserConsult />
+        <StyledHiddenScrollBar className="mt-10 flex items-center">
+          <p className="flex-grow text-xxl font-bold text-text-primary">
+            E-コンサル事例集
+          </p>
+          <Secondary>解決済みのコンサル事例を見る</Secondary>
+        </StyledHiddenScrollBar>
+        <StyledHiddenScrollBar className="flex space-x-2 overflow-x-auto py-4">
+          <TopItem />
+          <TopItem />
+          <TopItem />
+        </StyledHiddenScrollBar>
       </div>
       <div className="mt-2 lg:mx-4 lg:mt-0 lg:ml-10 lg:w-[296px]">
-        <div className="rounded-lg bg-bg-secondary p-4">
-          <p className="text-xxl font-bold text-text-primary">新着E-コンサル</p>
+        <div className="flex justify-center">
+          <img src="images/top/top-popup.svg" alt="" />
+        </div>
+        <div className="mt-2 rounded-lg bg-bg-secondary p-4">
+          <p className="text-xxl font-bold text-text-primary">
+            新着のE-コンサル
+          </p>
           <StyledHiddenScrollBar className="flex space-x-2 overflow-x-scroll py-4">
             <TopRightItem />
             <TopRightItem />
