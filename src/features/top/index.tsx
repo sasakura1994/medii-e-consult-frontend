@@ -4,8 +4,7 @@ import React from 'react';
 import { TopArticle } from './TopArticle';
 import { TopRightItem } from './TopRightItem';
 import { StyledHiddenScrollBar } from './styled';
-import TertiaryButton from '@/components/Button/Tertiary';
-import PrimaryButton from '@/components/Button/Primary';
+import { UserConsult } from './UserConsult';
 
 export const Top = () => {
   return (
@@ -15,17 +14,7 @@ export const Top = () => {
           text="ご卒業おめでとうございます🌸 卒業予定年となったため、医師情報の登録をお願いします。"
           ButtonText="変更する"
         />
-        <div className="mt-5 flex">
-          <p className="flex-grow text-xxl font-bold text-text-primary">
-            E-コンサルで質問する
-          </p>
-          <div className="hidden lg:block">
-            <PrimaryButton>新規E-コンサルを作成</PrimaryButton>
-          </div>
-          <div className="ml-2 hidden lg:block">
-            <TertiaryButton>E-コンサルの使い方</TertiaryButton>
-          </div>
-        </div>
+        <UserConsult />
       </div>
       <div className="mt-2 lg:mx-4 lg:mt-0 lg:ml-10 lg:w-[296px]">
         <div className="rounded-lg bg-bg-secondary p-4">
