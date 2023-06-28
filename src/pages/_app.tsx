@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import '@/styles/globals.scss';
 import '@/styles/swiperjs-custom.scss';
 import 'react-toastify/dist/ReactToastify.css';
+import 'react-popper-tooltip/dist/styles.css';
 import { SWRConfig } from 'swr';
 import { useFetcher } from '@/hooks/network/useFetcher';
 import { CookiesProvider } from 'react-cookie';
