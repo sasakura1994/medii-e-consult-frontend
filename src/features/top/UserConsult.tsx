@@ -2,6 +2,7 @@ import React from 'react';
 import TertiaryButton from '@/components/Button/Tertiary';
 import PrimaryButton from '@/components/Button/Primary';
 import { TopTab } from './TopTab';
+import { StyledHiddenScrollBar } from './styled';
 export const UserConsult = () => {
   return (
     <>
@@ -17,12 +18,12 @@ export const UserConsult = () => {
         </div>
       </div>
 
-      <div className="mt-5 flex items-end">
+      <StyledHiddenScrollBar className="mt-5 flex items-end overflow-x-scroll">
         <TopTab text="自分が質問" isActive={false} />
         <TopTab text="回答医 募集中" isActive />
         <TopTab text="自分が回答" isActive={false} isLast />
         <div className="w-auto border-b" />
-      </div>
+      </StyledHiddenScrollBar>
     </>
   );
 };

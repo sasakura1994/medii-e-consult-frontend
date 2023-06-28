@@ -17,7 +17,7 @@ export const TopTab = (props: TopTabType) => {
         }`}
       >
         <p
-          className={`px-6 py-3 text-md font-bold ${
+          className={`whitespace-nowrap px-6 py-3 text-md font-bold ${
             isActive ? 'text-text-primary' : 'text-monotone-400'
           }`}
         >
