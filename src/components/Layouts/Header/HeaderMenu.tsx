@@ -29,7 +29,7 @@ export const HeaderMenu: React.FC = () => {
               : undefined
           }
         >
-          所属グループ
+          グループ
         </HeaderMenuListItem>
         <HeaderMenuListItem href="/examplelist">
           E-コンサル事例集
