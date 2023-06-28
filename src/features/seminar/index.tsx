@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { SeminarConferenceCard } from './SeminarConferenceCard';
 import { SeminarArchiveHeader } from './SeminarArchiveHeader';
 import { SeminarCard } from './SeminarCard';
-import SecondaryButton from '@/components/Button/Secondary';
+import SecondaryButton from '@/components/Button/SecondaryButton';
 import { useSeminar } from './useSeminar';
 import { ImcompleteProfileModal } from '@/components/Parts/Modal/ImcompleteProfileModal';
 

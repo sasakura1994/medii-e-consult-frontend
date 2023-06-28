@@ -1,5 +1,5 @@
-import PrimaryButton from '@/components/Button/Primary';
-import TertiaryButton from '@/components/Button/Tertiary';
+import PrimaryButton from '@/components/Button/PrimaryButton';
+import TertiaryButton from '@/components/Button/TertiaryButton';
 import { SeminarEntityType } from '@/types/entities/seminarEntity';
 import React, { useMemo, useState } from 'react';
 
@@ -48,7 +48,6 @@ export const SeminarConferenceCard = (props: SeminarConferenceCardProps) => {
           </p>
           <div className="mt-2 flex justify-center">
             <TertiaryButton
-              size="medium"
               onClick={() => {
                 setIsOpened((prev) => !prev);
               }}
