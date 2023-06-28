@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import PrimaryButton from '@/components/Button/Primary';
+import PrimaryButton from '@/components/Button/PrimaryButton';
 import { useFetchTicketCount } from '@/hooks/api/seminar/useFetchTicketCount';
 import { useFetchCurrentPoint } from '@/features/mypages/pointHistory/useFetchCurrentPoint';
 import { usePopperTooltip } from 'react-popper-tooltip';
