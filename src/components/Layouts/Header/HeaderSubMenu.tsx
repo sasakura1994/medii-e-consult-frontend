@@ -5,6 +5,7 @@ import { useFetchTicketCount } from '@/hooks/api/seminar/useFetchTicketCount';
 import { useFetchCurrentPoint } from '@/features/mypages/pointHistory/useFetchCurrentPoint';
 import { usePopperTooltip } from 'react-popper-tooltip';
 import { Tooltip } from '@/components/Tooltip/Tooltip';
+import { HeaderMyPageButton } from './HeaderMyPageButton';
 
 export const HeaderSubMenu = () => {
   const ticketTooltip = usePopperTooltip();
@@ -19,7 +20,9 @@ export const HeaderSubMenu = () => {
         <Link href="/newchatroom">
           <PrimaryButton>コンサルを作成</PrimaryButton>
         </Link>
-        <div className="ml-4 font-bold text-secondary">マイページ</div>
+        <div className="ml-4">
+          <HeaderMyPageButton />
+        </div>
         <div className="ml-8">
           <div className="flex items-center" ref={ticketTooltip.setTriggerRef}>
             <div>

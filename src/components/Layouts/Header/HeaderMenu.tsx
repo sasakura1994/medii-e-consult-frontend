@@ -21,9 +21,6 @@ export const HeaderMenu: React.FC = () => {
         >
           E-コンサル
         </HeaderMenuListItem>
-        <HeaderMenuListItem href="/examplelist">
-          E-コンサル事例集
-        </HeaderMenuListItem>
         <HeaderMenuListItem
           href="/group"
           badgeText={
@@ -33,6 +30,9 @@ export const HeaderMenu: React.FC = () => {
           }
         >
           所属グループ
+        </HeaderMenuListItem>
+        <HeaderMenuListItem href="/examplelist">
+          E-コンサル事例集
         </HeaderMenuListItem>
         <HeaderMenuListItem href={process.env.CASE_BANK_URL ?? '/'}>
           症例バンク

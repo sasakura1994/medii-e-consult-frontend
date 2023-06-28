@@ -36,3 +36,7 @@ export const getAccountIdFromToken = (token: string): string => {
   );
   return JSON.parse(jsonPayload).account_id;
 };
+
+export const removeAuthToken = () => {
+  document.cookie = `access_token=; max-age=0; path=/`;
+};
