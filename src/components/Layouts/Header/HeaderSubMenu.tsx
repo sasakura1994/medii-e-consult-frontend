@@ -18,41 +18,46 @@ export const HeaderSubMenu = () => {
     <>
       <nav className="flex items-center text-md text-text-primary">
         <Link href="/newchatroom">
-          <PrimaryButton>コンサルを作成</PrimaryButton>
+          <PrimaryButton>E-コンサルで質問する</PrimaryButton>
         </Link>
-        <div className="ml-4">
+        <div className="ml-4 flex items-center">
           <HeaderMyPageButton />
         </div>
-        <div className="ml-8">
-          <div className="flex items-center" ref={ticketTooltip.setTriggerRef}>
-            <div>
-              <img
-                src="/icons/ticket-perferated.svg"
-                width="24"
-                height="24"
-                alt="セミナーチケット"
-              />
+        <div className="ml-8 hidden items-center lg:flex">
+          <div>
+            <div
+              className="flex items-center"
+              ref={ticketTooltip.setTriggerRef}
+            >
+              <div>
+                <img
+                  src="/icons/ticket-perferated.svg"
+                  width="24"
+                  height="24"
+                  alt="セミナーチケット"
+                />
+              </div>
+              <div className="ml-1">{ticketCount?.ticket_count ?? ' '}枚</div>
             </div>
-            <div className="ml-1">{ticketCount?.ticket_count ?? ' '}枚</div>
           </div>
-        </div>
-        <div className="ml-2">
-          <div
-            className="flex items-center"
-            ref={mediiPointTooltip.setTriggerRef}
-          >
-            <div>
-              <img
-                src="/icons/medii_point.svg"
-                width="24"
-                height="24"
-                alt="Mediiポイント"
-              />
-            </div>
-            <div className="ml-1">
-              {currentPoint
-                ? new Intl.NumberFormat('ja-JP').format(currentPoint)
-                : ' '}
+          <div className="ml-2">
+            <div
+              className="flex items-center"
+              ref={mediiPointTooltip.setTriggerRef}
+            >
+              <div>
+                <img
+                  src="/icons/medii_point.svg"
+                  width="24"
+                  height="24"
+                  alt="Mediiポイント"
+                />
+              </div>
+              <div className="ml-1">
+                {currentPoint
+                  ? new Intl.NumberFormat('ja-JP').format(currentPoint)
+                  : ' '}
+              </div>
             </div>
           </div>
         </div>

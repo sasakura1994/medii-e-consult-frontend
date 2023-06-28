@@ -12,7 +12,14 @@ export const HeaderMyPageButton = () => {
   return (
     <>
       <button className="font-bold text-secondary" ref={tooltip.setTriggerRef}>
-        マイページ
+        <span className="hidden lg:inline">マイページ</span>
+        <img
+          className="lg:hidden"
+          src="/icons/list.svg"
+          width="32"
+          height="32"
+          alt="マイページ"
+        />
       </button>
       {tooltip.visible && (
         <Tooltip
