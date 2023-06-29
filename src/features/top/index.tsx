@@ -27,6 +27,9 @@ export const Top = () => {
           <TopItem />
           <TopItem />
         </StyledHiddenScrollBar>
+        <p className="text-md text-text-secondary">
+          ※ 掲載を許諾されたE-コンサルを掲載しています。
+        </p>
       </div>
       <div className="mt-2 lg:mx-4 lg:mt-0 lg:ml-10 lg:w-[296px]">
         <div className="flex justify-center">
