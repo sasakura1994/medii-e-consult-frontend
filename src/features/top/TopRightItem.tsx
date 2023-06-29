@@ -7,10 +7,15 @@ export const TopRightItem = () => {
     <div className="h-[201px] min-w-[232px] rounded-lg border border-[#EDEDED] shadow-high">
       <div className="p-4">
         <div className="flex items-center space-x-1">
-          <p className="h-6 w-10 rounded-full bg-medii-sky-base px-2 py-0.5 text-center text-medii-sm text-white">
+          <p
+            className="h-6 w-10 whitespace-nowrap rounded-full bg-medii-sky-base
+           px-2 py-0.5 text-center text-medii-sm text-white"
+          >
             新着
           </p>
-          <TopClockHistory />
+          <TopClockHistory>
+            <p className="ml-1 text-medii-sm text-text-primary">10分前に質問</p>
+          </TopClockHistory>
         </div>
         <div className="mt-2 h-[107px]">
           <p className="text-l font-bold line-clamp-4">
