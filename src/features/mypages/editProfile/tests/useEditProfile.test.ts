@@ -7,7 +7,7 @@ import { HospitalEntity } from '@/types/entities/hospitalEntity';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { ProfileEntity } from '@/types/entities/profileEntity';
 import { useSearchHospitals } from '@/hooks/api/hospital/useSearchHospitals';
-import { loadLocalStorage } from '@/libs/LocalStorageManager';
+import { loadLocalStorage, saveLocalStorage } from '@/libs/LocalStorageManager';
 
 jest.mock('@/hooks/api/doctor/useFetchProfile');
 jest.mock('@/hooks/api/hospital/useFetchHospital');
@@ -122,6 +122,60 @@ describe('useEditProfile', () => {
       }).result;
 
       expect(hooks.current.profile?.last_name).toEqual('not draft');
+    });
+  });
+
+  describe('setProfileFields', () => {
+    test('プロフィールを更新', async () => {
+      const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
+      (useFetchProfileMock as jest.Mock).mockReturnValue({
+        profile: {
+          birthday_year: 2000,
+          birthday_month: 4,
+          birthday_day: 1,
+          qualified_year: 2020,
+          last_name: 'before',
+          hospital_id: '',
+          hospital_name: 'free input not draft',
+        } as ProfileEntity,
+      });
+
+      const hooks = await renderHook(() => useEditProfile({ isRegisterMode: false }), {
+        wrapper: RecoilRoot,
+      }).result;
+
+      await act(() => {
+        hooks.current.setProfileFields({ last_name: 'after' });
+      });
+
+      expect(hooks.current.profile?.last_name).toEqual('after');
+      expect(saveLocalStorage).not.toHaveBeenCalled();
+    });
+
+    test('登録時の場合は下書きにも保存', async () => {
+      const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
+      (useFetchProfileMock as jest.Mock).mockReturnValue({
+        profile: {
+          birthday_year: 2000,
+          birthday_month: 4,
+          birthday_day: 1,
+          qualified_year: 2020,
+          last_name: 'before',
+          hospital_id: '',
+          hospital_name: 'free input not draft',
+        } as ProfileEntity,
+      });
+
+      const hooks = await renderHook(() => useEditProfile({ isRegisterMode: true }), {
+        wrapper: RecoilRoot,
+      }).result;
+
+      await act(() => {
+        hooks.current.setProfileFields({ last_name: 'after' });
+      });
+
+      expect(hooks.current.profile?.last_name).toEqual('after');
+      expect(saveLocalStorage).toHaveBeenCalled();
     });
   });
 
