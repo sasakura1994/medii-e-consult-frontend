@@ -1,10 +1,10 @@
 import React from 'react';
-import TertiaryButton from '@/components/Button/Tertiary';
-import PrimaryButton from '@/components/Button/Primary';
+import TertiaryButton from '@/components/Button/TertiaryButton';
+import PrimaryButton from '@/components/Button/PrimaryButton';
 import { TopTab } from './TopTab';
 import { StyledHiddenScrollBar } from './styled';
 import { TopToolTip } from './TopToolTip';
-import SecondaryButton from '@/components/Button/Secondary';
+import SecondaryButton from '@/components/Button/SecondaryButton';
 export const UserConsult = () => {
   return (
     <>
@@ -13,10 +13,10 @@ export const UserConsult = () => {
           E-コンサルで質問する
         </p>
         <div className="hidden lg:block">
-          <PrimaryButton>新規E-コンサルを作成</PrimaryButton>
+          <PrimaryButton size="large">新規E-コンサルを作成</PrimaryButton>
         </div>
         <div className="ml-2 hidden lg:block">
-          <TertiaryButton>E-コンサルの使い方</TertiaryButton>
+          <TertiaryButton size="large">E-コンサルの使い方</TertiaryButton>
         </div>
       </div>
 

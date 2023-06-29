@@ -1,5 +1,5 @@
-import PrimaryButton from '@/components/Button/Primary';
-import TertiaryButton from '@/components/Button/Tertiary';
+import PrimaryButton from '@/components/Button/PrimaryButton';
+import TertiaryButton from '@/components/Button/TertiaryButton';
 import Label from '@/components/Parts/Label/Label';
 import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 import { useRouter } from 'next/router';
@@ -61,7 +61,7 @@ export const CompleteCard = (props: CompleteCardProps) => {
                 router.push(linkSolid);
               }}
             >
-              <PrimaryButton width="w-full" size="large">
+              <PrimaryButton className="w-full" size="large">
                 {buttonSolid}
               </PrimaryButton>
             </div>
@@ -76,7 +76,7 @@ export const CompleteCard = (props: CompleteCardProps) => {
                 router.push(linkOutline);
               }}
             >
-              <TertiaryButton width="w-full" size="large">
+              <TertiaryButton className="w-full" size="large">
                 {buttonOutline}
               </TertiaryButton>
             </div>

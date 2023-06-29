@@ -1,4 +1,4 @@
-import Secondary from '@/components/Button/Secondary';
+import SecondaryButton from '@/components/Button/SecondaryButton';
 import { InlineNotification } from '@/components/Notification/InlineNotification';
 import React from 'react';
 import { TopArticle } from './TopArticle';
@@ -20,7 +20,9 @@ export const Top = () => {
           <p className="flex-grow text-xxl font-bold text-text-primary">
             E-コンサル事例集
           </p>
-          <Secondary>解決済みのコンサル事例を見る</Secondary>
+          <SecondaryButton size="large">
+            解決済みのコンサル事例を見る
+          </SecondaryButton>
         </StyledHiddenScrollBar>
         <StyledHiddenScrollBar className="flex space-x-2 overflow-x-auto py-4">
           <TopItem />
@@ -45,7 +47,9 @@ export const Top = () => {
             <TopRightItem />
           </StyledHiddenScrollBar>
           <div className="flex justify-center">
-            <Secondary width="full">解決済みのコンサル事例を見る</Secondary>
+            <SecondaryButton size="large" className="w-full">
+              解決済みのコンサル事例を見る
+            </SecondaryButton>
           </div>
         </div>
         <div className="mt-4">

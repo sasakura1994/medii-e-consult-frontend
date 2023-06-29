@@ -1,5 +1,5 @@
 import React from 'react';
-import PrimaryButtom from '../Button/Primary';
+import PrimaryButtom from '../Button/PrimaryButton';
 
 type InlineNotificationProps = {
   className?: string;
