@@ -51,6 +51,7 @@ export const TextField: React.FC<PropsType> = (props) => {
           placeholder={placeholder}
           disabled={disabled}
           id={id}
+          data-testid={id}
           aria-label={ariaLabel}
           className={textFielClassName}
           style={style}

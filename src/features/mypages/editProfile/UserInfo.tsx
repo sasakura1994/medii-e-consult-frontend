@@ -8,7 +8,8 @@ import { YearInput } from '@/components/Parts/Form/YearInput';
 
 type Props = ReturnType<typeof useEditProfile> & EditProfileProps;
 
-export const UserInfo: React.FC<Props> = ({ isRegisterMode, profile, setProfileFields }: Props) => {
+export const UserInfo = (props: Props) => {
+  const { isRegisterMode, profile, setProfileFields } = props;
   const eraConverter = useEraConverter();
 
   if (!profile) {
