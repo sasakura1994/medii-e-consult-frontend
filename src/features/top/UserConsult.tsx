@@ -10,7 +10,7 @@ export const UserConsult = () => {
     <>
       <div className="mt-5 flex">
         <p className="flex-grow text-xxl font-bold text-text-primary">
-          E-コンサルで質問する
+          あなたに関わるE-コンサル
         </p>
         <div className="hidden lg:block">
           <PrimaryButton size="large">新規E-コンサルを作成</PrimaryButton>
