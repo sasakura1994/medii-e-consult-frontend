@@ -4,16 +4,20 @@ import { renderHook, act } from '@testing-library/react';
 import { useEditProfile } from '@/features/mypages/editProfile/useEditProfile';
 import { useFetchHospital } from '@/hooks/api/hospital/useFetchHospital';
 import { HospitalEntity } from '@/types/entities/hospitalEntity';
-import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
+import { useFetchProfile, mutateFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { ProfileEntity } from '@/types/entities/profileEntity';
 import { useSearchHospitals } from '@/hooks/api/hospital/useSearchHospitals';
 import { loadLocalStorage, saveLocalStorage } from '@/libs/LocalStorageManager';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
+import { useRouter } from 'next/router';
+import { useUpdateProfile } from '@/hooks/api/doctor/useUpdateProfile';
 
 jest.mock('@/hooks/api/doctor/useFetchProfile');
 jest.mock('@/hooks/api/hospital/useFetchHospital');
 jest.mock('@/hooks/api/hospital/useSearchHospitals');
+jest.mock('@/hooks/api/doctor/useUpdateProfile');
 jest.mock('@/libs/LocalStorageManager');
+jest.mock('next/router');
 
 describe('useEditProfile', () => {
   const hospital = {
@@ -29,6 +33,13 @@ describe('useEditProfile', () => {
   const useSearchHospitalsMock = useSearchHospitals as jest.Mocked<typeof useSearchHospitals>;
   (useSearchHospitalsMock as jest.Mock).mockReturnValue({
     hospitals: [],
+  });
+
+  beforeEach(() => {
+    const useUpdateProfileMock = useUpdateProfile as unknown as jest.Mock<typeof useUpdateProfile>;
+    (useUpdateProfileMock as jest.Mock).mockReturnValue({
+      updateProfile: jest.fn().mockResolvedValue({ data: {} }),
+    });
   });
 
   describe('初期化', () => {
@@ -359,6 +370,73 @@ describe('useEditProfile', () => {
       expect(hooks.current.profile?.speciality_2).toEqual('B');
       expect(hooks.current.profile?.speciality_3).toEqual('C');
       expect(hooks.current.profile?.speciality_4).toEqual('D');
+    });
+  });
+
+  describe('submit', () => {
+    test('プロフィールの更新処理', async () => {
+      const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
+      (useFetchProfileMock as jest.Mock).mockReturnValue({
+        profile: {
+          birthday_year: 2000,
+          birthday_month: 4,
+          birthday_day: 1,
+          qualified_year: 2020,
+        } as ProfileEntity,
+      });
+
+      const pushMock = jest.fn();
+      const useRouterMock = useRouter as jest.Mocked<typeof useRouter>;
+      (useRouterMock as jest.Mock).mockReturnValue({
+        push: pushMock,
+      });
+
+      const updateProfileMock = jest.fn().mockResolvedValue({ response: { data: {} } });
+      const useUpdateProfileMock = useUpdateProfile as unknown as jest.Mock<typeof useUpdateProfile>;
+      useUpdateProfileMock.mockRestore();
+      (useUpdateProfileMock as jest.Mock).mockReturnValue({
+        updateProfile: updateProfileMock,
+      });
+
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {
+        wrapper: RecoilRoot,
+      }).result;
+
+      await act(() => {
+        hooks.current.submit();
+      });
+
+      expect(mutateFetchProfile).toHaveBeenCalled();
+      expect(pushMock).toHaveBeenCalledWith('/editprofile/completed');
+      expect(updateProfileMock).toHaveBeenCalled();
+    });
+
+    test('新規登録時は医師確認へ', async () => {
+      const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
+      (useFetchProfileMock as jest.Mock).mockReturnValue({
+        profile: {
+          birthday_year: 2000,
+          birthday_month: 4,
+          birthday_day: 1,
+          qualified_year: 2020,
+        } as ProfileEntity,
+      });
+
+      const pushMock = jest.fn();
+      const useRouterMock = useRouter as jest.Mocked<typeof useRouter>;
+      (useRouterMock as jest.Mock).mockReturnValue({
+        push: pushMock,
+      });
+
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: true }), {
+        wrapper: RecoilRoot,
+      }).result;
+
+      await act(() => {
+        hooks.current.submit();
+      });
+
+      expect(pushMock).toHaveBeenCalledWith('/document');
     });
   });
 });
