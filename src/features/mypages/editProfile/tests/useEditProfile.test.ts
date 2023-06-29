@@ -8,6 +8,7 @@ import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { ProfileEntity } from '@/types/entities/profileEntity';
 import { useSearchHospitals } from '@/hooks/api/hospital/useSearchHospitals';
 import { loadLocalStorage, saveLocalStorage } from '@/libs/LocalStorageManager';
+import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 
 jest.mock('@/hooks/api/doctor/useFetchProfile');
 jest.mock('@/hooks/api/hospital/useFetchHospital');
@@ -322,6 +323,42 @@ describe('useEditProfile', () => {
 
       expect(hooks.current.selectedHospital?.label).toBe(hospitals[1].hospital_name);
       expect(hooks.current.selectedHospital?.value).toBe(hospitals[1].hospital_id);
+    });
+  });
+
+  describe('selectMedicalSpecialities', () => {
+    test('科を選択', async () => {
+      const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
+      (useFetchProfileMock as jest.Mock).mockReturnValue({
+        profile: {
+          birthday_year: 2000,
+          birthday_month: 4,
+          birthday_day: 1,
+          qualified_year: 2020,
+          main_speciality: '',
+          speciality_2: '',
+          speciality_3: '',
+          speciality_4: '',
+        } as ProfileEntity,
+      });
+
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {
+        wrapper: RecoilRoot,
+      }).result;
+
+      act(() => {
+        hooks.current.selectMedicalSpecialities([
+          { speciality_code: 'A' } as MedicalSpecialityEntity,
+          { speciality_code: 'B' } as MedicalSpecialityEntity,
+          { speciality_code: 'C' } as MedicalSpecialityEntity,
+          { speciality_code: 'D' } as MedicalSpecialityEntity,
+        ]);
+      });
+
+      expect(hooks.current.profile?.main_speciality).toEqual('A');
+      expect(hooks.current.profile?.speciality_2).toEqual('B');
+      expect(hooks.current.profile?.speciality_3).toEqual('C');
+      expect(hooks.current.profile?.speciality_4).toEqual('D');
     });
   });
 });
