@@ -44,7 +44,7 @@ describe('useEditProfile', () => {
         } as ProfileEntity,
       });
 
-      const hooks = await renderHook(() => useEditProfile({ isRegisterMode: false }), {
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {
         wrapper: RecoilRoot,
       }).result;
 
@@ -64,7 +64,7 @@ describe('useEditProfile', () => {
         } as ProfileEntity,
       });
 
-      const hooks = await renderHook(() => useEditProfile({ isRegisterMode: false }), {
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {
         wrapper: RecoilRoot,
       }).result;
 
@@ -86,7 +86,7 @@ describe('useEditProfile', () => {
         } as ProfileEntity)
       );
 
-      const hooks = await renderHook(() => useEditProfile({ isRegisterMode: true }), {
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: true }), {
         wrapper: RecoilRoot,
       }).result;
 
@@ -117,7 +117,7 @@ describe('useEditProfile', () => {
         } as ProfileEntity)
       );
 
-      const hooks = await renderHook(() => useEditProfile({ isRegisterMode: false }), {
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {
         wrapper: RecoilRoot,
       }).result;
 
@@ -140,11 +140,11 @@ describe('useEditProfile', () => {
         } as ProfileEntity,
       });
 
-      const hooks = await renderHook(() => useEditProfile({ isRegisterMode: false }), {
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {
         wrapper: RecoilRoot,
       }).result;
 
-      await act(() => {
+      act(() => {
         hooks.current.setProfileFields({ last_name: 'after' });
       });
 
@@ -166,16 +166,43 @@ describe('useEditProfile', () => {
         } as ProfileEntity,
       });
 
-      const hooks = await renderHook(() => useEditProfile({ isRegisterMode: true }), {
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: true }), {
         wrapper: RecoilRoot,
       }).result;
 
-      await act(() => {
+      act(() => {
         hooks.current.setProfileFields({ last_name: 'after' });
       });
 
       expect(hooks.current.profile?.last_name).toEqual('after');
       expect(saveLocalStorage).toHaveBeenCalled();
+    });
+  });
+
+  describe('setHospitalName', () => {
+    test('病院の自由入力', async () => {
+      const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
+      (useFetchProfileMock as jest.Mock).mockReturnValue({
+        profile: {
+          birthday_year: 2000,
+          birthday_month: 4,
+          birthday_day: 1,
+          qualified_year: 2020,
+          hospital_id: 'hospital',
+          hospital_name: '',
+        } as ProfileEntity,
+      });
+
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {
+        wrapper: RecoilRoot,
+      }).result;
+
+      act(() => {
+        hooks.current.setHospitalName('hospital name');
+      });
+
+      expect(hooks.current.profile?.hospital_name).toEqual('hospital name');
+      expect(hooks.current.hospitalInputType).toEqual('free');
     });
   });
 
@@ -207,7 +234,7 @@ describe('useEditProfile', () => {
         hospitals: [],
       });
 
-      const hooks = await renderHook(() => useEditProfile({ isRegisterMode: false }), {
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {
         wrapper: RecoilRoot,
       }).result;
 
@@ -243,7 +270,7 @@ describe('useEditProfile', () => {
         hospitals: [hospital],
       });
 
-      const hooks = await renderHook(() => useEditProfile({ isRegisterMode: false }), {
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {
         wrapper: RecoilRoot,
       }).result;
 
@@ -285,11 +312,11 @@ describe('useEditProfile', () => {
         hospital: hospitals[0],
       });
 
-      const hooks = await renderHook(() => useEditProfile({ isRegisterMode: false }), {
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {
         wrapper: RecoilRoot,
       }).result;
 
-      await act(() => {
+      act(() => {
         hooks.current.selectHospital({ value: hospitals[1].hospital_id, label: hospitals[1].hospital_name });
       });
 
