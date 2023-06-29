@@ -439,4 +439,52 @@ describe('useEditProfile', () => {
       expect(pushMock).toHaveBeenCalledWith('/document');
     });
   });
+
+  describe('toggleQuestionaryItem', () => {
+    test('アンケート項目を追加で選択', async () => {
+      const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
+      (useFetchProfileMock as jest.Mock).mockReturnValue({
+        profile: {
+          birthday_year: 2000,
+          birthday_month: 4,
+          birthday_day: 1,
+          qualified_year: 2020,
+          questionary_selected_ids_csv: '1,2',
+        } as ProfileEntity,
+      });
+
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {
+        wrapper: RecoilRoot,
+      }).result;
+
+      act(() => {
+        hooks.current.toggleQuestionaryItem(3);
+      });
+
+      expect(hooks.current.profile?.questionary_selected_ids_csv).toEqual('1,2,3');
+    });
+
+    test('アンケート項目を非選択に', async () => {
+      const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
+      (useFetchProfileMock as jest.Mock).mockReturnValue({
+        profile: {
+          birthday_year: 2000,
+          birthday_month: 4,
+          birthday_day: 1,
+          qualified_year: 2020,
+          questionary_selected_ids_csv: '1,2,3',
+        } as ProfileEntity,
+      });
+
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {
+        wrapper: RecoilRoot,
+      }).result;
+
+      act(() => {
+        hooks.current.toggleQuestionaryItem(2);
+      });
+
+      expect(hooks.current.profile?.questionary_selected_ids_csv).toEqual('1,3');
+    });
+  });
 });
