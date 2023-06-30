@@ -4,12 +4,12 @@ import PrimaryButtom from '../Button/PrimaryButton';
 type InlineNotificationProps = {
   className?: string;
   text: string;
-  ButtonText?: string;
-  ButtonOnClick?: () => void;
+  buttonText?: string;
+  buttonOnClick?: () => void;
 };
 
 export const InlineNotification = (props: InlineNotificationProps) => {
-  const { className, text, ButtonText, ButtonOnClick } = props;
+  const { className, text, buttonText, buttonOnClick } = props;
   return (
     <div
       className={
@@ -19,7 +19,9 @@ export const InlineNotification = (props: InlineNotificationProps) => {
     >
       <p className="flex-grow text-md text-text-primary">{text}</p>
       <div className="mt-2 whitespace-nowrap lg:mt-0 ">
-        <PrimaryButtom onClick={ButtonOnClick}>{ButtonText}</PrimaryButtom>
+        <PrimaryButtom size="large" onClick={buttonOnClick}>
+          {buttonText}
+        </PrimaryButtom>
       </div>
     </div>
   );

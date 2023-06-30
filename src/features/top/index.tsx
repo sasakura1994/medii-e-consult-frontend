@@ -6,15 +6,13 @@ import { TopRightItem } from './TopRightItem';
 import { StyledHiddenScrollBar } from './styled';
 import { UserConsult } from './UserConsult';
 import { TopItem } from './TopItem';
+import { TopNotifications } from './TopNotifications';
 
 export const Top = () => {
   return (
     <div className="mx-4 flex min-h-screen flex-col pb-12 pt-6 lg:mx-10 lg:flex-row lg:pb-0">
       <div className="lg:flex-grow">
-        <InlineNotification
-          text="ご卒業おめでとうございます🌸 卒業予定年となったため、医師情報の登録をお願いします。"
-          ButtonText="変更する"
-        />
+        <TopNotifications />
         <UserConsult />
         <StyledHiddenScrollBar className="mt-10 flex items-center">
           <p className="flex-grow text-xxl font-bold text-text-primary">
