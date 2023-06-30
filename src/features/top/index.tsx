@@ -6,6 +6,7 @@ import { StyledHiddenScrollBar } from './styled';
 import { UserConsult } from './UserConsult';
 import { TopItem } from './TopItem';
 import { TopNotifications } from './TopNotifications';
+import { TopNews } from './TopNews';
 
 export const Top = () => {
   return (
@@ -50,14 +51,7 @@ export const Top = () => {
           </div>
         </div>
         <div className="mt-4">
-          <div className="flex items-center">
-            <p className="flex-grow text-xxl font-bold text-text-primary">
-              お知らせ
-            </p>
-            <button className="text-md text-text-secondary">すべて見る</button>
-          </div>
-          <TopArticle />
-          <TopArticle />
+          <TopNews />
         </div>
         <div className="mt-4">
           <div className="flex items-center">
