@@ -1,12 +1,12 @@
 import SecondaryButton from '@/components/Button/SecondaryButton';
 import React from 'react';
-import { TopArticle } from './TopArticle';
 import { TopRightItem } from './TopRightItem';
 import { StyledHiddenScrollBar } from './styled';
 import { UserConsult } from './UserConsult';
 import { TopItem } from './TopItem';
 import { TopNotifications } from './TopNotifications';
 import { TopNews } from './TopNews';
+import { TopInterviews } from './TopInterviews';
 
 export const Top = () => {
   return (
@@ -53,15 +53,8 @@ export const Top = () => {
         <div className="mt-4">
           <TopNews />
         </div>
-        <div className="mt-4">
-          <div className="flex items-center">
-            <p className="flex-grow text-xxl font-bold text-text-primary">
-              活用事例
-            </p>
-            <button className="text-md text-text-secondary">もっと見る</button>
-          </div>
-          <TopArticle />
-          <TopArticle />
+        <div className="mt-4 hidden lg:block">
+          <TopInterviews />
         </div>
       </div>
     </div>
