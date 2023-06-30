@@ -1,5 +1,4 @@
 import SecondaryButton from '@/components/Button/SecondaryButton';
-import { InlineNotification } from '@/components/Notification/InlineNotification';
 import React from 'react';
 import { TopArticle } from './TopArticle';
 import { TopRightItem } from './TopRightItem';
