@@ -18,7 +18,7 @@ export const InlineNotification = (props: InlineNotificationProps) => {
       }
     >
       <p className="flex-grow text-md text-text-primary">{text}</p>
-      <div className="mt-2 lg:mt-0">
+      <div className="mt-2 whitespace-nowrap lg:mt-0 ">
         <PrimaryButtom onClick={ButtonOnClick}>{ButtonText}</PrimaryButtom>
       </div>
     </div>

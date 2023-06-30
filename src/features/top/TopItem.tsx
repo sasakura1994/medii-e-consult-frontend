@@ -4,7 +4,10 @@ import { TopClockHistory } from './TopClockHistory';
 
 export const TopItem = () => {
   return (
-    <div className="h-[191px] min-w-[330px] rounded-lg border border-[#EDEDED] bg-bg-secondary shadow-low lg:w-1/3">
+    <div
+      className="h-[191px] min-w-[330px] rounded-lg border border-[#EDEDED]
+     bg-bg-secondary shadow-low lg:w-1/3 lg:min-w-0"
+    >
       <div className="p-4">
         <div className="w-28">
           <Label text="ICU/集中治療科" color="gray" />
