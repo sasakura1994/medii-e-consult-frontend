@@ -9,8 +9,8 @@ import { TopItem } from './TopItem';
 
 export const Top = () => {
   return (
-    <div className="mx-4 min-h-screen pb-12 pt-6 lg:mx-10 lg:flex lg:pb-0">
-      <div className="w-full lg:flex-grow">
+    <div className="mx-4 flex min-h-screen flex-col pb-12 pt-6 lg:mx-10 lg:flex-row lg:pb-0">
+      <div className="lg:flex-grow">
         <InlineNotification
           text="ご卒業おめでとうございます🌸 卒業予定年となったため、医師情報の登録をお願いします。"
           ButtonText="変更する"
