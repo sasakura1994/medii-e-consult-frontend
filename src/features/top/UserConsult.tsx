@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TertiaryButton from '@/components/Button/TertiaryButton';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import { TopTab } from './TopTab';
@@ -6,6 +6,7 @@ import { StyledHiddenScrollBar } from './styled';
 import { TopToolTip } from './TopToolTip';
 import SecondaryButton from '@/components/Button/SecondaryButton';
 export const UserConsult = () => {
+  const [activeTab, setActiveTab] = useState<'question' | 'answer'>('question');
   return (
     <>
       <div className="mt-5 flex">
@@ -21,9 +22,21 @@ export const UserConsult = () => {
       </div>
 
       <StyledHiddenScrollBar className="mt-5 flex items-end overflow-y-hidden overflow-x-scroll">
-        <TopTab text="自分が質問" isActive={false} />
-        <TopTab text="回答医 募集中" isActive />
-        <TopTab text="自分が回答" isActive={false} isLast />
+        <TopTab
+          text="自分が質問"
+          isActive={activeTab === 'question'}
+          onClick={() => {
+            setActiveTab('question');
+          }}
+        />
+        <TopTab
+          text="自分が回答"
+          isActive={activeTab === 'answer'}
+          onClick={() => {
+            setActiveTab('answer');
+          }}
+          isLast
+        />
         <div className="w-auto border-b" />
       </StyledHiddenScrollBar>
       <div className="mt-2 h-[336px] w-full rounded-lg border">
