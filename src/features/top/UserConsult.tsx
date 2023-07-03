@@ -1,12 +1,33 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import TertiaryButton from '@/components/Button/TertiaryButton';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import { TopTab } from './TopTab';
 import { StyledHiddenScrollBar } from './styled';
+import { UserCounsultContent } from './UserConsultContent';
+import { useFetchChatRoomList } from '@/hooks/api/chat/useFetchChatRoomList';
+import { useToken } from '@/hooks/authentication/useToken';
 import { UserConsultNoContents } from './UserConsultNoContents';
 
 export const UserConsult = () => {
   const [activeTab, setActiveTab] = useState<'question' | 'answer'>('question');
+  const { data: chatRoomList } = useFetchChatRoomList({
+    query: ['FREE', 'BY_NAME', 'GROUP'],
+  });
+  const { accountId } = useToken();
+  const viewData = useMemo(() => {
+    if (!chatRoomList) return [];
+    if (activeTab === 'question') {
+      return chatRoomList.filter((chat) => {
+        return chat.owner_account_id === accountId;
+      });
+    } else if (activeTab === 'answer') {
+      return chatRoomList.filter((chat) => {
+        return chat.owner_account_id !== accountId;
+      });
+    }
+    return [];
+  }, [accountId, activeTab, chatRoomList]);
+
   return (
     <>
       <div className="mt-5 flex">
@@ -39,34 +60,10 @@ export const UserConsult = () => {
         />
         <div className="w-auto border-b" />
       </StyledHiddenScrollBar>
-      {/* <UserConsultNoContents /> */}
-      <div className="flex h-28 items-center border-b border-border-divider p-4">
-        <div className="w-5/6">
-          <p className="text-l font-bold">経管栄養について質問</p>
-          <p className="truncate text-md text-text-secondary">
-            お世話になっております。栄養管理について相談です。70台男性、H158cm,
-            W 37kg, BMI 14.7 入院前は仕事をされ、生活自立。 W 37kg, BMI 14.7
-            入院前は仕事をされ、生活自立。
-          </p>
-
-          <div className="mt-2 flex">
-            <p
-              className="h-6 w-10 whitespace-nowrap rounded-full bg-medii-sky-base
-           px-2 py-0.5 text-center text-medii-sm text-white"
-            >
-              新着
-            </p>
-            <p className="test-md ml-2 font-bold text-text-secondary">
-              回答医を探しています
-            </p>
-            <p className="test-md text-text-secondary">・</p>
-            <p className="test-md text-text-secondary">10分前</p>
-          </div>
-        </div>
-        <div className="mx-auto">
-          <TertiaryButton size="medium">相談を見る</TertiaryButton>
-        </div>
-      </div>
+      {viewData.length <= 0 && <UserConsultNoContents />}
+      {viewData.map((chat) => {
+        return <UserCounsultContent key={chat.chat_room_id} chat={chat} />;
+      })}
     </>
   );
 };
