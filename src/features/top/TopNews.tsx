@@ -12,7 +12,9 @@ export const TopNews = () => {
           お知らせ
         </p>
         <a href="https://medii.jp/news/" target="_blank" rel="noreferrer">
-          <button className="text-md text-text-secondary">すべて見る</button>
+          <button className="text-md text-text-secondary">
+            すべてのお知らせ
+          </button>
         </a>
       </div>
       {newsList?.map((news) => (
