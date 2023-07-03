@@ -19,7 +19,11 @@ export const TopNewsItem = (props: Props) => {
           </p>
         </div>
         <div className="mr-2 shrink-0">
-          <img className=" h-[60px] w-[88px]" src={news.cover} alt="" />
+          <img
+            className=" h-[60px] w-[88px] object-cover"
+            src={news.cover}
+            alt=""
+          />
         </div>
       </div>
     </a>
