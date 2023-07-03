@@ -14,6 +14,7 @@ export const UserConsult = () => {
     query: ['FREE', 'BY_NAME', 'GROUP'],
   });
   const { accountId } = useToken();
+
   const viewData = useMemo(() => {
     if (!chatRoomList) return [];
     if (activeTab === 'question') {
