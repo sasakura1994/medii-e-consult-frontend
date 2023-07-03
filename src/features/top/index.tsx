@@ -1,12 +1,12 @@
 import SecondaryButton from '@/components/Button/SecondaryButton';
 import React from 'react';
-import { TopRightItem } from './TopRightItem';
 import { StyledHiddenScrollBar } from './styled';
 import { UserConsult } from './UserConsult';
 import { TopItem } from './TopItem';
 import { TopNotifications } from './TopNotifications';
 import { TopNews } from './TopNews';
 import { TopInterviews } from './TopInterviews';
+import { TopNewerConsults } from './TopNewerConsults';
 
 export const Top = () => {
   return (
@@ -32,24 +32,7 @@ export const Top = () => {
         </p>
       </div>
       <div className="mt-2 lg:mx-4 lg:mt-0 lg:ml-10 lg:w-[296px]">
-        <div className="flex justify-center">
-          <img src="images/top/top-popup.png" alt="" />
-        </div>
-        <div className="mt-2 rounded-lg bg-bg-secondary p-4">
-          <p className="text-xxl font-bold text-text-primary">
-            新着のE-コンサル
-          </p>
-          <StyledHiddenScrollBar className="flex space-x-2 overflow-x-scroll py-4">
-            <TopRightItem />
-            <TopRightItem />
-            <TopRightItem />
-          </StyledHiddenScrollBar>
-          <div className="flex justify-center">
-            <SecondaryButton size="large" className="w-full">
-              解決済みのコンサル事例を見る
-            </SecondaryButton>
-          </div>
-        </div>
+        <TopNewerConsults />
         <div className="mt-4">
           <TopNews />
         </div>

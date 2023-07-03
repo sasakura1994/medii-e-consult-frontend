@@ -111,7 +111,6 @@ export const useNews = (): UseNews => {
         .filter((row) => {
           const isDisplay =
             row.document.fields.default.mapValue.fields.MQRJlwFO;
-          console.log(isDisplay);
           return isDisplay?.booleanValue === true;
         })
         .slice(0, 2)
