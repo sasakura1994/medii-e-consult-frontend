@@ -7,9 +7,11 @@ import { UserCounsultContent } from './UserConsultContent';
 import { useFetchChatRoomList } from '@/hooks/api/chat/useFetchChatRoomList';
 import { useToken } from '@/hooks/authentication/useToken';
 import { UserConsultNoContents } from './UserConsultNoContents';
+import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
 
 export const UserConsult = () => {
   const [activeTab, setActiveTab] = useState<'question' | 'answer'>('question');
+  const [isOpenAllChatRoom, setIsOpenAllChatRoom] = useState(false);
   const { data: chatRoomList } = useFetchChatRoomList({
     query: ['FREE', 'BY_NAME', 'GROUP'],
   });
@@ -17,17 +19,31 @@ export const UserConsult = () => {
 
   const viewData = useMemo(() => {
     if (!chatRoomList) return [];
+    const diffDate = (chat: ChatRoomEntity) => {
+      const now = new Date();
+      const updatedAt = new Date(chat.last_updated_date);
+      const diff = now.getTime() - updatedAt.getTime();
+      const diffMin = Math.floor(diff / 1000 / 60);
+      // 1週間以内のものを表示
+      return diffMin < 60 * 24 * 7 * 4 * 3; // !!一旦確認用に3ヶ月にしています。マージまでに戻すこと!!
+    };
     if (activeTab === 'question') {
-      return chatRoomList.filter((chat) => {
-        return chat.owner_account_id === accountId;
+      const questionChatRoomList = chatRoomList.filter((chat) => {
+        return chat.owner_account_id === accountId && diffDate(chat);
       });
+      return isOpenAllChatRoom
+        ? questionChatRoomList
+        : questionChatRoomList.slice(0, 5);
     } else if (activeTab === 'answer') {
-      return chatRoomList.filter((chat) => {
-        return chat.owner_account_id !== accountId;
+      const answerChatRoomList = chatRoomList.filter((chat) => {
+        return chat.owner_account_id !== accountId && diffDate(chat);
       });
+      return isOpenAllChatRoom
+        ? answerChatRoomList
+        : answerChatRoomList.slice(0, 5);
     }
     return [];
-  }, [accountId, activeTab, chatRoomList]);
+  }, [accountId, activeTab, chatRoomList, isOpenAllChatRoom]);
 
   return (
     <>
@@ -65,6 +81,13 @@ export const UserConsult = () => {
       {viewData.map((chat) => {
         return <UserCounsultContent key={chat.chat_room_id} chat={chat} />;
       })}
+      <TertiaryButton
+        size="large"
+        className="mx-auto mt-7 w-full lg:w-auto"
+        onClick={() => setIsOpenAllChatRoom((prev) => !prev)}
+      >
+        すべてのE-コンサル
+      </TertiaryButton>
     </>
   );
 };

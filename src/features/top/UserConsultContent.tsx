@@ -1,5 +1,6 @@
 import TertiaryButton from '@/components/Button/TertiaryButton';
 import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
+import Link from 'next/link';
 import React, { useMemo } from 'react';
 
 type UserCounsultContentProps = {
@@ -11,8 +12,8 @@ export const UserCounsultContent = (props: UserCounsultContentProps) => {
 
   const timeAgo = useMemo(() => {
     const now = new Date();
-    const createdAt = new Date(chat.last_updated_date);
-    const diff = now.getTime() - createdAt.getTime();
+    const updatedAt = new Date(chat.last_updated_date);
+    const diff = now.getTime() - updatedAt.getTime();
     const diffMin = Math.floor(diff / 1000 / 60);
     if (diffMin < 60) {
       return `${diffMin}分前`;
@@ -70,7 +71,9 @@ export const UserCounsultContent = (props: UserCounsultContentProps) => {
         </div>
       </div>
       <div className="mx-auto">
-        <TertiaryButton size="medium">相談を見る</TertiaryButton>
+        <Link href={`/chat?chat_room_id=${chat.chat_room_id}`}>
+          <TertiaryButton size="medium">相談を見る</TertiaryButton>
+        </Link>
       </div>
     </div>
   );
