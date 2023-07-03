@@ -3,8 +3,8 @@ import TertiaryButton from '@/components/Button/TertiaryButton';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import { TopTab } from './TopTab';
 import { StyledHiddenScrollBar } from './styled';
-import { TopToolTip } from './TopToolTip';
-import SecondaryButton from '@/components/Button/SecondaryButton';
+import { UserConsultNoContents } from './UserConsultNoContents';
+
 export const UserConsult = () => {
   const [activeTab, setActiveTab] = useState<'question' | 'answer'>('question');
   return (
@@ -39,20 +39,32 @@ export const UserConsult = () => {
         />
         <div className="w-auto border-b" />
       </StyledHiddenScrollBar>
-      <div className="mt-2 h-[336px] w-full rounded-lg border">
-        <div className="mt-6 flex justify-center space-x-1">
-          <TopToolTip text="全診療科対応" />
-          <TopToolTip text="完全無料" />
-          <TopToolTip text="匿名で質問できる" />
+      {/* <UserConsultNoContents /> */}
+      <div className="flex h-28 items-center border-b border-border-divider p-4">
+        <div className="w-5/6">
+          <p className="text-l font-bold">経管栄養について質問</p>
+          <p className="truncate text-md text-text-secondary">
+            お世話になっております。栄養管理について相談です。70台男性、H158cm,
+            W 37kg, BMI 14.7 入院前は仕事をされ、生活自立。 W 37kg, BMI 14.7
+            入院前は仕事をされ、生活自立。
+          </p>
+
+          <div className="mt-2 flex">
+            <p
+              className="h-6 w-10 whitespace-nowrap rounded-full bg-medii-sky-base
+           px-2 py-0.5 text-center text-medii-sm text-white"
+            >
+              新着
+            </p>
+            <p className="test-md ml-2 font-bold text-text-secondary">
+              回答医を探しています
+            </p>
+            <p className="test-md text-text-secondary">・</p>
+            <p className="test-md text-text-secondary">10分前</p>
+          </div>
         </div>
-        <p className="mt-2 text-center text-xxl font-bold text-text-primary">
-          1,000名以上の専門医に臨床疑問を相談してみませんか？
-        </p>
-        <div className="mt-6 flex justify-center">
-          <img src="images/top/top-consult.png" alt="" />
-        </div>
-        <div className="mt-6 flex justify-center">
-          <SecondaryButton size="large">E-コンサルを始める</SecondaryButton>
+        <div className="mx-auto">
+          <TertiaryButton size="medium">相談を見る</TertiaryButton>
         </div>
       </div>
     </>
