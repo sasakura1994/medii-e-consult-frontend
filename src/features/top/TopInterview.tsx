@@ -19,7 +19,7 @@ export const TopInterview = (props: Props) => {
     <a href={interview.url} target="_blank" rel="noreferrer">
       <div className="flex cursor-pointer gap-2 border-b py-4">
         <div className="w-[200px]">
-          <p className="text-md leading-[160%] text-text-primary line-clamp-3">
+          <p className="text-md text-text-primary line-clamp-3">
             {interview.title}
           </p>
           <p className="mt-1 text-sm font-light text-text-secondary">
