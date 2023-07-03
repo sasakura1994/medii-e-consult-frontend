@@ -9,8 +9,8 @@ import { TopNotifications } from './TopNotifications';
 
 export const Top = () => {
   return (
-    <div className="mx-4 flex min-h-screen flex-col pb-12 pt-6 lg:mx-10 lg:flex-row lg:pb-0">
-      <div className="lg:flex-grow">
+    <div className="mx-4 flex min-h-screen flex-col pb-12 pt-6 lg:mx-10 lg:flex-row lg:justify-center lg:pb-0">
+      <div className="lg:max-w-[1024px]">
         <TopNotifications />
         <UserConsult />
         <StyledHiddenScrollBar className="mt-10 flex items-center">

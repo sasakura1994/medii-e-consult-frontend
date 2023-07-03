@@ -33,7 +33,7 @@ export const UserCounsultContent = (props: UserCounsultContentProps) => {
   const labelText = useMemo(() => {
     const activeClass =
       'h-6 w-auto whitespace-nowrap rounded-full bg-medii-sky-base px-2 py-0.5 text-center text-medii-sm text-white';
-    const disabledClass = `h-6 w-auto whitespace-nowrap rounded-full 
+    const disabledClass = `h-6 w-auto whitespace-nowrap rounded-full
       bg-button-disabled px-2 py-0.5 text-center text-medii-sm text-text-secondary`;
     switch (chat.status) {
       case 'CREATED':
@@ -55,7 +55,28 @@ export const UserCounsultContent = (props: UserCounsultContentProps) => {
 
   return (
     <div className="flex h-28 items-center border-b border-border-divider p-4">
-      <div className="w-5/6">
+      {/* SP */}
+      <Link href={`/chat?chat_room_id=${chat.chat_room_id}`}>
+        <a className="block lg:hidden">
+          <div className="w-full lg:w-5/6">
+            <p className="text-l font-bold line-clamp-1">{chat.title}</p>
+            <p className="text-md text-text-secondary line-clamp-1">
+              {chat.latest_message}
+            </p>
+
+            <div className="mt-2 flex">
+              {labelText}
+              <p className="test-md ml-2 font-bold text-text-secondary">
+                回答医を探しています
+              </p>
+              <p className="test-md text-text-secondary">・</p>
+              <p className="test-md text-text-secondary">{timeAgo}</p>
+            </div>
+          </div>
+        </a>
+      </Link>
+      {/* PC */}
+      <div className="hidden w-full lg:block lg:w-5/6">
         <p className="text-l font-bold">{chat.title}</p>
         <p className="text-md text-text-secondary line-clamp-1">
           {chat.latest_message}
@@ -70,9 +91,11 @@ export const UserCounsultContent = (props: UserCounsultContentProps) => {
           <p className="test-md text-text-secondary">{timeAgo}</p>
         </div>
       </div>
-      <div className="mx-auto">
+      <div className="mx-auto hidden lg:block">
         <Link href={`/chat?chat_room_id=${chat.chat_room_id}`}>
-          <TertiaryButton size="medium">相談を見る</TertiaryButton>
+          <TertiaryButton size="medium" className="whitespace-nowrap">
+            相談を見る
+          </TertiaryButton>
         </Link>
       </div>
     </div>
