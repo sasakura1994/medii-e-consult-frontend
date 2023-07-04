@@ -6,10 +6,14 @@ export type NewerConsult = {
   consult_name: string;
 };
 
-export type FetchNewerConsultsResponseData = NewerConsult[];
+export type FetchNewerConsultsResponseData = {
+  consults: NewerConsult[];
+};
 
-export const useFetchNewerConsults = () => {
-  return useAuthenticatedSWR<FetchNewerConsultsResponseData>(
+export const useFetchNewerConsults = (): NewerConsult[] | undefined => {
+  const { data } = useAuthenticatedSWR<FetchNewerConsultsResponseData>(
     `/chat_room/newer_consult?count=5`
   );
+
+  return data?.consults;
 };

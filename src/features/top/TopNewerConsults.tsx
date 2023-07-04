@@ -6,7 +6,7 @@ import { useFetchNewerConsults } from '@/hooks/api/chat/useFetchNewerConsults';
 import Link from 'next/link';
 
 export const TopNewerConsults = () => {
-  const { data: consults } = useFetchNewerConsults();
+  const consults = useFetchNewerConsults();
 
   return (
     <>
