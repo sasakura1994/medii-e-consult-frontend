@@ -52,9 +52,11 @@ export const UserConsult = () => {
         <p className="flex-grow text-xxl font-bold text-text-primary">
           あなたに関わるE-コンサル
         </p>
-        <Link className="hidden whitespace-nowrap lg:block" href="/newchatroom">
-          <PrimaryButton size="large">新規E-コンサルを作成</PrimaryButton>
-        </Link>
+        <div className="hidden whitespace-nowrap lg:block">
+          <Link href="/newchatroom">
+            <PrimaryButton size="large">新規E-コンサルを作成</PrimaryButton>
+          </Link>
+        </div>
         <div className="ml-2 hidden whitespace-nowrap lg:block">
           <TertiaryButton size="large">E-コンサルの使い方</TertiaryButton>
         </div>
