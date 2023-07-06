@@ -10,6 +10,8 @@ import { dateFormat } from '@/libs/date';
 import { ConsultExampleActions } from './ConsultExampleActions';
 import { ConsultExampleDetailMessage } from './ConsultExampleDetailMessage';
 import { useConsultExampleActions } from './useConsultExampleActions';
+import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
+import Link from 'next/link';
 
 type Props = {
   consultExample: ConsultExampleDetailEntity;
@@ -161,6 +163,13 @@ export const ConsultExampleDetail: React.FC<Props> = ({
           ))}
         </div>
       </Card>
+      <div className="mb-20 mt-10 flex justify-center lg:mb-10">
+        <Link href="/newchatroom">
+          <a>
+            <PrimaryButton>匿名でコンサル作成</PrimaryButton>
+          </a>
+        </Link>
+      </div>
     </>
   );
 };
