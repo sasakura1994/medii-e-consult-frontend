@@ -3,6 +3,7 @@ import React from 'react';
 import { TopClockHistory } from './TopClockHistory';
 import { ConsultExampleEntity } from '@/types/entities/ConsultExampleEntity';
 import { useMedicalSpeciality } from '@/hooks/medicalSpeciality/useMedicalSpeciality';
+import { getTimeIntervalText } from '@/libs/date';
 
 type Props = {
   consultExample: ConsultExampleEntity;
@@ -16,11 +17,11 @@ export const TopExample = (props: Props) => {
 
   return (
     <div
-      className="lg:w-1/3 h-[191px] min-w-[330px] rounded-lg border
-     border-[#EDEDED] bg-bg-secondary shadow-low"
+      className="h-[191px] min-w-[330px] rounded-lg border border-[#EDEDED]
+     bg-bg-secondary shadow-low lg:w-1/3"
     >
       <div className="p-4">
-        <div className="w-28">
+        <div className="flex justify-start">
           <Label
             text={
               getMedicalSpecialityName(consultExample.speciality_code) ?? ''
@@ -42,7 +43,7 @@ export const TopExample = (props: Props) => {
             <span className="text-sm font-bold text-text-link">
               {hours}時間{minutes}分
             </span>
-            （2時間前に質問）
+            （{getTimeIntervalText(consultExample.consultant_date)}に質問）
           </p>
         </TopClockHistory>
       </div>
