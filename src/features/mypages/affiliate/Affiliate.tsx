@@ -43,7 +43,7 @@ export const Affiliate: React.FC = () => {
             <div className="my-auto w-[120px] lg:mx-auto">
               <SecondaryButton
                 onClick={downloadQrCode}
-                className="text-medii-sm font-bold"
+                className="text-medii-sm"
               >
                 QRコードを保存
               </SecondaryButton>
@@ -58,7 +58,7 @@ export const Affiliate: React.FC = () => {
               />
               <SecondaryButton
                 onClick={clipboard}
-                className="whitespace-nowrap text-medii-sm font-bold"
+                className="whitespace-nowrap text-medii-sm"
               >
                 リンクをコピー
               </SecondaryButton>
