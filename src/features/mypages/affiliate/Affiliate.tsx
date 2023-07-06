@@ -56,10 +56,11 @@ export const Affiliate: React.FC = () => {
                 className="flex-grow lg:w-[312px]"
                 value={invitationUrl}
               />
-              <SecondaryButton onClick={clipboard}>
-                <p className="whitespace-nowrap text-medii-sm font-bold">
-                  リンクをコピー
-                </p>
+              <SecondaryButton
+                onClick={clipboard}
+                className="whitespace-nowrap text-medii-sm font-bold"
+              >
+                リンクをコピー
               </SecondaryButton>
             </div>
           </div>
