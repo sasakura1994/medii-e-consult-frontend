@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import { useAffiliate } from './useAffiliate';
 import { Card } from '@/components/Parts/Card/Card';
-import SecondaryButton from '@/components/Button/Secondary';
+import SecondaryButton from '@/components/Button/SecondaryButton';
 import TextField from '@/components/TextField/TextField';
 import { HowToInvitation } from './HowToInvitation';
 
