@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import { useAffiliate } from './useAffiliate';
 import { Card } from '@/components/Parts/Card/Card';
-import SecondaryButton from '@/components/Button/Secondary';
+import SecondaryButton from '@/components/Button/SecondaryButton';
 import TextField from '@/components/TextField/TextField';
 import { HowToInvitation } from './HowToInvitation';
 
@@ -41,7 +41,10 @@ export const Affiliate: React.FC = () => {
               <img src={qrCodeUrl} alt="" className="" />
             </div>
             <div className="my-auto w-[120px] lg:mx-auto">
-              <SecondaryButton width="full" onClick={downloadQrCode}>
+              <SecondaryButton
+                onClick={downloadQrCode}
+                className="text-medii-sm"
+              >
                 QRコードを保存
               </SecondaryButton>
             </div>
@@ -53,8 +56,11 @@ export const Affiliate: React.FC = () => {
                 className="flex-grow lg:w-[312px]"
                 value={invitationUrl}
               />
-              <SecondaryButton onClick={clipboard}>
-                <p className="whitespace-nowrap">リンクをコピー</p>
+              <SecondaryButton
+                onClick={clipboard}
+                className="whitespace-nowrap text-medii-sm"
+              >
+                リンクをコピー
               </SecondaryButton>
             </div>
           </div>
