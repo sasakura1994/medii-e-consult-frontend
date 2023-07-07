@@ -9,16 +9,11 @@ export type ButtonProps = {
   size?: ButtonSize;
   disabled?: boolean;
   className?: string;
+  type?: 'button' | 'submit' | 'reset';
 };
 
 const Button = (props: ButtonProps) => {
-  const {
-    children,
-    className,
-    onClick,
-    size = 'medium',
-    disabled = false,
-  } = props;
+  const { children, className, onClick, size = 'medium', disabled = false, type } = props;
 
   const bottunSizes: { [key: string]: string } = {
     small: 'h-6',
@@ -27,6 +22,7 @@ const Button = (props: ButtonProps) => {
   };
   return (
     <button
+      type={type}
       className={`
         flex
         items-center

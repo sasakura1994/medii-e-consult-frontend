@@ -4,12 +4,12 @@ import { MedicalCareer } from './MedicalCareer';
 import { HospitalAffiliation } from './HospitalAffiliation';
 import { UsageClassification } from './UsageClassification';
 import { Card } from '@/components/Parts/Card/Card';
-import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 import { useEditProfile } from './useEditProfile';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
 import { EditProfileNotification } from './EditProfileNotification';
 import { EditProfileQuestionary } from './EditProfileQuestionary';
+import PrimaryButton from '@/components/Button/PrimaryButton';
 
 export type EditProfileProps = {
   isRegisterMode: boolean;
@@ -56,7 +56,7 @@ export const EditProfile = (props: EditProfileProps) => {
         {errorMessage !== '' && <ErrorMessage className="mt-2 text-center">{errorMessage}</ErrorMessage>}
 
         <div className="my-6">
-          <PrimaryButton type="submit" dataTestId="btn-profile-regist" className="mx-auto">
+          <PrimaryButton type="submit" className="mx-auto" disabled={!editProfile.isCompleted} size="large">
             {isRegisterMode ? '医師資格確認へ進む' : 'プロフィール登録'}
           </PrimaryButton>
         </div>

@@ -37,6 +37,7 @@ type UseEditProfile = {
   hospitalOptions: Option[];
   hospitals: HospitalEntity[];
   hospitalSearchText: string;
+  isCompleted: boolean;
   isSending: boolean;
   profile?: EditingProfile;
   selectedHospital?: Option;
@@ -78,6 +79,38 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
     () => profile?.questionary_selected_ids_csv?.split(/,/) ?? [],
     [profile?.questionary_selected_ids_csv]
   );
+
+  const isCompleted = useMemo(() => {
+    if (!profile) {
+      return false;
+    }
+
+    if (isRegisterMode) {
+      if (
+        profile.last_name === '' ||
+        profile.first_name === '' ||
+        profile.last_name_hira === '' ||
+        profile.first_name_hira === '' ||
+        profile.birthday_year === '' ||
+        profile.birthday_month === '' ||
+        profile.birthday_day === ''
+      ) {
+        return false;
+      }
+    }
+
+    if (profile.main_speciality !== 'STUDENT') {
+      if (
+        profile.prefecture_code === '' ||
+        (hospitalInputType === 'select' && profile.hospital_id === '') ||
+        (hospitalInputType === 'free' && profile.hospital_name === '')
+      ) {
+        return false;
+      }
+    }
+
+    return profile.main_speciality !== '';
+  }, [profile, isRegisterMode, hospitalInputType]);
 
   const isHospitalDisabled = ['STUDENT', 'SHIKAKOUKUGEKA'].includes(profile?.main_speciality ?? '');
 
@@ -261,6 +294,7 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
     hospitalOptions,
     hospitals,
     hospitalSearchText,
+    isCompleted,
     isSending,
     profile,
     selectedHospital,
