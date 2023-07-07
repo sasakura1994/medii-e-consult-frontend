@@ -22,9 +22,11 @@ export const TopNewerConsults = () => {
         </StyledHiddenScrollBar>
         <div className="flex justify-center">
           <Link href="/examplelist">
-            <SecondaryButton size="large" className="w-full">
-              解決済みのコンサル事例を見る
-            </SecondaryButton>
+            <a>
+              <SecondaryButton size="large" className="w-full">
+                解決済みのコンサル事例を見る
+              </SecondaryButton>
+            </a>
           </Link>
         </div>
       </div>
