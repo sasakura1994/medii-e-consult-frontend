@@ -1,6 +1,4 @@
-import SecondaryButton from '@/components/Button/SecondaryButton';
 import React from 'react';
-import { StyledHiddenScrollBar } from './styled';
 import { UserConsult } from './UserConsult';
 import { TopNotifications } from './TopNotifications';
 import { TopNews } from './TopNews';
