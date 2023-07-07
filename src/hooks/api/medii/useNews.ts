@@ -133,7 +133,7 @@ export const useNews = (): UseNews => {
     }
 
     fetchNews();
-  }, [axios, fetchNews, newsList]);
+  }, [fetchNews, newsList]);
 
   return { newsList };
 };
