@@ -43,7 +43,11 @@ export const TopExample = (props: Props) => {
             <span className="text-sm font-bold text-text-link">
               {hours}時間{minutes}分
             </span>
-            （{getTimeIntervalText(consultExample.consultant_date)}に質問）
+            {consultExample.consultant_date !== '' && (
+              <>
+                （{getTimeIntervalText(consultExample.consultant_date)}に質問）
+              </>
+            )}
           </p>
         </TopClockHistory>
       </div>
