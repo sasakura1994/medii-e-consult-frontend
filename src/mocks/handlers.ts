@@ -8,11 +8,9 @@ import {
   getAmazonGiftsMock,
   postAmazonGiftsMock,
 } from '@/features/mypages/amazonGift/amazonGiftMock';
-import { getQrCodeMock } from '@/features/mypages/affiliate/affiliateMock';
 import { registerMock } from '@/features/register/registerMock';
 
 export const handlers = [
-  rest.get('https://chart.googleapis.com/chart', getQrCodeMock),
   rest.get('/api/doctor/profile', getProfileMock),
   rest.post('/api/doctor/update_profile', updateProfileMock),
   rest.get('/api/medii_point/current_point', getCurrentPointMock),

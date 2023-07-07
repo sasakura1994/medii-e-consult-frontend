@@ -1,74 +1,89 @@
 import React from 'react';
-import styles from './Affiliate.module.scss';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import { useAffiliate } from './useAffiliate';
 import { Card } from '@/components/Parts/Card/Card';
+import SecondaryButton from '@/components/Button/SecondaryButton';
+import TextField from '@/components/TextField/TextField';
+import { HowToInvitation } from './HowToInvitation';
 
 export const Affiliate: React.FC = () => {
-  const accountId = 'AC10-6226-9933-69'; // TODO: ログイン情報から取得する
-  const { isError, qrCodeUrl, downloadQrCode, clipboard } =
-    useAffiliate(accountId);
+  const { isError, qrCodeUrl, downloadQrCode, clipboard, invitationUrl } =
+    useAffiliate();
 
   return (
     <>
-      <Card
-        className="
-        mt-10
-        mb-[49px]
-        px-6
-        py-6
-        lg:mb-10
-        lg:px-[84px]
-        lg:py-10
-      "
-      >
-        <h2 className={styles.affiliate__heading}>医師紹介</h2>
-
-        <div className="mb-8 lg:mb-1">
-          <h3 className={styles.affiliate__sub_heading}>ご紹介URL</h3>
-          <div className="flex flex-wrap justify-center gap-y-5 lg:gap-x-5">
-            <div className="h-40 w-40">
-              <img src={qrCodeUrl} alt="" className="h-full w-full" />
+      <Card className="mt-10 px-6 py-10">
+        <p className="text-left text-xxl font-bold">医師紹介キャンペーン</p>
+        <p className="mt-8 text-l font-bold">ご紹介特典</p>
+        <div className="flex flex-col items-center lg:flex-row lg:space-x-4 ">
+          <div className="mt-4 h-[76px] w-[327px] shadow-low lg:w-[290px]">
+            <p className="my-2 text-center text-md font-bold">ご紹介者様</p>
+            <div className="flex items-center justify-center space-x-2">
+              <img src="/icons/seminar_ticket.svg" alt="" />
+              <p className="text-md">セミナー視聴チケット</p>
             </div>
-            <div className="flex flex-col justify-center gap-y-5">
-              <button
-                type="button"
-                className={styles.affiliate__btn}
+          </div>
+          <div className="mt-4 h-[76px] w-[327px] shadow-low lg:w-[290px] ">
+            <p className="my-2 text-center text-md font-bold">
+              ご入会いただいた方
+            </p>
+            <div className="flex items-center justify-center space-x-2">
+              <img src="/icons/point_invitation.svg" alt="" />
+              <p className="text-md">Mediiのポイント(1000pt)</p>
+            </div>
+          </div>
+        </div>
+        <p className="mt-8 text-l font-bold">紹介ページURL</p>
+        <div className="flex flex-col lg:flex-row">
+          <div className="flex border-0 border-border-divider pr-6 lg:flex-col lg:border-r">
+            <div className="h-[120px] w-[120px]">
+              <img src={qrCodeUrl} alt="" className="" />
+            </div>
+            <div className="my-auto w-[120px] lg:mx-auto">
+              <SecondaryButton
                 onClick={downloadQrCode}
+                className="text-medii-sm"
               >
                 QRコードを保存
-              </button>
-              <button
-                type="button"
-                className={styles.affiliate__btn}
+              </SecondaryButton>
+            </div>
+          </div>
+          <div className="my-auto lg:ml-3">
+            <p className="ml-2 mb-1 text-md lg:mb-0">またはURLを共有</p>
+            <div className="flex items-center space-x-1">
+              <TextField
+                className="flex-grow lg:w-[312px]"
+                value={invitationUrl}
+              />
+              <SecondaryButton
                 onClick={clipboard}
+                className="whitespace-nowrap text-medii-sm"
               >
-                紹介用URLをコピー
-              </button>
+                リンクをコピー
+              </SecondaryButton>
             </div>
           </div>
         </div>
-
-        <div className="mb-[22px] hidden lg:block">
-          <h3 className="bg-[#e2e7ff] text-center text-sm leading-6 text-primary">
-            スマートフォン向けアプリもぜひご利用ください
-          </h3>
-          <div className="flex items-center justify-center gap-x-12 px-6 py-3">
-            <a
-              href="https://apps.apple.com/us/app/id1530503820"
-              className="w-4/5"
-            >
-              <img src="/images/appstore.png" alt="" className="w-full" />
-            </a>
-            <a
-              href="https://play.google.com/store/apps/details?id=jp.medii.mediiapp"
-              className="w-4/5"
-            >
-              <img src="/images/googleplay.png" alt="" className="w-full" />
-            </a>
-          </div>
-        </div>
+        <p className="mt-8 text-l font-bold">ご紹介の手順</p>
+        <HowToInvitation
+          number={1}
+          text={
+            '紹介ページURLより”あなた専用の紹介ページ”を取得し、お知り合いの医師・医学生に送る'
+          }
+        />
+        <HowToInvitation
+          number={2}
+          text={
+            'お知り合いの医師・医学生は、紹介ページにアクセスし、紹介特典とE-コンサルについての情報を受け取る'
+          }
+        />
+        <HowToInvitation
+          number={3}
+          text={
+            'あなた専用の紹介ページから会員登録いただくと、あなたと新規会員へ紹介特典をプレゼント'
+          }
+        />
       </Card>
 
       <ToastContainer
