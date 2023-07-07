@@ -9,7 +9,6 @@ export type PropsType = {
   ariaLabel?: string;
   className?: string;
   style?: React.CSSProperties;
-  label?: string | JSX.Element;
   required?: boolean;
   subscript?: string;
   type?: React.HTMLInputTypeAttribute;

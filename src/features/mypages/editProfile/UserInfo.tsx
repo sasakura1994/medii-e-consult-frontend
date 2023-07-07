@@ -29,7 +29,7 @@ export const UserInfo = (props: Props) => {
             disabled={!isRegisterMode}
             id="last_name"
             className="mb-4 lg:mb-0"
-            label="姓"
+            placeholder="姓"
           />
         </div>
 
@@ -41,6 +41,7 @@ export const UserInfo = (props: Props) => {
             onChange={(e) => setProfileFields({ first_name: e.target.value })}
             disabled={!isRegisterMode}
             id="first_name"
+            placeholder="名"
           />
         </div>
       </div>
@@ -55,6 +56,7 @@ export const UserInfo = (props: Props) => {
             disabled={!isRegisterMode}
             id="last_name_hira"
             className="mb-4 lg:mb-0"
+            placeholder="姓（かな）"
           />
         </div>
 
@@ -66,6 +68,7 @@ export const UserInfo = (props: Props) => {
             onChange={(e) => setProfileFields({ first_name_hira: e.target.value })}
             disabled={!isRegisterMode}
             id="first_name_hira"
+            placeholder="名（かな）"
           />
         </div>
       </div>
@@ -116,7 +119,6 @@ export const UserInfo = (props: Props) => {
         <TextField
           name="graduated_university"
           id="graduated_university"
-          label="卒業大学"
           disabled={!isRegisterMode}
           placeholder="大学名"
           value={profile.graduated_university ?? ''}

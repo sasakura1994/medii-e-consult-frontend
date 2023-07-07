@@ -100,6 +100,7 @@ export const MedicalCareer = (props: MedicalCareerProps) => {
               id="expertise"
               className="!h-28"
               value={profile.expertise}
+              placeholder="よく診てきた疾患・領域情報を入力してください"
               onChange={(e) => setProfileFields({ expertise: e.target.value })}
             />
           </div>
@@ -111,6 +112,7 @@ export const MedicalCareer = (props: MedicalCareerProps) => {
               id="qualification"
               className="!h-28"
               value={profile.qualification}
+              placeholder="保有している専門医資格を入力してください"
               onChange={(e) => setProfileFields({ qualification: e.target.value })}
             />
           </div>
