@@ -17,7 +17,7 @@ export const EditProfileQuestionary = (props: Props) => {
 
   return (
     <>
-      <div className="mb-10">
+      <div className="mb-10" data-testid="edit-profile-questionary">
         <h3 className="mb-4 text-primary">■ アンケート</h3>
         <div className="mt-2">
           <EditProfileLabel required={false}>ご登録いただいたきっかけを教えてください(複数選択可)</EditProfileLabel>
