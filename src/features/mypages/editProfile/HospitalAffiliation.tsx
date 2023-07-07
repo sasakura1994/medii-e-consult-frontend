@@ -67,7 +67,7 @@ export const HospitalAffiliation = (props: Props) => {
           checked={hospitalInputType === 'select'}
         />
         {hospitalInputType === 'select' && (
-          <div className="mt-1">
+          <div className="mt-1" data-testid="hospital-select">
             <Select
               options={hospitalOptions}
               placeholder="病院名"
