@@ -18,7 +18,7 @@ export const TopExample = (props: Props) => {
   return (
     <div
       className="h-[191px] min-w-[330px] rounded-lg border border-[#EDEDED]
-     bg-bg-secondary shadow-low lg:w-1/3"
+     bg-white shadow-low lg:w-1/3"
     >
       <div className="p-4">
         <div className="flex justify-start">

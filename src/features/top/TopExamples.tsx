@@ -17,7 +17,7 @@ export const TopExamples = () => {
           解決済みのコンサル事例を見る
         </SecondaryButton>
       </StyledHiddenScrollBar>
-      <StyledHiddenScrollBar className="flex max-w-[1024px] space-x-2 overflow-x-auto py-4">
+      <StyledHiddenScrollBar className="flex max-w-[1024px] space-x-2 overflow-x-auto px-1 py-4">
         {data?.list.map((consultExample) => (
           <TopExample
             key={consultExample.example_id}
