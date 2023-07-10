@@ -3,7 +3,7 @@ import React from 'react';
 import { TopClockHistory } from './TopClockHistory';
 import { ConsultExampleEntity } from '@/types/entities/ConsultExampleEntity';
 import { useMedicalSpeciality } from '@/hooks/medicalSpeciality/useMedicalSpeciality';
-import { getTimeIntervalText } from '@/libs/date';
+import { dateFormat } from '@/libs/date';
 
 type Props = {
   consultExample: ConsultExampleEntity;
@@ -44,9 +44,7 @@ export const TopExample = (props: Props) => {
               {hours}時間{minutes}分
             </span>
             {consultExample.consultant_date !== '' && (
-              <>
-                （{getTimeIntervalText(consultExample.consultant_date)}に質問）
-              </>
+              <>（{dateFormat(consultExample.consultant_date, 'YYYY/M/D')}）</>
             )}
           </p>
         </TopClockHistory>
