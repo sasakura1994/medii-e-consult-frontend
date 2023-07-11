@@ -43,7 +43,7 @@ export const Affiliate: React.FC = () => {
             <div className="my-auto w-[120px] lg:mx-auto">
               <SecondaryButton
                 onClick={downloadQrCode}
-                className="text-medii-sm"
+                className="whitespace-nowrap text-medii-sm"
               >
                 QRコードを保存
               </SecondaryButton>
@@ -53,7 +53,7 @@ export const Affiliate: React.FC = () => {
             <p className="ml-2 mb-1 text-md lg:mb-0">またはURLを共有</p>
             <div className="flex items-center space-x-1">
               <TextField
-                className="flex-grow lg:w-[312px]"
+                className="min-w-0 flex-shrink lg:w-[312px]"
                 value={invitationUrl}
               />
               <SecondaryButton
