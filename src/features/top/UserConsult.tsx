@@ -26,7 +26,7 @@ export const UserConsult = () => {
       const diff = now.getTime() - updatedAt.getTime();
       const diffMin = Math.floor(diff / 1000 / 60);
       // TODO:ここで無理やり1週間以内のものを表示しています。apiの準備ができ次第修正します。
-      return diffMin < 60 * 24 * 7 * 4 * 3; // !!一旦確認用に3ヶ月にしています。マージまでに戻すこと!!
+      return diffMin < 60 * 24 * 7 * 4;
     };
     if (activeTab === 'question') {
       const questionChatRoomList = chatRoomList.filter((chat) => {
@@ -91,13 +91,22 @@ export const UserConsult = () => {
           />
         );
       })}
-      <TertiaryButton
-        size="large"
-        className="mx-auto mt-7 w-full lg:w-auto"
-        onClick={() => setIsOpenAllChatRoom((prev) => !prev)}
-      >
-        すべてのE-コンサル
-      </TertiaryButton>
+      {isOpenAllChatRoom ? (
+        <TertiaryButton
+          className="mx-auto mt-7 w-full lg:w-auto"
+          onClick={() => setIsOpenAllChatRoom((prev) => !prev)}
+        >
+          閉じる
+        </TertiaryButton>
+      ) : (
+        <TertiaryButton
+          size="large"
+          className="mx-auto mt-7 w-full lg:w-auto"
+          onClick={() => setIsOpenAllChatRoom((prev) => !prev)}
+        >
+          すべてのE-コンサル
+        </TertiaryButton>
+      )}
     </>
   );
 };
