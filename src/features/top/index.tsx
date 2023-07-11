@@ -1,5 +1,5 @@
 import SecondaryButton from '@/components/Button/SecondaryButton';
-import React from 'react';
+import React, { useState } from 'react';
 import { StyledHiddenScrollBar } from './styled';
 import { UserConsult } from './UserConsult';
 import { TopItem } from './TopItem';
@@ -10,9 +10,10 @@ import { TopNewerConsults } from './TopNewerConsults';
 import TutorialExplanation from './TutorialExplanation';
 
 export const Top = () => {
+  const [showModal, setShowModal] = useState(true);
   return (
     <>
-      <TutorialExplanation />
+      {showModal && <TutorialExplanation setShowModal={setShowModal} />}
       <div className="mx-4 flex min-h-screen flex-col pb-12 pt-6 lg:mx-10 lg:flex-row lg:pb-0">
         <div className="lg:flex-grow">
           <TopNotifications />

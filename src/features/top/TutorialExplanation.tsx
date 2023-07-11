@@ -1,7 +1,12 @@
 import { Modal } from '@/components/Parts/Modal/Modal';
 import React, { useState } from 'react';
 
-const TutorialExplanation = () => {
+type TutorialExplanationProps = {
+  setShowModal: (isShow: boolean) => void;
+};
+
+const TutorialExplanation = (props: TutorialExplanationProps) => {
+  const { setShowModal } = props;
   const [page, setPage] = useState(1);
 
   const next = () => {
@@ -15,11 +20,22 @@ const TutorialExplanation = () => {
   };
 
   return (
-    <Modal className="min-h-[80%] w-3/5">
-      <div className="rounded-lg bg-white p-6 text-center">
-        <div className="mx-auto h-3/5 w-3/5 overflow-auto">
+    <Modal
+      className="relative flex h-4/5 w-3/5 flex-col"
+      setShowModal={setShowModal}
+    >
+      <div
+        className="mr-9 mt-5 flex cursor-pointer flex-row-reverse"
+        onClick={() => {
+          setShowModal(false);
+        }}
+      >
+        <img src="icons/close_primary.svg" alt="" />
+      </div>
+      <div className="relative flex h-full flex-col rounded-lg bg-white p-6 text-center">
+        <div className="mx-auto mb-14 h-full w-4/5 overflow-y-auto">
           {page === 1 ? (
-            <div className="h-[400px] w-full overflow-y-scroll">
+            <div className="h-[350px] w-full">
               <img
                 src="images/top/tutorial1.png"
                 alt="tutorial1"
@@ -27,36 +43,42 @@ const TutorialExplanation = () => {
               />
             </div>
           ) : page === 2 ? (
-            <img
-              src="images/top/tutorial2.png"
-              className="h-auto max-w-full"
-              alt="tutorial2"
-            />
+            <div className="h-[350px] w-full">
+              <img
+                src="images/top/tutorial2.png"
+                className="h-auto max-w-full"
+                alt="tutorial2"
+              />
+            </div>
           ) : page === 3 ? (
-            <img
-              src="images/top/tutorial3.png"
-              className="h-auto max-w-full"
-              alt="tutorial3"
-            />
+            <div className="h-[350px] w-full">
+              <img
+                src="images/top/tutorial3.png"
+                className="h-auto max-w-full"
+                alt="tutorial3"
+              />
+            </div>
           ) : (
-            <div className="relative overflow-y-scroll">
+            <div className="h-[350px] w-full">
               <img
                 src="images/top/tutorial4.png"
                 className="h-auto max-w-full"
                 alt="tutorial4"
               />
-              <div className="absolute bottom-0 left-0 flex h-full w-full items-end justify-center">
-                <img
-                  onClick={() => setPage(1)}
-                  className="h-[64px] max-w-[80%] cursor-pointer"
-                  src="icons/start_tutorial.svg"
-                  alt="start_tutorial"
-                />
-              </div>
+
+              <img
+                onClick={() => setPage(1)}
+                className="mx-auto h-[64px] max-w-[80%] cursor-pointer"
+                src="icons/start_tutorial.svg"
+                alt="start_tutorial"
+              />
             </div>
           )}
         </div>
-        <div className="inline-flex items-center justify-center space-x-4 text-2xl text-gray-400">
+        <div
+          className="absolute bottom-0 right-0 left-0 mx-auto mb-4
+        flex items-center justify-center space-x-4 text-2xl text-gray-400"
+        >
           {page !== 1 ? (
             <img
               onClick={back}
