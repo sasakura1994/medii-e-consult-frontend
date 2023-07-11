@@ -16,7 +16,7 @@ export const UserConsultNoContents = () => {
         <img src="images/top/top-consult.png" alt="" />
       </div>
       <div className="mt-6 flex justify-center">
-        <SecondaryButton size="large">E-コンサルを始める</SecondaryButton>
+        <SecondaryButton size="large">30秒でわかるご利用ガイド</SecondaryButton>
       </div>
     </div>
   );

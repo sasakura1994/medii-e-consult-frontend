@@ -41,13 +41,10 @@ export const UserCounsultContent = (props: UserCounsultContentProps) => {
       case 'CREATED':
         return <p className={activeClass}>新着</p>;
       case 'ACTIVE':
-        return <p className={activeClass}>進行中</p>;
       case 'REOPEN':
         return <p className={activeClass}>進行中</p>;
       case 'CLOSED':
-        return <p className={disabledClass}>解決済み</p>;
       case 'RESOLVED':
-        return <p className={disabledClass}>解決済み</p>;
       case 'TEMP_RESOLVED':
         return <p className={disabledClass}>解決済み</p>;
       default:

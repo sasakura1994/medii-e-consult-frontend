@@ -7,8 +7,8 @@ import { UserCounsultContent } from './UserConsultContent';
 import { useFetchChatRoomList } from '@/hooks/api/chat/useFetchChatRoomList';
 import { useToken } from '@/hooks/authentication/useToken';
 import { UserConsultNoContents } from './UserConsultNoContents';
-import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
 import Link from 'next/link';
+import { getTimeIntervalText } from '@/libs/date';
 
 export const UserConsult = () => {
   const [activeTab, setActiveTab] = useState<'question' | 'answer'>('question');
@@ -20,24 +20,22 @@ export const UserConsult = () => {
 
   const viewData = useMemo(() => {
     if (!chatRoomList) return [];
-    const diffDate = (chat: ChatRoomEntity) => {
-      const now = new Date();
-      const updatedAt = new Date(chat.last_updated_date);
-      const diff = now.getTime() - updatedAt.getTime();
-      const diffMin = Math.floor(diff / 1000 / 60);
-      // TODO:ここで無理やり1週間以内のものを表示しています。apiの準備ができ次第修正します。
-      return diffMin < 60 * 24 * 7 * 4;
-    };
     if (activeTab === 'question') {
       const questionChatRoomList = chatRoomList.filter((chat) => {
-        return chat.owner_account_id === accountId && diffDate(chat);
+        return (
+          chat.owner_account_id === accountId &&
+          getTimeIntervalText(chat.last_updated_date)
+        );
       });
       return isOpenAllChatRoom
         ? questionChatRoomList
         : questionChatRoomList.slice(0, 5);
     } else if (activeTab === 'answer') {
       const answerChatRoomList = chatRoomList.filter((chat) => {
-        return chat.owner_account_id !== accountId && diffDate(chat);
+        return (
+          chat.owner_account_id !== accountId &&
+          getTimeIntervalText(chat.last_updated_date)
+        );
       });
       return isOpenAllChatRoom
         ? answerChatRoomList
@@ -54,7 +52,9 @@ export const UserConsult = () => {
         </p>
         <div className="hidden whitespace-nowrap lg:block">
           <Link href="/newchatroom">
-            <PrimaryButton size="large">新規E-コンサルを作成</PrimaryButton>
+            <a>
+              <PrimaryButton size="large">新規E-コンサルを作成</PrimaryButton>
+            </a>
           </Link>
         </div>
         <div className="ml-2 hidden whitespace-nowrap lg:block">
