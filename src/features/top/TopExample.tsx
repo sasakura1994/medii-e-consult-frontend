@@ -2,9 +2,9 @@ import Label from '@/components/Parts/Label/Label';
 import React from 'react';
 import { TopClockHistory } from './TopClockHistory';
 import { ConsultExampleEntity } from '@/types/entities/ConsultExampleEntity';
-import { useMedicalSpeciality } from '@/hooks/medicalSpeciality/useMedicalSpeciality';
 import { dateFormat } from '@/libs/date';
 import Link from 'next/link';
+import { useConsultExample } from '../consultExample/useConsultExample';
 
 type Props = {
   consultExample: ConsultExampleEntity;
@@ -12,7 +12,7 @@ type Props = {
 
 export const TopExample = (props: Props) => {
   const { consultExample } = props;
-  const { getMedicalSpecialityName } = useMedicalSpeciality();
+  const { getCategoryName } = useConsultExample();
   const minutes = consultExample.first_answer_minutes % 60;
   const hours = (consultExample.first_answer_minutes - minutes) / 60;
 
@@ -25,16 +25,7 @@ export const TopExample = (props: Props) => {
         >
           <div className="p-4">
             <div className="flex justify-start">
-              <Label
-                text={
-                  consultExample.speciality_code !== ''
-                    ? getMedicalSpecialityName(
-                        consultExample.speciality_code
-                      ) ?? ''
-                    : consultExample.category_name
-                }
-                color="gray"
-              />
+              <Label text={getCategoryName(consultExample)} color="gray" />
             </div>
             <p className="mt-2 text-md text-text-secondary">
               {consultExample.disease_name}
