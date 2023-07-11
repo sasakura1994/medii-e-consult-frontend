@@ -25,7 +25,7 @@ export const UserConsult = () => {
       const updatedAt = new Date(chat.last_updated_date);
       const diff = now.getTime() - updatedAt.getTime();
       const diffMin = Math.floor(diff / 1000 / 60);
-      // 1週間以内のものを表示
+      // TODO:ここで無理やり1週間以内のものを表示しています。apiの準備ができ次第修正します。
       return diffMin < 60 * 24 * 7 * 4 * 3; // !!一旦確認用に3ヶ月にしています。マージまでに戻すこと!!
     };
     if (activeTab === 'question') {
@@ -81,8 +81,15 @@ export const UserConsult = () => {
         <div className="w-auto border-b" />
       </StyledHiddenScrollBar>
       {viewData.length <= 0 && <UserConsultNoContents />}
-      {viewData.map((chat) => {
-        return <UserCounsultContent key={chat.chat_room_id} chat={chat} />;
+      {viewData.map((chat, index) => {
+        // TODO: モックで適当に文字列を入れています。apiの準備ができ次第修正します。
+        return (
+          <UserCounsultContent
+            key={chat.chat_room_id}
+            chat={chat}
+            index={index}
+          />
+        );
       })}
       <TertiaryButton
         size="large"

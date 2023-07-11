@@ -5,10 +5,11 @@ import React, { useMemo } from 'react';
 
 type UserCounsultContentProps = {
   chat: ChatRoomEntity;
+  index: number; // TODO: モックデータのため、後で消す
 };
 
 export const UserCounsultContent = (props: UserCounsultContentProps) => {
-  const { chat } = props;
+  const { chat, index } = props;
 
   const timeAgo = useMemo(() => {
     const now = new Date();
@@ -35,6 +36,7 @@ export const UserCounsultContent = (props: UserCounsultContentProps) => {
       'h-6 w-auto whitespace-nowrap rounded-full bg-medii-sky-base px-2 py-0.5 text-center text-medii-sm text-white';
     const disabledClass = `h-6 w-auto whitespace-nowrap rounded-full
       bg-button-disabled px-2 py-0.5 text-center text-medii-sm text-text-secondary`;
+    // TODO: ここの仕様は現在確認中
     switch (chat.status) {
       case 'CREATED':
         return <p className={activeClass}>新着</p>;
@@ -52,6 +54,19 @@ export const UserCounsultContent = (props: UserCounsultContentProps) => {
         return '';
     }
   }, [chat.status]);
+  // TODO: モック
+  const assigneeName = useMemo(() => {
+    switch ((index + 1) % 3) {
+      case 0:
+        return '回答医を探しています';
+      case 1:
+        return 'メディ大学グループが回答';
+      case 2:
+        return '山田裕揮先生が回答';
+      default:
+        return '回答医を探しています';
+    }
+  }, [index]);
 
   return (
     <div className="flex h-28 items-center border-b border-border-divider p-4">
@@ -67,7 +82,7 @@ export const UserCounsultContent = (props: UserCounsultContentProps) => {
             <div className="mt-2 flex">
               {labelText}
               <p className="test-md ml-2 font-bold text-text-secondary">
-                回答医を探しています
+                {assigneeName}
               </p>
               <p className="test-md text-text-secondary">・</p>
               <p className="test-md text-text-secondary">{timeAgo}</p>
@@ -85,7 +100,7 @@ export const UserCounsultContent = (props: UserCounsultContentProps) => {
         <div className="mt-2 flex">
           {labelText}
           <p className="test-md ml-2 font-bold text-text-secondary">
-            回答医を探しています
+            {assigneeName}
           </p>
           <p className="test-md text-text-secondary">・</p>
           <p className="test-md text-text-secondary">{timeAgo}</p>
