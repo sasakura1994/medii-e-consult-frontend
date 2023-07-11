@@ -21,7 +21,7 @@ export const usePostChatRoom = () => {
   const createNewChatRoom = React.useCallback(
     (data: PostChatRoomRequestData) => {
       return axios.post<PostChatRoomResponseData>(
-        '/api/chat_room/new_chat_room',
+        '/chat_room/new_chat_room',
         data
       );
     },
