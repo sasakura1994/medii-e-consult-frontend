@@ -14,7 +14,7 @@ export const TopExamples = () => {
           E-コンサル事例集
         </p>
         <SecondaryButton size="large">
-          解決済みのコンサル事例を見る
+          <span className="hidden lg:inline">解決済みの</span>コンサル事例を見る
         </SecondaryButton>
       </StyledHiddenScrollBar>
       <StyledHiddenScrollBar className="flex max-w-[1024px] space-x-2 overflow-x-auto px-1 py-4">
