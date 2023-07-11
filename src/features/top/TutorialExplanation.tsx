@@ -11,18 +11,17 @@ const TutorialExplanation = (props: TutorialExplanationProps) => {
 
   const next = () => {
     setPage(page + 1);
-    console.log('next:' + (page + 1));
   };
 
   const back = () => {
     setPage(page - 1);
-    console.log('back:' + (page - 1));
   };
 
   return (
     <Modal
-      className="relative flex h-4/5 w-3/5 flex-col"
+      className="relative flex w-full flex-col lg:h-4/5 lg:w-3/5"
       setShowModal={setShowModal}
+      isCenter
     >
       <div
         className="mr-9 mt-5 flex cursor-pointer flex-row-reverse"
