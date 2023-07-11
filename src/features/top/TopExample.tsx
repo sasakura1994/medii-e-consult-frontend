@@ -27,7 +27,11 @@ export const TopExample = (props: Props) => {
             <div className="flex justify-start">
               <Label
                 text={
-                  getMedicalSpecialityName(consultExample.speciality_code) ?? ''
+                  consultExample.speciality_code !== ''
+                    ? getMedicalSpecialityName(
+                        consultExample.speciality_code
+                      ) ?? ''
+                    : consultExample.category_name
                 }
                 color="gray"
               />
