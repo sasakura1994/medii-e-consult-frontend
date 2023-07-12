@@ -1,5 +1,6 @@
 import { Modal } from '@/components/Parts/Modal/Modal';
-import React, { useState } from 'react';
+import React from 'react';
+import { useTutorialExplanation } from './useTutorialExplanation';
 
 type TutorialExplanationProps = {
   setShowModal: (isShow: boolean) => void;
@@ -7,15 +8,7 @@ type TutorialExplanationProps = {
 
 const TutorialExplanation = (props: TutorialExplanationProps) => {
   const { setShowModal } = props;
-  const [page, setPage] = useState(1);
-
-  const next = () => {
-    setPage(page + 1);
-  };
-
-  const back = () => {
-    setPage(page - 1);
-  };
+  const { page, next, back } = useTutorialExplanation();
 
   return (
     <Modal
@@ -49,27 +42,12 @@ const TutorialExplanation = (props: TutorialExplanationProps) => {
                 alt="tutorial2"
               />
             </div>
-          ) : page === 3 ? (
+          ) : (
             <div className="h-[350px] w-full">
               <img
                 src="images/top/tutorial3.png"
                 className="h-auto max-w-full"
                 alt="tutorial3"
-              />
-            </div>
-          ) : (
-            <div className="h-[350px] w-full">
-              <img
-                src="images/top/tutorial4.png"
-                className="h-auto max-w-full"
-                alt="tutorial4"
-              />
-
-              <img
-                onClick={() => setPage(1)}
-                className="mx-auto h-[64px] max-w-[80%] cursor-pointer"
-                src="icons/start_tutorial.svg"
-                alt="start_tutorial"
               />
             </div>
           )}
@@ -92,8 +70,8 @@ const TutorialExplanation = (props: TutorialExplanationProps) => {
               alt="arrow_left_disable"
             />
           )}
-          <span>{page}/4</span>
-          {page !== 4 ? (
+          <span>{page}/3</span>
+          {page !== 3 ? (
             <img
               onClick={next}
               className="h-[39px] cursor-pointer"

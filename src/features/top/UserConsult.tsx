@@ -5,7 +5,13 @@ import { TopTab } from './TopTab';
 import { StyledHiddenScrollBar } from './styled';
 import { TopToolTip } from './TopToolTip';
 import SecondaryButton from '@/components/Button/SecondaryButton';
-export const UserConsult = () => {
+
+type UserConsultProps = {
+  setShowTutorialExplanationModal: (isShow: boolean) => void;
+};
+
+export const UserConsult = (props: UserConsultProps) => {
+  const { setShowTutorialExplanationModal } = props;
   return (
     <>
       <div className="mt-5 flex">
@@ -15,8 +21,13 @@ export const UserConsult = () => {
         <div className="hidden whitespace-nowrap lg:block">
           <PrimaryButton size="large">新規E-コンサルを作成</PrimaryButton>
         </div>
-        <div className="ml-2 hidden whitespace-nowrap lg:block">
-          <TertiaryButton size="large">E-コンサルの使い方</TertiaryButton>
+        <div
+          className="ml-2 hidden whitespace-nowrap lg:block"
+          onClick={() => {
+            setShowTutorialExplanationModal(true);
+          }}
+        >
+          <TertiaryButton size="large">E-コンサルとは？</TertiaryButton>
         </div>
       </div>
 

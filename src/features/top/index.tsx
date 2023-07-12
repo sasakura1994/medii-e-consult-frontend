@@ -1,5 +1,5 @@
 import SecondaryButton from '@/components/Button/SecondaryButton';
-import React, { useState } from 'react';
+import React from 'react';
 import { StyledHiddenScrollBar } from './styled';
 import { UserConsult } from './UserConsult';
 import { TopItem } from './TopItem';
@@ -8,16 +8,19 @@ import { TopNews } from './TopNews';
 import { TopInterviews } from './TopInterviews';
 import { TopNewerConsults } from './TopNewerConsults';
 import TutorialExplanation from './TutorialExplanation';
+import { useTop } from './useTop';
 
 export const Top = () => {
-  const [showModal, setShowModal] = useState(true);
+  const { showTutorialExplanationModal, setShowTutorialExplanationModal } =
+    useTop();
   return (
     <>
-      {showModal && <TutorialExplanation setShowModal={setShowModal} />}
       <div className="mx-4 flex min-h-screen flex-col pb-12 pt-6 lg:mx-10 lg:flex-row lg:pb-0">
         <div className="lg:flex-grow">
           <TopNotifications />
-          <UserConsult />
+          <UserConsult
+            setShowTutorialExplanationModal={setShowTutorialExplanationModal}
+          />
           <StyledHiddenScrollBar className="mt-10 flex items-center">
             <p className="flex-grow text-xxl font-bold text-text-primary">
               E-コンサル事例集
@@ -45,6 +48,9 @@ export const Top = () => {
           </div>
         </div>
       </div>
+      {showTutorialExplanationModal && (
+        <TutorialExplanation setShowModal={setShowTutorialExplanationModal} />
+      )}
     </>
   );
 };
