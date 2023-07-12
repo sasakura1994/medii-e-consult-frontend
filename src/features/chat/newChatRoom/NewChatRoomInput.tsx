@@ -104,30 +104,30 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                       </div>
                     )}
                   </div>
-                  {selectedMedicalSpecialities.length > 0 && (
-                    <div className="my-6">
-                      <SelectedMedicalSpecialities
-                        medicalSpecialities={selectedMedicalSpecialities}
-                        medicalSpecialityCategories={
-                          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                          medicalSpecialityCategories!
-                        }
-                        onDelete={(medicalSpeciality) =>
-                          setSelectedMedicalSpecialities(
-                            (selectedMedicalSpecialities) =>
-                              selectedMedicalSpecialities.filter(
-                                (existingMedicalSpeciality) =>
-                                  medicalSpeciality.speciality_code !==
-                                  existingMedicalSpeciality.speciality_code
-                              )
-                          )
-                        }
-                        moveSelectedMedicalSpeciality={
-                          moveSelectedMedicalSpeciality
-                        }
-                      />
-                    </div>
-                  )}
+                  {selectedMedicalSpecialities.length > 0 &&
+                    medicalSpecialityCategories && (
+                      <div className="my-6">
+                        <SelectedMedicalSpecialities
+                          medicalSpecialities={selectedMedicalSpecialities}
+                          medicalSpecialityCategories={
+                            medicalSpecialityCategories
+                          }
+                          onDelete={(medicalSpeciality) =>
+                            setSelectedMedicalSpecialities(
+                              (selectedMedicalSpecialities) =>
+                                selectedMedicalSpecialities.filter(
+                                  (existingMedicalSpeciality) =>
+                                    medicalSpeciality.speciality_code !==
+                                    existingMedicalSpeciality.speciality_code
+                                )
+                            )
+                          }
+                          moveSelectedMedicalSpeciality={
+                            moveSelectedMedicalSpeciality
+                          }
+                        />
+                      </div>
+                    )}
                 </>
               )}
             </div>
@@ -209,6 +209,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
               name="age_range"
               id="age-range"
               required
+              value={ageRange}
               onChange={(e) => setAgeRangeWrapper(e.target.value)}
             >
               <option value="" disabled={ageRange !== ''}>
@@ -226,6 +227,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                 <SelectBox
                   name="child_age"
                   id="child-age"
+                  value={childAge}
                   required
                   onChange={(e) => setChildAgeWrapper(e.target.value)}
                 >

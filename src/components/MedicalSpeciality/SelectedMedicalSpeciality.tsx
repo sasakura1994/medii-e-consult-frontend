@@ -6,7 +6,7 @@ import { useSelectedMedicalSpeciality } from './useSelectedMedicalSpeciality';
 export type SelectedMedicalSpecialityProps = {
   index: number;
   medicalSpeciality: MedicalSpecialityEntity;
-  medicalSpecialityCategory: MedicalSpecialityCategoryEntity;
+  medicalSpecialityCategory?: MedicalSpecialityCategoryEntity;
   onDelete: () => void;
   moveItem: (dragIndex: number, hoverIndex: number) => void;
 };

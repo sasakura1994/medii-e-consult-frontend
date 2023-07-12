@@ -12,6 +12,7 @@ import { useFetchMedicalSpecialityCategories } from '@/hooks/api/medicalCategory
 import { loadLocalStorage, saveLocalStorage } from '@/libs/LocalStorageManager';
 import { NewChatRoomEntity } from '@/types/entities/chat/NewChatRoomEntity';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
+import { useRouter } from 'next/router';
 import {
   ChangeEvent,
   FormEvent,
@@ -19,6 +20,7 @@ import {
   useRef,
   useState,
   useEffect,
+  useMemo,
 } from 'react';
 
 export const newChatRoomFormDataKey = 'NewChatRoom::chatRoom';
@@ -27,13 +29,18 @@ type AgeRange = string | 'child';
 type Mode = 'input' | 'confirm';
 
 export const useNewChatRoom = () => {
+  const router = useRouter();
+
   const [mode, setMode] = useState<Mode>('input');
   const [chatRoom, setChatRoom] = useState<NewChatRoomEntity>({
+    chat_room_id: '',
     room_type: 'FREE',
     gender: 'man',
     disease_name: '',
     first_message: '',
     publishment_accepted: true,
+    target_specialities: [],
+    chat_draft_image_ids: [],
   });
   const [ageRange, setAgeRange] = useState<AgeRange>('');
   const [childAge, setChildAge] = useState<string>('');
@@ -50,6 +57,7 @@ export const useNewChatRoom = () => {
     useState(false);
   const [isSearchGroupModalShown, setIsSearchGroupModalShown] = useState(false);
   const [isUseDraftImages, setIsUseDraftImages] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   const { createNewChatRoom } = usePostChatRoom();
   const { createDraftImage } = usePostDraftImage();
@@ -63,7 +71,26 @@ export const useNewChatRoom = () => {
 
   const imageInput = useRef<HTMLInputElement>(null);
 
+  const formData = useMemo(
+    (): NewChatRoomEntity => ({
+      ...chatRoom,
+      age: Number(ageRange === 'child' ? childAge : ageRange),
+      chat_draft_image_ids:
+        chatDraftImages?.map(
+          (chatDraftImage) => chatDraftImage.chat_draft_image_id
+        ) ?? [],
+      target_specialities: selectedMedicalSpecialities.map(
+        (medicalSpeciality) => medicalSpeciality.speciality_code
+      ),
+    }),
+    [ageRange, chatDraftImages, chatRoom, childAge, selectedMedicalSpecialities]
+  );
+
   const initialize = useCallback(async () => {
+    if (!medicalSpecialities) {
+      return;
+    }
+
     const draft = loadLocalStorage(newChatRoomFormDataKey);
     if (!draft) {
       return;
@@ -73,17 +100,55 @@ export const useNewChatRoom = () => {
         '下書きに作成途中のコンサルがあります。作成途中のコンサルを続けて編集しますか？'
       )
     ) {
+      setIsInitialized(true);
       return;
     }
 
     const data = JSON.parse(draft) as NewChatRoomEntity;
+    console.log(data);
+
     setChatRoom(data);
+
+    if (data.age) {
+      if (data.age < 10) {
+        setChildAge(data.age.toString());
+        setAgeRange('child');
+      } else {
+        setAgeRange(data.age.toString());
+      }
+    }
+
+    const currentMedicalSpecialities: MedicalSpecialityEntity[] = [];
+    for (const specialityCode of data.target_specialities) {
+      const medicalSpeciality = medicalSpecialities.find(
+        (medicalSpeciality) =>
+          medicalSpeciality.speciality_code === specialityCode
+      );
+      if (medicalSpeciality) {
+        currentMedicalSpecialities.push(medicalSpeciality);
+      }
+    }
+    setSelectedMedicalSpecialities(currentMedicalSpecialities);
+
     setIsUseDraftImages(true);
-  }, []);
+    setIsInitialized(true);
+  }, [medicalSpecialities]);
 
   useEffect(() => {
+    if (isInitialized) {
+      return;
+    }
     initialize();
-  }, [initialize]);
+  }, [initialize, isInitialized]);
+
+  const setChatRoomFields = useCallback(
+    (data: Partial<NewChatRoomEntity>) => {
+      const newData = { ...formData, ...data };
+      saveLocalStorage(newChatRoomFormDataKey, JSON.stringify(newData));
+      setChatRoom(newData);
+    },
+    [formData]
+  );
 
   const setAgeRangeWrapper = useCallback(
     (age: AgeRange) => {
@@ -91,20 +156,20 @@ export const useNewChatRoom = () => {
 
       if (age === 'child') {
         setChildAge('');
-        setChatRoom({ ...chatRoom, age: undefined });
+        setChatRoomFields({ age: undefined });
       } else {
-        setChatRoom({ ...chatRoom, age: Number(age) });
+        setChatRoomFields({ age: Number(age) });
       }
     },
-    [chatRoom]
+    [setChatRoomFields]
   );
 
   const setChildAgeWrapper = useCallback(
     (age: string) => {
       setChildAge(age);
-      setChatRoom({ ...chatRoom, age: Number(age) });
+      setChatRoomFields({ age: Number(age) });
     },
-    [chatRoom]
+    [setChatRoomFields]
   );
 
   const selectConsultMessageTemplate = useCallback(
@@ -118,7 +183,7 @@ export const useNewChatRoom = () => {
         return;
       }
 
-      setChatRoom((chatRoom) => ({ ...chatRoom, first_message: firstMessage }));
+      setChatRoomFields({ first_message: firstMessage });
     },
     [chatRoom.first_message]
   );
@@ -156,9 +221,15 @@ export const useNewChatRoom = () => {
     // )
 
     const response = await createNewChatRoom({
-      ...chatRoom,
-      chat_draft_image_ids: [],
-      target_specialities: [],
+      ...formData,
+      chat_room_id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
+        /[xy]/g,
+        (c) => {
+          const r = (Math.random() * 16) | 0,
+            v = c == 'x' ? r : (r & 0x3) | 0x8;
+          return v.toString(16);
+        }
+      ),
     }).catch((error) => {
       console.error(error);
       setErrorMessage(
@@ -173,13 +244,15 @@ export const useNewChatRoom = () => {
       return;
     }
 
-    if (response.data.code !== 1) {
+    if (response.data.code !== 1 || !response.data.chat_room_id) {
       setIsSending(false);
       setErrorMessage(response.data.message);
       setModeAndScrollToTop('input');
       return;
     }
-  }, [chatRoom, createNewChatRoom, setModeAndScrollToTop]);
+
+    router.push(`/chat?chat_room_id=${response.data.chat_room_id}`);
+  }, [createNewChatRoom, formData, router, setModeAndScrollToTop]);
 
   const resetImageInput = useCallback(() => {
     if (imageInput.current) {
@@ -263,15 +336,6 @@ export const useNewChatRoom = () => {
     []
   );
 
-  const setChatRoomFields = useCallback(
-    (data: Partial<NewChatRoomEntity>) => {
-      const newData = { ...chatRoom, ...data };
-      saveLocalStorage(newChatRoomFormDataKey, JSON.stringify(newData));
-      setChatRoom(newData);
-    },
-    [chatRoom]
-  );
-
   return {
     ageRange,
     backToInput,
@@ -299,7 +363,6 @@ export const useNewChatRoom = () => {
     resetImageInput,
     selectConsultMessageTemplate,
     selectedMedicalSpecialities,
-    setAgeRange,
     setAgeRangeWrapper,
     setChildAgeWrapper,
     setEditingImage,
