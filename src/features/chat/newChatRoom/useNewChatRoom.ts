@@ -5,14 +5,23 @@ import {
   usePostChatRoom,
 } from '@/hooks/api/chat/usePostChatRoom';
 import { usePostDraftImage } from '@/hooks/api/chat/usePostDraftImage';
+import { useFetchDoctorProfile } from '@/hooks/api/doctor/useFetchDoctorProfil';
+import { useFetchGroup } from '@/hooks/api/group/useFetchGroup';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { useFetchMedicalSpecialityCategories } from '@/hooks/api/medicalCategoryCategory/useFetchMedicalSpecialityCategories';
-import { saveLocalStorage } from '@/libs/LocalStorageManager';
+import { loadLocalStorage, saveLocalStorage } from '@/libs/LocalStorageManager';
 import { GroupEntity } from '@/types/entities/GroupEntity';
 import { NewChatRoomEntity } from '@/types/entities/chat/NewChatRoomEntity';
 import { DoctorEntity } from '@/types/entities/doctorEntity';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
-import { ChangeEvent, FormEvent, useCallback, useRef, useState } from 'react';
+import {
+  ChangeEvent,
+  FormEvent,
+  useCallback,
+  useRef,
+  useState,
+  useEffect,
+} from 'react';
 
 export const newChatRoomFormDataKey = 'NewChatRoom::chatRoom';
 
@@ -33,8 +42,6 @@ export const useNewChatRoom = () => {
   const [selectedMedicalSpecialities, setSelectedMedicalSpecialities] =
     useState<MedicalSpecialityEntity[]>([]);
   const [editingImage, setEditingImage] = useState<File>();
-  const [doctor, setDoctor] = useState<DoctorEntity>();
-  const [group, setGroup] = useState<GroupEntity>();
   const [isSending, setIsSending] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [
@@ -52,8 +59,33 @@ export const useNewChatRoom = () => {
   const { chatDraftImages, mutate: mutateGetChatDraftImages } =
     useGetChatDraftImages({ isNeed: true });
   const { deleteChatDraftImage } = useDeleteChatDraftImage();
+  const { group } = useFetchGroup(chatRoom.group_id);
+  const { doctor } = useFetchDoctorProfile(chatRoom.target_doctor);
 
   const imageInput = useRef<HTMLInputElement>(null);
+
+  const initialize = useCallback(async () => {
+    const draft = loadLocalStorage(newChatRoomFormDataKey);
+    if (!draft) {
+      return;
+    }
+    if (
+      !confirm(
+        '下書きに作成途中のコンサルがあります。作成途中のコンサルを続けて編集しますか？'
+      )
+    ) {
+      return;
+    }
+
+    const data = JSON.parse(draft) as NewChatRoomEntity;
+
+    //loaddraftimages
+    setChatRoom(data);
+  }, []);
+
+  useEffect(() => {
+    initialize();
+  }, [initialize]);
 
   const setAgeRangeWrapper = useCallback(
     (age: AgeRange) => {
@@ -232,22 +264,6 @@ export const useNewChatRoom = () => {
     []
   );
 
-  const changeDoctor = useCallback(
-    (doctor: DoctorEntity) => {
-      setDoctor(doctor);
-      setChatRoom({ ...chatRoom, target_doctor: doctor.account_id });
-    },
-    [chatRoom]
-  );
-
-  const changeGroup = useCallback(
-    (group: GroupEntity) => {
-      setGroup(group);
-      setChatRoom({ ...chatRoom, group_id: group.group_id });
-    },
-    [chatRoom]
-  );
-
   const setChatRoomFields = useCallback(
     (data: Partial<NewChatRoomEntity>) => {
       const newData = { ...chatRoom, ...data };
@@ -261,8 +277,6 @@ export const useNewChatRoom = () => {
     ageRange,
     backToInput,
     childAge,
-    changeDoctor,
-    changeGroup,
     changeMedicalSpecialities,
     chatDraftImages,
     confirmInput,

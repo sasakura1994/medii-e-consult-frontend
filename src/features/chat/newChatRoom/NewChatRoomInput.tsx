@@ -36,8 +36,6 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
     ageRange,
     deleteChatDraftImageById,
     errorMessage,
-    changeDoctor,
-    changeGroup,
     changeMedicalSpecialities,
     chatDraftImages,
     childAge,
@@ -387,7 +385,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
         <DoctorSearchModal
           onChange={(doctor) => {
             setIsDoctorSearchModalShown(false);
-            changeDoctor(doctor);
+            setChatRoomFields({ target_doctor: doctor.account_id });
           }}
           setShowModal={setIsDoctorSearchModalShown}
         />
@@ -396,7 +394,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
         <SearchGroupModal
           onChange={(group) => {
             setIsSearchGroupModalShown(false);
-            changeGroup(group);
+            setChatRoomFields({ group_id: group.group_id });
           }}
           setShowModal={setIsSearchGroupModalShown}
         />
