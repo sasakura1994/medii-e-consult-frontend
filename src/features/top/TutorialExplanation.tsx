@@ -12,7 +12,7 @@ const TutorialExplanation = (props: TutorialExplanationProps) => {
 
   return (
     <Modal
-      className="relative flex w-full flex-col lg:h-4/5 lg:w-3/5"
+      className="relative flex w-full flex-col lg:h-[90%] lg:w-3/5"
       setShowModal={setShowModal}
       isCenter
     >
@@ -24,21 +24,21 @@ const TutorialExplanation = (props: TutorialExplanationProps) => {
       >
         <img src="icons/close_primary.svg" alt="" />
       </div>
-      <div className="relative flex h-full flex-col rounded-lg bg-white p-6 text-center">
-        <div className="mx-auto mb-14 h-full w-4/5 overflow-y-auto">
+      <div className="relative flex h-full flex-col rounded-lg bg-white px-6 py-2 text-center">
+        <div className="mx-auto mb-14 h-full w-full overflow-y-auto">
           {page === 1 ? (
-            <div className="h-[350px] w-full">
+            <div className="mx-auto h-[350px] w-full">
               <img
                 src="images/top/tutorial1.png"
                 alt="tutorial1"
-                className="h-auto max-w-full"
+                className="h-auto w-full"
               />
             </div>
           ) : page === 2 ? (
             <div className="h-[350px] w-full">
               <img
                 src="images/top/tutorial2.png"
-                className="h-auto max-w-full"
+                className="h-auto w-full"
                 alt="tutorial2"
               />
             </div>
@@ -46,7 +46,7 @@ const TutorialExplanation = (props: TutorialExplanationProps) => {
             <div className="h-[350px] w-full">
               <img
                 src="images/top/tutorial3.png"
-                className="h-auto max-w-full"
+                className="h-auto w-full"
                 alt="tutorial3"
               />
             </div>
