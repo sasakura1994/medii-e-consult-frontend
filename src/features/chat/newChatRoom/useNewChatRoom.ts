@@ -18,7 +18,7 @@ type Mode = 'input' | 'confirm';
 
 export const useNewChatRoom = () => {
   const [mode, setMode] = React.useState<Mode>('input');
-  const [formData, setFormData] = React.useState<NewChatRoomEntity>({
+  const [chatRoom, setChatRoom] = React.useState<NewChatRoomEntity>({
     room_type: 'FREE',
     gender: 'man',
     disease_name: '',
@@ -59,26 +59,26 @@ export const useNewChatRoom = () => {
 
       if (age === 'child') {
         setChildAge('');
-        setFormData({ ...formData, age: undefined });
+        setChatRoom({ ...chatRoom, age: undefined });
       } else {
-        setFormData({ ...formData, age: Number(age) });
+        setChatRoom({ ...chatRoom, age: Number(age) });
       }
     },
-    [formData]
+    [chatRoom]
   );
 
   const setChildAgeWrapper = React.useCallback(
     (age: string) => {
       setChildAge(age);
-      setFormData({ ...formData, age: Number(age) });
+      setChatRoom({ ...chatRoom, age: Number(age) });
     },
-    [formData]
+    [chatRoom]
   );
 
   const selectConsultMessageTemplate = React.useCallback(
     (firstMessage: string) => {
       if (
-        formData.first_message.trim() !== '' &&
+        chatRoom.first_message.trim() !== '' &&
         !confirm(
           'コンサル文にテンプレートを反映します。現在書かれている内容は消えてしまいますがよろしいですか？'
         )
@@ -86,9 +86,9 @@ export const useNewChatRoom = () => {
         return;
       }
 
-      setFormData((formData) => ({ ...formData, first_message: firstMessage }));
+      setChatRoom((chatRoom) => ({ ...chatRoom, first_message: firstMessage }));
     },
-    [formData.first_message]
+    [chatRoom.first_message]
   );
 
   const setModeAndScrollToTop = React.useCallback((mode: Mode) => {
@@ -102,29 +102,29 @@ export const useNewChatRoom = () => {
 
       setModeAndScrollToTop('confirm');
     },
-    [formData]
+    [setModeAndScrollToTop]
   );
 
   const backToInput = React.useCallback(() => {
     setModeAndScrollToTop('input');
-  }, []);
+  }, [setModeAndScrollToTop]);
 
   const submit = React.useCallback(async () => {
     setIsSending(true);
     setErrorMessage('');
 
     // if (this.reConsultChatRoom) {
-    //   formData.re_consult_chat_room_id = this.reConsultChatRoom.chat_room_id
-    //   formData.re_consult_file_chat_message_ids =
+    //   chatRoom.re_consult_chat_room_id = this.reConsultChatRoom.chat_room_id
+    //   chatRoom.re_consult_file_chat_message_ids =
     //     this.reConsultFileMessages.map((chatMessage) => chatMessage.uid)
     // }
 
-    // formData.target_specialities = formData.target_specialities.map(
+    // chatRoom.target_specialities = chatRoom.target_specialities.map(
     //   (medicalSpeciality) => medicalSpeciality.speciality_code
     // )
 
     const response = await createNewChatRoom({
-      ...formData,
+      ...chatRoom,
       chat_draft_image_ids: [],
       target_specialities: [],
     }).catch((error) => {
@@ -147,13 +147,21 @@ export const useNewChatRoom = () => {
       setModeAndScrollToTop('input');
       return;
     }
-  }, [formData]);
+  }, [chatRoom, createNewChatRoom, setModeAndScrollToTop]);
 
   const resetImageInput = React.useCallback(() => {
     if (imageInput.current) {
       imageInput.current.value = '';
     }
   }, [imageInput]);
+
+  const addFile = React.useCallback(
+    async (file: File) => {
+      await createDraftImage(file);
+      mutateGetChatDraftImages();
+    },
+    [createDraftImage, mutateGetChatDraftImages]
+  );
 
   const onSelectImage = React.useCallback(
     async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -171,18 +179,16 @@ export const useNewChatRoom = () => {
 
       await addFile(files[0]);
     },
-    []
+    [addFile]
   );
 
-  const onImageEdited = React.useCallback((file: File) => {
-    setEditingImage(undefined);
-    addFile(file);
-  }, []);
-
-  const addFile = React.useCallback(async (file: File) => {
-    await createDraftImage(file);
-    mutateGetChatDraftImages();
-  }, []);
+  const onImageEdited = React.useCallback(
+    (file: File) => {
+      setEditingImage(undefined);
+      addFile(file);
+    },
+    [addFile]
+  );
 
   const deleteChatDraftImageById = React.useCallback(
     async (chatDraftImageId: string) => {
@@ -198,7 +204,7 @@ export const useNewChatRoom = () => {
       }
       mutateGetChatDraftImages();
     },
-    []
+    [deleteChatDraftImage, mutateGetChatDraftImages]
   );
 
   const changeMedicalSpecialities = React.useCallback(
@@ -227,17 +233,17 @@ export const useNewChatRoom = () => {
   const changeDoctor = React.useCallback(
     (doctor: DoctorEntity) => {
       setDoctor(doctor);
-      setFormData({ ...formData, target_doctor: doctor.account_id });
+      setChatRoom({ ...chatRoom, target_doctor: doctor.account_id });
     },
-    [formData]
+    [chatRoom]
   );
 
   const changeGroup = React.useCallback(
     (group: GroupEntity) => {
       setGroup(group);
-      setFormData({ ...formData, group_id: group.group_id });
+      setChatRoom({ ...chatRoom, group_id: group.group_id });
     },
-    [formData]
+    [chatRoom]
   );
 
   return {
@@ -253,7 +259,7 @@ export const useNewChatRoom = () => {
     doctor,
     editingImage,
     errorMessage,
-    formData,
+    chatRoom,
     group,
     imageInput,
     isDoctorSearchModalShown,
@@ -273,7 +279,7 @@ export const useNewChatRoom = () => {
     setAgeRangeWrapper,
     setChildAgeWrapper,
     setEditingImage,
-    setFormData,
+    setChatRoom,
     setIsDoctorSearchModalShown,
     setIsMedicalSpecialitiesSelectDialogShown,
     setIsSearchGroupModalShown,

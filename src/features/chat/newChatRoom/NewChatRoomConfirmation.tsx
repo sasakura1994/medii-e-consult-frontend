@@ -9,7 +9,7 @@ import { GrayButton } from '@/components/Parts/Button/GrayButton';
 type Props = ReturnType<typeof useNewChatRoom>;
 
 export const NewChatRoomConfirmation: React.FC<Props> = (props: Props) => {
-  const { ageRange, backToInput, childAge, formData, isSending, submit } =
+  const { ageRange, backToInput, childAge, chatRoom, isSending, submit } =
     props;
 
   return (
@@ -25,19 +25,19 @@ export const NewChatRoomConfirmation: React.FC<Props> = (props: Props) => {
         <NewChatRoomConfirmationLabel>患者情報</NewChatRoomConfirmationLabel>
         <NewChatRoomConfirmationValue className="mt-4 flex gap-4">
           <div>{ageRange === 'child' ? `${childAge}歳` : `${ageRange}代`}</div>
-          <div>{formData.gender === 'man' ? '男性' : '女性'}</div>
+          <div>{chatRoom.gender === 'man' ? '男性' : '女性'}</div>
         </NewChatRoomConfirmationValue>
         <NewChatRoomConfirmationLabel className="mt-10">
           要約
         </NewChatRoomConfirmationLabel>
         <NewChatRoomConfirmationValue className="mt-4">
-          {formData.disease_name}
+          {chatRoom.disease_name}
         </NewChatRoomConfirmationValue>
         <NewChatRoomConfirmationLabel className="mt-10">
           コンサル文
         </NewChatRoomConfirmationLabel>
         <div className="mt-4 whitespace-pre-wrap break-words text-sm">
-          {formData.first_message}
+          {chatRoom.first_message}
         </div>
         <div className="mt-8 text-center">
           {!isSending ? (

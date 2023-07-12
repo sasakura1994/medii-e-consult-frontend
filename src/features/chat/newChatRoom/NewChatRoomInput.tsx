@@ -44,7 +44,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
     confirmInput,
     doctor,
     editingImage,
-    formData,
+    chatRoom,
     group,
     imageInput,
     isDoctorSearchModalShown,
@@ -61,7 +61,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
     setAgeRangeWrapper,
     setChildAgeWrapper,
     setEditingImage,
-    setFormData,
+    setChatRoom,
     setIsDoctorSearchModalShown,
     setIsMedicalSpecialitiesSelectDialogShown,
     setIsSearchGroupModalShown,
@@ -82,11 +82,11 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                 id="room-type-free"
                 label="診療科で指定する"
                 note="一般的なご相談の場合"
-                checked={formData.room_type === 'FREE'}
+                checked={chatRoom.room_type === 'FREE'}
                 value="FREE"
-                onChange={() => setFormData({ ...formData, room_type: 'FREE' })}
+                onChange={() => setChatRoom({ ...chatRoom, room_type: 'FREE' })}
               />
-              {formData.room_type === 'FREE' && (
+              {chatRoom.room_type === 'FREE' && (
                 <>
                   <div className="mt-2 flex items-center gap-2">
                     <OutlinedSquareButton
@@ -138,14 +138,14 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                 id="room-type-by-name"
                 label="バイネーム(氏名)で指定する"
                 note="相談したい先生が決まっている場合"
-                checked={formData.room_type === 'BY_NAME'}
+                checked={chatRoom.room_type === 'BY_NAME'}
                 value="BY_NAME"
                 onChange={() =>
-                  setFormData({ ...formData, room_type: 'BY_NAME' })
+                  setChatRoom({ ...chatRoom, room_type: 'BY_NAME' })
                 }
               />
             </div>
-            {formData.room_type === 'BY_NAME' && (
+            {chatRoom.room_type === 'BY_NAME' && (
               <>
                 <div className="my-2 flex items-center gap-2">
                   <OutlinedSquareButton
@@ -169,15 +169,15 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                 id="room-type-group"
                 label="グループで指定する"
                 note="特定疾患や地域連携のご相談の場合"
-                checked={formData.room_type === 'GROUP'}
+                checked={chatRoom.room_type === 'GROUP'}
                 value="GROUP"
                 isBeta
                 onChange={() =>
-                  setFormData({ ...formData, room_type: 'GROUP' })
+                  setChatRoom({ ...chatRoom, room_type: 'GROUP' })
                 }
               />
             </div>
-            {formData.room_type === 'GROUP' && (
+            {chatRoom.room_type === 'GROUP' && (
               <>
                 <div className="my-2 flex items-center gap-2">
                   <OutlinedSquareButton
@@ -198,16 +198,16 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
               value="man"
               label="男性"
               id="gender-man"
-              checked={formData.gender === 'man'}
-              onChange={() => setFormData({ ...formData, gender: 'man' })}
+              checked={chatRoom.gender === 'man'}
+              onChange={() => setChatRoom({ ...chatRoom, gender: 'man' })}
             />
             <Radio
               name="gender"
               value="woman"
               label="女性"
               id="gender-woman"
-              checked={formData.gender === 'woman'}
-              onChange={() => setFormData({ ...formData, gender: 'woman' })}
+              checked={chatRoom.gender === 'woman'}
+              onChange={() => setChatRoom({ ...chatRoom, gender: 'woman' })}
             />
           </div>
           <div className="mt-2 w-[240px]">
@@ -251,9 +251,9 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
           <div className="mt-1">
             <TextField
               name="disease_name"
-              value={formData.disease_name}
+              value={chatRoom.disease_name}
               onChange={(e) =>
-                setFormData({ ...formData, disease_name: e.target.value })
+                setChatRoom({ ...chatRoom, disease_name: e.target.value })
               }
               placeholder="例）多関節痛を訴える抗核抗体陽性患者への追加検査"
               required
@@ -279,9 +279,9 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
             <ExpandTextArea
               name="first_message"
               className="min-h-[140px] text-[13px]"
-              value={formData.first_message}
+              value={chatRoom.first_message}
               onChange={(e) =>
-                setFormData({ ...formData, first_message: e.target.value })
+                setChatRoom({ ...chatRoom, first_message: e.target.value })
               }
             />
             <div className="mt-3 flex items-center gap-2">
@@ -348,10 +348,10 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
               <CheckBox
                 name="publishment_accepted"
                 label="コンサル事例としての掲載を許可する。"
-                checked={formData.publishment_accepted}
+                checked={chatRoom.publishment_accepted}
                 onChange={(e) =>
-                  setFormData({
-                    ...formData,
+                  setChatRoom({
+                    ...chatRoom,
                     publishment_accepted: e.target.checked,
                   })
                 }
