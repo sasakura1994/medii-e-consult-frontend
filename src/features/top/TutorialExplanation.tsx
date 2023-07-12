@@ -33,7 +33,7 @@ const TutorialExplanation = (props: TutorialExplanationProps) => {
           <img src="images/top/tutorial3.png" alt="tutorial3" />
         )}
 
-        <div className="mx-auto mb-4 flex items-center justify-center space-x-4 text-2xl text-gray-400">
+        <div className="mx-auto mt-2 mb-4 flex items-center justify-center space-x-4 text-2xl text-gray-400">
           {page !== 1 ? (
             <img
               onClick={back}
