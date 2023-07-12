@@ -36,7 +36,7 @@ export const MedicalSpecialitiesSelectDialog: React.FC<
 
   return (
     <Modal setShowModal={setShowModal} className={`lg:w-[740px]`}>
-      <div className="my-10 mx-6 lg:mx-20">
+      <div className="mx-6 my-10 lg:mx-20">
         <ModalTitleWithCloseButton
           title="診療科で指定する"
           onClose={() => setShowModal(false)}
@@ -109,7 +109,7 @@ export const MedicalSpecialitiesSelectDialog: React.FC<
           </div>
         )}
         <div className="mt-10">
-          <PrimaryButton type="button" onClick={submit}>
+          <PrimaryButton type="button" onClick={submit} className="mx-auto">
             この診療科で指定
           </PrimaryButton>
         </div>

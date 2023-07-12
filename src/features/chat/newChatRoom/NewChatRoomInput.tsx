@@ -335,7 +335,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
               </div>
             )}
             <div className="my-6 text-center">
-              <PrimaryButton type="submit" className="my-6 w-[60%]">
+              <PrimaryButton type="submit" className="mx-auto my-6 w-[60%]">
                 プレビュー
               </PrimaryButton>
             </div>
