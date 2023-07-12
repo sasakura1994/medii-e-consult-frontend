@@ -14,6 +14,20 @@ describe('useAffiliate', () => {
     // createObjectURL のモック
     global.URL.createObjectURL = jest.fn().mockReturnValue(mockQrCodeUrl);
 
+    // モック化する fetch 関数
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        arrayBuffer: () => Promise.resolve(new ArrayBuffer(8)),
+        ok: true,
+        headers: new Headers(),
+        redirected: false,
+        status: 200,
+        statusText: 'OK',
+        type: 'basic',
+        url: '',
+      } as Response)
+    );
+
     // navigator のモック
     Object.assign(navigator, {
       clipboard: {
@@ -27,6 +41,8 @@ describe('useAffiliate', () => {
         },
       },
     });
+    // fetch のモックをリセット
+    (global.fetch as jest.Mock).mockClear();
   });
 
   afterEach(() => {

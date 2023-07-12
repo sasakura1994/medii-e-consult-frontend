@@ -33,7 +33,7 @@ export const SearchGroupModal: React.FC<SearchGroupModalProps> = (
   return (
     <>
       <Modal setShowModal={setShowModal} className="lg:w-[644px]">
-        <div className="my-10 mx-6 lg:mx-20">
+        <div className="mx-6 my-10 lg:mx-20">
           <ModalTitleWithCloseButton
             title="E-コンサルするグループを選択"
             onClose={() => setShowModal(false)}
@@ -94,7 +94,7 @@ export const SearchGroupModal: React.FC<SearchGroupModalProps> = (
             <PrimaryButton
               type="button"
               size="lg"
-              className="w-full max-w-[260px]"
+              className="mx-auto w-full max-w-[260px]"
               onClick={search}
             >
               絞り込み検索
