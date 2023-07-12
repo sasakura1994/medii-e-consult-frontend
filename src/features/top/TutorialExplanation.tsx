@@ -12,7 +12,7 @@ const TutorialExplanation = (props: TutorialExplanationProps) => {
 
   return (
     <Modal
-      className="relative flex w-full flex-col lg:w-1/2"
+      className="relative flex w-full flex-col lg:max-h-[90%] lg:w-1/2"
       setShowModal={setShowModal}
       isCenter
     >
