@@ -61,7 +61,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
     setAgeRangeWrapper,
     setChildAgeWrapper,
     setEditingImage,
-    setChatRoom,
+    setChatRoomFields,
     setIsDoctorSearchModalShown,
     setIsMedicalSpecialitiesSelectDialogShown,
     setIsSearchGroupModalShown,
@@ -84,7 +84,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                 note="一般的なご相談の場合"
                 checked={chatRoom.room_type === 'FREE'}
                 value="FREE"
-                onChange={() => setChatRoom({ ...chatRoom, room_type: 'FREE' })}
+                onChange={() => setChatRoomFields({ room_type: 'FREE' })}
               />
               {chatRoom.room_type === 'FREE' && (
                 <>
@@ -140,9 +140,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                 note="相談したい先生が決まっている場合"
                 checked={chatRoom.room_type === 'BY_NAME'}
                 value="BY_NAME"
-                onChange={() =>
-                  setChatRoom({ ...chatRoom, room_type: 'BY_NAME' })
-                }
+                onChange={() => setChatRoomFields({ room_type: 'BY_NAME' })}
               />
             </div>
             {chatRoom.room_type === 'BY_NAME' && (
@@ -172,9 +170,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                 checked={chatRoom.room_type === 'GROUP'}
                 value="GROUP"
                 isBeta
-                onChange={() =>
-                  setChatRoom({ ...chatRoom, room_type: 'GROUP' })
-                }
+                onChange={() => setChatRoomFields({ room_type: 'GROUP' })}
               />
             </div>
             {chatRoom.room_type === 'GROUP' && (
@@ -199,7 +195,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
               label="男性"
               id="gender-man"
               checked={chatRoom.gender === 'man'}
-              onChange={() => setChatRoom({ ...chatRoom, gender: 'man' })}
+              onChange={() => setChatRoomFields({ gender: 'man' })}
             />
             <Radio
               name="gender"
@@ -207,7 +203,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
               label="女性"
               id="gender-woman"
               checked={chatRoom.gender === 'woman'}
-              onChange={() => setChatRoom({ ...chatRoom, gender: 'woman' })}
+              onChange={() => setChatRoomFields({ gender: 'woman' })}
             />
           </div>
           <div className="mt-2 w-[240px]">
@@ -253,7 +249,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
               name="disease_name"
               value={chatRoom.disease_name}
               onChange={(e) =>
-                setChatRoom({ ...chatRoom, disease_name: e.target.value })
+                setChatRoomFields({ disease_name: e.target.value })
               }
               placeholder="例）多関節痛を訴える抗核抗体陽性患者への追加検査"
               required
@@ -281,7 +277,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
               className="min-h-[140px] text-[13px]"
               value={chatRoom.first_message}
               onChange={(e) =>
-                setChatRoom({ ...chatRoom, first_message: e.target.value })
+                setChatRoomFields({ first_message: e.target.value })
               }
             />
             <div className="mt-3 flex items-center gap-2">
@@ -312,7 +308,11 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                   >
                     <div className="w-full grow">
                       {chatDraftImage.is_image ? (
-                        <img src={chatDraftImage.url} className="max-w-full" />
+                        <img
+                          src={chatDraftImage.url}
+                          className="max-w-full"
+                          alt=""
+                        />
                       ) : (
                         <></>
                       )}
@@ -327,7 +327,12 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                           );
                         }}
                       >
-                        <img src="/icons/close.png" width="16" height="16" />
+                        <img
+                          src="/icons/close.png"
+                          width="16"
+                          height="16"
+                          alt="Close"
+                        />
                       </a>
                     </div>
                   </div>
@@ -350,8 +355,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                 label="コンサル事例としての掲載を許可する。"
                 checked={chatRoom.publishment_accepted}
                 onChange={(e) =>
-                  setChatRoom({
-                    ...chatRoom,
+                  setChatRoomFields({
                     publishment_accepted: e.target.checked,
                   })
                 }

@@ -7,6 +7,7 @@ import {
 import { usePostDraftImage } from '@/hooks/api/chat/usePostDraftImage';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { useFetchMedicalSpecialityCategories } from '@/hooks/api/medicalCategoryCategory/useFetchMedicalSpecialityCategories';
+import { saveLocalStorage } from '@/libs/LocalStorageManager';
 import { GroupEntity } from '@/types/entities/GroupEntity';
 import { NewChatRoomEntity } from '@/types/entities/chat/NewChatRoomEntity';
 import { DoctorEntity } from '@/types/entities/doctorEntity';
@@ -247,6 +248,15 @@ export const useNewChatRoom = () => {
     [chatRoom]
   );
 
+  const setChatRoomFields = useCallback(
+    (data: Partial<NewChatRoomEntity>) => {
+      const newData = { ...chatRoom, ...data };
+      saveLocalStorage(newChatRoomFormDataKey, JSON.stringify(newData));
+      setChatRoom(newData);
+    },
+    [chatRoom]
+  );
+
   return {
     ageRange,
     backToInput,
@@ -280,7 +290,7 @@ export const useNewChatRoom = () => {
     setAgeRangeWrapper,
     setChildAgeWrapper,
     setEditingImage,
-    setChatRoom,
+    setChatRoomFields,
     setIsDoctorSearchModalShown,
     setIsMedicalSpecialitiesSelectDialogShown,
     setIsSearchGroupModalShown,
