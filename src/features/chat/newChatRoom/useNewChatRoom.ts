@@ -10,9 +10,7 @@ import { useFetchGroup } from '@/hooks/api/group/useFetchGroup';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { useFetchMedicalSpecialityCategories } from '@/hooks/api/medicalCategoryCategory/useFetchMedicalSpecialityCategories';
 import { loadLocalStorage, saveLocalStorage } from '@/libs/LocalStorageManager';
-import { GroupEntity } from '@/types/entities/GroupEntity';
 import { NewChatRoomEntity } from '@/types/entities/chat/NewChatRoomEntity';
-import { DoctorEntity } from '@/types/entities/doctorEntity';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 import {
   ChangeEvent,
@@ -51,13 +49,14 @@ export const useNewChatRoom = () => {
   const [isDoctorSearchModalShown, setIsDoctorSearchModalShown] =
     useState(false);
   const [isSearchGroupModalShown, setIsSearchGroupModalShown] = useState(false);
+  const [isUseDraftImages, setIsUseDraftImages] = useState(false);
 
   const { createNewChatRoom } = usePostChatRoom();
   const { createDraftImage } = usePostDraftImage();
   const { medicalSpecialities } = useFetchMedicalSpecialities();
   const { medicalSpecialityCategories } = useFetchMedicalSpecialityCategories();
   const { chatDraftImages, mutate: mutateGetChatDraftImages } =
-    useGetChatDraftImages({ isNeed: true });
+    useGetChatDraftImages({ isNeed: isUseDraftImages });
   const { deleteChatDraftImage } = useDeleteChatDraftImage();
   const { group } = useFetchGroup(chatRoom.group_id);
   const { doctor } = useFetchDoctorProfile(chatRoom.target_doctor);
@@ -78,9 +77,8 @@ export const useNewChatRoom = () => {
     }
 
     const data = JSON.parse(draft) as NewChatRoomEntity;
-
-    //loaddraftimages
     setChatRoom(data);
+    setIsUseDraftImages(true);
   }, []);
 
   useEffect(() => {
@@ -192,6 +190,7 @@ export const useNewChatRoom = () => {
   const addFile = useCallback(
     async (file: File) => {
       await createDraftImage(file);
+      setIsUseDraftImages(true);
       mutateGetChatDraftImages();
     },
     [createDraftImage, mutateGetChatDraftImages]
