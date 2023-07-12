@@ -19,7 +19,7 @@ describe('useNewChatROom', () => {
     });
 
     expect(result.current.doctor?.account_id).toBe(doctor.account_id);
-    expect(result.current.formData.target_doctor).toBe(doctor.account_id);
+    expect(result.current.chatRoom.target_doctor).toBe(doctor.account_id);
   });
 
   test('Select target group', async () => {
@@ -35,6 +35,6 @@ describe('useNewChatROom', () => {
     });
 
     expect(result.current.group?.group_id).toBe(group.group_id);
-    expect(result.current.formData.group_id).toBe(group.group_id);
+    expect(result.current.chatRoom.group_id).toBe(group.group_id);
   });
 });
