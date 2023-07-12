@@ -11,37 +11,38 @@ import { GroupEntity } from '@/types/entities/GroupEntity';
 import { NewChatRoomEntity } from '@/types/entities/chat/NewChatRoomEntity';
 import { DoctorEntity } from '@/types/entities/doctorEntity';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
-import React from 'react';
+import { ChangeEvent, FormEvent, useCallback, useRef, useState } from 'react';
+
+export const newChatRoomFormDataKey = 'NewChatRoom::chatRoom';
 
 type AgeRange = string | 'child';
 type Mode = 'input' | 'confirm';
 
 export const useNewChatRoom = () => {
-  const [mode, setMode] = React.useState<Mode>('input');
-  const [chatRoom, setChatRoom] = React.useState<NewChatRoomEntity>({
+  const [mode, setMode] = useState<Mode>('input');
+  const [chatRoom, setChatRoom] = useState<NewChatRoomEntity>({
     room_type: 'FREE',
     gender: 'man',
     disease_name: '',
     first_message: '',
     publishment_accepted: true,
   });
-  const [ageRange, setAgeRange] = React.useState<AgeRange>('');
-  const [childAge, setChildAge] = React.useState<string>('');
+  const [ageRange, setAgeRange] = useState<AgeRange>('');
+  const [childAge, setChildAge] = useState<string>('');
   const [selectedMedicalSpecialities, setSelectedMedicalSpecialities] =
-    React.useState<MedicalSpecialityEntity[]>([]);
-  const [editingImage, setEditingImage] = React.useState<File>();
-  const [doctor, setDoctor] = React.useState<DoctorEntity>();
-  const [group, setGroup] = React.useState<GroupEntity>();
-  const [isSending, setIsSending] = React.useState(false);
-  const [errorMessage, setErrorMessage] = React.useState('');
+    useState<MedicalSpecialityEntity[]>([]);
+  const [editingImage, setEditingImage] = useState<File>();
+  const [doctor, setDoctor] = useState<DoctorEntity>();
+  const [group, setGroup] = useState<GroupEntity>();
+  const [isSending, setIsSending] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [
     isMedicalSpecialitiesSelectDialogShown,
     setIsMedicalSpecialitiesSelectDialogShown,
-  ] = React.useState(false);
+  ] = useState(false);
   const [isDoctorSearchModalShown, setIsDoctorSearchModalShown] =
-    React.useState(false);
-  const [isSearchGroupModalShown, setIsSearchGroupModalShown] =
-    React.useState(false);
+    useState(false);
+  const [isSearchGroupModalShown, setIsSearchGroupModalShown] = useState(false);
 
   const { createNewChatRoom } = usePostChatRoom();
   const { createDraftImage } = usePostDraftImage();
@@ -51,9 +52,9 @@ export const useNewChatRoom = () => {
     useGetChatDraftImages({ isNeed: true });
   const { deleteChatDraftImage } = useDeleteChatDraftImage();
 
-  const imageInput = React.useRef<HTMLInputElement>(null);
+  const imageInput = useRef<HTMLInputElement>(null);
 
-  const setAgeRangeWrapper = React.useCallback(
+  const setAgeRangeWrapper = useCallback(
     (age: AgeRange) => {
       setAgeRange(age);
 
@@ -67,7 +68,7 @@ export const useNewChatRoom = () => {
     [chatRoom]
   );
 
-  const setChildAgeWrapper = React.useCallback(
+  const setChildAgeWrapper = useCallback(
     (age: string) => {
       setChildAge(age);
       setChatRoom({ ...chatRoom, age: Number(age) });
@@ -75,7 +76,7 @@ export const useNewChatRoom = () => {
     [chatRoom]
   );
 
-  const selectConsultMessageTemplate = React.useCallback(
+  const selectConsultMessageTemplate = useCallback(
     (firstMessage: string) => {
       if (
         chatRoom.first_message.trim() !== '' &&
@@ -91,13 +92,13 @@ export const useNewChatRoom = () => {
     [chatRoom.first_message]
   );
 
-  const setModeAndScrollToTop = React.useCallback((mode: Mode) => {
+  const setModeAndScrollToTop = useCallback((mode: Mode) => {
     setMode(mode);
     window.scrollTo(0, 0);
   }, []);
 
-  const confirmInput = React.useCallback(
-    (e: React.FormEvent<HTMLFormElement>) => {
+  const confirmInput = useCallback(
+    (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
       setModeAndScrollToTop('confirm');
@@ -105,11 +106,11 @@ export const useNewChatRoom = () => {
     [setModeAndScrollToTop]
   );
 
-  const backToInput = React.useCallback(() => {
+  const backToInput = useCallback(() => {
     setModeAndScrollToTop('input');
   }, [setModeAndScrollToTop]);
 
-  const submit = React.useCallback(async () => {
+  const submit = useCallback(async () => {
     setIsSending(true);
     setErrorMessage('');
 
@@ -149,13 +150,13 @@ export const useNewChatRoom = () => {
     }
   }, [chatRoom, createNewChatRoom, setModeAndScrollToTop]);
 
-  const resetImageInput = React.useCallback(() => {
+  const resetImageInput = useCallback(() => {
     if (imageInput.current) {
       imageInput.current.value = '';
     }
   }, [imageInput]);
 
-  const addFile = React.useCallback(
+  const addFile = useCallback(
     async (file: File) => {
       await createDraftImage(file);
       mutateGetChatDraftImages();
@@ -163,8 +164,8 @@ export const useNewChatRoom = () => {
     [createDraftImage, mutateGetChatDraftImages]
   );
 
-  const onSelectImage = React.useCallback(
-    async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onSelectImage = useCallback(
+    async (e: ChangeEvent<HTMLInputElement>) => {
       e.preventDefault();
       if (!e.target.files || e.target.files.length === 0) {
         return;
@@ -182,7 +183,7 @@ export const useNewChatRoom = () => {
     [addFile]
   );
 
-  const onImageEdited = React.useCallback(
+  const onImageEdited = useCallback(
     (file: File) => {
       setEditingImage(undefined);
       addFile(file);
@@ -190,7 +191,7 @@ export const useNewChatRoom = () => {
     [addFile]
   );
 
-  const deleteChatDraftImageById = React.useCallback(
+  const deleteChatDraftImageById = useCallback(
     async (chatDraftImageId: string) => {
       const response = await deleteChatDraftImage(chatDraftImageId).catch(
         (error) => {
@@ -207,7 +208,7 @@ export const useNewChatRoom = () => {
     [deleteChatDraftImage, mutateGetChatDraftImages]
   );
 
-  const changeMedicalSpecialities = React.useCallback(
+  const changeMedicalSpecialities = useCallback(
     (medicalSpecialities: MedicalSpecialityEntity[]) => {
       setSelectedMedicalSpecialities(medicalSpecialities);
       setIsMedicalSpecialitiesSelectDialogShown(false);
@@ -215,7 +216,7 @@ export const useNewChatRoom = () => {
     []
   );
 
-  const moveSelectedMedicalSpeciality = React.useCallback(
+  const moveSelectedMedicalSpeciality = useCallback(
     (dragIndex: number, hoverIndex: number) => {
       setSelectedMedicalSpecialities((selectedMedicalSpecialities) => {
         const copy = [...selectedMedicalSpecialities];
@@ -230,7 +231,7 @@ export const useNewChatRoom = () => {
     []
   );
 
-  const changeDoctor = React.useCallback(
+  const changeDoctor = useCallback(
     (doctor: DoctorEntity) => {
       setDoctor(doctor);
       setChatRoom({ ...chatRoom, target_doctor: doctor.account_id });
@@ -238,7 +239,7 @@ export const useNewChatRoom = () => {
     [chatRoom]
   );
 
-  const changeGroup = React.useCallback(
+  const changeGroup = useCallback(
     (group: GroupEntity) => {
       setGroup(group);
       setChatRoom({ ...chatRoom, group_id: group.group_id });
