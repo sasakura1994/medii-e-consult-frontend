@@ -30,7 +30,7 @@ export const SeminarConferenceCard = (props: SeminarConferenceCardProps) => {
         <div className="ml-0 w-full lg:m-4 lg:w-[440px]">
           <div className="mt-1 flex items-center">
             <p className="text-md">{dateTime}</p>
-            <div className="ml-3 w-full lg:ml-5 lg:w-auto">
+            <div className="ml-3 w-full whitespace-nowrap lg:ml-5 lg:w-auto">
               <a href={seminar.zoom_url} target="_blank" rel="noreferrer">
                 <PrimaryButton>Zoom E-カンファに事前登録</PrimaryButton>
               </a>
