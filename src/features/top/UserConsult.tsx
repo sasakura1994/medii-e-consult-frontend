@@ -4,45 +4,30 @@ import PrimaryButton from '@/components/Button/PrimaryButton';
 import { TopTab } from './TopTab';
 import { StyledHiddenScrollBar } from './styled';
 import { UserCounsultContent } from './UserConsultContent';
-import { useFetchChatRoomList } from '@/hooks/api/chat/useFetchChatRoomList';
-import { useToken } from '@/hooks/authentication/useToken';
 import { UserConsultNoContents } from './UserConsultNoContents';
 import Link from 'next/link';
-import { getTimeIntervalText } from '@/libs/date';
+import { useFetchChatRoomMineOwn } from '@/hooks/api/chat/useFetchChatRoomMineOwn';
 
 export const UserConsult = () => {
   const [activeTab, setActiveTab] = useState<'question' | 'answer'>('question');
   const [isOpenAllChatRoom, setIsOpenAllChatRoom] = useState(false);
-  const { data: chatRoomList } = useFetchChatRoomList({
-    query: ['FREE', 'BY_NAME', 'GROUP'],
+  const { data: chatRoomMineOwnData } = useFetchChatRoomMineOwn({
+    limit: 100,
   });
-  const { accountId } = useToken();
 
   const viewData = useMemo(() => {
-    if (!chatRoomList) return [];
+    if (!chatRoomMineOwnData?.rooms) return [];
     if (activeTab === 'question') {
-      const questionChatRoomList = chatRoomList.filter((chat) => {
-        return (
-          chat.owner_account_id === accountId &&
-          getTimeIntervalText(chat.last_updated_date)
-        );
-      });
       return isOpenAllChatRoom
-        ? questionChatRoomList
-        : questionChatRoomList.slice(0, 5);
+        ? chatRoomMineOwnData.rooms
+        : chatRoomMineOwnData.rooms.slice(0, 5);
     } else if (activeTab === 'answer') {
-      const answerChatRoomList = chatRoomList.filter((chat) => {
-        return (
-          chat.owner_account_id !== accountId &&
-          getTimeIntervalText(chat.last_updated_date)
-        );
-      });
       return isOpenAllChatRoom
-        ? answerChatRoomList
-        : answerChatRoomList.slice(0, 5);
+        ? chatRoomMineOwnData.rooms
+        : chatRoomMineOwnData.rooms.slice(0, 5);
     }
     return [];
-  }, [accountId, activeTab, chatRoomList, isOpenAllChatRoom]);
+  }, [activeTab, chatRoomMineOwnData, isOpenAllChatRoom]);
 
   return (
     <>
@@ -81,13 +66,11 @@ export const UserConsult = () => {
         <div className="w-auto border-b" />
       </StyledHiddenScrollBar>
       {viewData.length <= 0 && <UserConsultNoContents />}
-      {viewData.map((chat, index) => {
-        // TODO: モックで適当に文字列を入れています。apiの準備ができ次第修正します。
+      {viewData.map((chatRoomMineOwn) => {
         return (
           <UserCounsultContent
-            key={chat.chat_room_id}
-            chat={chat}
-            index={index}
+            key={chatRoomMineOwn.chat_room_id}
+            chatRoomMineOwn={chatRoomMineOwn}
           />
         );
       })}

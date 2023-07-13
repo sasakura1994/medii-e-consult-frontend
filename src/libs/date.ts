@@ -71,5 +71,20 @@ export const getTimeIntervalText = (
   }
 
   const days = Math.floor(hours / 24);
-  return `${days}日前`;
+  if (days < 7) {
+    return `${days}日前`;
+  }
+
+  const weeks = Math.floor(days / 7);
+  if (weeks < 4) {
+    return `${weeks}週間前`;
+  }
+
+  const months = Math.floor(days / 30);
+  if (months < 12) {
+    return `${months}ヶ月前`;
+  }
+
+  const years = Math.floor(months / 12);
+  return `${years}年前`;
 };
