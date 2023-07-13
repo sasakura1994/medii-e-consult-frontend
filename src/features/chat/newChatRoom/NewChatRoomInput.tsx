@@ -21,6 +21,7 @@ import { SelectedMedicalSpecialities } from '@/components/MedicalSpeciality/Sele
 import { DoctorSearchModal } from './DoctorSearchModal';
 import { SearchGroupModal } from './SearchGroupModal';
 import { NewChatRoomFile } from './NewChatRoomFile';
+import { useRouter } from 'next/router';
 // canvasの関係でサーバー時点でimportされているとエラーになるためこうするしかないらしい
 const ImageEditorComponent = dynamic<ImageEditorProps>(
   (() =>
@@ -57,6 +58,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
     moveSelectedMedicalSpeciality,
     onImageEdited,
     onSelectImage,
+    query,
     reConsultFileMessages,
     resetImageInput,
     selectConsultMessageTemplate,
@@ -74,6 +76,17 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
     <>
       <h1 className="text-center text-2xl leading-9">E-コンサル ルーム作成</h1>
       <div className="mx-auto mb-10 lg:w-[80%]">
+        {query.reconsult && (
+          <div className="my-10 flex justify-center border-4 border-solid border-strong p-5 text-strong">
+            <div>
+              元のコンサルと同じ内容で入力済みとなっております。
+              <br className="hidden lg:inline" />
+              他の医師に相談するにあたり、内容の編集をする場合
+              <br className="hidden lg:inline" />
+              下記のフォームを直接編集をしてください。
+            </div>
+          </div>
+        )}
         <form onSubmit={confirmInput}>
           <NewChatRoomFormLabel className="mt-4">
             専門医指定方法
@@ -132,6 +145,18 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                         />
                       </div>
                     )}
+                  <div className="mb-3 text-medii-sm font-bold text-strong">
+                    <div>
+                      Medii所属の医師がコンサル内容を判断した上で、現在選択されていない診療科に回答依頼を送り直すことがあります。
+                    </div>
+                    {query.reconsult && (
+                      <div>
+                        最初のコンサルと違う科の医師から回答を受けたい場合は変更してください。
+                        <br />
+                        既にコンサルの回答をもらった医師には送信はされません。
+                      </div>
+                    )}
+                  </div>
                 </>
               )}
             </div>
@@ -164,28 +189,36 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                 </div>
               </>
             )}
-            <div>
-              <NewChatRoomRoomType
-                id="room-type-group"
-                label="グループで指定する"
-                note="特定疾患や地域連携のご相談の場合"
-                checked={chatRoom.room_type === 'GROUP'}
-                value="GROUP"
-                isBeta
-                onChange={() => setChatRoomFields({ room_type: 'GROUP' })}
-              />
-            </div>
-            {chatRoom.room_type === 'GROUP' && (
+            {!query.reconsult && (
               <>
-                <div className="my-2 flex items-center gap-2">
-                  <OutlinedSquareButton
-                    type="button"
-                    onClick={() => setIsSearchGroupModalShown(true)}
-                  >
-                    グループ検索
-                  </OutlinedSquareButton>
-                  {group ? <div>{group.group_name}</div> : <div>未選択</div>}
+                <div>
+                  <NewChatRoomRoomType
+                    id="room-type-group"
+                    label="グループで指定する"
+                    note="特定疾患や地域連携のご相談の場合"
+                    checked={chatRoom.room_type === 'GROUP'}
+                    value="GROUP"
+                    isBeta
+                    onChange={() => setChatRoomFields({ room_type: 'GROUP' })}
+                  />
                 </div>
+                {chatRoom.room_type === 'GROUP' && (
+                  <>
+                    <div className="my-2 flex items-center gap-2">
+                      <OutlinedSquareButton
+                        type="button"
+                        onClick={() => setIsSearchGroupModalShown(true)}
+                      >
+                        グループ検索
+                      </OutlinedSquareButton>
+                      {group ? (
+                        <div>{group.group_name}</div>
+                      ) : (
+                        <div>未選択</div>
+                      )}
+                    </div>
+                  </>
+                )}
               </>
             )}
           </div>
@@ -303,6 +336,13 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                 画像・動画・Word・PDF等を含むあらゆるファイル形式に対応しています
               </div>
             </div>
+            {query.reconsult && (
+              <div className="my-3 text-medii-sm font-bold text-strong">
+                参考画像を追加ボタンを押すと新規で画像を掲載することが可能です。
+                <br />
+                不要な画像は×を押すことで削除できます。
+              </div>
+            )}
             {((chatDraftImages && chatDraftImages.length > 0) ||
               reConsultFileMessages.length > 0 ||
               filesForReConsult.length > 0) && (

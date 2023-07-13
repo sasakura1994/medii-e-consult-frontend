@@ -507,6 +507,7 @@ export const useNewChatRoom = () => {
     moveSelectedMedicalSpeciality,
     onImageEdited,
     onSelectImage,
+    query,
     reConsultFileMessages,
     resetImageInput,
     selectConsultMessageTemplate,
