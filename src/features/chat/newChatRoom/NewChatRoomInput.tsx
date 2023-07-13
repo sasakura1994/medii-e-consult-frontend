@@ -63,7 +63,6 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
     setIsDoctorSearchModalShown,
     setIsMedicalSpecialitiesSelectDialogShown,
     setIsSearchGroupModalShown,
-    setSelectedMedicalSpecialities,
   } = props;
 
   return (
@@ -113,14 +112,14 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                             medicalSpecialityCategories
                           }
                           onDelete={(medicalSpeciality) =>
-                            setSelectedMedicalSpecialities(
-                              (selectedMedicalSpecialities) =>
-                                selectedMedicalSpecialities.filter(
-                                  (existingMedicalSpeciality) =>
-                                    medicalSpeciality.speciality_code !==
-                                    existingMedicalSpeciality.speciality_code
-                                )
-                            )
+                            setChatRoomFields({
+                              target_specialities:
+                                chatRoom.target_specialities.filter(
+                                  (specialityCode) =>
+                                    specialityCode !==
+                                    medicalSpeciality.speciality_code
+                                ),
+                            })
                           }
                           moveSelectedMedicalSpeciality={
                             moveSelectedMedicalSpeciality

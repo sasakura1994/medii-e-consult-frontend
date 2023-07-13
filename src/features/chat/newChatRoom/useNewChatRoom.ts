@@ -44,8 +44,6 @@ export const useNewChatRoom = () => {
   });
   const [ageRange, setAgeRange] = useState<AgeRange>('');
   const [childAge, setChildAge] = useState<string>('');
-  const [selectedMedicalSpecialities, setSelectedMedicalSpecialities] =
-    useState<MedicalSpecialityEntity[]>([]);
   const [editingImage, setEditingImage] = useState<File>();
   const [isSending, setIsSending] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -71,6 +69,24 @@ export const useNewChatRoom = () => {
 
   const imageInput = useRef<HTMLInputElement>(null);
 
+  const selectedMedicalSpecialities = useMemo((): MedicalSpecialityEntity[] => {
+    if (!medicalSpecialities) {
+      return [];
+    }
+
+    const results: MedicalSpecialityEntity[] = [];
+    for (const specialityCode of chatRoom.target_specialities) {
+      const medicalSpeciality = medicalSpecialities.find(
+        (medicalSpeciality) =>
+          medicalSpeciality.speciality_code === specialityCode
+      );
+      if (medicalSpeciality) {
+        results.push(medicalSpeciality);
+      }
+    }
+    return results;
+  }, [chatRoom.target_specialities, medicalSpecialities]);
+
   const formData = useMemo(
     (): NewChatRoomEntity => ({
       ...chatRoom,
@@ -79,11 +95,8 @@ export const useNewChatRoom = () => {
         chatDraftImages?.map(
           (chatDraftImage) => chatDraftImage.chat_draft_image_id
         ) ?? [],
-      target_specialities: selectedMedicalSpecialities.map(
-        (medicalSpeciality) => medicalSpeciality.speciality_code
-      ),
     }),
-    [ageRange, chatDraftImages, chatRoom, childAge, selectedMedicalSpecialities]
+    [ageRange, chatDraftImages, chatRoom, childAge]
   );
 
   const initialize = useCallback(async () => {
@@ -105,7 +118,6 @@ export const useNewChatRoom = () => {
     }
 
     const data = JSON.parse(draft) as NewChatRoomEntity;
-    console.log(data);
 
     setChatRoom(data);
 
@@ -117,18 +129,6 @@ export const useNewChatRoom = () => {
         setAgeRange(data.age.toString());
       }
     }
-
-    const currentMedicalSpecialities: MedicalSpecialityEntity[] = [];
-    for (const specialityCode of data.target_specialities) {
-      const medicalSpeciality = medicalSpecialities.find(
-        (medicalSpeciality) =>
-          medicalSpeciality.speciality_code === specialityCode
-      );
-      if (medicalSpeciality) {
-        currentMedicalSpecialities.push(medicalSpeciality);
-      }
-    }
-    setSelectedMedicalSpecialities(currentMedicalSpecialities);
 
     setIsUseDraftImages(true);
     setIsInitialized(true);
@@ -185,7 +185,7 @@ export const useNewChatRoom = () => {
 
       setChatRoomFields({ first_message: firstMessage });
     },
-    [chatRoom.first_message]
+    [chatRoom.first_message, setChatRoomFields]
   );
 
   const setModeAndScrollToTop = useCallback((mode: Mode) => {
@@ -315,25 +315,29 @@ export const useNewChatRoom = () => {
 
   const changeMedicalSpecialities = useCallback(
     (medicalSpecialities: MedicalSpecialityEntity[]) => {
-      setSelectedMedicalSpecialities(medicalSpecialities);
+      setChatRoomFields({
+        target_specialities: medicalSpecialities.map(
+          (medicalSpeciality) => medicalSpeciality.speciality_code
+        ),
+      });
       setIsMedicalSpecialitiesSelectDialogShown(false);
     },
-    []
+    [setChatRoomFields]
   );
 
   const moveSelectedMedicalSpeciality = useCallback(
     (dragIndex: number, hoverIndex: number) => {
-      setSelectedMedicalSpecialities((selectedMedicalSpecialities) => {
-        const copy = [...selectedMedicalSpecialities];
-        const dragging = copy.splice(dragIndex, 1);
-        return [
+      const copy = [...chatRoom.target_specialities];
+      const dragging = copy.splice(dragIndex, 1);
+      setChatRoomFields({
+        target_specialities: [
           ...copy.slice(0, hoverIndex),
           dragging[0],
           ...copy.slice(hoverIndex),
-        ];
+        ],
       });
     },
-    []
+    [chatRoom.target_specialities, setChatRoomFields]
   );
 
   return {
@@ -370,7 +374,6 @@ export const useNewChatRoom = () => {
     setIsDoctorSearchModalShown,
     setIsMedicalSpecialitiesSelectDialogShown,
     setIsSearchGroupModalShown,
-    setSelectedMedicalSpecialities,
     submit,
   };
 };
