@@ -312,6 +312,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                     key={chatMessage.uid}
                     isImage={chatMessage.content_type.match(/^image/) !== null}
                     url={chatMessage.file_path}
+                    fileName={chatMessage.file_name}
                     onDelete={() => deleteReConsultFileMessage(chatMessage.uid)}
                   />
                 ))}
@@ -320,6 +321,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                     key={file.id}
                     isImage={file.file.type.match(/^image/) !== null}
                     url={file.image as string}
+                    fileName={file.file.name}
                     onDelete={() => deleteFileForReConsult(file.id)}
                   />
                 ))}
@@ -328,6 +330,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                     key={chatDraftImage.chat_draft_image_id}
                     isImage={chatDraftImage.is_image}
                     url={chatDraftImage.url}
+                    fileName={chatDraftImage.file_name}
                     onDelete={() =>
                       deleteChatDraftImageById(
                         chatDraftImage.chat_draft_image_id
