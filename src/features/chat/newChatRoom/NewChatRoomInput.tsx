@@ -39,12 +39,14 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
     errorMessage,
     changeMedicalSpecialities,
     chatDraftImages,
+    chatRoom,
     childAge,
     confirmInput,
     doctor,
+    deleteFileForReConsult,
     deleteReConsultFileMessage,
     editingImage,
-    chatRoom,
+    filesForReConsult,
     group,
     imageInput,
     isDoctorSearchModalShown,
@@ -302,7 +304,8 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
               </div>
             </div>
             {((chatDraftImages && chatDraftImages.length > 0) ||
-              reConsultFileMessages) && (
+              reConsultFileMessages.length > 0 ||
+              filesForReConsult.length > 0) && (
               <div className="mt-4 flex flex-col gap-5">
                 {reConsultFileMessages.map((chatMessage) => (
                   <NewChatRoomFile
@@ -310,6 +313,14 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                     isImage={chatMessage.content_type.match(/^image/) !== null}
                     url={chatMessage.file_path}
                     onDelete={() => deleteReConsultFileMessage(chatMessage.uid)}
+                  />
+                ))}
+                {filesForReConsult.map((file) => (
+                  <NewChatRoomFile
+                    key={file.id}
+                    isImage={file.file.type.match(/^image/) !== null}
+                    url={file.image as string}
+                    onDelete={() => deleteFileForReConsult(file.id)}
                   />
                 ))}
                 {chatDraftImages?.map((chatDraftImage) => (

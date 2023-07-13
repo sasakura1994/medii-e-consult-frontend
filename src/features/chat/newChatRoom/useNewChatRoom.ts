@@ -31,6 +31,12 @@ export const newChatRoomFormDataKey = 'NewChatRoom::chatRoom';
 type AgeRange = string | 'child';
 type Mode = 'input' | 'confirm';
 
+type FileForReConsult = {
+  id: number;
+  file: File;
+  image: string | ArrayBuffer;
+};
+
 type NewChatRoomQuery = {
   target_account_id?: string;
   target_group_id?: string;
@@ -76,6 +82,9 @@ export const useNewChatRoom = () => {
   const [editingImage, setEditingImage] = useState<File>();
   const [reConsultFileMessages, setReConsultFileMessages] = useState<
     ChatMessageEntity[]
+  >([]);
+  const [filesForReConsult, setFilesForReConsult] = useState<
+    FileForReConsult[]
   >([]);
   const [isSending, setIsSending] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -327,11 +336,26 @@ export const useNewChatRoom = () => {
 
   const addFile = useCallback(
     async (file: File) => {
+      if (query.reconsult) {
+        const fileReader = new FileReader();
+        fileReader.onload = () => {
+          const image = fileReader.result;
+          if (image) {
+            setFilesForReConsult((filesForReConsult) => [
+              ...filesForReConsult,
+              { id: new Date().getTime(), file, image },
+            ]);
+          }
+        };
+        fileReader.readAsDataURL(file);
+        return;
+      }
+
       await createDraftImage(file);
       setIsUseDraftImages(true);
       mutateGetChatDraftImages();
     },
-    [createDraftImage, mutateGetChatDraftImages]
+    [createDraftImage, mutateGetChatDraftImages, query.reconsult]
   );
 
   const onSelectImage = useCallback(
@@ -413,6 +437,12 @@ export const useNewChatRoom = () => {
     );
   }, []);
 
+  const deleteFileForReConsult = useCallback((id: number) => {
+    setFilesForReConsult((filesForReConsult) =>
+      filesForReConsult.filter((file) => file.id !== id)
+    );
+  }, []);
+
   return {
     ageRange,
     backToInput,
@@ -421,11 +451,13 @@ export const useNewChatRoom = () => {
     chatDraftImages,
     confirmInput,
     deleteChatDraftImageById,
+    deleteFileForReConsult,
     deleteReConsultFileMessage,
     doctor,
     editingImage,
     errorMessage,
     chatRoom,
+    filesForReConsult,
     group,
     imageInput,
     isDoctorSearchModalShown,
