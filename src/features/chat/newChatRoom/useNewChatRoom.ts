@@ -405,6 +405,14 @@ export const useNewChatRoom = () => {
     [chatRoom.target_specialities, setChatRoomFields]
   );
 
+  const deleteReConsultFileMessage = useCallback((chatMessageId: number) => {
+    setReConsultFileMessages((reConsultFileMessages) =>
+      reConsultFileMessages.filter(
+        (chatMessage) => chatMessage.uid !== chatMessageId
+      )
+    );
+  }, []);
+
   return {
     ageRange,
     backToInput,
@@ -413,6 +421,7 @@ export const useNewChatRoom = () => {
     chatDraftImages,
     confirmInput,
     deleteChatDraftImageById,
+    deleteReConsultFileMessage,
     doctor,
     editingImage,
     errorMessage,
@@ -429,6 +438,7 @@ export const useNewChatRoom = () => {
     moveSelectedMedicalSpeciality,
     onImageEdited,
     onSelectImage,
+    reConsultFileMessages,
     resetImageInput,
     selectConsultMessageTemplate,
     selectedMedicalSpecialities,

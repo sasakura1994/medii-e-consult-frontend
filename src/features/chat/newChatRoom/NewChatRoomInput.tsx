@@ -20,6 +20,7 @@ import { MedicalSpecialitiesSelectDialog } from '@/components/MedicalSpeciality/
 import { SelectedMedicalSpecialities } from '@/components/MedicalSpeciality/SelectedMedicalSpecialities';
 import { DoctorSearchModal } from './DoctorSearchModal';
 import { SearchGroupModal } from './SearchGroupModal';
+import { NewChatRoomFile } from './NewChatRoomFile';
 // canvasの関係でサーバー時点でimportされているとエラーになるためこうするしかないらしい
 const ImageEditorComponent = dynamic<ImageEditorProps>(
   (() =>
@@ -41,6 +42,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
     childAge,
     confirmInput,
     doctor,
+    deleteReConsultFileMessage,
     editingImage,
     chatRoom,
     group,
@@ -53,6 +55,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
     moveSelectedMedicalSpeciality,
     onImageEdited,
     onSelectImage,
+    reConsultFileMessages,
     resetImageInput,
     selectConsultMessageTemplate,
     selectedMedicalSpecialities,
@@ -298,43 +301,28 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                 画像・動画・Word・PDF等を含むあらゆるファイル形式に対応しています
               </div>
             </div>
-            {chatDraftImages && chatDraftImages.length > 0 && (
+            {((chatDraftImages && chatDraftImages.length > 0) ||
+              reConsultFileMessages) && (
               <div className="mt-4 flex flex-col gap-5">
-                {chatDraftImages.map((chatDraftImage) => (
-                  <div
-                    className="flex items-center gap-4"
+                {reConsultFileMessages.map((chatMessage) => (
+                  <NewChatRoomFile
+                    key={chatMessage.uid}
+                    isImage={chatMessage.content_type.match(/^image/) !== null}
+                    url={chatMessage.file_path}
+                    onDelete={() => deleteReConsultFileMessage(chatMessage.uid)}
+                  />
+                ))}
+                {chatDraftImages?.map((chatDraftImage) => (
+                  <NewChatRoomFile
                     key={chatDraftImage.chat_draft_image_id}
-                  >
-                    <div className="w-full grow">
-                      {chatDraftImage.is_image ? (
-                        <img
-                          src={chatDraftImage.url}
-                          className="max-w-full"
-                          alt=""
-                        />
-                      ) : (
-                        <></>
-                      )}
-                    </div>
-                    <div className="shrink-0 grow-0">
-                      <a
-                        href="#"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          deleteChatDraftImageById(
-                            chatDraftImage.chat_draft_image_id
-                          );
-                        }}
-                      >
-                        <img
-                          src="/icons/close.png"
-                          width="16"
-                          height="16"
-                          alt="Close"
-                        />
-                      </a>
-                    </div>
-                  </div>
+                    isImage={chatDraftImage.is_image}
+                    url={chatDraftImage.url}
+                    onDelete={() =>
+                      deleteChatDraftImageById(
+                        chatDraftImage.chat_draft_image_id
+                      )
+                    }
+                  />
                 ))}
               </div>
             )}
