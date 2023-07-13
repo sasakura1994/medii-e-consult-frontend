@@ -1,7 +1,9 @@
 import { useDeleteChatDraftImage } from '@/hooks/api/chat/useDeleteChatDraftImage';
 import { useFetchBaseChatRoomForReConsult } from '@/hooks/api/chat/useFetchBaseChatRoomForReConsult';
 import { useGetChatDraftImages } from '@/hooks/api/chat/useGetChatDraftImages';
+import { usePostChatMessageFile } from '@/hooks/api/chat/usePostChatMessageFile';
 import {
+  PostChatRoomRequestData,
   PostChatRoomResponseData,
   usePostChatRoom,
 } from '@/hooks/api/chat/usePostChatRoom';
@@ -10,7 +12,11 @@ import { useFetchDoctorProfile } from '@/hooks/api/doctor/useFetchDoctorProfil';
 import { useFetchGroup } from '@/hooks/api/group/useFetchGroup';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { useFetchMedicalSpecialityCategories } from '@/hooks/api/medicalCategoryCategory/useFetchMedicalSpecialityCategories';
-import { loadLocalStorage, saveLocalStorage } from '@/libs/LocalStorageManager';
+import {
+  loadLocalStorage,
+  removeLocalStorage,
+  saveLocalStorage,
+} from '@/libs/LocalStorageManager';
 import { ChatMessageEntity } from '@/types/entities/chat/ChatMessageEntity';
 import { ChatRoomType } from '@/types/entities/chat/ChatRoomEntity';
 import { NewChatRoomEntity } from '@/types/entities/chat/NewChatRoomEntity';
@@ -75,7 +81,6 @@ export const useNewChatRoom = () => {
     first_message: '',
     publishment_accepted: true,
     target_specialities: [],
-    chat_draft_image_ids: [],
   });
   const [ageRange, setAgeRange] = useState<AgeRange>('');
   const [childAge, setChildAge] = useState<string>('');
@@ -108,6 +113,7 @@ export const useNewChatRoom = () => {
   const { group } = useFetchGroup(chatRoom.group_id);
   const { doctor } = useFetchDoctorProfile(chatRoom.target_doctor);
   const { fetchBaseChatRoomForReConsult } = useFetchBaseChatRoomForReConsult();
+  const { postChatMessageFile } = usePostChatMessageFile();
 
   const imageInput = useRef<HTMLInputElement>(null);
 
@@ -133,12 +139,8 @@ export const useNewChatRoom = () => {
     (): NewChatRoomEntity => ({
       ...chatRoom,
       age: Number(ageRange === 'child' ? childAge : ageRange),
-      chat_draft_image_ids:
-        chatDraftImages?.map(
-          (chatDraftImage) => chatDraftImage.chat_draft_image_id
-        ) ?? [],
     }),
-    [ageRange, chatDraftImages, chatRoom, childAge]
+    [ageRange, chatRoom, childAge]
   );
 
   const initializeAge = useCallback((age?: number | null) => {
@@ -284,27 +286,32 @@ export const useNewChatRoom = () => {
     setIsSending(true);
     setErrorMessage('');
 
-    // if (this.reConsultChatRoom) {
-    //   chatRoom.re_consult_chat_room_id = this.reConsultChatRoom.chat_room_id
-    //   chatRoom.re_consult_file_chat_message_ids =
-    //     this.reConsultFileMessages.map((chatMessage) => chatMessage.uid)
-    // }
+    const chatRoomId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
+      /[xy]/g,
+      (c) => {
+        const r = (Math.random() * 16) | 0,
+          v = c == 'x' ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+      }
+    );
 
-    // chatRoom.target_specialities = chatRoom.target_specialities.map(
-    //   (medicalSpeciality) => medicalSpeciality.speciality_code
-    // )
-
-    const response = await createNewChatRoom({
+    const data: PostChatRoomRequestData = {
       ...formData,
-      chat_room_id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
-        /[xy]/g,
-        (c) => {
-          const r = (Math.random() * 16) | 0,
-            v = c == 'x' ? r : (r & 0x3) | 0x8;
-          return v.toString(16);
-        }
-      ),
-    }).catch((error) => {
+      chat_room_id: chatRoomId,
+      chat_draft_image_ids:
+        chatDraftImages?.map(
+          (chatDraftImage) => chatDraftImage.chat_draft_image_id
+        ) ?? [],
+    };
+
+    if (query.reconsult) {
+      data.re_consult_chat_room_id = query.reconsult;
+      data.re_consult_file_chat_message_ids = reConsultFileMessages.map(
+        (chatMessage) => chatMessage.uid
+      );
+    }
+
+    const response = await createNewChatRoom(data).catch((error) => {
       console.error(error);
       setErrorMessage(
         (error.response.data as PostChatRoomResponseData).message
@@ -325,8 +332,38 @@ export const useNewChatRoom = () => {
       return;
     }
 
+    if (query.reconsult) {
+      const errorMessages: string[] = [];
+      for (const file of filesForReConsult) {
+        await postChatMessageFile(chatRoomId, file.file).catch((error) => {
+          console.error(error);
+          errorMessages.push(
+            `${file.file.name}:` +
+              (error.response?.data?.message || 'エラーが発生しました。')
+          );
+          return null;
+        });
+      }
+
+      if (errorMessages.length > 0) {
+        alert(errorMessages.join('\n'));
+      }
+    }
+
+    setIsSending(false);
+    removeLocalStorage(newChatRoomFormDataKey);
     router.push(`/chat?chat_room_id=${response.data.chat_room_id}`);
-  }, [createNewChatRoom, formData, router, setModeAndScrollToTop]);
+  }, [
+    chatDraftImages,
+    createNewChatRoom,
+    filesForReConsult,
+    formData,
+    postChatMessageFile,
+    query.reconsult,
+    reConsultFileMessages,
+    router,
+    setModeAndScrollToTop,
+  ]);
 
   const resetImageInput = useCallback(() => {
     if (imageInput.current) {
