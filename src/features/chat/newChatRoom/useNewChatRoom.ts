@@ -1,4 +1,5 @@
 import { useDeleteChatDraftImage } from '@/hooks/api/chat/useDeleteChatDraftImage';
+import { useFetchBaseChatRoomForReConsult } from '@/hooks/api/chat/useFetchBaseChatRoomForReConsult';
 import { useGetChatDraftImages } from '@/hooks/api/chat/useGetChatDraftImages';
 import {
   PostChatRoomResponseData,
@@ -10,6 +11,7 @@ import { useFetchGroup } from '@/hooks/api/group/useFetchGroup';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { useFetchMedicalSpecialityCategories } from '@/hooks/api/medicalCategoryCategory/useFetchMedicalSpecialityCategories';
 import { loadLocalStorage, saveLocalStorage } from '@/libs/LocalStorageManager';
+import { ChatMessageEntity } from '@/types/entities/chat/ChatMessageEntity';
 import { ChatRoomType } from '@/types/entities/chat/ChatRoomEntity';
 import { NewChatRoomEntity } from '@/types/entities/chat/NewChatRoomEntity';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
@@ -72,6 +74,9 @@ export const useNewChatRoom = () => {
   const [ageRange, setAgeRange] = useState<AgeRange>('');
   const [childAge, setChildAge] = useState<string>('');
   const [editingImage, setEditingImage] = useState<File>();
+  const [reConsultFileMessages, setReConsultFileMessages] = useState<
+    ChatMessageEntity[]
+  >([]);
   const [isSending, setIsSending] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [
@@ -93,6 +98,7 @@ export const useNewChatRoom = () => {
   const { deleteChatDraftImage } = useDeleteChatDraftImage();
   const { group } = useFetchGroup(chatRoom.group_id);
   const { doctor } = useFetchDoctorProfile(chatRoom.target_doctor);
+  const { fetchBaseChatRoomForReConsult } = useFetchBaseChatRoomForReConsult();
 
   const imageInput = useRef<HTMLInputElement>(null);
 
@@ -126,8 +132,44 @@ export const useNewChatRoom = () => {
     [ageRange, chatDraftImages, chatRoom, childAge]
   );
 
+  const initializeAge = useCallback((age?: number | null) => {
+    if (!age) {
+      return;
+    }
+
+    if (age < 10) {
+      setChildAge(age.toString());
+      setAgeRange('child');
+    } else {
+      setAgeRange(age.toString());
+    }
+  }, []);
+
   const initialize = useCallback(async () => {
     if (!medicalSpecialities) {
+      return;
+    }
+
+    if (query.reconsult) {
+      const baseChatRoomData = await fetchBaseChatRoomForReConsult(
+        query.reconsult
+      );
+      if (!baseChatRoomData) {
+        return;
+      }
+
+      setChatRoom((chatRoom) => ({
+        ...chatRoom,
+        age: baseChatRoomData.chat_room.age ?? undefined,
+        disease_name: baseChatRoomData.chat_room.disease_name,
+        first_message: baseChatRoomData.first_message,
+        target_specialities: baseChatRoomData.medical_specialities.map(
+          (medicalSpeciality) => medicalSpeciality.speciality_code
+        ),
+      }));
+      setReConsultFileMessages(baseChatRoomData.file_messages);
+      initializeAge(baseChatRoomData.chat_room.age);
+      setIsInitialized(true);
       return;
     }
 
@@ -147,19 +189,15 @@ export const useNewChatRoom = () => {
     const data = JSON.parse(draft) as NewChatRoomEntity;
 
     setChatRoom(data);
-
-    if (data.age) {
-      if (data.age < 10) {
-        setChildAge(data.age.toString());
-        setAgeRange('child');
-      } else {
-        setAgeRange(data.age.toString());
-      }
-    }
-
+    initializeAge(data.age);
     setIsUseDraftImages(true);
     setIsInitialized(true);
-  }, [medicalSpecialities]);
+  }, [
+    fetchBaseChatRoomForReConsult,
+    initializeAge,
+    medicalSpecialities,
+    query.reconsult,
+  ]);
 
   useEffect(() => {
     if (isInitialized) {
