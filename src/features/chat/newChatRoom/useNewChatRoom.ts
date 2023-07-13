@@ -10,6 +10,7 @@ import { useFetchGroup } from '@/hooks/api/group/useFetchGroup';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { useFetchMedicalSpecialityCategories } from '@/hooks/api/medicalCategoryCategory/useFetchMedicalSpecialityCategories';
 import { loadLocalStorage, saveLocalStorage } from '@/libs/LocalStorageManager';
+import { ChatRoomType } from '@/types/entities/chat/ChatRoomEntity';
 import { NewChatRoomEntity } from '@/types/entities/chat/NewChatRoomEntity';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 import { useRouter } from 'next/router';
@@ -28,13 +29,39 @@ export const newChatRoomFormDataKey = 'NewChatRoom::chatRoom';
 type AgeRange = string | 'child';
 type Mode = 'input' | 'confirm';
 
+type NewChatRoomQuery = {
+  target_account_id?: string;
+  target_group_id?: string;
+  reconsult?: string;
+  room_type?: ChatRoomType;
+};
+
+const getDefaultRoomType = (query: NewChatRoomQuery): ChatRoomType => {
+  if (query.room_type) {
+    return query.room_type;
+  }
+
+  if (query.target_account_id) {
+    return 'BY_NAME';
+  }
+
+  if (query.target_group_id) {
+    return 'GROUP';
+  }
+
+  return 'FREE';
+};
+
 export const useNewChatRoom = () => {
   const router = useRouter();
+  const query = router.query as NewChatRoomQuery;
 
   const [mode, setMode] = useState<Mode>('input');
   const [chatRoom, setChatRoom] = useState<NewChatRoomEntity>({
     chat_room_id: '',
-    room_type: 'FREE',
+    room_type: getDefaultRoomType(query),
+    target_doctor: query.target_account_id,
+    group_id: query.target_group_id,
     gender: 'man',
     disease_name: '',
     first_message: '',
