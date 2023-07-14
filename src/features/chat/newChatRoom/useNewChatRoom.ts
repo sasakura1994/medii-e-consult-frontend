@@ -501,6 +501,7 @@ export const useNewChatRoom = () => {
     isMedicalSpecialitiesSelectDialogShown,
     isSearchGroupModalShown,
     isSending,
+    isUseDraftImages,
     medicalSpecialities,
     medicalSpecialityCategories,
     mode,

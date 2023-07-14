@@ -17,9 +17,11 @@ import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntit
 import { NewChatRoomEntity } from '@/types/entities/chat/NewChatRoomEntity';
 import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
 import { ChatMessageEntity } from '@/types/entities/chat/ChatMessageEntity';
-import { FormEvent } from 'react';
+import { ChangeEvent, FormEvent } from 'react';
 import { usePostChatRoom } from '@/hooks/api/chat/usePostChatRoom';
 import * as usePostChatMessageFileModule from '@/hooks/api/chat/usePostChatMessageFile';
+import * as usePostDraftImageModule from '@/hooks/api/chat/usePostDraftImage';
+import * as useGetChatDraftImagesModule from '@/hooks/api/chat/useGetChatDraftImages';
 
 jest.mock('next/router');
 jest.mock('@/hooks/api/medicalCategory/useFetchMedicalSpecialities');
@@ -93,10 +95,27 @@ beforeEach(() => {
     usePostChatMessageFileModule,
     'usePostChatMessageFile'
   );
-
-  // const usePostChatMessageFileMock = jest.mocked(usePostChatMessageFile);
   usePostChatMessageFileMock.mockReturnValue({
     postChatMessageFile: jest.fn(),
+  });
+
+  const usePostDraftImageMock = jest.spyOn(
+    usePostDraftImageModule,
+    'usePostDraftImage'
+  );
+  usePostDraftImageMock.mockReturnValue({
+    createDraftImage: jest.fn(),
+  });
+
+  const useGetChatDraftImagesMock = jest.spyOn(
+    useGetChatDraftImagesModule,
+    'useGetChatDraftImages'
+  );
+  useGetChatDraftImagesMock.mockReturnValue({
+    chatDraftImages: [],
+    mutate: jest.fn(),
+    isLoading: false,
+    error: null,
   });
 });
 
@@ -458,6 +477,114 @@ describe('useNewChatROom', () => {
       expect(pushMock).toBeCalled();
       expect(createNewChatRoomMock).toBeCalled();
       expect(postChatMessageFileMock).toBeCalled();
+    });
+  });
+
+  describe('onSelectImage', () => {
+    test('画像の場合', async () => {
+      const { result } = renderHook(() => useNewChatRoom(), {
+        wrapper: RecoilRoot,
+      });
+
+      const file = new File([], 'filename', { type: 'image/png' });
+
+      await act(() =>
+        result.current.onSelectImage({
+          preventDefault: jest.fn(),
+          target: {
+            files: [file],
+          },
+        } as unknown as ChangeEvent<HTMLInputElement>)
+      );
+
+      waitFor(() => {
+        expect(result.current.editingImage).toEqual(file);
+      });
+    });
+
+    test('画像以外の場合', async () => {
+      const { result } = renderHook(() => useNewChatRoom(), {
+        wrapper: RecoilRoot,
+      });
+
+      const file = new File([], 'filename', { type: 'text/plain' });
+
+      const createDraftImageMock = jest.fn();
+      const usePostDraftImageMock = jest.spyOn(
+        usePostDraftImageModule,
+        'usePostDraftImage'
+      );
+      usePostDraftImageMock.mockReturnValue({
+        createDraftImage: jest.fn(),
+      });
+
+      const mutateMock = jest.fn();
+      const useGetChatDraftImagesMock = jest.spyOn(
+        useGetChatDraftImagesModule,
+        'useGetChatDraftImages'
+      );
+      useGetChatDraftImagesMock.mockReturnValue({
+        chatDraftImages: [],
+        mutate: jest.fn(),
+        isLoading: false,
+        error: null,
+      });
+
+      await act(() =>
+        result.current.onSelectImage({
+          preventDefault: jest.fn(),
+          target: {
+            files: [file],
+          },
+        } as unknown as ChangeEvent<HTMLInputElement>)
+      );
+
+      waitFor(() => {
+        expect(createDraftImageMock).toBeCalledWith(file);
+        expect(mutateMock).toBeCalled();
+        expect(result.current.isUseDraftImages).toBeTruthy();
+      });
+    });
+  });
+
+  describe('onImageEdited', () => {
+    test('画像以外の場合', async () => {
+      const { result } = renderHook(() => useNewChatRoom(), {
+        wrapper: RecoilRoot,
+      });
+
+      const file = new File([], 'filename', { type: 'text/plain' });
+
+      const createDraftImageMock = jest.fn();
+      const usePostDraftImageMock = jest.spyOn(
+        usePostDraftImageModule,
+        'usePostDraftImage'
+      );
+      usePostDraftImageMock.mockReturnValue({
+        createDraftImage: jest.fn(),
+      });
+
+      const mutateMock = jest.fn();
+      const useGetChatDraftImagesMock = jest.spyOn(
+        useGetChatDraftImagesModule,
+        'useGetChatDraftImages'
+      );
+      useGetChatDraftImagesMock.mockReturnValue({
+        chatDraftImages: [],
+        mutate: jest.fn(),
+        isLoading: false,
+        error: null,
+      });
+
+      act(() => result.current.setEditingImage(file));
+      await act(() => result.current.onImageEdited(file));
+
+      waitFor(() => {
+        expect(createDraftImageMock).toBeCalledWith(file);
+        expect(mutateMock).toBeCalledWith(file);
+        expect(result.current.isUseDraftImages).toBeTruthy();
+        expect(result.current.editingImage).toBeUndefined();
+      });
     });
   });
 });
