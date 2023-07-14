@@ -516,6 +516,7 @@ export const useNewChatRoom = () => {
     setChildAgeWrapper,
     setEditingImage,
     setChatRoomFields,
+    setFilesForReConsult,
     setIsDoctorSearchModalShown,
     setIsMedicalSpecialitiesSelectDialogShown,
     setIsSearchGroupModalShown,

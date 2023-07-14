@@ -2,7 +2,11 @@ import {
   useFetchBaseChatRoomForReConsult,
   FetchBaseChatRoomForReConsultResponseData,
 } from '@/hooks/api/chat/useFetchBaseChatRoomForReConsult';
-import { loadLocalStorage, saveLocalStorage } from '@/libs/LocalStorageManager';
+import {
+  loadLocalStorage,
+  removeLocalStorage,
+  saveLocalStorage,
+} from '@/libs/LocalStorageManager';
 import 'cross-fetch/polyfill';
 import { act, renderHook, waitFor } from '@testing-library/react';
 import { newChatRoomFormDataKey, useNewChatRoom } from '../useNewChatRoom';
@@ -14,10 +18,14 @@ import { NewChatRoomEntity } from '@/types/entities/chat/NewChatRoomEntity';
 import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
 import { ChatMessageEntity } from '@/types/entities/chat/ChatMessageEntity';
 import { FormEvent } from 'react';
+import { usePostChatRoom } from '@/hooks/api/chat/usePostChatRoom';
+import * as usePostChatMessageFileModule from '@/hooks/api/chat/usePostChatMessageFile';
 
 jest.mock('next/router');
 jest.mock('@/hooks/api/medicalCategory/useFetchMedicalSpecialities');
 jest.mock('@/hooks/api/chat/useFetchBaseChatRoomForReConsult');
+jest.mock('@/hooks/api/chat/usePostChatRoom');
+jest.mock('@/hooks/api/chat/usePostChatMessageFile');
 jest.mock('@/libs/LocalStorageManager');
 
 const medicalSpecialitiesMock: MedicalSpecialityEntity[] = [
@@ -33,6 +41,11 @@ useFetchMedicalSpecialitiesMock.mockReturnValue({
   medicalSpecialities: medicalSpecialitiesMock,
   isLoading: false,
   error: undefined,
+});
+
+const usePostChatRoomMock = jest.mocked(usePostChatRoom);
+usePostChatRoomMock.mockReturnValue({
+  createNewChatRoom: jest.fn(),
 });
 
 const baseChatRoomForReConsultData: FetchBaseChatRoomForReConsultResponseData =
@@ -73,6 +86,18 @@ useFetchBaseChatRoomForReConsultMock.mockReturnValue({
   fetchBaseChatRoomForReConsult: jest
     .fn()
     .mockReturnValue(baseChatRoomForReConsultData),
+});
+
+beforeEach(() => {
+  const usePostChatMessageFileMock = jest.spyOn(
+    usePostChatMessageFileModule,
+    'usePostChatMessageFile'
+  );
+
+  // const usePostChatMessageFileMock = jest.mocked(usePostChatMessageFile);
+  usePostChatMessageFileMock.mockReturnValue({
+    postChatMessageFile: jest.fn(),
+  });
 });
 
 describe('useNewChatROom', () => {
@@ -340,15 +365,99 @@ describe('useNewChatROom', () => {
     (global.scrollTo as jest.Mock).mockClear();
   });
 
-  test('backToInput', async () => {
+  test('backToInput', () => {
     const { result } = renderHook(() => useNewChatRoom(), {
       wrapper: RecoilRoot,
     });
 
     act(() => result.current.backToInput());
 
-    await waitFor(() => {
+    waitFor(() => {
       expect(result.current.mode).toBe('input');
+    });
+  });
+
+  describe('submit', () => {
+    test('通常', async () => {
+      const createNewChatRoomMock = jest.fn();
+      createNewChatRoomMock.mockResolvedValueOnce({
+        data: {
+          chat_room_id: 'chatroomid',
+          code: 1,
+        },
+      });
+      const usePostChatRoomMock = jest.mocked(usePostChatRoom);
+      usePostChatRoomMock.mockReturnValue({
+        createNewChatRoom: createNewChatRoomMock,
+      });
+
+      const removeLocalStorageMock = jest.mocked(removeLocalStorage);
+
+      const pushMock = jest.fn();
+      const useRouterMock = jest.mocked(useRouter);
+      useRouterMock.mockReturnValue({
+        query: {},
+        push: pushMock,
+      } as unknown as ReturnType<typeof useRouter>);
+
+      const { result } = renderHook(() => useNewChatRoom(), {
+        wrapper: RecoilRoot,
+      });
+
+      await act(() => result.current.submit());
+
+      expect(removeLocalStorageMock).toBeCalled();
+      expect(pushMock).toBeCalled();
+      expect(createNewChatRoomMock).toBeCalled();
+    });
+
+    test('再コンサル時', async () => {
+      const createNewChatRoomMock = jest.fn();
+      createNewChatRoomMock.mockResolvedValueOnce({
+        data: {
+          chat_room_id: 'chatroomid',
+          code: 1,
+        },
+      });
+      const usePostChatRoomMock = jest.mocked(usePostChatRoom);
+      usePostChatRoomMock.mockReturnValue({
+        createNewChatRoom: createNewChatRoomMock,
+      });
+
+      const removeLocalStorageMock = jest.mocked(removeLocalStorage);
+
+      const pushMock = jest.fn();
+      const useRouterMock = jest.mocked(useRouter);
+      useRouterMock.mockReturnValue({
+        query: { reconsult: 'basechatroomid' },
+        push: pushMock,
+      } as unknown as ReturnType<typeof useRouter>);
+
+      const postChatMessageFileMock = jest.fn();
+      postChatMessageFileMock.mockResolvedValue(true);
+      const usePostChatMessageFileMock = jest.spyOn(
+        usePostChatMessageFileModule,
+        'usePostChatMessageFile'
+      );
+      usePostChatMessageFileMock.mockReturnValue({
+        postChatMessageFile: postChatMessageFileMock,
+      });
+
+      const { result } = renderHook(() => useNewChatRoom(), {
+        wrapper: RecoilRoot,
+      });
+
+      act(() =>
+        result.current.setFilesForReConsult([
+          { id: 1, file: new File([], ''), image: '' },
+        ])
+      );
+      await act(() => result.current.submit());
+
+      expect(removeLocalStorageMock).toBeCalled();
+      expect(pushMock).toBeCalled();
+      expect(createNewChatRoomMock).toBeCalled();
+      expect(postChatMessageFileMock).toBeCalled();
     });
   });
 });
