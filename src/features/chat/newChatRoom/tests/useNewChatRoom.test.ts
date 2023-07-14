@@ -1,15 +1,22 @@
+import {
+  useFetchBaseChatRoomForReConsult,
+  FetchBaseChatRoomForReConsultResponseData,
+} from '@/hooks/api/chat/useFetchBaseChatRoomForReConsult';
 import { loadLocalStorage } from '@/libs/LocalStorageManager';
 import 'cross-fetch/polyfill';
-import { act, renderHook } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
 import { useNewChatRoom } from '../useNewChatRoom';
 import { RecoilRoot } from 'recoil';
 import { useRouter } from 'next/router';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 import { NewChatRoomEntity } from '@/types/entities/chat/NewChatRoomEntity';
+import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
+import { ChatMessageEntity } from '@/types/entities/chat/ChatMessageEntity';
 
 jest.mock('next/router');
 jest.mock('@/hooks/api/medicalCategory/useFetchMedicalSpecialities');
+jest.mock('@/hooks/api/chat/useFetchBaseChatRoomForReConsult');
 jest.mock('@/libs/LocalStorageManager');
 
 const medicalSpecialitiesMock: MedicalSpecialityEntity[] = [
@@ -25,6 +32,46 @@ useFetchMedicalSpecialitiesMock.mockReturnValue({
   medicalSpecialities: medicalSpecialitiesMock,
   isLoading: false,
   error: undefined,
+});
+
+const baseChatRoomForReConsultData: FetchBaseChatRoomForReConsultResponseData =
+  {
+    chat_room: {
+      chat_room_id: 'chatroomid',
+      disease_name: 'disease',
+      age: 20,
+    } as ChatRoomEntity,
+    first_message: 'first message',
+    medical_specialities: [
+      {
+        speciality_code: 'ALLERGY',
+        name: 'アレルギー内科',
+      } as MedicalSpecialityEntity,
+      {
+        speciality_code: 'BYOURI',
+        name: '病理科',
+      } as MedicalSpecialityEntity,
+      {
+        speciality_code: 'GANKA',
+        name: '眼科',
+      } as MedicalSpecialityEntity,
+    ],
+    file_messages: [
+      {
+        file_id: 'file1',
+      } as ChatMessageEntity,
+      {
+        file_id: 'file2',
+      } as ChatMessageEntity,
+    ],
+  };
+const useFetchBaseChatRoomForReConsultMock = jest.mocked(
+  useFetchBaseChatRoomForReConsult
+);
+useFetchBaseChatRoomForReConsultMock.mockReturnValue({
+  fetchBaseChatRoomForReConsult: jest
+    .fn()
+    .mockReturnValue(baseChatRoomForReConsultData),
 });
 
 describe('useNewChatROom', () => {
@@ -88,42 +135,64 @@ describe('useNewChatROom', () => {
   });
 
   describe('initialize', () => {
-    test('下書きがある場合', () => {
-      const chatRoom = {
-        disease_name: '風邪',
-        target_specialities: [],
-      } as unknown as NewChatRoomEntity;
-      const loadLocalStorageMock = jest.mocked(loadLocalStorage);
-      loadLocalStorageMock.mockReturnValue(JSON.stringify(chatRoom));
-
-      global.confirm = jest.fn().mockReturnValue(true);
-
-      const { result } = renderHook(() => useNewChatRoom(), {
-        wrapper: RecoilRoot,
+    describe('下書き', () => {
+      beforeEach(() => {
+        const chatRoom = {
+          disease_name: '風邪',
+          target_specialities: [],
+        } as unknown as NewChatRoomEntity;
+        const loadLocalStorageMock = jest.mocked(loadLocalStorage);
+        loadLocalStorageMock.mockReturnValueOnce(JSON.stringify(chatRoom));
       });
 
-      expect(result.current.chatRoom.disease_name).toBe('風邪');
+      afterEach(() => {
+        (global.confirm as jest.Mock).mockClear();
+      });
 
-      (global.confirm as jest.Mock).mockClear();
+      test('下書きがある場合', () => {
+        global.confirm = jest.fn().mockReturnValue(true);
+
+        const { result } = renderHook(() => useNewChatRoom(), {
+          wrapper: RecoilRoot,
+        });
+
+        expect(result.current.chatRoom.disease_name).toBe('風邪');
+      });
+
+      test('下書きがあるが復元しない場合', () => {
+        global.confirm = jest.fn().mockReturnValue(false);
+
+        const { result } = renderHook(() => useNewChatRoom(), {
+          wrapper: RecoilRoot,
+        });
+
+        expect(result.current.chatRoom.disease_name).not.toBe('風邪');
+      });
     });
 
-    test('下書きがあるが復元しない場合', () => {
-      const chatRoom = {
-        disease_name: '風邪',
-        target_specialities: [],
-      } as unknown as NewChatRoomEntity;
-      const loadLocalStorageMock = jest.mocked(loadLocalStorage);
-      loadLocalStorageMock.mockReturnValue(JSON.stringify(chatRoom));
-
-      global.confirm = jest.fn().mockReturnValue(false);
+    test('再コンサル', async () => {
+      const useRouterMock = useRouter as jest.Mocked<typeof useRouter>;
+      (useRouterMock as jest.Mock).mockReturnValue({
+        query: { reconsult: 'chatroomid' },
+      });
 
       const { result } = renderHook(() => useNewChatRoom(), {
         wrapper: RecoilRoot,
       });
 
-      expect(result.current.chatRoom.disease_name).not.toBe('風邪');
-
-      (global.confirm as jest.Mock).mockClear();
+      await waitFor(() => {
+        expect(result.current.ageRange).toBe('20');
+        expect(result.current.chatRoom.disease_name).toBe('disease');
+        expect(result.current.chatRoom.first_message).toBe('first message');
+        expect(result.current.chatRoom.target_specialities).toEqual([
+          'ALLERGY',
+          'BYOURI',
+          'GANKA',
+        ]);
+        expect(result.current.reConsultFileMessages).toEqual(
+          baseChatRoomForReConsultData.file_messages
+        );
+      });
     });
   });
 });
