@@ -218,4 +218,46 @@ describe('useNewChatROom', () => {
       );
     });
   });
+
+  describe('setAgeRangeWrapper', () => {
+    test('child', () => {
+      const { result } = renderHook(() => useNewChatRoom(), {
+        wrapper: RecoilRoot,
+      });
+
+      act(() => result.current.setAgeRangeWrapper('child'));
+
+      waitFor(() => {
+        expect(result.current.chatRoom.age).toBeUndefined();
+        expect(result.current.ageRange).toBe('child');
+        expect(result.current.childAge).toBe('');
+      });
+    });
+
+    test('年代', () => {
+      const { result } = renderHook(() => useNewChatRoom(), {
+        wrapper: RecoilRoot,
+      });
+
+      act(() => result.current.setAgeRangeWrapper('20'));
+
+      waitFor(() => {
+        expect(result.current.chatRoom.age).toEqual(20);
+        expect(result.current.ageRange).toBe('20');
+      });
+    });
+  });
+
+  test('setChildAgeWrapper', () => {
+    const { result } = renderHook(() => useNewChatRoom(), {
+      wrapper: RecoilRoot,
+    });
+
+    act(() => result.current.setChildAgeWrapper('5'));
+
+    waitFor(() => {
+      expect(result.current.chatRoom.age).toEqual(5);
+      expect(result.current.childAge).toBe('5');
+    });
+  });
 });
