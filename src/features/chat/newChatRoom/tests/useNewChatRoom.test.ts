@@ -2,10 +2,10 @@ import {
   useFetchBaseChatRoomForReConsult,
   FetchBaseChatRoomForReConsultResponseData,
 } from '@/hooks/api/chat/useFetchBaseChatRoomForReConsult';
-import { loadLocalStorage } from '@/libs/LocalStorageManager';
+import { loadLocalStorage, saveLocalStorage } from '@/libs/LocalStorageManager';
 import 'cross-fetch/polyfill';
 import { act, renderHook, waitFor } from '@testing-library/react';
-import { useNewChatRoom } from '../useNewChatRoom';
+import { newChatRoomFormDataKey, useNewChatRoom } from '../useNewChatRoom';
 import { RecoilRoot } from 'recoil';
 import { useRouter } from 'next/router';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
@@ -193,6 +193,29 @@ describe('useNewChatROom', () => {
           baseChatRoomForReConsultData.file_messages
         );
       });
+    });
+  });
+
+  test('setChatRoomFields', () => {
+    const saveLocalStorageMock = jest.mocked(saveLocalStorage);
+
+    const { result } = renderHook(() => useNewChatRoom(), {
+      wrapper: RecoilRoot,
+    });
+
+    const data = { disease_name: 'disease2' };
+    act(() => result.current.setChatRoomFields(data));
+
+    waitFor(() => {
+      expect(result.current.chatRoom.disease_name).toBe('disease2');
+      expect(saveLocalStorageMock).toBeCalledWith(
+        newChatRoomFormDataKey,
+        JSON.stringify({
+          ...result.current.chatRoom,
+          age: 0,
+          ...data,
+        })
+      );
     });
   });
 });
