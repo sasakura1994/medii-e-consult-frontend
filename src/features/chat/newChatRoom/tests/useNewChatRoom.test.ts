@@ -22,6 +22,7 @@ import { usePostChatRoom } from '@/hooks/api/chat/usePostChatRoom';
 import * as usePostChatMessageFileModule from '@/hooks/api/chat/usePostChatMessageFile';
 import * as usePostDraftImageModule from '@/hooks/api/chat/usePostDraftImage';
 import * as useGetChatDraftImagesModule from '@/hooks/api/chat/useGetChatDraftImages';
+import * as useDeleteChatDraftImageModule from '@/hooks/api/chat/useDeleteChatDraftImage';
 
 jest.mock('next/router');
 jest.mock('@/hooks/api/medicalCategory/useFetchMedicalSpecialities');
@@ -88,6 +89,16 @@ useFetchBaseChatRoomForReConsultMock.mockReturnValue({
   fetchBaseChatRoomForReConsult: jest
     .fn()
     .mockReturnValue(baseChatRoomForReConsultData),
+});
+
+const deleteChatDraftImageMock = jest.fn();
+deleteChatDraftImageMock.mockResolvedValue(true);
+const useDeleteChatDraftImageMock = jest.spyOn(
+  useDeleteChatDraftImageModule,
+  'useDeleteChatDraftImage'
+);
+useDeleteChatDraftImageMock.mockReturnValue({
+  deleteChatDraftImage: deleteChatDraftImageMock,
 });
 
 beforeEach(() => {
@@ -585,6 +596,33 @@ describe('useNewChatROom', () => {
         expect(result.current.isUseDraftImages).toBeTruthy();
         expect(result.current.editingImage).toBeUndefined();
       });
+    });
+  });
+
+  test('deleteChatDraftImageById', async () => {
+    const { result } = renderHook(() => useNewChatRoom(), {
+      wrapper: RecoilRoot,
+    });
+
+    deleteChatDraftImageMock.mockClear();
+
+    const mutateMock = jest.fn();
+    const useGetChatDraftImagesMock = jest.spyOn(
+      useGetChatDraftImagesModule,
+      'useGetChatDraftImages'
+    );
+    useGetChatDraftImagesMock.mockReturnValue({
+      chatDraftImages: [],
+      mutate: jest.fn(),
+      isLoading: false,
+      error: null,
+    });
+
+    await act(() => result.current.deleteChatDraftImageById('a'));
+
+    waitFor(() => {
+      expect(deleteChatDraftImageMock).toBeCalled();
+      expect(mutateMock).toBeCalled();
     });
   });
 });
