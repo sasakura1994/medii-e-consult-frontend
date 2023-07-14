@@ -75,9 +75,11 @@ const baseChatRoomForReConsultData: FetchBaseChatRoomForReConsultResponseData =
     ],
     file_messages: [
       {
+        uid: 1,
         file_id: 'file1',
       } as ChatMessageEntity,
       {
+        uid: 2,
         file_id: 'file2',
       } as ChatMessageEntity,
     ],
@@ -629,6 +631,92 @@ describe('useNewChatROom', () => {
     waitFor(() => {
       expect(deleteChatDraftImageMock).toBeCalled();
       expect(mutateMock).toBeCalled();
+    });
+  });
+
+  test('changeMedicalSpecialities', async () => {
+    const { result } = renderHook(() => useNewChatRoom(), {
+      wrapper: RecoilRoot,
+    });
+
+    act(() => result.current.setIsMedicalSpecialitiesSelectDialogShown(true));
+
+    await act(() =>
+      result.current.changeMedicalSpecialities([
+        { speciality_code: 'A' } as MedicalSpecialityEntity,
+        { speciality_code: 'B' } as MedicalSpecialityEntity,
+        { speciality_code: 'C' } as MedicalSpecialityEntity,
+      ])
+    );
+
+    waitFor(() => {
+      expect(result.current.chatRoom.target_specialities).toEqual([
+        'A',
+        'B',
+        'C',
+      ]);
+      expect(result.current.isMedicalSpecialitiesSelectDialogShown).toBeFalsy();
+    });
+  });
+
+  test('moveSelectedMedicalSpeciality', async () => {
+    const { result } = renderHook(() => useNewChatRoom(), {
+      wrapper: RecoilRoot,
+    });
+
+    act(() =>
+      result.current.setChatRoomFields({ target_specialities: ['A', 'B', 'C'] })
+    );
+
+    await act(() => result.current.moveSelectedMedicalSpeciality(1, 2));
+
+    waitFor(() => {
+      expect(result.current.chatRoom.target_specialities).toEqual([
+        'A',
+        'C',
+        'B',
+      ]);
+    });
+  });
+
+  test('deleteReConsultFileMessage', () => {
+    const useRouterMock = useRouter as jest.Mocked<typeof useRouter>;
+    (useRouterMock as jest.Mock).mockReturnValue({
+      query: { reconsult: 'chatroomid' },
+    });
+
+    const { result } = renderHook(() => useNewChatRoom(), {
+      wrapper: RecoilRoot,
+    });
+
+    act(() => result.current.deleteReConsultFileMessage(1));
+
+    waitFor(() => {
+      expect(result.current.reConsultFileMessages).toEqual([
+        baseChatRoomForReConsultData.file_messages[1],
+      ]);
+    });
+  });
+
+  test('deleteFileForReConsult', () => {
+    const { result } = renderHook(() => useNewChatRoom(), {
+      wrapper: RecoilRoot,
+    });
+
+    act(() =>
+      result.current.setFilesForReConsult([
+        { id: 1, file: new File([], ''), image: '' },
+        { id: 2, file: new File([], ''), image: '' },
+        { id: 3, file: new File([], ''), image: '' },
+      ])
+    );
+    act(() => result.current.deleteFileForReConsult(1));
+
+    waitFor(() => {
+      expect(result.current.filesForReConsult).toEqual([
+        { id: 2, file: new File([], ''), image: '' },
+        { id: 3, file: new File([], ''), image: '' },
+      ]);
     });
   });
 });
