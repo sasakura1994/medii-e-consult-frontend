@@ -347,6 +347,9 @@ describe('useNewChatROom', () => {
         wrapper: RecoilRoot,
       });
 
+      act(() =>
+        result.current.setChatRoomFields({ first_message: 'first_message' })
+      );
       act(() => result.current.selectConsultMessageTemplate('test'));
 
       waitFor(() => {
@@ -364,11 +367,14 @@ describe('useNewChatROom', () => {
         wrapper: RecoilRoot,
       });
 
+      act(() =>
+        result.current.setChatRoomFields({ first_message: 'first_message' })
+      );
       act(() => result.current.selectConsultMessageTemplate('test'));
 
       waitFor(() => {
         expect(confirmMock).toBeCalled();
-        expect(result.current.chatRoom.first_message).toBe('');
+        expect(result.current.chatRoom.first_message).toBe('first_message');
       });
     });
   });
