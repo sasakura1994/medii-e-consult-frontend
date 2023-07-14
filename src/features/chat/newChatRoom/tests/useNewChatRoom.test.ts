@@ -13,6 +13,7 @@ import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntit
 import { NewChatRoomEntity } from '@/types/entities/chat/NewChatRoomEntity';
 import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
 import { ChatMessageEntity } from '@/types/entities/chat/ChatMessageEntity';
+import { FormEvent } from 'react';
 
 jest.mock('next/router');
 jest.mock('@/hooks/api/medicalCategory/useFetchMedicalSpecialities');
@@ -258,6 +259,96 @@ describe('useNewChatROom', () => {
     waitFor(() => {
       expect(result.current.chatRoom.age).toEqual(5);
       expect(result.current.childAge).toBe('5');
+    });
+  });
+
+  describe('selectConsultMessageTemplate', () => {
+    afterEach(() => {
+      (global.confirm as jest.Mock).mockClear();
+    });
+
+    test('入力欄が空の時', () => {
+      const confirmMock = jest.fn();
+      global.confirm = confirmMock;
+
+      const { result } = renderHook(() => useNewChatRoom(), {
+        wrapper: RecoilRoot,
+      });
+
+      act(() => result.current.selectConsultMessageTemplate('test'));
+
+      waitFor(() => {
+        expect(confirmMock).not.toBeCalled();
+        expect(result.current.chatRoom.first_message).toBe('test');
+      });
+    });
+
+    test('入力欄に値がありOKした時', () => {
+      const confirmMock = jest.fn();
+      confirmMock.mockReturnValueOnce(true);
+      global.confirm = confirmMock;
+
+      const { result } = renderHook(() => useNewChatRoom(), {
+        wrapper: RecoilRoot,
+      });
+
+      act(() => result.current.selectConsultMessageTemplate('test'));
+
+      waitFor(() => {
+        expect(confirmMock).toBeCalled();
+        expect(result.current.chatRoom.first_message).toBe('test');
+      });
+    });
+
+    test('入力欄に値がありOKしなかった時', () => {
+      const confirmMock = jest.fn();
+      confirmMock.mockReturnValueOnce(false);
+      global.confirm = confirmMock;
+
+      const { result } = renderHook(() => useNewChatRoom(), {
+        wrapper: RecoilRoot,
+      });
+
+      act(() => result.current.selectConsultMessageTemplate('test'));
+
+      waitFor(() => {
+        expect(confirmMock).toBeCalled();
+        expect(result.current.chatRoom.first_message).toBe('');
+      });
+    });
+  });
+
+  test('confirmInput', async () => {
+    const scrollToMock = jest.fn();
+    global.scrollTo = scrollToMock;
+
+    const { result } = renderHook(() => useNewChatRoom(), {
+      wrapper: RecoilRoot,
+    });
+
+    act(() =>
+      result.current.confirmInput({
+        preventDefault: jest.fn(),
+      } as unknown as FormEvent<HTMLFormElement>)
+    );
+
+    await waitFor(() => {
+      expect(scrollToMock).toBeCalledWith(0, 0);
+      expect(result.current.mode).toBe('confirm');
+    });
+
+    (global.scrollTo as jest.Mock).mockClear();
+  });
+
+  test('backToInput', async () => {
+    const { result } = renderHook(() => useNewChatRoom(), {
+      wrapper: RecoilRoot,
+    });
+
+    act(() => result.current.backToInput());
+
+    await waitFor(() => {
+      expect(result.current.mode).toBe('input');
     });
   });
 });
