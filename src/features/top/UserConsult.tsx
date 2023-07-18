@@ -8,7 +8,12 @@ import { UserConsultNoContents } from './UserConsultNoContents';
 import Link from 'next/link';
 import { useFetchChatRoomMineOwn } from '@/hooks/api/chat/useFetchChatRoomMineOwn';
 
-export const UserConsult = () => {
+type UserConsultProps = {
+  setShowTutorialExplanationModal: (isShow: boolean) => void;
+};
+
+export const UserConsult = (props: UserConsultProps) => {
+  const { setShowTutorialExplanationModal } = props;
   const [activeTab, setActiveTab] = useState<'question' | 'answer'>('question');
   const [isOpenAllChatRoom, setIsOpenAllChatRoom] = useState(false);
   const { data: chatRoomMineOwnData } = useFetchChatRoomMineOwn({
@@ -42,8 +47,13 @@ export const UserConsult = () => {
             </a>
           </Link>
         </div>
-        <div className="ml-2 hidden whitespace-nowrap lg:block">
-          <TertiaryButton size="large">E-コンサルの使い方</TertiaryButton>
+        <div
+          className="ml-2 hidden whitespace-nowrap lg:block"
+          onClick={() => {
+            setShowTutorialExplanationModal(true);
+          }}
+        >
+          <TertiaryButton size="large">E-コンサルとは？</TertiaryButton>
         </div>
       </div>
 

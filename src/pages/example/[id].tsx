@@ -37,7 +37,7 @@ const ConsultExamplePage: NextPage = () => {
   useEventLog({ name: `/example/${id}` });
 
   return (
-    <>
+    <div className="bg-bg">
       <Container className="lg:py-6">
         {consultExample && consultExampleMessages && (
           <ConsultExampleDetail
@@ -78,7 +78,7 @@ const ConsultExamplePage: NextPage = () => {
         </>
       )}
       <ImcompleteProfileModal />
-    </>
+    </div>
   );
 };
 

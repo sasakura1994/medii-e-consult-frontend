@@ -21,9 +21,9 @@ const ConsultExamplesPage: NextPage = () => {
   useEventLog({ name: '/ExampleList' });
 
   return (
-    <>
-      <Container>
-        <Card className="px-5 py-10 lg:mt-10 lg:pl-[90px] lg:pr-[80px]">
+    <div className="bg-bg">
+      <Container className="lg:pt-10">
+        <Card className="px-5 py-10 lg:pl-[90px] lg:pr-[80px] lg:pt-10">
           <h2 className="mb-10 text-center text-2xl">コンサル事例集</h2>
           {data && (
             <>
@@ -46,7 +46,7 @@ const ConsultExamplesPage: NextPage = () => {
         </Card>
       </Container>
       <ImcompleteProfileModal />
-    </>
+    </div>
   );
 };
 
