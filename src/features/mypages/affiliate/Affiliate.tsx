@@ -21,7 +21,7 @@ export const Affiliate: React.FC = () => {
             <p className="my-2 text-center text-md font-bold">ご紹介者様</p>
             <div className="flex items-center justify-center space-x-2">
               <img src="/icons/seminar_ticket.svg" alt="" />
-              <p className="text-md">セミナー視聴チケット</p>
+              <p className="text-md">E-カンファ視聴チケット</p>
             </div>
           </div>
           <div className="mt-4 h-[76px] w-[327px] shadow-low lg:w-[290px] ">
@@ -43,7 +43,7 @@ export const Affiliate: React.FC = () => {
             <div className="my-auto w-[120px] lg:mx-auto">
               <SecondaryButton
                 onClick={downloadQrCode}
-                className="whitespace-nowrap text-medii-sm"
+                className="whitespace-nowrap"
               >
                 QRコードを保存
               </SecondaryButton>
@@ -58,7 +58,7 @@ export const Affiliate: React.FC = () => {
               />
               <SecondaryButton
                 onClick={clipboard}
-                className="whitespace-nowrap text-medii-sm"
+                className="whitespace-nowrap"
               >
                 リンクをコピー
               </SecondaryButton>
