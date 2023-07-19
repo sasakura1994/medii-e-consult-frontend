@@ -60,6 +60,7 @@ export const getTimeIntervalText = (
   }
 
   const diff = dayjs().diff(dayjs(timeStr), 'minute');
+  console.log(timeStr);
 
   if (diff < 60) {
     return `${diff}分前`;
@@ -75,5 +76,5 @@ export const getTimeIntervalText = (
     return `${days}日前`;
   }
 
-  return dayjs(timeStr).tz('UTC').format('YYYY/MM/DD');
+  return dateFormat(timeStr, 'YYYY/MM/DD');
 };

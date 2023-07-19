@@ -7,6 +7,7 @@ import { UserCounsultContent } from './UserConsultContent';
 import { UserConsultNoContents } from './UserConsultNoContents';
 import Link from 'next/link';
 import { useFetchChatRoomMineOwn } from '@/hooks/api/chat/useFetchChatRoomMineOwn';
+import { useFetchChatRoomMineRespond } from '@/hooks/api/chat/useFetchChatRoomMineRespond';
 
 type UserConsultProps = {
   setShowTutorialExplanationModal: (isShow: boolean) => void;
@@ -19,20 +20,29 @@ export const UserConsult = (props: UserConsultProps) => {
   const { data: chatRoomMineOwnData } = useFetchChatRoomMineOwn({
     limit: 100,
   });
+  const { data: chatRoomMineRespondData } = useFetchChatRoomMineRespond({
+    limit: 100,
+  });
 
-  const viewData = useMemo(() => {
+  const viewDatas = useMemo(() => {
     if (!chatRoomMineOwnData?.rooms) return [];
+    if (!chatRoomMineRespondData?.rooms) return [];
     if (activeTab === 'question') {
       return isOpenAllChatRoom
         ? chatRoomMineOwnData.rooms
         : chatRoomMineOwnData.rooms.slice(0, 5);
     } else if (activeTab === 'answer') {
       return isOpenAllChatRoom
-        ? chatRoomMineOwnData.rooms
-        : chatRoomMineOwnData.rooms.slice(0, 5);
+        ? chatRoomMineRespondData.rooms
+        : chatRoomMineRespondData.rooms.slice(0, 5);
     }
     return [];
-  }, [activeTab, chatRoomMineOwnData, isOpenAllChatRoom]);
+  }, [
+    activeTab,
+    chatRoomMineOwnData,
+    chatRoomMineRespondData,
+    isOpenAllChatRoom,
+  ]);
 
   return (
     <>
@@ -75,12 +85,13 @@ export const UserConsult = (props: UserConsultProps) => {
         />
         <div className="w-auto border-b" />
       </StyledHiddenScrollBar>
-      {viewData.length <= 0 && <UserConsultNoContents />}
-      {viewData.map((chatRoomMineOwn) => {
+      {viewDatas.length <= 0 && <UserConsultNoContents />}
+      {viewDatas.map((viewData) => {
         return (
           <UserCounsultContent
-            key={chatRoomMineOwn.chat_room_id}
-            chatRoomMineOwn={chatRoomMineOwn}
+            key={viewData.chat_room_id}
+            viewData={viewData}
+            activeTab={activeTab}
           />
         );
       })}

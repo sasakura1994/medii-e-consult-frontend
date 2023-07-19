@@ -1,10 +1,10 @@
 import { useAuthenticatedSWR } from '@/hooks/network/useAuthenticatedSWR';
 
-type UseFetchChatRoomMineOwnProps = {
+type UseFetchChatRoomMineRespondProps = {
   limit?: number;
 };
 
-export type ChatRoomMineOwnEntity = {
+export type ChatRoomMineRespondEntity = {
   chat_room_id: string;
   status: string;
   last_updated_date: string;
@@ -17,18 +17,18 @@ export type ChatRoomMineOwnEntity = {
   unread_count: number;
 };
 
-type FetchChatRoomMineOwnResponseData = {
+type FetchChatRoomMineRespondResponseData = {
   next_token: string;
-  rooms: ChatRoomMineOwnEntity[];
+  rooms: ChatRoomMineRespondEntity[];
 };
 
-export const useFetchChatRoomMineOwn = (
-  props: UseFetchChatRoomMineOwnProps
+export const useFetchChatRoomMineRespond = (
+  props: UseFetchChatRoomMineRespondProps
 ) => {
   const { limit } = props;
   const { error, data, mutate } =
-    useAuthenticatedSWR<FetchChatRoomMineOwnResponseData>(
-      `/chat_room/mine/own${limit && '?limit=' + limit}`
+    useAuthenticatedSWR<FetchChatRoomMineRespondResponseData>(
+      `/chat_room/mine/respond${limit && '?limit=' + limit}`
     );
 
   return {
