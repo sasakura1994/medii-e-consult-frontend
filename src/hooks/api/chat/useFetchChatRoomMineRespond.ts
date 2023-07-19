@@ -11,7 +11,7 @@ export type ChatRoomMineRespondEntity = {
   latest_message: string;
   room_type: string;
   title: string;
-  target_speciality: string;
+  target_specialities: string[];
   attending_doctor_names: string[];
   attending_group_name: string;
   unread_count: number;

@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { useFetchChatRoomMineOwn } from '@/hooks/api/chat/useFetchChatRoomMineOwn';
 import { useFetchChatRoomMineRespond } from '@/hooks/api/chat/useFetchChatRoomMineRespond';
 import { UserConsultAnswerContent } from './UserConsultAnswerContent';
+import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 
 type UserConsultProps = {
   setShowTutorialExplanationModal: (isShow: boolean) => void;
@@ -24,6 +25,7 @@ export const UserConsult = (props: UserConsultProps) => {
   const { data: chatRoomMineRespondData } = useFetchChatRoomMineRespond({
     limit: 100,
   });
+  const { medicalSpecialities } = useFetchMedicalSpecialities();
 
   return (
     <>
@@ -71,23 +73,26 @@ export const UserConsult = (props: UserConsultProps) => {
           {!chatRoomMineOwnData?.rooms.length && activeTab === 'question' && (
             <UserConsultNoContents />
           )}
-          {chatRoomMineOwnData && isOpenAllChatRoom
-            ? chatRoomMineOwnData.rooms.map((chatRoomMineOwn) => {
-                return (
-                  <UserConsultQuestionContent
-                    key={chatRoomMineOwn.chat_room_id}
-                    chatRoomMineOwn={chatRoomMineOwn}
-                  />
-                );
-              })
-            : chatRoomMineOwnData?.rooms.slice(0, 5).map((chatRoomMineOwn) => {
-                return (
-                  <UserConsultQuestionContent
-                    key={chatRoomMineOwn.chat_room_id}
-                    chatRoomMineOwn={chatRoomMineOwn}
-                  />
-                );
-              })}
+          {chatRoomMineOwnData &&
+            (isOpenAllChatRoom
+              ? chatRoomMineOwnData.rooms.map((chatRoomMineOwn) => {
+                  return (
+                    <UserConsultQuestionContent
+                      key={chatRoomMineOwn.chat_room_id}
+                      chatRoomMineOwn={chatRoomMineOwn}
+                    />
+                  );
+                })
+              : chatRoomMineOwnData?.rooms
+                  .slice(0, 5)
+                  .map((chatRoomMineOwn) => {
+                    return (
+                      <UserConsultQuestionContent
+                        key={chatRoomMineOwn.chat_room_id}
+                        chatRoomMineOwn={chatRoomMineOwn}
+                      />
+                    );
+                  }))}
           {chatRoomMineOwnData?.rooms.length && (
             <>
               {isOpenAllChatRoom ? (
@@ -115,26 +120,29 @@ export const UserConsult = (props: UserConsultProps) => {
         <>
           {!chatRoomMineRespondData?.rooms.length && <UserConsultNoContents />}
           {chatRoomMineRespondData &&
-          activeTab === 'answer' &&
-          isOpenAllChatRoom
-            ? chatRoomMineRespondData.rooms.map((chatRoomMineRespond) => {
-                return (
-                  <UserConsultAnswerContent
-                    key={chatRoomMineRespond.chat_room_id}
-                    chatRoomMineRespond={chatRoomMineRespond}
-                  />
-                );
-              })
-            : chatRoomMineRespondData?.rooms
-                .slice(0, 5)
-                .map((chatRoomMineRespond) => {
+            medicalSpecialities &&
+            activeTab === 'answer' &&
+            (isOpenAllChatRoom
+              ? chatRoomMineRespondData.rooms.map((chatRoomMineRespond) => {
                   return (
                     <UserConsultAnswerContent
                       key={chatRoomMineRespond.chat_room_id}
                       chatRoomMineRespond={chatRoomMineRespond}
+                      medicalSpecialities={medicalSpecialities}
                     />
                   );
-                })}
+                })
+              : chatRoomMineRespondData?.rooms
+                  .slice(0, 5)
+                  .map((chatRoomMineRespond) => {
+                    return (
+                      <UserConsultAnswerContent
+                        key={chatRoomMineRespond.chat_room_id}
+                        chatRoomMineRespond={chatRoomMineRespond}
+                        medicalSpecialities={medicalSpecialities}
+                      />
+                    );
+                  }))}
           {chatRoomMineRespondData?.rooms.length && (
             <>
               {isOpenAllChatRoom ? (

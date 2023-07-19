@@ -1,17 +1,19 @@
 import TertiaryButton from '@/components/Button/TertiaryButton';
 import { ChatRoomMineRespondEntity } from '@/hooks/api/chat/useFetchChatRoomMineRespond';
 import { getTimeIntervalText } from '@/libs/date';
+import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 import Link from 'next/link';
 import React, { useMemo } from 'react';
 
 type UserConsultAnswerContentProps = {
   chatRoomMineRespond: ChatRoomMineRespondEntity;
+  medicalSpecialities: MedicalSpecialityEntity[];
 };
 
 export const UserConsultAnswerContent = (
   props: UserConsultAnswerContentProps
 ) => {
-  const { chatRoomMineRespond } = props;
+  const { chatRoomMineRespond, medicalSpecialities } = props;
 
   const labelText = useMemo(() => {
     const activeClass =
@@ -34,15 +36,27 @@ export const UserConsultAnswerContent = (
     }
   }, [chatRoomMineRespond.status]);
 
+  const medicalSpecialityName = useMemo(() => {
+    return (
+      medicalSpecialities?.find(
+        (medicalSpeciality) =>
+          medicalSpeciality.speciality_code ===
+          chatRoomMineRespond.target_specialities[0]
+      )?.name || ''
+    );
+  }, [chatRoomMineRespond, medicalSpecialities]);
+
   const respondentLabel = useMemo(() => {
     if (chatRoomMineRespond.status === 'CREATED') {
       return '回答医を探しています';
     } else if (chatRoomMineRespond.room_type === 'GROUP') {
-      return chatRoomMineRespond.attending_group_name + ' への相談';
-    } else {
+      return chatRoomMineRespond.attending_group_name + 'への相談';
+    } else if (chatRoomMineRespond.room_type === 'BY_NAME') {
       return chatRoomMineRespond.attending_doctor_names[0] + ' 先生への相談';
+    } else {
+      return medicalSpecialityName + 'の医師への相談';
     }
-  }, [chatRoomMineRespond]);
+  }, [chatRoomMineRespond, medicalSpecialityName]);
 
   return (
     <div className="flex h-28 items-center border-b border-border-divider p-4">
