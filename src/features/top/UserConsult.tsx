@@ -95,7 +95,7 @@ export const UserConsult = (props: UserConsultProps) => {
                       />
                     );
                   }))}
-          {chatRoomMineOwnData?.rooms.length && (
+          {chatRoomMineOwnData && chatRoomMineOwnData.rooms.length > 0 && (
             <>
               {isOpenAllChatRoom ? (
                 <TertiaryButton
@@ -149,26 +149,27 @@ export const UserConsult = (props: UserConsultProps) => {
                       />
                     );
                   }))}
-          {chatRoomMineRespondData?.rooms.length && (
-            <>
-              {isOpenAllChatRoom ? (
-                <TertiaryButton
-                  className="mx-auto mt-7 w-full lg:w-auto"
-                  onClick={() => setIsOpenAllChatRoom((prev) => !prev)}
-                >
-                  閉じる
-                </TertiaryButton>
-              ) : (
-                <TertiaryButton
-                  size="large"
-                  className="mx-auto mt-7 w-full lg:w-auto"
-                  onClick={() => setIsOpenAllChatRoom((prev) => !prev)}
-                >
-                  すべてのE-コンサル
-                </TertiaryButton>
-              )}
-            </>
-          )}
+          {chatRoomMineRespondData &&
+            chatRoomMineRespondData.rooms.length > 0 && (
+              <>
+                {isOpenAllChatRoom ? (
+                  <TertiaryButton
+                    className="mx-auto mt-7 w-full lg:w-auto"
+                    onClick={() => setIsOpenAllChatRoom((prev) => !prev)}
+                  >
+                    閉じる
+                  </TertiaryButton>
+                ) : (
+                  <TertiaryButton
+                    size="large"
+                    className="mx-auto mt-7 w-full lg:w-auto"
+                    onClick={() => setIsOpenAllChatRoom((prev) => !prev)}
+                  >
+                    すべてのE-コンサル
+                  </TertiaryButton>
+                )}
+              </>
+            )}
         </>
       )}
     </>
