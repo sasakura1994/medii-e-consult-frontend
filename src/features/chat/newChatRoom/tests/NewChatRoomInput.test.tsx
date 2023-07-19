@@ -4,6 +4,8 @@ import { render, screen } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
 import { NewChatRoomInput } from '../NewChatRoomInput';
 import { UseNewChatRoom } from '../useNewChatRoom';
+import { GroupEntity } from '@/types/entities/GroupEntity';
+import { NewChatRoomEntity } from '@/types/entities/chat/NewChatRoomEntity';
 
 const baseUseNewChatRoom = {
   chatRoom: { room_type: 'FREE' },
@@ -55,5 +57,25 @@ describe('NewChatRoomInput', () => {
       ).not.toBeInTheDocument();
       expect(screen.queryByTestId('reconsult-image-note')).toBeInTheDocument();
     });
+  });
+
+  test('実名グループの場合は補足を表示', () => {
+    render(
+      <RecoilRoot>
+        <NewChatRoomInput
+          {...{
+            ...baseUseNewChatRoom,
+            chatRoom: {
+              room_type: 'GROUP',
+            } as NewChatRoomEntity,
+            group: {
+              is_real_name: true,
+            } as GroupEntity,
+          }}
+        />
+      </RecoilRoot>
+    );
+
+    expect(screen.queryByTestId('real-name-note')).toBeInTheDocument();
   });
 });

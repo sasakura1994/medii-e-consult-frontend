@@ -21,6 +21,7 @@ import { SelectedMedicalSpecialities } from '@/components/MedicalSpeciality/Sele
 import { DoctorSearchModal } from './DoctorSearchModal';
 import { SearchGroupModal } from './SearchGroupModal';
 import { NewChatRoomFile } from './NewChatRoomFile';
+import Label from '@/components/Parts/Label/Label';
 // canvasの関係でサーバー時点でimportされているとエラーになるためこうするしかないらしい
 const ImageEditorComponent = dynamic<ImageEditorProps>(
   (() =>
@@ -203,18 +204,27 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                 </div>
                 {chatRoom.room_type === 'GROUP' && (
                   <>
-                    <div className="my-2 flex items-center gap-2">
+                    <div className="my-2 flex items-start gap-2 lg:items-center">
                       <OutlinedSquareButton
                         type="button"
                         onClick={() => setIsSearchGroupModalShown(true)}
                       >
                         グループ検索
                       </OutlinedSquareButton>
-                      {group ? (
-                        <div>{group.group_name}</div>
-                      ) : (
-                        <div>未選択</div>
-                      )}
+                      <div className="flex flex-col items-start gap-2 lg:flex-row lg:items-center">
+                        {group ? (
+                          <div>{group.group_name}</div>
+                        ) : (
+                          <div>未選択</div>
+                        )}
+                        {group?.is_real_name && (
+                          <Label
+                            text="実名で投稿されるグループ"
+                            color="gray"
+                            dataTestId="real-name-note"
+                          />
+                        )}
+                      </div>
                     </div>
                   </>
                 )}

@@ -21,9 +21,26 @@ export const GroupDetailModal: React.FC<Props> = ({
 
   return (
     <Modal setShowModal={setShowModal} className="lg:w-[644px]">
-      <div className="my-10 mx-6 lg:mx-20">
+      <div className="mx-6 my-10 lg:mx-20">
         <div className="text-center text-2xl font-bold">グループ情報</div>
         <div className="mt-10">
+          {group.is_real_name && (
+            <div
+              className="mb-6 flex gap-2 bg-[#FEEDEB] p-4"
+              data-testid="real-name-note"
+            >
+              <img
+                className="m-2 block"
+                src="/icons/exclamation-triangle.svg"
+                width="16"
+                height="16"
+                alt=""
+              />
+              <div className="text-md">
+                回答医側から意向により、グループへのコンサルは匿名ではなく実名で投稿されます。
+              </div>
+            </div>
+          )}
           <GroupDetailModalLabelAndValue label="グループ名">
             {group.group_name}
           </GroupDetailModalLabelAndValue>
