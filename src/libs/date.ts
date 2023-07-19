@@ -58,8 +58,9 @@ export const getTimeIntervalText = (
   if (!timeStr) {
     return '';
   }
-
-  const diff = dayjs().diff(dayjs(timeStr), 'minute');
+  // Zがついていると、日本時間として認識されないので、除去する
+  const jaTimeStr = timeStr.replace('Z', '');
+  const diff = dayjs().utc().diff(dayjs(jaTimeStr), 'minute');
 
   if (diff < 60) {
     return `${diff}分前`;
@@ -75,16 +76,5 @@ export const getTimeIntervalText = (
     return `${days}日前`;
   }
 
-  const weeks = Math.floor(days / 7);
-  if (weeks < 4) {
-    return `${weeks}週間前`;
-  }
-
-  const months = Math.floor(days / 30);
-  if (months < 12) {
-    return `${months}ヶ月前`;
-  }
-
-  const years = Math.floor(months / 12);
-  return `${years}年前`;
+  return dayjs(timeStr).tz('UTC').format('YYYY/MM/DD');
 };
