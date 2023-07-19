@@ -71,7 +71,9 @@ export const UserConsult = (props: UserConsultProps) => {
       {activeTab === 'question' && (
         <>
           {!chatRoomMineOwnData?.rooms.length && activeTab === 'question' && (
-            <UserConsultNoContents />
+            <UserConsultNoContents
+              setShowTutorialExplanationModal={setShowTutorialExplanationModal}
+            />
           )}
           {chatRoomMineOwnData &&
             (isOpenAllChatRoom
@@ -118,7 +120,11 @@ export const UserConsult = (props: UserConsultProps) => {
 
       {activeTab === 'answer' && (
         <>
-          {!chatRoomMineRespondData?.rooms.length && <UserConsultNoContents />}
+          {!chatRoomMineRespondData?.rooms.length && (
+            <UserConsultNoContents
+              setShowTutorialExplanationModal={setShowTutorialExplanationModal}
+            />
+          )}
           {chatRoomMineRespondData &&
             medicalSpecialities &&
             activeTab === 'answer' &&
