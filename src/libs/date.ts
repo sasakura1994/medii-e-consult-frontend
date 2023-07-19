@@ -58,9 +58,8 @@ export const getTimeIntervalText = (
   if (!timeStr) {
     return '';
   }
-  // Zがついていると、日本時間として認識されないので、除去する
-  const jaTimeStr = timeStr.replace('Z', '');
-  const diff = dayjs().utc().diff(dayjs(jaTimeStr), 'minute');
+
+  const diff = dayjs().diff(dayjs(timeStr), 'minute');
 
   if (diff < 60) {
     return `${diff}分前`;
