@@ -21,7 +21,6 @@ import { SelectedMedicalSpecialities } from '@/components/MedicalSpeciality/Sele
 import { DoctorSearchModal } from './DoctorSearchModal';
 import { SearchGroupModal } from './SearchGroupModal';
 import { NewChatRoomFile } from './NewChatRoomFile';
-import { useRouter } from 'next/router';
 // canvasの関係でサーバー時点でimportされているとエラーになるためこうするしかないらしい
 const ImageEditorComponent = dynamic<ImageEditorProps>(
   (() =>
@@ -150,7 +149,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                       Medii所属の医師がコンサル内容を判断した上で、現在選択されていない診療科に回答依頼を送り直すことがあります。
                     </div>
                     {query.reconsult && (
-                      <div>
+                      <div data-testid="reconsult-free-note">
                         最初のコンサルと違う科の医師から回答を受けたい場合は変更してください。
                         <br />
                         既にコンサルの回答をもらった医師には送信はされません。
@@ -191,7 +190,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
             )}
             {!query.reconsult && (
               <>
-                <div>
+                <div data-testid="room-type-group-container">
                   <NewChatRoomRoomType
                     id="room-type-group"
                     label="グループで指定する"
@@ -337,7 +336,10 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
               </div>
             </div>
             {query.reconsult && (
-              <div className="my-3 text-medii-sm font-bold text-strong">
+              <div
+                className="my-3 text-medii-sm font-bold text-strong"
+                data-testid="reconsult-image-note"
+              >
                 参考画像を追加ボタンを押すと新規で画像を掲載することが可能です。
                 <br />
                 不要な画像は×を押すことで削除できます。

@@ -17,9 +17,13 @@ import {
   removeLocalStorage,
   saveLocalStorage,
 } from '@/libs/LocalStorageManager';
+import { GroupEntity } from '@/types/entities/GroupEntity';
+import { ChatDraftImageEntity } from '@/types/entities/chat/ChatDraftImageEntity';
 import { ChatMessageEntity } from '@/types/entities/chat/ChatMessageEntity';
 import { ChatRoomType } from '@/types/entities/chat/ChatRoomEntity';
 import { NewChatRoomEntity } from '@/types/entities/chat/NewChatRoomEntity';
+import { DoctorEntity } from '@/types/entities/doctorEntity';
+import { MedicalSpecialityCategoryEntity } from '@/types/entities/medicalSpecialityCategoryEntity';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 import { useRouter } from 'next/router';
 import {
@@ -30,6 +34,9 @@ import {
   useState,
   useEffect,
   useMemo,
+  RefObject,
+  Dispatch,
+  SetStateAction,
 } from 'react';
 
 export const newChatRoomFormDataKey = 'NewChatRoom::chatRoom';
@@ -66,7 +73,56 @@ const getDefaultRoomType = (query: NewChatRoomQuery): ChatRoomType => {
   return 'FREE';
 };
 
-export const useNewChatRoom = () => {
+export type UseNewChatRoom = {
+  ageRange: string;
+  backToInput: () => void;
+  childAge: string;
+  changeMedicalSpecialities: (
+    medicalSpecialities: MedicalSpecialityEntity[]
+  ) => void;
+  chatDraftImages?: ChatDraftImageEntity[];
+  confirmInput: (e: FormEvent<HTMLFormElement>) => void;
+  deleteChatDraftImageById: (chatDraftImageId: string) => Promise<void>;
+  deleteFileForReConsult: (id: number) => void;
+  deleteReConsultFileMessage: (chatMessageId: number) => void;
+  doctor?: DoctorEntity;
+  editingImage?: File;
+  errorMessage: string;
+  chatRoom: NewChatRoomEntity;
+  filesForReConsult: FileForReConsult[];
+  group?: GroupEntity;
+  imageInput: RefObject<HTMLInputElement>;
+  isDoctorSearchModalShown: boolean;
+  isMedicalSpecialitiesSelectDialogShown: boolean;
+  isSearchGroupModalShown: boolean;
+  isSending: boolean;
+  isUseDraftImages: boolean;
+  medicalSpecialities?: MedicalSpecialityEntity[];
+  medicalSpecialityCategories?: MedicalSpecialityCategoryEntity[];
+  mode: Mode;
+  moveSelectedMedicalSpeciality: (
+    dragIndex: number,
+    hoverIndex: number
+  ) => void;
+  onImageEdited: (file: File) => void;
+  onSelectImage: (e: ChangeEvent<HTMLInputElement>) => Promise<void>;
+  query: NewChatRoomQuery;
+  reConsultFileMessages: ChatMessageEntity[];
+  resetImageInput: () => void;
+  selectConsultMessageTemplate: (firstMessage: string) => void;
+  selectedMedicalSpecialities: MedicalSpecialityEntity[];
+  setAgeRangeWrapper: (age: AgeRange) => void;
+  setChildAgeWrapper: (age: string) => void;
+  setEditingImage: Dispatch<SetStateAction<File | undefined>>;
+  setChatRoomFields: (data: Partial<NewChatRoomEntity>) => void;
+  setFilesForReConsult: Dispatch<SetStateAction<FileForReConsult[]>>;
+  setIsDoctorSearchModalShown: Dispatch<SetStateAction<boolean>>;
+  setIsMedicalSpecialitiesSelectDialogShown: Dispatch<SetStateAction<boolean>>;
+  setIsSearchGroupModalShown: Dispatch<SetStateAction<boolean>>;
+  submit: () => Promise<void>;
+};
+
+export const useNewChatRoom = (): UseNewChatRoom => {
   const router = useRouter();
   const query = router.query as NewChatRoomQuery;
 
