@@ -37,13 +37,19 @@ export const UserConsultAnswerContent = (
   }, [chatRoomMineRespond.status]);
 
   const medicalSpecialityName = useMemo(() => {
-    return (
+    // chatRoomMineRespond.target_specialitiesが2件以上ある場合は「他n件の診療科」と表示する
+    const firstSpeciality =
       medicalSpecialities?.find(
         (medicalSpeciality) =>
           medicalSpeciality.speciality_code ===
           chatRoomMineRespond.target_specialities[0]
-      )?.name || ''
-    );
+      )?.name || '';
+    if (chatRoomMineRespond.target_specialities.length > 1) {
+      return `${firstSpeciality} 他${
+        chatRoomMineRespond.target_specialities.length - 1
+      }件の診療科`;
+    }
+    return firstSpeciality;
   }, [chatRoomMineRespond, medicalSpecialities]);
 
   const respondentLabel = useMemo(() => {
