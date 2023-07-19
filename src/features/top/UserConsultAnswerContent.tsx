@@ -50,7 +50,7 @@ export const UserConsultAnswerContent = (
     if (chatRoomMineRespond.status === 'CREATED') {
       return '回答医を探しています';
     } else if (chatRoomMineRespond.room_type === 'GROUP') {
-      return chatRoomMineRespond.attending_group_name + 'への相談';
+      return chatRoomMineRespond.attending_group_name + ' グループへの相談';
     } else if (chatRoomMineRespond.room_type === 'BY_NAME') {
       return chatRoomMineRespond.attending_doctor_names[0] + ' 先生への相談';
     } else {

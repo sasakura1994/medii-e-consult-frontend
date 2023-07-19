@@ -38,7 +38,7 @@ export const UserConsultQuestionContent = (
     if (chatRoomMineOwn.status === 'CREATED') {
       return '回答医を探しています';
     } else if (chatRoomMineOwn.room_type === 'GROUP') {
-      return chatRoomMineOwn.attending_group_name + 'が回答';
+      return chatRoomMineOwn.attending_group_name + ' グループが回答';
     } else {
       return chatRoomMineOwn.attending_doctor_names[0] + ' 先生が回答';
     }
