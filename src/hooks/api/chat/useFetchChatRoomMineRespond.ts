@@ -12,7 +12,7 @@ export type ChatRoomMineRespondEntity = {
   room_type: string;
   title: string;
   target_speciality: string;
-  attending_doctor_name: string;
+  attending_doctor_names: string[];
   attending_group_name: string;
   unread_count: number;
 };

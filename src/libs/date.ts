@@ -60,7 +60,6 @@ export const getTimeIntervalText = (
   }
 
   const diff = dayjs().diff(dayjs(timeStr), 'minute');
-  console.log(timeStr);
 
   if (diff < 60) {
     return `${diff}分前`;

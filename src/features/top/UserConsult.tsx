@@ -1,13 +1,14 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import TertiaryButton from '@/components/Button/TertiaryButton';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import { TopTab } from './TopTab';
 import { StyledHiddenScrollBar } from './styled';
-import { UserCounsultContent } from './UserConsultContent';
+import { UserConsultQuestionContent } from './UserConsultQuestionContent';
 import { UserConsultNoContents } from './UserConsultNoContents';
 import Link from 'next/link';
 import { useFetchChatRoomMineOwn } from '@/hooks/api/chat/useFetchChatRoomMineOwn';
 import { useFetchChatRoomMineRespond } from '@/hooks/api/chat/useFetchChatRoomMineRespond';
+import { UserConsultAnswerContent } from './UserConsultAnswerContent';
 
 type UserConsultProps = {
   setShowTutorialExplanationModal: (isShow: boolean) => void;
@@ -23,26 +24,6 @@ export const UserConsult = (props: UserConsultProps) => {
   const { data: chatRoomMineRespondData } = useFetchChatRoomMineRespond({
     limit: 100,
   });
-
-  const viewDatas = useMemo(() => {
-    if (!chatRoomMineOwnData?.rooms) return [];
-    if (!chatRoomMineRespondData?.rooms) return [];
-    if (activeTab === 'question') {
-      return isOpenAllChatRoom
-        ? chatRoomMineOwnData.rooms
-        : chatRoomMineOwnData.rooms.slice(0, 5);
-    } else if (activeTab === 'answer') {
-      return isOpenAllChatRoom
-        ? chatRoomMineRespondData.rooms
-        : chatRoomMineRespondData.rooms.slice(0, 5);
-    }
-    return [];
-  }, [
-    activeTab,
-    chatRoomMineOwnData,
-    chatRoomMineRespondData,
-    isOpenAllChatRoom,
-  ]);
 
   return (
     <>
@@ -85,31 +66,96 @@ export const UserConsult = (props: UserConsultProps) => {
         />
         <div className="w-auto border-b" />
       </StyledHiddenScrollBar>
-      {viewDatas.length <= 0 && <UserConsultNoContents />}
-      {viewDatas.map((viewData) => {
-        return (
-          <UserCounsultContent
-            key={viewData.chat_room_id}
-            viewData={viewData}
-            activeTab={activeTab}
-          />
-        );
-      })}
-      {isOpenAllChatRoom ? (
-        <TertiaryButton
-          className="mx-auto mt-7 w-full lg:w-auto"
-          onClick={() => setIsOpenAllChatRoom((prev) => !prev)}
-        >
-          閉じる
-        </TertiaryButton>
-      ) : (
-        <TertiaryButton
-          size="large"
-          className="mx-auto mt-7 w-full lg:w-auto"
-          onClick={() => setIsOpenAllChatRoom((prev) => !prev)}
-        >
-          すべてのE-コンサル
-        </TertiaryButton>
+      {activeTab === 'question' && (
+        <>
+          {!chatRoomMineOwnData?.rooms.length && activeTab === 'question' && (
+            <UserConsultNoContents />
+          )}
+          {chatRoomMineOwnData && isOpenAllChatRoom
+            ? chatRoomMineOwnData.rooms.map((chatRoomMineOwn) => {
+                return (
+                  <UserConsultQuestionContent
+                    key={chatRoomMineOwn.chat_room_id}
+                    chatRoomMineOwn={chatRoomMineOwn}
+                  />
+                );
+              })
+            : chatRoomMineOwnData?.rooms.slice(0, 5).map((chatRoomMineOwn) => {
+                return (
+                  <UserConsultQuestionContent
+                    key={chatRoomMineOwn.chat_room_id}
+                    chatRoomMineOwn={chatRoomMineOwn}
+                  />
+                );
+              })}
+          {chatRoomMineOwnData?.rooms.length && (
+            <>
+              {isOpenAllChatRoom ? (
+                <TertiaryButton
+                  className="mx-auto mt-7 w-full lg:w-auto"
+                  onClick={() => setIsOpenAllChatRoom((prev) => !prev)}
+                >
+                  閉じる
+                </TertiaryButton>
+              ) : (
+                <TertiaryButton
+                  size="large"
+                  className="mx-auto mt-7 w-full lg:w-auto"
+                  onClick={() => setIsOpenAllChatRoom((prev) => !prev)}
+                >
+                  すべてのE-コンサル
+                </TertiaryButton>
+              )}
+            </>
+          )}
+        </>
+      )}
+
+      {activeTab === 'answer' && (
+        <>
+          {!chatRoomMineRespondData?.rooms.length && <UserConsultNoContents />}
+          {chatRoomMineRespondData &&
+          activeTab === 'answer' &&
+          isOpenAllChatRoom
+            ? chatRoomMineRespondData.rooms.map((chatRoomMineRespond) => {
+                return (
+                  <UserConsultAnswerContent
+                    key={chatRoomMineRespond.chat_room_id}
+                    chatRoomMineRespond={chatRoomMineRespond}
+                  />
+                );
+              })
+            : chatRoomMineRespondData?.rooms
+                .slice(0, 5)
+                .map((chatRoomMineRespond) => {
+                  return (
+                    <UserConsultAnswerContent
+                      key={chatRoomMineRespond.chat_room_id}
+                      chatRoomMineRespond={chatRoomMineRespond}
+                    />
+                  );
+                })}
+          {chatRoomMineRespondData?.rooms.length && (
+            <>
+              {isOpenAllChatRoom ? (
+                <TertiaryButton
+                  className="mx-auto mt-7 w-full lg:w-auto"
+                  onClick={() => setIsOpenAllChatRoom((prev) => !prev)}
+                >
+                  閉じる
+                </TertiaryButton>
+              ) : (
+                <TertiaryButton
+                  size="large"
+                  className="mx-auto mt-7 w-full lg:w-auto"
+                  onClick={() => setIsOpenAllChatRoom((prev) => !prev)}
+                >
+                  すべてのE-コンサル
+                </TertiaryButton>
+              )}
+            </>
+          )}
+        </>
       )}
     </>
   );
