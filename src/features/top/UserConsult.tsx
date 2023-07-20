@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TertiaryButton from '@/components/Button/TertiaryButton';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import { TopTab } from './TopTab';
 import { StyledHiddenScrollBar } from './styled';
-import { TopToolTip } from './TopToolTip';
-import SecondaryButton from '@/components/Button/SecondaryButton';
+import { UserConsultQuestionContent } from './UserConsultQuestionContent';
+import { UserConsultNoContents } from './UserConsultNoContents';
+import Link from 'next/link';
+import { useFetchChatRoomMineOwn } from '@/hooks/api/chat/useFetchChatRoomMineOwn';
+import { useFetchChatRoomMineRespond } from '@/hooks/api/chat/useFetchChatRoomMineRespond';
+import { UserConsultAnswerContent } from './UserConsultAnswerContent';
+import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 
 type UserConsultProps = {
   setShowTutorialExplanationModal: (isShow: boolean) => void;
@@ -12,6 +17,16 @@ type UserConsultProps = {
 
 export const UserConsult = (props: UserConsultProps) => {
   const { setShowTutorialExplanationModal } = props;
+  const [activeTab, setActiveTab] = useState<'question' | 'answer'>('question');
+  const [isOpenAllChatRoom, setIsOpenAllChatRoom] = useState(false);
+  const { data: chatRoomMineOwnData } = useFetchChatRoomMineOwn({
+    limit: 100,
+  });
+  const { data: chatRoomMineRespondData } = useFetchChatRoomMineRespond({
+    limit: 100,
+  });
+  const { medicalSpecialities } = useFetchMedicalSpecialities();
+
   return (
     <>
       <div className="mt-5 flex">
@@ -19,7 +34,11 @@ export const UserConsult = (props: UserConsultProps) => {
           あなたに関わるE-コンサル
         </p>
         <div className="hidden whitespace-nowrap lg:block">
-          <PrimaryButton size="large">新規E-コンサルを作成</PrimaryButton>
+          <Link href="/newchatroom">
+            <a>
+              <PrimaryButton size="large">新規E-コンサルを作成</PrimaryButton>
+            </a>
+          </Link>
         </div>
         <div
           className="ml-2 hidden whitespace-nowrap lg:block"
@@ -32,27 +51,127 @@ export const UserConsult = (props: UserConsultProps) => {
       </div>
 
       <StyledHiddenScrollBar className="mt-5 flex items-end overflow-y-hidden overflow-x-scroll">
-        <TopTab text="自分が質問" isActive={false} />
-        <TopTab text="回答医 募集中" isActive />
-        <TopTab text="自分が回答" isActive={false} isLast />
+        <TopTab
+          text="自分が質問"
+          isActive={activeTab === 'question'}
+          onClick={() => {
+            setActiveTab('question');
+          }}
+        />
+        <TopTab
+          text="自分が回答"
+          isActive={activeTab === 'answer'}
+          onClick={() => {
+            setActiveTab('answer');
+          }}
+          isLast
+        />
         <div className="w-auto border-b" />
       </StyledHiddenScrollBar>
-      <div className="mt-2 h-[336px] w-full rounded-lg border">
-        <div className="mt-6 flex justify-center space-x-1">
-          <TopToolTip text="全診療科対応" />
-          <TopToolTip text="完全無料" />
-          <TopToolTip text="匿名で質問できる" />
-        </div>
-        <p className="mt-2 text-center text-xxl font-bold text-text-primary">
-          1,000名以上の専門医に臨床疑問を相談してみませんか？
-        </p>
-        <div className="mt-6 flex justify-center">
-          <img src="images/top/top-consult.png" alt="" />
-        </div>
-        <div className="mt-6 flex justify-center">
-          <SecondaryButton size="large">E-コンサルを始める</SecondaryButton>
-        </div>
-      </div>
+      {activeTab === 'question' && (
+        <>
+          {!chatRoomMineOwnData?.rooms.length && activeTab === 'question' && (
+            <UserConsultNoContents
+              setShowTutorialExplanationModal={setShowTutorialExplanationModal}
+            />
+          )}
+          {chatRoomMineOwnData &&
+            (isOpenAllChatRoom
+              ? chatRoomMineOwnData.rooms.map((chatRoomMineOwn) => {
+                  return (
+                    <UserConsultQuestionContent
+                      key={chatRoomMineOwn.chat_room_id}
+                      chatRoomMineOwn={chatRoomMineOwn}
+                    />
+                  );
+                })
+              : chatRoomMineOwnData?.rooms
+                  .slice(0, 5)
+                  .map((chatRoomMineOwn) => {
+                    return (
+                      <UserConsultQuestionContent
+                        key={chatRoomMineOwn.chat_room_id}
+                        chatRoomMineOwn={chatRoomMineOwn}
+                      />
+                    );
+                  }))}
+          {chatRoomMineOwnData && chatRoomMineOwnData.rooms.length > 0 && (
+            <>
+              {isOpenAllChatRoom ? (
+                <TertiaryButton
+                  className="mx-auto mt-7 w-full lg:w-auto"
+                  onClick={() => setIsOpenAllChatRoom((prev) => !prev)}
+                >
+                  閉じる
+                </TertiaryButton>
+              ) : (
+                <TertiaryButton
+                  size="large"
+                  className="mx-auto mt-7 w-full lg:w-auto"
+                  onClick={() => setIsOpenAllChatRoom((prev) => !prev)}
+                >
+                  すべてのE-コンサル
+                </TertiaryButton>
+              )}
+            </>
+          )}
+        </>
+      )}
+
+      {activeTab === 'answer' && (
+        <>
+          {!chatRoomMineRespondData?.rooms.length && (
+            <UserConsultNoContents
+              setShowTutorialExplanationModal={setShowTutorialExplanationModal}
+            />
+          )}
+          {chatRoomMineRespondData &&
+            medicalSpecialities &&
+            activeTab === 'answer' &&
+            (isOpenAllChatRoom
+              ? chatRoomMineRespondData.rooms.map((chatRoomMineRespond) => {
+                  return (
+                    <UserConsultAnswerContent
+                      key={chatRoomMineRespond.chat_room_id}
+                      chatRoomMineRespond={chatRoomMineRespond}
+                      medicalSpecialities={medicalSpecialities}
+                    />
+                  );
+                })
+              : chatRoomMineRespondData?.rooms
+                  .slice(0, 5)
+                  .map((chatRoomMineRespond) => {
+                    return (
+                      <UserConsultAnswerContent
+                        key={chatRoomMineRespond.chat_room_id}
+                        chatRoomMineRespond={chatRoomMineRespond}
+                        medicalSpecialities={medicalSpecialities}
+                      />
+                    );
+                  }))}
+          {chatRoomMineRespondData &&
+            chatRoomMineRespondData.rooms.length > 0 && (
+              <>
+                {isOpenAllChatRoom ? (
+                  <TertiaryButton
+                    className="mx-auto mt-7 w-full lg:w-auto"
+                    onClick={() => setIsOpenAllChatRoom((prev) => !prev)}
+                  >
+                    閉じる
+                  </TertiaryButton>
+                ) : (
+                  <TertiaryButton
+                    size="large"
+                    className="mx-auto mt-7 w-full lg:w-auto"
+                    onClick={() => setIsOpenAllChatRoom((prev) => !prev)}
+                  >
+                    すべてのE-コンサル
+                  </TertiaryButton>
+                )}
+              </>
+            )}
+        </>
+      )}
     </>
   );
 };
