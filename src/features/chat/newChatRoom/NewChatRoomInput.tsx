@@ -198,7 +198,6 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                     note="特定疾患や地域連携のご相談の場合"
                     checked={chatRoom.room_type === 'GROUP'}
                     value="GROUP"
-                    isBeta
                     onChange={() => setChatRoomFields({ room_type: 'GROUP' })}
                   />
                 </div>
