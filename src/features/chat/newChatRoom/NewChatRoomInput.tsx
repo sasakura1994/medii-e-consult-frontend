@@ -174,6 +174,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
               <>
                 <div className="my-2 flex items-center gap-2">
                   <OutlinedSquareButton
+                    dataTestId="by-name-search-button"
                     type="button"
                     onClick={() => setIsDoctorSearchModalShown(true)}
                   >
@@ -442,6 +443,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
             setChatRoomFields({ target_doctor: doctor.account_id });
           }}
           setShowModal={setIsDoctorSearchModalShown}
+          reConsultChatRoomId={query.reconsult}
         />
       )}
       {isSearchGroupModalShown && (

@@ -1,11 +1,13 @@
 import React from 'react';
 
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
 import { NewChatRoomInput } from '../NewChatRoomInput';
 import { UseNewChatRoom } from '../useNewChatRoom';
 import { GroupEntity } from '@/types/entities/GroupEntity';
 import { NewChatRoomEntity } from '@/types/entities/chat/NewChatRoomEntity';
+import userEvent from '@testing-library/user-event';
+import * as useSearchDoctorModule from '@/hooks/api/doctor/useSearchDoctor';
 
 const baseUseNewChatRoom = {
   chatRoom: { room_type: 'FREE' },
@@ -56,6 +58,36 @@ describe('NewChatRoomInput', () => {
         screen.queryByTestId('room-type-group-container')
       ).not.toBeInTheDocument();
       expect(screen.queryByTestId('reconsult-image-note')).toBeInTheDocument();
+    });
+
+    test('同じ医師を探さないための医師検索パラメータ付与', async () => {
+      const useSearchDoctorMock = jest.fn();
+      useSearchDoctorMock.mockReturnValue({ doctors: [] });
+      const useSearchDoctorModuleMock = jest.mocked(useSearchDoctorModule);
+      useSearchDoctorModuleMock.useSearchDoctor = useSearchDoctorMock;
+
+      render(
+        <RecoilRoot>
+          <NewChatRoomInput
+            {...({
+              ...baseUseNewChatRoom,
+              chatRoom: { room_type: 'BY_NAME' },
+              isDoctorSearchModalShown: true,
+              query: { reconsult: 'chatroomid' },
+            } as unknown as UseNewChatRoom)}
+          />
+        </RecoilRoot>
+      );
+
+      act(() =>
+        userEvent.click(screen.getByTestId('doctor-search-modal-search-button'))
+      );
+
+      expect(useSearchDoctorMock).toBeCalledWith({
+        experienceYears: '',
+        speciality: '',
+        reConsultChatRoomId: 'chatroomid',
+      });
     });
   });
 
