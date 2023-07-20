@@ -71,5 +71,9 @@ export const getTimeIntervalText = (
   }
 
   const days = Math.floor(hours / 24);
-  return `${days}日前`;
+  if (days < 7) {
+    return `${days}日前`;
+  }
+
+  return dateFormat(timeStr, 'YYYY/MM/DD');
 };
