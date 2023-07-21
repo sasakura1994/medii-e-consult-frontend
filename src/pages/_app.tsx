@@ -94,7 +94,7 @@ const App = (props: AppPropsWithLayout) => {
         '/seminar',
         '/seminar/archives',
         '/top',
-      ].some((str) => url.toLocaleLowerCase().includes(str))
+      ].some((str) => url.toLowerCase().includes(str))
     ) {
       window.location.href = url.toLowerCase();
       throw 'routeChange aborted.';
