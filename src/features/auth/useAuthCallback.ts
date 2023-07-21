@@ -22,11 +22,11 @@ export const useAuthCallback = (): UseAuthCallback => {
   const { key, ttl, redirect } = router.query as Query;
   const [isProcessing, setIsProcessing] = useState(false);
   const [isFailed, setIsFailed] = useState(false);
-  const { axios } = useAxios();
+  const { axios, hasToken } = useAxios();
   const { setTokenAndMarkInitialized } = useToken();
 
   const initialize = useCallback(async () => {
-    if (!key || !ttl || !redirect || isProcessing) {
+    if (!key || !ttl || !redirect || isProcessing || !hasToken) {
       return;
     }
 
@@ -51,6 +51,7 @@ export const useAuthCallback = (): UseAuthCallback => {
     ttl,
     redirect,
     isProcessing,
+    hasToken,
     axios,
     setTokenAndMarkInitialized,
     router,
