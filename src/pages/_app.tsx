@@ -94,7 +94,7 @@ const App = (props: AppPropsWithLayout) => {
         '/seminar',
         '/seminar/archives',
         '/top',
-      ].some((str) => url.toLowerCase().includes(str))
+      ].includes(url.toLowerCase())
     ) {
       window.location.href = url.toLowerCase();
       throw 'routeChange aborted.';
@@ -116,5 +116,6 @@ const App = (props: AppPropsWithLayout) => {
 };
 
 // 初回queryのundefined現象を解決する
+App.getInitialProps = async () => ( { pageProps: {} } );
 
 export default App;
