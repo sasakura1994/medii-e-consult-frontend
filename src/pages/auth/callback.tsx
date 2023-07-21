@@ -4,6 +4,7 @@ import { useAuthCallback } from '@/features/auth/useAuthCallback';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 import { Card } from '@/components/Parts/Card/Card';
 import { HeaderLogoOnly } from '@/components/Layouts/Header/HeaderLogoOnly';
+import Link from 'next/link';
 
 const AuthCallbackPage: NextPageWithLayout = () => {
   const { isFailed } = useAuthCallback();
@@ -22,7 +23,7 @@ const AuthCallbackPage: NextPageWithLayout = () => {
               </p>
               <div className="mt-10 text-center text-text-link underline">
                 <div>
-                  <a href="#">ログイン</a>
+                  <Link href="/login">ログイン</Link>
                 </div>
                 <div className="mt-4">
                   <a
