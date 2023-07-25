@@ -1,28 +1,17 @@
-import { Badge } from '@/components/Parts/Badge/Badge';
-import React, { ReactNode } from 'react';
+import React from 'react';
 
-type Props = {
-  children: ReactNode;
-};
-
-export const FooterNotificationBadge: React.FC<Props> = ({
-  children,
-}: Props) => {
+export const FooterNotificationBadge = () => {
   return (
-    <Badge
+    <div
       className="
         absolute
-        right-[8px]
-        top-[8px]
-        flex
-        h-[16px]
-        w-[16px]
-        items-center
-        justify-center
-        text-xxs
+        right-[6px]
+        top-1
+        h-2
+        w-2
+        rounded-full
+        bg-medii-sky-base
       "
-    >
-      {children}
-    </Badge>
+    />
   );
 };
