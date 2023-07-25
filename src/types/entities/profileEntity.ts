@@ -39,6 +39,7 @@ export type ProfileEntity = {
   hospital_id: string;
   hospital_name: string;
   graduated_university: string | undefined | null;
+  registration_source: string;
   is_invited: boolean;
   is_skip_confirmation_by_utm_source: boolean;
   questionary_selected_ids_csv: string | undefined | null;
