@@ -10,8 +10,8 @@ const nextConfig = {
     CASE_BANK_URL: process.env.CASE_BANK_URL,
     INVITATION_URL: process.env.INVITATION_URL,
   },
-  // basePath: isSymView ? '/medii/e-consult-staging' : '',
-  // assetPrefix: isSymView ? '/medii/e-consult-staging' : '',
+  basePath: isSymView ? '/medii/e-consult-staging' : '',
+  assetPrefix: isSymView ? '/medii/e-consult-staging' : '',
 };
 
 module.exports = nextConfig;
