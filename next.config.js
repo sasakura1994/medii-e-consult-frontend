@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 
+const isSymView = process.env.SYMVIEW === 'true';
 const nextConfig = {
 
   reactStrictMode: true,
@@ -9,23 +10,8 @@ const nextConfig = {
     CASE_BANK_URL: process.env.CASE_BANK_URL,
     INVITATION_URL: process.env.INVITATION_URL,
   },
-
-  async rewrites() {
-    return {
-      beforeFiles: [
-        {
-          source: '/:path*',
-          has:[
-            {
-              type:'host',
-              value:'stg-symview.me'
-            }
-          ],
-          destination:'/medii/e-consult-staging/:path*'
-        },
-      ],
-    };
-  },
+  basePath: isSymView ? '/medii/e-consult-staging' : '',
+  assetPrefix: isSymView ? '/medii/e-consult-staging' : '',
 };
 
 module.exports = nextConfig;
