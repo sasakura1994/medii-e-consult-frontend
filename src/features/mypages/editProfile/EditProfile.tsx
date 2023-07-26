@@ -11,6 +11,7 @@ import { EditProfileNotification } from './EditProfileNotification';
 import { EditProfileQuestionary } from './EditProfileQuestionary';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import Link from 'next/link';
+import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 
 export type EditProfileProps = {
   isRegisterMode: boolean;
@@ -20,6 +21,7 @@ export const EditProfile = (props: EditProfileProps) => {
   const { isRegisterMode } = props;
   const editProfile = useEditProfile(props);
   const { errorMessage, profile, submit } = editProfile;
+  const { profile: fetchedProfile } = useFetchProfile();
 
   if (!profile) {
     return (
@@ -45,7 +47,7 @@ export const EditProfile = (props: EditProfileProps) => {
           <UserInfo {...editProfile} {...props} />
           <MedicalCareer {...editProfile} {...props} />
           <HospitalAffiliation {...editProfile} />
-          <UsageClassification {...editProfile} />
+          {fetchedProfile?.registration_source !== 'nmo' && <UsageClassification {...editProfile} />}
           {isRegisterMode && (
             <>
               <EditProfileNotification {...editProfile} />

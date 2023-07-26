@@ -133,10 +133,12 @@ export const ProfileDetail: React.FC<Props> = ({ onEdit }: Props) => {
               )}
             </div>
 
-            <div className="mb-10">
-              <h3 className="mb-4 text-primary">■ E-コンサル利用区分</h3>
-              <p>{profile.want_to_be_consultant ? '回答医&相談（E−コンサルへの回答も行います）' : '相談医'}</p>
-            </div>
+            {profile.registration_source !== 'nmo' && (
+              <div className="mb-10" data-testid="profile-detail-usage-classification">
+                <h3 className="mb-4 text-primary">■ E-コンサル利用区分</h3>
+                <p>{profile.want_to_be_consultant ? '回答医&相談（E−コンサルへの回答も行います）' : '相談医'}</p>
+              </div>
+            )}
           </>
         )}
       </Card>

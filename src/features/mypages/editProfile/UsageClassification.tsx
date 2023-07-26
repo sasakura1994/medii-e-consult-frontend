@@ -2,13 +2,15 @@ import React from 'react';
 import { Radio } from '@/components/Parts/Form/Radio';
 import { UseEditProfile } from './useEditProfile';
 
-export const UsageClassification = ({ profile, setProfileFields }: UseEditProfile) => {
+export const UsageClassification = (props: UseEditProfile) => {
+  const { profile, setProfileFields } = props;
+
   if (!profile) {
     return <></>;
   }
 
   return (
-    <div className="mb-10">
+    <div className="mb-10" data-testid="edit-profile-usage-classification">
       <h3 className="mb-4 text-primary">■ E-コンサル利用区分</h3>
 
       <div className="mb-4">
