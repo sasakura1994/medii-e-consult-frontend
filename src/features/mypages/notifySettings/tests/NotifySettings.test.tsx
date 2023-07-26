@@ -10,15 +10,14 @@ jest.mock('@/hooks/api/doctor/useFetchProfile');
 
 describe('NotifySettings', () => {
   test('ラジオボタンが選択できること', async () => {
-    const useFetchProfileMock = useFetchProfileModule as jest.Mocked<
-      typeof useFetchProfileModule
-    >;
+    const useFetchProfileMock = useFetchProfileModule as jest.Mocked<typeof useFetchProfileModule>;
     useFetchProfileMock.useFetchProfile.mockReturnValue({
       profile: {
         is_mail_notify: false,
         is_push_notify: false,
         not_seminar_mail_target: false,
       } as ProfileEntity,
+      isLoading: false,
     });
 
     await act(() => {

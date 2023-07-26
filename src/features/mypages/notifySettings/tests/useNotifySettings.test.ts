@@ -12,23 +12,20 @@ type UseNotifySettingsType = ReturnType<typeof useNotifySettings>;
 
 describe('NotifySettings', () => {
   beforeEach(() => {
-    const useUpdateProfileMock = useUpdateProfileModule as jest.Mocked<
-      typeof useUpdateProfileModule
-    >;
+    const useUpdateProfileMock = useUpdateProfileModule as jest.Mocked<typeof useUpdateProfileModule>;
     useUpdateProfileMock.useUpdateProfile.mockReturnValue({
       updateProfile: jest.fn().mockResolvedValue({}),
     });
   });
 
   test('メール・プッシュ通知両方受け取るを選択した場合に状態が変わること', async () => {
-    const useFetchProfileMock = useFetchProfileModule as jest.Mocked<
-      typeof useFetchProfileModule
-    >;
+    const useFetchProfileMock = useFetchProfileModule as jest.Mocked<typeof useFetchProfileModule>;
     useFetchProfileMock.useFetchProfile.mockReturnValue({
       profile: {
         is_mail_notify: false,
         is_push_notify: false,
       } as ProfileEntity,
+      isLoading: false,
     });
 
     let hoooResult: { current: UseNotifySettingsType } | undefined;
@@ -51,14 +48,13 @@ describe('NotifySettings', () => {
   });
 
   test('メール通知を選択した場合に状態が変わること', async () => {
-    const useFetchProfileMock = useFetchProfileModule as jest.Mocked<
-      typeof useFetchProfileModule
-    >;
+    const useFetchProfileMock = useFetchProfileModule as jest.Mocked<typeof useFetchProfileModule>;
     useFetchProfileMock.useFetchProfile.mockReturnValue({
       profile: {
         is_mail_notify: false,
         is_push_notify: true,
       } as ProfileEntity,
+      isLoading: false,
     });
 
     let hoooResult: { current: UseNotifySettingsType } | undefined;
@@ -80,14 +76,13 @@ describe('NotifySettings', () => {
   });
 
   test('プッシュ通知を選択した場合に状態が変わること', async () => {
-    const useFetchProfileMock = useFetchProfileModule as jest.Mocked<
-      typeof useFetchProfileModule
-    >;
+    const useFetchProfileMock = useFetchProfileModule as jest.Mocked<typeof useFetchProfileModule>;
     useFetchProfileMock.useFetchProfile.mockReturnValue({
       profile: {
         is_mail_notify: true,
         is_push_notify: false,
       } as ProfileEntity,
+      isLoading: false,
     });
 
     let hoooResult: { current: UseNotifySettingsType } | undefined;
@@ -109,13 +104,12 @@ describe('NotifySettings', () => {
   });
 
   test('メール通知を受け取るを選択した場合に状態が変わること', async () => {
-    const useFetchProfileMock = useFetchProfileModule as jest.Mocked<
-      typeof useFetchProfileModule
-    >;
+    const useFetchProfileMock = useFetchProfileModule as jest.Mocked<typeof useFetchProfileModule>;
     useFetchProfileMock.useFetchProfile.mockReturnValue({
       profile: {
         not_seminar_mail_target: true,
       } as ProfileEntity,
+      isLoading: false,
     });
 
     let hoooResult: { current: UseNotifySettingsType } | undefined;
@@ -136,13 +130,12 @@ describe('NotifySettings', () => {
   });
 
   test('メール通知を受け取らないを選択した場合に状態が変わること', async () => {
-    const useFetchProfileMock = useFetchProfileModule as jest.Mocked<
-      typeof useFetchProfileModule
-    >;
+    const useFetchProfileMock = useFetchProfileModule as jest.Mocked<typeof useFetchProfileModule>;
     useFetchProfileMock.useFetchProfile.mockReturnValue({
       profile: {
         not_seminar_mail_target: false,
       } as ProfileEntity,
+      isLoading: false,
     });
 
     let hoooResult: { current: UseNotifySettingsType } | undefined;
