@@ -10,7 +10,7 @@ import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 import { useAuthenticationOnPage } from '@/hooks/authentication/useAuthenticationOnPage';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 
-const WithdrawPage: NextPageWithLayout = () => {
+const WithdrawalPage: NextPageWithLayout = () => {
   useAuthenticationOnPage();
   const { isSending, withdraw } = useWithdrawalPage();
   const { profile, isLoading } = useFetchProfile();
@@ -27,7 +27,7 @@ const WithdrawPage: NextPageWithLayout = () => {
               <>
                 <div className="text-medii-xl font-bold">アカウントを削除します</div>
                 {profile.registration_source === 'nmo' && (
-                  <p className="my-10 text-left">
+                  <p className="my-10 text-left" data-testid="nmo-notice">
                     日経メディカル Onlineとの接続を解除し、Mediiでの会員情報を削除します。
                     <br />
                     Mediiを退会しても日経メディカル Onlineは引き続きご利用可能です。
@@ -60,8 +60,8 @@ const WithdrawPage: NextPageWithLayout = () => {
   );
 };
 
-WithdrawPage.getLayout = (page: React.ReactElement) => {
+WithdrawalPage.getLayout = (page: React.ReactElement) => {
   return page;
 };
 
-export default WithdrawPage;
+export default WithdrawalPage;
