@@ -12,7 +12,7 @@ jest.mock('next/router');
 jest.mock('@/hooks/api/doctor/useFetchProfile');
 jest.mock('@/libs/LocalStorageManager');
 
-describe('EditProfile', () => {
+describe('/editprofile', () => {
   test('編集画面に切り替わること', async () => {
     const useRouterMock = useRouter as jest.Mocked<typeof useRouter>;
     (useRouterMock as jest.Mock).mockReturnValue({
