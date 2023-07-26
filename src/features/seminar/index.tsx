@@ -7,6 +7,7 @@ import { SeminarCard } from './SeminarCard';
 import SecondaryButton from '@/components/Button/SecondaryButton';
 import { useSeminar } from './useSeminar';
 import { ImcompleteProfileModal } from '@/components/Parts/Modal/ImcompleteProfileModal';
+import PrimaryButton from '@/components/Button/PrimaryButton';
 
 export const Seminar = () => {
   const { seminars, upcomingSeminars, ticketCount, showModal, setShowModal } =
@@ -97,7 +98,7 @@ export const Seminar = () => {
               <h3 className="text-center text-2xl text-primary">
                 チケットとは?
               </h3>
-              <p className="py-10">
+              <p className="py-10 pt-10">
                 チケットとは、E-カンファアーカイブ動画を閲覧するために必要なものです。
                 <br />
                 E-コンサルで相談する、もしくはお知り合いの医師にMediiをご紹介いただくとチケットを1枚獲得できます。
@@ -112,6 +113,22 @@ export const Seminar = () => {
                 src="/images/seminar/about_ticket_sp.png"
                 alt=""
               />
+              <div className="flex lg:gap-40 mt-4">
+                <Link href="/newchatroom">
+                  <a>
+                    <PrimaryButton size="large">
+                      <p>コンサル作成</p>
+                    </PrimaryButton>
+                  </a>
+                </Link>
+                <Link href="/affiliate">
+                  <a>
+                    <PrimaryButton size="large">
+                      <p>医師を招待</p>
+                    </PrimaryButton>
+                  </a>
+                </Link>
+              </div>
             </div>
           </Modal>
         )}
