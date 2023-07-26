@@ -13,6 +13,8 @@ export const FooterSpMenu: React.FC = () => {
         <FooterSpMenuItem
           href="/chat"
           image="/icons/footer_consult.svg"
+          imageWidth={24}
+          imageHeight={24}
           hasBadge={unreadCounts && unreadCounts.unread_consult.length > 0}
           isCurrent={router.pathname.match(/\/chat/) !== null}
         >
@@ -21,6 +23,8 @@ export const FooterSpMenu: React.FC = () => {
         <FooterSpMenuItem
           href="/group"
           image="/icons/footer_group.svg"
+          imageWidth={25}
+          imageHeight={24}
           hasBadge={unreadCounts && unreadCounts.unread_conference.length > 0}
           isCurrent={router.pathname.match(/\/group/) !== null}
         >
@@ -29,16 +33,26 @@ export const FooterSpMenu: React.FC = () => {
         <FooterSpMenuItem
           href="/examplelist"
           image="/icons/footer_case.svg"
+          imageWidth={24}
+          imageHeight={24}
           isCurrent={router.pathname.match(/\/example/) !== null}
         >
           事例集
         </FooterSpMenuItem>
-        <FooterSpMenuItem href={process.env.CASE_BANK_URL ?? '/'} image="/icons/bank.svg" isCurrent={false}>
+        <FooterSpMenuItem
+          href={process.env.CASE_BANK_URL ?? '/'}
+          image="/icons/bank.svg"
+          imageWidth={24}
+          imageHeight={24}
+          isCurrent={false}
+        >
           症例バンク
         </FooterSpMenuItem>
         <FooterSpMenuItem
           href="/seminar"
           image="/icons/seminar.svg"
+          imageWidth={25}
+          imageHeight={24}
           isCurrent={router.pathname.match(/\/seminar/) !== null}
         >
           E-カンファ

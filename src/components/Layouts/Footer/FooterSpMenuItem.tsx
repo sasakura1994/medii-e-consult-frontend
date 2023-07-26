@@ -1,22 +1,32 @@
 import React, { ReactNode } from 'react';
 import Link from 'next/link';
 import { FooterNotificationBadge } from './FooterNotificationBadge';
+import { ColoredImage } from '@/components/Image/ColoredImage';
 
 type Props = {
   href: string;
   hasBadge?: boolean;
   children: ReactNode;
   image: string;
+  imageWidth: number;
+  imageHeight: number;
   isCurrent: boolean;
 };
 
 export const FooterSpMenuItem = (props: Props) => {
-  const { children, href, hasBadge = false, image, isCurrent } = props;
+  const { children, href, hasBadge = false, image, imageWidth, imageHeight, isCurrent } = props;
 
   return (
     <li className="flex flex-1 flex-col items-center gap-1">
       <div className="relative flex h-6 w-full items-center justify-center">
-        <img src={image} alt="" />
+        <div className="flex h-8 w-8 items-center justify-center">
+          <ColoredImage
+            src={image}
+            color={isCurrent ? '#0758e4' : '#999'}
+            width={`${imageWidth}px`}
+            height={`${imageHeight}px`}
+          />
+        </div>
         {hasBadge && <FooterNotificationBadge />}
       </div>
       <Link href={href}>
