@@ -11,13 +11,9 @@ export const MyPageLayoutWithoutSpFooterMenu = (props: PropsType) => {
   useAuthenticationOnPage();
 
   return (
-    <>
+    <div className="h-full min-h-screen w-full bg-bg">
       <Header />
-      <div className={'h-full min-h-screen w-full bg-[#eff3f6]'}>
-        <main className={'mx-auto pt-10 pb-20 lg:w-lg-breakpoint lg:pb-0'}>
-          {children}
-        </main>
-      </div>
-    </>
+      <main className="mx-auto pb-20 pt-10 lg:w-lg-breakpoint lg:pb-0">{children}</main>
+    </div>
   );
 };
