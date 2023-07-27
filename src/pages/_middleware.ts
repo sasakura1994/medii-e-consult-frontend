@@ -7,8 +7,9 @@ const Middleware = (req: NextRequest) => {
 
     // 擬似ヘッダーを取得する処理
     const authority = req.headers.get('Authority');
-    // 取得した擬似ヘッダーをコンソールに出力
-    console.log('送信元:', authority);
+    if (!authority?.endsWith("medii.jp")) {
+      url.pathname = "/medii/e-consult-staging" + url.pathname;
+    }
 
     return NextResponse.redirect(url);
   }
