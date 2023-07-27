@@ -2,7 +2,7 @@ import React from 'react';
 import { EditProfileLabel } from '@/features/mypages/editProfile/EditProfileLabel';
 import { TextField } from '@/components/Parts/Form/TextField';
 import { TextArea } from '@/components/Parts/Form/TextArea';
-import { useEditProfile } from './useEditProfile';
+import { UseEditProfile } from './useEditProfile';
 import { useMedicalCareer } from './useMedicalCareer';
 import { ProfileMedicalSpecialitiesSelectDialog } from '@/components/MedicalSpeciality/ProfileMedicalSpecialitiesSelectDialog';
 import { ProfileMedicalSpecialities } from '@/components/MedicalSpeciality/ProfileMedicalSpecialities';
@@ -10,7 +10,7 @@ import { EditProfileProps } from './EditProfile';
 import { YearInput } from '@/components/Parts/Form/YearInput';
 import { useEraConverter } from '@/hooks/useEraConverter';
 
-export type MedicalCareerProps = ReturnType<typeof useEditProfile> & EditProfileProps;
+export type MedicalCareerProps = UseEditProfile & EditProfileProps;
 
 export const MedicalCareer = (props: MedicalCareerProps) => {
   const { isRegisterMode, profile, selectMedicalSpecialities, setProfileFields } = props;

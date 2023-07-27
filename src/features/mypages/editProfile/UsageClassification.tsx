@@ -1,10 +1,8 @@
 import React from 'react';
 import { Radio } from '@/components/Parts/Form/Radio';
-import { useEditProfile } from './useEditProfile';
+import { UseEditProfile } from './useEditProfile';
 
-type Props = ReturnType<typeof useEditProfile>;
-
-export const UsageClassification: React.FC<Props> = ({ profile, setProfileFields }) => {
+export const UsageClassification = ({ profile, setProfileFields }: UseEditProfile) => {
   if (!profile) {
     return <></>;
   }

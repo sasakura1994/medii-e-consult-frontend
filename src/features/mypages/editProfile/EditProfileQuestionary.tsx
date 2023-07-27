@@ -1,13 +1,11 @@
 import React from 'react';
-import { useEditProfile } from './useEditProfile';
+import { UseEditProfile } from './useEditProfile';
 import { EditProfileLabel } from './EditProfileLabel';
 import { TextArea } from '@/components/Parts/Form/TextArea';
 import { useFetchQuestionaryItems } from '@/hooks/api/questionary/useFetchQuestionaryItems';
 import { CheckBox } from '@/components/Parts/Form/CheckBox';
 
-export type Props = ReturnType<typeof useEditProfile>;
-
-export const EditProfileQuestionary = (props: Props) => {
+export const EditProfileQuestionary = (props: UseEditProfile) => {
   const { profile, selectedQuestionaryItemIds, setProfileFields, toggleQuestionaryItem } = props;
   const { questionaryItems } = useFetchQuestionaryItems();
 

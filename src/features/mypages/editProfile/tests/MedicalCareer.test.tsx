@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, act } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
 import { useRouter } from 'next/router';
-import { EditingProfile, useEditProfile } from '../useEditProfile';
+import { EditingProfile, UseEditProfile } from '../useEditProfile';
 import { EditProfileProps } from '../EditProfile';
 import { MedicalCareer } from '../MedicalCareer';
 
@@ -23,7 +23,7 @@ describe('MedicalCareer', () => {
             qualified_year: '',
           } as EditingProfile,
           setProfileFields: jest.fn(),
-        } as unknown as ReturnType<typeof useEditProfile> & EditProfileProps;
+        } as unknown as UseEditProfile & EditProfileProps;
         render(
           <RecoilRoot>
             <MedicalCareer {...props} />
@@ -44,7 +44,7 @@ describe('MedicalCareer', () => {
             qualified_year: '',
           } as EditingProfile,
           setProfileFields: jest.fn(),
-        } as unknown as ReturnType<typeof useEditProfile> & EditProfileProps;
+        } as unknown as UseEditProfile & EditProfileProps;
         render(
           <RecoilRoot>
             <MedicalCareer {...props} />
@@ -64,7 +64,7 @@ describe('MedicalCareer', () => {
             qualified_year: '',
           } as EditingProfile,
           setProfileFields: jest.fn(),
-        } as unknown as ReturnType<typeof useEditProfile> & EditProfileProps;
+        } as unknown as UseEditProfile & EditProfileProps;
         render(
           <RecoilRoot>
             <MedicalCareer {...props} />
@@ -84,7 +84,7 @@ describe('MedicalCareer', () => {
             qualified_year: '',
           } as EditingProfile,
           setProfileFields: jest.fn(),
-        } as unknown as ReturnType<typeof useEditProfile> & EditProfileProps;
+        } as unknown as UseEditProfile & EditProfileProps;
         render(
           <RecoilRoot>
             <MedicalCareer {...props} />
@@ -103,7 +103,7 @@ describe('MedicalCareer', () => {
             qualified_year: '2000',
           } as EditingProfile,
           setProfileFields: jest.fn(),
-        } as unknown as ReturnType<typeof useEditProfile> & EditProfileProps;
+        } as unknown as UseEditProfile & EditProfileProps;
         render(
           <RecoilRoot>
             <MedicalCareer {...props} />
@@ -122,7 +122,7 @@ describe('MedicalCareer', () => {
             qualified_year: '2000',
           } as EditingProfile,
           setProfileFields: jest.fn(),
-        } as unknown as ReturnType<typeof useEditProfile> & EditProfileProps;
+        } as unknown as UseEditProfile & EditProfileProps;
         render(
           <RecoilRoot>
             <MedicalCareer {...props} />

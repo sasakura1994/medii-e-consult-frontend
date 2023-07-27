@@ -31,7 +31,7 @@ type Option = {
 
 type HospitalInputType = 'free' | 'select';
 
-type UseEditProfile = {
+export type UseEditProfile = {
   errorMessage: string;
   hospitalInputType: HospitalInputType;
   hospitalOptions: Option[];

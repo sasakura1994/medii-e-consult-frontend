@@ -1,10 +1,8 @@
 import React from 'react';
-import { useEditProfile } from './useEditProfile';
+import { UseEditProfile } from './useEditProfile';
 import { Radio } from '@/components/Parts/Form/Radio';
 
-type Props = ReturnType<typeof useEditProfile>;
-
-export const EditProfileNotification = (props: Props) => {
+export const EditProfileNotification = (props: UseEditProfile) => {
   const { profile, setProfileFields } = props;
 
   if (!profile) {

@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, act } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
 import { useRouter } from 'next/router';
-import { EditingProfile, useEditProfile } from '../useEditProfile';
+import { EditingProfile, UseEditProfile } from '../useEditProfile';
 import { EditProfileProps } from '../EditProfile';
 import { HospitalAffiliation } from '../HospitalAffiliation';
 
@@ -22,7 +22,7 @@ describe('HospitalAffiliation', () => {
           profile: {} as EditingProfile,
           setProfileFields: jest.fn(),
           hospitalInputType: 'select',
-        } as unknown as ReturnType<typeof useEditProfile> & EditProfileProps;
+        } as unknown as UseEditProfile & EditProfileProps;
         render(
           <RecoilRoot>
             <HospitalAffiliation {...props} />
@@ -41,7 +41,7 @@ describe('HospitalAffiliation', () => {
           profile: {} as EditingProfile,
           setProfileFields: jest.fn(),
           hospitalInputType: 'free',
-        } as unknown as ReturnType<typeof useEditProfile> & EditProfileProps;
+        } as unknown as UseEditProfile & EditProfileProps;
         render(
           <RecoilRoot>
             <HospitalAffiliation {...props} />

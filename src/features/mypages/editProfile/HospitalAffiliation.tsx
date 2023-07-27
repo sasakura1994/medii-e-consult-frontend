@@ -4,12 +4,10 @@ import { EditProfileLabel } from '@/features/mypages/editProfile/EditProfileLabe
 import { TextField } from '@/components/Parts/Form/TextField';
 import { SelectBox } from '@/components/Parts/Form/SelectBox';
 import { Radio } from '@/components/Parts/Form/Radio';
-import { useEditProfile } from './useEditProfile';
+import { UseEditProfile } from './useEditProfile';
 import { usePrefecture } from '@/hooks/prefecture/usePrefecture';
 
-type Props = ReturnType<typeof useEditProfile>;
-
-export const HospitalAffiliation = (props: Props) => {
+export const HospitalAffiliation = (props: UseEditProfile) => {
   const {
     hospitalInputType,
     hospitalOptions,

@@ -4,7 +4,7 @@ import { RecoilRoot } from 'recoil';
 import { useRouter } from 'next/router';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { UserInfo } from '../UserInfo';
-import { EditingProfile, useEditProfile } from '../useEditProfile';
+import { EditingProfile, UseEditProfile } from '../useEditProfile';
 import { EditProfileProps } from '../EditProfile';
 
 jest.mock('next/router');
@@ -32,7 +32,7 @@ describe('UserInfo', () => {
         isRegisterMode: false,
         profile: {} as EditingProfile,
         setProfileFields: jest.fn(),
-      } as unknown as ReturnType<typeof useEditProfile> & EditProfileProps;
+      } as unknown as UseEditProfile & EditProfileProps;
       render(
         <RecoilRoot>
           <UserInfo {...props} />
@@ -56,7 +56,7 @@ describe('UserInfo', () => {
         isRegisterMode: true,
         profile: {} as EditingProfile,
         setProfileFields: jest.fn(),
-      } as unknown as ReturnType<typeof useEditProfile> & EditProfileProps;
+      } as unknown as UseEditProfile & EditProfileProps;
       render(
         <RecoilRoot>
           <UserInfo {...props} />

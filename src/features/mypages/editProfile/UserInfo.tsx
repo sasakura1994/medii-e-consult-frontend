@@ -1,12 +1,12 @@
 import React from 'react';
 import { TextField } from '@/components/Parts/Form/TextField';
-import { useEditProfile } from './useEditProfile';
+import { UseEditProfile } from './useEditProfile';
 import { EditProfileProps } from './EditProfile';
 import { EditProfileLabel } from '@/features/mypages/editProfile/EditProfileLabel';
 import { useEraConverter } from '@/hooks/useEraConverter';
 import { YearInput } from '@/components/Parts/Form/YearInput';
 
-type Props = ReturnType<typeof useEditProfile> & EditProfileProps;
+type Props = UseEditProfile & EditProfileProps;
 
 export const UserInfo = (props: Props) => {
   const { isRegisterMode, profile, setProfileFields } = props;
