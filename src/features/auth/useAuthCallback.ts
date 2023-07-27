@@ -5,7 +5,6 @@ import { useToken } from '@/hooks/authentication/useToken';
 
 type Query = {
   key: string;
-  ttl: string;
   redirect: string;
 };
 
@@ -19,26 +18,24 @@ type UseAuthCallback = {
 
 export const useAuthCallback = (): UseAuthCallback => {
   const router = useRouter();
-  const { key, ttl, redirect } = router.query as Query;
+  const { key, redirect } = router.query as Query;
   const [isProcessing, setIsProcessing] = useState(false);
   const [isFailed, setIsFailed] = useState(false);
   const { axios, hasToken } = useAxios();
   const { setTokenAndMarkInitialized } = useToken();
 
   const initialize = useCallback(async () => {
-    if (!key || !ttl || !redirect || isProcessing || !hasToken) {
+    if (!key || !redirect || isProcessing || !hasToken) {
       return;
     }
 
     setIsProcessing(true);
 
-    const data = { key, ttl };
-    const response = await axios
-      .post<LoginResponseData>('/nmo/login', data)
-      .catch((error) => {
-        console.error(error);
-        return null;
-      });
+    const data = { key };
+    const response = await axios.post<LoginResponseData>('/nmo/login', data).catch((error) => {
+      console.error(error);
+      return null;
+    });
     if (!response) {
       setIsFailed(true);
       return;
@@ -46,16 +43,7 @@ export const useAuthCallback = (): UseAuthCallback => {
 
     setTokenAndMarkInitialized(response.data.jwt_token);
     router.push(redirect);
-  }, [
-    key,
-    ttl,
-    redirect,
-    isProcessing,
-    hasToken,
-    axios,
-    setTokenAndMarkInitialized,
-    router,
-  ]);
+  }, [key, redirect, isProcessing, hasToken, axios, setTokenAndMarkInitialized, router]);
 
   useEffect(() => {
     initialize();

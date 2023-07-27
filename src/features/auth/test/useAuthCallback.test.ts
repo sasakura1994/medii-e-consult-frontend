@@ -16,7 +16,6 @@ describe('useAuthCallback', () => {
     (useRouterMock as jest.Mock).mockReturnValue({
       query: {
         key: 'ky012345678901234567890123456789',
-        ttl: '10000',
         redirect: 'https://example.com',
       },
       push: pushMock,
