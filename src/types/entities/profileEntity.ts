@@ -44,4 +44,5 @@ export type ProfileEntity = {
   is_skip_confirmation_by_utm_source: boolean;
   questionary_selected_ids_csv: string | undefined | null;
   questionary_other: string | undefined | null;
+  is_guest: boolean;
 };
