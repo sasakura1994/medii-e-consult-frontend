@@ -5,6 +5,8 @@ import { EditProfileProps } from './EditProfile';
 import { EditProfileLabel } from '@/features/mypages/editProfile/EditProfileLabel';
 import { useEraConverter } from '@/hooks/useEraConverter';
 import { YearInput } from '@/components/Parts/Form/YearInput';
+import { UserInfoNames } from './UserInfoNames';
+import { EditProfileHeading } from './EditProfileHeading';
 
 type Props = UseEditProfile & EditProfileProps;
 
@@ -18,60 +20,9 @@ export const UserInfo = (props: Props) => {
 
   return (
     <div className="mb-10">
-      <h3 className="mb-4 text-primary">■ 利用者情報</h3>
-      <div className="mb-4 lg:flex lg:gap-6">
-        <div>
-          <EditProfileLabel required={isRegisterMode ? true : undefined}>姓</EditProfileLabel>
-          <TextField
-            name="last_name"
-            value={profile.last_name}
-            onChange={(e) => setProfileFields({ last_name: e.target.value })}
-            disabled={!isRegisterMode}
-            id="last_name"
-            className="mb-4 lg:mb-0"
-            placeholder="姓"
-          />
-        </div>
+      <EditProfileHeading className="mb-4">利用者情報</EditProfileHeading>
 
-        <div>
-          <EditProfileLabel required={isRegisterMode ? true : undefined}>名</EditProfileLabel>
-          <TextField
-            name="first_name"
-            value={profile.first_name}
-            onChange={(e) => setProfileFields({ first_name: e.target.value })}
-            disabled={!isRegisterMode}
-            id="first_name"
-            placeholder="名"
-          />
-        </div>
-      </div>
-
-      <div className="mb-4 lg:flex lg:gap-6">
-        <div>
-          <EditProfileLabel required={isRegisterMode ? true : undefined}>姓（かな）</EditProfileLabel>
-          <TextField
-            name="last_name_hira"
-            value={profile.last_name_hira}
-            onChange={(e) => setProfileFields({ last_name_hira: e.target.value })}
-            disabled={!isRegisterMode}
-            id="last_name_hira"
-            className="mb-4 lg:mb-0"
-            placeholder="姓（かな）"
-          />
-        </div>
-
-        <div>
-          <EditProfileLabel required={isRegisterMode ? true : undefined}>名（かな）</EditProfileLabel>
-          <TextField
-            name="first_name_hira"
-            value={profile.first_name_hira}
-            onChange={(e) => setProfileFields({ first_name_hira: e.target.value })}
-            disabled={!isRegisterMode}
-            id="first_name_hira"
-            placeholder="名（かな）"
-          />
-        </div>
-      </div>
+      <UserInfoNames isEnabled={isRegisterMode} profile={profile} setProfileFields={setProfileFields} />
 
       <div className="mb-4">
         <EditProfileLabel required={isRegisterMode ? true : undefined}>生年月日（半角）</EditProfileLabel>
