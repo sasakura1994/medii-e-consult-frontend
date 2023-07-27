@@ -13,13 +13,13 @@ const AuthCallbackPage: NextPageWithLayout = () => {
     <div className="flex h-[100vh] flex-col bg-bg">
       <HeaderLogoOnly />
       <div className="flex flex-1 items-center justify-center">
-        <Card className="mx-auto p-20 lg:max-w-[600px]">
+        <Card className="mx-auto px-8 py-20 lg:max-w-[750px] lg:px-20">
           {isFailed ? (
             <div>
               <p>
-                申し訳ございませんが、ログインに失敗しました。
+                ログインに失敗しました。恐れ入りますが、再度ログインをお試しください。
                 <br />
-                恐れ入りますが、再度ログインをお試しください。
+                ログインに関して問題がある場合は、サポートまでお問い合わせください。
               </p>
               <div className="mt-10 text-center text-text-link underline">
                 <div>
