@@ -43,7 +43,9 @@ export const EditProfile = (props: EditProfileProps) => {
           </h2>
 
           <UserInfo {...editProfile} {...props} />
-          <MedicalCareer {...editProfile} {...props} />
+          <div className="mt-4">
+            <MedicalCareer {...editProfile} {...props} />
+          </div>
           <HospitalAffiliation {...editProfile} />
           <UsageClassification {...editProfile} />
           {isRegisterMode && (

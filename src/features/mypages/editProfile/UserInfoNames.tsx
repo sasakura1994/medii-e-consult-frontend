@@ -43,7 +43,7 @@ export const UserInfoNames = (props: Props) => {
         </div>
       </div>
 
-      <div className="mb-4 lg:flex lg:gap-6">
+      <div className="lg:flex lg:gap-6">
         <div>
           <EditProfileLabel required={isEnabled ? true : undefined}>姓（かな）</EditProfileLabel>
           <TextField

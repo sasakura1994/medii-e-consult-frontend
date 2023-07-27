@@ -1,28 +1,16 @@
 import React from 'react';
 import { EditProfileLabel } from '@/features/mypages/editProfile/EditProfileLabel';
-import { TextField } from '@/components/Parts/Form/TextField';
 import { TextArea } from '@/components/Parts/Form/TextArea';
 import { UseEditProfile } from './useEditProfile';
-import { useMedicalCareer } from './useMedicalCareer';
-import { ProfileMedicalSpecialitiesSelectDialog } from '@/components/MedicalSpeciality/ProfileMedicalSpecialitiesSelectDialog';
-import { ProfileMedicalSpecialities } from '@/components/MedicalSpeciality/ProfileMedicalSpecialities';
 import { EditProfileProps } from './EditProfile';
-import { YearInput } from '@/components/Parts/Form/YearInput';
-import { useEraConverter } from '@/hooks/useEraConverter';
 import { EditProfileHeading } from './EditProfileHeading';
+import { MedicalCareerQualifiedYear } from './MedicalCareerQualifiedYear';
+import { MedicalCareerSpecialities } from './MedicalCareerSpecialities';
 
 export type MedicalCareerProps = UseEditProfile & EditProfileProps;
 
 export const MedicalCareer = (props: MedicalCareerProps) => {
   const { isRegisterMode, profile, selectMedicalSpecialities, setProfileFields } = props;
-  const {
-    isMedicalSpecialitiesSelectDialogShown,
-    moveSelectedMedicalSpeciality,
-    selectedMedicalSpecialities,
-    setIsMedicalSpecialitiesSelectDialogShown,
-    toggleMedicalSpeciality,
-  } = useMedicalCareer(props);
-  const eraConverter = useEraConverter();
 
   if (!profile) {
     return <></>;
@@ -38,61 +26,16 @@ export const MedicalCareer = (props: MedicalCareerProps) => {
           profile.is_skip_confirmation_by_utm_source ||
           profile.qualified_year !== '') && (
           <div className="mb-4">
-            <EditProfileLabel required={isRegisterMode ? true : undefined}>医師資格取得年</EditProfileLabel>
-            {isRegisterMode ? (
-              <YearInput
-                {...eraConverter}
-                value={Number(profile.qualified_year)}
-                onChange={(value) => setProfileFields({ qualified_year: value.toString() })}
-              />
-            ) : (
-              <TextField
-                name="doctor_qualified_year"
-                value={profile.qualified_year}
-                disabled={true}
-                id="doctor_qualified_year"
-                className="!w-64"
-                subscript="年"
-              />
-            )}
+            <MedicalCareerQualifiedYear
+              isEnabled={isRegisterMode}
+              profile={profile}
+              setProfileFields={setProfileFields}
+            />
           </div>
         )}
 
         <div className="mb-4">
-          <EditProfileLabel required={true}>所属科</EditProfileLabel>
-          <button
-            type="button"
-            className="relative
-                     h-12
-                     w-full
-                     rounded
-                     border
-                     border-solid
-                     border-btn-gray
-                     px-4
-                     text-left
-                     after:absolute
-                     after:right-3
-                     after:top-1/2
-                     after:z-10
-                     after:block
-                     after:h-[15px]
-                     after:w-[14px]
-                     after:-translate-y-1/2
-                     after:bg-[url('/icons/pull.svg')]
-                     after:content-['']"
-            onClick={() => setIsMedicalSpecialitiesSelectDialogShown(true)}
-          >
-            <span className={selectedMedicalSpecialities.length === 0 ? 'text-monotone-500' : ''}>
-              {selectedMedicalSpecialities.length === 0 ? '所属科を選択してください' : '所属科を選び直す'}
-            </span>
-          </button>
-
-          <ProfileMedicalSpecialities
-            selectedMedicalSpecialities={selectedMedicalSpecialities}
-            moveSelectedMedicalSpeciality={moveSelectedMedicalSpeciality}
-            toggleMedicalSpeciality={toggleMedicalSpeciality}
-          />
+          <MedicalCareerSpecialities profile={profile} selectMedicalSpecialities={selectMedicalSpecialities} />
 
           <div className="mt-4">
             <EditProfileLabel required={false}>特によく診てきた疾患・領域</EditProfileLabel>
@@ -119,16 +62,6 @@ export const MedicalCareer = (props: MedicalCareerProps) => {
           </div>
         </div>
       </div>
-      {isMedicalSpecialitiesSelectDialogShown && (
-        <ProfileMedicalSpecialitiesSelectDialog
-          defaultSelectedMedicalSpecialities={selectedMedicalSpecialities}
-          onChange={(medicalSpecialities) => {
-            selectMedicalSpecialities(medicalSpecialities);
-            setIsMedicalSpecialitiesSelectDialogShown(false);
-          }}
-          setShowModal={setIsMedicalSpecialitiesSelectDialogShown}
-        />
-      )}
     </>
   );
 };

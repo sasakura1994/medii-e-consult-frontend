@@ -1,7 +1,7 @@
 import { RecoilRoot } from 'recoil';
 import 'cross-fetch/polyfill';
 import { act, renderHook } from '@testing-library/react';
-import { useMedicalCareer } from '../useMedicalCareer';
+import { useMedicalCareerSpecialities } from '../useMedicalCareerSpecialities';
 import { ProfileEntity } from '@/types/entities/profileEntity';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 import { MedicalCareerProps } from '../MedicalCareer';
@@ -16,7 +16,7 @@ const medicalSpecialities: MedicalSpecialityEntity[] = [
   { speciality_code: 'HIHUKA', name: '皮膚科' } as MedicalSpecialityEntity,
 ];
 
-describe('useMedicalCareer', () => {
+describe('useMedicalCareerSpecialities', () => {
   test('editProfileMode', async () => {
     const useMedicalSpecialityMock = useMedicalSpeciality as jest.Mocked<typeof useMedicalSpeciality>;
     (useMedicalSpecialityMock as jest.Mock).mockReturnValue({
@@ -32,7 +32,7 @@ describe('useMedicalCareer', () => {
       } as ProfileEntity,
     };
 
-    const hooks = await renderHook(() => useMedicalCareer(props as unknown as MedicalCareerProps), {
+    const hooks = await renderHook(() => useMedicalCareerSpecialities(props as unknown as MedicalCareerProps), {
       wrapper: RecoilRoot,
     }).result;
 
@@ -57,7 +57,7 @@ describe('useMedicalCareer', () => {
       selectMedicalSpecialities,
     };
 
-    const hooks = await renderHook(() => useMedicalCareer(props as unknown as MedicalCareerProps), {
+    const hooks = await renderHook(() => useMedicalCareerSpecialities(props as unknown as MedicalCareerProps), {
       wrapper: RecoilRoot,
     }).result;
 
@@ -89,7 +89,7 @@ describe('useMedicalCareer', () => {
       selectMedicalSpecialities,
     };
 
-    const hooks = await renderHook(() => useMedicalCareer(props as unknown as MedicalCareerProps), {
+    const hooks = await renderHook(() => useMedicalCareerSpecialities(props as unknown as MedicalCareerProps), {
       wrapper: RecoilRoot,
     }).result;
 
