@@ -9,6 +9,7 @@ import { ProfileMedicalSpecialities } from '@/components/MedicalSpeciality/Profi
 import { EditProfileProps } from './EditProfile';
 import { YearInput } from '@/components/Parts/Form/YearInput';
 import { useEraConverter } from '@/hooks/useEraConverter';
+import { EditProfileHeading } from './EditProfileHeading';
 
 export type MedicalCareerProps = UseEditProfile & EditProfileProps;
 
@@ -30,7 +31,7 @@ export const MedicalCareer = (props: MedicalCareerProps) => {
   return (
     <>
       <div className="mb-10">
-        <h3 className="mb-4 text-primary">■ 医療従事経歴</h3>
+        <EditProfileHeading className="mb-4">医療従事経歴</EditProfileHeading>
 
         {(profile.is_hospital_doctor ||
           profile.is_invited ||

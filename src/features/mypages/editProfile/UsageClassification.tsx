@@ -1,6 +1,7 @@
 import React from 'react';
 import { Radio } from '@/components/Parts/Form/Radio';
 import { UseEditProfile } from './useEditProfile';
+import { EditProfileHeading } from './EditProfileHeading';
 
 export const UsageClassification = ({ profile, setProfileFields }: UseEditProfile) => {
   if (!profile) {
@@ -9,7 +10,7 @@ export const UsageClassification = ({ profile, setProfileFields }: UseEditProfil
 
   return (
     <div className="mb-10">
-      <h3 className="mb-4 text-primary">■ E-コンサル利用区分</h3>
+      <EditProfileHeading className="mb-4">E-コンサル利用区分</EditProfileHeading>
 
       <div className="mb-4">
         <Radio

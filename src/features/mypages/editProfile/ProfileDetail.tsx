@@ -8,6 +8,7 @@ import { useMedicalSpeciality } from '@/hooks/medicalSpeciality/useMedicalSpecia
 import { usePrefecture } from '@/hooks/prefecture/usePrefecture';
 import { useProfile } from '@/hooks/useProfile';
 import Link from 'next/link';
+import { EditProfileHeading } from './EditProfileHeading';
 
 type Props = {
   onEdit: () => void;
@@ -34,7 +35,7 @@ export const ProfileDetail: React.FC<Props> = ({ onEdit }: Props) => {
         {profile && (
           <>
             <div className="mb-10">
-              <h3 className="mb-4 text-primary">■ 利用者情報</h3>
+              <EditProfileHeading className="mb-4">利用者情報</EditProfileHeading>
               <div className="flex">
                 <CaptionWithBody
                   caption="名前"
@@ -84,7 +85,7 @@ export const ProfileDetail: React.FC<Props> = ({ onEdit }: Props) => {
             </div>
 
             <div className="mb-10">
-              <h3 className="mb-4 text-primary">■ 医療従事経歴</h3>
+              <EditProfileHeading className="mb-4">医療従事経歴</EditProfileHeading>
 
               <CaptionWithBody
                 caption="医師資格取得年"
@@ -118,7 +119,7 @@ export const ProfileDetail: React.FC<Props> = ({ onEdit }: Props) => {
             </div>
 
             <div className="mb-10">
-              <h3 className="mb-4 text-primary">■ 所属病院</h3>
+              <EditProfileHeading className="mb-4">所属病院</EditProfileHeading>
 
               {(profile.hospital_id || profile.hospital_name) && (
                 <>
@@ -134,7 +135,7 @@ export const ProfileDetail: React.FC<Props> = ({ onEdit }: Props) => {
             </div>
 
             <div className="mb-10">
-              <h3 className="mb-4 text-primary">■ E-コンサル利用区分</h3>
+              <EditProfileHeading className="mb-4">E-コンサル利用区分</EditProfileHeading>
               <p>{profile.want_to_be_consultant ? '回答医&相談（E−コンサルへの回答も行います）' : '相談医'}</p>
             </div>
           </>
