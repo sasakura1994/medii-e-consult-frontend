@@ -11,34 +11,25 @@ import TutorialExplanation from './TutorialExplanation';
 import { useTop } from './useTop';
 
 export const Top = () => {
-  const { showTutorialExplanationModal, setShowTutorialExplanationModal } =
-    useTop();
+  const { showTutorialExplanationModal, setShowTutorialExplanationModal } = useTop();
   return (
-    <>
+    <div className="bg-white">
       <div className="mx-4 flex min-h-screen flex-col pb-12 pt-6 lg:mx-10 lg:flex-row lg:pb-0">
         <div className="lg:flex-grow">
           <TopNotifications />
-          <UserConsult
-            setShowTutorialExplanationModal={setShowTutorialExplanationModal}
-          />
+          <UserConsult setShowTutorialExplanationModal={setShowTutorialExplanationModal} />
           <StyledHiddenScrollBar className="mt-10 flex items-center">
-            <p className="flex-grow text-xxl font-bold text-text-primary">
-              E-コンサル事例集
-            </p>
-            <SecondaryButton size="large">
-              解決済みのコンサル事例を見る
-            </SecondaryButton>
+            <p className="flex-grow text-xxl font-bold text-text-primary">E-コンサル事例集</p>
+            <SecondaryButton size="large">解決済みのコンサル事例を見る</SecondaryButton>
           </StyledHiddenScrollBar>
           <StyledHiddenScrollBar className="flex space-x-2 overflow-x-auto py-4">
             <TopItem />
             <TopItem />
             <TopItem />
           </StyledHiddenScrollBar>
-          <p className="text-md text-text-secondary">
-            ※ 掲載を許諾されたE-コンサルを掲載しています。
-          </p>
+          <p className="text-md text-text-secondary">※ 掲載を許諾されたE-コンサルを掲載しています。</p>
         </div>
-        <div className="mt-2 lg:mx-4 lg:mt-0 lg:ml-10 lg:w-[296px]">
+        <div className="mt-2 lg:mx-4 lg:ml-10 lg:mt-0 lg:w-[296px]">
           <TopNewerConsults />
           <div className="mt-4">
             <TopNews />
@@ -48,9 +39,7 @@ export const Top = () => {
           </div>
         </div>
       </div>
-      {showTutorialExplanationModal && (
-        <TutorialExplanation setShowModal={setShowTutorialExplanationModal} />
-      )}
-    </>
+      {showTutorialExplanationModal && <TutorialExplanation setShowModal={setShowTutorialExplanationModal} />}
+    </div>
   );
 };

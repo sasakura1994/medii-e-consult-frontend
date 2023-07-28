@@ -10,15 +10,14 @@ jest.mock('@/hooks/api/doctor/useFetchProfile');
 describe('is_imperfect_profile', () => {
   describe('message', () => {
     test('is_imperfect_profile', async () => {
-      const useFetchProfileMock = useFetchProfileModule as jest.Mocked<
-        typeof useFetchProfileModule
-      >;
+      const useFetchProfileMock = useFetchProfileModule as jest.Mocked<typeof useFetchProfileModule>;
       useFetchProfileMock.useFetchProfile.mockReturnValue({
         profile: {
           is_imperfect_profile: true,
           main_speciality: 'naika',
           need_to_send_confimation: true,
         } as ProfileEntity,
+        isLoading: false,
       });
 
       await render(
@@ -27,21 +26,18 @@ describe('is_imperfect_profile', () => {
         </RecoilRoot>
       );
 
-      expect(
-        screen.getByText(/プロフィール情報が入力されておりません。/)
-      ).toBeInTheDocument();
+      expect(screen.getByText(/プロフィール情報が入力されておりません。/)).toBeInTheDocument();
     });
 
     test('need_to_send_confimation', async () => {
-      const useFetchProfileMock = useFetchProfileModule as jest.Mocked<
-        typeof useFetchProfileModule
-      >;
+      const useFetchProfileMock = useFetchProfileModule as jest.Mocked<typeof useFetchProfileModule>;
       useFetchProfileMock.useFetchProfile.mockReturnValue({
         profile: {
           is_imperfect_profile: false,
           main_speciality: 'naika',
           need_to_send_confimation: true,
         } as ProfileEntity,
+        isLoading: false,
       });
 
       await render(
@@ -50,21 +46,18 @@ describe('is_imperfect_profile', () => {
         </RecoilRoot>
       );
 
-      expect(
-        screen.getByText(/確認資料が提出されておりません。/)
-      ).toBeInTheDocument();
+      expect(screen.getByText(/確認資料が提出されておりません。/)).toBeInTheDocument();
     });
 
     test('デフォルト', async () => {
-      const useFetchProfileMock = useFetchProfileModule as jest.Mocked<
-        typeof useFetchProfileModule
-      >;
+      const useFetchProfileMock = useFetchProfileModule as jest.Mocked<typeof useFetchProfileModule>;
       useFetchProfileMock.useFetchProfile.mockReturnValue({
         profile: {
           is_imperfect_profile: false,
           main_speciality: 'naika',
           need_to_send_confimation: false,
         } as ProfileEntity,
+        isLoading: false,
       });
 
       await render(
@@ -73,9 +66,7 @@ describe('is_imperfect_profile', () => {
         </RecoilRoot>
       );
 
-      expect(
-        screen.getByText(/現在、ご提出頂いた資料を確認中です。/)
-      ).toBeInTheDocument();
+      expect(screen.getByText(/現在、ご提出頂いた資料を確認中です。/)).toBeInTheDocument();
     });
   });
 });
