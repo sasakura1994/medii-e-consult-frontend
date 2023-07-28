@@ -49,7 +49,7 @@ export const useLogin = (): UseLogin => {
 
       const res = await postLogin(email, password).catch((error) => {
         console.error(error);
-        setErrorMessage(error.message || 'エラーが発生しました');
+        setErrorMessage(error.response?.data?.message || 'エラーが発生しました');
         return null;
       });
 
