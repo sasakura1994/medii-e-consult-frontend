@@ -26,8 +26,7 @@ const GuideLink = ({
 };
 
 const Login: NextPageWithLayout = () => {
-  const { setEmail, setPassword, login, errorMessage, saveRedirectUrl } =
-    useLogin();
+  const { setEmail, setPassword, login, errorMessage, goToRegistration, saveRedirectUrl } = useLogin();
 
   return (
     <div className="mb-12 md:mt-6">
@@ -42,8 +41,8 @@ const Login: NextPageWithLayout = () => {
           border-solid
           border-login-container-frame
           bg-white
-          pt-4
           pb-8
+          pt-4
         "
       >
         <h1 className="my-7 text-center text-2xl">E-コンサルにログイン</h1>
@@ -66,7 +65,13 @@ const Login: NextPageWithLayout = () => {
             }}
           />
           <div className="mt-2">
-            <GuideLink href="/registration" onClick={saveRedirectUrl}>
+            <GuideLink
+              href="/registration"
+              onClick={(e) => {
+                e.preventDefault();
+                goToRegistration();
+              }}
+            >
               新規登録はこちら
             </GuideLink>
           </div>
@@ -82,8 +87,8 @@ const Login: NextPageWithLayout = () => {
                 my-4
                 rounded-full
                 bg-primary
-                py-2
                 px-14
+                py-2
                 text-white
                 drop-shadow-[0_4px_10px_rgba(92,107,192,.3)]
               "
@@ -105,7 +110,7 @@ const Login: NextPageWithLayout = () => {
             onSuccess={(response: any) => console.log(response)}
             render={(props: any) => (
               <button
-                className="mt-6 inline-flex items-center rounded-md border border-solid border-black py-2 px-10"
+                className="mt-6 inline-flex items-center rounded-md border border-solid border-black px-10 py-2"
                 {...props}
               >
                 <AiFillApple className="inline" size="30" />
@@ -115,9 +120,7 @@ const Login: NextPageWithLayout = () => {
           />
         </div>
       </div>
-      {errorMessage != '' && (
-        <p className="text-center font-bold text-red-500">{errorMessage}</p>
-      )}
+      {errorMessage != '' && <p className="text-center font-bold text-red-500">{errorMessage}</p>}
     </div>
   );
 };

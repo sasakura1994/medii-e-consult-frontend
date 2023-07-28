@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Dispatch, FormEvent, SetStateAction, useCallback, useEffect, useState } from 'react';
 import { useToken } from './authentication/useToken';
 import { usePostLogin } from './api/doctor/usePostLogin';
 import { useRouter } from 'next/router';
@@ -12,20 +12,21 @@ type Query = {
 };
 
 export type UseLogin = {
-  setEmail: React.Dispatch<React.SetStateAction<string>>;
-  setPassword: React.Dispatch<React.SetStateAction<string>>;
+  setEmail: Dispatch<SetStateAction<string>>;
+  setPassword: Dispatch<SetStateAction<string>>;
   errorMessage: string;
-  login: (e: React.FormEvent<HTMLFormElement>) => void;
+  login: (e: FormEvent<HTMLFormElement>) => void;
+  goToRegistration: () => void;
   saveRedirectUrl: () => void;
 };
 
 export const useLogin = (): UseLogin => {
   const router = useRouter();
   const { redirect, from } = router.query as Query;
-  const [redirectUrl, setRedirectUrl] = React.useState('');
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [errorMessage, setErrorMessage] = React.useState('');
+  const [redirectUrl, setRedirectUrl] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const { setTokenAndMarkInitialized } = useToken();
   const { login: postLogin } = usePostLogin();
 
@@ -42,8 +43,8 @@ export const useLogin = (): UseLogin => {
     }
   }, [redirect]);
 
-  const login = React.useCallback(
-    async (e: React.FormEvent<HTMLFormElement>) => {
+  const login = useCallback(
+    async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
       const res = await postLogin(email, password).catch((error) => {
@@ -75,17 +76,36 @@ export const useLogin = (): UseLogin => {
     [email, from, password, postLogin, redirectUrl, router, setTokenAndMarkInitialized]
   );
 
-  const saveRedirectUrl = React.useCallback(() => {
+  const saveRedirectUrl = useCallback(() => {
     if (redirect) {
       localStorage.setItem(loginRedirectUrlKey, redirect);
     }
   }, [redirect]);
+
+  const goToRegistration = useCallback(() => {
+    const parts: string[] = [];
+
+    for (const key in router.query) {
+      const value = router.query[key];
+      if (typeof value === 'string' || value instanceof String) {
+        parts.push(`${key}=${encodeURIComponent(value as string)}`);
+      } else {
+        (value as string[]).forEach((value) => {
+          parts.push(`${key}=${encodeURIComponent(value as string)}`);
+        });
+      }
+    }
+
+    saveRedirectUrl();
+    router.push(parts.length === 0 ? '/registration' : `/registration?${parts.join('&')}`);
+  }, [router, saveRedirectUrl]);
 
   return {
     setEmail,
     setPassword,
     login,
     errorMessage,
+    goToRegistration,
     saveRedirectUrl,
   };
 };
