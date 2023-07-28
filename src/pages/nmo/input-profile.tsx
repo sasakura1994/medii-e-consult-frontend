@@ -8,6 +8,7 @@ import { MedicalCareerSpecialities } from '@/features/mypages/editProfile/Medica
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 import { useNmoInputProfile } from '@/features/nmo/useNmoInputProfile';
+import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
 
 const NmoInputProfilePage: NextPageWithLayout = () => {
   const inputProfile = useNmoInputProfile();
@@ -17,6 +18,7 @@ const NmoInputProfilePage: NextPageWithLayout = () => {
     <div className="lg:py-10">
       <Card className="mx-auto px-4 pb-[100px] pt-10 lg:w-lg-breakpoint lg:px-[84px] lg:pb-10 lg:pt-10">
         <h1 className="mb-10 text-center text-2xl leading-9">プロフィール入力</h1>
+        <div className="my-8">コンサル作成時に必要な情報であるため、以下のプロフィールについて入力をお願いします。</div>
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -30,6 +32,7 @@ const NmoInputProfilePage: NextPageWithLayout = () => {
           <div className="mt-4">
             <MedicalCareerSpecialities {...inputProfile} />
           </div>
+          {errorMessage !== '' && <ErrorMessage className="mt-8 text-center">{errorMessage}</ErrorMessage>}
           <div className="mt-10 flex justify-center">
             {isSending ? (
               <SpinnerBorder />
