@@ -1,4 +1,4 @@
-import React, { Dispatch, FormEvent, SetStateAction, useCallback, useEffect, useState } from 'react';
+import { Dispatch, FormEvent, SetStateAction, useCallback, useEffect, useMemo, useState } from 'react';
 import { useToken } from './authentication/useToken';
 import { usePostLogin } from './api/doctor/usePostLogin';
 import { useRouter } from 'next/router';
@@ -15,6 +15,7 @@ export type UseLogin = {
   setEmail: Dispatch<SetStateAction<string>>;
   setPassword: Dispatch<SetStateAction<string>>;
   errorMessage: string;
+  nmoLoginUrl: string;
   login: (e: FormEvent<HTMLFormElement>) => void;
   goToRegistration: () => void;
   saveRedirectUrl: () => void;
@@ -29,6 +30,11 @@ export const useLogin = (): UseLogin => {
   const [errorMessage, setErrorMessage] = useState('');
   const { setTokenAndMarkInitialized } = useToken();
   const { login: postLogin } = usePostLogin();
+
+  const nmoLoginUrl = useMemo(() => {
+    const url = process.env.WEB_SERVER_URL + (redirectUrl === '' ? '/top' : redirectUrl);
+    return process.env.NMO_URL + `/mreach/simple_member_register/medii?furl=${encodeURIComponent(url)}`;
+  }, [redirectUrl]);
 
   useEffect(() => {
     if (redirect) {
@@ -105,6 +111,7 @@ export const useLogin = (): UseLogin => {
     setPassword,
     login,
     errorMessage,
+    nmoLoginUrl,
     goToRegistration,
     saveRedirectUrl,
   };
