@@ -12,8 +12,8 @@ const nextConfig = {
     EX_WEB_DIR: process.env.EX_WEB_DIR,
     EX_API_URL: process.env.EX_API_URL,
   },
-  basePath: isSymView ? '/medii/e-consult-staging' : '',
-  assetPrefix: isSymView ? '/medii/e-consult-staging' : '',
+  basePath: './'// isSymView ? '/medii/e-consult-staging' : '',
+  //assetPrefix: isSymView ? '/medii/e-consult-staging' : '',
 };
 
 module.exports = nextConfig;
