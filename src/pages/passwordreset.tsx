@@ -54,14 +54,10 @@ const PasswordResetPage: NextPageWithLayout = () => {
                       required
                     />
                   </div>
-                  {isPasswordNotMatched && (
-                    <div className="text-center">
-                      パスワードが一致していません
-                    </div>
-                  )}
+                  {isPasswordNotMatched && <div className="text-center">パスワードが一致していません</div>}
                   <div className="my-6 text-center">
                     {!isSending ? (
-                      <PrimaryButton type="submit">
+                      <PrimaryButton type="submit" className="mx-auto">
                         パスワード設定
                       </PrimaryButton>
                     ) : (
@@ -69,20 +65,12 @@ const PasswordResetPage: NextPageWithLayout = () => {
                         <SpinnerBorder />
                       </div>
                     )}
-                    {errorMessage !== '' && (
-                      <ErrorMessage className="text-center">
-                        {errorMessage}
-                      </ErrorMessage>
-                    )}
+                    {errorMessage !== '' && <ErrorMessage className="text-center">{errorMessage}</ErrorMessage>}
                   </div>
                 </div>
               </div>
             </form>
-            {!isTokenExists && (
-              <ErrorMessage className="text-center">
-                トークンが指定されていません
-              </ErrorMessage>
-            )}
+            {!isTokenExists && <ErrorMessage className="text-center">トークンが指定されていません</ErrorMessage>}
           </>
         ) : (
           <div className="text-center" data-testid="result-text">
