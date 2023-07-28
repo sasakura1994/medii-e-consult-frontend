@@ -52,7 +52,7 @@ export const HowToUse: React.FC = () => {
               <div className="my-4 mx-2 border-x-2 border-b border-gray-400 opacity-25" />
               <div className="flex items-center">
                 <img
-                  src="/images/howtouse/doctor.png"
+                  src="images/howtouse/doctor.png"
                   className="m-3 hidden h-28 md:block"
                 />
                 <div className="h-auto rounded-lg border border-gray-400 p-3 md:h-32">
@@ -67,7 +67,7 @@ export const HowToUse: React.FC = () => {
               </div>
               <div className="mt-4 flex items-center">
                 <img
-                  src="/images/howtouse/doctor.png"
+                  src="images/howtouse/doctor.png"
                   className="m-3 hidden  h-28 md:block"
                 />
                 <div className="h-auto rounded-lg border border-gray-400 p-3 md:h-32">
@@ -81,7 +81,7 @@ export const HowToUse: React.FC = () => {
               </div>
               <div className="mt-4 flex items-center">
                 <img
-                  src="/images/howtouse/doctor.png"
+                  src="images/howtouse/doctor.png"
                   className="m-3 hidden h-28 md:block"
                 />
                 <div className="h-auto rounded-lg border border-gray-400 p-3 md:h-32">

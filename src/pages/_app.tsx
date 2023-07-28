@@ -14,6 +14,7 @@ import { useRouter } from 'next/router';
 import { GoogleTagManager } from '@/components/Layouts/GoogleTagManager';
 import Script from 'next/script';
 import { useToken } from '@/hooks/authentication/useToken';
+import { ExtractDomainManager } from '@/components/Layouts/ExtractDomainManager';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
@@ -56,6 +57,7 @@ const AppInner = ({ Component, pageProps }: AppPropsWithLayout) => {
           <GoogleTagManager />
         </>
       )}
+      <ExtractDomainManager />
       <SWRConfig
         value={{
           fetcher,
@@ -102,7 +104,6 @@ const App = (props: AppPropsWithLayout) => {
   };
   useEffect(() => {
     router.events.on('routeChangeStart', handleStart);
-
     return () => {
       router.events.off('routeChangeStart', handleStart);
     };
