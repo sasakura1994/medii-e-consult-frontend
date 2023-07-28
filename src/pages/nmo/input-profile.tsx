@@ -7,7 +7,7 @@ import { MedicalCareerQualifiedYear } from '@/features/mypages/editProfile/Medic
 import { MedicalCareerSpecialities } from '@/features/mypages/editProfile/MedicalCareerSpecialities';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
-import { useNmoInputProfile } from '@/features/mypages/nmo/useNmoInputProfile';
+import { useNmoInputProfile } from '@/features/nmo/useNmoInputProfile';
 
 const NmoInputProfilePage: NextPageWithLayout = () => {
   const inputProfile = useNmoInputProfile();

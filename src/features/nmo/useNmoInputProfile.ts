@@ -1,6 +1,10 @@
 import { useCallback, useEffect } from 'react';
-import { UseEditProfile, useEditProfile } from '../editProfile/useEditProfile';
+import { UseEditProfile, useEditProfile } from '../mypages/editProfile/useEditProfile';
 import { useRouter } from 'next/router';
+
+type Query = {
+  redirect?: string;
+};
 
 type UseNmoInputProfile = UseEditProfile & {
   submitNmoInputProfile: () => void;
@@ -8,6 +12,7 @@ type UseNmoInputProfile = UseEditProfile & {
 
 export const useNmoInputProfile = (): UseNmoInputProfile => {
   const router = useRouter();
+  const { redirect } = router.query as Query;
   const editProfile = useEditProfile({ isRegisterMode: false });
   const { profile, saveProfile } = editProfile;
 
@@ -16,7 +21,7 @@ export const useNmoInputProfile = (): UseNmoInputProfile => {
       return;
     }
 
-    if (profile.registration_source !== 'nmo') {
+    if (profile.registration_source !== 'nmo' || profile.last_name_hira !== '') {
       router.push('/top');
     }
     // profileが有効になった場合のみのチェックを行うため
@@ -33,8 +38,8 @@ export const useNmoInputProfile = (): UseNmoInputProfile => {
       return;
     }
 
-    router.push('/top');
-  }, [profile, router, saveProfile]);
+    router.push(redirect ?? '/top');
+  }, [profile, redirect, router, saveProfile]);
 
   return { ...editProfile, submitNmoInputProfile };
 };
