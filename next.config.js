@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 
-const isSymView = process.env.SYMVIEW === 'true';
 const nextConfig = {
 
   reactStrictMode: true,
@@ -12,8 +11,8 @@ const nextConfig = {
     EX_WEB_DIR: process.env.EX_WEB_DIR,
     EX_API_URL: process.env.EX_API_URL,
   },
-  basePath: './'// isSymView ? '/medii/e-consult-staging' : '',
-  //assetPrefix: isSymView ? '/medii/e-consult-staging' : '',
+  basePath: process.env.EX_WEB_DIR || '',
+  assetPrefix: process.env.EX_WEB_DIR || '',
 };
 
 module.exports = nextConfig;
