@@ -7,6 +7,7 @@ import { mutateFetchProfile } from './api/doctor/useFetchProfile';
 export const loginRedirectUrlKey = 'Login:redirectUrl';
 
 type Query = {
+  from?: 'case_bank';
   redirect?: string;
 };
 
@@ -20,7 +21,7 @@ export type UseLogin = {
 
 export const useLogin = (): UseLogin => {
   const router = useRouter();
-  const { redirect } = router.query as Query;
+  const { redirect, from } = router.query as Query;
   const [redirectUrl, setRedirectUrl] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -55,24 +56,23 @@ export const useLogin = (): UseLogin => {
         return;
       }
 
-      if (res.data.jwt_token) {
-        setTokenAndMarkInitialized(res.data.jwt_token);
-        mutateFetchProfile();
-        localStorage.removeItem(loginRedirectUrlKey);
-
-        router.push(redirectUrl === '' ? 'top' : redirectUrl);
+      if (!res.data.jwt_token) {
+        setErrorMessage('エラーが発生しました');
         return;
       }
-      setErrorMessage('エラーが発生しました');
+
+      if (from === 'case_bank') {
+        location.href = process.env.CASE_BANK_URL + `/login/callback?t=${res.data.jwt_token}`;
+        return;
+      }
+
+      setTokenAndMarkInitialized(res.data.jwt_token);
+      mutateFetchProfile();
+      localStorage.removeItem(loginRedirectUrlKey);
+
+      router.push(redirectUrl === '' ? 'top' : redirectUrl);
     },
-    [
-      email,
-      password,
-      postLogin,
-      redirectUrl,
-      router,
-      setTokenAndMarkInitialized,
-    ]
+    [email, from, password, postLogin, redirectUrl, router, setTokenAndMarkInitialized]
   );
 
   const saveRedirectUrl = React.useCallback(() => {
