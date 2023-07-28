@@ -6,8 +6,8 @@ const Middleware = (req: NextRequest) => {
     url.pathname = req.nextUrl.pathname.toLowerCase();
 
     // Authorityヘッダーが外部か否かでサブディレクトリ化
-    const authority = req.headers.get('Authority');
-    if (!authority?.endsWith("medii.jp")) {
+    const authority = req.headers.get('authority');
+    if (authority != null && !authority.endsWith("medii.jp")) {
       url.pathname = process.env.EX_WEB_DIR + url.pathname;
     }
 
