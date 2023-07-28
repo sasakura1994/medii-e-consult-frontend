@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import { UseEditProfile, useEditProfile } from '../mypages/editProfile/useEditProfile';
 import { useRouter } from 'next/router';
+import { useNmo } from '@/hooks/alliance/useNmo';
 
 type Query = {
   redirect?: string;
@@ -15,18 +16,17 @@ export const useNmoInputProfile = (): UseNmoInputProfile => {
   const { redirect } = router.query as Query;
   const editProfile = useEditProfile({ isRegisterMode: false });
   const { profile, saveProfile } = editProfile;
+  const { isNeedToInputProfile } = useNmo();
 
   useEffect(() => {
     if (!profile) {
       return;
     }
 
-    if (profile.registration_source !== 'nmo' || profile.last_name_hira !== '') {
+    if (!isNeedToInputProfile) {
       router.push('/top');
     }
-    // profileが有効になった場合のみのチェックを行うため
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [!profile]);
+  }, [isNeedToInputProfile, profile, router]);
 
   const submitNmoInputProfile = useCallback(async () => {
     if (!profile) {
