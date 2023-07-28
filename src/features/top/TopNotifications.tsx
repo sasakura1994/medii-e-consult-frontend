@@ -17,7 +17,7 @@ export const TopNotifications = () => {
     return (
       <InlineNotification
         text="すべてのサービスをご利用いただくには、追加のプロフィール入力が必要です。"
-        buttonText="プロフィール画面を開く"
+        buttonText="プロフィール入力"
         buttonOnClick={() => router.push('/nmo/input-profile')}
       />
     );

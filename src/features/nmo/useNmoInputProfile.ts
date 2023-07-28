@@ -2,6 +2,7 @@ import { useCallback, useEffect } from 'react';
 import { UseEditProfile, useEditProfile } from '../mypages/editProfile/useEditProfile';
 import { useRouter } from 'next/router';
 import { useNmo } from '@/hooks/alliance/useNmo';
+import { mutateFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 
 type Query = {
   redirect?: string;
@@ -38,6 +39,7 @@ export const useNmoInputProfile = (): UseNmoInputProfile => {
       return;
     }
 
+    mutateFetchProfile();
     router.push(redirect ?? '/top');
   }, [profile, redirect, router, saveProfile]);
 
