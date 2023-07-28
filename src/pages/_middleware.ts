@@ -5,10 +5,10 @@ const Middleware = (req: NextRequest) => {
     const url = req.nextUrl.clone();
     url.pathname = req.nextUrl.pathname.toLowerCase();
 
-    // 擬似ヘッダーを取得する処理
+    // Authorityヘッダーが外部か否かでサブディレクトリ化
     const authority = req.headers.get('Authority');
     if (!authority?.endsWith("medii.jp")) {
-      url.pathname = "/medii/e-consult-staging" + url.pathname;
+      url.pathname = process.env.EX_ENDPOINT_DIR + url.pathname;
     }
 
     return NextResponse.redirect(url);

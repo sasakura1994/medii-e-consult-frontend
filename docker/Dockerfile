@@ -7,11 +7,13 @@ WORKDIR /app
 ARG endpoint_url
 ARG web_server_url
 ARG case_bank_url
-ARG symview
+ARG ex_api_dir
+ARG ex_endpoint_dir
 ENV ENDPOINT_URL=$endpoint_url
 ENV WEB_SERVER_URL=$web_server_url
 ENV CASE_BANK_URL=$case_bank_url
-ENV SYMVIEW=$symview
+ENV EX_ENDPOINT_DIR=$ex_endpoint_dir
+ENV EX_API_DIR=$ex_api_dir
 
 RUN npm ci
 RUN npm run build
