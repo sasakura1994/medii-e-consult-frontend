@@ -8,7 +8,7 @@ const Middleware = (req: NextRequest) => {
     // Authorityヘッダーが外部か否かでサブディレクトリ化
     const authority = req.headers.get('Authority');
     if (!authority?.endsWith("medii.jp")) {
-      url.pathname = process.env.EX_ENDPOINT_DIR + url.pathname;
+      url.pathname = process.env.EX_WEB_DIR + url.pathname;
     }
 
     return NextResponse.redirect(url);
