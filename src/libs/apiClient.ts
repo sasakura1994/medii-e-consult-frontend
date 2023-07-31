@@ -33,9 +33,9 @@ export const createApiClient = (options: ApiClientOption = {}): AxiosInstance =>
   }
 
   let endpoint = process.env.ENDPOINT_URL;
-  if (typeof window !== "undefined"){
+  //if (typeof window !== "undefined"){
     //endpoint = window.location.hostname + process.env.EX_API_DIR
-  }
+  //}
 
   const instance = axios.create({
     baseURL: endpoint,
