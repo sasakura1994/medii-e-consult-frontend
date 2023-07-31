@@ -106,8 +106,8 @@ export const HowToUse: React.FC = () => {
                 ホーム画面について
               </div>
               <div className="my-4 mx-2 border-x-2 border-b border-gray-400 opacity-25" />
-              <img src="/images/howtouse/01.png" className="mx-auto" />
-              <img src="/images/howtouse/02.png" className="mx-auto mt-5" />
+              <img src="images/howtouse/01.png" className="mx-auto" />
+              <img src="images/howtouse/02.png" className="mx-auto mt-5" />
               <div className="ml-2 mt-8 text-left md:ml-10 ">
                 <div className="my-2">
                   <span className="mr-2 text-red-500">1</span>
@@ -145,7 +145,7 @@ export const HowToUse: React.FC = () => {
                 <div className="my-10">
                   <span className="mr-2">1</span>
                   <span>ホーム画面から、＋ボタンを押下</span>
-                  <img src="/images/howtouse/03.png" />
+                  <img src="images/howtouse/03.png" />
                 </div>
                 <div className="my-10">
                   <span className="mr-2">2</span>
@@ -155,7 +155,7 @@ export const HowToUse: React.FC = () => {
                     『担当科を指定する（医師指定なし）』を選択した場合は、コンサルしたい担当科を選択してください。また、『専門医を指定する（医師指定あり）』を選択した場合は、詳細を入力し、医師を選択してください。
                   </p>
                   <div className="h-2" />
-                  <img src="/images/howtouse/04.png" className="mx-auto" />
+                  <img src="images/howtouse/04.png" className="mx-auto" />
                 </div>
                 <div className="my-10">
                   <span className="mr-2">3</span>
@@ -163,7 +163,7 @@ export const HowToUse: React.FC = () => {
                     患者情報/患者背景/コンサル文を入力し、ルームを作成する
                   </span>
                   <div className="h-2" />
-                  <img src="/images/howtouse/05.png" className="mx-auto" />
+                  <img src="images/howtouse/05.png" className="mx-auto" />
                 </div>
                 <div className="my-10">
                   <span className="mr-2">4</span>
@@ -174,7 +174,7 @@ export const HowToUse: React.FC = () => {
                     作成したルームに専門医がアサインされるのをお待ちください。専門医がアサインされる前でもファイルやメッセージを送ることは可能です。
                   </p>
                   <div className="h-2" />
-                  <img src="/images/howtouse/06.png" className="mx-auto" />
+                  <img src="images/howtouse/06.png" className="mx-auto" />
                 </div>
               </div>
               <div
@@ -187,7 +187,7 @@ export const HowToUse: React.FC = () => {
                 <p className="mb-2 ml-4 text-sm">
                   専門外の質問の場合は「回答パス」ボタンを押下します。未解決の場合は「チャット継続」ボタンを押下するとチャットの継続が可能になります。
                 </p>
-                <img src="/images/howtouse/07.png" className="mx-auto" />
+                <img src="images/howtouse/07.png" className="mx-auto" />
               </div>
               <div
                 id="file"
@@ -196,7 +196,7 @@ export const HowToUse: React.FC = () => {
                 ファイル添付
                 <div className="my-4 mx-2 border-x-2 border-b border-gray-400 opacity-25" />
                 <p>「ファイル添付ボタン」を押下</p>
-                <img src="/images/howtouse/08.png" className="mx-auto" />
+                <img src="images/howtouse/08.png" className="mx-auto" />
               </div>
               <div
                 id="profile"
@@ -207,7 +207,7 @@ export const HowToUse: React.FC = () => {
                 <p>メニューの「マイページ」からプロフィールの確認・変更</p>
               </div>
               <div className="h-8"></div>
-              <img src="/images/howtouse/10.png" className="mx-auto" />
+              <img src="images/howtouse/10.png" className="mx-auto" />
               <div
                 id="inquiry"
                 className="mx-2 mt-10  text-left align-baseline font-normal"
@@ -217,7 +217,7 @@ export const HowToUse: React.FC = () => {
                 <p className="text-sm">
                   メニューの「お問合せ・ご要望」から件名・本文を入力いただき「送信」ボタンを押下してください。ご不明点やご要望がありましたら、ぜひこちらよりご連絡ください。
                 </p>
-                <img src="/images/howtouse/11.png" className="mx-auto" />
+                <img src="images/howtouse/11.png" className="mx-auto" />
               </div>
             </div>
           </div>
