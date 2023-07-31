@@ -61,13 +61,13 @@
     }
 
     &___menu::before {
-      mask-image: url("/icons/menu.svg");
+      mask-image: url("icons/menu.svg");
     }
     &___seminar::before {
-      mask-image: url("/icons/seminar.svg");
+      mask-image: url("icons/seminar.svg");
     }
     &___mypage::before {
-      mask-image: url("/icons/my_profile.svg");
+      mask-image: url("icons/my_profile.svg");
     }
   }
 }
@@ -110,10 +110,10 @@
     }
 
     &___seminar::before {
-      mask-image: url("/icons/seminar.svg");
+      mask-image: url("icons/seminar.svg");
     }
     &___menu::before {
-      mask-image: url("/icons/menu.svg");
+      mask-image: url("icons/menu.svg");
     }
   }
 }
