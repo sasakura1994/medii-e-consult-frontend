@@ -51,7 +51,7 @@ const DocumentInputStudentDocument = ({ selected, setSelected }: DocumentInputSt
               name="file"
               className="hidden"
             />
-            <img src="/images/document/student.png" className="mx-auto mt-6" alt="" />
+            <img src="images/document/student.png" className="mx-auto mt-6" alt="" />
             <div className="mt-1 text-center">大学名と名前のある面をアップしてください</div>
             <div className="mt-1 font-bold">卒業予定年</div>
             <div className="mt-1">

@@ -25,18 +25,18 @@ export const HeaderSubMenu: React.FC = () => {
                   {
                     text: 'E-コンサルの使い方',
                     link: '/HowToUse',
-                    icon: <img src="/icons/help.svg" />,
+                    icon: <img src="icons/help.svg" />,
                   },
                   {
                     text: 'よくある質問',
                     link: 'https://tayori.com/faq/4cb3c7c0fd09ab493d1efcbf01dcf76729c62202',
-                    icon: <img src="/icons/faq.svg" />,
+                    icon: <img src="icons/faq.svg" />,
                     openInNewTab: true,
                   },
                   {
                     text: 'お問合わせ',
                     link: 'https://tayori.com/form/62897c986d36f5b573fec1a04508f24b70b11fe6',
-                    icon: <img src="/icons/contact.svg" />,
+                    icon: <img src="icons/contact.svg" />,
                     openInNewTab: true,
                   },
                 ]}
@@ -71,27 +71,27 @@ export const HeaderSubMenu: React.FC = () => {
                   {
                     text: 'プロフィール',
                     link: '/EditProfile',
-                    icon: <img src="/icons/my_profile.svg" />,
+                    icon: <img src="icons/my_profile.svg" />,
                   },
                   {
                     text: 'Mediiポイント',
                     link: '/PointHistory',
-                    icon: <img src="/icons/point.svg" />,
+                    icon: <img src="icons/point.svg" />,
                   },
                   {
                     text: 'Amazonギフト',
                     link: '/AmazonGift',
-                    icon: <img src="/icons/gift.svg" />,
+                    icon: <img src="icons/gift.svg" />,
                   },
                   {
                     text: '医師紹介',
                     link: '/Affiliate',
-                    icon: <img src="/icons/invite.svg" />,
+                    icon: <img src="icons/invite.svg" />,
                   },
                   {
                     text: '通知設定',
                     link: '/NotifySettings',
-                    icon: <img src="/icons/noti_setting.svg" />,
+                    icon: <img src="icons/noti_setting.svg" />,
                   },
                 ]}
                 style={{
@@ -130,45 +130,45 @@ export const HeaderSubMenu: React.FC = () => {
                     {
                       text: 'プロフィール',
                       link: '/EditProfile',
-                      icon: <img src="/icons/my_profile.svg" />,
+                      icon: <img src="icons/my_profile.svg" />,
                     },
                     {
                       text: 'Mediiポイント',
                       link: '/PointHistory',
-                      icon: <img src="/icons/point.svg" />,
+                      icon: <img src="icons/point.svg" />,
                     },
                     {
                       text: 'Amazonギフト',
                       link: '/AmazonGift',
-                      icon: <img src="/icons/gift.svg" />,
+                      icon: <img src="icons/gift.svg" />,
                     },
                     {
                       text: '医師紹介',
                       link: '/Affiliate',
-                      icon: <img src="/icons/invite.svg" />,
+                      icon: <img src="icons/invite.svg" />,
                     },
                     {
                       text: '通知設定',
                       link: '/NotifySettings',
-                      icon: <img src="/icons/noti_setting.svg" />,
+                      icon: <img src="icons/noti_setting.svg" />,
                     },
                   ],
                   service: [
                     {
                       text: 'E-コンサルの使い方',
                       link: '/HowToUse',
-                      icon: <img src="/icons/help.svg" />,
+                      icon: <img src="icons/help.svg" />,
                     },
                     {
                       text: 'よくある質問',
                       link: 'https://tayori.com/faq/4cb3c7c0fd09ab493d1efcbf01dcf76729c62202',
-                      icon: <img src="/icons/faq.svg" />,
+                      icon: <img src="icons/faq.svg" />,
                       openInNewTab: true,
                     },
                     {
                       text: 'お問合わせ',
                       link: 'https://tayori.com/form/62897c986d36f5b573fec1a04508f24b70b11fe6',
-                      icon: <img src="/icons/contact.svg" />,
+                      icon: <img src="icons/contact.svg" />,
                       openInNewTab: true,
                     },
                   ],

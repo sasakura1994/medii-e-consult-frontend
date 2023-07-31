@@ -154,7 +154,7 @@ const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
               props.onClose();
             }}
           >
-            <img src="/icons/close.svg" className="h-10 w-10" />
+            <img src="icons/close.svg" className="h-10 w-10" />
           </a>
         </div>
       </div>
@@ -188,12 +188,12 @@ const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
             "
           >
             <ImageEditorToolButton
-              src="/icons/circle_back.svg"
+              src="icons/circle_back.svg"
               isDisabled={lines.length === 0}
               onClick={undo}
             />
             <ImageEditorToolButton
-              src="/icons/circle_pen.svg"
+              src="icons/circle_pen.svg"
               onClick={() =>
                 setIsLineWidthSettingShown(
                   (isLineWidthSettingShown) => !isLineWidthSettingShown
@@ -201,11 +201,11 @@ const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
               }
             />
             <ImageEditorToolButton
-              src="/icons/circle_plus.svg"
+              src="icons/circle_plus.svg"
               onClick={() => changeScale(scale * 1.2)}
             />
             <ImageEditorToolButton
-              src="/icons/circle_minus.svg"
+              src="icons/circle_minus.svg"
               onClick={() => changeScale(scale / 1.2)}
             />
             {isLineWidthSettingShown && (

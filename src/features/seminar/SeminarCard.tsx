@@ -27,7 +27,7 @@ export const SeminarCard: React.FC<Props> = ({ seminar }: Props) => {
                 seminar.movie_url ? 'bg-primary' : 'bg-[#f5847d]'
               }`}
             >
-              <img src="/images/seminar/key_locked.svg" alt="" />
+              <img src="images/seminar/key_locked.svg" alt="" />
             </div>
           </div>
           <div className="lg:mx-3">

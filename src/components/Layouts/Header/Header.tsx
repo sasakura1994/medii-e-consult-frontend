@@ -14,7 +14,7 @@ export const Header: React.FC = () => {
         className={styles.back_btn}
       >
         <img
-          src="/images/union.png"
+          src="images/union.png"
           alt="戻る"
           className={styles.back_btn__img}
         />

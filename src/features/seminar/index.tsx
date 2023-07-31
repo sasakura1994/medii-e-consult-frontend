@@ -71,7 +71,7 @@ export const Seminar = () => {
                 >
                   すべてのアーカイブ動画を見る
                   <img
-                    src="/icons/arrow_right.svg"
+                    src="icons/arrow_right.svg"
                     className="ml-2 inline h-3"
                     alt=""
                   />
@@ -90,7 +90,7 @@ export const Seminar = () => {
               <img
                 data-testid="close-modal"
                 onClick={() => setShowModal(false)}
-                src="/icons/close_primary.svg"
+                src="icons/close_primary.svg"
                 className="absolute right-4 top-4 lg:right-10 lg:top-14"
                 alt=""
               />
@@ -104,12 +104,12 @@ export const Seminar = () => {
               </p>
               <img
                 className="hidden md:block"
-                src="/images/seminar/about_ticket_pc.png"
+                src="images/seminar/about_ticket_pc.png"
                 alt=""
               />
               <img
                 className="md:hidden"
-                src="/images/seminar/about_ticket_sp.png"
+                src="images/seminar/about_ticket_sp.png"
                 alt=""
               />
             </div>

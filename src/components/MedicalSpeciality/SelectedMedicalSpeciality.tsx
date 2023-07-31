@@ -33,7 +33,7 @@ export const SelectedMedicalSpeciality: React.FC<
           ref={dragRef}
           className="flex h-full w-8 grow-0 items-center justify-center bg-bg"
         >
-          <img src="/icons/drag_indicator.svg" width="24" height="24" />
+          <img src="icons/drag_indicator.svg" width="24" height="24" />
         </div>
         <div className="flex w-10 shrink-0 grow-0 items-center justify-center text-center font-bold text-primary">
           <div>{index + 1}</div>
@@ -52,7 +52,7 @@ export const SelectedMedicalSpeciality: React.FC<
           onDelete();
         }}
       >
-        <img src="/icons/close_gray.svg" width="12" height="12" alt="" />
+        <img src="icons/close_gray.svg" width="12" height="12" alt="" />
         <div>削除</div>
       </a>
     </div>

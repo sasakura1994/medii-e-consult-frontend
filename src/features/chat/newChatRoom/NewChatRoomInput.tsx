@@ -327,7 +327,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                           );
                         }}
                       >
-                        <img src="/icons/close.png" width="16" height="16" />
+                        <img src="icons/close.png" width="16" height="16" />
                       </a>
                     </div>
                   </div>

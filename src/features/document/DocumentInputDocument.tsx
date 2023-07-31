@@ -25,7 +25,7 @@ const DocumentInputDocument = ({
           <div className="relative flex text-left text-2xl font-bold lg:mt-10 lg:text-center">
             <div className="hidden cursor-pointer lg:block">
               <img
-                src="/icons/arrow_left.svg"
+                src="icons/arrow_left.svg"
                 className="mt-1.5 h-3 w-3"
                 alt=""
               />
@@ -78,7 +78,7 @@ const DocumentInputDocument = ({
             className="hidden"
           />
           <img
-            src="/images/document/license_sample.png"
+            src="images/document/license_sample.png"
             className="mt-6 max-w-full"
             alt=""
           />

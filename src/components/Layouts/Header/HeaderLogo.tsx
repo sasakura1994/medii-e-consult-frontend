@@ -7,7 +7,7 @@ export const HeaderLogo: React.FC = () => {
       <Link href="/top">
         <a className="inline-block no-underline">
           <img
-            src="/images/side_logo.svg"
+            src="images/side_logo.svg"
             alt="Medii E-コンサル"
             className="h-full w-full"
           />

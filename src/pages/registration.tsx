@@ -37,11 +37,11 @@ const Registration: NextPageWithLayout = () => {
         <div className="mx-auto flex justify-center md:py-4">
           <div className="mb-8 flex flex-col items-stretch justify-center md:flex-row md:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
             <img
-              src="/images/registration/left.png"
+              src="images/registration/left.png"
               className="hidden max-w-[480px] bg-white md:block"
             />
             <img
-              src="/images/registration/mobile_main.png"
+              src="images/registration/mobile_main.png"
               className="max-w-[480px] bg-white md:hidden"
             />
             <div className="flex max-w-[480px] flex-col items-center justify-items-stretch bg-white px-4 pb-6 md:pl-8 md:pr-12 md:pt-16 md:pb-4">

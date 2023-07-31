@@ -98,7 +98,7 @@ export const ConsultExampleCommentModal: React.FC<Props> = ({
                 type="submit"
                 className="flex items-center rounded px-5"
               >
-                <img src="/icons/send.svg" alt="" />
+                <img src="icons/send.svg" alt="" />
                 <div className="font-normal">投稿</div>
               </PrimaryButton>
             )}

@@ -41,7 +41,7 @@ export const SeminarArchiveHeader: React.FC<Props> = ({
             border border-[#c4c4c4] bg-white blur-xs md:rounded-3xl"
             ></div>
             <div className="relative flex items-center p-5 md:p-6">
-              <img src="/images/seminar/ticket.png" alt="" />
+              <img src="images/seminar/ticket.png" alt="" />
               <p className="hidden pl-2 lg:block lg:text-2xl">
                 現在のチケット所持枚数
                 <span className="pl-2 text-4xl font-bold text-[#f5847d]">
@@ -78,7 +78,7 @@ export const SeminarArchiveHeader: React.FC<Props> = ({
           <div className="align-center relative mx-auto flex flex-col items-center bg-white px-6 py-4">
             <img
               onClick={() => setShowModal(false)}
-              src="/icons/close_primary.svg"
+              src="icons/close_primary.svg"
               className="absolute right-4 top-0 cursor-pointer"
               alt=""
             />
@@ -91,12 +91,12 @@ export const SeminarArchiveHeader: React.FC<Props> = ({
             </p>
             <img
               className="hidden md:block"
-              src="/images/seminar/about_ticket_pc.png"
+              src="images/seminar/about_ticket_pc.png"
               alt=""
             />
             <img
               className="md:hidden"
-              src="/images/seminar/about_ticket_sp.png"
+              src="images/seminar/about_ticket_sp.png"
               alt=""
             />
           </div>

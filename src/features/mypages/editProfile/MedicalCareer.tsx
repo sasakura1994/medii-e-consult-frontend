@@ -58,7 +58,7 @@ export const MedicalCareer: React.FC<PropsType> = (props) => {
           <p className="text-lg font-bold">所属科</p>
           <div className="mt-2 flex items-center justify-between border border-solid border-[#eff3f6]">
             <div className="flex-initial bg-[#eff3f6] py-2 px-1">
-              <img src="/icons/drag_indicator.svg" alt="" />
+              <img src="icons/drag_indicator.svg" alt="" />
             </div>
             <div className="flex-1 pl-4 pr-3 text-sm">
               <span className="pr-4 text-base font-bold text-primary">1</span>
@@ -67,7 +67,7 @@ export const MedicalCareer: React.FC<PropsType> = (props) => {
             <div className="flex-initial">
               <button type="button" className="mr-3 flex items-center">
                 <img
-                  src="/icons/close_gray.svg"
+                  src="icons/close_gray.svg"
                   alt=""
                   className="mr-1 block"
                 />
@@ -86,7 +86,7 @@ export const MedicalCareer: React.FC<PropsType> = (props) => {
           </p>
           <div className="mt-2 flex items-center justify-between border border-solid border-[#eff3f6]">
             <div className="flex-initial bg-[#eff3f6] py-2 px-1">
-              <img src="/icons/drag_indicator.svg" alt="" />
+              <img src="icons/drag_indicator.svg" alt="" />
             </div>
             <div className="flex-1 pl-4 pr-3 text-sm">
               <span className="pr-4 text-base font-bold text-primary">2</span>
@@ -95,7 +95,7 @@ export const MedicalCareer: React.FC<PropsType> = (props) => {
             <div className="flex-initial">
               <button type="button" className="mr-3 flex items-center">
                 <img
-                  src="/icons/close_gray.svg"
+                  src="icons/close_gray.svg"
                   alt=""
                   className="mr-1 block"
                 />

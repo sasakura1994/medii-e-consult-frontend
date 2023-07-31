@@ -67,14 +67,14 @@ export const ConsultExampleDetail: React.FC<Props> = ({
             <div className="flex items-center text-sm lg:text-primary">
               <img
                 className="lg:hidden"
-                src="/icons/good_out.svg"
+                src="icons/good_out.svg"
                 width="24"
                 height="24"
                 alt="いいねの数"
               />
               <img
                 className="hidden lg:block"
-                src="/icons/good_out_primary.svg"
+                src="icons/good_out_primary.svg"
                 width="24"
                 height="24"
                 alt="いいねの数"
@@ -93,14 +93,14 @@ export const ConsultExampleDetail: React.FC<Props> = ({
                 }
               >
                 <img
-                  src="/icons/comment.svg"
+                  src="icons/comment.svg"
                   width="24"
                   height="24"
                   className="ml-4 block lg:hidden"
                   alt="コメントの数"
                 />
                 <img
-                  src="/icons/comment_primary.svg"
+                  src="icons/comment_primary.svg"
                   width="24"
                   height="24"
                   className="ml-4 hidden lg:block"

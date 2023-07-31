@@ -87,7 +87,7 @@ const Seminar: NextPage = () => {
               <div className="flex w-full items-center justify-center rounded-md bg-[#e2e7ff] py-4">
                 <div className="m-2 flex h-8 w-8 items-center justify-center rounded-full bg-primary lg:h-20 lg:w-20">
                   <img
-                    src="/images/seminar/video.svg"
+                    src="images/seminar/video.svg"
                     className="w-[19px] lg:w-auto"
                   />
                 </div>
@@ -201,7 +201,7 @@ const Seminar: NextPage = () => {
           <div className="align-center relative flex flex-col items-center bg-white px-6 py-4 lg:py-20 lg:px-28">
             <img
               onClick={() => setShowModal(false)}
-              src="/icons/close_primary.svg"
+              src="icons/close_primary.svg"
               className="absolute right-4 top-4 lg:right-10 lg:top-14"
             />
             <h3 className="text-center text-2xl text-primary">チケットとは?</h3>
@@ -212,11 +212,11 @@ const Seminar: NextPage = () => {
             </p>
             <img
               className="hidden lg:block"
-              src="/images/seminar/about_ticket_pc.png"
+              src="images/seminar/about_ticket_pc.png"
             />
             <img
               className="lg:hidden"
-              src="/images/seminar/about_ticket_sp.png"
+              src="images/seminar/about_ticket_sp.png"
             />
           </div>
         </Modal>

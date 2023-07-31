@@ -36,7 +36,7 @@ export const UrlPublish: React.FC<PropsType> = (props) => {
           onClick={() => clipboard('クリップボードにコピーしました')}
         >
           <img
-            src="/icons/clip.svg"
+            src="icons/clip.svg"
             alt=""
             className="mr-3 inline-block align-middle"
           />

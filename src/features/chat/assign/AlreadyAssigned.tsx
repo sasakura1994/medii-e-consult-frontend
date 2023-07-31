@@ -24,7 +24,7 @@ export const AlreadyAssigned: React.FC<Props> = ({
       <div data-testid="assign-already-assigned" className="bg-white py-8">
         <Container className="px-8">
           <img
-            src="/icons/exclamation.svg"
+            src="icons/exclamation.svg"
             width="32"
             height="32"
             alt=""
