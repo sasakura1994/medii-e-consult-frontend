@@ -5,7 +5,7 @@ export type UseFetchSeminars = {
   seminars: SeminarEntityType[] | undefined;
 };
 
-const endpoint = 'http://localhost:5000/api/v2/seminar/upcoming';
+const endpoint = '/seminar/upcoming';
 
 export const useFetchUpcomingSeminar = (count?: number): UseFetchSeminars => {
   const { data } = useAuthenticatedSWR<{
