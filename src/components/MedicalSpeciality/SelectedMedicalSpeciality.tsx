@@ -28,7 +28,7 @@ export const SelectedMedicalSpeciality: React.FC<SelectedMedicalSpecialityProps>
     >
       <div className="flex h-full grow">
         <div ref={dragRef} className="flex h-full w-8 grow-0 cursor-grab items-center justify-center bg-bg">
-          <img src="/icons/drag_indicator.svg" width="24" height="24" alt="Drag" />
+          <div className="h-6 w-6 bg-[url('/icons/drag_indicator.svg')]" />
         </div>
         <div className="flex w-10 shrink-0 grow-0 items-center justify-center text-center font-bold text-primary">
           <div>{index + 1}</div>
