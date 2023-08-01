@@ -15,8 +15,9 @@ export const HeaderSubMenu: React.FC = () => {
             <Tooltip delayHide={100} offset={[50, 4]} showArrow={true}>
               <a className={styles.header_submenu__link}>
                 <span
-                  className={`${styles.header_submenu__link_text} ${styles.header_submenu__link_text___menu}`}
+                  className={`${styles.header_submenu__link_text}`}
                 >
+                  <img src='icons/footer_consult.svg' />
                   メニュー
                 </span>
               </a>
