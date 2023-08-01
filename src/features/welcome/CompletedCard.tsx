@@ -1,9 +1,9 @@
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import TertiaryButton from '@/components/Button/TertiaryButton';
+import Label from '@/components/Parts/Label/Label';
 import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { EditProfileLabel } from '../mypages/editProfile/EditProfileLabel';
 
 type CompleteCardProps = {
   title: string;
@@ -39,7 +39,7 @@ export const CompleteCard = (props: CompleteCardProps) => {
       <div className="mx-auto w-80 rounded-md bg-white p-6 shadow-high" style={{ height: '362px' }}>
         <div className="mx-auto flex">
           <p className="mx-auto my-auto text-center text-xl font-bold text-text-primary">{title}</p>
-          {label && <EditProfileLabel>{label}</EditProfileLabel>}
+          {label && <Label text={label} />}
         </div>
         <img className="mx-auto mt-4 h-32 w-52" src={imageSrc} alt={title} />
         <p className="mx-auto mt-4 text-left text-md text-text-secondary">{description}</p>
