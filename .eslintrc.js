@@ -18,7 +18,7 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint', 'prefer-arrow'],
   rules: {
-    'max-len': ['warn', { code: 120 }],
+    'max-len': ['warn', { code: 120, ignorePattern: '^import\\s.+\\sfrom\\s.+;$' }],
     '@next/next/no-img-element': 'off',
     'prefer-arrow/prefer-arrow-functions': [
       'warn',

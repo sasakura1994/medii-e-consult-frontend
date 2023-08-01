@@ -1,12 +1,10 @@
 import { useDeleteChatDraftImage } from '@/hooks/api/chat/useDeleteChatDraftImage';
 import { useGetChatDraftImages } from '@/hooks/api/chat/useGetChatDraftImages';
-import {
-  PostChatRoomResponseData,
-  usePostChatRoom,
-} from '@/hooks/api/chat/usePostChatRoom';
+import { PostChatRoomResponseData, usePostChatRoom } from '@/hooks/api/chat/usePostChatRoom';
 import { usePostDraftImage } from '@/hooks/api/chat/usePostDraftImage';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { useFetchMedicalSpecialityCategories } from '@/hooks/api/medicalCategoryCategory/useFetchMedicalSpecialityCategories';
+import { moveItem } from '@/libs/dnd';
 import { GroupEntity } from '@/types/entities/GroupEntity';
 import { NewChatRoomEntity } from '@/types/entities/chat/NewChatRoomEntity';
 import { DoctorEntity } from '@/types/entities/doctorEntity';
@@ -27,28 +25,21 @@ export const useNewChatRoom = () => {
   });
   const [ageRange, setAgeRange] = React.useState<AgeRange>('');
   const [childAge, setChildAge] = React.useState<string>('');
-  const [selectedMedicalSpecialities, setSelectedMedicalSpecialities] =
-    React.useState<MedicalSpecialityEntity[]>([]);
+  const [selectedMedicalSpecialities, setSelectedMedicalSpecialities] = React.useState<MedicalSpecialityEntity[]>([]);
   const [editingImage, setEditingImage] = React.useState<File>();
   const [doctor, setDoctor] = React.useState<DoctorEntity>();
   const [group, setGroup] = React.useState<GroupEntity>();
   const [isSending, setIsSending] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState('');
-  const [
-    isMedicalSpecialitiesSelectDialogShown,
-    setIsMedicalSpecialitiesSelectDialogShown,
-  ] = React.useState(false);
-  const [isDoctorSearchModalShown, setIsDoctorSearchModalShown] =
-    React.useState(false);
-  const [isSearchGroupModalShown, setIsSearchGroupModalShown] =
-    React.useState(false);
+  const [isMedicalSpecialitiesSelectDialogShown, setIsMedicalSpecialitiesSelectDialogShown] = React.useState(false);
+  const [isDoctorSearchModalShown, setIsDoctorSearchModalShown] = React.useState(false);
+  const [isSearchGroupModalShown, setIsSearchGroupModalShown] = React.useState(false);
 
   const { createNewChatRoom } = usePostChatRoom();
   const { createDraftImage } = usePostDraftImage();
   const { medicalSpecialities } = useFetchMedicalSpecialities();
   const { medicalSpecialityCategories } = useFetchMedicalSpecialityCategories();
-  const { chatDraftImages, mutate: mutateGetChatDraftImages } =
-    useGetChatDraftImages({ isNeed: true });
+  const { chatDraftImages, mutate: mutateGetChatDraftImages } = useGetChatDraftImages({ isNeed: true });
   const { deleteChatDraftImage } = useDeleteChatDraftImage();
 
   const imageInput = React.useRef<HTMLInputElement>(null);
@@ -79,9 +70,7 @@ export const useNewChatRoom = () => {
     (firstMessage: string) => {
       if (
         formData.first_message.trim() !== '' &&
-        !confirm(
-          'コンサル文にテンプレートを反映します。現在書かれている内容は消えてしまいますがよろしいですか？'
-        )
+        !confirm('コンサル文にテンプレートを反映します。現在書かれている内容は消えてしまいますがよろしいですか？')
       ) {
         return;
       }
@@ -129,9 +118,7 @@ export const useNewChatRoom = () => {
       target_specialities: [],
     }).catch((error) => {
       console.error(error);
-      setErrorMessage(
-        (error.response.data as PostChatRoomResponseData).message
-      );
+      setErrorMessage((error.response.data as PostChatRoomResponseData).message);
       return null;
     });
 
@@ -155,24 +142,21 @@ export const useNewChatRoom = () => {
     }
   }, [imageInput]);
 
-  const onSelectImage = React.useCallback(
-    async (e: React.ChangeEvent<HTMLInputElement>) => {
-      e.preventDefault();
-      if (!e.target.files || e.target.files.length === 0) {
-        return;
-      }
+  const onSelectImage = React.useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    if (!e.target.files || e.target.files.length === 0) {
+      return;
+    }
 
-      const files = e.target.files;
+    const files = e.target.files;
 
-      if (files[0].type.match(/^image\//)) {
-        setEditingImage(files[0]);
-        return;
-      }
+    if (files[0].type.match(/^image\//)) {
+      setEditingImage(files[0]);
+      return;
+    }
 
-      await addFile(files[0]);
-    },
-    []
-  );
+    await addFile(files[0]);
+  }, []);
 
   const onImageEdited = React.useCallback((file: File) => {
     setEditingImage(undefined);
@@ -184,44 +168,28 @@ export const useNewChatRoom = () => {
     mutateGetChatDraftImages();
   }, []);
 
-  const deleteChatDraftImageById = React.useCallback(
-    async (chatDraftImageId: string) => {
-      const response = await deleteChatDraftImage(chatDraftImageId).catch(
-        (error) => {
-          console.error(error);
-          return null;
-        }
-      );
-      if (!response) {
-        alert('エラーが発生しました。');
-        return;
-      }
-      mutateGetChatDraftImages();
-    },
-    []
-  );
+  const deleteChatDraftImageById = React.useCallback(async (chatDraftImageId: string) => {
+    const response = await deleteChatDraftImage(chatDraftImageId).catch((error) => {
+      console.error(error);
+      return null;
+    });
+    if (!response) {
+      alert('エラーが発生しました。');
+      return;
+    }
+    mutateGetChatDraftImages();
+  }, []);
 
-  const changeMedicalSpecialities = React.useCallback(
-    (medicalSpecialities: MedicalSpecialityEntity[]) => {
-      setSelectedMedicalSpecialities(medicalSpecialities);
-      setIsMedicalSpecialitiesSelectDialogShown(false);
-    },
-    []
-  );
+  const changeMedicalSpecialities = React.useCallback((medicalSpecialities: MedicalSpecialityEntity[]) => {
+    setSelectedMedicalSpecialities(medicalSpecialities);
+    setIsMedicalSpecialitiesSelectDialogShown(false);
+  }, []);
 
   const moveSelectedMedicalSpeciality = React.useCallback(
     (dragIndex: number, hoverIndex: number) => {
-      setSelectedMedicalSpecialities((selectedMedicalSpecialities) => {
-        const copy = [...selectedMedicalSpecialities];
-        const dragging = copy.splice(dragIndex, 1);
-        return [
-          ...copy.slice(0, hoverIndex),
-          dragging[0],
-          ...copy.slice(hoverIndex),
-        ];
-      });
+      setSelectedMedicalSpecialities(moveItem(selectedMedicalSpecialities, dragIndex, hoverIndex));
     },
-    []
+    [selectedMedicalSpecialities]
   );
 
   const changeDoctor = React.useCallback(

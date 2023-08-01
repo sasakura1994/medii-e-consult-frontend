@@ -72,6 +72,8 @@ const AppInner = ({ Component, pageProps }: AppPropsWithLayout) => {
 const App = (props: AppPropsWithLayout) => {
   const router = useRouter();
   const handleStart = (url: string) => {
+    const absoluteUrl = new URL(url, window.location.origin);
+    const pathname = absoluteUrl.pathname.toLowerCase();
     if (
       [
         '/',
@@ -94,9 +96,10 @@ const App = (props: AppPropsWithLayout) => {
         '/seminar',
         '/seminar/archives',
         '/top',
-      ].some((str) => url.toLowerCase().includes(str))
+      ].some((str) => pathname.includes(str))
     ) {
-      window.location.href = url.toLowerCase();
+      absoluteUrl.pathname = pathname;
+      window.location.href = absoluteUrl.toString();
       throw 'routeChange aborted.';
     }
   };

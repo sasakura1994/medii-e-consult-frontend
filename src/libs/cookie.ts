@@ -36,5 +36,5 @@ export const getAccountIdFromToken = (token: string): string => {
 };
 
 export const removeAuthToken = () => {
-  document.cookie = `access_token=; expires=${new Date('1999-12-31T23:59:59Z').toUTCString()}; max-age=0; path=/`;
+  document.cookie = `access_token=; max-age=0; path=/`;
 };

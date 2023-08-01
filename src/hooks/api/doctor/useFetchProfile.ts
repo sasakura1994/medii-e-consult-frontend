@@ -9,9 +9,7 @@ export type UseFetchProfileType = {
   isLoading: boolean;
 };
 
-export const mutateFetchProfile = () => {
-  mutate(endpoint);
-};
+export const mutateFetchProfile = () => mutate(endpoint);
 
 export const useFetchProfile = (): UseFetchProfileType => {
   const { data: profile, isLoading } = useAuthenticatedSWR<ProfileEntity>(endpoint);
