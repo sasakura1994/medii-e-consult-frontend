@@ -112,7 +112,6 @@ export const HeaderSubMenu: React.FC = () => {
               <a
                 className={`${styles.header_submenu_sp__link} ${styles.header_submenu_sp__link___seminar}`}
               >
-                <div style={{ maskImage: 'url(icons/footer_consult.svg)' }} />
                 E-カンファ
               </a>
             </Link>
