@@ -7,6 +7,7 @@ export type ButtonProps = {
   onClick?: () => void;
   leftIcon?: React.ReactNode;
   size?: ButtonSize;
+  type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
   className?: string;
   type?: 'button' | 'submit' | 'reset';
