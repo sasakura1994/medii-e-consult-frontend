@@ -10,6 +10,7 @@ import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
 import { EditProfileNotification } from './EditProfileNotification';
 import { EditProfileQuestionary } from './EditProfileQuestionary';
 import PrimaryButton from '@/components/Button/PrimaryButton';
+import Link from 'next/link';
 
 export type EditProfileProps = {
   isRegisterMode: boolean;
@@ -64,9 +65,9 @@ export const EditProfile = (props: EditProfileProps) => {
 
       {!isRegisterMode && (
         <div className="mt-12 text-center lg:pb-20">
-          <button type="button" className="text-[#0758E4] underline" onClick={() => console.log('アカウント削除')}>
-            アカウントを削除する
-          </button>
+          <Link href="/withdrawal">
+            <a className="text-[#0758E4] underline">アカウントを削除する</a>
+          </Link>
         </div>
       )}
     </div>
