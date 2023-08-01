@@ -40,7 +40,7 @@ export const TopUpcomingSeminars = () => {
                     </div>
                     <Label className="shrink-0" text="参加無料" size="sm" />
                   </div>
-                  <div className="mt-2 text-l font-semibold line-clamp-2">{seminar.description}</div>
+                  <div className="mt-2 text-l font-semibold line-clamp-2">{seminar.subject}</div>
                 </a>
               </Link>
             ))}
