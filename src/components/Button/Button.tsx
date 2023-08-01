@@ -10,7 +10,6 @@ export type ButtonProps = {
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
   className?: string;
-  type?: 'button' | 'submit' | 'reset';
 };
 
 const Button = (props: ButtonProps) => {
