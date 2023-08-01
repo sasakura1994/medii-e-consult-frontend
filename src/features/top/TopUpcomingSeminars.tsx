@@ -34,7 +34,7 @@ export const TopUpcomingSeminars = () => {
                     className="h-[168px] w-[320px] object-cover"
                   />
                   <div className="mt-4 flex gap-2">
-                    <div className="text-md">
+                    <div className="flex items-center text-md">
                       {dateFormat(seminar.seminar_date, 'YYYY/MM/DD')}（{getWeekDay(seminar.seminar_date)}）
                       {seminar.seminar_start_time.substring(0, 5)}-{seminar.seminar_end_time.substring(0, 5)}
                     </div>
