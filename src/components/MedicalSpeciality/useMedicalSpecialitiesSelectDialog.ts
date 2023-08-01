@@ -31,14 +31,19 @@ export const useMedicalSpecialitiesSelectDialog = (props: MedicalSpecialitiesSel
             (medicalSpeciality) => medicalSpeciality.speciality_code !== toggledMedicalSpeciality.speciality_code
           )
         );
-      } else {
-        setSelectedMedicalSpecialities((selectedMedicalSpecialities) => [
-          ...selectedMedicalSpecialities,
-          toggledMedicalSpeciality,
-        ]);
+        return;
       }
+
+      if (selectedMedicalSpecialities.length >= 4) {
+        return;
+      }
+
+      setSelectedMedicalSpecialities((selectedMedicalSpecialities) => [
+        ...selectedMedicalSpecialities,
+        toggledMedicalSpeciality,
+      ]);
     },
-    [selectedSpecialityCodes]
+    [selectedMedicalSpecialities.length, selectedSpecialityCodes]
   );
 
   const isMedicalSpecialitySelected = React.useCallback(
