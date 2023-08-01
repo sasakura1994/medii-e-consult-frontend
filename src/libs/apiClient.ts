@@ -34,10 +34,10 @@ export const createApiClient = (options: ApiClientOption = {}): AxiosInstance =>
 
   let endpoint = process.env.ENDPOINT_URL;
   if (typeof window !== "undefined" ){
-    if(process.env.EX_API_DIR){
+    if(!location.hostname.includes("medii.jp") &&
+       location.hostname !== "localhost" &&
+       process.env.EX_API_DIR){
       endpoint = location.origin + process.env.EX_API_DIR
-    }else{
-      console.log("process.env.EX_API_DIR is not defined")
     }
   }
 
@@ -53,12 +53,13 @@ export const createApiClient = (options: ApiClientOption = {}): AxiosInstance =>
 };
 
 export const redirectToLoginPage = () => {
-  const loginPageUrl = '/login';
+  const externalDir = process.env.EX_WEB_DIR as string;
+  const loginPageUrl = externalDir + '/login';
   // 外部ドメイン経由の場合は常にExternalディレクトリに展開されるので、リダイレクト時には除去
   const redirectParam =
     '?redirect=' +
     encodeURIComponent(
-      window.location.pathname.replace(process.env.WEB_EXTERNAL_SUB_DIR as string, '') + window.location.search
+      window.location.pathname.replace(externalDir, '') + window.location.search
     );
   window.location.href = loginPageUrl + redirectParam;
 };
