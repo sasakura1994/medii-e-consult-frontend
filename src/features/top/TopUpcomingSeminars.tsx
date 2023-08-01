@@ -38,7 +38,7 @@ export const TopUpcomingSeminars = () => {
                       {dateFormat(seminar.seminar_date, 'YYYY/MM/DD')}（{getWeekDay(seminar.seminar_date)}）
                       {seminar.seminar_start_time.substring(0, 5)}-{seminar.seminar_end_time.substring(0, 5)}
                     </div>
-                    <Label className="shrink-0" text="参加無料" />
+                    <Label className="shrink-0" text="参加無料" size="sm" />
                   </div>
                   <div className="mt-2 text-l font-semibold line-clamp-2">{seminar.description}</div>
                 </a>
