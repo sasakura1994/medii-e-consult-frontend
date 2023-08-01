@@ -9,7 +9,7 @@ const nextConfig = {
     CASE_BANK_URL: process.env.CASE_BANK_URL,
     INVITATION_URL: process.env.INVITATION_URL,
     EX_WEB_DIR: process.env.EX_WEB_DIR || '',
-    EX_API_URL: process.env.EX_API_URL || '',
+    EX_API_DIR: process.env.EX_API_DIR || '',
   },
   basePath: process.env.EX_WEB_DIR || '',
   assetPrefix: process.env.EX_WEB_DIR || '',
