@@ -9,13 +9,14 @@ import { TopInterviews } from './TopInterviews';
 import { TopNewerConsults } from './TopNewerConsults';
 import TutorialExplanation from './TutorialExplanation';
 import { useTop } from './useTop';
+import { TopUpcomingSeminars } from './TopUpcomingSeminars';
 
 export const Top = () => {
   const { showTutorialExplanationModal, setShowTutorialExplanationModal } = useTop();
   return (
     <div className="bg-white">
-      <div className="mx-4 flex min-h-screen flex-col pb-12 pt-6 lg:mx-10 lg:flex-row lg:pb-0">
-        <div className="lg:flex-grow">
+      <div className="mx-4 flex min-h-screen flex-col pb-12 pt-6 lg:mx-10 lg:flex-row lg:justify-center">
+        <div className="max-w-[1024px] pb-8 lg:flex-grow">
           <TopNotifications />
           <UserConsult setShowTutorialExplanationModal={setShowTutorialExplanationModal} />
           <StyledHiddenScrollBar className="mt-10 flex items-center">
@@ -28,6 +29,9 @@ export const Top = () => {
             <TopItem />
           </StyledHiddenScrollBar>
           <p className="text-md text-text-secondary">※ 掲載を許諾されたE-コンサルを掲載しています。</p>
+          <div className="mt-10">
+            <TopUpcomingSeminars />
+          </div>
         </div>
         <div className="mt-2 lg:mx-4 lg:ml-10 lg:mt-0 lg:w-[296px]">
           <TopNewerConsults />
