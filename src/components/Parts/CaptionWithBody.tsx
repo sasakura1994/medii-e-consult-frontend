@@ -1,24 +1,18 @@
-import React from 'react';
-
-type ClassNamesType = {
-  block?: string;
-  caption?: string;
-  body?: string;
-};
+import React, { ReactNode } from 'react';
 
 type PropsType = {
   caption: string;
-  body?: string;
-  classNames?: ClassNamesType;
+  className?: string;
+  children: ReactNode;
 };
 
 export const CaptionWithBody: React.FC<PropsType> = (props) => {
-  const { caption, body, classNames } = props;
+  const { caption, children, className } = props;
 
   return (
-    <div className={classNames?.block}>
-      <p className={classNames?.caption}>{caption}</p>
-      {body && <p className={classNames?.body}>{body}</p>}
+    <div className={className}>
+      <div className="mb-2 text-[#999999]">{caption}</div>
+      <div>{children}</div>
     </div>
   );
 };
