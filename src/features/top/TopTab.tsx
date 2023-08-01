@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 
 type TopTabType = {
   text: string;
   isActive: boolean;
   isLast?: boolean;
+  onClick: MouseEventHandler;
 };
 
 export const TopTab = (props: TopTabType) => {
-  const { text, isActive, isLast } = props;
+  const { text, isActive, isLast, onClick } = props;
 
   return (
     <>
       <div
+        onClick={onClick}
         className={`w-auto cursor-pointer rounded-t-lg border-x border-t ${
           isActive ? 'h-12 bg-white' : 'h-10 border-b bg-bg-secondary'
         }`}

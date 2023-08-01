@@ -47,7 +47,11 @@ export const ConsultExampleDetailMessage: React.FC<Props> = ({
           `}
           data-testid="message"
         >
-          {consultExampleMessage.message.trim()}
+          {consultExampleMessage.file_path == '' ? (
+            consultExampleMessage.message.trim()
+          ) : (
+            <img src={consultExampleMessage.file_path} alt='image' />
+          )}
         </div>
         <div className="mt-2 lg:w-full">
           <ConsultExampleActions

@@ -46,7 +46,7 @@ export const createApiClient = (options: ApiClientOption = {}): AxiosInstance =>
 };
 
 export const redirectToLoginPage = () => {
-  const loginPageUrl = 'login';
+  const loginPageUrl = '/login';
   // 外部ドメイン経由の場合は常にExternalディレクトリに展開されるので、リダイレクト時には除去
   const redirectParam =
     '?redirect=' +

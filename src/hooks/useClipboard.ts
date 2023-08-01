@@ -8,13 +8,12 @@ export type UseClipboardType = {
 
 export const useClipboard = (url: string): UseClipboardType => {
   const [isError, setIsError] = React.useState(false);
-  const [clipboardUrl] = React.useState(url);
 
   const clipboard = React.useCallback(
     async (message?: string) => {
       setIsError(false);
       try {
-        await navigator.clipboard.writeText(clipboardUrl);
+        await navigator.clipboard.writeText(url);
         if (message) {
           toast(message);
         }
@@ -23,7 +22,7 @@ export const useClipboard = (url: string): UseClipboardType => {
         toast('コピーに失敗しました。');
       }
     },
-    [clipboardUrl]
+    [url]
   );
 
   return {
