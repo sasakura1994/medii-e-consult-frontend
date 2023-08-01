@@ -1,7 +1,7 @@
 import React from 'react';
 import Script from 'next/script';
 
-export const ExtractDomainManager: React.FC = () => {
+export const ExternalDomainManager: React.FC = () => {
   return (
     <Script
       id="edm"
