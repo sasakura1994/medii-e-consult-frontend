@@ -1,5 +1,5 @@
 import React from 'react';
-import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
+import { disableBodyScroll, clearAllBodyScrollLocks, enableBodyScroll } from 'body-scroll-lock';
 import { ModalPropsType } from './Modal';
 
 let modalCount = 0;
@@ -13,9 +13,9 @@ export const useModal = (props: ModalPropsType) => {
       return;
     }
 
-    if (modalCount === 0) {
-      disableBodyScroll(modalRef.current);
-    }
+    const ref = modalRef.current;
+
+    disableBodyScroll(modalRef.current);
 
     modalCount += 1;
 
@@ -23,6 +23,10 @@ export const useModal = (props: ModalPropsType) => {
       modalCount -= 1;
       if (modalCount === 0) {
         clearAllBodyScrollLocks();
+      } else {
+        if (ref) {
+          enableBodyScroll(ref);
+        }
       }
     };
   }, [modalRef]);
