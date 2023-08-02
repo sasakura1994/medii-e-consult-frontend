@@ -26,7 +26,7 @@ export const CustomHead: React.FC<PropsType> = (props) => {
   const defaultTitle = 'Medii E-コンサル';
   const { title, description } = props;
   const pageTitle = !title ? defaultTitle : `${title} - ${defaultTitle}`;
-  const baseDir = process.env.EX_WEB_DIR ? process.env.EX_WEB_DIR : '/';
+  const baseDir = process.env.EX_WEB_DIR ? process.env.EX_WEB_DIR + '/' : '/';
 
   return (
     <Head>
