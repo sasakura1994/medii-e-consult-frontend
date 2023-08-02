@@ -1,10 +1,15 @@
 import { useAuthenticatedSWR } from '@/hooks/network/useAuthenticatedSWR';
 import { GroupEntity } from '@/types/entities/GroupEntity';
 
+export type FetchedGroupEntity = Pick<
+  GroupEntity,
+  'group_id' | 'group_name' | 'area' | 'disease' | 'explanation' | 'is_real_name'
+>;
+
 export type UseFetchGroup = {
   isLoading: boolean;
   error?: Error;
-  group?: GroupEntity;
+  group?: FetchedGroupEntity;
 };
 
 export const useFetchGroup = (groupId?: string): UseFetchGroup => {
@@ -12,9 +17,7 @@ export const useFetchGroup = (groupId?: string): UseFetchGroup => {
     isLoading,
     error,
     data: group,
-  } = useAuthenticatedSWR<GroupEntity>(
-    groupId ? `/group/get_group?groupId=${groupId}` : null
-  );
+  } = useAuthenticatedSWR<FetchedGroupEntity>(groupId ? `/group/get_group?groupId=${groupId}` : null);
 
   return {
     isLoading,

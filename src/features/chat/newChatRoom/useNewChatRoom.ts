@@ -5,12 +5,11 @@ import { usePostChatMessageFile } from '@/hooks/api/chat/usePostChatMessageFile'
 import { PostChatRoomRequestData, PostChatRoomResponseData, usePostChatRoom } from '@/hooks/api/chat/usePostChatRoom';
 import { usePostDraftImage } from '@/hooks/api/chat/usePostDraftImage';
 import { useFetchDoctorProfile } from '@/hooks/api/doctor/useFetchDoctorProfile';
-import { useFetchGroup } from '@/hooks/api/group/useFetchGroup';
+import { FetchedGroupEntity, useFetchGroup } from '@/hooks/api/group/useFetchGroup';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { useFetchMedicalSpecialityCategories } from '@/hooks/api/medicalCategoryCategory/useFetchMedicalSpecialityCategories';
 import { loadLocalStorage, removeLocalStorage, saveLocalStorage } from '@/libs/LocalStorageManager';
 import { moveItem } from '@/libs/dnd';
-import { GroupEntity } from '@/types/entities/GroupEntity';
 import { ChatDraftImageEntity } from '@/types/entities/chat/ChatDraftImageEntity';
 import { ChatMessageEntity } from '@/types/entities/chat/ChatMessageEntity';
 import { ChatRoomType } from '@/types/entities/chat/ChatRoomEntity';
@@ -81,7 +80,7 @@ export type UseNewChatRoom = {
   errorMessage: string;
   chatRoom: NewChatRoomEntity;
   filesForReConsult: FileForReConsult[];
-  group?: GroupEntity;
+  group?: FetchedGroupEntity;
   imageInput: RefObject<HTMLInputElement>;
   isDoctorSearchModalShown: boolean;
   isMedicalSpecialitiesSelectDialogShown: boolean;
