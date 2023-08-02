@@ -9,7 +9,17 @@ import { GrayButton } from '@/components/Parts/Button/GrayButton';
 type Props = ReturnType<typeof useNewChatRoom>;
 
 export const NewChatRoomConfirmation: React.FC<Props> = (props: Props) => {
-  const { ageRange, backToInput, chatDraftImages, childAge, chatRoom, isSending, submit } = props;
+  const {
+    ageRange,
+    backToInput,
+    chatDraftImages,
+    childAge,
+    chatRoom,
+    filesForReConsult,
+    isSending,
+    reConsultFileMessages,
+    submit,
+  } = props;
 
   return (
     <>
@@ -28,18 +38,43 @@ export const NewChatRoomConfirmation: React.FC<Props> = (props: Props) => {
         <NewChatRoomConfirmationValue className="mt-4">{chatRoom.disease_name}</NewChatRoomConfirmationValue>
         <NewChatRoomConfirmationLabel className="mt-10">コンサル文</NewChatRoomConfirmationLabel>
         <div className="mt-4 whitespace-pre-wrap break-words text-sm">{chatRoom.first_message}</div>
-        {chatDraftImages && (
+        {filesForReConsult.length > 0 || reConsultFileMessages.length > 0 ? (
           <div className="mt-8 flex flex-col gap-4">
-            {chatDraftImages.map((chatDraftImage) => (
-              <div key={chatDraftImage.chat_draft_image_id}>
-                {chatDraftImage.is_image ? (
-                  <img src={chatDraftImage.url} alt={chatDraftImage.file_name} />
+            {reConsultFileMessages.map((chatMessage) => (
+              <div key={chatMessage.uid}>
+                {chatMessage.content_type.match(/^image/) !== null ? (
+                  <img src={chatMessage.file_path} alt={chatMessage.file_name} />
                 ) : (
-                  <>{chatDraftImage.file_name}</>
+                  <>{chatMessage.file_name}</>
+                )}
+              </div>
+            ))}
+            {filesForReConsult.map((file) => (
+              <div key={file.id}>
+                {file.file.type.match(/^image/) !== null ? (
+                  <img src={file.image as string} alt={file.file.name} />
+                ) : (
+                  <>{file.file.name}</>
                 )}
               </div>
             ))}
           </div>
+        ) : (
+          <>
+            {chatDraftImages && (
+              <div className="mt-8 flex flex-col gap-4">
+                {chatDraftImages.map((chatDraftImage) => (
+                  <div key={chatDraftImage.chat_draft_image_id}>
+                    {chatDraftImage.is_image ? (
+                      <img src={chatDraftImage.url} alt={chatDraftImage.file_name} />
+                    ) : (
+                      <>{chatDraftImage.file_name}</>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
         )}
         <div className="mt-8 text-center">
           {!isSending ? (
