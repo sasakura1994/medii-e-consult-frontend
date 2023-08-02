@@ -8,7 +8,7 @@ import {
   usePostChatRoom,
 } from '@/hooks/api/chat/usePostChatRoom';
 import { usePostDraftImage } from '@/hooks/api/chat/usePostDraftImage';
-import { useFetchDoctorProfile } from '@/hooks/api/doctor/useFetchDoctorProfil';
+import { useFetchDoctorProfile } from '@/hooks/api/doctor/useFetchDoctorProfile';
 import { useFetchGroup } from '@/hooks/api/group/useFetchGroup';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { useFetchMedicalSpecialityCategories } from '@/hooks/api/medicalCategoryCategory/useFetchMedicalSpecialityCategories';
