@@ -89,7 +89,6 @@ export const HospitalAffiliation = (props: UseEditProfile) => {
       <div className="mb-4">
         <Radio
           name="select_hospital"
-          id="direct-hospital"
           label="直接入力"
           value="free"
           onChange={() => setHospitalInputType('free')}
