@@ -294,6 +294,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
               className="min-h-[140px] text-[13px]"
               value={chatRoom.first_message}
               onChange={(e) => setChatRoomFields({ first_message: e.target.value })}
+              required
             />
             <div className="mt-3 flex items-center gap-2">
               <input
