@@ -10,9 +10,7 @@ import { consultMessageTemplates } from '@/data/chatRoom';
 import { ExpandTextArea } from '@/components/Parts/Form/ExpandTextArea';
 import { CheckBox } from '@/components/Parts/Form/CheckBox';
 import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
-import ImageEditor, {
-  ImageEditorProps,
-} from '@/components/Parts/ImageEditor/ImageEditor';
+import ImageEditor, { ImageEditorProps } from '@/components/Parts/ImageEditor/ImageEditor';
 import dynamic, { DynamicOptions } from 'next/dynamic';
 import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 import { OutlinedSquareButton } from '@/components/Parts/Button/OutlinedSquareButton';
@@ -24,10 +22,7 @@ import { NewChatRoomFile } from './NewChatRoomFile';
 import Label from '@/components/Parts/Label/Label';
 // canvasの関係でサーバー時点でimportされているとエラーになるためこうするしかないらしい
 const ImageEditorComponent = dynamic<ImageEditorProps>(
-  (() =>
-    import(
-      '@/components/Parts/ImageEditor/ImageEditor'
-    )) as DynamicOptions<ImageEditorProps>,
+  (() => import('@/components/Parts/ImageEditor/ImageEditor')) as DynamicOptions<ImageEditorProps>,
   { ssr: false }
 ) as typeof ImageEditor;
 
@@ -88,9 +83,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
           </div>
         )}
         <form onSubmit={confirmInput}>
-          <NewChatRoomFormLabel className="mt-4">
-            専門医指定方法
-          </NewChatRoomFormLabel>
+          <NewChatRoomFormLabel className="mt-4">専門医指定方法</NewChatRoomFormLabel>
           <div className="mt-1 flex flex-col gap-1">
             <div>
               <NewChatRoomRoomType
@@ -104,47 +97,33 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
               {chatRoom.room_type === 'FREE' && (
                 <>
                   <div className="mt-2 flex items-center gap-2">
-                    <OutlinedSquareButton
-                      type="button"
-                      onClick={() =>
-                        setIsMedicalSpecialitiesSelectDialogShown(true)
-                      }
-                    >
+                    <OutlinedSquareButton type="button" onClick={() => setIsMedicalSpecialitiesSelectDialogShown(true)}>
                       診療科を指定
                     </OutlinedSquareButton>
                     {selectedMedicalSpecialities.length === 0 ? (
                       <div>未選択</div>
                     ) : (
                       <div>
-                        選択数：{selectedMedicalSpecialities.length}/
-                        {medicalSpecialities?.length}
+                        選択数：{selectedMedicalSpecialities.length}/{medicalSpecialities?.length}
                       </div>
                     )}
                   </div>
-                  {selectedMedicalSpecialities.length > 0 &&
-                    medicalSpecialityCategories && (
-                      <div className="my-6">
-                        <SelectedMedicalSpecialities
-                          medicalSpecialities={selectedMedicalSpecialities}
-                          medicalSpecialityCategories={
-                            medicalSpecialityCategories
-                          }
-                          onDelete={(medicalSpeciality) =>
-                            setChatRoomFields({
-                              target_specialities:
-                                chatRoom.target_specialities.filter(
-                                  (specialityCode) =>
-                                    specialityCode !==
-                                    medicalSpeciality.speciality_code
-                                ),
-                            })
-                          }
-                          moveSelectedMedicalSpeciality={
-                            moveSelectedMedicalSpeciality
-                          }
-                        />
-                      </div>
-                    )}
+                  {selectedMedicalSpecialities.length > 0 && medicalSpecialityCategories && (
+                    <div className="my-6">
+                      <SelectedMedicalSpecialities
+                        medicalSpecialities={selectedMedicalSpecialities}
+                        medicalSpecialityCategories={medicalSpecialityCategories}
+                        onDelete={(medicalSpeciality) =>
+                          setChatRoomFields({
+                            target_specialities: chatRoom.target_specialities.filter(
+                              (specialityCode) => specialityCode !== medicalSpeciality.speciality_code
+                            ),
+                          })
+                        }
+                        moveSelectedMedicalSpeciality={moveSelectedMedicalSpeciality}
+                      />
+                    </div>
+                  )}
                   <div className="mb-3 text-medii-sm font-bold text-strong">
                     <div>
                       Medii所属の医師がコンサル内容を判断した上で、現在選択されていない診療科に回答依頼を送り直すことがあります。
@@ -207,20 +186,18 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                     <div className="my-2 flex items-start gap-2 lg:items-center">
                       <OutlinedSquareButton
                         type="button"
+                        className="whitespace-nowrap"
                         onClick={() => setIsSearchGroupModalShown(true)}
                       >
                         グループ検索
                       </OutlinedSquareButton>
                       <div className="flex flex-col items-start gap-2 lg:flex-row lg:items-center">
-                        {group ? (
-                          <div>{group.group_name}</div>
-                        ) : (
-                          <div>未選択</div>
-                        )}
+                        {group ? <div>{group.group_name}</div> : <div>未選択</div>}
                         {group?.is_real_name && (
                           <Label
                             text="実名で投稿されるグループ"
                             color="gray"
+                            className="whitespace-nowrap"
                             dataTestId="real-name-note"
                           />
                         )}
@@ -294,16 +271,12 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
             <TextField
               name="disease_name"
               value={chatRoom.disease_name}
-              onChange={(e) =>
-                setChatRoomFields({ disease_name: e.target.value })
-              }
+              onChange={(e) => setChatRoomFields({ disease_name: e.target.value })}
               placeholder="例）多関節痛を訴える抗核抗体陽性患者への追加検査"
               required
             />
           </div>
-          <NewChatRoomFormLabel className="mt-4">
-            コンサル文
-          </NewChatRoomFormLabel>
+          <NewChatRoomFormLabel className="mt-4">コンサル文</NewChatRoomFormLabel>
           <div className="mt-6 text-xs font-bold">テンプレートを反映</div>
           <div className="mt-4 flex flex-row flex-wrap gap-x-6">
             {consultMessageTemplates.map((consultMessageTemplate) => (
@@ -311,9 +284,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                 key={consultMessageTemplate.title}
                 name="consult_message_template"
                 label={consultMessageTemplate.title}
-                onChange={() =>
-                  selectConsultMessageTemplate(consultMessageTemplate.text)
-                }
+                onChange={() => selectConsultMessageTemplate(consultMessageTemplate.text)}
               />
             ))}
           </div>
@@ -322,9 +293,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
               name="first_message"
               className="min-h-[140px] text-[13px]"
               value={chatRoom.first_message}
-              onChange={(e) =>
-                setChatRoomFields({ first_message: e.target.value })
-              }
+              onChange={(e) => setChatRoomFields({ first_message: e.target.value })}
             />
             <div className="mt-3 flex items-center gap-2">
               <input
@@ -335,10 +304,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                 onClick={() => resetImageInput()}
                 onChange={onSelectImage}
               />
-              <OutlinedSquareButton
-                type="button"
-                onClick={() => imageInput.current?.click()}
-              >
+              <OutlinedSquareButton type="button" onClick={() => imageInput.current?.click()}>
                 参考画像追加
               </OutlinedSquareButton>
               <div className="text-[11px] text-block-gray">
@@ -346,10 +312,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
               </div>
             </div>
             {query.reconsult && (
-              <div
-                className="my-3 text-medii-sm font-bold text-strong"
-                data-testid="reconsult-image-note"
-              >
+              <div className="my-3 text-medii-sm font-bold text-strong" data-testid="reconsult-image-note">
                 参考画像を追加ボタンを押すと新規で画像を掲載することが可能です。
                 <br />
                 不要な画像は×を押すことで削除できます。
@@ -383,11 +346,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                     isImage={chatDraftImage.is_image}
                     url={chatDraftImage.url}
                     fileName={chatDraftImage.file_name}
-                    onDelete={() =>
-                      deleteChatDraftImageById(
-                        chatDraftImage.chat_draft_image_id
-                      )
-                    }
+                    onDelete={() => deleteChatDraftImageById(chatDraftImage.chat_draft_image_id)}
                   />
                 ))}
               </div>
@@ -397,11 +356,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                 プレビュー
               </PrimaryButton>
             </div>
-            {errorMessage !== '' && (
-              <ErrorMessage className="text-center">
-                {errorMessage}
-              </ErrorMessage>
-            )}
+            {errorMessage !== '' && <ErrorMessage className="text-center">{errorMessage}</ErrorMessage>}
             <div className="mt-12">
               <CheckBox
                 name="publishment_accepted"
@@ -423,11 +378,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
         </form>
       </div>
       {editingImage && (
-        <ImageEditorComponent
-          file={editingImage}
-          onSubmit={onImageEdited}
-          onClose={() => setEditingImage(undefined)}
-        />
+        <ImageEditorComponent file={editingImage} onSubmit={onImageEdited} onClose={() => setEditingImage(undefined)} />
       )}
       {isMedicalSpecialitiesSelectDialogShown && (
         <MedicalSpecialitiesSelectDialog
