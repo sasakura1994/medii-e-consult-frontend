@@ -16,7 +16,6 @@ usage: page component
 */
 import React from 'react';
 import Head from 'next/head';
-import { ExternalDomainManager } from '@/components/Layouts/ExternalDomainManager';
 
 type PropsType = {
   title?: string;
@@ -34,7 +33,6 @@ export const CustomHead: React.FC<PropsType> = (props) => {
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <link rel="icon" href="/favicon.ico" />
       <title>{pageTitle}</title>
-      <ExternalDomainManager />
       {description && <meta name="description" content={description} />}
     </Head>
   );

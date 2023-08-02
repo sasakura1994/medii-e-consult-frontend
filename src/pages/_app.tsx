@@ -14,6 +14,7 @@ import { useRouter } from 'next/router';
 import { GoogleTagManager } from '@/components/Layouts/GoogleTagManager';
 import Script from 'next/script';
 import { useToken } from '@/hooks/authentication/useToken';
+import { ExternalDomainManager } from '@/components/Layouts/ExternalDomainManager';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
@@ -40,6 +41,7 @@ const AppInner = ({ Component, pageProps }: AppPropsWithLayout) => {
   return (
     <CookiesProvider>
       {/* GTMタグだけ先に描画されるのを避けるため必ず両方同時にチェック */}
+      <ExternalDomainManager />
       {(isTokenInitialized || accountId) && (
         <>
           {accountId && (
