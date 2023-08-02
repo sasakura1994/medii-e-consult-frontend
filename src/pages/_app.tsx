@@ -41,6 +41,7 @@ const AppInner = ({ Component, pageProps }: AppPropsWithLayout) => {
   return (
     <CookiesProvider>
       {/* GTMタグだけ先に描画されるのを避けるため必ず両方同時にチェック */}
+      <ExternalDomainManager />
       {(isTokenInitialized || accountId) && (
         <>
           {accountId && (
@@ -57,7 +58,6 @@ const AppInner = ({ Component, pageProps }: AppPropsWithLayout) => {
           <GoogleTagManager />
         </>
       )}
-      <ExternalDomainManager />
       <SWRConfig
         value={{
           fetcher,
