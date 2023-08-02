@@ -72,6 +72,8 @@ const AppInner = ({ Component, pageProps }: AppPropsWithLayout) => {
 const App = (props: AppPropsWithLayout) => {
   const router = useRouter();
   const handleStart = (url: string) => {
+    const absoluteUrl = new URL(url, window.location.origin);
+    const pathname = absoluteUrl.pathname.toLowerCase();
     if (
       [
         '/',
@@ -94,9 +96,10 @@ const App = (props: AppPropsWithLayout) => {
         '/seminar',
         '/seminar/archives',
         '/top',
-      ].includes(url.toLowerCase())
+      ].some((str) => pathname.includes(str))
     ) {
-      window.location.href = url.toLowerCase();
+      absoluteUrl.pathname = pathname;
+      window.location.href = absoluteUrl.toString();
       throw 'routeChange aborted.';
     }
   };
@@ -116,6 +119,6 @@ const App = (props: AppPropsWithLayout) => {
 };
 
 // 初回queryのundefined現象を解決する
-App.getInitialProps = async () => ( { pageProps: {} } );
+App.getInitialProps = async () => ({ pageProps: {} });
 
 export default App;

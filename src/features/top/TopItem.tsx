@@ -10,7 +10,7 @@ export const TopItem = () => {
     >
       <div className="p-4">
         <div className="w-28">
-          <Label text="ICU/集中治療科" color="gray" />
+          <Label text="ICU/集中治療科" color="gray" size="sm" />
         </div>
         <p className="mt-2 text-md text-text-secondary">異型リンパ球</p>
         <div className="mt-2 h-[71px]">

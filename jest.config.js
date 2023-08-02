@@ -1,10 +1,6 @@
 module.exports = {
   testEnvironment: 'jest-environment-jsdom',
-  collectCoverageFrom: [
-    '**/*.{js,jsx,ts,tsx}',
-    '!**/*.d.ts',
-    '!**/node_modules/**',
-  ],
+  collectCoverageFrom: ['**/*.{js,jsx,ts,tsx}', '!**/*.d.ts', '!**/node_modules/**'],
   moduleNameMapper: {
     // Handle CSS imports (with CSS modules)
     // https://jestjs.io/docs/webpack#mocking-css-modules
@@ -21,15 +17,8 @@ module.exports = {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
   setupFilesAfterEnv: ['<rootDir>/__tests__/setupTests.ts'],
-  testPathIgnorePatterns: [
-    '<rootDir>/node_modules/',
-    '<rootDir>/.vscode/',
-    '<rootDir>/__tests__/setupTests.ts',
-  ],
-  testMatch: [
-    '**/__tests__/**/*.+(ts|tsx|js|jsx)',
-    '**/?(*.)+(spec|test).+(ts|tsx|js|jsx)',
-  ],
+  testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/.vscode/', '<rootDir>/__tests__/setupTests.ts'],
+  testMatch: ['**/__tests__/**/*.+(ts|tsx|js|jsx)', '**/?(*.)+(spec|test).+(ts|tsx|js|jsx)'],
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': [
       'ts-jest',
@@ -38,7 +27,5 @@ module.exports = {
       },
     ],
   },
-  transformIgnorePatterns: [
-    `/node_modules/(?!react-dnd|core-dnd|@react-dnd|dnd-core|react-dnd-html5-backend)`,
-  ],
+  transformIgnorePatterns: [`/node_modules/(?!react-dnd|core-dnd|@react-dnd|dnd-core|react-dnd-html5-backend)`],
 };

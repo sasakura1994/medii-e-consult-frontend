@@ -2,21 +2,14 @@ import { useDeleteChatDraftImage } from '@/hooks/api/chat/useDeleteChatDraftImag
 import { useFetchBaseChatRoomForReConsult } from '@/hooks/api/chat/useFetchBaseChatRoomForReConsult';
 import { useGetChatDraftImages } from '@/hooks/api/chat/useGetChatDraftImages';
 import { usePostChatMessageFile } from '@/hooks/api/chat/usePostChatMessageFile';
-import {
-  PostChatRoomRequestData,
-  PostChatRoomResponseData,
-  usePostChatRoom,
-} from '@/hooks/api/chat/usePostChatRoom';
+import { PostChatRoomRequestData, PostChatRoomResponseData, usePostChatRoom } from '@/hooks/api/chat/usePostChatRoom';
 import { usePostDraftImage } from '@/hooks/api/chat/usePostDraftImage';
 import { useFetchDoctorProfile } from '@/hooks/api/doctor/useFetchDoctorProfile';
 import { useFetchGroup } from '@/hooks/api/group/useFetchGroup';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { useFetchMedicalSpecialityCategories } from '@/hooks/api/medicalCategoryCategory/useFetchMedicalSpecialityCategories';
-import {
-  loadLocalStorage,
-  removeLocalStorage,
-  saveLocalStorage,
-} from '@/libs/LocalStorageManager';
+import { loadLocalStorage, removeLocalStorage, saveLocalStorage } from '@/libs/LocalStorageManager';
+import { moveItem } from '@/libs/dnd';
 import { GroupEntity } from '@/types/entities/GroupEntity';
 import { ChatDraftImageEntity } from '@/types/entities/chat/ChatDraftImageEntity';
 import { ChatMessageEntity } from '@/types/entities/chat/ChatMessageEntity';
@@ -77,9 +70,7 @@ export type UseNewChatRoom = {
   ageRange: string;
   backToInput: () => void;
   childAge: string;
-  changeMedicalSpecialities: (
-    medicalSpecialities: MedicalSpecialityEntity[]
-  ) => void;
+  changeMedicalSpecialities: (medicalSpecialities: MedicalSpecialityEntity[]) => void;
   chatDraftImages?: ChatDraftImageEntity[];
   confirmInput: (e: FormEvent<HTMLFormElement>) => void;
   deleteChatDraftImageById: (chatDraftImageId: string) => Promise<void>;
@@ -100,10 +91,7 @@ export type UseNewChatRoom = {
   medicalSpecialities?: MedicalSpecialityEntity[];
   medicalSpecialityCategories?: MedicalSpecialityCategoryEntity[];
   mode: Mode;
-  moveSelectedMedicalSpeciality: (
-    dragIndex: number,
-    hoverIndex: number
-  ) => void;
+  moveSelectedMedicalSpeciality: (dragIndex: number, hoverIndex: number) => void;
   onImageEdited: (file: File) => void;
   onSelectImage: (e: ChangeEvent<HTMLInputElement>) => Promise<void>;
   query: NewChatRoomQuery;
@@ -141,20 +129,12 @@ export const useNewChatRoom = (): UseNewChatRoom => {
   const [ageRange, setAgeRange] = useState<AgeRange>('');
   const [childAge, setChildAge] = useState<string>('');
   const [editingImage, setEditingImage] = useState<File>();
-  const [reConsultFileMessages, setReConsultFileMessages] = useState<
-    ChatMessageEntity[]
-  >([]);
-  const [filesForReConsult, setFilesForReConsult] = useState<
-    FileForReConsult[]
-  >([]);
+  const [reConsultFileMessages, setReConsultFileMessages] = useState<ChatMessageEntity[]>([]);
+  const [filesForReConsult, setFilesForReConsult] = useState<FileForReConsult[]>([]);
   const [isSending, setIsSending] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [
-    isMedicalSpecialitiesSelectDialogShown,
-    setIsMedicalSpecialitiesSelectDialogShown,
-  ] = useState(false);
-  const [isDoctorSearchModalShown, setIsDoctorSearchModalShown] =
-    useState(false);
+  const [isMedicalSpecialitiesSelectDialogShown, setIsMedicalSpecialitiesSelectDialogShown] = useState(false);
+  const [isDoctorSearchModalShown, setIsDoctorSearchModalShown] = useState(false);
   const [isSearchGroupModalShown, setIsSearchGroupModalShown] = useState(false);
   const [isUseDraftImages, setIsUseDraftImages] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
@@ -163,8 +143,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
   const { createDraftImage } = usePostDraftImage();
   const { medicalSpecialities } = useFetchMedicalSpecialities();
   const { medicalSpecialityCategories } = useFetchMedicalSpecialityCategories();
-  const { chatDraftImages, mutate: mutateGetChatDraftImages } =
-    useGetChatDraftImages({ isNeed: isUseDraftImages });
+  const { chatDraftImages, mutate: mutateGetChatDraftImages } = useGetChatDraftImages({ isNeed: isUseDraftImages });
   const { deleteChatDraftImage } = useDeleteChatDraftImage();
   const { group } = useFetchGroup(chatRoom.group_id);
   const { doctor } = useFetchDoctorProfile(chatRoom.target_doctor);
@@ -181,8 +160,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     const results: MedicalSpecialityEntity[] = [];
     for (const specialityCode of chatRoom.target_specialities) {
       const medicalSpeciality = medicalSpecialities.find(
-        (medicalSpeciality) =>
-          medicalSpeciality.speciality_code === specialityCode
+        (medicalSpeciality) => medicalSpeciality.speciality_code === specialityCode
       );
       if (medicalSpeciality) {
         results.push(medicalSpeciality);
@@ -218,9 +196,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     }
 
     if (query.reconsult) {
-      const baseChatRoomData = await fetchBaseChatRoomForReConsult(
-        query.reconsult
-      );
+      const baseChatRoomData = await fetchBaseChatRoomForReConsult(query.reconsult);
       if (!baseChatRoomData) {
         return;
       }
@@ -244,11 +220,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     if (!draft) {
       return;
     }
-    if (
-      !confirm(
-        '下書きに作成途中のコンサルがあります。作成途中のコンサルを続けて編集しますか？'
-      )
-    ) {
+    if (!confirm('下書きに作成途中のコンサルがあります。作成途中のコンサルを続けて編集しますか？')) {
       setIsInitialized(true);
       return;
     }
@@ -259,12 +231,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     initializeAge(data.age);
     setIsUseDraftImages(true);
     setIsInitialized(true);
-  }, [
-    fetchBaseChatRoomForReConsult,
-    initializeAge,
-    medicalSpecialities,
-    query.reconsult,
-  ]);
+  }, [fetchBaseChatRoomForReConsult, initializeAge, medicalSpecialities, query.reconsult]);
 
   useEffect(() => {
     if (isInitialized) {
@@ -308,9 +275,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     (firstMessage: string) => {
       if (
         chatRoom.first_message.trim() !== '' &&
-        !confirm(
-          'コンサル文にテンプレートを反映します。現在書かれている内容は消えてしまいますがよろしいですか？'
-        )
+        !confirm('コンサル文にテンプレートを反映します。現在書かれている内容は消えてしまいますがよろしいですか？')
       ) {
         return;
       }
@@ -342,36 +307,26 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     setIsSending(true);
     setErrorMessage('');
 
-    const chatRoomId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
-      /[xy]/g,
-      (c) => {
-        const r = (Math.random() * 16) | 0,
-          v = c == 'x' ? r : (r & 0x3) | 0x8;
-        return v.toString(16);
-      }
-    );
+    const chatRoomId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+      const r = (Math.random() * 16) | 0,
+        v = c == 'x' ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    });
 
     const data: PostChatRoomRequestData = {
       ...formData,
       chat_room_id: chatRoomId,
-      chat_draft_image_ids:
-        chatDraftImages?.map(
-          (chatDraftImage) => chatDraftImage.chat_draft_image_id
-        ) ?? [],
+      chat_draft_image_ids: chatDraftImages?.map((chatDraftImage) => chatDraftImage.chat_draft_image_id) ?? [],
     };
 
     if (query.reconsult) {
       data.re_consult_chat_room_id = query.reconsult;
-      data.re_consult_file_chat_message_ids = reConsultFileMessages.map(
-        (chatMessage) => chatMessage.uid
-      );
+      data.re_consult_file_chat_message_ids = reConsultFileMessages.map((chatMessage) => chatMessage.uid);
     }
 
     const response = await createNewChatRoom(data).catch((error) => {
       console.error(error);
-      setErrorMessage(
-        (error.response.data as PostChatRoomResponseData).message
-      );
+      setErrorMessage((error.response.data as PostChatRoomResponseData).message);
       return null;
     });
 
@@ -393,10 +348,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
       for (const file of filesForReConsult) {
         await postChatMessageFile(chatRoomId, file.file).catch((error) => {
           console.error(error);
-          errorMessages.push(
-            `${file.file.name}:` +
-              (error.response?.data?.message || 'エラーが発生しました。')
-          );
+          errorMessages.push(`${file.file.name}:` + (error.response?.data?.message || 'エラーが発生しました。'));
           return null;
         });
       }
@@ -480,12 +432,10 @@ export const useNewChatRoom = (): UseNewChatRoom => {
 
   const deleteChatDraftImageById = useCallback(
     async (chatDraftImageId: string) => {
-      const response = await deleteChatDraftImage(chatDraftImageId).catch(
-        (error) => {
-          console.error(error);
-          return null;
-        }
-      );
+      const response = await deleteChatDraftImage(chatDraftImageId).catch((error) => {
+        console.error(error);
+        return null;
+      });
       if (!response) {
         alert('エラーが発生しました。');
         return;
@@ -498,9 +448,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
   const changeMedicalSpecialities = useCallback(
     (medicalSpecialities: MedicalSpecialityEntity[]) => {
       setChatRoomFields({
-        target_specialities: medicalSpecialities.map(
-          (medicalSpeciality) => medicalSpeciality.speciality_code
-        ),
+        target_specialities: medicalSpecialities.map((medicalSpeciality) => medicalSpeciality.speciality_code),
       });
       setIsMedicalSpecialitiesSelectDialogShown(false);
     },
@@ -509,14 +457,8 @@ export const useNewChatRoom = (): UseNewChatRoom => {
 
   const moveSelectedMedicalSpeciality = useCallback(
     (dragIndex: number, hoverIndex: number) => {
-      const copy = [...chatRoom.target_specialities];
-      const dragging = copy.splice(dragIndex, 1);
       setChatRoomFields({
-        target_specialities: [
-          ...copy.slice(0, hoverIndex),
-          dragging[0],
-          ...copy.slice(hoverIndex),
-        ],
+        target_specialities: moveItem(chatRoom.target_specialities, dragIndex, hoverIndex),
       });
     },
     [chatRoom.target_specialities, setChatRoomFields]
@@ -524,16 +466,12 @@ export const useNewChatRoom = (): UseNewChatRoom => {
 
   const deleteReConsultFileMessage = useCallback((chatMessageId: number) => {
     setReConsultFileMessages((reConsultFileMessages) =>
-      reConsultFileMessages.filter(
-        (chatMessage) => chatMessage.uid !== chatMessageId
-      )
+      reConsultFileMessages.filter((chatMessage) => chatMessage.uid !== chatMessageId)
     );
   }, []);
 
   const deleteFileForReConsult = useCallback((id: number) => {
-    setFilesForReConsult((filesForReConsult) =>
-      filesForReConsult.filter((file) => file.id !== id)
-    );
+    setFilesForReConsult((filesForReConsult) => filesForReConsult.filter((file) => file.id !== id));
   }, []);
 
   return {

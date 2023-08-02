@@ -11,13 +11,11 @@ export type SelectedMedicalSpecialityProps = {
   moveItem: (dragIndex: number, hoverIndex: number) => void;
 };
 
-export const SelectedMedicalSpeciality: React.FC<
-  SelectedMedicalSpecialityProps
-> = (props: SelectedMedicalSpecialityProps) => {
-  const { index, medicalSpeciality, medicalSpecialityCategory, onDelete } =
-    props;
-  const { dragRef, handlerId, isDragging, previewRef } =
-    useSelectedMedicalSpeciality(props);
+export const SelectedMedicalSpeciality: React.FC<SelectedMedicalSpecialityProps> = (
+  props: SelectedMedicalSpecialityProps
+) => {
+  const { index, medicalSpeciality, medicalSpecialityCategory, onDelete } = props;
+  const { dragRef, handlerId, isDragging, previewRef } = useSelectedMedicalSpeciality(props);
 
   return (
     <div
@@ -29,11 +27,8 @@ export const SelectedMedicalSpeciality: React.FC<
       }`}
     >
       <div className="flex h-full grow">
-        <div
-          ref={dragRef}
-          className="flex h-full w-8 grow-0 items-center justify-center bg-bg"
-        >
-          <img src="/icons/drag_indicator.svg" width="24" height="24" />
+        <div ref={dragRef} className="flex h-full w-8 grow-0 cursor-grab items-center justify-center bg-bg">
+          <div className="h-6 w-6 bg-[url('/icons/drag_indicator.svg')]" />
         </div>
         <div className="flex w-10 shrink-0 grow-0 items-center justify-center text-center font-bold text-primary">
           <div>{index + 1}</div>
