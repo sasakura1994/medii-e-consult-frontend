@@ -24,7 +24,7 @@ export const useWithdrawalPage = () => {
     }
 
     removeAuthToken();
-    router.push('/withdrawal-completed');
+    router.push('/withdrawal/completed');
   }, [axios, router]);
 
   return { isSending, withdraw };
