@@ -2,6 +2,9 @@ import React from 'react';
 import { Radio } from '@/components/Parts/Form/Radio';
 import { UseEditProfile } from './useEditProfile';
 
+const now = new Date();
+const doctorApprovalYear = now.getFullYear() - (now.getMonth() <= 3 ? 7 : 6);
+
 export const UsageClassification = (props: UseEditProfile) => {
   const { profile, setProfileFields } = props;
 
@@ -31,12 +34,11 @@ export const UsageClassification = (props: UseEditProfile) => {
         <p className="mb-4 ml-4 mt-2 text-[13px] font-medium">
           ※ご回答いただくエキスパート専門医の登録には、審査を行っております
           <br />
-          ※医師卒後年数7年目以上を一つの条件とし、総合的に判定しております
+          ※医師卒後年数7年目(～{doctorApprovalYear}年度医師登録)以上を一つの条件とし、総合的に判定しております
           <br />
           ※エキスパート専門医に登録いただいても、E-コンサルへのご回答は任意です
           <br />
           ※回答する毎にAmazonギフト券と交換できるポイントが付与されます
-          <br />
         </p>
       </div>
 
