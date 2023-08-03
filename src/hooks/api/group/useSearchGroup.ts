@@ -8,30 +8,28 @@ export type SearchGroupConditions = {
   groupName: string;
 };
 
+export type SearchedGroupEntity = Pick<
+  GroupEntity,
+  'group_id' | 'group_name' | 'area' | 'disease' | 'explanation' | 'is_real_name'
+> & {
+  member_ids: string[];
+  speciality_counts: { [key: string]: number };
+};
+
 export type UseSearchGroupType = {
   isLoading: boolean;
   error?: Error;
-  groups?: GroupEntity[];
+  groups?: SearchedGroupEntity[];
 };
 
-export const useSearchGroup = (
-  conditions?: SearchGroupConditions
-): UseSearchGroupType => {
+export const useSearchGroup = (conditions?: SearchGroupConditions): UseSearchGroupType => {
   const endpoint = conditions
-    ? `/group/search_groups?speciality_code=${
-        conditions.specialityCode
-      }&disease=${encodeURIComponent(
+    ? `/group/search_groups?speciality_code=${conditions.specialityCode}&disease=${encodeURIComponent(
         conditions.disease
-      )}&area=${encodeURIComponent(
-        conditions.area
-      )}&group_name=${encodeURIComponent(conditions.groupName)}`
+      )}&area=${encodeURIComponent(conditions.area)}&group_name=${encodeURIComponent(conditions.groupName)}`
     : undefined;
 
-  const {
-    isLoading,
-    error,
-    data: groups,
-  } = useAuthenticatedSWR<GroupEntity[]>(endpoint);
+  const { isLoading, error, data: groups } = useAuthenticatedSWR<SearchedGroupEntity[]>(endpoint);
 
   return {
     isLoading,
