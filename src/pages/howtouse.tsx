@@ -3,7 +3,7 @@ import type { NextPageWithLayout } from '@/pages/_app';
 import { HowToUse } from '@/features/howToUse';
 import { useRouter } from 'next/router';
 import { CustomHead } from '@/components/Layouts/Header/CustomHead';
-import { Layout } from '@/components/Layouts/Layout';
+import { LegacyLayout } from '@/components/Layouts/LegacyLayout';
 
 const HowToUsePage: NextPageWithLayout = () => {
   const router = useRouter();
@@ -16,7 +16,7 @@ const HowToUsePage: NextPageWithLayout = () => {
       return (
         <>
           <CustomHead />
-          <Layout>{page}</Layout>
+          <LegacyLayout>{page}</LegacyLayout>
         </>
       );
     }

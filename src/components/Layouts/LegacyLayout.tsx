@@ -11,12 +11,12 @@ type PropsType = {
   headerFigure?: HeaderFigureType;
 };
 
-export const Layout = (props: PropsType) => {
+export const LegacyLayout = (props: PropsType) => {
   const { children, headerFigure } = props;
   useAuthenticationOnPage();
 
   return (
-    <div className="h-full min-h-screen w-full bg-bg-primary">
+    <div className="h-full min-h-screen w-full bg-bg">
       {!headerFigure || headerFigure === 'default' ? (
         <Header />
       ) : headerFigure === 'simple' ? (
