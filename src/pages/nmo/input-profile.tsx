@@ -9,6 +9,7 @@ import PrimaryButton from '@/components/Button/PrimaryButton';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 import { useNmoInputProfile } from '@/features/nmo/useNmoInputProfile';
 import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
+import { EditProfileBirthday } from '@/features/mypages/editProfile/EditProfileBirthday';
 
 const NmoInputProfilePage: NextPageWithLayout = () => {
   const inputProfile = useNmoInputProfile();
@@ -27,6 +28,9 @@ const NmoInputProfilePage: NextPageWithLayout = () => {
         >
           <EditProfileHeading className="mb-4">利用者情報</EditProfileHeading>
           <UserInfoNames isEnabled={true} {...inputProfile} />
+          <div className="mt-4">
+            <EditProfileBirthday isEnabled={true} {...inputProfile} />
+          </div>
           <EditProfileHeading className="my-8">医療従事経歴</EditProfileHeading>
           <MedicalCareerQualifiedYear isEnabled={true} {...inputProfile} />
           <div className="mt-4">
