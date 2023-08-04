@@ -139,6 +139,12 @@ export const ProfileDetail: React.FC<Props> = ({ onEdit }: Props) => {
                 <p>{profile.want_to_be_consultant ? '回答医&相談（E−コンサルへの回答も行います）' : '相談医'}</p>
               </div>
             )}
+
+            <div className="mt-12 lg:pb-10">
+              <Link href="/withdrawal/confirm">
+                <a className="text-md text-distructive underline">アカウントを削除する</a>
+              </Link>
+            </div>
           </>
         )}
       </Card>
