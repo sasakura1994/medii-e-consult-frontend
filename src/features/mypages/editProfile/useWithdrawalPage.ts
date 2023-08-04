@@ -4,6 +4,10 @@ import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react';
 import { useFetchQuestionaryItemsForWithdrawal } from '@/hooks/api/questionary/useFetchQuestionaryItemsForWithdrawal';
 
+type WithdrawRequestData = {
+  questionary_item_ids: string;
+};
+
 export const useWithdrawalPage = () => {
   const router = useRouter();
   const { axios } = useAxios();
@@ -27,7 +31,11 @@ export const useWithdrawalPage = () => {
   const withdraw = useCallback(async () => {
     setIsSending(true);
 
-    const response = await axios.delete('/doctor/withdraw').catch((error) => {
+    const data: WithdrawRequestData = {
+      questionary_item_ids: selectedQuestionaryItemIds.join(','),
+    };
+
+    const response = await axios.delete('/doctor/withdraw', { data }).catch((error) => {
       console.error(error);
       alert(error.response.data.message || 'エラーが発生しました');
       return null;
@@ -41,7 +49,7 @@ export const useWithdrawalPage = () => {
 
     removeAuthToken();
     router.push('/withdrawal/completed');
-  }, [axios, router]);
+  }, [axios, router, selectedQuestionaryItemIds]);
 
   return { isSending, questionaryItems, selectedQuestionaryItemIds, toggleQuestionaryItem, withdraw };
 };
