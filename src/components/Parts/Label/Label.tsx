@@ -5,10 +5,11 @@ type LabelProps = {
   color?: 'primaryBlue' | 'gray';
   size?: 'sm' | 'md';
   className?: string;
+  dataTestId?: string;
 };
 
 const Label = (props: LabelProps) => {
-  const { text, color = 'primaryBlue', className, size = 'md' } = props;
+  const { text, color = 'primaryBlue', className, size = 'md', dataTestId } = props;
 
   return (
     <p
@@ -17,6 +18,7 @@ const Label = (props: LabelProps) => {
       } ${color === 'gray' ? 'bg-[#EDEDED] text-text-secondary ' : 'bg-medii-blue-100 text-medii-blue-base'} ${
         className ?? ''
       }`}
+      data-testid={dataTestId}
     >
       {text}
     </p>

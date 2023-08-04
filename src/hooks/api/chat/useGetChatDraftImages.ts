@@ -1,7 +1,7 @@
 import { useAuthenticatedSWR } from '@/hooks/network/useAuthenticatedSWR';
 import { ChatDraftImageEntity } from '@/types/entities/chat/ChatDraftImageEntity';
 
-const endpoint = '/api/chat_draft_image/chat_draft_images';
+const endpoint = '/chat_draft_image/chat_draft_images';
 
 export type GetChatDraftImagesResponseData = {
   chat_draft_images: ChatDraftImageEntity[];

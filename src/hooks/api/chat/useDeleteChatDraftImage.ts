@@ -11,7 +11,7 @@ export const useDeleteChatDraftImage = () => {
   const deleteChatDraftImage = React.useCallback(
     (chatDraftImageId: string) => {
       return axios.delete<DeleteChatDraftImageResponseData>(
-        `/api/chat_draft_image/${chatDraftImageId}`
+        `/chat_draft_image/${chatDraftImageId}`
       );
     },
     [axios]

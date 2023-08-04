@@ -29,14 +29,11 @@ export const SelectedMedicalSpecialities: React.FC<Props> = ({
             key={medicalSpeciality.speciality_code}
             index={index}
             medicalSpeciality={medicalSpeciality}
-            medicalSpecialityCategory={
-              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-              medicalSpecialityCategories.find(
-                (medicalSpecialityCategory) =>
-                  medicalSpecialityCategory.id ===
-                  medicalSpeciality.medical_speciality_category_id
-              )!
-            }
+            medicalSpecialityCategory={medicalSpecialityCategories.find(
+              (medicalSpecialityCategory) =>
+                medicalSpecialityCategory.id ===
+                medicalSpeciality.medical_speciality_category_id
+            )}
             onDelete={() => onDelete(medicalSpeciality)}
             moveItem={moveSelectedMedicalSpeciality}
           />

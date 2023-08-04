@@ -21,6 +21,7 @@ export const Radio: React.FC<PropsType> = (props) => {
         name={name}
         checked={checked}
         id={id}
+        data-testid={id}
         className={`${styles.radio__input} ${styles.visually_hidden}`}
         onChange={onChange}
       />
