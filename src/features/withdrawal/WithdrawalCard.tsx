@@ -12,7 +12,7 @@ export const WithdrawalCard = (props: Props) => {
   const { image, href, buttonLabel } = props;
 
   return (
-    <div className="flex h-[224px] flex-1 flex-col items-center justify-center gap-4 rounded-lg shadow-high">
+    <div className="flex h-[224px] flex-1 flex-col items-center justify-center gap-4 rounded-lg py-6 shadow-high">
       <img src={image} alt="" />
       <a href={href} target="_blank" rel="noreferrer">
         <TertiaryButton size="large" className="flex items-center gap-1">
