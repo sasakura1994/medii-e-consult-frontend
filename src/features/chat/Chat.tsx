@@ -6,7 +6,7 @@ export const Chat = () => {
   const router = useRouter();
   const { chat_room_id } = router.query;
   return (
-    <div className="flex">
+    <div className="flex bg-white">
       <ConsultList />
       {chat_room_id ? (
         <ConsultDetail />

@@ -3,6 +3,7 @@ import { ConsultTitle } from './ConsultTitle';
 import { useFetchChatRoomList } from '@/hooks/api/chat/useFetchChatRoomList';
 import { useFetchUnreadCounts } from '@/hooks/api/chat/useFetchUnreadCounts';
 import Link from 'next/link';
+import { StyledHiddenScrollBar } from './styled';
 
 export const ConsultList = () => {
   const [isOpenedConultList, setIsOpenedConsultList] = useState(true);
@@ -21,7 +22,7 @@ export const ConsultList = () => {
           ＋匿名でコンサル作成
         </button>
       </div>
-      <div className="flex h-10">
+      <div className="flex h-10 bg-white">
         <div className="flex w-full cursor-pointer items-center justify-center border-b-2 border-primary">
           <p className="text-sm text-primary">コンサル中</p>
         </div>
@@ -29,41 +30,27 @@ export const ConsultList = () => {
           <p className="text-sm">解決済み</p>
         </div>
       </div>
-      <div className="h-full overflow-scroll pb-36">
+      <StyledHiddenScrollBar className="h-full overflow-scroll bg-white pb-36">
         <button
-          className="flex h-10 w-full cursor-pointer items-center bg-[#f1f1f1] hover:bg-btn-hover-gray"
+          className=" flex h-10 w-full cursor-pointer items-center border-t-black bg-[#f1f1f1] hover:bg-btn-hover-gray"
           onClick={() => setIsOpenedConsultList((prev) => !prev)}
         >
-          <img
-            src="/icons/human_single.svg"
-            alt=""
-            className="ml-3 mr-3 h-6 w-6"
-          />
-          <p className="text-md font-bold text-text-secondary">
+          <img src="/icons/human_single.svg" alt="" className="ml-3 mr-3 h-6 w-6" />
+          <p className="text-md font-bold text-[#333333]">
             マンツーマン [
             {chatRoomList
               ? chatRoomList.filter(
                   (c) =>
                     c.room_type !== 'GROUP' &&
-                    (c.status === 'CREATED' ||
-                      c.status === 'ACTIVE' ||
-                      c.status === 'REOPEN')
+                    (c.status === 'CREATED' || c.status === 'ACTIVE' || c.status === 'REOPEN')
                 ).length
               : 0}
             ]
           </p>
           {isOpenedConultList ? (
-            <img
-              src="/icons/arrow_down.svg"
-              alt=""
-              className="ml-auto mr-3 h-4 w-4"
-            />
+            <img src="/icons/arrow_down.svg" alt="" className="ml-auto mr-3 h-4 w-4" />
           ) : (
-            <img
-              src="/icons/arrow_right.svg"
-              alt=""
-              className="ml-auto mr-3 h-4 w-4"
-            />
+            <img src="/icons/arrow_right.svg" alt="" className="ml-auto mr-3 h-4 w-4" />
           )}
         </button>
         {isOpenedConultList &&
@@ -72,10 +59,7 @@ export const ConsultList = () => {
           chatRoomList
             .filter(
               (c) =>
-                c.room_type !== 'GROUP' &&
-                (c.status === 'CREATED' ||
-                  c.status === 'ACTIVE' ||
-                  c.status === 'REOPEN')
+                c.room_type !== 'GROUP' && (c.status === 'CREATED' || c.status === 'ACTIVE' || c.status === 'REOPEN')
             )
             .map((chatRoom) => {
               return (
@@ -102,39 +86,25 @@ export const ConsultList = () => {
               );
             })}
         <button
-          className="flex h-10 w-full cursor-pointer items-center bg-[#f1f1f1] hover:bg-btn-hover-gray"
+          className="flex h-10 w-full cursor-pointer items-center border-t-black bg-[#f1f1f1] hover:bg-btn-hover-gray"
           onClick={() => setIsOpenedGroupList((prev) => !prev)}
         >
-          <img
-            src="/icons/human_double.svg"
-            alt=""
-            className="ml-3 mr-3 h-6 w-6"
-          />
-          <p className="text-md font-bold text-text-secondary">
+          <img src="/icons/human_double.svg" alt="" className="ml-3 mr-3 h-6 w-6" />
+          <p className="text-md font-bold text-[#333333]">
             グループ[
             {chatRoomList
               ? chatRoomList.filter(
                   (c) =>
                     c.room_type === 'GROUP' &&
-                    (c.status === 'CREATED' ||
-                      c.status === 'ACTIVE' ||
-                      c.status === 'REOPEN')
+                    (c.status === 'CREATED' || c.status === 'ACTIVE' || c.status === 'REOPEN')
                 ).length
               : 0}
             ]
           </p>
           {isOpenedGroupList ? (
-            <img
-              src="/icons/arrow_down.svg"
-              alt=""
-              className="ml-auto mr-3 h-4 w-4"
-            />
+            <img src="/icons/arrow_down.svg" alt="" className="ml-auto mr-3 h-4 w-4" />
           ) : (
-            <img
-              src="/icons/arrow_right.svg"
-              alt=""
-              className="ml-auto mr-3 h-4 w-4"
-            />
+            <img src="/icons/arrow_right.svg" alt="" className="ml-auto mr-3 h-4 w-4" />
           )}
         </button>
         {isOpenedGroupList &&
@@ -143,10 +113,7 @@ export const ConsultList = () => {
           chatRoomList
             .filter(
               (c) =>
-                c.room_type === 'GROUP' &&
-                (c.status === 'CREATED' ||
-                  c.status === 'ACTIVE' ||
-                  c.status === 'REOPEN')
+                c.room_type === 'GROUP' && (c.status === 'CREATED' || c.status === 'ACTIVE' || c.status === 'REOPEN')
             )
             .map((chatRoom) => {
               return (
@@ -172,7 +139,7 @@ export const ConsultList = () => {
                 </Link>
               );
             })}
-      </div>
+      </StyledHiddenScrollBar>
     </div>
   );
 };
