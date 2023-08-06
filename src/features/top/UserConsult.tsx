@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import TertiaryButton from '@/components/Button/TertiaryButton';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import { TopTab } from './TopTab';
@@ -6,10 +6,8 @@ import { StyledHiddenScrollBar } from './styled';
 import { UserConsultQuestionContent } from './UserConsultQuestionContent';
 import { UserConsultNoContents } from './UserConsultNoContents';
 import Link from 'next/link';
-import { useFetchChatRoomMineOwn } from '@/hooks/api/chat/useFetchChatRoomMineOwn';
-import { useFetchChatRoomMineRespond } from '@/hooks/api/chat/useFetchChatRoomMineRespond';
 import { UserConsultAnswerContent } from './UserConsultAnswerContent';
-import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
+import { useUserConsult } from './useUserConsult';
 
 type UserConsultProps = {
   setShowTutorialExplanationModal: (isShow: boolean) => void;
@@ -17,22 +15,22 @@ type UserConsultProps = {
 
 export const UserConsult = (props: UserConsultProps) => {
   const { setShowTutorialExplanationModal } = props;
-  const [activeTab, setActiveTab] = useState<'question' | 'answer'>('question');
-  const [isOpenAllChatRoom, setIsOpenAllChatRoom] = useState(false);
-  const { data: chatRoomMineOwnData } = useFetchChatRoomMineOwn({
-    limit: 100,
-  });
-  const { data: chatRoomMineRespondData } = useFetchChatRoomMineRespond({
-    limit: 100,
-  });
-  const { medicalSpecialities } = useFetchMedicalSpecialities();
+  const {
+    activeTab,
+    setActiveTab,
+    isOpenAllChatRoom,
+    setIsOpenAllChatRoom,
+    mineOwnUnreadCount,
+    mineRespondUnreadCount,
+    medicalSpecialities,
+    chatRoomMineOwnData,
+    chatRoomMineRespondData,
+  } = useUserConsult();
 
   return (
     <>
       <div className="mt-5 flex">
-        <p className="flex-grow text-xxl font-bold text-text-primary">
-          あなたに関わるE-コンサル
-        </p>
+        <p className="flex-grow text-xxl font-bold text-text-primary">あなたに関わるE-コンサル</p>
         <div className="hidden whitespace-nowrap lg:block">
           <Link href="/newchatroom">
             <a>
@@ -53,6 +51,7 @@ export const UserConsult = (props: UserConsultProps) => {
       <StyledHiddenScrollBar className="mt-5 flex items-end overflow-y-hidden overflow-x-scroll">
         <TopTab
           text="自分が質問"
+          unreadCount={mineOwnUnreadCount}
           isActive={activeTab === 'question'}
           onClick={() => {
             setActiveTab('question');
@@ -60,6 +59,7 @@ export const UserConsult = (props: UserConsultProps) => {
         />
         <TopTab
           text="自分が回答"
+          unreadCount={mineRespondUnreadCount}
           isActive={activeTab === 'answer'}
           onClick={() => {
             setActiveTab('answer');
@@ -71,30 +71,20 @@ export const UserConsult = (props: UserConsultProps) => {
       {activeTab === 'question' && (
         <>
           {!chatRoomMineOwnData?.rooms.length && activeTab === 'question' && (
-            <UserConsultNoContents
-              setShowTutorialExplanationModal={setShowTutorialExplanationModal}
-            />
+            <UserConsultNoContents setShowTutorialExplanationModal={setShowTutorialExplanationModal} />
           )}
           {chatRoomMineOwnData &&
             (isOpenAllChatRoom
               ? chatRoomMineOwnData.rooms.map((chatRoomMineOwn) => {
                   return (
-                    <UserConsultQuestionContent
-                      key={chatRoomMineOwn.chat_room_id}
-                      chatRoomMineOwn={chatRoomMineOwn}
-                    />
+                    <UserConsultQuestionContent key={chatRoomMineOwn.chat_room_id} chatRoomMineOwn={chatRoomMineOwn} />
                   );
                 })
-              : chatRoomMineOwnData?.rooms
-                  .slice(0, 5)
-                  .map((chatRoomMineOwn) => {
-                    return (
-                      <UserConsultQuestionContent
-                        key={chatRoomMineOwn.chat_room_id}
-                        chatRoomMineOwn={chatRoomMineOwn}
-                      />
-                    );
-                  }))}
+              : chatRoomMineOwnData?.rooms.slice(0, 5).map((chatRoomMineOwn) => {
+                  return (
+                    <UserConsultQuestionContent key={chatRoomMineOwn.chat_room_id} chatRoomMineOwn={chatRoomMineOwn} />
+                  );
+                }))}
           {chatRoomMineOwnData && chatRoomMineOwnData.rooms.length > 0 && (
             <>
               {isOpenAllChatRoom ? (
@@ -121,9 +111,7 @@ export const UserConsult = (props: UserConsultProps) => {
       {activeTab === 'answer' && (
         <>
           {!chatRoomMineRespondData?.rooms.length && (
-            <UserConsultNoContents
-              setShowTutorialExplanationModal={setShowTutorialExplanationModal}
-            />
+            <UserConsultNoContents setShowTutorialExplanationModal={setShowTutorialExplanationModal} />
           )}
           {chatRoomMineRespondData &&
             medicalSpecialities &&
@@ -138,38 +126,35 @@ export const UserConsult = (props: UserConsultProps) => {
                     />
                   );
                 })
-              : chatRoomMineRespondData?.rooms
-                  .slice(0, 5)
-                  .map((chatRoomMineRespond) => {
-                    return (
-                      <UserConsultAnswerContent
-                        key={chatRoomMineRespond.chat_room_id}
-                        chatRoomMineRespond={chatRoomMineRespond}
-                        medicalSpecialities={medicalSpecialities}
-                      />
-                    );
-                  }))}
-          {chatRoomMineRespondData &&
-            chatRoomMineRespondData.rooms.length > 0 && (
-              <>
-                {isOpenAllChatRoom ? (
-                  <TertiaryButton
-                    className="mx-auto mt-7 w-full lg:w-auto"
-                    onClick={() => setIsOpenAllChatRoom((prev) => !prev)}
-                  >
-                    閉じる
-                  </TertiaryButton>
-                ) : (
-                  <TertiaryButton
-                    size="large"
-                    className="mx-auto mt-7 w-full lg:w-auto"
-                    onClick={() => setIsOpenAllChatRoom((prev) => !prev)}
-                  >
-                    すべてのE-コンサル
-                  </TertiaryButton>
-                )}
-              </>
-            )}
+              : chatRoomMineRespondData?.rooms.slice(0, 5).map((chatRoomMineRespond) => {
+                  return (
+                    <UserConsultAnswerContent
+                      key={chatRoomMineRespond.chat_room_id}
+                      chatRoomMineRespond={chatRoomMineRespond}
+                      medicalSpecialities={medicalSpecialities}
+                    />
+                  );
+                }))}
+          {chatRoomMineRespondData && chatRoomMineRespondData.rooms.length > 0 && (
+            <>
+              {isOpenAllChatRoom ? (
+                <TertiaryButton
+                  className="mx-auto mt-7 w-full lg:w-auto"
+                  onClick={() => setIsOpenAllChatRoom((prev) => !prev)}
+                >
+                  閉じる
+                </TertiaryButton>
+              ) : (
+                <TertiaryButton
+                  size="large"
+                  className="mx-auto mt-7 w-full lg:w-auto"
+                  onClick={() => setIsOpenAllChatRoom((prev) => !prev)}
+                >
+                  すべてのE-コンサル
+                </TertiaryButton>
+              )}
+            </>
+          )}
         </>
       )}
     </>
