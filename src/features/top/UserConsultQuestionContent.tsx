@@ -43,7 +43,7 @@ export const UserConsultQuestionContent = (props: UserConsultQuestionContentProp
   }, [chatRoomMineOwn]);
 
   return (
-    <div className="flex h-28 items-center border-b border-border-divider p-4">
+    <div className="flex min-h-[112px] items-center border-b border-border-divider p-4">
       {/* SP */}
       <Link href={`/chat?chat_room_id=${chatRoomMineOwn.chat_room_id}`}>
         <a className="block lg:hidden">
@@ -55,7 +55,7 @@ export const UserConsultQuestionContent = (props: UserConsultQuestionContentProp
               )}
               <p className="text-md text-text-secondary line-clamp-1">{chatRoomMineOwn.latest_message}</p>
             </div>
-            <div className="mt-2 flex">
+            <div className="mt-2 flex items-center">
               {labelText}
               <p className="test-md ml-2 font-bold text-text-secondary">{respondentLabel}</p>
               <p className="test-md text-text-secondary">・</p>
