@@ -6,7 +6,12 @@ import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetc
 import { DoctorEntity } from '@/types/entities/doctorEntity';
 import React from 'react';
 
-export const useDoctorSearchModal = () => {
+type Args = {
+  reConsultChatRoomId?: string;
+};
+
+export const useDoctorSearchModal = (args: Args) => {
+  const { reConsultChatRoomId } = args;
   const [experienceYears, setExperienceYears] = React.useState('');
   const [specialityCode, setSpecialityCode] = React.useState('');
   const [searchConditions, setSearchConditions] =
@@ -20,8 +25,9 @@ export const useDoctorSearchModal = () => {
     setSearchConditions({
       speciality: specialityCode,
       experienceYears: experienceYears,
+      reConsultChatRoomId,
     });
-  }, [experienceYears, specialityCode]);
+  }, [reConsultChatRoomId, experienceYears, specialityCode]);
 
   const getMedicalSpecialityName = React.useCallback(
     (specialityCode: string) =>

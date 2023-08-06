@@ -198,7 +198,7 @@ describe('Document', () => {
       userEvent.clear(doctorNumber);
       userEvent.type(doctorNumber, '111111');
 
-      const year = screen.getByTestId('document-input-number-form-year');
+      const year = screen.getByTestId('year-input-year');
       userEvent.clear(year);
       userEvent.type(year, '2015');
 

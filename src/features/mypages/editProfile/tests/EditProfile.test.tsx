@@ -1,30 +1,30 @@
 import React from 'react';
-import userEvent from '@testing-library/user-event';
-import { render, screen, act, waitFor } from '@testing-library/react';
+import { render, screen, act } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
-import { Profile } from '../Profile';
+import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
+import { EditProfile } from '../EditProfile';
+
+jest.mock('@/hooks/api/doctor/useFetchProfile');
 
 describe('EditProfile', () => {
-  test('編集画面に切り替わること', async () => {
-    await act(() => {
-      render(
-        <RecoilRoot>
-          <Profile />
-        </RecoilRoot>
-      );
+  test('nmoの場合は利用区分を表示しない', async () => {
+    const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
+    (useFetchProfileMock as jest.Mock).mockReturnValue({
+      profile: {
+        birthday_year: 2000,
+        birthday_month: 4,
+        birthday_day: 1,
+        qualified_year: 2020,
+        registration_source: 'nmo',
+      },
     });
 
-    // screen.debug();
+    render(
+      <RecoilRoot>
+        <EditProfile isRegisterMode={false} />
+      </RecoilRoot>
+    );
 
-    const editProfileBtn = screen.getByTestId('btn-profile-edit');
-    await act(() => {
-      userEvent.click(editProfileBtn);
-    });
-
-    const headingEditProfileEdit = screen.getByTestId('h-edit-profile-edit');
-    expect(headingEditProfileEdit).toBeInTheDocument();
+    expect(screen.queryByTestId('edit-profile-usage-classification')).not.toBeInTheDocument();
   });
-  test.todo('詳細画面に切り替わること');
-  test.todo('所属科選択モーダルが表示されること');
-  test.todo('更新ができること');
 });

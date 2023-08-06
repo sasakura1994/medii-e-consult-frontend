@@ -19,10 +19,7 @@ export const dayjsDate = (dateStr?: string): Date | undefined => {
   return dayjs(dateStr).tz().toDate();
 };
 
-export const dateFormat = (
-  dateStr: string | Date | null | undefined,
-  formatStr: string
-): string => {
+export const dateFormat = (dateStr: string | Date | null | undefined, formatStr: string): string => {
   if (!dateStr) {
     return '';
   }
@@ -45,9 +42,33 @@ export const timeFormat = (timeStr: string | null | undefined): string => {
 };
 
 // ref https://github.com/iamkun/dayjs/issues/320#issuecomment-537885327
-export const validateDate = (
-  dateStr: string | Date,
-  formatStr: string
-): boolean => {
+export const validateDate = (dateStr: string | Date, formatStr: string): boolean => {
   return dayjs(dateStr, formatStr).tz().format(formatStr) === dateStr;
 };
+
+export const getTimeIntervalText = (timeStr: string | null | undefined): string => {
+  if (!timeStr) {
+    return '';
+  }
+
+  const diff = dayjs().diff(dayjs(timeStr), 'minute');
+
+  if (diff < 60) {
+    return `${diff}分前`;
+  }
+
+  const hours = Math.floor(diff / 60);
+  if (hours < 24) {
+    return `${hours}時間前`;
+  }
+
+  const days = Math.floor(hours / 24);
+  if (days < 7) {
+    return `${days}日前`;
+  }
+
+  return dateFormat(timeStr, 'YYYY/MM/DD');
+};
+
+export const getWeekDay = (timeStr: string | Date) =>
+  ['日', '月', '火', '水', '木', '金', '土'][dayjs(timeStr).tz().day()];

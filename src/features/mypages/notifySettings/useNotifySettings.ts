@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { profileState } from '@/globalStates/profileState';
-import { useRecoilState } from 'recoil';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { useUpdateProfile } from '@/hooks/api/doctor/useUpdateProfile';
 import type { ProfileEntity } from '@/types/entities/profileEntity';
 
-export type UseNotifySettingsType = {
+export type UseNotifySettings = {
   profile?: ProfileEntity;
   isError: boolean;
   changeNotifyNew: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -14,28 +12,25 @@ export type UseNotifySettingsType = {
   update: () => void;
 };
 
-export const useNotifySettings = (): UseNotifySettingsType => {
-  const [profile, setProfileData] = useRecoilState(profileState);
-  const { profile: profileData } = useFetchProfile();
-  const { isSuccess, isError, updateProfile } = useUpdateProfile();
+export const useNotifySettings = (): UseNotifySettings => {
+  const [isInitialized, setIsInitialized] = useState(false);
+  const [profile, setProfile] = useState<ProfileEntity>();
+  const [isError, setIsError] = useState(false);
 
-  /**
-   * 更新失敗
-   */
-  React.useEffect(() => {
-    if (!isSuccess && isError) {
-      toast('通知設定に失敗しました');
-    }
-  }, [isSuccess, isError]);
+  const { profile: defaultProfile } = useFetchProfile();
+  const { updateProfile } = useUpdateProfile();
 
-  /**
-   * 更新成功
-   */
-  React.useEffect(() => {
-    if (isSuccess) {
-      toast('通知設定を変更しました');
+  useEffect(() => {
+    if (isInitialized) {
+      return;
     }
-  }, [isSuccess]);
+    if (!defaultProfile) {
+      return;
+    }
+
+    setProfile({ ...defaultProfile });
+    setIsInitialized(true);
+  }, [isInitialized, defaultProfile]);
 
   /**
    * 新着メッセージ通知の選択処理
@@ -70,12 +65,16 @@ export const useNotifySettings = (): UseNotifySettingsType => {
           break;
       }
 
-      setProfileData((oldValues: ProfileEntity) => ({
-        ...oldValues,
-        ...notifyNewFlags,
-      }));
+      setProfile((oldValues?: ProfileEntity) =>
+        oldValues
+          ? {
+              ...oldValues,
+              ...notifyNewFlags,
+            }
+          : undefined
+      );
     },
-    [setProfileData]
+    [setProfile]
   );
 
   /**
@@ -96,34 +95,43 @@ export const useNotifySettings = (): UseNotifySettingsType => {
           break;
       }
 
-      setProfileData((oldValues: ProfileEntity) => ({
-        ...oldValues,
-        not_seminar_mail_target: notifySeminarFlags,
-      }));
+      setProfile((oldValues?: ProfileEntity) =>
+        oldValues
+          ? {
+              ...oldValues,
+              not_seminar_mail_target: notifySeminarFlags,
+            }
+          : undefined
+      );
     },
-    [setProfileData]
+    [setProfile]
   );
 
   /**
    * 更新実行
    */
-  const update = () => {
-    updateProfile(profile);
-  };
+  const update = useCallback(async () => {
+    setIsError(false);
+    const data = { ...profile };
+    const formData = new FormData();
+    Object.keys(data).forEach((key) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      formData.append(key, (data as any)[key]);
+    });
 
-  /**
-   * プロフィールをフェッチできたらグローバルステートに保持する
-   * Note:
-   *       ログイン時（useLogin）にもステートに値がセットされているが、
-   *       ログイン後はリダイレクトが走って中身が消えてしまうので、一旦ここで再セットするようにしている
-   */
-  React.useEffect(() => {
-    if (!profileData) return;
-    setProfileData((oldValues: ProfileEntity) => ({
-      ...oldValues,
-      ...profileData,
-    }));
-  }, [profileData]);
+    const response = await updateProfile(formData).catch((error) => {
+      console.error(error);
+      return null;
+    });
+
+    if (!response) {
+      setIsError(true);
+      toast('通知設定に失敗しました');
+      return;
+    }
+
+    toast('通知設定を変更しました');
+  }, [profile, updateProfile]);
 
   return {
     profile,

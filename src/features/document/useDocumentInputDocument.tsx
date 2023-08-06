@@ -42,6 +42,7 @@ export const useDocumentInputDocument = ({
         }
         const newProfile = { ...profile };
         newProfile.document = fileSelectorRef.current?.files?.[0] || undefined;
+        newProfile.confimation_type = 'document';
         try {
           await uploadDocument(newProfile);
           setSelectedWithRedirect('completed');

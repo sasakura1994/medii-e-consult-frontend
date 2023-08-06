@@ -11,6 +11,7 @@ import { MedicalSpecialitySelectButton } from '@/components/MedicalSpeciality/Me
 import { useDoctor } from '@/hooks/useDoctor';
 
 export type DoctorSearchModalProps = {
+  reConsultChatRoomId?: string;
   onChange: (doctor: DoctorEntity) => void;
   setShowModal: (isShow: boolean) => void;
 };
@@ -18,7 +19,7 @@ export type DoctorSearchModalProps = {
 export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = (
   props: DoctorSearchModalProps
 ) => {
-  const { onChange, setShowModal } = props;
+  const { reConsultChatRoomId, onChange, setShowModal } = props;
   const {
     applySearchConditions,
     doctor,
@@ -29,13 +30,13 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = (
     setSpecialityCode,
     setExperienceYears,
     specialityCode,
-  } = useDoctorSearchModal();
+  } = useDoctorSearchModal({ reConsultChatRoomId });
   const { calculateExperienceYear } = useDoctor();
 
   return (
     <>
       <Modal setShowModal={setShowModal} className="lg:w-[644px]">
-        <div className="my-10 mx-6 lg:mx-20">
+        <div className="mx-6 my-10 lg:mx-20">
           <ModalTitleWithCloseButton
             title="E-コンサルする専門医を選択"
             onClose={() => setShowModal(false)}
@@ -80,7 +81,8 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = (
             <PrimaryButton
               type="button"
               size="lg"
-              className="w-full max-w-[260px]"
+              dataTestId="doctor-search-modal-search-button"
+              className="mx-auto w-full max-w-[260px]"
               onClick={applySearchConditions}
             >
               検索

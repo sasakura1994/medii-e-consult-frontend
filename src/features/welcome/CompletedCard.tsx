@@ -1,5 +1,5 @@
-import PrimaryButton from '@/components/Button/Primary';
-import TertiaryButton from '@/components/Button/Tertiary';
+import PrimaryButton from '@/components/Button/PrimaryButton';
+import TertiaryButton from '@/components/Button/TertiaryButton';
 import Label from '@/components/Parts/Label/Label';
 import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 import { useRouter } from 'next/router';
@@ -36,20 +36,13 @@ export const CompleteCard = (props: CompleteCardProps) => {
   } = props;
   return (
     <>
-      <div
-        className="mx-auto w-80 rounded-md bg-white p-6 shadow-high"
-        style={{ height: '362px' }}
-      >
+      <div className="mx-auto w-80 rounded-md bg-white p-6 shadow-high" style={{ height: '362px' }}>
         <div className="mx-auto flex">
-          <p className="my-auto mx-auto text-center text-xl font-bold text-text-primary">
-            {title}
-          </p>
-          {label && <Label text={label} />}
+          <p className="mx-auto my-auto text-center text-xl font-bold text-text-primary">{title}</p>
+          {label && <Label text={label} size="sm" />}
         </div>
         <img className="mx-auto mt-4 h-32 w-52" src={imageSrc} alt={title} />
-        <p className="mx-auto mt-4 text-left text-md text-text-secondary">
-          {description}
-        </p>
+        <p className="mx-auto mt-4 text-left text-md text-text-secondary">{description}</p>
         <div className="mt-6 flex justify-center space-x-2">
           {buttonSolid && linkSolid && (
             <div
@@ -61,7 +54,7 @@ export const CompleteCard = (props: CompleteCardProps) => {
                 router.push(linkSolid);
               }}
             >
-              <PrimaryButton width="w-full" size="large">
+              <PrimaryButton className="w-full" size="large">
                 {buttonSolid}
               </PrimaryButton>
             </div>
@@ -76,7 +69,7 @@ export const CompleteCard = (props: CompleteCardProps) => {
                 router.push(linkOutline);
               }}
             >
-              <TertiaryButton width="w-full" size="large">
+              <TertiaryButton className="w-full" size="large">
                 {buttonOutline}
               </TertiaryButton>
             </div>

@@ -1,5 +1,5 @@
-import PrimaryButton from '@/components/Button/Primary';
-import TertiaryButton from '@/components/Button/Tertiary';
+import PrimaryButton from '@/components/Button/PrimaryButton';
+import TertiaryButton from '@/components/Button/TertiaryButton';
 import { SeminarEntityType } from '@/types/entities/seminarEntity';
 import React, { useMemo, useState } from 'react';
 
@@ -30,7 +30,7 @@ export const SeminarConferenceCard = (props: SeminarConferenceCardProps) => {
         <div className="ml-0 w-full lg:m-4 lg:w-[440px]">
           <div className="mt-1 flex items-center">
             <p className="text-md">{dateTime}</p>
-            <div className="ml-3 w-full lg:ml-5 lg:w-auto">
+            <div className="ml-3 w-full whitespace-nowrap lg:ml-5 lg:w-auto">
               <a href={seminar.zoom_url} target="_blank" rel="noreferrer">
                 <PrimaryButton>Zoom E-カンファに事前登録</PrimaryButton>
               </a>
@@ -48,7 +48,6 @@ export const SeminarConferenceCard = (props: SeminarConferenceCardProps) => {
           </p>
           <div className="mt-2 flex justify-center">
             <TertiaryButton
-              size="medium"
               onClick={() => {
                 setIsOpened((prev) => !prev);
               }}
@@ -72,7 +71,7 @@ export const SeminarConferenceCard = (props: SeminarConferenceCardProps) => {
       <div className="mt-2 h-auto w-full">
         <div className="flex items-center">
           <p className="text-md">{dateTime}</p>
-          <div className="ml-3 w-full lg:ml-5 lg:w-auto">
+          <div className="ml-3 w-full whitespace-nowrap lg:ml-5 lg:w-auto">
             <a href={seminar.zoom_url} target="_blank" rel="noreferrer">
               <PrimaryButton>Zoom E-カンファに事前登録</PrimaryButton>
             </a>

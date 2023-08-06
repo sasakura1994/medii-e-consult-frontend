@@ -10,9 +10,7 @@ import { consultMessageTemplates } from '@/data/chatRoom';
 import { ExpandTextArea } from '@/components/Parts/Form/ExpandTextArea';
 import { CheckBox } from '@/components/Parts/Form/CheckBox';
 import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
-import ImageEditor, {
-  ImageEditorProps,
-} from '@/components/Parts/ImageEditor/ImageEditor';
+import ImageEditor, { ImageEditorProps } from '@/components/Parts/ImageEditor/ImageEditor';
 import dynamic, { DynamicOptions } from 'next/dynamic';
 import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 import { OutlinedSquareButton } from '@/components/Parts/Button/OutlinedSquareButton';
@@ -20,12 +18,11 @@ import { MedicalSpecialitiesSelectDialog } from '@/components/MedicalSpeciality/
 import { SelectedMedicalSpecialities } from '@/components/MedicalSpeciality/SelectedMedicalSpecialities';
 import { DoctorSearchModal } from './DoctorSearchModal';
 import { SearchGroupModal } from './SearchGroupModal';
+import { NewChatRoomFile } from './NewChatRoomFile';
+import Label from '@/components/Parts/Label/Label';
 // canvasの関係でサーバー時点でimportされているとエラーになるためこうするしかないらしい
 const ImageEditorComponent = dynamic<ImageEditorProps>(
-  (() =>
-    import(
-      '@/components/Parts/ImageEditor/ImageEditor'
-    )) as DynamicOptions<ImageEditorProps>,
+  (() => import('@/components/Parts/ImageEditor/ImageEditor')) as DynamicOptions<ImageEditorProps>,
   { ssr: false }
 ) as typeof ImageEditor;
 
@@ -36,15 +33,16 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
     ageRange,
     deleteChatDraftImageById,
     errorMessage,
-    changeDoctor,
-    changeGroup,
     changeMedicalSpecialities,
     chatDraftImages,
+    chatRoom,
     childAge,
     confirmInput,
     doctor,
+    deleteFileForReConsult,
+    deleteReConsultFileMessage,
     editingImage,
-    formData,
+    filesForReConsult,
     group,
     imageInput,
     isDoctorSearchModalShown,
@@ -55,81 +53,89 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
     moveSelectedMedicalSpeciality,
     onImageEdited,
     onSelectImage,
+    query,
+    reConsultFileMessages,
     resetImageInput,
     selectConsultMessageTemplate,
     selectedMedicalSpecialities,
     setAgeRangeWrapper,
     setChildAgeWrapper,
     setEditingImage,
-    setFormData,
+    setChatRoomFields,
     setIsDoctorSearchModalShown,
     setIsMedicalSpecialitiesSelectDialogShown,
     setIsSearchGroupModalShown,
-    setSelectedMedicalSpecialities,
   } = props;
 
   return (
     <>
       <h1 className="text-center text-2xl leading-9">E-コンサル ルーム作成</h1>
       <div className="mx-auto mb-10 lg:w-[80%]">
+        {query.reconsult && (
+          <div className="my-10 flex justify-center border-4 border-solid border-strong p-5 text-strong">
+            <div>
+              元のコンサルと同じ内容で入力済みとなっております。
+              <br className="hidden lg:inline" />
+              他の医師に相談するにあたり、内容の編集をする場合
+              <br className="hidden lg:inline" />
+              下記のフォームを直接編集をしてください。
+            </div>
+          </div>
+        )}
         <form onSubmit={confirmInput}>
-          <NewChatRoomFormLabel className="mt-4">
-            専門医指定方法
-          </NewChatRoomFormLabel>
+          <NewChatRoomFormLabel className="mt-4">専門医指定方法</NewChatRoomFormLabel>
           <div className="mt-1 flex flex-col gap-1">
             <div>
               <NewChatRoomRoomType
                 id="room-type-free"
                 label="診療科で指定する"
                 note="一般的なご相談の場合"
-                checked={formData.room_type === 'FREE'}
+                checked={chatRoom.room_type === 'FREE'}
                 value="FREE"
-                onChange={() => setFormData({ ...formData, room_type: 'FREE' })}
+                onChange={() => setChatRoomFields({ room_type: 'FREE' })}
               />
-              {formData.room_type === 'FREE' && (
+              {chatRoom.room_type === 'FREE' && (
                 <>
                   <div className="mt-2 flex items-center gap-2">
-                    <OutlinedSquareButton
-                      type="button"
-                      onClick={() =>
-                        setIsMedicalSpecialitiesSelectDialogShown(true)
-                      }
-                    >
+                    <OutlinedSquareButton type="button" onClick={() => setIsMedicalSpecialitiesSelectDialogShown(true)}>
                       診療科を指定
                     </OutlinedSquareButton>
                     {selectedMedicalSpecialities.length === 0 ? (
                       <div>未選択</div>
                     ) : (
                       <div>
-                        選択数：{selectedMedicalSpecialities.length}/
-                        {medicalSpecialities?.length}
+                        選択数：{selectedMedicalSpecialities.length}/{medicalSpecialities?.length}
                       </div>
                     )}
                   </div>
-                  {selectedMedicalSpecialities.length > 0 && (
+                  {selectedMedicalSpecialities.length > 0 && medicalSpecialityCategories && (
                     <div className="my-6">
                       <SelectedMedicalSpecialities
                         medicalSpecialities={selectedMedicalSpecialities}
-                        medicalSpecialityCategories={
-                          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                          medicalSpecialityCategories!
-                        }
+                        medicalSpecialityCategories={medicalSpecialityCategories}
                         onDelete={(medicalSpeciality) =>
-                          setSelectedMedicalSpecialities(
-                            (selectedMedicalSpecialities) =>
-                              selectedMedicalSpecialities.filter(
-                                (existingMedicalSpeciality) =>
-                                  medicalSpeciality.speciality_code !==
-                                  existingMedicalSpeciality.speciality_code
-                              )
-                          )
+                          setChatRoomFields({
+                            target_specialities: chatRoom.target_specialities.filter(
+                              (specialityCode) => specialityCode !== medicalSpeciality.speciality_code
+                            ),
+                          })
                         }
-                        moveSelectedMedicalSpeciality={
-                          moveSelectedMedicalSpeciality
-                        }
+                        moveSelectedMedicalSpeciality={moveSelectedMedicalSpeciality}
                       />
                     </div>
                   )}
+                  <div className="mb-3 text-medii-sm font-bold text-strong">
+                    <div>
+                      Medii所属の医師がコンサル内容を判断した上で、現在選択されていない診療科に回答依頼を送り直すことがあります。
+                    </div>
+                    {query.reconsult && (
+                      <div data-testid="reconsult-free-note">
+                        最初のコンサルと違う科の医師から回答を受けたい場合は変更してください。
+                        <br />
+                        既にコンサルの回答をもらった医師には送信はされません。
+                      </div>
+                    )}
+                  </div>
                 </>
               )}
             </div>
@@ -138,17 +144,16 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                 id="room-type-by-name"
                 label="バイネーム(氏名)で指定する"
                 note="相談したい先生が決まっている場合"
-                checked={formData.room_type === 'BY_NAME'}
+                checked={chatRoom.room_type === 'BY_NAME'}
                 value="BY_NAME"
-                onChange={() =>
-                  setFormData({ ...formData, room_type: 'BY_NAME' })
-                }
+                onChange={() => setChatRoomFields({ room_type: 'BY_NAME' })}
               />
             </div>
-            {formData.room_type === 'BY_NAME' && (
+            {chatRoom.room_type === 'BY_NAME' && (
               <>
                 <div className="my-2 flex items-center gap-2">
                   <OutlinedSquareButton
+                    dataTestId="by-name-search-button"
                     type="button"
                     onClick={() => setIsDoctorSearchModalShown(true)}
                   >
@@ -164,30 +169,42 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                 </div>
               </>
             )}
-            <div>
-              <NewChatRoomRoomType
-                id="room-type-group"
-                label="グループで指定する"
-                note="特定疾患や地域連携のご相談の場合"
-                checked={formData.room_type === 'GROUP'}
-                value="GROUP"
-                isBeta
-                onChange={() =>
-                  setFormData({ ...formData, room_type: 'GROUP' })
-                }
-              />
-            </div>
-            {formData.room_type === 'GROUP' && (
+            {!query.reconsult && (
               <>
-                <div className="my-2 flex items-center gap-2">
-                  <OutlinedSquareButton
-                    type="button"
-                    onClick={() => setIsSearchGroupModalShown(true)}
-                  >
-                    グループ検索
-                  </OutlinedSquareButton>
-                  {group ? <div>{group.group_name}</div> : <div>未選択</div>}
+                <div data-testid="room-type-group-container">
+                  <NewChatRoomRoomType
+                    id="room-type-group"
+                    label="グループで指定する"
+                    note="特定疾患や地域連携のご相談の場合"
+                    checked={chatRoom.room_type === 'GROUP'}
+                    value="GROUP"
+                    onChange={() => setChatRoomFields({ room_type: 'GROUP' })}
+                  />
                 </div>
+                {chatRoom.room_type === 'GROUP' && (
+                  <>
+                    <div className="my-2 flex items-start gap-2 lg:items-center">
+                      <OutlinedSquareButton
+                        type="button"
+                        className="whitespace-nowrap"
+                        onClick={() => setIsSearchGroupModalShown(true)}
+                      >
+                        グループ検索
+                      </OutlinedSquareButton>
+                      <div className="flex flex-col items-start gap-2 lg:flex-row lg:items-center">
+                        {group ? <div>{group.group_name}</div> : <div>未選択</div>}
+                        {group?.is_real_name && (
+                          <Label
+                            text="実名で投稿されるグループ"
+                            color="gray"
+                            className="whitespace-nowrap"
+                            dataTestId="real-name-note"
+                          />
+                        )}
+                      </div>
+                    </div>
+                  </>
+                )}
               </>
             )}
           </div>
@@ -198,16 +215,16 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
               value="man"
               label="男性"
               id="gender-man"
-              checked={formData.gender === 'man'}
-              onChange={() => setFormData({ ...formData, gender: 'man' })}
+              checked={chatRoom.gender === 'man'}
+              onChange={() => setChatRoomFields({ gender: 'man' })}
             />
             <Radio
               name="gender"
               value="woman"
               label="女性"
               id="gender-woman"
-              checked={formData.gender === 'woman'}
-              onChange={() => setFormData({ ...formData, gender: 'woman' })}
+              checked={chatRoom.gender === 'woman'}
+              onChange={() => setChatRoomFields({ gender: 'woman' })}
             />
           </div>
           <div className="mt-2 w-[240px]">
@@ -215,6 +232,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
               name="age_range"
               id="age-range"
               required
+              value={ageRange}
               onChange={(e) => setAgeRangeWrapper(e.target.value)}
             >
               <option value="" disabled={ageRange !== ''}>
@@ -232,6 +250,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                 <SelectBox
                   name="child_age"
                   id="child-age"
+                  value={childAge}
                   required
                   onChange={(e) => setChildAgeWrapper(e.target.value)}
                 >
@@ -251,17 +270,13 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
           <div className="mt-1">
             <TextField
               name="disease_name"
-              value={formData.disease_name}
-              onChange={(e) =>
-                setFormData({ ...formData, disease_name: e.target.value })
-              }
+              value={chatRoom.disease_name}
+              onChange={(e) => setChatRoomFields({ disease_name: e.target.value })}
               placeholder="例）多関節痛を訴える抗核抗体陽性患者への追加検査"
               required
             />
           </div>
-          <NewChatRoomFormLabel className="mt-4">
-            コンサル文
-          </NewChatRoomFormLabel>
+          <NewChatRoomFormLabel className="mt-4">コンサル文</NewChatRoomFormLabel>
           <div className="mt-6 text-xs font-bold">テンプレートを反映</div>
           <div className="mt-4 flex flex-row flex-wrap gap-x-6">
             {consultMessageTemplates.map((consultMessageTemplate) => (
@@ -269,9 +284,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                 key={consultMessageTemplate.title}
                 name="consult_message_template"
                 label={consultMessageTemplate.title}
-                onChange={() =>
-                  selectConsultMessageTemplate(consultMessageTemplate.text)
-                }
+                onChange={() => selectConsultMessageTemplate(consultMessageTemplate.text)}
               />
             ))}
           </div>
@@ -279,10 +292,9 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
             <ExpandTextArea
               name="first_message"
               className="min-h-[140px] text-[13px]"
-              value={formData.first_message}
-              onChange={(e) =>
-                setFormData({ ...formData, first_message: e.target.value })
-              }
+              value={chatRoom.first_message}
+              onChange={(e) => setChatRoomFields({ first_message: e.target.value })}
+              required
             />
             <div className="mt-3 flex items-center gap-2">
               <input
@@ -293,65 +305,66 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                 onClick={() => resetImageInput()}
                 onChange={onSelectImage}
               />
-              <OutlinedSquareButton
-                type="button"
-                onClick={() => imageInput.current?.click()}
-              >
+              <OutlinedSquareButton type="button" onClick={() => imageInput.current?.click()}>
                 参考画像追加
               </OutlinedSquareButton>
               <div className="text-[11px] text-block-gray">
                 画像・動画・Word・PDF等を含むあらゆるファイル形式に対応しています
               </div>
             </div>
-            {chatDraftImages && chatDraftImages.length > 0 && (
+            {query.reconsult && (
+              <div className="my-3 text-medii-sm font-bold text-strong" data-testid="reconsult-image-note">
+                参考画像を追加ボタンを押すと新規で画像を掲載することが可能です。
+                <br />
+                不要な画像は×を押すことで削除できます。
+              </div>
+            )}
+            {((chatDraftImages && chatDraftImages.length > 0) ||
+              reConsultFileMessages.length > 0 ||
+              filesForReConsult.length > 0) && (
               <div className="mt-4 flex flex-col gap-5">
-                {chatDraftImages.map((chatDraftImage) => (
-                  <div
-                    className="flex items-center gap-4"
+                {reConsultFileMessages.map((chatMessage) => (
+                  <NewChatRoomFile
+                    key={chatMessage.uid}
+                    isImage={chatMessage.content_type.match(/^image/) !== null}
+                    url={chatMessage.file_path}
+                    fileName={chatMessage.file_name}
+                    onDelete={() => deleteReConsultFileMessage(chatMessage.uid)}
+                  />
+                ))}
+                {filesForReConsult.map((file) => (
+                  <NewChatRoomFile
+                    key={file.id}
+                    isImage={file.file.type.match(/^image/) !== null}
+                    url={file.image as string}
+                    fileName={file.file.name}
+                    onDelete={() => deleteFileForReConsult(file.id)}
+                  />
+                ))}
+                {chatDraftImages?.map((chatDraftImage) => (
+                  <NewChatRoomFile
                     key={chatDraftImage.chat_draft_image_id}
-                  >
-                    <div className="w-full grow">
-                      {chatDraftImage.is_image ? (
-                        <img src={chatDraftImage.url} className="max-w-full" />
-                      ) : (
-                        <></>
-                      )}
-                    </div>
-                    <div className="shrink-0 grow-0">
-                      <a
-                        href="#"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          deleteChatDraftImageById(
-                            chatDraftImage.chat_draft_image_id
-                          );
-                        }}
-                      >
-                        <img src="/icons/close.png" width="16" height="16" />
-                      </a>
-                    </div>
-                  </div>
+                    isImage={chatDraftImage.is_image}
+                    url={chatDraftImage.url}
+                    fileName={chatDraftImage.file_name}
+                    onDelete={() => deleteChatDraftImageById(chatDraftImage.chat_draft_image_id)}
+                  />
                 ))}
               </div>
             )}
             <div className="my-6 text-center">
-              <PrimaryButton type="submit" className="my-6 w-[60%]">
+              <PrimaryButton type="submit" className="mx-auto my-6 w-[60%]">
                 プレビュー
               </PrimaryButton>
             </div>
-            {errorMessage !== '' && (
-              <ErrorMessage className="text-center">
-                {errorMessage}
-              </ErrorMessage>
-            )}
+            {errorMessage !== '' && <ErrorMessage className="text-center">{errorMessage}</ErrorMessage>}
             <div className="mt-12">
               <CheckBox
                 name="publishment_accepted"
                 label="コンサル事例としての掲載を許可する。"
-                checked={formData.publishment_accepted}
+                checked={chatRoom.publishment_accepted}
                 onChange={(e) =>
-                  setFormData({
-                    ...formData,
+                  setChatRoomFields({
                     publishment_accepted: e.target.checked,
                   })
                 }
@@ -366,11 +379,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
         </form>
       </div>
       {editingImage && (
-        <ImageEditorComponent
-          file={editingImage}
-          onSubmit={onImageEdited}
-          onClose={() => setEditingImage(undefined)}
-        />
+        <ImageEditorComponent file={editingImage} onSubmit={onImageEdited} onClose={() => setEditingImage(undefined)} />
       )}
       {isMedicalSpecialitiesSelectDialogShown && (
         <MedicalSpecialitiesSelectDialog
@@ -383,16 +392,17 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
         <DoctorSearchModal
           onChange={(doctor) => {
             setIsDoctorSearchModalShown(false);
-            changeDoctor(doctor);
+            setChatRoomFields({ target_doctor: doctor.account_id });
           }}
           setShowModal={setIsDoctorSearchModalShown}
+          reConsultChatRoomId={query.reconsult}
         />
       )}
       {isSearchGroupModalShown && (
         <SearchGroupModal
           onChange={(group) => {
             setIsSearchGroupModalShown(false);
-            changeGroup(group);
+            setChatRoomFields({ group_id: group.group_id });
           }}
           setShowModal={setIsSearchGroupModalShown}
         />

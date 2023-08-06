@@ -1,16 +1,14 @@
 import React from 'react';
-import { Label } from './Label';
 
 export type PropsType = {
   name: string;
-  value?: string;
+  value?: string | number;
   placeholder?: string;
   disabled?: boolean;
   id?: string;
   ariaLabel?: string;
   className?: string;
   style?: React.CSSProperties;
-  label?: string | JSX.Element;
   required?: boolean;
   subscript?: string;
   type?: React.HTMLInputTypeAttribute;
@@ -28,7 +26,6 @@ export const TextField: React.FC<PropsType> = (props) => {
     ariaLabel,
     className,
     style,
-    label,
     required,
     subscript,
     type = 'text',
@@ -45,8 +42,6 @@ export const TextField: React.FC<PropsType> = (props) => {
 
   return (
     <div className="w-full">
-      <Label label={label} required={required} id={id} />
-
       <div className="flex items-end">
         <input
           type={type}
@@ -55,12 +50,13 @@ export const TextField: React.FC<PropsType> = (props) => {
           placeholder={placeholder}
           disabled={disabled}
           id={id}
+          data-testid={id}
           aria-label={ariaLabel}
           className={textFielClassName}
           style={style}
           onChange={onChange}
           onBlur={onBlur}
-          required
+          required={required}
         />
         {subscript && <span className="ml-2">{subscript}</span>}
       </div>

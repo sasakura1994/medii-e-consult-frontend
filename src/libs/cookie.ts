@@ -6,9 +6,7 @@ export const setAuthToken = (token: string) => {
 
 export const getAuthToken = (): string | null => {
   const cookies = document.cookie.split(';').map((cookie) => cookie.trim());
-  const accessTokenCookie = cookies.find((cookie) =>
-    cookie.startsWith('access_token=')
-  );
+  const accessTokenCookie = cookies.find((cookie) => cookie.startsWith('access_token='));
   if (!accessTokenCookie) return null;
   const accessToken = accessTokenCookie.split('=')[1];
 
@@ -28,10 +26,15 @@ export const getAccountIdFromToken = (token: string): string => {
   const base64Url = token.split('.')[1];
   const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
   const jsonPayload = decodeURIComponent(
-    atob(base64)
+    window
+      .atob(base64)
       .split('')
       .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
       .join('')
   );
   return JSON.parse(jsonPayload).account_id;
+};
+
+export const removeAuthToken = () => {
+  document.cookie = `access_token=; max-age=0; path=/`;
 };
