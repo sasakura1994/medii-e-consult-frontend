@@ -15,7 +15,7 @@ export const usePostDraftImage = () => {
       const formData = new FormData();
       formData.append('file', file);
       return axios.post<PostChatRoomResponseData>(
-        '/api/chat_draft_image/store',
+        '/chat_draft_image/store',
         formData
       );
     },

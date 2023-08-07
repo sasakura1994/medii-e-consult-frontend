@@ -6,9 +6,7 @@ export const setAuthToken = (token: string) => {
 
 export const getAuthToken = (): string | null => {
   const cookies = document.cookie.split(';').map((cookie) => cookie.trim());
-  const accessTokenCookie = cookies.find((cookie) =>
-    cookie.startsWith('access_token=')
-  );
+  const accessTokenCookie = cookies.find((cookie) => cookie.startsWith('access_token='));
   if (!accessTokenCookie) return null;
   const accessToken = accessTokenCookie.split('=')[1];
 

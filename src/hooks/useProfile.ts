@@ -1,6 +1,4 @@
-import React from 'react';
-import { useRecoilState } from 'recoil';
-import { editProfileScreenState } from '../features/mypages/editProfile/editProfileScreenState';
+import React, { useMemo } from 'react';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { useFetchEmail } from '@/hooks/api/account/useFetchEmail';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
@@ -11,24 +9,18 @@ import type { EmailEntityType } from '@/types/entities/emailEntity';
 import type { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 import type { PrefectureEntityType } from '@/types/entities/prefectureEntity';
 import type { HospitalEntity } from '@/types/entities/hospitalEntity';
-import type { EditProfileScreenStateType } from '../features/mypages/editProfile/editProfileScreenState';
 
 export type UseProfile = {
   profile: ProfileEntity | undefined;
   email: EmailEntityType | undefined;
+  hospitalName: string;
   medicalSpeciality: MedicalSpecialityEntity[] | undefined;
   prefecture: PrefectureEntityType[] | undefined;
   hospital: HospitalEntity | undefined;
-  editProfileScreen: EditProfileScreenStateType;
-  showModal: boolean;
-  openEdit: () => void;
-  getMedicalSpecialityNameByCode: (
-    code: string | undefined
-  ) => string | undefined;
   getPrefectureNameByCode: (code: string | undefined) => string | undefined;
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
+// プロフィールを便利に扱うためのカスタムフック
 export const useProfile = (): UseProfile => {
   const { profile } = useFetchProfile();
   const { email } = useFetchEmail();
@@ -36,31 +28,17 @@ export const useProfile = (): UseProfile => {
   const { prefecture } = useFetchPrefecture();
   const { hospital } = useFetchHospital(profile?.hospital_id);
 
-  const [editProfileScreen, setEditProfileScreen] = useRecoilState(
-    editProfileScreenState
-  );
-  // モーダルからモーダルを表示（2重表示）する場合があるので、グローバルではなくローカルステートで定義し props で渡せるようにする
-  const [showModal, setShowModal] = React.useState(false);
+  const hospitalName = useMemo(() => {
+    if (!profile) {
+      return '';
+    }
 
-  const openEdit = () => {
-    setEditProfileScreen((oldValues) => ({
-      ...oldValues,
-      isEditOpen: true,
-      isDetailOpen: false,
-    }));
-  };
+    if ((profile.hospital_id || '') === '') {
+      return profile.hospital_name;
+    }
 
-  const getMedicalSpecialityNameByCode = React.useCallback(
-    (code: string | undefined): string | undefined => {
-      if (!code || !medicalSpecialities) return undefined;
-
-      const matched = medicalSpecialities.find(
-        (ms) => ms.speciality_code === code
-      );
-      return matched?.name;
-    },
-    [medicalSpecialities]
-  );
+    return hospital?.hospital_name ?? '';
+  }, [profile, hospital]);
 
   const getPrefectureNameByCode = React.useCallback(
     (code: string | undefined): string | undefined => {
@@ -75,14 +53,10 @@ export const useProfile = (): UseProfile => {
   return {
     profile,
     email,
+    hospitalName,
     medicalSpeciality: medicalSpecialities,
     prefecture,
     hospital,
-    editProfileScreen,
-    showModal,
-    openEdit,
-    getMedicalSpecialityNameByCode,
     getPrefectureNameByCode,
-    setShowModal,
   };
 };

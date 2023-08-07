@@ -54,13 +54,9 @@ export const useEraConverter = (): UseEraConverter => {
       case 'year':
         return adjustedYear > 0 ? String(adjustedYear) : '';
       case 'showa':
-        return adjustedYear > 0 && adjustedYear <= 64
-          ? String(adjustedYear)
-          : '';
+        return adjustedYear > 0 && adjustedYear <= 64 ? String(adjustedYear) : '';
       case 'heisei':
-        return adjustedYear > 0 && adjustedYear <= 31
-          ? String(adjustedYear)
-          : '';
+        return adjustedYear > 0 && adjustedYear <= 31 ? String(adjustedYear) : '';
       case 'reiwa':
         return adjustedYear > 0 ? String(adjustedYear) : '';
       default:

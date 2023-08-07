@@ -16,7 +16,7 @@ export const Layout = (props: PropsType) => {
   useAuthenticationOnPage();
 
   return (
-    <>
+    <div className="h-full min-h-screen w-full bg-bg-primary">
       {!headerFigure || headerFigure === 'default' ? (
         <Header />
       ) : headerFigure === 'simple' ? (
@@ -26,6 +26,6 @@ export const Layout = (props: PropsType) => {
       )}
       <main>{children}</main>
       <FooterSpMenu />
-    </>
+    </div>
   );
 };
