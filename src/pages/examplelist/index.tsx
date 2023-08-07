@@ -23,7 +23,7 @@ const ConsultExamplesPage: NextPageWithLayout = () => {
 
   return (
     <div>
-      <Container className="pb-20 lg:pt-10">
+      <Container className="mb-20 lg:pt-10">
         <Card className="px-5 py-10 lg:pl-[90px] lg:pr-[80px] lg:pt-10">
           <h2 className="mb-10 text-center text-2xl">コンサル事例集</h2>
           {data && (
