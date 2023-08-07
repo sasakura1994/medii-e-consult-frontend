@@ -13,7 +13,7 @@ const Label = (props: LabelProps) => {
 
   return (
     <p
-      className={`mx-auto my-auto w-auto rounded-md px-2 text-center ${
+      className={`my-auto w-auto rounded-md px-2 text-center ${
         size === 'md' ? 'py-1 text-md font-semibold' : 'py-[2px] text-medii-sm font-light'
       } ${color === 'gray' ? 'bg-[#EDEDED] text-text-secondary ' : 'bg-medii-blue-100 text-medii-blue-base'} ${
         className ?? ''

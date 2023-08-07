@@ -1,5 +1,4 @@
 import React from 'react';
-import type { NextPage } from 'next';
 import { Container } from '@/components/Layouts/Container';
 import { useRouter } from 'next/router';
 import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
@@ -9,12 +8,14 @@ import { ConsultExampleCommentModal } from '@/features/consultExample/ConsultExa
 import { ConsultExampleCommentsModal } from '@/features/consultExample/ConsultExampleCommentsModal';
 import { ConsultExampleAllCommentsModal } from '@/features/consultExample/ConsultExampleAllCommentsModal';
 import { ImcompleteProfileModal } from '@/components/Parts/Modal/ImcompleteProfileModal';
+import { NextPageWithLayout } from '../_app';
+import { LegacyLayout } from '@/components/Layouts/LegacyLayout';
 
 type Query = {
   id: string;
 };
 
-const ConsultExamplePage: NextPage = () => {
+const ConsultExamplePage: NextPageWithLayout = () => {
   const router = useRouter();
   const { id } = router.query as Query;
   const {
@@ -37,7 +38,7 @@ const ConsultExamplePage: NextPage = () => {
   useEventLog({ name: `/example/${id}` });
 
   return (
-    <div className="bg-bg">
+    <div>
       <Container className="lg:py-6">
         {consultExample && consultExampleMessages && (
           <ConsultExampleDetail
@@ -80,6 +81,10 @@ const ConsultExamplePage: NextPage = () => {
       <ImcompleteProfileModal />
     </div>
   );
+};
+
+ConsultExamplePage.getLayout = (page: React.ReactElement) => {
+  return <LegacyLayout>{page}</LegacyLayout>;
 };
 
 export default ConsultExamplePage;
