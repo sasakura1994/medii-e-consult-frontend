@@ -38,7 +38,7 @@ const ConsultExamplePage: NextPageWithLayout = () => {
   useEventLog({ name: `/example/${id}` });
 
   return (
-    <div className="pb-20">
+    <div>
       <Container className="lg:py-6">
         {consultExample && consultExampleMessages && (
           <ConsultExampleDetail
