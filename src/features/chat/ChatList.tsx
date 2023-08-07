@@ -12,8 +12,10 @@ export const ChatList = (props: ChatListProps) => {
   const { chatListData, currentUserAccountId } = props;
   return (
     <div>
-      <OtherChat />
-      <MyChat />
+      {chatListData &&
+        chatListData.map((c) => {
+          return c.account_id === currentUserAccountId ? <MyChat chatData={c} /> : <OtherChat chatData={c} />;
+        })}
     </div>
   );
 };

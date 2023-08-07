@@ -27,10 +27,8 @@ export const ConsultTitle = (props: ConsultTitleProps) => {
 
   return (
     <div
-      className={
-        `h-auto min-h-[64px] cursor-pointer border-b border-[#d5d5d5] pb-2
-       hover:bg-primary-light active:bg-primary-light` + isSelected && 'bg-primary-light'
-      }
+      className={`h-auto min-h-[64px] cursor-pointer border-b border-[#d5d5d5] pb-2
+       hover:bg-primary-light active:bg-primary-light ${isSelected && 'bg-primary-light'}`}
     >
       <div className="flex items-center">
         {isUnreadConsult ? (

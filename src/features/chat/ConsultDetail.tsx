@@ -12,8 +12,7 @@ export const ConsultDetail = () => {
   const router = useRouter();
   const { chat_room_id } = router.query;
   const chatRoomIdStr = chat_room_id as string;
-  const { data: publishmentStatusData } =
-    useGetPublishmentStatus(chatRoomIdStr);
+  const { data: publishmentStatusData } = useGetPublishmentStatus(chatRoomIdStr);
   const { data: chatRoomData } = useFetchChatRoom(chatRoomIdStr);
   const { medicalSpecialities } = useFetchMedicalSpecialities();
   const { data: chatListData } = useFetchChatList(chatRoomIdStr);
@@ -51,9 +50,7 @@ export const ConsultDetail = () => {
               <div className="ml-4 flex w-[53px] items-center justify-center rounded-full bg-strong">
                 <p className="py-0.5 text-xs text-white">未解決</p>
               </div>
-              <p className="ml-2 flex-grow font-bold">
-                {chatRoomData.chat_room.title}
-              </p>
+              <p className="ml-2 flex-grow font-bold">{chatRoomData.chat_room.title}</p>
               <button className="h-9 w-[78px] rounded-full bg-primary">
                 <p className="text-xs text-white">返答依頼</p>
               </button>
@@ -63,47 +60,32 @@ export const ConsultDetail = () => {
               <button className="h-9 w-[78px] rounded-full bg-strong">
                 <p className="text-xs text-white">回答パス</p>
               </button>
-              <img
-                src="/icons/btn_menu.svg"
-                alt=""
-                className="h-9 w-9 cursor-pointer"
-              />
+              <img src="/icons/btn_menu.svg" alt="" className="h-9 w-9 cursor-pointer" />
             </div>
             <div className="flex h-5 items-center space-x-1 border">
-              {chatRoomData.members[0] && (
-                <p className="text-xxs">E-コンサル</p>
-              )}
+              {chatRoomData.members[0] && <p className="text-xxs">E-コンサル</p>}
               <p className="text-md font-bold">
                 {chatRoomData.chat_room.room_type === 'GROUP' ? (
                   chatRoomData.members.length + '人の専門医メンバー'
                 ) : chatRoomData.members[0] ? (
                   publishmentStatusData.publishment_accepted ? (
-                    chatRoomData.members[0].last_name +
-                    ' ' +
-                    chatRoomData.members[0].first_name +
-                    ' 先生'
+                    chatRoomData.members[0].last_name + ' ' + chatRoomData.members[0].first_name + ' 先生'
                   ) : (
                     '質問医'
                   )
                 ) : (
-                  <p className="text-strong">
-                    回答してくださる専門医の先生を探しています
-                  </p>
+                  <p className="font-normal text-strong">回答してくださる専門医の先生を探しています</p>
                 )}
               </p>
-              {chatRoomData.chat_room.room_type !== 'GROUP' &&
-                chatRoomData.members[0] && (
-                  <p className="text-xs">
-                    ({targetSpeciality?.name}・{experienceYear}年目)
-                  </p>
-                )}
+              {chatRoomData.chat_room.room_type !== 'GROUP' && chatRoomData.members[0] && (
+                <p className="text-xs">
+                  ({targetSpeciality?.name}・{experienceYear}年目)
+                </p>
+              )}
             </div>
           </div>
           <div className="flex-grow overflow-auto bg-bg pb-2">
-            <ChatList
-              chatListData={chatListData}
-              currentUserAccountId={accountId}
-            />
+            <ChatList chatListData={chatListData} currentUserAccountId={accountId} />
           </div>
           <div className="relative top-10 flex-none">
             <ChatTextInput />

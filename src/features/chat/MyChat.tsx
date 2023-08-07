@@ -1,24 +1,35 @@
+import { ChatData } from '@/hooks/api/chat/useFetchChatList';
 import React from 'react';
 
-export const MyChat = () => {
+type MyChatProps = {
+  chatData: ChatData;
+};
+
+export const MyChat = (props: MyChatProps) => {
+  const { chatData } = props;
+  const date = new Date(chatData.created_date);
+  const formattedDate = date.toLocaleString(undefined, {
+    month: 'numeric',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+  });
   return (
     <>
       <div className="mr-3 flex justify-end">
         <p className="text-sm">自分</p>
-        <p className="ml-1 text-sm text-block-gray">6/16 14:43</p>
+        <p className="ml-1 text-sm text-block-gray">{formattedDate}</p>
       </div>
       <div className="flex justify-end">
-        <p className="mr-3 mb-3 max-w-[670px] whitespace-pre-wrap rounded-lg bg-primary-light p-2">
-          {`お世話になっております。
-
-⚫️⚫️の一般的な解釈/使用法についてご教示頂きたい点があり、質問させていただきました。
-患者さんは⚫️年前に⚫️⚫️と診断され、現在は⚫️⚫️の治療を行っております。
-
-現在症状として⚫️⚫️ 身体所見として⚫️⚫️ 検査所見として⚫️⚫️を認めています。
-一般的に、⚫️⚫️という疾患/所見/治療は⚫️⚫️でしょうか？ 専門の先生にご意見をお伺いしたいと考えております。
-
-どうぞよろしくお願いいたします。`}
-        </p>
+        {chatData.deleted ? (
+          <p className="mb-3 mr-3 max-w-[670px] whitespace-pre-wrap rounded-lg bg-block-gray p-2 text-white">
+            削除済みメッセージ
+          </p>
+        ) : (
+          <p className="mb-3 mr-3 max-w-[670px] whitespace-pre-wrap rounded-lg bg-primary-light p-2">
+            {chatData.message}
+          </p>
+        )}
       </div>
     </>
   );
