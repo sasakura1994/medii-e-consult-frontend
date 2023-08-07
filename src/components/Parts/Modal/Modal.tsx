@@ -15,7 +15,7 @@ export const Modal: React.FC<ModalPropsType> = (props) => {
   return (
     <div
       ref={modalRef}
-      className={`modal fixed left-0 top-0 z-[200] w-screen overflow-y-auto bg-black/20 ${
+      className={`modal fixed left-0 top-0 z-[200] w-screen overflow-y-auto bg-bg-overlay ${
         props.isCenter === true ? 'flex items-center justify-center' : ''
       }`}
       style={{ height: '100dvh' }}

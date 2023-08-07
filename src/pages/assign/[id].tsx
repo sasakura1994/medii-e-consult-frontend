@@ -5,6 +5,7 @@ import { useAssign } from '@/features/chat/assign/useAssign';
 import { AssignConfirmationModal } from '@/features/chat/assign/AssignConfirmationModal';
 import { AlreadyAssigned } from '@/features/chat/assign/AlreadyAssigned';
 import { Container } from '@/components/Layouts/Container';
+import { LegacyLayout } from '@/components/Layouts/LegacyLayout';
 
 const AssignPage: NextPageWithLayout = () => {
   const useAssignData = useAssign();
@@ -25,11 +26,7 @@ const AssignPage: NextPageWithLayout = () => {
       {chatRoom &&
         (chatRoom.status === 'CREATED' ? (
           <Container className="mb-10 mt-4">
-            <Assign
-              chatRoom={chatRoom}
-              images={images || []}
-              onConfirm={() => setIsConfirming(true)}
-            />
+            <Assign chatRoom={chatRoom} images={images || []} onConfirm={() => setIsConfirming(true)} />
           </Container>
         ) : (
           <AlreadyAssigned
@@ -48,6 +45,10 @@ const AssignPage: NextPageWithLayout = () => {
       )}
     </>
   );
+};
+
+AssignPage.getLayout = (page: React.ReactElement) => {
+  return <LegacyLayout>{page}</LegacyLayout>;
 };
 
 export default AssignPage;
