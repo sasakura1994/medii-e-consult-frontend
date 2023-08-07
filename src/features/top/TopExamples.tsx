@@ -3,6 +3,7 @@ import SecondaryButton from '@/components/Button/SecondaryButton';
 import { StyledHiddenScrollBar } from './styled';
 import { TopExample } from './TopExample';
 import { useFetchConsultExamples } from '@/hooks/api/consultExample/useFetchConsultExamples';
+import Link from 'next/link';
 
 export const TopExamples = () => {
   const { data } = useFetchConsultExamples();
@@ -11,7 +12,9 @@ export const TopExamples = () => {
     <>
       <StyledHiddenScrollBar className="mt-10 flex items-center">
         <p className="flex-grow text-xxl font-bold text-text-primary">E-コンサル事例集</p>
-        <SecondaryButton>コンサル事例を見る</SecondaryButton>
+        <Link href="/examplelist">
+          <SecondaryButton>コンサル事例を見る</SecondaryButton>
+        </Link>
       </StyledHiddenScrollBar>
       <StyledHiddenScrollBar className="flex max-w-[1024px] space-x-2 overflow-x-auto px-1 py-4">
         {data?.list.map((consultExample) => (
