@@ -6,6 +6,7 @@ import { SelectBox } from '@/components/Parts/Form/SelectBox';
 import { Radio } from '@/components/Parts/Form/Radio';
 import { UseEditProfile } from './useEditProfile';
 import { usePrefecture } from '@/hooks/prefecture/usePrefecture';
+import { EditProfileHeading } from './EditProfileHeading';
 
 export const HospitalAffiliation = (props: UseEditProfile) => {
   const {
@@ -28,7 +29,7 @@ export const HospitalAffiliation = (props: UseEditProfile) => {
 
   return (
     <div className="mb-10">
-      <h3 className="mb-4 text-primary">■ 所属病院</h3>
+      <EditProfileHeading className="mb-4">所属病院</EditProfileHeading>
 
       <div className="mb-4 w-72">
         <EditProfileLabel required id="prefecture_code">

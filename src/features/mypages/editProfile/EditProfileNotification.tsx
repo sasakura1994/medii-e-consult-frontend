@@ -1,6 +1,7 @@
 import React from 'react';
 import { UseEditProfile } from './useEditProfile';
 import { Radio } from '@/components/Parts/Form/Radio';
+import { EditProfileHeading } from './EditProfileHeading';
 
 export const EditProfileNotification = (props: UseEditProfile) => {
   const { profile, setProfileFields } = props;
@@ -12,7 +13,7 @@ export const EditProfileNotification = (props: UseEditProfile) => {
   return (
     <>
       <div className="mb-10" data-testid="edit-profile-notification">
-        <h3 className="mb-4 text-primary">■ 通知</h3>
+        <EditProfileHeading className="mb-4">通知</EditProfileHeading>
         <h4 className="mt-4 text-monotone-500">E-コンサルからの新着メッセージ通知通知</h4>
         <div className="mt-2">
           <div>

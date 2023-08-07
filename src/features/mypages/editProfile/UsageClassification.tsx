@@ -1,6 +1,7 @@
 import React from 'react';
 import { Radio } from '@/components/Parts/Form/Radio';
 import { UseEditProfile } from './useEditProfile';
+import { EditProfileHeading } from './EditProfileHeading';
 
 const now = new Date();
 const doctorApprovalYear = now.getFullYear() - (now.getMonth() <= 3 ? 7 : 6);
@@ -14,7 +15,7 @@ export const UsageClassification = (props: UseEditProfile) => {
 
   return (
     <div className="mb-10" data-testid="edit-profile-usage-classification">
-      <h3 className="mb-4 text-primary">■ E-コンサル利用区分</h3>
+      <EditProfileHeading className="mb-4">E-コンサル利用区分</EditProfileHeading>
 
       <div className="mb-4">
         <Radio
