@@ -40,14 +40,6 @@ const Welcome = () => {
               linkOutline="/seminar"
               logOutline="click-seminar-in-welcome"
             />
-            <CompleteCard
-              title="症例バンク"
-              imageSrc="/images/document/bank.svg"
-              description="論文・ガイドラインだけではわからない、臨床経験から蓄積された知見をスライド形式で閲覧できます。"
-              buttonOutline="症例スライドを見る"
-              linkOutline={process.env.CASE_BANK_URL ?? ''}
-              logOutline="click-case-bank-in-welcome"
-            />
           </div>
           <div
             onClick={async () => {
