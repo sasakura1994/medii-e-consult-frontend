@@ -12,12 +12,10 @@ export const MyPageLayout = (props: PropsType) => {
   useAuthenticationOnPage();
 
   return (
-    <>
-      <div className="h-full min-h-screen w-full bg-bg">
-        <Header />
-        <main className="mx-auto pb-20 pt-10 lg:w-lg-breakpoint lg:pb-0">{children}</main>
-      </div>
+    <div className="h-full min-h-screen w-full bg-bg pb-16 lg:pb-0">
+      <Header />
+      <main className="mx-auto pb-20 pt-10 lg:w-lg-breakpoint lg:pb-0">{children}</main>
       <FooterSpMenu />
-    </>
+    </div>
   );
 };
