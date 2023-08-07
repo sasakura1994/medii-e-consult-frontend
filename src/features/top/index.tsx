@@ -14,7 +14,7 @@ export const Top = () => {
   return (
     <div className="bg-white">
       <div className="mx-4 flex min-h-screen flex-col pb-12 pt-6 lg:mx-10 lg:flex-row lg:justify-center">
-        <div className="max-w-[1024px] pb-8 lg:flex-grow">
+        <div className="max-w-[1024px] pb-8 lg:w-0 lg:flex-grow">
           <TopNotifications />
           <UserConsult setShowTutorialExplanationModal={setShowTutorialExplanationModal} />
           <TopExamples />
