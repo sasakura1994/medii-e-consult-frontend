@@ -95,6 +95,26 @@ describe('MedicalCareer', () => {
       expect(screen.queryByTestId('year-input-year')).toBeInTheDocument();
     });
 
+    test('HUFユーザーの場合は表示', async () => {
+      act(() => {
+        const props = {
+          isRegisterMode: true,
+          profile: {
+            is_huf_user: true,
+            qualified_year: '',
+          } as EditingProfile,
+          setProfileFields: jest.fn(),
+        } as unknown as UseEditProfile & EditProfileProps;
+        render(
+          <RecoilRoot>
+            <MedicalCareer {...props} />
+          </RecoilRoot>
+        );
+      });
+
+      expect(screen.queryByTestId('year-input-year')).toBeInTheDocument();
+    });
+
     test('編集時は入力欄がdisabled', async () => {
       act(() => {
         const props = {

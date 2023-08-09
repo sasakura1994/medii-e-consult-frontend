@@ -24,6 +24,7 @@ export const MedicalCareer = (props: MedicalCareerProps) => {
         {(profile.is_hospital_doctor ||
           profile.is_invited ||
           profile.is_skip_confirmation_by_utm_source ||
+          profile.is_huf_user ||
           profile.qualified_year !== '') && (
           <div className="mb-4">
             <MedicalCareerQualifiedYear
