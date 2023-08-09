@@ -51,7 +51,7 @@ export const UserConsult = (props: UserConsultProps) => {
       <StyledHiddenScrollBar className="mt-5 flex items-end overflow-y-hidden overflow-x-scroll">
         <TopTab
           text="自分が質問"
-          unreadCount={mineOwnUnreadCount}
+          isExistUnread={mineOwnUnreadCount > 0}
           isActive={activeTab === 'question'}
           onClick={() => {
             setActiveTab('question');
@@ -59,7 +59,7 @@ export const UserConsult = (props: UserConsultProps) => {
         />
         <TopTab
           text="自分が回答"
-          unreadCount={mineRespondUnreadCount}
+          isExistUnread={mineRespondUnreadCount > 0}
           isActive={activeTab === 'answer'}
           onClick={() => {
             setActiveTab('answer');
