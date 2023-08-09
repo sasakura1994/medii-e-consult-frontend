@@ -28,7 +28,7 @@ export const HeaderMyPageButton = () => {
           className="text-md"
         >
           <HeaderMyPageMenuItem href="/editprofile">
-            マイページ
+            プロフィール
           </HeaderMyPageMenuItem>
           <HeaderMyPageMenuItem href="/notifysettings">
             通知設定
@@ -36,7 +36,9 @@ export const HeaderMyPageButton = () => {
           <HeaderMyPageMenuItem href="/affiliate">
             <div>知り合いの医師にMediiを紹介する</div>
             <div className="text-medii-sm font-semibold text-medii-blue-base">
-              対象の医師を1人紹介でポイントプレゼント
+              対象医師を1人紹介すると
+              <br />
+              E-カンファ視聴チケットをプレゼント
             </div>
           </HeaderMyPageMenuItem>
           <HeaderMyPageMenuItem href="/pointhistory">
