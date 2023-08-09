@@ -22,6 +22,8 @@ describe('/editprofile', () => {
     const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
     (useFetchProfileMock as jest.Mock).mockReturnValue({
       profile: {
+        status: 'VERIFIED',
+        last_name: 'last name',
         birthday_year: 2000,
         birthday_month: 4,
         birthday_day: 1,
