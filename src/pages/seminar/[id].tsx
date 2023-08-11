@@ -14,6 +14,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { getSeminarDateTime } from '@/features/seminar/useSeminar';
+import { AboutTicketModal } from '@/components/Parts/Modal/AboutTicketModal';
 
 
 const Seminar: NextPage = () => {
@@ -33,32 +34,34 @@ const Seminar: NextPage = () => {
   const [showModal, setShowModal] = React.useState(false);
   const [, setSwiperRef] = React.useState<SwiperRef | null>(null);
   return (
-    <div className="bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat pb-12 lg:pt-32 lg:bg-[url('/images/seminar/PC_back.png')] lg:pt-10">
+    <div className="bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat pb-12 lg:bg-[url('/images/seminar/PC_back.png')] lg:pt-32 lg:pt-10">
       <div className="mx-auto pt-28 lg:max-w-[960px] lg:rounded-2xl lg:bg-white lg:p-10  lg:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
-        <div className="relative
+        <div
+          className="relative
         mx-auto
-        pt-32
         w-full
         bg-white
-        lg:pt-0
-        lg:mt-0 lg:max-w-[960px] lg:rounded-2xl lg:bg-transparent lg:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] lg:shadow-none">
+        pt-32
+        lg:mt-0
+        lg:max-w-[960px] lg:rounded-2xl lg:bg-transparent lg:pt-0 lg:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] lg:shadow-none"
+        >
           {seminar?.movie_url ? (
-          <div className="absolute top-[-79px] px-[27px] lg:static lg:px-0">
-            <iframe
-              src={seminar.movie_url}
-              title="YouTube video player"
-              className="aspect-video w-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-          </div>
-        ) : (
-          <img
-            src={seminar && seminar.image_url}
-            className="absolute lg:static right-0 left-0 top-[-79px] z-20 mx-auto aspect-video w-5/6 shadow-lg lg:mt-0 lg:w-full lg:max-w-[960px] lg:bg-white lg:pt-0 lg:shadow-none"
-          />
-        )}
-          { !seminar?.movie_url && (
+            <div className="absolute top-[-79px] px-[27px] lg:static lg:px-0">
+              <iframe
+                src={seminar.movie_url}
+                title="YouTube video player"
+                className="aspect-video w-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+          ) : (
+            <img
+              src={seminar && seminar.image_url}
+              className="absolute right-0 left-0 top-[-79px] z-20 mx-auto aspect-video w-5/6 shadow-lg lg:static lg:mt-0 lg:w-full lg:max-w-[960px] lg:bg-white lg:pt-0 lg:shadow-none"
+            />
+          )}
+          {!seminar?.movie_url && (
             <div className="mx-8 mt-4 bg-gray-100 px-2 py-6 lg:mx-0 lg:mt-0">
               <div className="text-center text-sm font-semibold text-gray-500 lg:text-2xl">
                 チケットを一枚消費して動画を閲覧可能です
@@ -82,7 +85,7 @@ const Seminar: NextPage = () => {
               </div>
             </div>
           )}
-          <div className="flex flex-col items-center bg-white px-7 lg:px-[60px] pb-10">
+          <div className="flex flex-col items-center bg-white px-7 pb-10 lg:px-[60px]">
             <div className="mt-4 flex w-full flex-col items-center">
               <div className="flex w-full items-center justify-center rounded-md bg-[#e2e7ff] py-4">
                 <div className="m-2 flex h-8 w-8 items-center justify-center rounded-full bg-primary lg:h-20 lg:w-20">
@@ -109,8 +112,8 @@ const Seminar: NextPage = () => {
               </div>
               <div className="border-b py-4">
                 <div className="flex">
-                  <p className="text-base lg:text-lg pr-4 text-2xl text-primary lg:font-bold">
-                      講師
+                  <p className="pr-4 text-base text-2xl text-primary lg:text-lg lg:font-bold">
+                    講師
                   </p>
                   <p className="whitespace-pre-wrap text-base lg:text-lg">
                     {seminar?.doctor_name !== undefined
@@ -144,7 +147,7 @@ const Seminar: NextPage = () => {
                   <a
                     href={`/newChatRoom?target_account_id=${seminar?.account_id}`}
                   >
-                    <PrimaryButton className="mt-8 text-left m-auto text-sm lg:text-md">
+                    <PrimaryButton className="m-auto mt-8 text-left text-sm lg:text-md">
                       この先生にE-コンサルで相談をする
                     </PrimaryButton>
                   </a>
@@ -196,31 +199,7 @@ const Seminar: NextPage = () => {
           ))}
         </Swiper>
       </div>
-      {showModal && (
-        <Modal setShowModal={setShowModal} className="lg:w-[800px]">
-          <div className="align-center relative flex flex-col items-center bg-white px-6 py-4 lg:py-20 lg:px-28">
-            <img
-              onClick={() => setShowModal(false)}
-              src="/icons/close_primary.svg"
-              className="absolute right-4 top-4 lg:right-10 lg:top-14"
-            />
-            <h3 className="text-center text-2xl text-primary">チケットとは?</h3>
-            <p className="py-10">
-              チケットとはE-カンファアーカイブ動画を閲覧するために必要なものです。
-              <br />
-              E-コンサルで相談するとセミナーチケット1枚獲得できます。
-            </p>
-            <img
-              className="hidden lg:block"
-              src="/images/seminar/about_ticket_pc.png"
-            />
-            <img
-              className="lg:hidden"
-              src="/images/seminar/about_ticket_sp.png"
-            />
-          </div>
-        </Modal>
-      )}
+      {showModal && <AboutTicketModal setShowModal={setShowModal} />}
       {isTicketConfirmDialogShown && (
         <SeminarConfirmModal
           setShowModal={setIsTicketConfirmDialogShown}
@@ -228,7 +207,9 @@ const Seminar: NextPage = () => {
           labelText="使用する"
           onSubmit={() => consumeTicket()}
         >
-          <p className="font-bold text-center my-8">アーカイブ動画閲覧にチケット1枚を使用します。</p>
+          <p className="my-8 text-center font-bold">
+            アーカイブ動画閲覧にチケット1枚を使用します。
+          </p>
         </SeminarConfirmModal>
       )}
       {isTicketNotEnoughDialogShown && (

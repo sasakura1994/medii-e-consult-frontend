@@ -1,3 +1,4 @@
+import { AboutTicketModal } from '@/components/Parts/Modal/AboutTicketModal';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import { ticketCountEntity } from '@/types/entities/ticketCountEntity';
 import React from 'react';
@@ -70,38 +71,7 @@ export const SeminarArchiveHeader: React.FC<Props> = ({
           チケットを獲得するには?
         </button>
       </div>
-      {showModal && (
-        <Modal
-          setShowModal={setShowModal}
-          className="mt-24 py-6 lg:mt-10 lg:w-[800px]"
-        >
-          <div className="align-center relative mx-auto flex flex-col items-center bg-white px-6 py-4">
-            <img
-              onClick={() => setShowModal(false)}
-              src="/icons/close_primary.svg"
-              className="absolute right-4 top-0 cursor-pointer"
-              alt=""
-            />
-            <h3 className="text-center text-2xl text-primary">チケットとは?</h3>
-            <p className="pt-10">
-              チケットとはE-カンファアーカイブ動画を閲覧するために必要なものです。
-            </p>
-            <p className="pt-4 pb-10 lg:pt-0">
-              E-コンサルで相談するとチケット1枚獲得できます。
-            </p>
-            <img
-              className="hidden md:block"
-              src="/images/seminar/about_ticket_pc.png"
-              alt=""
-            />
-            <img
-              className="md:hidden"
-              src="/images/seminar/about_ticket_sp.png"
-              alt=""
-            />
-          </div>
-        </Modal>
-      )}
+      {showModal && <AboutTicketModal setShowModal={setShowModal} />}
     </div>
   );
 };
