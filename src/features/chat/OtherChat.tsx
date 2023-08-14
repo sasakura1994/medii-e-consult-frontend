@@ -2,7 +2,7 @@ import { ChatData } from '@/hooks/api/chat/useFetchChatList';
 import React from 'react';
 
 type OtherChatProps = {
-  chatData: ChatData;
+  chatData: ChatData & { displayName: string };
 };
 
 export const OtherChat = (props: OtherChatProps) => {
@@ -17,7 +17,7 @@ export const OtherChat = (props: OtherChatProps) => {
   return (
     <>
       <div className="ml-3 flex">
-        <p className="text-sm">総合内科 31年目</p>
+        <p className="text-sm">{chatData.displayName}</p>
         <p className="ml-1 text-sm text-block-gray">{formattedDate}</p>
       </div>
       <div className="ml-3 flex justify-start">

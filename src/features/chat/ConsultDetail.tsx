@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { ChatList } from './ChatList';
 import { ChatTextInput } from './ChatTextInput';
 import { useRouter } from 'next/router';
@@ -18,45 +18,73 @@ export const ConsultDetail = () => {
   const { data: chatListData } = useFetchChatList(chatRoomIdStr);
   const { accountId } = useToken();
 
-  const targetSpeciality = useMemo(() => {
-    if (chatRoomData && medicalSpecialities) {
-      const speciality = medicalSpecialities.find(
-        (m) => m.speciality_code === chatRoomData.chat_room.target_speciality
-      );
-      return speciality;
+  const getSpecialityName = useCallback(
+    (specialityCode: string) => {
+      if (chatRoomData && medicalSpecialities) {
+        const speciality = medicalSpecialities.find((m) => m.speciality_code === specialityCode);
+        return speciality ? speciality.name : '';
+      }
+    },
+    [chatRoomData, medicalSpecialities]
+  );
+
+  const getExperienceYear = useCallback((year: number) => {
+    const date = new Date();
+    const currentYear = date.getFullYear();
+    const passedYear = currentYear - year;
+
+    return passedYear + 1;
+  }, []);
+
+  const chatListDataWithDisplayName = useMemo(() => {
+    // TODO: 一旦first_nameがある場合は名前を表示し、ない場合はspecialityとexperienceYearを表示する
+    if (chatListData && chatRoomData) {
+      return chatListData.map((c) => {
+        if (chatRoomData.me?.account_id === c.account_id) {
+          if (chatRoomData.me.first_name) {
+            return { ...c, displayName: chatRoomData.me.last_name + ' ' + chatRoomData.me.first_name + '先生' };
+          } else if (chatRoomData.me.speciality_1) {
+            return {
+              ...c,
+              displayName:
+                getSpecialityName(chatRoomData.me.speciality_1) +
+                ' ' +
+                getExperienceYear(chatRoomData.me.qualified_year) +
+                '年目',
+            };
+          }
+          return { ...c, displayName: '' };
+        } else if (chatRoomData.members[0].account_id === c.account_id) {
+          if (chatRoomData.members[0].first_name) {
+            return {
+              ...c,
+              displayName: chatRoomData.members[0].last_name + ' ' + chatRoomData.members[0].first_name + '先生',
+            };
+          } else if (chatRoomData.members[0].speciality_1) {
+            return {
+              ...c,
+              displayName:
+                getSpecialityName(chatRoomData.members[0].speciality_1) +
+                ' ' +
+                getExperienceYear(chatRoomData.members[0].qualified_year) +
+                '年目',
+            };
+          }
+          return { ...c, displayName: '' };
+        } else if (c.account_id === 'CHATBOT') {
+          return {
+            ...c,
+            displayName: 'システム通知',
+          };
+        }
+        return { ...c, displayName: '' };
+      });
     }
-  }, [chatRoomData, medicalSpecialities]);
-
-  const experienceYear = useMemo(() => {
-    if (chatRoomData && chatRoomData.members[0]) {
-      const date = new Date();
-      const currentYear = date.getFullYear();
-      const passedYear = currentYear - chatRoomData.members[0].qualified_year;
-
-      return passedYear + 1;
-    }
-  }, [chatRoomData]);
-
-  const myUserDisplayName = useMemo(() => {
-    if (chatRoomData && medicalSpecialities && chatRoomData.me) {
-      const speciality = medicalSpecialities.find((m) => m.speciality_code === chatRoomData.me?.speciality_1) ?? {
-        name: '',
-      };
-      const date = new Date();
-      const currentYear = date.getFullYear();
-      const specialityExperienceYear = currentYear - chatRoomData.me.qualified_year;
-      return speciality.name + ' ' + (specialityExperienceYear + 1) + '年目';
-    }
-    return '';
-  }, [chatRoomData, medicalSpecialities]);
-
-  useEffect(() => {
-    console.log(chatListData);
-  }, [chatListData]);
+  }, [chatListData, chatRoomData, getExperienceYear, getSpecialityName]);
 
   return (
     <>
-      {chatRoomData && publishmentStatusData && accountId && chatListData && (
+      {chatRoomData && publishmentStatusData && accountId && chatListDataWithDisplayName && (
         <div className="flex h-[calc(100vh-110px)] w-[787px] flex-col border border-[#d5d5d5]">
           <div className="flex-none">
             <div className="mr-2 flex h-14 items-center space-x-1">
@@ -92,17 +120,14 @@ export const ConsultDetail = () => {
               </p>
               {chatRoomData.chat_room.room_type !== 'GROUP' && chatRoomData.members[0] && (
                 <p className="text-xs">
-                  ({targetSpeciality?.name}・{experienceYear}年目)
+                  ({getSpecialityName(chatRoomData.chat_room.target_speciality)}・
+                  {getExperienceYear(chatRoomData.members[0].qualified_year)}年目)
                 </p>
               )}
             </div>
           </div>
           <div className="flex-grow overflow-auto bg-bg pb-2">
-            <ChatList
-              chatListData={chatListData}
-              currentUserAccountId={accountId}
-              myUserDisplayName={myUserDisplayName}
-            />
+            <ChatList chatListData={chatListDataWithDisplayName} currentUserAccountId={accountId} />
           </div>
           <div className="relative top-10 flex-none">
             <ChatTextInput />

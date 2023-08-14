@@ -1,22 +1,21 @@
 import React from 'react';
 import { OtherChat } from './OtherChat';
 import { MyChat } from './MyChat';
-import { FetchChatListResponseData } from '@/hooks/api/chat/useFetchChatList';
+import { ChatData } from '@/hooks/api/chat/useFetchChatList';
 
 type ChatListProps = {
-  chatListData: FetchChatListResponseData;
+  chatListData: (ChatData & { displayName: string })[];
   currentUserAccountId: string;
-  myUserDisplayName: string;
 };
 
 export const ChatList = (props: ChatListProps) => {
-  const { chatListData, currentUserAccountId, myUserDisplayName } = props;
+  const { chatListData, currentUserAccountId } = props;
   return (
     <div>
       {chatListData &&
         chatListData.map((c) => {
           return c.account_id === currentUserAccountId ? (
-            <MyChat chatData={c} myUserDisplayName={myUserDisplayName} key={c.chat_message_id} />
+            <MyChat chatData={c} key={c.chat_message_id} />
           ) : (
             <OtherChat chatData={c} key={c.chat_message_id} />
           );
