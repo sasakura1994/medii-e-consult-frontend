@@ -15,9 +15,9 @@ export const ChatList = (props: ChatListProps) => {
       {chatListData &&
         chatListData.map((c) => {
           return c.account_id === currentUserAccountId ? (
-            <MyChat chatData={c} key={c.chat_message_id} />
+            <MyChat chatData={c} key={c.uid} />
           ) : (
-            <OtherChat chatData={c} key={c.chat_message_id} />
+            <OtherChat chatData={c} key={c.uid} />
           );
         })}
     </div>
