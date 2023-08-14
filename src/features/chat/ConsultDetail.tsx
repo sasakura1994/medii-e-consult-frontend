@@ -109,7 +109,7 @@ export const ConsultDetail = () => {
                 {chatRoomData.chat_room.room_type === 'GROUP' ? (
                   chatRoomData.members.length + '人の専門医メンバー'
                 ) : chatRoomData.members[0] ? (
-                  publishmentStatusData.publishment_accepted ? (
+                  chatRoomData.members[0].first_name ? (
                     chatRoomData.members[0].last_name + ' ' + chatRoomData.members[0].first_name + ' 先生'
                   ) : (
                     '質問医'
