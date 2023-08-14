@@ -15,9 +15,9 @@ export const TopNewerConsults = () => {
       </div>
       <div className="mt-2 rounded-lg bg-bg-secondary p-4">
         <p className="text-xxl font-bold text-text-primary">新着のE-コンサル</p>
-        <StyledHiddenScrollBar className="flex space-x-2 overflow-x-scroll py-4">
-          {consults?.map((consult) => (
-            <TopNewerConsult key={consult.consult_name} consult={consult} />
+        <StyledHiddenScrollBar className="flex space-x-2 overflow-x-scroll px-1 py-4">
+          {consults?.map((consult, index) => (
+            <TopNewerConsult key={consult.consult_name + index} consult={consult} />
           ))}
         </StyledHiddenScrollBar>
         <div className="flex justify-center">

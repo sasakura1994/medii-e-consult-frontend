@@ -4,7 +4,6 @@ import { ConsultExampleMessageEntity } from '@/types/entities/ConsultExampleMess
 import React from 'react';
 import { ConsultExampleTag } from './ConsultExampleTag';
 import { useConsultExample } from '@/features/consultExample/useConsultExample';
-import { useMedicalSpeciality } from '@/hooks/medicalSpeciality/useMedicalSpeciality';
 import { ConsultExampleFirstAnswerTime } from './ConsultExampleFirstAnswerTime';
 import { dateFormat } from '@/libs/date';
 import { ConsultExampleActions } from './ConsultExampleActions';
@@ -36,8 +35,7 @@ export const ConsultExampleDetail: React.FC<Props> = ({
   onShowAllComments,
   onShowCommentsForMessage,
 }: Props) => {
-  const { getMedicalSpecialityName } = useMedicalSpeciality();
-  const { getAgeText, getGenderText } = useConsultExample();
+  const { getAgeText, getCategoryName, getGenderText } = useConsultExample();
   const {
     likeAndMutate,
     likeMessageAndMutate,
@@ -51,9 +49,7 @@ export const ConsultExampleDetail: React.FC<Props> = ({
         <div className="flex gap-2">
           <div>
             <ConsultExampleTag>
-              {consultExample.speciality_code !== ''
-                ? getMedicalSpecialityName(consultExample.speciality_code)
-                : consultExample.category_name}
+              {getCategoryName(consultExample)}
             </ConsultExampleTag>
           </div>
           <div className="flex flex-1 flex-col items-end gap-4 lg:flex-row lg:items-center lg:justify-between lg:gap-0">

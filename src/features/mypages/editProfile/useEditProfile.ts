@@ -40,6 +40,7 @@ export type UseEditProfile = {
   isCompleted: boolean;
   isSending: boolean;
   profile?: EditingProfile;
+  saveProfile: () => Promise<boolean>;
   selectedHospital?: Option;
   selectHospital: (selected: Option | null) => void;
   selectMedicalSpecialities: (medicalSpecialities: MedicalSpecialityEntity[]) => void;
@@ -219,11 +220,7 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
     [profile, setProfileFields]
   );
 
-  const submit = useCallback(async () => {
-    if (!profile) {
-      return;
-    }
-
+  const saveProfile = useCallback(async (): Promise<boolean> => {
     setIsSending(true);
     setErrorMessage('');
 
@@ -253,17 +250,29 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
     setIsSending(false);
 
     if (!response) {
-      return;
+      return false;
     }
 
     mutateFetchProfile();
+    return true;
+  }, [hospitalInputType, isHospitalDisabled, profile, updateProfile]);
+
+  const submit = useCallback(async () => {
+    if (!profile) {
+      return;
+    }
+
+    const result = await saveProfile();
+    if (!result) {
+      return;
+    }
 
     if (isRegisterMode || profile.need_to_send_confimation) {
       router.push('/document');
     } else {
       router.push('/editprofile/completed');
     }
-  }, [profile, isHospitalDisabled, hospitalInputType, updateProfile, isRegisterMode, router]);
+  }, [profile, saveProfile, isRegisterMode, router]);
 
   const toggleQuestionaryItem = useCallback(
     (questionaryItemId: number) => {
@@ -297,6 +306,7 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
     isCompleted,
     isSending,
     profile,
+    saveProfile,
     selectedHospital,
     selectHospital,
     selectMedicalSpecialities,

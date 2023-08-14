@@ -4,6 +4,7 @@ import { EditProfileLabel } from './EditProfileLabel';
 import { TextArea } from '@/components/Parts/Form/TextArea';
 import { useFetchQuestionaryItems } from '@/hooks/api/questionary/useFetchQuestionaryItems';
 import { CheckBox } from '@/components/Parts/Form/CheckBox';
+import { EditProfileHeading } from './EditProfileHeading';
 
 export const EditProfileQuestionary = (props: UseEditProfile) => {
   const { profile, selectedQuestionaryItemIds, setProfileFields, toggleQuestionaryItem } = props;
@@ -16,7 +17,7 @@ export const EditProfileQuestionary = (props: UseEditProfile) => {
   return (
     <>
       <div className="mb-10" data-testid="edit-profile-questionary">
-        <h3 className="mb-4 text-primary">■ アンケート</h3>
+        <EditProfileHeading className="mb-4">アンケート</EditProfileHeading>
         <div className="mt-2">
           <EditProfileLabel required={false}>ご登録いただいたきっかけを教えてください(複数選択可)</EditProfileLabel>
         </div>

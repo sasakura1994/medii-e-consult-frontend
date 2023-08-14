@@ -14,7 +14,7 @@ export const TopNewerConsult = (props: Props) => {
   const { getMedicalSpecialityName } = useMedicalSpeciality();
 
   return (
-    <div className="h-[201px] min-w-[232px] rounded-lg border border-[#EDEDED] shadow-high">
+    <div className="h-[201px] min-w-[232px] rounded-lg border border-[#EDEDED] bg-white shadow-high">
       <div className="p-4">
         <div className="flex items-center space-x-1">
           <p
