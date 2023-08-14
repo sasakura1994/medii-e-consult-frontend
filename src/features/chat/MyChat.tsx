@@ -3,10 +3,11 @@ import React from 'react';
 
 type MyChatProps = {
   chatData: ChatData;
+  myUserDisplayName: string;
 };
 
 export const MyChat = (props: MyChatProps) => {
-  const { chatData } = props;
+  const { chatData, myUserDisplayName } = props;
   const date = new Date(chatData.created_date);
   const formattedDate = date.toLocaleString(undefined, {
     month: 'numeric',
@@ -17,7 +18,7 @@ export const MyChat = (props: MyChatProps) => {
   return (
     <>
       <div className="mr-3 flex justify-end">
-        <p className="text-sm">自分</p>
+        <p className="text-sm text-block-gray">{myUserDisplayName}</p>
         <p className="ml-1 text-sm text-block-gray">{formattedDate}</p>
       </div>
       <div className="flex justify-end">

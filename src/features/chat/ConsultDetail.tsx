@@ -37,6 +37,19 @@ export const ConsultDetail = () => {
     }
   }, [chatRoomData]);
 
+  const myUserDisplayName = useMemo(() => {
+    if (chatRoomData && medicalSpecialities && chatRoomData.me) {
+      const speciality = medicalSpecialities.find((m) => m.speciality_code === chatRoomData.me?.speciality_1) ?? {
+        name: '',
+      };
+      const date = new Date();
+      const currentYear = date.getFullYear();
+      const specialityExperienceYear = currentYear - chatRoomData.me.qualified_year;
+      return speciality.name + ' ' + (specialityExperienceYear + 1) + '年目';
+    }
+    return '';
+  }, [chatRoomData, medicalSpecialities]);
+
   useEffect(() => {
     console.log(chatListData);
   }, [chatListData]);
@@ -85,7 +98,11 @@ export const ConsultDetail = () => {
             </div>
           </div>
           <div className="flex-grow overflow-auto bg-bg pb-2">
-            <ChatList chatListData={chatListData} currentUserAccountId={accountId} />
+            <ChatList
+              chatListData={chatListData}
+              currentUserAccountId={accountId}
+              myUserDisplayName={myUserDisplayName}
+            />
           </div>
           <div className="relative top-10 flex-none">
             <ChatTextInput />
