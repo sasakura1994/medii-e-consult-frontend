@@ -26,6 +26,10 @@ export const MyChat = (props: MyChatProps) => {
           <p className="mb-3 mr-3 max-w-[670px] whitespace-pre-wrap rounded-lg bg-block-gray p-2 text-white">
             削除済みメッセージ
           </p>
+        ) : chatData.content_type.startsWith('image/') ? (
+          <div className="mb-3 mr-3 p-2">
+            <img src={chatData.file_path} alt="" className="aspect-auto h-[250px]" />
+          </div>
         ) : (
           <p className="mb-3 mr-3 max-w-[670px] whitespace-pre-wrap rounded-lg bg-primary-light p-2">
             {chatData.message}
