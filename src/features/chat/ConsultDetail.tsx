@@ -1,23 +1,24 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { ChatList } from './ChatList';
 import { ChatTextInput } from './ChatTextInput';
-import { useRouter } from 'next/router';
-import { useFetchChatRoom } from '@/hooks/api/chat/useFetchChatRoom';
-import { useGetPublishmentStatus } from '@/hooks/api/chat/useGetPublishmentStatus';
-import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
-import { useFetchChatList } from '@/hooks/api/chat/useFetchChatList';
+import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
+import { FetchChatListResponseData } from '@/hooks/api/chat/useFetchChatList';
 import { useToken } from '@/hooks/authentication/useToken';
+import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 
-export const ConsultDetail = () => {
-  const router = useRouter();
-  const { chat_room_id } = router.query;
-  const chatRoomIdStr = chat_room_id as string;
-  const { data: publishmentStatusData } = useGetPublishmentStatus(chatRoomIdStr);
-  const { data: chatRoomData } = useFetchChatRoom(chatRoomIdStr);
-  const { medicalSpecialities } = useFetchMedicalSpecialities();
-  const { data: chatListData } = useFetchChatList(chatRoomIdStr);
+type ConsultDetailProps = {
+  publishmentStatusData?: {
+    publishment_accepted: number;
+  };
+  chatRoomData?: FetchChatRoomResponseData;
+  medicalSpecialities?: MedicalSpecialityEntity[];
+  chatListData?: FetchChatListResponseData;
+};
+
+export const ConsultDetail = (props: ConsultDetailProps) => {
+  const { publishmentStatusData, chatRoomData, medicalSpecialities, chatListData } = props;
   const { accountId } = useToken();
-
+  const chatListRef = useRef<HTMLDivElement>(null);
   const getSpecialityName = useCallback(
     (specialityCode: string) => {
       if (chatRoomData && medicalSpecialities) {
@@ -82,6 +83,13 @@ export const ConsultDetail = () => {
     }
   }, [chatListData, chatRoomData, getExperienceYear, getSpecialityName]);
 
+  // チャットリストが更新される度にスクロールを一番下にする
+  useEffect(() => {
+    if (chatListRef.current) {
+      chatListRef.current.scrollTop = chatListRef.current.scrollHeight;
+    }
+  }, [chatListData]);
+
   return (
     <>
       {chatRoomData && publishmentStatusData && accountId && chatListDataWithDisplayName && (
@@ -126,11 +134,11 @@ export const ConsultDetail = () => {
               )}
             </div>
           </div>
-          <div className="flex-grow overflow-auto bg-bg pb-2">
+          <div className="flex-grow overflow-auto bg-bg pb-2" ref={chatListRef}>
             <ChatList chatListData={chatListDataWithDisplayName} currentUserAccountId={accountId} />
           </div>
           <div className="relative flex-none">
-            <ChatTextInput />
+            <ChatTextInput chatRoomId={chatRoomData.chat_room.chat_room_id} />
           </div>
         </div>
       )}

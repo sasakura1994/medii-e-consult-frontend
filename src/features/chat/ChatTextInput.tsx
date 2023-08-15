@@ -1,4 +1,5 @@
 import ImageEditor, { ImageEditorProps } from '@/components/Parts/ImageEditor/ImageEditor';
+import { usePostChatMessageNewText } from '@/hooks/api/chat/usePostChatMessageNewText';
 import dynamic, { DynamicOptions } from 'next/dynamic';
 import React, { useRef, useEffect, useState, useCallback, ChangeEvent } from 'react';
 // canvasの関係でサーバー時点でimportできないため、下記のようにdynamic importする
@@ -7,7 +8,13 @@ const ImageEditorComponent = dynamic<ImageEditorProps>(
   { ssr: false }
 ) as typeof ImageEditor;
 
-export const ChatTextInput = () => {
+type ChatTextInputProps = {
+  chatRoomId: string;
+};
+
+export const ChatTextInput = (props: ChatTextInputProps) => {
+  const { chatRoomId } = props;
+  const { postNewMessage } = usePostChatMessageNewText();
   const textInputRef = useRef<HTMLTextAreaElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
   const [editingImage, setEditingImage] = useState<File>();
@@ -55,6 +62,19 @@ export const ChatTextInput = () => {
         className="ml-2 flex w-[682px] resize-none rounded border border-solid border-block-gray px-2 py-1
           placeholder-gray-600 disabled:bg-[#d5d5d5] disabled:text-block-gray"
         placeholder="メッセージを入力 (Shift + Enterキーで送信)"
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' && e.shiftKey) {
+            e.preventDefault();
+            postNewMessage({
+              chat_room_id: chatRoomId,
+              message: textInputRef.current?.value ?? '',
+            });
+
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            textInputRef.current!.value = '';
+            resizeHeight();
+          }
+        }}
       />
       <input
         type="file"
@@ -70,7 +90,21 @@ export const ChatTextInput = () => {
         className="my-auto ml-3 h-[30px] w-[30px] cursor-pointer"
         onClick={() => imageInputRef.current?.click()}
       />
-      <img src="/icons/send_message.svg" alt="" className="my-auto ml-3 h-[30px] w-[30px] cursor-pointer" />
+      <img
+        src="/icons/send_message.svg"
+        alt=""
+        className="my-auto ml-3 h-[30px] w-[30px] cursor-pointer"
+        onClick={() => {
+          postNewMessage({
+            chat_room_id: chatRoomId,
+            message: textInputRef.current?.value ?? '',
+          });
+
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          textInputRef.current!.value = '';
+          resizeHeight();
+        }}
+      />
       {editingImage && (
         <ImageEditorComponent
           file={editingImage}

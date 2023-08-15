@@ -4,14 +4,15 @@ import { ConsultDetail } from './ConsultDetail';
 import { useRouter } from 'next/router';
 import { useWebSocket } from '@/hooks/useWebSocket';
 import { useToken } from '@/hooks/authentication/useToken';
+import { useFetchChatList } from '@/hooks/api/chat/useFetchChatList';
+import { useFetchChatRoom } from '@/hooks/api/chat/useFetchChatRoom';
+import { useGetPublishmentStatus } from '@/hooks/api/chat/useGetPublishmentStatus';
+import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 
 type WebsocketResponseMessage = {
-  type: 'subscribe_response' | 'pong';
+  type: 'subscribe_response' | 'pong' | 'mes';
   param: string;
-  data: {
-    code: number;
-    message: string;
-  };
+  data: string;
 };
 
 export const Chat = () => {
@@ -19,6 +20,11 @@ export const Chat = () => {
   const { socket } = useWebSocket();
   const { token, accountId } = useToken();
   const { chat_room_id } = router.query;
+  const chatRoomIdStr = chat_room_id as string;
+  const { data: publishmentStatusData } = useGetPublishmentStatus(chatRoomIdStr);
+  const { data: chatRoomData } = useFetchChatRoom(chatRoomIdStr);
+  const { medicalSpecialities } = useFetchMedicalSpecialities();
+  const { data: chatListData, mutate } = useFetchChatList(chatRoomIdStr);
 
   useEffect(() => {
     if (!socket.current) {
@@ -56,7 +62,10 @@ export const Chat = () => {
     };
 
     const onMessage = (event: MessageEvent) => {
-      const data: WebsocketResponseMessage = JSON.parse(event.data);
+      // メッセージには改行などの制御文字が含まれているため、削除する
+      // eslint-disable-next-line no-control-regex
+      const jsonText = event.data.replace(/[\u0000-\u0019]+/g, '');
+      const data: WebsocketResponseMessage = JSON.parse(jsonText);
       if (data.type === 'subscribe_response' && data.param === 'vcs:' + accountId) {
         webSocket.send(
           JSON.stringify({
@@ -74,6 +83,11 @@ export const Chat = () => {
             })
           );
         }, 10000);
+      } else if (data.type === 'mes') {
+        // TODO: すぐmutateするとDBに存在しないので一旦0.5秒待機してからmutate
+        setTimeout(() => {
+          mutate();
+        }, 500);
       }
     };
 
@@ -84,13 +98,18 @@ export const Chat = () => {
       webSocket.removeEventListener('open', onOpen);
       webSocket.removeEventListener('message', onMessage);
     };
-  }, [accountId, socket, token]);
+  }, [accountId, mutate, socket, token]);
 
   return (
     <div className="flex bg-white">
       <ConsultList />
       {chat_room_id ? (
-        <ConsultDetail />
+        <ConsultDetail
+          publishmentStatusData={publishmentStatusData}
+          chatRoomData={chatRoomData}
+          medicalSpecialities={medicalSpecialities}
+          chatListData={chatListData}
+        />
       ) : (
         <div className="flex h-screen w-[787px] flex-col border border-[#d5d5d5] bg-bg" />
       )}
