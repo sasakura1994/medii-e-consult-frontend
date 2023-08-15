@@ -85,7 +85,7 @@ export const ConsultDetail = () => {
   return (
     <>
       {chatRoomData && publishmentStatusData && accountId && chatListDataWithDisplayName && (
-        <div className="flex h-[calc(100vh-110px)] w-[787px] flex-col border border-[#d5d5d5]">
+        <div className="flex h-[calc(100vh-62px)] w-[787px] flex-col border border-[#d5d5d5]">
           <div className="flex-none">
             <div className="mr-2 flex h-14 items-center space-x-1">
               <div className="ml-4 flex w-[53px] items-center justify-center rounded-full bg-strong">
@@ -129,7 +129,7 @@ export const ConsultDetail = () => {
           <div className="flex-grow overflow-auto bg-bg pb-2">
             <ChatList chatListData={chatListDataWithDisplayName} currentUserAccountId={accountId} />
           </div>
-          <div className="relative top-10 flex-none">
+          <div className="relative flex-none">
             <ChatTextInput />
           </div>
         </div>
