@@ -115,6 +115,7 @@ export const ChatTextInput = (props: ChatTextInputProps) => {
               chat_room_id: chatRoomId,
               uploaded_file: file,
             });
+
             setEditingImage(undefined);
           }}
           onClose={() => setEditingImage(undefined)}
