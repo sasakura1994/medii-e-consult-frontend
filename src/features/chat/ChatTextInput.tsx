@@ -1,4 +1,5 @@
 import ImageEditor, { ImageEditorProps } from '@/components/Parts/ImageEditor/ImageEditor';
+import { usePostChatMessageNewFiles } from '@/hooks/api/chat/usePostChatMessageNewFiles';
 import { usePostChatMessageNewText } from '@/hooks/api/chat/usePostChatMessageNewText';
 import dynamic, { DynamicOptions } from 'next/dynamic';
 import React, { useRef, useEffect, useState, useCallback, ChangeEvent } from 'react';
@@ -15,6 +16,7 @@ type ChatTextInputProps = {
 export const ChatTextInput = (props: ChatTextInputProps) => {
   const { chatRoomId } = props;
   const { postNewMessage } = usePostChatMessageNewText();
+  const { postNewFile } = usePostChatMessageNewFiles();
   const textInputRef = useRef<HTMLTextAreaElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
   const [editingImage, setEditingImage] = useState<File>();
@@ -108,8 +110,12 @@ export const ChatTextInput = (props: ChatTextInputProps) => {
       {editingImage && (
         <ImageEditorComponent
           file={editingImage}
-          onSubmit={() => {
-            console.log('submit');
+          onSubmit={(file) => {
+            postNewFile({
+              chat_room_id: chatRoomId,
+              uploaded_file: file,
+            });
+            setEditingImage(undefined);
           }}
           onClose={() => setEditingImage(undefined)}
         />
