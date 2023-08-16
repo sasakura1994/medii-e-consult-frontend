@@ -6,6 +6,7 @@ import { usePostChatMessageNewFiles } from '@/hooks/api/chat/usePostChatMessageN
 import { usePostChatMessageNewText } from '@/hooks/api/chat/usePostChatMessageNewText';
 import dynamic, { DynamicOptions } from 'next/dynamic';
 import React, { useRef, useEffect, useState, useCallback, ChangeEvent } from 'react';
+import RectSpinnerDialog from './RectSpinnerDialog';
 // canvasの関係でサーバー時点でimportできないため、下記のようにdynamic importする
 const ImageEditorComponent = dynamic<ImageEditorProps>(
   (() => import('@/components/Parts/ImageEditor/ImageEditor')) as DynamicOptions<ImageEditorProps>,
@@ -24,6 +25,7 @@ export const ChatTextInput = (props: ChatTextInputProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [editingImage, setEditingImage] = useState<File>();
   const [isOpenFileInputModal, setIsOpenFileInputModal] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
 
   const onSelectFile = useCallback(async (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -70,12 +72,14 @@ export const ChatTextInput = (props: ChatTextInputProps) => {
     }
   };
 
-  const postFile = () => {
+  const postFile = async () => {
     if (fileInputRef.current?.files) {
-      postNewFile({
+      setIsUploading(true);
+      await postNewFile({
         chat_room_id: chatRoomId,
         uploaded_file: fileInputRef.current.files[0],
       });
+      setIsUploading(false);
       resetFileInput();
       setIsOpenFileInputModal(false);
     }
@@ -110,6 +114,7 @@ export const ChatTextInput = (props: ChatTextInputProps) => {
           </div>
         </Modal>
       )}
+      {isUploading && <RectSpinnerDialog />}
       <div className="flex w-full bg-white py-1">
         <textarea
           ref={textInputRef}
