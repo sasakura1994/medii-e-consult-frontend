@@ -57,6 +57,7 @@ export const ChatTextInput = (props: ChatTextInputProps) => {
       }
     }
   };
+
   const postTextMessage = () => {
     if (textInputRef.current) {
       postNewMessage({
