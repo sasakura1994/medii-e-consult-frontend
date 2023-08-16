@@ -154,13 +154,14 @@ export const ChatTextInput = (props: ChatTextInputProps) => {
         {editingImage && (
           <ImageEditorComponent
             file={editingImage}
-            onSubmit={(file) => {
-              postNewFile({
+            onSubmit={async (file) => {
+              setEditingImage(undefined);
+              setIsUploading(true);
+              await postNewFile({
                 chat_room_id: chatRoomId,
                 uploaded_file: file,
               });
-
-              setEditingImage(undefined);
+              setIsUploading(false);
             }}
             onClose={() => setEditingImage(undefined)}
           />
