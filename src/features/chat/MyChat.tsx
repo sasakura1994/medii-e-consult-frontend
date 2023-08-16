@@ -14,6 +14,15 @@ export const MyChat = (props: MyChatProps) => {
     hour: 'numeric',
     minute: 'numeric',
   });
+  const downloadFile = async () => {
+    const a = document.createElement('a');
+    a.href = chatData.file_path;
+    a.download = chatData.file_name;
+    a.target = '_blank';
+    a.rel = 'noreferrer';
+    a.click();
+  };
+
   return (
     <>
       <div className="mr-3 flex justify-end">
@@ -31,6 +40,11 @@ export const MyChat = (props: MyChatProps) => {
         ) : chatData.content_type.startsWith('image/') ? (
           <div className="mb-3 mr-3 p-2">
             <img src={chatData.file_path} alt="" className="aspect-auto h-[250px]" />
+          </div>
+        ) : chatData.content_type.startsWith('application/') ? (
+          <div className="mb-3 mr-3 flex cursor-pointer items-center rounded-lg bg-white p-2" onClick={downloadFile}>
+            <img src="icons/insert_drive_file.svg" alt="" className="h-10 w-10" />
+            <p className="max-w-[670px] whitespace-pre-wrap break-words">{chatData.file_name}</p>
           </div>
         ) : (
           <p
