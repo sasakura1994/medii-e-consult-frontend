@@ -10,11 +10,21 @@ import { Breadcrumb } from '@/components/Breadcrumb/Breadcrumb';
 import { BreadcrumbLink } from '@/components/Breadcrumb/BreadcrumbLink';
 import SecondaryButton from '@/components/Button/SecondaryButton';
 import { CheckBox } from '@/components/Parts/Form/CheckBox';
+import { TextArea } from '@/components/Parts/Form/TextArea';
 
 const WithdrawalPage: NextPageWithLayout = () => {
   useAuthenticationOnPage();
-  const { isSending, questionaryItems, selectedQuestionaryItemIds, toggleQuestionaryItem, withdraw } =
-    useWithdrawalPage();
+  const {
+    isSending,
+    other,
+    questionaryItems,
+    selectedQuestionaryItemIds,
+    setOther,
+    setUseOther,
+    toggleQuestionaryItem,
+    useOther,
+    withdraw,
+  } = useWithdrawalPage();
   const { profile, isLoading } = useFetchProfile();
 
   return (
@@ -43,6 +53,24 @@ const WithdrawalPage: NextPageWithLayout = () => {
                 />
               </div>
             ))}
+            <div>
+              <CheckBox
+                label="その他"
+                checked={useOther}
+                name="questionary_use_other"
+                onChange={() => setUseOther((useOther) => !useOther)}
+              />
+            </div>
+            {useOther && (
+              <TextArea
+                name="questionary_other"
+                value={other}
+                onChange={(e) => setOther(e.target.value)}
+                placeholder="その他の理由をお聞かせください"
+                className="h-20 max-w-[576px]"
+                required
+              />
+            )}
           </div>
           {profile.registration_source === 'nmo' && (
             <p className="my-10 text-left" data-testid="nmo-notice">

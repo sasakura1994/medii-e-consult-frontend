@@ -6,12 +6,15 @@ import { useFetchQuestionaryItemsForWithdrawal } from '@/hooks/api/questionary/u
 
 type WithdrawRequestData = {
   questionary_item_ids: string;
+  questionary_other: string;
 };
 
 export const useWithdrawalPage = () => {
   const router = useRouter();
   const { axios } = useAxios();
   const [isSending, setIsSending] = useState(false);
+  const [useOther, setUseOther] = useState(false);
+  const [other, setOther] = useState('');
   const [selectedQuestionaryItemIds, setSelectedQuestionaryItemIds] = useState<number[]>([]);
 
   const { questionaryItems } = useFetchQuestionaryItemsForWithdrawal();
@@ -33,6 +36,7 @@ export const useWithdrawalPage = () => {
 
     const data: WithdrawRequestData = {
       questionary_item_ids: selectedQuestionaryItemIds.join(','),
+      questionary_other: useOther ? other : '',
     };
 
     const response = await axios.delete('/doctor/withdraw', { data }).catch((error) => {
@@ -49,7 +53,17 @@ export const useWithdrawalPage = () => {
 
     removeAuthToken();
     router.push('/withdrawal/completed');
-  }, [axios, router, selectedQuestionaryItemIds]);
+  }, [axios, other, router, selectedQuestionaryItemIds, useOther]);
 
-  return { isSending, questionaryItems, selectedQuestionaryItemIds, toggleQuestionaryItem, withdraw };
+  return {
+    isSending,
+    other,
+    questionaryItems,
+    selectedQuestionaryItemIds,
+    setOther,
+    setUseOther,
+    toggleQuestionaryItem,
+    useOther,
+    withdraw,
+  };
 };
