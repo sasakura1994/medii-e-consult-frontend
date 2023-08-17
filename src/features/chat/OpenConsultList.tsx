@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { ConsultTitle } from './ConsultTitle';
-import { StyledHiddenScrollBar } from './styled';
 import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
 import { useFetchUnreadCounts } from '@/hooks/api/chat/useFetchUnreadCounts';
 
@@ -15,7 +14,7 @@ export const OpenConsultList = (props: OpenConsultListProps) => {
   const [isOpenedGroupList, setIsOpenedGroupList] = useState(true);
   const unreadCountsResponseData = useFetchUnreadCounts();
   return (
-    <StyledHiddenScrollBar className="h-full overflow-scroll bg-white pb-36">
+    <div className="h-full overflow-auto bg-white pb-36">
       <button
         className=" flex h-10 w-full cursor-pointer items-center border-t-black bg-[#f1f1f1] hover:bg-btn-hover-gray"
         onClick={() => setIsOpenedConsultList((prev) => !prev)}
@@ -120,6 +119,6 @@ export const OpenConsultList = (props: OpenConsultListProps) => {
               </Link>
             );
           })}
-    </StyledHiddenScrollBar>
+    </div>
   );
 };

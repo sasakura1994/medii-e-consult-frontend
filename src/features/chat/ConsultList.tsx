@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useFetchChatRoomList } from '@/hooks/api/chat/useFetchChatRoomList';
 import { OpenConsultList } from './OpenConsultList';
+import { CloseConsultList } from './CloseConsultList';
 
 export const ConsultList = () => {
   const { data: chatRoomList } = useFetchChatRoomList({
@@ -9,7 +10,7 @@ export const ConsultList = () => {
   const [selectedTab, setSelectedTab] = useState<'open' | 'close'>('open');
 
   return (
-    <div className="h-screen w-[336px] border border-[#d5d5d5]">
+    <div className="h-[calc(100vh-20px)] w-[336px] border border-[#d5d5d5]">
       <div className="flex h-14 items-center bg-primary">
         <img src="/icons/consult_list.svg" alt="" className="ml-2 h-7 w-8" />
         <p className="text-md font-bold text-white">コンサル一覧</p>
@@ -24,7 +25,7 @@ export const ConsultList = () => {
           }`}
           onClick={() => setSelectedTab('open')}
         >
-          <p className="text-sm text-primary">コンサル中</p>
+          <p className={`text-sm ${selectedTab === 'open' && 'text-primary'}`}>コンサル中</p>
         </div>
         <div
           className={`flex w-full cursor-pointer items-center justify-center border-b-2 ${
@@ -32,10 +33,11 @@ export const ConsultList = () => {
           }`}
           onClick={() => setSelectedTab('close')}
         >
-          <p className="text-sm">解決済み</p>
+          <p className={`text-sm ${selectedTab === 'close' && 'text-primary'}`}>解決済み</p>
         </div>
       </div>
       {selectedTab === 'open' && <OpenConsultList chatRoomList={chatRoomList} />}
+      {selectedTab === 'close' && <CloseConsultList chatRoomList={chatRoomList} />}
     </div>
   );
 };
