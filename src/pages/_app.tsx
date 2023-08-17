@@ -74,6 +74,10 @@ const App = (props: AppPropsWithLayout) => {
   const handleStart = (url: string) => {
     const absoluteUrl = new URL(url, window.location.origin);
     const pathname = absoluteUrl.pathname.toLowerCase();
+    // 同じページに遷移する場合は画面のリダイレクトを行わない
+    if (router.pathname.toLowerCase() === pathname) {
+      return;
+    }
     if (
       [
         '/',
@@ -109,6 +113,7 @@ const App = (props: AppPropsWithLayout) => {
     return () => {
       router.events.off('routeChangeStart', handleStart);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 
   return (
