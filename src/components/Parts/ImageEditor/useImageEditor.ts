@@ -195,7 +195,7 @@ export const useImageEditor = (props: ImageEditorProps) => {
   );
 
   const onSubmit = React.useCallback(() => {
-    const dataURL = stageRef.current!.toDataURL();
+    const dataURL = stageRef.current!.toDataURL({ quality: 1.0, pixelRatio: 2.0 });
 
     const bin = window.atob(dataURL.replace(/^.*,/, ''));
     const buffer = new Uint8Array(bin.length);
