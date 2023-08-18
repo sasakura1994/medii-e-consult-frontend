@@ -5,7 +5,6 @@ import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import { FetchChatListResponseData } from '@/hooks/api/chat/useFetchChatList';
 import { useToken } from '@/hooks/authentication/useToken';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
-import { StyledOverlay } from './styled';
 
 type ConsultDetailProps = {
   publishmentStatusData?: {
@@ -20,7 +19,6 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
   const { publishmentStatusData, chatRoomData, medicalSpecialities, chatListData } = props;
   const { accountId } = useToken();
   const chatListRef = useRef<HTMLDivElement | null>(null);
-  const [scrollContentHeight, setScrollContentHeight] = useState('100%');
   const getSpecialityName = useCallback(
     (specialityCode: string) => {
       if (chatRoomData && medicalSpecialities) {
@@ -89,9 +87,6 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
   useEffect(() => {
     if (chatListRef.current) {
       chatListRef.current.scrollTop = chatListRef.current.scrollHeight;
-      const scrollContentHeight = String(chatListRef.current.scrollHeight) + 'px';
-      console.log('scrollContentHeight', scrollContentHeight);
-      setScrollContentHeight(scrollContentHeight);
     }
   }, [chatListData, chatRoomData]);
 
@@ -99,7 +94,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     <>
       {chatRoomData && publishmentStatusData && accountId && chatListDataWithDisplayName && (
         <div className="flex h-[calc(100vh-62px)] w-[787px] flex-col border border-[#d5d5d5]">
-          <div className="flex-none">
+          <div className="flex-shrink-0 flex-grow-0">
             <div className="mr-2 flex h-14 items-center space-x-1">
               <div className="ml-4 flex w-[53px] items-center justify-center rounded-full bg-strong">
                 <p className="py-0.5 text-xs text-white">未解決</p>
@@ -139,10 +134,13 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
               )}
             </div>
           </div>
-          <StyledOverlay scrollContentHeight={scrollContentHeight} className="flex-grow bg-bg pb-2" ref={chatListRef}>
-            <ChatList chatListData={chatListDataWithDisplayName} currentUserAccountId={accountId} />
-          </StyledOverlay>
-          <div className="relative flex-none">
+          <div className="relative flex overflow-hidden">
+            <div className="-mb-3 flex-1 overflow-scroll" ref={chatListRef}>
+              <ChatList chatListData={chatListDataWithDisplayName} currentUserAccountId={accountId} />
+            </div>
+            <div className="pointer-events-none absolute inset-0 overflow-hidden bg-black bg-opacity-20" />
+          </div>
+          <div className="flex-shrink-0 flex-grow-0">
             <ChatTextInput chatRoomId={chatRoomData.chat_room.chat_room_id} />
           </div>
         </div>
