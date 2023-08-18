@@ -19,11 +19,13 @@ describe('EditProfile', () => {
       },
     });
 
-    render(
-      <RecoilRoot>
-        <EditProfile isRegisterMode={false} />
-      </RecoilRoot>
-    );
+    await act(() => {
+      render(
+        <RecoilRoot>
+          <EditProfile isRegisterMode={false} />
+        </RecoilRoot>
+      );
+    });
 
     expect(screen.queryByTestId('edit-profile-usage-classification')).not.toBeInTheDocument();
   });
