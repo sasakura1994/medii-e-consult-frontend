@@ -1,10 +1,11 @@
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ChatList } from './ChatList';
 import { ChatTextInput } from './ChatTextInput';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import { FetchChatListResponseData } from '@/hooks/api/chat/useFetchChatList';
 import { useToken } from '@/hooks/authentication/useToken';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
+import { StyledOverlay } from './styled';
 
 type ConsultDetailProps = {
   publishmentStatusData?: {
@@ -18,7 +19,8 @@ type ConsultDetailProps = {
 export const ConsultDetail = (props: ConsultDetailProps) => {
   const { publishmentStatusData, chatRoomData, medicalSpecialities, chatListData } = props;
   const { accountId } = useToken();
-  const chatListRef = useRef<HTMLDivElement>(null);
+  const chatListRef = useRef<HTMLDivElement | null>(null);
+  const [scrollContentHeight, setScrollContentHeight] = useState('100%');
   const getSpecialityName = useCallback(
     (specialityCode: string) => {
       if (chatRoomData && medicalSpecialities) {
@@ -87,8 +89,11 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
   useEffect(() => {
     if (chatListRef.current) {
       chatListRef.current.scrollTop = chatListRef.current.scrollHeight;
+      const scrollContentHeight = String(chatListRef.current.scrollHeight) + 'px';
+      console.log('scrollContentHeight', scrollContentHeight);
+      setScrollContentHeight(scrollContentHeight);
     }
-  }, [chatListData]);
+  }, [chatListData, chatRoomData]);
 
   return (
     <>
@@ -134,9 +139,9 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
               )}
             </div>
           </div>
-          <div className="flex-grow overflow-auto bg-bg pb-2" ref={chatListRef}>
+          <StyledOverlay scrollContentHeight={scrollContentHeight} className="flex-grow bg-bg pb-2" ref={chatListRef}>
             <ChatList chatListData={chatListDataWithDisplayName} currentUserAccountId={accountId} />
-          </div>
+          </StyledOverlay>
           <div className="relative flex-none">
             <ChatTextInput chatRoomId={chatRoomData.chat_room.chat_room_id} />
           </div>
