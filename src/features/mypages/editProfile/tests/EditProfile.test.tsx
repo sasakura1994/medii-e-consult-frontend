@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, act } from '@testing-library/react';
+import { render, screen, act, waitFor } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { EditProfile } from '../EditProfile';
@@ -27,6 +27,9 @@ describe('EditProfile', () => {
       );
     });
 
-    expect(screen.queryByTestId('edit-profile-usage-classification')).not.toBeInTheDocument();
+    const editProfileUsageClassification = await act(
+      async () => await waitFor(() => screen.queryByTestId('edit-profile-usage-classification'))
+    );
+    expect(editProfileUsageClassification).not.toBeInTheDocument();
   });
 });
