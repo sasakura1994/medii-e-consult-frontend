@@ -64,6 +64,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
           {isOpenRoomReopenModal && mutateChatRoom && mutateChatRoomList && (
             <RoomReopenModal
               chatRoomID={chatRoomData.chat_room.chat_room_id}
+              isChatRoomOwner={isChatRoomOwner}
               setIsOpenRoomReopenModal={setIsOpenRoomReopenModal}
               mutateChatRoom={mutateChatRoom}
               mutateChatRoomList={mutateChatRoomList}
