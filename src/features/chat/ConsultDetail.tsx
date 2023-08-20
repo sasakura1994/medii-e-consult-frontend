@@ -5,6 +5,7 @@ import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import { FetchChatListResponseData } from '@/hooks/api/chat/useFetchChatList';
 import { useToken } from '@/hooks/authentication/useToken';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
+import Link from 'next/link';
 
 type ConsultDetailProps = {
   publishmentStatusData?: {
@@ -177,6 +178,36 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                 <div className="mx-3 mt-4 min-w-[40%] cursor-pointer rounded-full bg-white px-4 py-1 text-primary">
                   <p className="text-sm">このコンサルを再開する</p>
                 </div>
+                {isChatRoomOwner &&
+                  (chatRoomData.chat_room.room_type === 'GROUP' ? (
+                    <Link
+                      href={{
+                        pathname: 'newchatroom',
+                        query: `target_group_id=${chatRoomData.chat_room.group_id}`,
+                      }}
+                    >
+                      <div
+                        className="mx-3 mt-4 min-w-[40%] cursor-pointer
+                       rounded-full bg-white px-4 py-1 text-primary"
+                      >
+                        <p className="text-sm">同じ医師グループに別の症例を相談する</p>
+                      </div>
+                    </Link>
+                  ) : (
+                    <Link
+                      href={{
+                        pathname: 'newchatroom',
+                        query: `target_account_id=${chatRoomData.members[0].account_id}`,
+                      }}
+                    >
+                      <div
+                        className="mx-3 mt-4 min-w-[40%] cursor-pointer
+                      rounded-full bg-white px-4 py-1 text-primary"
+                      >
+                        <p className="text-sm">同じ医師に別の症例を相談する</p>
+                      </div>
+                    </Link>
+                  ))}
               </div>
             </div>
           )}
