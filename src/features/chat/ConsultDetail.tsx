@@ -170,6 +170,16 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
               <div className="pointer-events-none absolute inset-0 overflow-hidden bg-black bg-opacity-20" />
             )}
           </div>
+          {isCloseRoom && (
+            <div className="pointer-events-auto bg-[#5c6bc0] p-2 text-center text-sm text-white">
+              <p>解決済みのルームです</p>
+              <div className="flex justify-center">
+                <div className="mx-3 mt-4 min-w-[40%] cursor-pointer rounded-full bg-white px-4 py-1 text-primary">
+                  <p className="text-sm">このコンサルを再開する</p>
+                </div>
+              </div>
+            </div>
+          )}
           <div className="flex-shrink-0 flex-grow-0">
             <ChatTextInput chatRoomId={chatRoomData.chat_room.chat_room_id} />
           </div>
