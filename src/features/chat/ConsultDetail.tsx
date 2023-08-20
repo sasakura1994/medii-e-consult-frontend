@@ -6,7 +6,9 @@ import { FetchChatListResponseData } from '@/hooks/api/chat/useFetchChatList';
 import { useToken } from '@/hooks/authentication/useToken';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 import Link from 'next/link';
-import { ReConsultConfirmDialog } from './ReConsultConfirmDialog';
+import { ReConsultConfirmModal } from './ReConsultConfirmModal';
+import { RoomReopenModal } from './RoomReopenModal';
+import { KeyedMutator } from 'swr';
 
 type ConsultDetailProps = {
   publishmentStatusData?: {
@@ -15,11 +17,13 @@ type ConsultDetailProps = {
   chatRoomData?: FetchChatRoomResponseData;
   medicalSpecialities?: MedicalSpecialityEntity[];
   chatListData?: FetchChatListResponseData;
+  mutateChatRoom?: KeyedMutator<FetchChatRoomResponseData>;
 };
 
 export const ConsultDetail = (props: ConsultDetailProps) => {
-  const { publishmentStatusData, chatRoomData, medicalSpecialities, chatListData } = props;
-  const [isOpenReConsultConfirmDialog, setIsOpenReConsultConfirmDialog] = useState(false);
+  const { publishmentStatusData, chatRoomData, medicalSpecialities, chatListData, mutateChatRoom } = props;
+  const [isOpenReConsultConfirmModal, setIsOpenReConsultConfirmModal] = useState(false);
+  const [isOpenRoomReopenModal, setIsOpenRoomReopenModal] = useState(false);
   const { accountId } = useToken();
   const chatListRef = useRef<HTMLDivElement | null>(null);
   const getSpecialityName = useCallback(
@@ -109,10 +113,17 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     <>
       {chatRoomData && publishmentStatusData && accountId && chatListDataWithDisplayName && (
         <>
-          {isOpenReConsultConfirmDialog && (
-            <ReConsultConfirmDialog
+          {isOpenReConsultConfirmModal && (
+            <ReConsultConfirmModal
               chatRoomID={chatRoomData.chat_room.chat_room_id}
-              setIsOpenReConsultConfirmDialog={setIsOpenReConsultConfirmDialog}
+              setIsOpenReConsultConfirmModal={setIsOpenReConsultConfirmModal}
+            />
+          )}
+          {isOpenRoomReopenModal && mutateChatRoom && (
+            <RoomReopenModal
+              chatRoomID={chatRoomData.chat_room.chat_room_id}
+              setIsOpenRoomReopenModal={setIsOpenRoomReopenModal}
+              mutateChatRoom={mutateChatRoom}
             />
           )}
           <div className="flex h-[calc(100vh-62px)] w-[787px] flex-col border border-[#d5d5d5]">
@@ -143,7 +154,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                 ) : isChatRoomOwner && chatRoomData.chat_room.room_type !== 'GROUP' ? (
                   <button
                     className="h-9 w-[138px] rounded-full bg-primary"
-                    onClick={() => setIsOpenReConsultConfirmDialog(true)}
+                    onClick={() => setIsOpenReConsultConfirmModal(true)}
                   >
                     <p className="text-xs text-white">他の医師に相談する</p>
                   </button>
@@ -187,7 +198,10 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
               <div className="pointer-events-auto bg-[#5c6bc0] p-2 text-center text-sm text-white">
                 <p>解決済みのルームです</p>
                 <div className="flex justify-center">
-                  <div className="mx-3 mt-4 min-w-[40%] cursor-pointer rounded-full bg-white px-4 py-1 text-primary">
+                  <div
+                    className="mx-3 mt-4 min-w-[40%] cursor-pointer rounded-full bg-white px-4 py-1 text-primary"
+                    onClick={() => setIsOpenRoomReopenModal(true)}
+                  >
                     <p className="text-sm">このコンサルを再開する</p>
                   </div>
                   {isChatRoomOwner &&

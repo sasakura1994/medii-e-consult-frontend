@@ -4,15 +4,15 @@ import { Modal } from '@/components/Parts/Modal/Modal';
 import Link from 'next/link';
 import React from 'react';
 
-type ReConsultConfirmDialogProps = {
+type ReConsultConfirmModalProps = {
   chatRoomID: string;
-  setIsOpenReConsultConfirmDialog: (isOpen: boolean) => void;
+  setIsOpenReConsultConfirmModal: (isOpen: boolean) => void;
 };
 
-export const ReConsultConfirmDialog = (props: ReConsultConfirmDialogProps) => {
-  const { chatRoomID, setIsOpenReConsultConfirmDialog } = props;
+export const ReConsultConfirmModal = (props: ReConsultConfirmModalProps) => {
+  const { chatRoomID, setIsOpenReConsultConfirmModal } = props;
   return (
-    <Modal className="w-[644px]" isCenter setShowModal={setIsOpenReConsultConfirmDialog}>
+    <Modal className="w-[644px]" isCenter setShowModal={setIsOpenReConsultConfirmModal}>
       <div className="mx-[82px] my-[15px]">
         <p className="my-9 text-2xl font-bold">他の医師に同様のコンサルを作成します</p>
 
@@ -24,7 +24,7 @@ export const ReConsultConfirmDialog = (props: ReConsultConfirmDialogProps) => {
           <li className="list-disc">すでに回答をもらった医師には送信されません。</li>
         </ul>
         <div className="mb-10 flex justify-center space-x-4">
-          <OutlinedButton onClick={() => setIsOpenReConsultConfirmDialog(false)}>キャンセル</OutlinedButton>
+          <OutlinedButton onClick={() => setIsOpenReConsultConfirmModal(false)}>キャンセル</OutlinedButton>
           <Link href={{ pathname: 'newchatroom', query: `reconsult=${chatRoomID}` }}>
             <PrimaryButton>コンサルに進む</PrimaryButton>
           </Link>

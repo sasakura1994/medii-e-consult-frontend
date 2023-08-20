@@ -22,7 +22,7 @@ export const Chat = () => {
   const { chat_room_id } = router.query;
   const chatRoomIdStr = chat_room_id as string;
   const { data: publishmentStatusData } = useGetPublishmentStatus(chatRoomIdStr);
-  const { data: chatRoomData } = useFetchChatRoom(chatRoomIdStr);
+  const { data: chatRoomData, mutate: mutateChatRoom } = useFetchChatRoom(chatRoomIdStr);
   const { medicalSpecialities } = useFetchMedicalSpecialities();
   const { data: chatListData, mutate } = useFetchChatList(chatRoomIdStr);
 
@@ -109,6 +109,7 @@ export const Chat = () => {
           chatRoomData={chatRoomData}
           medicalSpecialities={medicalSpecialities}
           chatListData={chatListData}
+          mutateChatRoom={mutateChatRoom}
         />
       ) : (
         <div className="flex h-screen w-[787px] flex-col border border-[#d5d5d5] bg-bg" />
