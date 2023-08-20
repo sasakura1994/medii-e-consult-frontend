@@ -1,14 +1,15 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React from 'react';
 import { ChatList } from './ChatList';
 import { ChatTextInput } from './ChatTextInput';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import { FetchChatListResponseData } from '@/hooks/api/chat/useFetchChatList';
-import { useToken } from '@/hooks/authentication/useToken';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 import Link from 'next/link';
 import { ReConsultConfirmModal } from './ReConsultConfirmModal';
 import { RoomReopenModal } from './RoomReopenModal';
 import { KeyedMutator } from 'swr';
+import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
+import { useConsultDetail } from './useConsultDetail';
 
 type ConsultDetailProps = {
   publishmentStatusData?: {
@@ -18,96 +19,37 @@ type ConsultDetailProps = {
   medicalSpecialities?: MedicalSpecialityEntity[];
   chatListData?: FetchChatListResponseData;
   mutateChatRoom?: KeyedMutator<FetchChatRoomResponseData>;
+  mutateChatRoomList?: KeyedMutator<ChatRoomEntity[]>;
+  setSelectedTab: React.Dispatch<React.SetStateAction<'open' | 'close'>>;
 };
 
 export const ConsultDetail = (props: ConsultDetailProps) => {
-  const { publishmentStatusData, chatRoomData, medicalSpecialities, chatListData, mutateChatRoom } = props;
-  const [isOpenReConsultConfirmModal, setIsOpenReConsultConfirmModal] = useState(false);
-  const [isOpenRoomReopenModal, setIsOpenRoomReopenModal] = useState(false);
-  const { accountId } = useToken();
-  const chatListRef = useRef<HTMLDivElement | null>(null);
-  const getSpecialityName = useCallback(
-    (specialityCode: string) => {
-      if (chatRoomData && medicalSpecialities) {
-        const speciality = medicalSpecialities.find((m) => m.speciality_code === specialityCode);
-        return speciality ? speciality.name : '';
-      }
-    },
-    [chatRoomData, medicalSpecialities]
-  );
-
-  const getExperienceYear = useCallback((year: number) => {
-    const date = new Date();
-    const currentYear = date.getFullYear();
-    const passedYear = currentYear - year;
-
-    return passedYear + 1;
-  }, []);
-
-  const chatListDataWithDisplayName = useMemo(() => {
-    // TODO: 一旦first_nameがある場合は名前を表示し、ない場合はspecialityとexperienceYearを表示する
-    if (chatListData && chatRoomData) {
-      return chatListData.map((c) => {
-        if (chatRoomData.me?.account_id === c.account_id) {
-          if (chatRoomData.me.first_name) {
-            return { ...c, displayName: chatRoomData.me.last_name + ' ' + chatRoomData.me.first_name + '先生' };
-          } else if (chatRoomData.me.speciality_1) {
-            return {
-              ...c,
-              displayName:
-                getSpecialityName(chatRoomData.me.speciality_1) +
-                ' ' +
-                getExperienceYear(chatRoomData.me.qualified_year) +
-                '年目',
-            };
-          }
-          return { ...c, displayName: '' };
-        } else if (chatRoomData.members[0].account_id === c.account_id) {
-          if (chatRoomData.members[0].first_name) {
-            return {
-              ...c,
-              displayName: chatRoomData.members[0].last_name + ' ' + chatRoomData.members[0].first_name + '先生',
-            };
-          } else if (chatRoomData.members[0].speciality_1) {
-            return {
-              ...c,
-              displayName:
-                getSpecialityName(chatRoomData.members[0].speciality_1) +
-                ' ' +
-                getExperienceYear(chatRoomData.members[0].qualified_year) +
-                '年目',
-            };
-          }
-          return { ...c, displayName: '' };
-        } else if (c.account_id === 'CHATBOT') {
-          return {
-            ...c,
-            displayName: 'システム通知',
-          };
-        }
-        return { ...c, displayName: '' };
-      });
-    }
-  }, [chatListData, chatRoomData, getExperienceYear, getSpecialityName]);
-
-  const isCloseRoom = useMemo(() => {
-    if (chatRoomData) {
-      return chatRoomData.chat_room.status === 'RESOLVED' || chatRoomData.chat_room.status === 'CLOSED';
-    }
-  }, [chatRoomData]);
-
-  const isChatRoomOwner = useMemo(() => {
-    if (chatRoomData) {
-      return chatRoomData.chat_room.owner_account_id === accountId;
-    }
-  }, [chatRoomData, accountId]);
-
-  // チャットリストが更新される度にスクロールを一番下にする
-  useEffect(() => {
-    if (chatListRef.current) {
-      chatListRef.current.scrollTop = chatListRef.current.scrollHeight;
-    }
-  }, [chatListData, chatRoomData]);
+  const {
+    publishmentStatusData,
+    chatRoomData,
+    medicalSpecialities,
+    chatListData,
+    mutateChatRoom,
+    mutateChatRoomList,
+    setSelectedTab,
+  } = props;
+  const {
+    accountId,
+    chatListRef,
+    chatListDataWithDisplayName,
+    isCloseRoom,
+    isChatRoomOwner,
+    isOpenReConsultConfirmModal,
+    setIsOpenReConsultConfirmModal,
+    isOpenRoomReopenModal,
+    setIsOpenRoomReopenModal,
+    getSpecialityName,
+    getExperienceYear,
+  } = useConsultDetail({
+    medicalSpecialities: medicalSpecialities,
+    chatRoomData: chatRoomData,
+    chatListData: chatListData,
+  });
 
   return (
     <>
@@ -119,11 +61,13 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
               setIsOpenReConsultConfirmModal={setIsOpenReConsultConfirmModal}
             />
           )}
-          {isOpenRoomReopenModal && mutateChatRoom && (
+          {isOpenRoomReopenModal && mutateChatRoom && mutateChatRoomList && (
             <RoomReopenModal
               chatRoomID={chatRoomData.chat_room.chat_room_id}
               setIsOpenRoomReopenModal={setIsOpenRoomReopenModal}
               mutateChatRoom={mutateChatRoom}
+              mutateChatRoomList={mutateChatRoomList}
+              setSelectedTab={setSelectedTab}
             />
           )}
           <div className="flex h-[calc(100vh-62px)] w-[787px] flex-col border border-[#d5d5d5]">

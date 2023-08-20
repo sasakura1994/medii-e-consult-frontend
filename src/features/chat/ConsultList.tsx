@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
-import { useFetchChatRoomList } from '@/hooks/api/chat/useFetchChatRoomList';
+import React from 'react';
 import { OpenConsultList } from './OpenConsultList';
 import { CloseConsultList } from './CloseConsultList';
+import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
 
-export const ConsultList = () => {
-  const { data: chatRoomList } = useFetchChatRoomList({
-    query: ['FREE', 'BY_NAME', 'GROUP'],
-  });
-  const [selectedTab, setSelectedTab] = useState<'open' | 'close'>('open');
+type ConsultListProps = {
+  chatRoomList?: ChatRoomEntity[];
+  selectedTab: 'open' | 'close';
+  setSelectedTab: React.Dispatch<React.SetStateAction<'open' | 'close'>>;
+};
+
+export const ConsultList = (props: ConsultListProps) => {
+  const { chatRoomList, selectedTab, setSelectedTab } = props;
 
   return (
     <div className="h-[calc(100vh-20px)] w-[336px] border border-[#d5d5d5]">

@@ -2,20 +2,22 @@ import { OutlinedButton } from '@/components/Parts/Button/OutlinedButton';
 import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
-import { usePostChatRoomReOpen } from '@/hooks/api/chat/usePostChatRoomReOpen';
-import React, { useState } from 'react';
+import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
+import React from 'react';
 import { KeyedMutator } from 'swr';
+import { useRoomReopenModal } from './useRoomReopenModal';
 
 type RoomReopenModalProps = {
   chatRoomID: string;
   setIsOpenRoomReopenModal: (isOpen: boolean) => void;
   mutateChatRoom: KeyedMutator<FetchChatRoomResponseData>;
+  mutateChatRoomList: KeyedMutator<ChatRoomEntity[]>;
+  setSelectedTab: React.Dispatch<React.SetStateAction<'open' | 'close'>>;
 };
 
 export const RoomReopenModal = (props: RoomReopenModalProps) => {
-  const { chatRoomID, setIsOpenRoomReopenModal, mutateChatRoom } = props;
-  const [selectedReason, setSelectedReason] = useState<'unsolved' | 'thanks' | 'additional' | undefined>(undefined);
-  const { reOpenChatRoom } = usePostChatRoomReOpen();
+  const { chatRoomID, setIsOpenRoomReopenModal, mutateChatRoom, mutateChatRoomList, setSelectedTab } = props;
+  const { selectedReason, setSelectedReason, reOpenChatRoom } = useRoomReopenModal();
 
   return (
     <Modal className="w-[644px]" isCenter setShowModal={setIsOpenRoomReopenModal}>
@@ -63,10 +65,12 @@ export const RoomReopenModal = (props: RoomReopenModalProps) => {
           </OutlinedButton>
           <PrimaryButton
             className="w-[191px]"
-            onClick={() => {
-              reOpenChatRoom({ chat_room_id: chatRoomID, reason: selectedReason });
+            onClick={async () => {
+              await reOpenChatRoom({ chat_room_id: chatRoomID, reason: selectedReason });
               setIsOpenRoomReopenModal(false);
               mutateChatRoom();
+              mutateChatRoomList();
+              setSelectedTab('open');
             }}
           >
             決定

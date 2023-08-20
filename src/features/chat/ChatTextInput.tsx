@@ -1,7 +1,7 @@
 import ImageEditor, { ImageEditorProps } from '@/components/Parts/ImageEditor/ImageEditor';
-import { usePostChatMessageNewText } from '@/hooks/api/chat/usePostChatMessageNewText';
 import dynamic, { DynamicOptions } from 'next/dynamic';
-import React, { useRef, useEffect, useState, useCallback, ChangeEvent } from 'react';
+import React from 'react';
+import { useChatTextInput } from './useChatTextInput';
 // canvasの関係でサーバー時点でimportできないため、下記のようにdynamic importする
 const ImageEditorComponent = dynamic<ImageEditorProps>(
   (() => import('@/components/Parts/ImageEditor/ImageEditor')) as DynamicOptions<ImageEditorProps>,
@@ -14,45 +14,16 @@ type ChatTextInputProps = {
 
 export const ChatTextInput = (props: ChatTextInputProps) => {
   const { chatRoomId } = props;
-  const { postNewMessage } = usePostChatMessageNewText();
-  const textInputRef = useRef<HTMLTextAreaElement>(null);
-  const imageInputRef = useRef<HTMLInputElement>(null);
-  const [editingImage, setEditingImage] = useState<File>();
-
-  const onSelectImage = useCallback(async (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    if (!e.target.files || e.target.files.length === 0) {
-      return;
-    }
-
-    const files = e.target.files;
-
-    if (files[0].type.match(/^image\//)) {
-      setEditingImage(files[0]);
-      return;
-    }
-  }, []);
-
-  const resetImageInput = useCallback(() => {
-    if (imageInputRef.current) {
-      imageInputRef.current.value = '';
-    }
-  }, [imageInputRef]);
-
-  const resizeHeight = () => {
-    if (textInputRef.current) {
-      textInputRef.current.style.height = '40px';
-      textInputRef.current.style.height = `${textInputRef.current.scrollHeight}px`;
-      if (textInputRef.current.scrollHeight > 400) {
-        textInputRef.current.style.height = '400px';
-        textInputRef.current.style.overflowY = 'scroll';
-      }
-    }
-  };
-
-  useEffect(() => {
-    resizeHeight();
-  }, []);
+  const {
+    postNewMessage,
+    editingImage,
+    setEditingImage,
+    textInputRef,
+    imageInputRef,
+    resizeHeight,
+    onSelectImage,
+    resetImageInput,
+  } = useChatTextInput();
 
   return (
     <div className="flex w-full bg-white py-1">
