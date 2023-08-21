@@ -22,7 +22,7 @@ const WithdrawalConfirmPage: NextPageWithLayout = () => {
       </div>
       <div className="mt-3 flex flex-col gap-6 lg:flex-row">
         <WithdrawalCard
-          image="/images/withdrawal/img_e-consult.svg"
+          image="/images/withdrawal/img_e-consult.png"
           buttonLabel="E-コンサルについて詳しく知る"
           href="https://medii.jp/e-consult"
         />
