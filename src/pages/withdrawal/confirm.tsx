@@ -24,9 +24,13 @@ const WithdrawalConfirmPage: NextPageWithLayout = () => {
         <WithdrawalCard
           image="/images/withdrawal/img_e-consult.svg"
           buttonLabel="E-コンサルについて詳しく知る"
-          href=""
+          href="https://medii.jp/e-consult"
         />
-        <WithdrawalCard image="/images/withdrawal/img_e-confe.svg" buttonLabel="E-カンファについて詳しく知る" href="" />
+        <WithdrawalCard
+          image="/images/withdrawal/img_e-confe.svg"
+          buttonLabel="E-カンファについて詳しく知る"
+          href="https://medii.jp/e-conference"
+        />
       </div>
       <div className="mt-6">
         <h3 className="text-l font-semibold">メール配信を停止したい</h3>
