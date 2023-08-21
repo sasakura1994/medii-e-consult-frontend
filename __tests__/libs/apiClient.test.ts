@@ -5,6 +5,18 @@ import { createApiClient } from '@/libs/apiClient';
 const mock = new MockAdapter(axios);
 
 describe('createApiClient', () => {
+  beforeEach(() => {
+    Object.defineProperty(window, 'location', {
+      value: {
+        href: '',
+        pathname: '/',
+        search: '',
+        hostname: '',
+      },
+      writable: true,
+    });
+  });
+
   test('should add token to headers when token is provided', () => {
     const token = 'dummy_token';
     const apiClient = createApiClient({ token });
