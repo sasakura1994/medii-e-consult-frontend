@@ -142,7 +142,7 @@ export const ProfileDetail: React.FC<Props> = ({ onEdit }: Props) => {
 
             <div className="mt-12 lg:pb-10">
               <Link href="/withdrawal/confirm">
-                <a className="text-md text-distructive underline">アカウントを削除する</a>
+                <a className="text-md text-distructive underline">アカウントを削除</a>
               </Link>
             </div>
           </>
