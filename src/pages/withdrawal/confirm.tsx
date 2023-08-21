@@ -18,7 +18,7 @@ const WithdrawalConfirmPage: NextPageWithLayout = () => {
       </Breadcrumb>
       <h2 className="mt-2 text-xxl font-semibold">アカウント削除</h2>
       <div className="mt-10 text-md">
-        Mediiのアカウントをを削除します。削除完了後は、コンサル・E-カンファ・症例バンクの全てのサービスが利用できなくなります。
+        Mediiのアカウントを削除します。削除完了後は、コンサル・E-カンファ・症例バンクの全てのサービスが利用できなくなります。
       </div>
       <div className="mt-3 flex flex-col gap-6 lg:flex-row">
         <WithdrawalCard
