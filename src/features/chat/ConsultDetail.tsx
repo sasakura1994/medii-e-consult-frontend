@@ -132,7 +132,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
               </div>
             </div>
             <div className="relative flex flex-grow overflow-hidden">
-              <div className="-mb-3 flex-1 overflow-scroll bg-bg" ref={chatListRef}>
+              <div className="-mb-3 flex-1 overflow-auto bg-bg" ref={chatListRef}>
                 <ChatList chatListData={chatListDataWithDisplayName} currentUserAccountId={accountId} />
               </div>
               {isCloseRoom && (
