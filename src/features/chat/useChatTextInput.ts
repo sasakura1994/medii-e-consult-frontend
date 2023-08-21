@@ -1,13 +1,22 @@
+import { usePostChatMessageNewFiles } from '@/hooks/api/chat/usePostChatMessageNewFiles';
 import { usePostChatMessageNewText } from '@/hooks/api/chat/usePostChatMessageNewText';
 import { useRef, useState, useCallback, ChangeEvent, useEffect } from 'react';
 
-export const useChatTextInput = () => {
-  const { postNewMessage } = usePostChatMessageNewText();
-  const textInputRef = useRef<HTMLTextAreaElement>(null);
-  const imageInputRef = useRef<HTMLInputElement>(null);
-  const [editingImage, setEditingImage] = useState<File>();
+type UseChatTextInputProps = {
+  chatRoomId: string;
+};
 
-  const onSelectImage = useCallback(async (e: ChangeEvent<HTMLInputElement>) => {
+export const useChatTextInput = (props: UseChatTextInputProps) => {
+  const { chatRoomId } = props;
+  const { postNewMessage } = usePostChatMessageNewText();
+  const { postNewFile } = usePostChatMessageNewFiles();
+  const textInputRef = useRef<HTMLTextAreaElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isOpenFileInputModal, setIsOpenFileInputModal] = useState(false);
+  const [editingImage, setEditingImage] = useState<File>();
+  const [isUploading, setIsUploading] = useState(false);
+
+  const onSelectFile = useCallback(async (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     if (!e.target.files || e.target.files.length === 0) {
       return;
@@ -21,11 +30,11 @@ export const useChatTextInput = () => {
     }
   }, []);
 
-  const resetImageInput = useCallback(() => {
-    if (imageInputRef.current) {
-      imageInputRef.current.value = '';
+  const resetFileInput = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
     }
-  }, [imageInputRef]);
+  };
 
   const resizeHeight = () => {
     if (textInputRef.current) {
@@ -38,17 +47,47 @@ export const useChatTextInput = () => {
     }
   };
 
+  const postTextMessage = () => {
+    if (textInputRef.current) {
+      postNewMessage({
+        chat_room_id: chatRoomId,
+        message: textInputRef.current?.value ?? '',
+      });
+
+      textInputRef.current.value = '';
+      resizeHeight();
+    }
+  };
+
+  const postFile = async () => {
+    if (fileInputRef.current?.files) {
+      setIsUploading(true);
+      await postNewFile({
+        chat_room_id: chatRoomId,
+        uploaded_file: fileInputRef.current.files[0],
+      });
+      setIsUploading(false);
+      resetFileInput();
+      setIsOpenFileInputModal(false);
+    }
+  };
   useEffect(() => {
     resizeHeight();
   }, []);
   return {
-    postNewMessage,
+    isOpenFileInputModal,
+    setIsOpenFileInputModal,
     editingImage,
     setEditingImage,
     textInputRef,
-    imageInputRef,
+    fileInputRef,
     resizeHeight,
-    onSelectImage,
-    resetImageInput,
+    onSelectFile,
+    postTextMessage,
+    postFile,
+    isUploading,
+    setIsUploading,
+    resetFileInput,
+    postNewFile,
   };
 };

@@ -137,7 +137,7 @@ const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
                     key={index}
                     stroke={lineColor}
                     fill={lineColor}
-                    strokeWidth={line.lineWidth * 2}
+                    strokeWidth={line.lineWidth}
                     lineCap="round"
                     lineJoin="round"
                   />

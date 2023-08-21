@@ -1,17 +1,16 @@
 import React from 'react';
 
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import * as useMedicalSpeciality from '@/hooks/medicalSpeciality/useMedicalSpeciality';
 import { ConsultExampleListItem } from './ConsultExampleListItem';
 import { ConsultExampleEntity } from '@/types/entities/ConsultExampleEntity';
+import { act } from 'react-dom/test-utils';
 
 jest.mock('@/hooks/medicalSpeciality/useMedicalSpeciality');
 
 describe('ConsultExampleListItem', () => {
   beforeEach(() => {
-    const useMedicalSpecialityMock = useMedicalSpeciality as jest.Mocked<
-      typeof useMedicalSpeciality
-    >;
+    const useMedicalSpecialityMock = useMedicalSpeciality as jest.Mocked<typeof useMedicalSpeciality>;
     useMedicalSpecialityMock.useMedicalSpeciality.mockReturnValue({
       getMedicalSpecialityName: jest.fn(() => '内科'),
     } as unknown as ReturnType<typeof useMedicalSpecialityMock.useMedicalSpeciality>);
@@ -40,9 +39,11 @@ describe('ConsultExampleListItem', () => {
       updated_date: '',
     };
 
-    await render(<ConsultExampleListItem consultExample={consultExample} />);
+    render(<ConsultExampleListItem consultExample={consultExample} />);
 
-    const firstAnswerMinutesText = screen.getByText('初回回答まで');
+    const firstAnswerMinutesText = await act(async () => {
+      return await waitFor(async () => screen.getByText('初回回答まで'));
+    });
     expect(firstAnswerMinutesText).toBeInTheDocument();
   });
 
@@ -69,9 +70,13 @@ describe('ConsultExampleListItem', () => {
       updated_date: '',
     };
 
-    await render(<ConsultExampleListItem consultExample={consultExample} />);
+    await act(async () => {
+      render(<ConsultExampleListItem consultExample={consultExample} />);
+    });
 
-    const firstAnswerMinutesText = screen.queryByText('初回回答まで');
+    const firstAnswerMinutesText = await act(async () => {
+      return await waitFor(async () => screen.queryByText('初回回答まで'));
+    });
     expect(firstAnswerMinutesText).not.toBeInTheDocument();
   });
 
@@ -98,9 +103,13 @@ describe('ConsultExampleListItem', () => {
       updated_date: '',
     };
 
-    await render(<ConsultExampleListItem consultExample={consultExample} />);
+    await act(() => {
+      render(<ConsultExampleListItem consultExample={consultExample} />);
+    });
 
-    const specialityText = screen.getByText('内科');
+    const specialityText = await act(async () => {
+      return await waitFor(async () => screen.queryByText('内科'));
+    });
     expect(specialityText).toBeInTheDocument();
   });
 
@@ -127,11 +136,15 @@ describe('ConsultExampleListItem', () => {
       updated_date: '',
     };
 
-    await render(<ConsultExampleListItem consultExample={consultExample} />);
+    render(<ConsultExampleListItem consultExample={consultExample} />);
 
-    const groupText = screen.getByText('グループ1');
+    const groupText = await act(async () => {
+      return await waitFor(async () => screen.getByText('グループ1'));
+    });
+    const specialityText = await act(async () => {
+      return await waitFor(async () => screen.queryByText('内科'));
+    });
     expect(groupText).toBeInTheDocument();
-    const specialityText = screen.queryByText('内科');
     expect(specialityText).not.toBeInTheDocument();
   });
 });
