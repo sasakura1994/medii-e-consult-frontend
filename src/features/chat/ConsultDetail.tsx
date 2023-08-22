@@ -97,7 +97,11 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
       {chatRoomData && publishmentStatusData && accountId && chatListDataWithDisplayName && (
         <>
           {isOpenChatEditModal && (
-            <ChatEditModal chatRoomData={chatRoomData} setIsOpenChatEditModal={setIsOpenChatEditModal} />
+            <ChatEditModal
+              chatRoomData={chatRoomData}
+              setIsOpenChatEditModal={setIsOpenChatEditModal}
+              accountID={accountId}
+            />
           )}
           <div className="flex h-[calc(100vh-62px)] w-[787px] flex-col border border-[#d5d5d5]">
             <div className="flex-none">

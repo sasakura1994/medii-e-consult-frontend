@@ -10,13 +10,15 @@ import React, { useState } from 'react';
 type ChatEditModalProps = {
   chatRoomData: FetchChatRoomResponseData;
   setIsOpenChatEditModal: (isOpen: boolean) => void;
+  accountID: string;
 };
 
 export const ChatEditModal = (props: ChatEditModalProps) => {
-  const { chatRoomData, setIsOpenChatEditModal } = props;
+  const { chatRoomData, setIsOpenChatEditModal, accountID } = props;
   const [selectedGender, setSelectedGender] = useState<'man' | 'woman'>(chatRoomData.chat_room.gender);
   const [selectedAge, setSelectedAge] = useState(chatRoomData.chat_room.age);
   const [summary, setSummary] = useState(chatRoomData.chat_room.disease_name);
+  const isOwner = chatRoomData.chat_room.owner_account_id === accountID;
   return (
     <Modal className="w-[644px]" isCenter setShowModal={setIsOpenChatEditModal}>
       <div className="mx-[82px] my-[15px]">
@@ -80,12 +82,21 @@ export const ChatEditModal = (props: ChatEditModalProps) => {
             }}
           />
         </div>
-        <div className="mb-10 mt-8 flex justify-center space-x-4">
+        {isOwner ? (
+          <div className="mb-10 mt-8 flex justify-center space-x-4">
+            <OutlinedButton className="w-[223px]" onClick={() => setIsOpenChatEditModal(false)}>
+              キャンセル
+            </OutlinedButton>
+            <PrimaryButton className="w-[223px]">ルームを更新</PrimaryButton>
+          </div>
+        ) : (
           <OutlinedButton className="w-[223px]" onClick={() => setIsOpenChatEditModal(false)}>
-            キャンセル
+            閉じる
           </OutlinedButton>
-          <PrimaryButton className="w-[223px]">ルームを更新</PrimaryButton>
-        </div>
+        )}
+        {isOwner && chatRoomData.chat_room.status === 'CREATED' && (
+          <p className="mb-10 mt-8 cursor-pointer text-center text-[#999999] underline">ルームを削除する</p>
+        )}
       </div>
     </Modal>
   );
