@@ -1,10 +1,15 @@
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React from 'react';
 import { ChatList } from './ChatList';
 import { ChatTextInput } from './ChatTextInput';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import { FetchChatListResponseData } from '@/hooks/api/chat/useFetchChatList';
-import { useToken } from '@/hooks/authentication/useToken';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
+import Link from 'next/link';
+import { ReConsultConfirmModal } from './ReConsultConfirmModal';
+import { RoomReopenModal } from './RoomReopenModal';
+import { KeyedMutator } from 'swr';
+import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
+import { useConsultDetail } from './useConsultDetail';
 
 type ConsultDetailProps = {
   publishmentStatusData?: {
@@ -13,134 +18,175 @@ type ConsultDetailProps = {
   chatRoomData?: FetchChatRoomResponseData;
   medicalSpecialities?: MedicalSpecialityEntity[];
   chatListData?: FetchChatListResponseData;
+  mutateChatRoom?: KeyedMutator<FetchChatRoomResponseData>;
+  mutateChatRoomList?: KeyedMutator<ChatRoomEntity[]>;
+  setSelectedTab: React.Dispatch<React.SetStateAction<'open' | 'close'>>;
 };
 
 export const ConsultDetail = (props: ConsultDetailProps) => {
-  const { publishmentStatusData, chatRoomData, medicalSpecialities, chatListData } = props;
-  const { accountId } = useToken();
-  const chatListRef = useRef<HTMLDivElement>(null);
-  const getSpecialityName = useCallback(
-    (specialityCode: string) => {
-      if (chatRoomData && medicalSpecialities) {
-        const speciality = medicalSpecialities.find((m) => m.speciality_code === specialityCode);
-        return speciality ? speciality.name : '';
-      }
-    },
-    [chatRoomData, medicalSpecialities]
-  );
-
-  const getExperienceYear = useCallback((year: number) => {
-    const date = new Date();
-    const currentYear = date.getFullYear();
-    const passedYear = currentYear - year;
-
-    return passedYear + 1;
-  }, []);
-
-  const chatListDataWithDisplayName = useMemo(() => {
-    // TODO: 一旦first_nameがある場合は名前を表示し、ない場合はspecialityとexperienceYearを表示する
-    if (chatListData && chatRoomData) {
-      return chatListData.map((c) => {
-        if (chatRoomData.me?.account_id === c.account_id) {
-          if (chatRoomData.me.first_name) {
-            return { ...c, displayName: chatRoomData.me.last_name + ' ' + chatRoomData.me.first_name + '先生' };
-          } else if (chatRoomData.me.speciality_1) {
-            return {
-              ...c,
-              displayName:
-                getSpecialityName(chatRoomData.me.speciality_1) +
-                ' ' +
-                getExperienceYear(chatRoomData.me.qualified_year) +
-                '年目',
-            };
-          }
-          return { ...c, displayName: '' };
-        } else if (chatRoomData.members[0].account_id === c.account_id) {
-          if (chatRoomData.members[0].first_name) {
-            return {
-              ...c,
-              displayName: chatRoomData.members[0].last_name + ' ' + chatRoomData.members[0].first_name + '先生',
-            };
-          } else if (chatRoomData.members[0].speciality_1) {
-            return {
-              ...c,
-              displayName:
-                getSpecialityName(chatRoomData.members[0].speciality_1) +
-                ' ' +
-                getExperienceYear(chatRoomData.members[0].qualified_year) +
-                '年目',
-            };
-          }
-          return { ...c, displayName: '' };
-        } else if (c.account_id === 'CHATBOT') {
-          return {
-            ...c,
-            displayName: 'システム通知',
-          };
-        }
-        return { ...c, displayName: '' };
-      });
-    }
-  }, [chatListData, chatRoomData, getExperienceYear, getSpecialityName]);
-
-  // チャットリストが更新される度にスクロールを一番下にする
-  useEffect(() => {
-    if (chatListRef.current) {
-      chatListRef.current.scrollTop = chatListRef.current.scrollHeight;
-    }
-  }, [chatListData]);
+  const {
+    publishmentStatusData,
+    chatRoomData,
+    medicalSpecialities,
+    chatListData,
+    mutateChatRoom,
+    mutateChatRoomList,
+    setSelectedTab,
+  } = props;
+  const {
+    accountId,
+    chatListRef,
+    chatListDataWithDisplayName,
+    isCloseRoom,
+    isChatRoomOwner,
+    isOpenReConsultConfirmModal,
+    setIsOpenReConsultConfirmModal,
+    isOpenRoomReopenModal,
+    setIsOpenRoomReopenModal,
+    getSpecialityName,
+    getExperienceYear,
+  } = useConsultDetail({
+    medicalSpecialities: medicalSpecialities,
+    chatRoomData: chatRoomData,
+    chatListData: chatListData,
+  });
 
   return (
     <>
       {chatRoomData && publishmentStatusData && accountId && chatListDataWithDisplayName && (
-        <div className="flex h-[calc(100vh-62px)] w-[787px] flex-col border border-[#d5d5d5]">
-          <div className="flex-none">
-            <div className="mr-2 flex h-14 items-center space-x-1">
-              <div className="ml-4 flex w-[53px] items-center justify-center rounded-full bg-strong">
-                <p className="py-0.5 text-xs text-white">未解決</p>
-              </div>
-              <p className="ml-2 flex-grow font-bold">{chatRoomData.chat_room.title}</p>
-              <button className="h-9 w-[78px] rounded-full bg-primary">
-                <p className="text-xs text-white">返答依頼</p>
-              </button>
-              <button className="h-9 w-[126px] rounded-full bg-primary">
-                <p className="text-xs text-white">コンサル終了依頼</p>
-              </button>
-              <button className="h-9 w-[78px] rounded-full bg-strong">
-                <p className="text-xs text-white">回答パス</p>
-              </button>
-              <img src="/icons/btn_menu.svg" alt="" className="h-9 w-9 cursor-pointer" />
-            </div>
-            <div className="flex h-5 items-center space-x-1 border">
-              {chatRoomData.members[0] && <p className="text-xxs">E-コンサル</p>}
-              <p className="text-md font-bold">
-                {chatRoomData.chat_room.room_type === 'GROUP' ? (
-                  chatRoomData.members.length + '人の専門医メンバー'
-                ) : chatRoomData.members[0] ? (
-                  chatRoomData.members[0].first_name ? (
-                    chatRoomData.members[0].last_name + ' ' + chatRoomData.members[0].first_name + ' 先生'
-                  ) : (
-                    '質問医'
-                  )
+        <>
+          {isOpenReConsultConfirmModal && (
+            <ReConsultConfirmModal
+              chatRoomID={chatRoomData.chat_room.chat_room_id}
+              setIsOpenReConsultConfirmModal={setIsOpenReConsultConfirmModal}
+            />
+          )}
+          {isOpenRoomReopenModal && mutateChatRoom && mutateChatRoomList && (
+            <RoomReopenModal
+              chatRoomID={chatRoomData.chat_room.chat_room_id}
+              isChatRoomOwner={isChatRoomOwner}
+              setIsOpenRoomReopenModal={setIsOpenRoomReopenModal}
+              mutateChatRoom={mutateChatRoom}
+              mutateChatRoomList={mutateChatRoomList}
+              setSelectedTab={setSelectedTab}
+            />
+          )}
+          <div className="flex h-[calc(100vh-62px)] w-[787px] flex-col border border-[#d5d5d5]">
+            <div className="flex-shrink-0 flex-grow-0">
+              <div className="mr-2 flex h-14 items-center space-x-1">
+                {isCloseRoom ? (
+                  <div className="ml-4 flex w-[53px] items-center justify-center rounded-full bg-[#64abc4]">
+                    <p className="py-0.5 text-xs text-white">解決済</p>
+                  </div>
                 ) : (
-                  <p className="font-normal text-strong">回答してくださる専門医の先生を探しています</p>
+                  <div className="ml-4 flex w-[53px] items-center justify-center rounded-full bg-strong">
+                    <p className="py-0.5 text-xs text-white">未解決</p>
+                  </div>
                 )}
-              </p>
-              {chatRoomData.chat_room.room_type !== 'GROUP' && chatRoomData.members[0] && (
-                <p className="text-xs">
-                  ({getSpecialityName(chatRoomData.chat_room.target_speciality)}・
-                  {getExperienceYear(chatRoomData.members[0].qualified_year)}年目)
+                <p className="ml-2 flex-grow font-bold">{chatRoomData.chat_room.title}</p>
+                {!isCloseRoom ? (
+                  <>
+                    <button className="h-9 w-[78px] rounded-full bg-primary">
+                      <p className="text-xs text-white">返答依頼</p>
+                    </button>
+                    <button className="h-9 w-[126px] rounded-full bg-primary">
+                      <p className="text-xs text-white">コンサル終了依頼</p>
+                    </button>
+                    <button className="h-9 w-[78px] rounded-full bg-strong">
+                      <p className="text-xs text-white">回答パス</p>
+                    </button>
+                  </>
+                ) : isChatRoomOwner && chatRoomData.chat_room.room_type !== 'GROUP' ? (
+                  <button
+                    className="h-9 w-[138px] rounded-full bg-primary"
+                    onClick={() => setIsOpenReConsultConfirmModal(true)}
+                  >
+                    <p className="text-xs text-white">他の医師に相談する</p>
+                  </button>
+                ) : (
+                  <></>
+                )}
+                <img src="/icons/btn_menu.svg" alt="" className="h-9 w-9 cursor-pointer" />
+              </div>
+              <div className="flex h-5 items-center space-x-1 border">
+                {chatRoomData.members[0] && <p className="text-xxs">E-コンサル</p>}
+                <p className="text-md font-bold">
+                  {chatRoomData.chat_room.room_type === 'GROUP' ? (
+                    chatRoomData.members.length + '人の専門医メンバー'
+                  ) : chatRoomData.members[0] ? (
+                    chatRoomData.members[0].first_name ? (
+                      chatRoomData.members[0].last_name + ' ' + chatRoomData.members[0].first_name + ' 先生'
+                    ) : (
+                      '質問医'
+                    )
+                  ) : (
+                    <p className="font-normal text-strong">回答してくださる専門医の先生を探しています</p>
+                  )}
                 </p>
+                {chatRoomData.chat_room.room_type !== 'GROUP' && chatRoomData.members[0] && (
+                  <p className="text-xs">
+                    ({getSpecialityName(chatRoomData.chat_room.target_speciality)}・
+                    {getExperienceYear(chatRoomData.members[0].qualified_year)}年目)
+                  </p>
+                )}
+              </div>
+            </div>
+            <div className="relative flex flex-grow overflow-hidden">
+              <div className="-mb-3 flex-1 overflow-auto bg-bg" ref={chatListRef}>
+                <ChatList chatListData={chatListDataWithDisplayName} currentUserAccountId={accountId} />
+              </div>
+              {isCloseRoom && (
+                <div className="pointer-events-none absolute inset-0 overflow-hidden bg-black bg-opacity-20" />
               )}
             </div>
+            {isCloseRoom && (
+              <div className="pointer-events-auto bg-[#5c6bc0] p-2 text-center text-sm text-white">
+                <p>解決済みのルームです</p>
+                <div className="flex justify-center">
+                  <div
+                    className="mx-3 mt-4 min-w-[40%] cursor-pointer rounded-full bg-white px-4 py-1 text-primary"
+                    onClick={() => setIsOpenRoomReopenModal(true)}
+                  >
+                    <p className="text-sm">このコンサルを再開する</p>
+                  </div>
+                  {isChatRoomOwner &&
+                    (chatRoomData.chat_room.room_type === 'GROUP' ? (
+                      <Link
+                        href={{
+                          pathname: 'newchatroom',
+                          query: `target_group_id=${chatRoomData.chat_room.group_id}`,
+                        }}
+                      >
+                        <div
+                          className="mx-3 mt-4 min-w-[40%] cursor-pointer
+                       rounded-full bg-white px-4 py-1 text-primary"
+                        >
+                          <p className="text-sm">同じ医師グループに別の症例を相談する</p>
+                        </div>
+                      </Link>
+                    ) : (
+                      <Link
+                        href={{
+                          pathname: 'newchatroom',
+                          query: `target_account_id=${chatRoomData.members[0].account_id}`,
+                        }}
+                      >
+                        <div
+                          className="mx-3 mt-4 min-w-[40%] cursor-pointer
+                      rounded-full bg-white px-4 py-1 text-primary"
+                        >
+                          <p className="text-sm">同じ医師に別の症例を相談する</p>
+                        </div>
+                      </Link>
+                    ))}
+                </div>
+              </div>
+            )}
+            <div className="flex-shrink-0 flex-grow-0">
+              <ChatTextInput chatRoomId={chatRoomData.chat_room.chat_room_id} />
+            </div>
           </div>
-          <div className="flex-grow overflow-auto bg-bg pb-2" ref={chatListRef}>
-            <ChatList chatListData={chatListDataWithDisplayName} currentUserAccountId={accountId} />
-          </div>
-          <div className="relative flex-none">
-            <ChatTextInput chatRoomId={chatRoomData.chat_room.chat_room_id} />
-          </div>
-        </div>
+        </>
       )}
     </>
   );
