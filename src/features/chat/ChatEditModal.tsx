@@ -90,9 +90,11 @@ export const ChatEditModal = (props: ChatEditModalProps) => {
             <PrimaryButton className="w-[223px]">ルームを更新</PrimaryButton>
           </div>
         ) : (
-          <OutlinedButton className="w-[223px]" onClick={() => setIsOpenChatEditModal(false)}>
-            閉じる
-          </OutlinedButton>
+          <div className="mb-10 mt-8 flex justify-center space-x-4">
+            <OutlinedButton className="w-[223px]" onClick={() => setIsOpenChatEditModal(false)}>
+              閉じる
+            </OutlinedButton>
+          </div>
         )}
         {isOwner && chatRoomData.chat_room.status === 'CREATED' && (
           <p className="mb-10 mt-8 cursor-pointer text-center text-[#999999] underline">ルームを削除する</p>
