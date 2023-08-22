@@ -19,7 +19,9 @@ type RoomReopenModalProps = {
 export const RoomReopenModal = (props: RoomReopenModalProps) => {
   const { chatRoomID, isChatRoomOwner, setIsOpenRoomReopenModal, mutateChatRoom, mutateChatRoomList, setSelectedTab } =
     props;
-  const { selectedReason, setSelectedReason, reOpenChatRoom } = useRoomReopenModal();
+  const { selectedReason, setSelectedReason, reOpenChatRoom } = useRoomReopenModal({
+    isChatRoomOwner: isChatRoomOwner,
+  });
 
   return (
     <Modal className="w-[644px]" isCenter setShowModal={setIsOpenRoomReopenModal}>
