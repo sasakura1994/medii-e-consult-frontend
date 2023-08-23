@@ -32,8 +32,8 @@ export const ChatDeleteModal = (props: ChatDeleteModalProps) => {
             className="w-[223px] bg-strong"
             onClick={async () => {
               deleteChatRoom({ chat_room_id: chatRoomData.chat_room.chat_room_id });
-              mutateChatRoom && (await mutateChatRoom());
-              mutateChatRoomList && (await mutateChatRoomList());
+              await mutateChatRoom?.();
+              await mutateChatRoomList?.();
               setIsOpenDeleteModal(false);
             }}
           >

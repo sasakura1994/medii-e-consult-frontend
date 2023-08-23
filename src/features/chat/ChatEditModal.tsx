@@ -6,7 +6,7 @@ import { TextField } from '@/components/Parts/Form/TextField';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import { useUpdateChatRoom } from '@/hooks/api/chat/useUpdateChatRoom';
-import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
+import { ChatRoomEntity, ChatRoomGender } from '@/types/entities/chat/ChatRoomEntity';
 import React, { useState } from 'react';
 import { KeyedMutator } from 'swr';
 
@@ -23,7 +23,7 @@ export const ChatEditModal = (props: ChatEditModalProps) => {
   const { chatRoomData, setIsOpenChatEditModal, setIsOpenDeleteModal, accountID, mutateChatRoom, mutateChatRoomList } =
     props;
   const { updateChatRoom, errorMessage } = useUpdateChatRoom();
-  const [selectedGender, setSelectedGender] = useState<'man' | 'woman'>(chatRoomData.chat_room.gender);
+  const [selectedGender, setSelectedGender] = useState<ChatRoomGender>(chatRoomData.chat_room.gender);
   const [selectedAge, setSelectedAge] = useState(chatRoomData.chat_room.age);
   const [summary, setSummary] = useState(chatRoomData.chat_room.disease_name);
   const isOwner = chatRoomData.chat_room.owner_account_id === accountID;
@@ -104,8 +104,8 @@ export const ChatEditModal = (props: ChatEditModalProps) => {
                   disease_name: summary,
                   gender: selectedGender,
                 });
-                mutateChatRoom && (await mutateChatRoom());
-                mutateChatRoomList && (await mutateChatRoomList());
+                await mutateChatRoom?.();
+                await mutateChatRoomList?.();
                 setIsOpenChatEditModal(false);
               }}
             >
