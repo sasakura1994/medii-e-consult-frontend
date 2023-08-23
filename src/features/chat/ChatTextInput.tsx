@@ -1,12 +1,12 @@
 import { GrayButton } from '@/components/Parts/Button/GrayButton';
 import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 import ImageEditor, { ImageEditorProps } from '@/components/Parts/ImageEditor/ImageEditor';
-import { Modal } from '@/components/Parts/Modal/Modal';
-import { usePostChatMessageNewFiles } from '@/hooks/api/chat/usePostChatMessageNewFiles';
-import { usePostChatMessageNewText } from '@/hooks/api/chat/usePostChatMessageNewText';
 import dynamic, { DynamicOptions } from 'next/dynamic';
-import React, { useRef, useEffect, useState, useCallback, ChangeEvent } from 'react';
+import React from 'react';
+import { useChatTextInput } from './useChatTextInput';
+import { Modal } from '@/components/Parts/Modal/Modal';
 import RectSpinnerDialog from './RectSpinnerDialog';
+
 // canvasの関係でサーバー時点でimportできないため、下記のようにdynamic importする
 const ImageEditorComponent = dynamic<ImageEditorProps>(
   (() => import('@/components/Parts/ImageEditor/ImageEditor')) as DynamicOptions<ImageEditorProps>,
@@ -19,75 +19,22 @@ type ChatTextInputProps = {
 
 export const ChatTextInput = (props: ChatTextInputProps) => {
   const { chatRoomId } = props;
-  const { postNewMessage } = usePostChatMessageNewText();
-  const { postNewFile } = usePostChatMessageNewFiles();
-  const textInputRef = useRef<HTMLTextAreaElement>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const [editingImage, setEditingImage] = useState<File>();
-  const [isOpenFileInputModal, setIsOpenFileInputModal] = useState(false);
-  const [isUploading, setIsUploading] = useState(false);
-
-  const onSelectFile = useCallback(async (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    if (!e.target.files || e.target.files.length === 0) {
-      return;
-    }
-
-    const files = e.target.files;
-
-    if (files[0].type.match(/^image\//)) {
-      setEditingImage(files[0]);
-      return;
-    } else {
-      setIsOpenFileInputModal(true);
-    }
-  }, []);
-
-  const resetFileInput = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
-  };
-
-  const resizeHeight = () => {
-    if (textInputRef.current) {
-      textInputRef.current.style.height = '40px';
-      textInputRef.current.style.height = `${textInputRef.current.scrollHeight}px`;
-      if (textInputRef.current.scrollHeight > 400) {
-        textInputRef.current.style.height = '400px';
-        textInputRef.current.style.overflowY = 'scroll';
-      }
-    }
-  };
-
-  const postTextMessage = () => {
-    if (textInputRef.current) {
-      postNewMessage({
-        chat_room_id: chatRoomId,
-        message: textInputRef.current?.value ?? '',
-      });
-
-      textInputRef.current.value = '';
-      resizeHeight();
-    }
-  };
-
-  const postFile = async () => {
-    if (fileInputRef.current?.files) {
-      setIsUploading(true);
-      await postNewFile({
-        chat_room_id: chatRoomId,
-        uploaded_file: fileInputRef.current.files[0],
-      });
-      setIsUploading(false);
-      resetFileInput();
-      setIsOpenFileInputModal(false);
-    }
-  };
-
-  useEffect(() => {
-    resizeHeight();
-  }, []);
+  const {
+    isOpenFileInputModal,
+    setIsOpenFileInputModal,
+    editingImage,
+    setEditingImage,
+    textInputRef,
+    fileInputRef,
+    resizeHeight,
+    onSelectFile,
+    postTextMessage,
+    postFile,
+    isUploading,
+    setIsUploading,
+    resetFileInput,
+    postNewFile,
+  } = useChatTextInput({ chatRoomId: chatRoomId });
 
   return (
     <>

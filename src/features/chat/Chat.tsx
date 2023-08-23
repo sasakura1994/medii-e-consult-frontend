@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ConsultList } from './ConsultList';
 import { ConsultDetail } from './ConsultDetail';
 import { useRouter } from 'next/router';
@@ -8,6 +8,7 @@ import { useFetchChatList } from '@/hooks/api/chat/useFetchChatList';
 import { useFetchChatRoom } from '@/hooks/api/chat/useFetchChatRoom';
 import { useGetPublishmentStatus } from '@/hooks/api/chat/useGetPublishmentStatus';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
+import { useFetchChatRoomList } from '@/hooks/api/chat/useFetchChatRoomList';
 
 type WebsocketResponseMessage = {
   type: 'subscribe_response' | 'pong' | 'mes';
@@ -21,10 +22,15 @@ export const Chat = () => {
   const { token, accountId } = useToken();
   const { chat_room_id } = router.query;
   const chatRoomIdStr = chat_room_id as string;
+
+  const [selectedTab, setSelectedTab] = useState<'open' | 'close'>('open');
+  const { data: chatRoomList, mutate: mutateChatRoomList } = useFetchChatRoomList({
+    query: ['FREE', 'BY_NAME', 'GROUP'],
+  });
   const { data: publishmentStatusData } = useGetPublishmentStatus(chatRoomIdStr);
-  const { data: chatRoomData } = useFetchChatRoom(chatRoomIdStr);
+  const { data: chatRoomData, mutate: mutateChatRoom } = useFetchChatRoom(chatRoomIdStr);
   const { medicalSpecialities } = useFetchMedicalSpecialities();
-  const { data: chatListData, mutate } = useFetchChatList(chatRoomIdStr);
+  const { data: chatListData, mutate: mutateChatList } = useFetchChatList(chatRoomIdStr);
 
   useEffect(() => {
     if (!socket.current) {
@@ -86,7 +92,7 @@ export const Chat = () => {
       } else if (data.type === 'mes') {
         // TODO: すぐmutateするとDBに存在しないので一旦0.5秒待機してからmutate
         setTimeout(() => {
-          mutate();
+          mutateChatList();
         }, 500);
       }
     };
@@ -98,17 +104,20 @@ export const Chat = () => {
       webSocket.removeEventListener('open', onOpen);
       webSocket.removeEventListener('message', onMessage);
     };
-  }, [accountId, mutate, socket, token]);
+  }, [accountId, mutateChatList, socket, token]);
 
   return (
     <div className="flex bg-white">
-      <ConsultList />
+      <ConsultList chatRoomList={chatRoomList} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
       {chat_room_id ? (
         <ConsultDetail
           publishmentStatusData={publishmentStatusData}
           chatRoomData={chatRoomData}
           medicalSpecialities={medicalSpecialities}
           chatListData={chatListData}
+          mutateChatRoom={mutateChatRoom}
+          mutateChatRoomList={mutateChatRoomList}
+          setSelectedTab={setSelectedTab}
         />
       ) : (
         <div className="flex h-screen w-[787px] flex-col border border-[#d5d5d5] bg-bg" />

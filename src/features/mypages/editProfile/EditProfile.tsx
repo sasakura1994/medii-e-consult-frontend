@@ -66,14 +66,6 @@ export const EditProfile = (props: EditProfileProps) => {
           </PrimaryButton>
         </div>
       </form>
-
-      {!isRegisterMode && (
-        <div className="mt-12 text-center lg:pb-20">
-          <Link href="/withdrawal">
-            <a className="text-[#0758E4] underline">アカウントを削除する</a>
-          </Link>
-        </div>
-      )}
     </div>
   );
 };
