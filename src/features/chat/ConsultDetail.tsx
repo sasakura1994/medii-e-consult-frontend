@@ -78,6 +78,8 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
               chatRoomData={chatRoomData}
               setIsOpenChatEditModal={setIsOpenChatEditModal}
               accountID={accountId}
+              mutateChatRoom={mutateChatRoom}
+              mutateChatRoomList={mutateChatRoomList}
             />
           )}
           <div className="flex h-[calc(100vh-62px)] w-[787px] flex-col border border-[#d5d5d5]">

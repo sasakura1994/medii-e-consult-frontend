@@ -5,16 +5,22 @@ import { SelectBox } from '@/components/Parts/Form/SelectBox';
 import { TextField } from '@/components/Parts/Form/TextField';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
+import { useUpdateChatRoom } from '@/hooks/api/chat/useUpdateChatRoom';
+import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
 import React, { useState } from 'react';
+import { KeyedMutator } from 'swr';
 
 type ChatEditModalProps = {
   chatRoomData: FetchChatRoomResponseData;
   setIsOpenChatEditModal: (isOpen: boolean) => void;
   accountID: string;
+  mutateChatRoom?: KeyedMutator<FetchChatRoomResponseData>;
+  mutateChatRoomList?: KeyedMutator<ChatRoomEntity[]>;
 };
 
 export const ChatEditModal = (props: ChatEditModalProps) => {
-  const { chatRoomData, setIsOpenChatEditModal, accountID } = props;
+  const { chatRoomData, setIsOpenChatEditModal, accountID, mutateChatRoom, mutateChatRoomList } = props;
+  const { updateChatRoom, errorMessage } = useUpdateChatRoom();
   const [selectedGender, setSelectedGender] = useState<'man' | 'woman'>(chatRoomData.chat_room.gender);
   const [selectedAge, setSelectedAge] = useState(chatRoomData.chat_room.age);
   const [summary, setSummary] = useState(chatRoomData.chat_room.disease_name);
@@ -87,7 +93,22 @@ export const ChatEditModal = (props: ChatEditModalProps) => {
             <OutlinedButton className="w-[223px]" onClick={() => setIsOpenChatEditModal(false)}>
               キャンセル
             </OutlinedButton>
-            <PrimaryButton className="w-[223px]">ルームを更新</PrimaryButton>
+            <PrimaryButton
+              className="w-[223px]"
+              onClick={async () => {
+                await updateChatRoom({
+                  chat_room_id: chatRoomData.chat_room.chat_room_id,
+                  age: selectedAge,
+                  disease_name: summary,
+                  gender: selectedGender,
+                });
+                mutateChatRoom && (await mutateChatRoom());
+                mutateChatRoomList && (await mutateChatRoomList());
+                setIsOpenChatEditModal(false);
+              }}
+            >
+              ルームを更新
+            </PrimaryButton>
           </div>
         ) : (
           <div className="mb-10 mt-8 flex justify-center space-x-4">
@@ -99,6 +120,7 @@ export const ChatEditModal = (props: ChatEditModalProps) => {
         {isOwner && chatRoomData.chat_room.status === 'CREATED' && (
           <p className="mb-10 mt-8 cursor-pointer text-center text-[#999999] underline">ルームを削除する</p>
         )}
+        {errorMessage && <p className="text-center">{errorMessage}</p>}
       </div>
     </Modal>
   );
