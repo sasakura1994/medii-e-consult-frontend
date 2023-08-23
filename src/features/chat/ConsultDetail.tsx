@@ -11,6 +11,7 @@ import { KeyedMutator } from 'swr';
 import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
 import { useConsultDetail } from './useConsultDetail';
 import { ChatEditModal } from './ChatEditModal';
+import { ChatDeleteModal } from './ChatDeleteModal';
 
 type ConsultDetailProps = {
   publishmentStatusData?: {
@@ -46,6 +47,8 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     setIsOpenRoomReopenModal,
     isOpenChatEditModal,
     setIsOpenChatEditModal,
+    isOpenDeleteModal,
+    setIsOpenDeleteModal,
     getSpecialityName,
     getExperienceYear,
   } = useConsultDetail({
@@ -77,7 +80,17 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
             <ChatEditModal
               chatRoomData={chatRoomData}
               setIsOpenChatEditModal={setIsOpenChatEditModal}
+              setIsOpenDeleteModal={setIsOpenDeleteModal}
               accountID={accountId}
+              mutateChatRoom={mutateChatRoom}
+              mutateChatRoomList={mutateChatRoomList}
+            />
+          )}
+
+          {isOpenDeleteModal && (
+            <ChatDeleteModal
+              chatRoomData={chatRoomData}
+              setIsOpenDeleteModal={setIsOpenDeleteModal}
               mutateChatRoom={mutateChatRoom}
               mutateChatRoomList={mutateChatRoomList}
             />

@@ -13,13 +13,15 @@ import { KeyedMutator } from 'swr';
 type ChatEditModalProps = {
   chatRoomData: FetchChatRoomResponseData;
   setIsOpenChatEditModal: (isOpen: boolean) => void;
+  setIsOpenDeleteModal: (isOpen: boolean) => void;
   accountID: string;
   mutateChatRoom?: KeyedMutator<FetchChatRoomResponseData>;
   mutateChatRoomList?: KeyedMutator<ChatRoomEntity[]>;
 };
 
 export const ChatEditModal = (props: ChatEditModalProps) => {
-  const { chatRoomData, setIsOpenChatEditModal, accountID, mutateChatRoom, mutateChatRoomList } = props;
+  const { chatRoomData, setIsOpenChatEditModal, setIsOpenDeleteModal, accountID, mutateChatRoom, mutateChatRoomList } =
+    props;
   const { updateChatRoom, errorMessage } = useUpdateChatRoom();
   const [selectedGender, setSelectedGender] = useState<'man' | 'woman'>(chatRoomData.chat_room.gender);
   const [selectedAge, setSelectedAge] = useState(chatRoomData.chat_room.age);
@@ -118,7 +120,15 @@ export const ChatEditModal = (props: ChatEditModalProps) => {
           </div>
         )}
         {isOwner && chatRoomData.chat_room.status === 'CREATED' && (
-          <p className="mb-10 mt-8 cursor-pointer text-center text-[#999999] underline">ルームを削除する</p>
+          <p
+            className="mb-10 mt-8 cursor-pointer text-center text-[#999999] underline"
+            onClick={() => {
+              setIsOpenChatEditModal(false);
+              setIsOpenDeleteModal(true);
+            }}
+          >
+            ルームを削除する
+          </p>
         )}
         {errorMessage && <p className="text-center">{errorMessage}</p>}
       </div>

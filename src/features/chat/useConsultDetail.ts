@@ -15,6 +15,7 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
   const [isOpenReConsultConfirmModal, setIsOpenReConsultConfirmModal] = useState(false);
   const [isOpenRoomReopenModal, setIsOpenRoomReopenModal] = useState(false);
   const [isOpenChatEditModal, setIsOpenChatEditModal] = useState(false);
+  const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
   const { accountId } = useToken();
   const chatListRef = useRef<HTMLDivElement | null>(null);
   const getSpecialityName = useCallback(
@@ -112,6 +113,8 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
     setIsOpenRoomReopenModal,
     isOpenChatEditModal,
     setIsOpenChatEditModal,
+    isOpenDeleteModal,
+    setIsOpenDeleteModal,
     getSpecialityName,
     getExperienceYear,
   };
