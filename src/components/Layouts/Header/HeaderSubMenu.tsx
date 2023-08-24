@@ -18,7 +18,7 @@ export const HeaderSubMenu = () => {
     <>
       <nav className="flex items-center text-md text-text-primary">
         <Link href="/newchatroom">
-          <PrimaryButton>E-コンサルで質問する</PrimaryButton>
+          <PrimaryButton size='large'>E-コンサルで質問する</PrimaryButton>
         </Link>
         <div className="ml-4 flex items-center">
           <HeaderMyPageButton />
