@@ -40,15 +40,6 @@ export const FooterSpMenu: React.FC = () => {
           事例集
         </FooterSpMenuItem>
         <FooterSpMenuItem
-          href={process.env.CASE_BANK_URL ?? '/'}
-          image="/icons/bank.svg"
-          imageWidth={24}
-          imageHeight={24}
-          isCurrent={false}
-        >
-          症例バンク
-        </FooterSpMenuItem>
-        <FooterSpMenuItem
           href="/seminar"
           image="/icons/seminar.svg"
           imageWidth={25}

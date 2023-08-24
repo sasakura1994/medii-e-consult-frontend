@@ -18,7 +18,7 @@ export const HeaderSubMenu = () => {
     <>
       <nav className="flex items-center text-md text-text-primary">
         <Link href="/newchatroom">
-          <PrimaryButton>E-コンサルで質問する</PrimaryButton>
+          <PrimaryButton size='large' className='h-[40px] w-[181px]'>E-コンサルで質問する</PrimaryButton>
         </Link>
         <div className="ml-4 flex items-center">
           <HeaderMyPageButton />
@@ -37,7 +37,7 @@ export const HeaderSubMenu = () => {
                   alt="セミナーチケット"
                 />
               </div>
-              <div className="ml-1">{ticketCount?.ticket_count ?? ' '}枚</div>
+              <div className="ml-1">{ticketCount?.ticket_count ?? 0}枚</div>
             </div>
           </div>
           <div className="ml-2">
@@ -56,7 +56,7 @@ export const HeaderSubMenu = () => {
               <div className="ml-1">
                 {currentPoint
                   ? new Intl.NumberFormat('ja-JP').format(currentPoint)
-                  : ' '}
+                  : 0}
               </div>
             </div>
           </div>
