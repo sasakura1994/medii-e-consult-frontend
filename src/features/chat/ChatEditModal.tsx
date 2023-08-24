@@ -98,15 +98,17 @@ export const ChatEditModal = (props: ChatEditModalProps) => {
             <PrimaryButton
               className="w-[223px]"
               onClick={async () => {
-                await updateChatRoom({
+                const res = await updateChatRoom({
                   chat_room_id: chatRoomData.chat_room.chat_room_id,
                   age: selectedAge,
                   disease_name: summary,
                   gender: selectedGender,
                 });
-                await mutateChatRoom?.();
-                await mutateChatRoomList?.();
-                setIsOpenChatEditModal(false);
+                if (res?.data.code) {
+                  await mutateChatRoom?.();
+                  await mutateChatRoomList?.();
+                  setIsOpenChatEditModal(false);
+                }
               }}
             >
               ルームを更新
