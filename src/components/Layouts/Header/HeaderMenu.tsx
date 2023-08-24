@@ -34,9 +34,6 @@ export const HeaderMenu: React.FC = () => {
         <HeaderMenuListItem href="/examplelist">
           E-コンサル事例集
         </HeaderMenuListItem>
-        <HeaderMenuListItem href={process.env.CASE_BANK_URL ?? '/'}>
-          症例バンク
-        </HeaderMenuListItem>
         <HeaderMenuListItem href="/seminar">E-カンファ</HeaderMenuListItem>
       </HeaderMenuList>
     </HeaderMenuContainer>
