@@ -10,9 +10,7 @@ type UserConsultAnswerContentProps = {
   medicalSpecialities: MedicalSpecialityEntity[];
 };
 
-export const UserConsultAnswerContent = (
-  props: UserConsultAnswerContentProps
-) => {
+export const UserConsultAnswerContent = (props: UserConsultAnswerContentProps) => {
   const { chatRoomMineRespond, medicalSpecialities } = props;
 
   const labelText = useMemo(() => {
@@ -40,14 +38,10 @@ export const UserConsultAnswerContent = (
     // chatRoomMineRespond.target_specialitiesが2件以上ある場合は「他n件の診療科」と表示する
     const firstSpeciality =
       medicalSpecialities?.find(
-        (medicalSpeciality) =>
-          medicalSpeciality.speciality_code ===
-          chatRoomMineRespond.target_specialities[0]
+        (medicalSpeciality) => medicalSpeciality.speciality_code === chatRoomMineRespond.target_specialities[0]
       )?.name || '';
     if (chatRoomMineRespond.target_specialities.length > 1) {
-      return `${firstSpeciality} 他${
-        chatRoomMineRespond.target_specialities.length - 1
-      }件の診療科`;
+      return `${firstSpeciality} 他${chatRoomMineRespond.target_specialities.length - 1}件の診療科`;
     }
     return firstSpeciality;
   }, [chatRoomMineRespond, medicalSpecialities]);
@@ -65,23 +59,22 @@ export const UserConsultAnswerContent = (
   }, [chatRoomMineRespond, medicalSpecialityName]);
 
   return (
-    <div className="flex h-28 items-center border-b border-border-divider p-4">
+    <div className="flex min-h-[112px] items-center border-b border-border-divider p-4">
       {/* SP */}
       <Link href={`/chat?chat_room_id=${chatRoomMineRespond.chat_room_id}`}>
         <a className="block lg:hidden">
           <div className="w-full lg:w-5/6">
-            <p className="text-l font-bold line-clamp-1">
-              {chatRoomMineRespond.title}
-            </p>
-            <p className="text-md text-text-secondary line-clamp-1">
-              {chatRoomMineRespond.latest_message}
-            </p>
+            <p className="text-l font-bold line-clamp-1">{chatRoomMineRespond.title}</p>
+            <div className="flex items-center">
+              {chatRoomMineRespond.unread_count > 0 && (
+                <div className="mr-1 aspect-square h-2 w-2 rounded-full bg-medii-sky-base" />
+              )}
+              <p className="text-md text-text-secondary line-clamp-1">{chatRoomMineRespond.latest_message}</p>
+            </div>
 
-            <div className="mt-2 flex">
+            <div className="mt-2 flex items-center">
               {labelText}
-              <p className="test-md ml-2 font-bold text-text-secondary">
-                {respondentLabel}
-              </p>
+              <p className="test-md ml-2 font-bold text-text-secondary">{respondentLabel}</p>
               <p className="test-md text-text-secondary">・</p>
               <p className="test-md text-text-secondary">
                 {getTimeIntervalText(chatRoomMineRespond.last_updated_date)}
@@ -93,19 +86,17 @@ export const UserConsultAnswerContent = (
       {/* PC */}
       <div className="hidden w-full lg:block lg:w-5/6">
         <p className="text-l font-bold">{chatRoomMineRespond.title}</p>
-        <p className="text-md text-text-secondary line-clamp-1">
-          {chatRoomMineRespond.latest_message}
-        </p>
-
+        <div className="flex items-center">
+          {chatRoomMineRespond.unread_count > 0 && (
+            <div className="mr-1 aspect-square h-2 w-2 rounded-full bg-medii-sky-base" />
+          )}
+          <p className="text-md text-text-secondary line-clamp-1">{chatRoomMineRespond.latest_message}</p>
+        </div>
         <div className="mt-2 flex">
           {labelText}
-          <p className="test-md ml-2 font-bold text-text-secondary">
-            {respondentLabel}
-          </p>
+          <p className="test-md ml-2 font-bold text-text-secondary">{respondentLabel}</p>
           <p className="test-md text-text-secondary">・</p>
-          <p className="test-md text-text-secondary">
-            {getTimeIntervalText(chatRoomMineRespond.last_updated_date)}
-          </p>
+          <p className="test-md text-text-secondary">{getTimeIntervalText(chatRoomMineRespond.last_updated_date)}</p>
         </div>
       </div>
       <div className="mx-auto hidden lg:block">

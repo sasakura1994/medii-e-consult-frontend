@@ -10,11 +10,9 @@ const Welcome = () => {
   return (
     <>
       <div className="h-72 bg-medii-blue-100" />
-      <div className="absolute top-0 left-0 right-0 flex items-center justify-center">
+      <div className="absolute left-0 right-0 top-0 flex items-center justify-center">
         <div className="mx-auto px-8">
-          <p className="mt-28 text-center text-xxxl font-bold text-medii-blue-base">
-            Mediiにようこそ
-          </p>
+          <p className="mt-28 text-center text-xxxl font-bold text-medii-blue-base">Mediiにようこそ</p>
           <p className="mt-6 text-md text-monotone-950 lg:text-center">
             Mediiでは医師の臨床疑問や不安を解消する3つのサービスをご利用いただけます。
             <br />
@@ -29,7 +27,7 @@ const Welcome = () => {
               buttonSolid="専門医に相談"
               linkSolid="/NewChatRoom"
               logSolid="click-chat-in-welcome"
-              buttonOutline="使い方を見る"
+              buttonOutline="E-コンサルとは"
               linkOutline="/top?tutorial=true"
               logOutline="click-tutorial-in-welcome"
             />
@@ -42,14 +40,6 @@ const Welcome = () => {
               linkOutline="/seminar"
               logOutline="click-seminar-in-welcome"
             />
-            <CompleteCard
-              title="症例バンク"
-              imageSrc="/images/document/bank.svg"
-              description="論文・ガイドラインだけではわからない、臨床経験から蓄積された知見をスライド形式で閲覧できます。"
-              buttonOutline="症例スライドを見る"
-              linkOutline={process.env.CASE_BANK_URL ?? ''}
-              logOutline="click-case-bank-in-welcome"
-            />
           </div>
           <div
             onClick={async () => {
@@ -57,15 +47,9 @@ const Welcome = () => {
               router.push('/top');
             }}
           >
-            <div className="mt-16 mb-4 flex cursor-pointer items-center justify-center space-x-1">
-              <p className="text-md text-text-secondary">
-                トップページに移動する
-              </p>
-              <img
-                className="mt-0.5 text-text-secondary"
-                src="icons/arrow_right_short.svg"
-                alt="arrow_right_short"
-              />
+            <div className="mb-4 mt-16 flex cursor-pointer items-center justify-center space-x-1">
+              <p className="text-md text-text-secondary">トップページに移動する</p>
+              <img className="mt-0.5 text-text-secondary" src="icons/arrow_right_short.svg" alt="arrow_right_short" />
             </div>
           </div>
         </div>

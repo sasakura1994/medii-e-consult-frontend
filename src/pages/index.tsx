@@ -1,12 +1,9 @@
 import React from 'react';
-import type { NextPage } from 'next';
+import { Top } from '@/features/top';
+import { NextPageWithLayout } from './_app';
 
-const Home: NextPage = () => {
-  return (
-    <div className="min-h-screen">
-      <h1>Welcom E-コンサル</h1>
-    </div>
-  );
+const Home: NextPageWithLayout = () => {
+  return <Top />;
 };
 
 export default Home;
