@@ -47,12 +47,13 @@ export const ConsultExampleDetail: React.FC<Props> = ({
     <>
       <Card className="px-5 py-10 lg:px-10">
         <div className="flex gap-2">
-          <div>
+          <div className='flex-grow'>
             <ConsultExampleTag>
               {getCategoryName(consultExample)}
             </ConsultExampleTag>
           </div>
-          <div className="flex flex-1 flex-col items-end gap-4 lg:flex-row lg:items-center lg:justify-between lg:gap-0">
+          <div className="flex flex-none flex-col items-end gap-4
+          lg:flex-row lg:items-center lg:justify-between lg:gap-0">
             {consultExample.first_answer_minutes > 0 ? (
               <ConsultExampleFirstAnswerTime
                 firstAnswerMinutes={consultExample.first_answer_minutes}
@@ -111,9 +112,9 @@ export const ConsultExampleDetail: React.FC<Props> = ({
         <div className="mt-5 flex flex-col justify-between text-sm lg:mt-10 lg:flex-row">
           <div className="flex gap-1">
             {consultExample.age !== null && (
-              <div>{getAgeText(consultExample.age)}</div>
+              <div className='whitespace-nowrap'>{getAgeText(consultExample.age)}</div>
             )}
-            <div>
+            <div className='whitespace-nowrap'>
               {getGenderText(consultExample.gender, consultExample.age)}
             </div>
             <div>{consultExample.disease_name}</div>
