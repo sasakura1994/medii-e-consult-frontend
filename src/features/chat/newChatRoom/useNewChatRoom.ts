@@ -47,6 +47,7 @@ type NewChatRoomQuery = {
   target_group_id?: string;
   reconsult?: string;
   room_type?: ChatRoomType;
+  from?: string;
 };
 
 const getDefaultRoomType = (query: NewChatRoomQuery): ChatRoomType => {
@@ -316,6 +317,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
       ...formData,
       chat_room_id: chatRoomId,
       chat_draft_image_ids: chatDraftImages?.map((chatDraftImage) => chatDraftImage.chat_draft_image_id) ?? [],
+      from: query.from,
     };
 
     if (query.reconsult) {
