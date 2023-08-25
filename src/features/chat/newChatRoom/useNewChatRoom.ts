@@ -335,7 +335,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
       return;
     }
 
-    if (response.data.code !== 1 || !response.data.chat_room_id) {
+    if (!response.data.chat_room_id) {
       setIsSending(false);
       setErrorMessage(response.data.message);
       setModeAndScrollToTop('input');

@@ -53,11 +53,8 @@ export const useInitPassword = () => {
         return;
       }
 
-      if (response.data.code !== 1) {
-        setErrorMessage(response.data.message);
-        if (response.data.message === 'すでに有効化されているアカウントです') {
-          setIsEmailDuplicated(true);
-        }
+      if (response.data.message === 'すでに有効化されているアカウントです') {
+        setIsEmailDuplicated(true);
         return;
       }
 
