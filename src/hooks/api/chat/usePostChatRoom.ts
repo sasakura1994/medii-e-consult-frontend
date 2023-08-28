@@ -6,7 +6,7 @@ export type PostChatRoomRequestData = NewChatRoomEntity & {
   chat_draft_image_ids: string[];
   re_consult_chat_room_id?: string;
   re_consult_file_chat_message_ids?: number[];
-  from?: string;
+  create_source?: { [key: string]: string };
 };
 
 export type PostChatRoomResponseData = {

@@ -317,12 +317,15 @@ export const useNewChatRoom = (): UseNewChatRoom => {
       ...formData,
       chat_room_id: chatRoomId,
       chat_draft_image_ids: chatDraftImages?.map((chatDraftImage) => chatDraftImage.chat_draft_image_id) ?? [],
-      from: query.from,
     };
 
     if (query.reconsult) {
       data.re_consult_chat_room_id = query.reconsult;
       data.re_consult_file_chat_message_ids = reConsultFileMessages.map((chatMessage) => chatMessage.uid);
+    }
+
+    if (query.from) {
+      data.create_source = { from: query.from };
     }
 
     const response = await createNewChatRoom(data).catch((error) => {

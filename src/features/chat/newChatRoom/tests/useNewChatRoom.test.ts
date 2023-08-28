@@ -419,7 +419,7 @@ describe('useNewChatROom', () => {
         chat_room_id: expect.anything(),
         disease_name: '',
         first_message: '',
-        from: 'mail',
+        create_source: { from: 'mail' },
         gender: 'man',
         group_id: undefined,
         publishment_accepted: true,
