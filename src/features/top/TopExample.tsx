@@ -25,9 +25,9 @@ export const TopExample = (props: Props) => {
         >
           <div className="p-4">
             <div className="flex justify-start">
-              <Label text={getCategoryName(consultExample)} color="gray" />
+              <Label text={getCategoryName(consultExample)} color="gray" className='line-clamp-1' />
             </div>
-            <p className="mt-2 text-md text-text-secondary">
+            <p className="mt-2 text-md text-text-secondary line-clamp-1">
               {consultExample.disease_name}
             </p>
             <div className="mt-2 h-[71px]">

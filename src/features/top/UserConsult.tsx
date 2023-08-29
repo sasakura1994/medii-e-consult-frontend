@@ -34,7 +34,7 @@ export const UserConsult = (props: UserConsultProps) => {
         <div className="hidden whitespace-nowrap lg:block">
           <Link href="/newchatroom">
             <a>
-              <PrimaryButton size="large">新規E-コンサルを作成</PrimaryButton>
+              <PrimaryButton size="large">E-コンサルで質問する</PrimaryButton>
             </a>
           </Link>
         </div>

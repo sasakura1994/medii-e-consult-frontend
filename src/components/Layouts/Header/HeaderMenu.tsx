@@ -12,31 +12,29 @@ export const HeaderMenu: React.FC = () => {
       {/* PC Menu */}
       <HeaderMenuList>
         <HeaderMenuListItem
-          href="/Chat"
+          href="/chat"
           badgeText={
             unreadCounts && unreadCounts.unread_consult.length > 0
               ? unreadCounts.unread_consult.length.toString()
               : undefined
           }
         >
-          コンサル一覧
+          E-コンサル
         </HeaderMenuListItem>
         <HeaderMenuListItem
-          href="/Group"
+          href="/group"
           badgeText={
             unreadCounts && unreadCounts.unread_conference.length > 0
               ? unreadCounts.unread_conference.length.toString()
               : undefined
           }
         >
-          所属グループ
+          グループ
         </HeaderMenuListItem>
-        <HeaderMenuListItem href={process.env.CASE_BANK_URL ?? '/'}>
-          症例バンク
+        <HeaderMenuListItem href="/examplelist">
+          E-コンサル事例集
         </HeaderMenuListItem>
-        <HeaderMenuListItem href="/ExampleList">
-          コンサル事例集
-        </HeaderMenuListItem>
+        <HeaderMenuListItem href="/seminar">E-カンファ</HeaderMenuListItem>
       </HeaderMenuList>
     </HeaderMenuContainer>
   );
