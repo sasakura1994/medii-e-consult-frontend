@@ -6,7 +6,7 @@ import { CheckBox } from '@/components/Parts/Form/CheckBox';
 import { Radio } from '@/components/Parts/Form/Radio';
 import React from 'react';
 
-const OnBoardingQuestionary = () => {
+const OnBoardingQuestionaryPage = () => {
   return (
     <div className="mx-6 mb-10 mt-5 max-w-[1024px] lg:mx-auto lg:mt-10">
       <Breadcrumb>
@@ -51,4 +51,4 @@ const OnBoardingQuestionary = () => {
   );
 };
 
-export default OnBoardingQuestionary;
+export default OnBoardingQuestionaryPage;
