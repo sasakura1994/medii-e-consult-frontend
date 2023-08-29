@@ -62,7 +62,7 @@ const handleApiError = (apiClient: AxiosInstance) => {
       //C#のErrorリザルトの場合はエラーを返す
       if (response.data.code && response.data.code != 1) {
         //Header.vueの401監視がエラー吐くのでエラー時と型合わせてやる
-        return Promise.reject({ response: response });
+        return Promise.reject({ response: response, message: response.data.message });
       }
       return response;
     },
@@ -80,30 +80,10 @@ const handleApiError = (apiClient: AxiosInstance) => {
             ...errorObj,
             message: '認証に失敗しました',
           });
-        case 403:
-          return Promise.reject<ApiErrorType>({
-            ...errorObj,
-            message: 'アクセス権限がありません',
-          });
-        case 404:
-          return Promise.reject<ApiErrorType>({
-            ...errorObj,
-            message: 'ページが見つかりません',
-          });
-        case 422:
-          return Promise.reject<ApiErrorType>({
-            ...errorObj,
-            message: '不具合によりアクセスできません',
-          });
         case 500:
           return Promise.reject<ApiErrorType>({
             ...errorObj,
             message: 'サーバーでエラーが発生しました',
-          });
-        case 503:
-          return Promise.reject<ApiErrorType>({
-            ...errorObj,
-            message: 'アクセス集中により只今ご利用できません',
           });
       }
 

@@ -2,7 +2,7 @@ import { useDeleteChatDraftImage } from '@/hooks/api/chat/useDeleteChatDraftImag
 import { useFetchBaseChatRoomForReConsult } from '@/hooks/api/chat/useFetchBaseChatRoomForReConsult';
 import { useGetChatDraftImages } from '@/hooks/api/chat/useGetChatDraftImages';
 import { usePostChatMessageFile } from '@/hooks/api/chat/usePostChatMessageFile';
-import { PostChatRoomRequestData, PostChatRoomResponseData, usePostChatRoom } from '@/hooks/api/chat/usePostChatRoom';
+import { PostChatRoomRequestData, usePostChatRoom } from '@/hooks/api/chat/usePostChatRoom';
 import { usePostDraftImage } from '@/hooks/api/chat/usePostDraftImage';
 import { useFetchDoctorProfile } from '@/hooks/api/doctor/useFetchDoctorProfile';
 import { FetchedGroupEntity, useFetchGroup } from '@/hooks/api/group/useFetchGroup';
@@ -325,7 +325,8 @@ export const useNewChatRoom = (): UseNewChatRoom => {
 
     const response = await createNewChatRoom(data).catch((error) => {
       console.error(error);
-      setErrorMessage((error.response.data as PostChatRoomResponseData).message);
+
+      setErrorMessage(error.message || 'エラーが発生しました');
       return null;
     });
 
@@ -347,7 +348,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
       for (const file of filesForReConsult) {
         await postChatMessageFile(chatRoomId, file.file).catch((error) => {
           console.error(error);
-          errorMessages.push(`${file.file.name}:` + (error.response?.data?.message || 'エラーが発生しました。'));
+          errorMessages.push(`${file.file.name}:` + (error.message || 'エラーが発生しました。'));
           return null;
         });
       }
