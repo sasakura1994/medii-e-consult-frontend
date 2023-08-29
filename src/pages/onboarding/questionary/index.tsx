@@ -8,7 +8,7 @@ import React from 'react';
 
 const OnBoardingQuestionary = () => {
   return (
-    <div className="mx-auto mt-10 max-w-[1024px]">
+    <div className="mx-6 mb-10 mt-5 max-w-[1024px] lg:mx-auto lg:mt-10">
       <Breadcrumb>
         <BreadcrumbLink href="/top">TOP</BreadcrumbLink>
         <BreadcrumbItem>アンケート</BreadcrumbItem>
