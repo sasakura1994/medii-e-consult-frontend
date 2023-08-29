@@ -3,16 +3,15 @@ import React from 'react';
 import { MedicalSpecialitiesSelectDialogProps } from './MedicalSpecialitiesSelectDialog';
 import { useMedicalSpecialitySelect } from './useMedicalSpecialitySelect';
 import { moveItem } from '@/libs/dnd';
+import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 
-export const useMedicalSpecialitiesSelectDialog = (props: MedicalSpecialitiesSelectDialogProps) => {
+export const useMedicalSpecialitiesSelectDialog = (
+  props: MedicalSpecialitiesSelectDialogProps,
+  medicalSpecialities?: MedicalSpecialityEntity[]
+) => {
   const { defaultSelectedMedicalSpecialities, onChange } = props;
-  const {
-    getMedicalSpecialitiesForCategory,
-    isCategoryOpened,
-    medicalSpecialityCategories,
-    medicalSpecialities,
-    toggleCategory,
-  } = useMedicalSpecialitySelect();
+  const { getMedicalSpecialitiesForCategory, isCategoryOpened, medicalSpecialityCategories, toggleCategory } =
+    useMedicalSpecialitySelect(medicalSpecialities);
 
   const [selectedMedicalSpecialities, setSelectedMedicalSpecialities] = React.useState<MedicalSpecialityEntity[]>(
     defaultSelectedMedicalSpecialities

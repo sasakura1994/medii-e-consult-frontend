@@ -7,6 +7,7 @@ import { MedicalSpecialityCategorySelect } from './MedicalSpecialityCategorySele
 import { CheckBox } from '../Parts/Form/CheckBox';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 import { ProfileMedicalSpecialities } from './ProfileMedicalSpecialities';
+import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 
 export type ProfileMedicalSpecialitiesSelectDialogProps = {
   defaultSelectedMedicalSpecialities: MedicalSpecialityEntity[];
@@ -16,6 +17,7 @@ export type ProfileMedicalSpecialitiesSelectDialogProps = {
 
 export const ProfileMedicalSpecialitiesSelectDialog = (props: ProfileMedicalSpecialitiesSelectDialogProps) => {
   const { setShowModal } = props;
+  const { medicalSpecialities } = useFetchMedicalSpecialities();
   const {
     getMedicalSpecialitiesForCategory,
     getSelectedCountForCategory,
@@ -27,7 +29,7 @@ export const ProfileMedicalSpecialitiesSelectDialog = (props: ProfileMedicalSpec
     submit,
     toggleCategory,
     toggleMedicalSpeciality,
-  } = useMedicalSpecialitiesSelectDialog(props);
+  } = useMedicalSpecialitiesSelectDialog(props, medicalSpecialities);
 
   return (
     <Modal setShowModal={setShowModal} className={`lg:w-[740px]`}>
