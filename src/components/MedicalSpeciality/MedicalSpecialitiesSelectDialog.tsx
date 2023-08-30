@@ -8,6 +8,7 @@ import { CheckBox } from '../Parts/Form/CheckBox';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 import { OutlinedSquareButton } from '../Parts/Button/OutlinedSquareButton';
 import { SelectedMedicalSpecialities } from './SelectedMedicalSpecialities';
+import { useFetchMedicalSpecialitiesWithContract } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialitiesWithContract';
 
 export type MedicalSpecialitiesSelectDialogProps = {
   defaultSelectedMedicalSpecialities: MedicalSpecialityEntity[];
@@ -15,10 +16,11 @@ export type MedicalSpecialitiesSelectDialogProps = {
   setShowModal: (isShow: boolean) => void;
 };
 
-export const MedicalSpecialitiesSelectDialog: React.FC<
-  MedicalSpecialitiesSelectDialogProps
-> = (props: MedicalSpecialitiesSelectDialogProps) => {
+export const MedicalSpecialitiesSelectDialog: React.FC<MedicalSpecialitiesSelectDialogProps> = (
+  props: MedicalSpecialitiesSelectDialogProps
+) => {
   const { setShowModal } = props;
+  const { medicalSpecialities } = useFetchMedicalSpecialitiesWithContract();
   const {
     getMedicalSpecialitiesForCategory,
     getSelectedCountForCategory,
@@ -26,24 +28,18 @@ export const MedicalSpecialitiesSelectDialog: React.FC<
     isMedicalSpecialitySelected,
     medicalSpecialityCategories,
     moveSelectedMedicalSpeciality,
-    medicalSpecialities,
     selectedMedicalSpecialities,
     setSelectedMedicalSpecialities,
     submit,
     toggleCategory,
     toggleMedicalSpeciality,
-  } = useMedicalSpecialitiesSelectDialog(props);
+  } = useMedicalSpecialitiesSelectDialog(props, medicalSpecialities);
 
   return (
     <Modal setShowModal={setShowModal} className={`lg:w-[740px]`}>
       <div className="mx-6 my-10 lg:mx-20">
-        <ModalTitleWithCloseButton
-          title="診療科で指定する"
-          onClose={() => setShowModal(false)}
-        />
-        <div className="mt-4 text-block-gray">
-          選択した順番でコンサル依頼先の優先度を指定できます
-        </div>
+        <ModalTitleWithCloseButton title="診療科で指定する" onClose={() => setShowModal(false)} />
+        <div className="mt-4 text-block-gray">選択した順番でコンサル依頼先の優先度を指定できます</div>
         <div className="mt-10 flex flex-col gap-2">
           {medicalSpecialityCategories?.map((medicalSpecialityCategory) => (
             <>
@@ -52,26 +48,18 @@ export const MedicalSpecialitiesSelectDialog: React.FC<
                 medicalSpecialityCategory={medicalSpecialityCategory}
                 isSelected={isCategoryOpened(medicalSpecialityCategory.id)}
                 onClick={() => toggleCategory(medicalSpecialityCategory.id)}
-                selectedCount={getSelectedCountForCategory(
-                  medicalSpecialityCategory.id
-                )}
+                selectedCount={getSelectedCountForCategory(medicalSpecialityCategory.id)}
               />
               {isCategoryOpened(medicalSpecialityCategory.id) && (
                 <div className="my-4 grid grid-cols-2 gap-y-4 text-sm lg:mx-4 lg:grid-cols-3">
-                  {getMedicalSpecialitiesForCategory(
-                    medicalSpecialityCategory.id
-                  ).map((medicalSpeciality) => (
+                  {getMedicalSpecialitiesForCategory(medicalSpecialityCategory.id).map((medicalSpeciality) => (
                     <CheckBox
                       key={medicalSpeciality.speciality_code}
                       label={medicalSpeciality.name}
                       name="medical_specialityies[]"
                       value={medicalSpeciality.speciality_code}
-                      checked={isMedicalSpecialitySelected(
-                        medicalSpeciality.speciality_code
-                      )}
-                      onChange={() =>
-                        toggleMedicalSpeciality(medicalSpeciality)
-                      }
+                      checked={isMedicalSpecialitySelected(medicalSpeciality.speciality_code)}
+                      onChange={() => toggleMedicalSpeciality(medicalSpeciality)}
                     />
                   ))}
                 </div>
@@ -85,15 +73,11 @@ export const MedicalSpecialitiesSelectDialog: React.FC<
               <div className="flex grow items-center gap-2">
                 <div className="text-lg font-bold">選択中の診療科</div>
                 <div>
-                  選択数：{selectedMedicalSpecialities.length}/
-                  {medicalSpecialities?.length || 0}
+                  選択数：{selectedMedicalSpecialities.length}/{medicalSpecialities?.length || 0}
                 </div>
               </div>
               <div>
-                <OutlinedSquareButton
-                  type="button"
-                  onClick={() => setSelectedMedicalSpecialities([])}
-                >
+                <OutlinedSquareButton type="button" onClick={() => setSelectedMedicalSpecialities([])}>
                   選択をすべて解除
                 </OutlinedSquareButton>
               </div>

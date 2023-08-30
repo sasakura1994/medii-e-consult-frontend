@@ -7,6 +7,7 @@ import { MedicalSpecialityCategorySelect } from './MedicalSpecialityCategorySele
 import { CheckBox } from '../Parts/Form/CheckBox';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 import { ProfileMedicalSpecialities } from './ProfileMedicalSpecialities';
+import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 
 export type ProfileMedicalSpecialitiesSelectDialogProps = {
   defaultSelectedMedicalSpecialities: MedicalSpecialityEntity[];
@@ -16,6 +17,7 @@ export type ProfileMedicalSpecialitiesSelectDialogProps = {
 
 export const ProfileMedicalSpecialitiesSelectDialog = (props: ProfileMedicalSpecialitiesSelectDialogProps) => {
   const { setShowModal } = props;
+  const { medicalSpecialities } = useFetchMedicalSpecialities();
   const {
     getMedicalSpecialitiesForCategory,
     getSelectedCountForCategory,
@@ -27,13 +29,13 @@ export const ProfileMedicalSpecialitiesSelectDialog = (props: ProfileMedicalSpec
     submit,
     toggleCategory,
     toggleMedicalSpeciality,
-  } = useMedicalSpecialitiesSelectDialog(props);
+  } = useMedicalSpecialitiesSelectDialog(props, medicalSpecialities);
 
   return (
     <Modal setShowModal={setShowModal} className={`lg:w-[740px]`}>
       <div className="mx-6 my-10 lg:mx-20">
         <ModalTitleWithCloseButton title="所属科を選択する" onClose={() => setShowModal(false)} />
-        <div className="mt-4 text-block-gray">選択した順番でコンサル依頼先の優先度を指定できます</div>
+        <div className="mt-4 text-block-gray">所属・対応可能な科の指定は、後から編集することができます。</div>
         <div className="mt-10 flex flex-col gap-2">
           {medicalSpecialityCategories?.map((medicalSpecialityCategory) => (
             <>
