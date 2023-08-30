@@ -35,7 +35,7 @@ export const ProfileMedicalSpecialitiesSelectDialog = (props: ProfileMedicalSpec
     <Modal setShowModal={setShowModal} className={`lg:w-[740px]`}>
       <div className="mx-6 my-10 lg:mx-20">
         <ModalTitleWithCloseButton title="所属科を選択する" onClose={() => setShowModal(false)} />
-        <div className="mt-4 text-block-gray">選択した順番でコンサル依頼先の優先度を指定できます</div>
+        <div className="mt-4 text-block-gray">所属・対応可能な科の指定は、後から編集することができます。</div>
         <div className="mt-10 flex flex-col gap-2">
           {medicalSpecialityCategories?.map((medicalSpecialityCategory) => (
             <>
