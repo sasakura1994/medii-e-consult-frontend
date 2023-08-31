@@ -52,7 +52,7 @@ export const useRegister = (): UseRegisterType => {
       setIsSent(true);
     } catch (e: unknown) {
       const error = e as { message: string; response: { data: { message: string } } };
-      setErrorMessage(error.response.data.message);
+      setErrorMessage(error.response?.data?.message);
     }
   };
   return {

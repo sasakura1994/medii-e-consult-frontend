@@ -36,7 +36,7 @@ export const useDocumentInputAuto = ({ setSelectedWithRedirect }: UseDocumentInp
         setSelectedWithRedirect('completed');
       } catch (e) {
         const error = e as { message: string; response: { data: { message: string } } };
-        setErrorMessage(error.response.data.message);
+        setErrorMessage(error.response?.data?.message);
       }
     }
   }, [profile, year, tel, uploadDocument, setSelectedWithRedirect]);

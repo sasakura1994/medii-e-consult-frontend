@@ -18,7 +18,7 @@ export const usePasswordResetRequest = () => {
 
       const response = await requestResetPassword(mailAddress).catch((error) => {
         console.error(error);
-        errorMessage = error.response.data.message ?? 'エラーが発生しました';
+        errorMessage = error.response?.data?.message ?? 'エラーが発生しました';
         setErrorMessage(errorMessage);
         return error.response;
       });

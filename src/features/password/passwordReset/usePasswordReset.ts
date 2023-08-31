@@ -30,7 +30,7 @@ export const usePasswordReset = () => {
         token: query.token || '',
       }).catch((error) => {
         console.error(error);
-        errorMessage = error.response.data.message ?? 'エラーが発生しました';
+        errorMessage = error.response?.data?.message ?? 'エラーが発生しました';
         setErrorMessage(errorMessage);
         return error.response;
       });

@@ -37,7 +37,7 @@ export const useDocumentInputStudentDocument = ({ selected, setSelected }: UseDo
           setSelected('studentCompleted');
         } catch (e) {
           const error = e as { message: string; response: { data: { message: string } } };
-          setErrorMessage(error.response.data.message);
+          setErrorMessage(error.response?.data?.message);
         }
       } else {
         setErrorMessage('ファイルの種類が不正です');

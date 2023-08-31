@@ -39,7 +39,7 @@ export const useInitPassword = () => {
         token: query.token || '',
       }).catch((e) => {
         const error = e as { message: string; response: { data: { message: string } } };
-        setErrorMessage(error.response.data.message || 'エラーが発生しました');
+        setErrorMessage(error.response?.data?.message || 'エラーが発生しました');
         return null;
       });
 

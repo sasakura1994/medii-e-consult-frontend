@@ -40,7 +40,7 @@ export const useWithdrawalPage = () => {
     };
 
     const response = await axios.delete('/doctor/withdraw', { data }).catch((error) => {
-      alert(error.response.data.message || 'エラーが発生しました');
+      alert(error.response?.data?.message || 'エラーが発生しました');
       return null;
     });
 
