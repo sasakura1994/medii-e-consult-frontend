@@ -10,6 +10,8 @@ import { RoomReopenModal } from './RoomReopenModal';
 import { KeyedMutator } from 'swr';
 import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
 import { useConsultDetail } from './useConsultDetail';
+import { ChatEditModal } from './ChatEditModal';
+import { ChatDeleteModal } from './ChatDeleteModal';
 
 type ConsultDetailProps = {
   publishmentStatusData?: {
@@ -43,6 +45,10 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     setIsOpenReConsultConfirmModal,
     isOpenRoomReopenModal,
     setIsOpenRoomReopenModal,
+    isOpenChatEditModal,
+    setIsOpenChatEditModal,
+    isOpenDeleteModal,
+    setIsOpenDeleteModal,
     getSpecialityName,
     getExperienceYear,
   } = useConsultDetail({
@@ -50,7 +56,6 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     chatRoomData: chatRoomData,
     chatListData: chatListData,
   });
-
   return (
     <>
       {chatRoomData && publishmentStatusData && accountId && chatListDataWithDisplayName && (
@@ -69,6 +74,25 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
               mutateChatRoom={mutateChatRoom}
               mutateChatRoomList={mutateChatRoomList}
               setSelectedTab={setSelectedTab}
+            />
+          )}
+          {isOpenChatEditModal && (
+            <ChatEditModal
+              chatRoomData={chatRoomData}
+              setIsOpenChatEditModal={setIsOpenChatEditModal}
+              setIsOpenDeleteModal={setIsOpenDeleteModal}
+              accountID={accountId}
+              mutateChatRoom={mutateChatRoom}
+              mutateChatRoomList={mutateChatRoomList}
+            />
+          )}
+
+          {isOpenDeleteModal && (
+            <ChatDeleteModal
+              chatRoomData={chatRoomData}
+              setIsOpenDeleteModal={setIsOpenDeleteModal}
+              mutateChatRoom={mutateChatRoom}
+              mutateChatRoomList={mutateChatRoomList}
             />
           )}
           <div className="flex h-[calc(100vh-62px)] w-[787px] flex-col border border-[#d5d5d5]">
@@ -106,7 +130,12 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                 ) : (
                   <></>
                 )}
-                <img src="/icons/btn_menu.svg" alt="" className="h-9 w-9 cursor-pointer" />
+                <img
+                  src="/icons/btn_menu.svg"
+                  alt=""
+                  className="h-9 w-9 cursor-pointer"
+                  onClick={() => setIsOpenChatEditModal(true)}
+                />
               </div>
               <div className="flex h-5 items-center space-x-1 border">
                 {chatRoomData.members[0] && <p className="text-xxs">E-コンサル</p>}
@@ -131,13 +160,9 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                 )}
               </div>
             </div>
-            <div className="relative flex flex-grow overflow-hidden">
-              <div className="-mb-3 flex-1 overflow-auto bg-bg" ref={chatListRef}>
-                <ChatList chatListData={chatListDataWithDisplayName} currentUserAccountId={accountId} />
-              </div>
-              {isCloseRoom && (
-                <div className="pointer-events-none absolute inset-0 overflow-hidden bg-black bg-opacity-20" />
-              )}
+
+            <div className="flex-grow overflow-auto bg-bg pb-2" ref={chatListRef}>
+              <ChatList chatListData={chatListDataWithDisplayName} currentUserAccountId={accountId} />
             </div>
             {isCloseRoom && (
               <div className="pointer-events-auto bg-[#5c6bc0] p-2 text-center text-sm text-white">
