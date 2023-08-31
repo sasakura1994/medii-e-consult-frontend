@@ -12,5 +12,5 @@ export const QuestionaryItems = (props: Props) => {
     return <div className="mt-2 flex gap-4 text-md">{children}</div>;
   }
 
-  return <div className="mt-2 flex flex-col gap-1 text-md">{children}</div>;
+  return <div className="mt-2 flex flex-col items-start gap-1 text-md">{children}</div>;
 };
