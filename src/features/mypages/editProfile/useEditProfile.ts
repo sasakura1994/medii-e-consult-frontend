@@ -243,7 +243,7 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
 
     const response = await updateProfile(formData).catch((error) => {
       console.error(error);
-      setErrorMessage(error.response.data.message || 'エラーが発生しました');
+      setErrorMessage(error.response?.data?.message || 'エラーが発生しました');
       return null;
     });
 

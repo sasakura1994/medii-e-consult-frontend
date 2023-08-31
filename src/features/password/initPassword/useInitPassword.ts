@@ -12,18 +12,14 @@ export const useInitPassword = () => {
   const router = useRouter();
   const query = router.query as Query;
   const passwordInput = usePasswordInput();
-  const [isPrivacyPolicyAgreed, setIsPrivacyPolicyAgreed] =
-    React.useState(false);
+  const [isPrivacyPolicyAgreed, setIsPrivacyPolicyAgreed] = React.useState(false);
   const [isTermsOfUseAgreed, setIsTermsOfUseAgreed] = React.useState(false);
   const [isEmailDuplicated, setIsEmailDuplicated] = React.useState(false);
   const [isRead, setIsRead] = React.useState(false);
   const [isSending, setIsSending] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState('');
   const { setPassword } = usePostSetPassword();
-  const isTokenExists = React.useMemo(
-    () => query.token !== undefined,
-    [query.token]
-  );
+  const isTokenExists = React.useMemo(() => query.token !== undefined, [query.token]);
 
   const onSubmit = React.useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
@@ -41,23 +37,20 @@ export const useInitPassword = () => {
         first_password: passwordInput.firstPassword,
         second_password: passwordInput.secondPassword,
         token: query.token || '',
-      }).catch((error) => {
-        console.error(error);
+      }).catch((e) => {
+        const error = e as { message: string; response: { data: { message: string } } };
+        setErrorMessage(error.response?.data?.message || 'エラーが発生しました');
         return null;
       });
 
       setIsSending(false);
 
       if (!response) {
-        setErrorMessage('エラーが発生しました');
         return;
       }
 
-      if (response.data.code !== 1) {
-        setErrorMessage(response.data.message);
-        if (response.data.message === 'すでに有効化されているアカウントです') {
-          setIsEmailDuplicated(true);
-        }
+      if (response.data.message === 'すでに有効化されているアカウントです') {
+        setIsEmailDuplicated(true);
         return;
       }
 
@@ -66,11 +59,14 @@ export const useInitPassword = () => {
       router.push('/EditProfile?registerMode=true');
     },
     [
-      passwordInput.firstPassword,
-      passwordInput.secondPassword,
       isPrivacyPolicyAgreed,
       isTermsOfUseAgreed,
       isRead,
+      setPassword,
+      passwordInput.firstPassword,
+      passwordInput.secondPassword,
+      query.token,
+      router,
     ]
   );
 

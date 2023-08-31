@@ -63,10 +63,6 @@ export const useAssign = () => {
     if (!response) {
       return;
     }
-    if (response.data.code !== 1) {
-      setErrorMessage(response?.data.message || 'エラーが発生しました。');
-      return;
-    }
 
     router.push(`/chat?chat_room_id=${id}`);
   }, [id, isSending, postAssign, router]);
