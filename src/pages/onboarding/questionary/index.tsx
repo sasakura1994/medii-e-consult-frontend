@@ -10,7 +10,7 @@ import { useOnBoardingQuestionary } from '@/features/onboarding/useOnBoardingQue
 import React from 'react';
 
 const OnBoardingQuestionaryPage = () => {
-  const { questions } = useOnBoardingQuestionary();
+  const { questionAndAnswers, setAnswer, setOther, toggleAnswers } = useOnBoardingQuestionary();
 
   return (
     <div className="mx-6 mb-10 mt-5 max-w-[1024px] lg:mx-auto lg:mt-10">
@@ -28,13 +28,20 @@ const OnBoardingQuestionaryPage = () => {
         ※1,000ポイント以上貯まると、1ポイントを1円のAmazonポイントに変換してお使いいただけます。
       </div>
       <div className="mt-10 flex flex-col gap-6">
-        {questions?.map((question) => (
+        {questionAndAnswers.map(({ question, answer }) => (
           <section key={question.id}>
             <h3 className="text-md font-bold">{question.text}</h3>
             {question.type === 'SingleChoice' ? (
               <QuestionaryItems itemCount={question.items.length}>
                 {question.items.map((item) => (
-                  <Radio key={item.id} label={item.text} name={`questionary_item${question.id}`} value={item.id} />
+                  <Radio
+                    key={item.id}
+                    label={item.text}
+                    name={`questionary_item${question.id}`}
+                    value={item.id.toString()}
+                    checked={item.id === answer.value}
+                    onChange={() => setAnswer(question.id, item.id)}
+                  />
                 ))}
               </QuestionaryItems>
             ) : (
@@ -44,12 +51,20 @@ const OnBoardingQuestionaryPage = () => {
                     key={item.id}
                     label={item.text}
                     name={`questionary_item${question.id}_${item.id}`}
-                    value={item.id}
+                    value={item.id.toString()}
+                    checked={answer.values.includes(item.id)}
+                    onChange={() => toggleAnswers(question.id, item.id)}
                   />
                 ))}
               </QuestionaryItems>
             )}
-            {question.other_enable && <TextField value="" className="mt-1" />}
+            {question.other_enable && (
+              <TextField
+                className="mt-1"
+                value={answer.other}
+                onChange={(e) => setOther(question.id, e.target.value)}
+              />
+            )}
           </section>
         ))}
       </div>

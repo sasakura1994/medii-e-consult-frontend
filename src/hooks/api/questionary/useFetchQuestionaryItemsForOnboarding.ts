@@ -2,17 +2,17 @@ import { useAuthenticatedSWR } from '@/hooks/network/useAuthenticatedSWR';
 
 type QuestionaryType = 'SingleChoice' | 'MultiChoice';
 
-type QuestionSection = {
+export type Question = {
   id: string;
   text: string;
-  items: { id: string; text: string }[];
+  items: { id: number; text: string }[];
   type: QuestionaryType;
   other_enable: boolean;
   required: boolean;
 };
 
 type ResponseData = {
-  questions: QuestionSection[];
+  questions: Question[];
 };
 
 const endpoint = '/questionary/onboarding-questions';
