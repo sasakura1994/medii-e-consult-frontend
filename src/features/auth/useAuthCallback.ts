@@ -21,11 +21,11 @@ export const useAuthCallback = (): UseAuthCallback => {
   const { key, redirect } = router.query as Query;
   const [isProcessing, setIsProcessing] = useState(false);
   const [isFailed, setIsFailed] = useState(false);
-  const { axios, hasToken } = useAxios();
+  const { axios } = useAxios();
   const { setTokenAndMarkInitialized } = useToken();
 
   const initialize = useCallback(async () => {
-    if (!key || !redirect || isProcessing || !hasToken) {
+    if (!key || !redirect || isProcessing) {
       return;
     }
 
@@ -43,7 +43,7 @@ export const useAuthCallback = (): UseAuthCallback => {
 
     setTokenAndMarkInitialized(response.data.jwt_token);
     router.push(redirect);
-  }, [key, redirect, isProcessing, hasToken, axios, setTokenAndMarkInitialized, router]);
+  }, [key, redirect, isProcessing, axios, setTokenAndMarkInitialized, router]);
 
   useEffect(() => {
     initialize();
