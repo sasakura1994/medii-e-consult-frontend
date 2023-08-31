@@ -28,9 +28,7 @@ describe('useDocumentInputAuto', () => {
 
   test('インプットが正しくできること', async () => {
     const setSelectedWithRedirect = jest.fn();
-    const { result } = renderHook(() =>
-      useDocumentInputAuto({ setSelectedWithRedirect })
-    );
+    const { result } = renderHook(() => useDocumentInputAuto({ setSelectedWithRedirect }));
 
     act(() => {
       result.current.setTel('0987654321');
@@ -51,13 +49,11 @@ describe('useDocumentInputAuto', () => {
 
   test('エラー時にはsetSelectedにcompletedがセットされないこと', async () => {
     (useUploadDocument as jest.Mock).mockReturnValue({
-      uploadDocument: jest.fn().mockRejectedValue({ message: 'error' }),
+      uploadDocument: jest.fn().mockReturnValue(Promise.reject({ response: { data: { message: 'error' } } })),
     });
 
     const setSelectedWithRedirect = jest.fn();
-    const { result } = renderHook(() =>
-      useDocumentInputAuto({ setSelectedWithRedirect })
-    );
+    const { result } = renderHook(() => useDocumentInputAuto({ setSelectedWithRedirect }));
 
     await act(async () => {
       await result.current.submit();
@@ -73,9 +69,7 @@ describe('useDocumentInputAuto', () => {
     });
 
     const setSelectedWithRedirect = jest.fn();
-    const { result } = renderHook(() =>
-      useDocumentInputAuto({ setSelectedWithRedirect })
-    );
+    const { result } = renderHook(() => useDocumentInputAuto({ setSelectedWithRedirect }));
 
     await act(async () => {
       await result.current.submit();
