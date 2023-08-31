@@ -116,7 +116,11 @@ export const useNews = (): UseNews => {
         .map((row) => ({
           title: row.document.fields.default.mapValue.fields.title.stringValue,
           link: 'https://medii.jp/news/' + row.document.fields.default.mapValue.fields.slug.stringValue,
-          cover: row.document.fields.default.mapValue.fields.wp_cover?.stringValue ?? '/images/top/medii-info.png',
+          cover: row.document.fields.default.mapValue.fields.wp_cover
+            ? row.document.fields.default.mapValue.fields.wp_cover.stringValue !== ''
+              ? row.document.fields.default.mapValue.fields.wp_cover.stringValue
+              : '/images/top/medii-info.png'
+            : '/images/top/medii-info.png',
           date: row.document.fields._meta.mapValue.fields.publishedAt.timestampValue,
         }))
     );
