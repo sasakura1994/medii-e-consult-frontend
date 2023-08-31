@@ -3,6 +3,11 @@ import {
   Question,
   useFetchQuestionaryItemsForOnboarding,
 } from '@/hooks/api/questionary/useFetchQuestionaryItemsForOnboarding';
+import {
+  PostQuestionaryItemsForOnboardingAnswer,
+  usePostQuestionaryItemsForOnboarding,
+} from '@/hooks/api/questionary/usePostQuestionaryItemsForOnboarding';
+import { useRouter } from 'next/router';
 
 type Answer = {
   questionId: string;
@@ -17,8 +22,11 @@ type QuestionAndAnswer = {
 };
 
 export const useOnBoardingQuestionary = () => {
+  const router = useRouter();
   const [questionAndAnswers, setQuestionAndAnswers] = useState<QuestionAndAnswer[]>([]);
+  const [isSending, setIsSending] = useState(false);
   const { questions } = useFetchQuestionaryItemsForOnboarding();
+  const { postQuestionaryItemsForOnboarding } = usePostQuestionaryItemsForOnboarding();
 
   // questionAndAnswersを初期化
   useEffect(() => {
@@ -77,15 +85,28 @@ export const useOnBoardingQuestionary = () => {
     );
   }, []);
 
-  const submit = useCallback(() => {
-    const data = {
-      answers: questionAndAnswers.map(({ question, answer }) => ({
-        question_id: question.id,
-        choice_ids: question.type === 'SingleChoice' ? [answer.value] : answer.values,
-        other_text: answer.other,
-      })),
-    };
-  }, [questionAndAnswers]);
+  const submit = useCallback(async () => {
+    setIsSending(true);
+
+    const answers: PostQuestionaryItemsForOnboardingAnswer[] = questionAndAnswers.map(({ question, answer }) => ({
+      question_id: question.id,
+      choice_ids: question.type === 'SingleChoice' ? [answer.value] : answer.values,
+      other_text: answer.other,
+    }));
+
+    const response = await postQuestionaryItemsForOnboarding(answers).catch((error) => {
+      console.error(error);
+      return null;
+    });
+
+    setIsSending(false);
+
+    if (!response) {
+      return;
+    }
+
+    router.push('/onboarding/questionary/completed');
+  }, [postQuestionaryItemsForOnboarding, questionAndAnswers, router]);
 
   const checkIsCheckboxRequired = useCallback(
     (questionId: string) => {
@@ -99,5 +120,5 @@ export const useOnBoardingQuestionary = () => {
     [questionAndAnswers]
   );
 
-  return { checkIsCheckboxRequired, questionAndAnswers, setAnswer, setOther, submit, toggleAnswers };
+  return { checkIsCheckboxRequired, isSending, questionAndAnswers, setAnswer, setOther, submit, toggleAnswers };
 };

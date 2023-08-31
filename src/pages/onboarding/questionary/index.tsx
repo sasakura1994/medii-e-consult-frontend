@@ -4,13 +4,14 @@ import { BreadcrumbLink } from '@/components/Breadcrumb/BreadcrumbLink';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import { CheckBox } from '@/components/Parts/Form/CheckBox';
 import { Radio } from '@/components/Parts/Form/Radio';
+import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 import TextField from '@/components/TextField/TextField';
 import { QuestionaryItems } from '@/features/onboarding/QuestionaryItems';
 import { useOnBoardingQuestionary } from '@/features/onboarding/useOnBoardingQuestionary';
 import React from 'react';
 
 const OnBoardingQuestionaryPage = () => {
-  const { checkIsCheckboxRequired, questionAndAnswers, setAnswer, setOther, submit, toggleAnswers } =
+  const { checkIsCheckboxRequired, isSending, questionAndAnswers, setAnswer, setOther, submit, toggleAnswers } =
     useOnBoardingQuestionary();
 
   return (
@@ -77,10 +78,14 @@ const OnBoardingQuestionaryPage = () => {
             </section>
           ))}
         </div>
-        <div className="mt-10">
-          <PrimaryButton size="large" className="mx-auto px-4">
-            アンケートを送信する
-          </PrimaryButton>
+        <div className="mt-10 flex justify-center">
+          {isSending ? (
+            <SpinnerBorder />
+          ) : (
+            <PrimaryButton size="large" className="px-4">
+              アンケートを送信する
+            </PrimaryButton>
+          )}
         </div>
       </form>
     </div>
