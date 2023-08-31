@@ -77,5 +77,27 @@ export const useOnBoardingQuestionary = () => {
     );
   }, []);
 
-  return { questionAndAnswers, setAnswer, setOther, toggleAnswers };
+  const submit = useCallback(() => {
+    const data = {
+      answers: questionAndAnswers.map(({ question, answer }) => ({
+        question_id: question.id,
+        choice_ids: question.type === 'SingleChoice' ? [answer.value] : answer.values,
+        other_text: answer.other,
+      })),
+    };
+  }, [questionAndAnswers]);
+
+  const checkIsCheckboxRequired = useCallback(
+    (questionId: string) => {
+      const questionAndAnswer = questionAndAnswers.find((qa) => qa.question.id === questionId);
+      if (!questionAndAnswer) {
+        return false;
+      }
+
+      return questionAndAnswer.answer.values.length === 0;
+    },
+    [questionAndAnswers]
+  );
+
+  return { checkIsCheckboxRequired, questionAndAnswers, setAnswer, setOther, submit, toggleAnswers };
 };
