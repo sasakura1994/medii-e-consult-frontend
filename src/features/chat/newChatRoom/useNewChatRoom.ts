@@ -47,6 +47,7 @@ type NewChatRoomQuery = {
   target_group_id?: string;
   reconsult?: string;
   room_type?: ChatRoomType;
+  from?: string;
 };
 
 const getDefaultRoomType = (query: NewChatRoomQuery): ChatRoomType => {
@@ -321,6 +322,10 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     if (query.reconsult) {
       data.re_consult_chat_room_id = query.reconsult;
       data.re_consult_file_chat_message_ids = reConsultFileMessages.map((chatMessage) => chatMessage.uid);
+    }
+
+    if (query.from) {
+      data.create_source = { from: query.from };
     }
 
     const response = await createNewChatRoom(data).catch((error) => {

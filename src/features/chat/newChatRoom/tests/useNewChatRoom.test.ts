@@ -2,11 +2,7 @@ import {
   useFetchBaseChatRoomForReConsult,
   FetchBaseChatRoomForReConsultResponseData,
 } from '@/hooks/api/chat/useFetchBaseChatRoomForReConsult';
-import {
-  loadLocalStorage,
-  removeLocalStorage,
-  saveLocalStorage,
-} from '@/libs/LocalStorageManager';
+import { loadLocalStorage, removeLocalStorage, saveLocalStorage } from '@/libs/LocalStorageManager';
 import 'cross-fetch/polyfill';
 import { act, renderHook, waitFor } from '@testing-library/react';
 import { newChatRoomFormDataKey, useNewChatRoom } from '../useNewChatRoom';
@@ -37,9 +33,7 @@ const medicalSpecialitiesMock: MedicalSpecialityEntity[] = [
   { speciality_code: 'GANKA' } as MedicalSpecialityEntity,
 ];
 
-const useFetchMedicalSpecialitiesMock = jest.mocked(
-  useFetchMedicalSpecialities
-);
+const useFetchMedicalSpecialitiesMock = jest.mocked(useFetchMedicalSpecialities);
 useFetchMedicalSpecialitiesMock.mockReturnValue({
   medicalSpecialities: medicalSpecialitiesMock,
   isLoading: false,
@@ -51,79 +45,62 @@ usePostChatRoomMock.mockReturnValue({
   createNewChatRoom: jest.fn(),
 });
 
-const baseChatRoomForReConsultData: FetchBaseChatRoomForReConsultResponseData =
-  {
-    chat_room: {
-      chat_room_id: 'chatroomid',
-      disease_name: 'disease',
-      age: 20,
-    } as ChatRoomEntity,
-    first_message: 'first message',
-    medical_specialities: [
-      {
-        speciality_code: 'ALLERGY',
-        name: 'アレルギー内科',
-      } as MedicalSpecialityEntity,
-      {
-        speciality_code: 'BYOURI',
-        name: '病理科',
-      } as MedicalSpecialityEntity,
-      {
-        speciality_code: 'GANKA',
-        name: '眼科',
-      } as MedicalSpecialityEntity,
-    ],
-    file_messages: [
-      {
-        uid: 1,
-        file_id: 'file1',
-      } as ChatMessageEntity,
-      {
-        uid: 2,
-        file_id: 'file2',
-      } as ChatMessageEntity,
-    ],
-  };
-const useFetchBaseChatRoomForReConsultMock = jest.mocked(
-  useFetchBaseChatRoomForReConsult
-);
+const baseChatRoomForReConsultData: FetchBaseChatRoomForReConsultResponseData = {
+  chat_room: {
+    chat_room_id: 'chatroomid',
+    disease_name: 'disease',
+    age: 20,
+  } as ChatRoomEntity,
+  first_message: 'first message',
+  medical_specialities: [
+    {
+      speciality_code: 'ALLERGY',
+      name: 'アレルギー内科',
+    } as MedicalSpecialityEntity,
+    {
+      speciality_code: 'BYOURI',
+      name: '病理科',
+    } as MedicalSpecialityEntity,
+    {
+      speciality_code: 'GANKA',
+      name: '眼科',
+    } as MedicalSpecialityEntity,
+  ],
+  file_messages: [
+    {
+      uid: 1,
+      file_id: 'file1',
+    } as ChatMessageEntity,
+    {
+      uid: 2,
+      file_id: 'file2',
+    } as ChatMessageEntity,
+  ],
+};
+const useFetchBaseChatRoomForReConsultMock = jest.mocked(useFetchBaseChatRoomForReConsult);
 useFetchBaseChatRoomForReConsultMock.mockReturnValue({
-  fetchBaseChatRoomForReConsult: jest
-    .fn()
-    .mockReturnValue(baseChatRoomForReConsultData),
+  fetchBaseChatRoomForReConsult: jest.fn().mockReturnValue(baseChatRoomForReConsultData),
 });
 
 const deleteChatDraftImageMock = jest.fn();
 deleteChatDraftImageMock.mockResolvedValue(true);
-const useDeleteChatDraftImageMock = jest.spyOn(
-  useDeleteChatDraftImageModule,
-  'useDeleteChatDraftImage'
-);
+const useDeleteChatDraftImageMock = jest.spyOn(useDeleteChatDraftImageModule, 'useDeleteChatDraftImage');
 useDeleteChatDraftImageMock.mockReturnValue({
   deleteChatDraftImage: deleteChatDraftImageMock,
 });
 
 beforeEach(() => {
-  const usePostChatMessageFileMock = jest.spyOn(
-    usePostChatMessageFileModule,
-    'usePostChatMessageFile'
-  );
+  const usePostChatMessageFileMock = jest.spyOn(usePostChatMessageFileModule, 'usePostChatMessageFile');
   usePostChatMessageFileMock.mockReturnValue({
     postChatMessageFile: jest.fn(),
   });
 
-  const usePostDraftImageMock = jest.spyOn(
-    usePostDraftImageModule,
-    'usePostDraftImage'
-  );
+  const usePostDraftImageMock = jest.spyOn(usePostDraftImageModule, 'usePostDraftImage');
   usePostDraftImageMock.mockReturnValue({
     createDraftImage: jest.fn(),
   });
 
-  const useGetChatDraftImagesMock = jest.spyOn(
-    useGetChatDraftImagesModule,
-    'useGetChatDraftImages'
-  );
+  const useGetChatDraftImagesMock = jest.spyOn(useGetChatDraftImagesModule, 'useGetChatDraftImages');
   useGetChatDraftImagesMock.mockReturnValue({
     chatDraftImages: [],
     mutate: jest.fn(),
@@ -187,9 +164,7 @@ describe('useNewChatROom', () => {
       })
     );
 
-    expect(result.current.selectedMedicalSpecialities).toEqual(
-      medicalSpecialitiesMock
-    );
+    expect(result.current.selectedMedicalSpecialities).toEqual(medicalSpecialitiesMock);
   });
 
   describe('initialize', () => {
@@ -242,14 +217,8 @@ describe('useNewChatROom', () => {
         expect(result.current.ageRange).toBe('20');
         expect(result.current.chatRoom.disease_name).toBe('disease');
         expect(result.current.chatRoom.first_message).toBe('first message');
-        expect(result.current.chatRoom.target_specialities).toEqual([
-          'ALLERGY',
-          'BYOURI',
-          'GANKA',
-        ]);
-        expect(result.current.reConsultFileMessages).toEqual(
-          baseChatRoomForReConsultData.file_messages
-        );
+        expect(result.current.chatRoom.target_specialities).toEqual(['ALLERGY', 'BYOURI', 'GANKA']);
+        expect(result.current.reConsultFileMessages).toEqual(baseChatRoomForReConsultData.file_messages);
       });
     });
   });
@@ -349,9 +318,7 @@ describe('useNewChatROom', () => {
         wrapper: RecoilRoot,
       });
 
-      act(() =>
-        result.current.setChatRoomFields({ first_message: 'first_message' })
-      );
+      act(() => result.current.setChatRoomFields({ first_message: 'first_message' }));
       act(() => result.current.selectConsultMessageTemplate('test'));
 
       waitFor(() => {
@@ -369,9 +336,7 @@ describe('useNewChatROom', () => {
         wrapper: RecoilRoot,
       });
 
-      act(() =>
-        result.current.setChatRoomFields({ first_message: 'first_message' })
-      );
+      act(() => result.current.setChatRoomFields({ first_message: 'first_message' }));
       act(() => result.current.selectConsultMessageTemplate('test'));
 
       waitFor(() => {
@@ -434,7 +399,9 @@ describe('useNewChatROom', () => {
       const pushMock = jest.fn();
       const useRouterMock = jest.mocked(useRouter);
       useRouterMock.mockReturnValue({
-        query: {},
+        query: {
+          from: 'mail',
+        },
         push: pushMock,
       } as unknown as ReturnType<typeof useRouter>);
 
@@ -446,7 +413,20 @@ describe('useNewChatROom', () => {
 
       expect(removeLocalStorageMock).toBeCalled();
       expect(pushMock).toBeCalled();
-      expect(createNewChatRoomMock).toBeCalled();
+      expect(createNewChatRoomMock).toBeCalledWith({
+        age: 0,
+        chat_draft_image_ids: [],
+        chat_room_id: expect.anything(),
+        disease_name: '',
+        first_message: '',
+        create_source: { from: 'mail' },
+        gender: 'man',
+        group_id: undefined,
+        publishment_accepted: true,
+        room_type: 'FREE',
+        target_doctor: undefined,
+        target_specialities: [],
+      });
     });
 
     test('再コンサル時', async () => {
@@ -473,10 +453,7 @@ describe('useNewChatROom', () => {
 
       const postChatMessageFileMock = jest.fn();
       postChatMessageFileMock.mockResolvedValue(true);
-      const usePostChatMessageFileMock = jest.spyOn(
-        usePostChatMessageFileModule,
-        'usePostChatMessageFile'
-      );
+      const usePostChatMessageFileMock = jest.spyOn(usePostChatMessageFileModule, 'usePostChatMessageFile');
       usePostChatMessageFileMock.mockReturnValue({
         postChatMessageFile: postChatMessageFileMock,
       });
@@ -485,11 +462,7 @@ describe('useNewChatROom', () => {
         wrapper: RecoilRoot,
       });
 
-      act(() =>
-        result.current.setFilesForReConsult([
-          { id: 1, file: new File([], ''), image: '' },
-        ])
-      );
+      act(() => result.current.setFilesForReConsult([{ id: 1, file: new File([], ''), image: '' }]));
       await act(() => result.current.submit());
 
       expect(removeLocalStorageMock).toBeCalled();
@@ -529,19 +502,13 @@ describe('useNewChatROom', () => {
       const file = new File([], 'filename', { type: 'text/plain' });
 
       const createDraftImageMock = jest.fn();
-      const usePostDraftImageMock = jest.spyOn(
-        usePostDraftImageModule,
-        'usePostDraftImage'
-      );
+      const usePostDraftImageMock = jest.spyOn(usePostDraftImageModule, 'usePostDraftImage');
       usePostDraftImageMock.mockReturnValue({
         createDraftImage: jest.fn(),
       });
 
       const mutateMock = jest.fn();
-      const useGetChatDraftImagesMock = jest.spyOn(
-        useGetChatDraftImagesModule,
-        'useGetChatDraftImages'
-      );
+      const useGetChatDraftImagesMock = jest.spyOn(useGetChatDraftImagesModule, 'useGetChatDraftImages');
       useGetChatDraftImagesMock.mockReturnValue({
         chatDraftImages: [],
         mutate: jest.fn(),
@@ -575,19 +542,13 @@ describe('useNewChatROom', () => {
       const file = new File([], 'filename', { type: 'text/plain' });
 
       const createDraftImageMock = jest.fn();
-      const usePostDraftImageMock = jest.spyOn(
-        usePostDraftImageModule,
-        'usePostDraftImage'
-      );
+      const usePostDraftImageMock = jest.spyOn(usePostDraftImageModule, 'usePostDraftImage');
       usePostDraftImageMock.mockReturnValue({
         createDraftImage: jest.fn(),
       });
 
       const mutateMock = jest.fn();
-      const useGetChatDraftImagesMock = jest.spyOn(
-        useGetChatDraftImagesModule,
-        'useGetChatDraftImages'
-      );
+      const useGetChatDraftImagesMock = jest.spyOn(useGetChatDraftImagesModule, 'useGetChatDraftImages');
       useGetChatDraftImagesMock.mockReturnValue({
         chatDraftImages: [],
         mutate: jest.fn(),
@@ -615,10 +576,7 @@ describe('useNewChatROom', () => {
     deleteChatDraftImageMock.mockClear();
 
     const mutateMock = jest.fn();
-    const useGetChatDraftImagesMock = jest.spyOn(
-      useGetChatDraftImagesModule,
-      'useGetChatDraftImages'
-    );
+    const useGetChatDraftImagesMock = jest.spyOn(useGetChatDraftImagesModule, 'useGetChatDraftImages');
     useGetChatDraftImagesMock.mockReturnValue({
       chatDraftImages: [],
       mutate: jest.fn(),
@@ -650,11 +608,7 @@ describe('useNewChatROom', () => {
     );
 
     waitFor(() => {
-      expect(result.current.chatRoom.target_specialities).toEqual([
-        'A',
-        'B',
-        'C',
-      ]);
+      expect(result.current.chatRoom.target_specialities).toEqual(['A', 'B', 'C']);
       expect(result.current.isMedicalSpecialitiesSelectDialogShown).toBeFalsy();
     });
   });
@@ -664,18 +618,12 @@ describe('useNewChatROom', () => {
       wrapper: RecoilRoot,
     });
 
-    act(() =>
-      result.current.setChatRoomFields({ target_specialities: ['A', 'B', 'C'] })
-    );
+    act(() => result.current.setChatRoomFields({ target_specialities: ['A', 'B', 'C'] }));
 
     await act(() => result.current.moveSelectedMedicalSpeciality(1, 2));
 
     waitFor(() => {
-      expect(result.current.chatRoom.target_specialities).toEqual([
-        'A',
-        'C',
-        'B',
-      ]);
+      expect(result.current.chatRoom.target_specialities).toEqual(['A', 'C', 'B']);
     });
   });
 
@@ -692,9 +640,7 @@ describe('useNewChatROom', () => {
     act(() => result.current.deleteReConsultFileMessage(1));
 
     waitFor(() => {
-      expect(result.current.reConsultFileMessages).toEqual([
-        baseChatRoomForReConsultData.file_messages[1],
-      ]);
+      expect(result.current.reConsultFileMessages).toEqual([baseChatRoomForReConsultData.file_messages[1]]);
     });
   });
 

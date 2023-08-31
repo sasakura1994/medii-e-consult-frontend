@@ -25,7 +25,7 @@ const Welcome = () => {
               imageSrc="/images/document/consult.svg"
               description="臨床疑問をエキスパートの医師とチャット形式で相談できます。相談内容に適した医師をMediiがマッチングします。"
               buttonSolid="専門医に相談"
-              linkSolid="/NewChatRoom"
+              linkSolid="/newchatroom?from=welcome"
               logSolid="click-chat-in-welcome"
               buttonOutline="E-コンサルとは"
               linkOutline="/top?tutorial=true"
