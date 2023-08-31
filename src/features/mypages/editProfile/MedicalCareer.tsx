@@ -21,18 +21,13 @@ export const MedicalCareer = (props: MedicalCareerProps) => {
       <div className="mb-10">
         <EditProfileHeading className="mb-4">医療従事経歴</EditProfileHeading>
 
-        {(profile.is_hospital_doctor ||
-          profile.is_invited ||
-          profile.is_skip_confirmation_by_utm_source ||
-          profile.qualified_year !== '') && (
-          <div className="mb-4">
-            <MedicalCareerQualifiedYear
-              isEnabled={isRegisterMode}
-              profile={profile}
-              setProfileFields={setProfileFields}
-            />
-          </div>
-        )}
+        <div className="mb-4">
+          <MedicalCareerQualifiedYear
+            isEnabled={isRegisterMode}
+            profile={profile}
+            setProfileFields={setProfileFields}
+          />
+        </div>
 
         <div className="mb-4">
           <MedicalCareerSpecialities profile={profile} selectMedicalSpecialities={selectMedicalSpecialities} />
