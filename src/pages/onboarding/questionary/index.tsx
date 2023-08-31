@@ -4,9 +4,14 @@ import { BreadcrumbLink } from '@/components/Breadcrumb/BreadcrumbLink';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import { CheckBox } from '@/components/Parts/Form/CheckBox';
 import { Radio } from '@/components/Parts/Form/Radio';
+import TextField from '@/components/TextField/TextField';
+import { QuestionaryItems } from '@/features/onboarding/QuestionaryItems';
+import { useOnBoardingQuestionary } from '@/features/onboarding/useOnBoardingQuestionary';
 import React from 'react';
 
 const OnBoardingQuestionaryPage = () => {
+  const { questions } = useOnBoardingQuestionary();
+
   return (
     <div className="mx-6 mb-10 mt-5 max-w-[1024px] lg:mx-auto lg:mt-10">
       <Breadcrumb>
@@ -23,24 +28,30 @@ const OnBoardingQuestionaryPage = () => {
         ※1,000ポイント以上貯まると、1ポイントを1円のAmazonポイントに変換してお使いいただけます。
       </div>
       <div className="mt-10 flex flex-col gap-6">
-        <section>
-          <h3 className="text-md font-bold">
-            Mediiの提供する医師・医学生限定のオンライン専門医相談サービス「E-コンサル」をご存知ですか？
-          </h3>
-          <div className="mt-2 flex gap-4 text-md">
-            <Radio label="はい" name="questionary_item0" />
-            <Radio label="いいえ" name="questionary_item0" />
-          </div>
-        </section>
-        <section>
-          <h3 className="text-md font-bold">
-            上記のような困った症例、別の医師に意見を仰ぎたい症例に遭遇した際、どのように対応されましたか？
-          </h3>
-          <div className="mt-2 flex flex-col gap-1 text-md">
-            <CheckBox label="自身で論文、症例報告等を参照して自力解決に努めた" name="questionary_item0" />
-            <CheckBox label="院内の同科の医師に相談した" name="questionary_item0" />
-          </div>
-        </section>
+        {questions?.map((question) => (
+          <section key={question.id}>
+            <h3 className="text-md font-bold">{question.text}</h3>
+            {question.type === 'SingleChoice' ? (
+              <QuestionaryItems itemCount={question.items.length}>
+                {question.items.map((item) => (
+                  <Radio key={item.id} label={item.text} name={`questionary_item${question.id}`} value={item.id} />
+                ))}
+              </QuestionaryItems>
+            ) : (
+              <QuestionaryItems itemCount={question.items.length}>
+                {question.items.map((item) => (
+                  <CheckBox
+                    key={item.id}
+                    label={item.text}
+                    name={`questionary_item${question.id}_${item.id}`}
+                    value={item.id}
+                  />
+                ))}
+              </QuestionaryItems>
+            )}
+            {question.other_enable && <TextField value="" className="mt-1" />}
+          </section>
+        ))}
       </div>
       <div className="mt-10">
         <PrimaryButton size="large" className="mx-auto px-4">
