@@ -15,10 +15,7 @@ export const usePasswordReset = () => {
   const [isSending, setIsSending] = React.useState(false);
   const [isCompleted, setIsCompleted] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState('');
-  const isTokenExists = React.useMemo(
-    () => query.token !== undefined,
-    [query.token]
-  );
+  const isTokenExists = React.useMemo(() => query.token !== undefined, [query.token]);
 
   const onSubmit = React.useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
@@ -33,7 +30,7 @@ export const usePasswordReset = () => {
         token: query.token || '',
       }).catch((error) => {
         console.error(error);
-        errorMessage = error.message ?? 'エラーが発生しました';
+        errorMessage = error.response.data.message ?? 'エラーが発生しました';
         setErrorMessage(errorMessage);
         return error.response;
       });
@@ -49,12 +46,7 @@ export const usePasswordReset = () => {
 
       setIsCompleted(true);
     },
-    [
-      passwordInput.firstPassword,
-      passwordInput.secondPassword,
-      query.token,
-      resetPassword,
-    ]
+    [passwordInput.firstPassword, passwordInput.secondPassword, query.token, resetPassword]
   );
 
   return {

@@ -38,8 +38,8 @@ export const useInitPassword = () => {
         second_password: passwordInput.secondPassword,
         token: query.token || '',
       }).catch((e) => {
-        const error = e as { message: string };
-        setErrorMessage(error.message || 'エラーが発生しました');
+        const error = e as { message: string; response: { data: { message: string } } };
+        setErrorMessage(error.response.data.message || 'エラーが発生しました');
         return null;
       });
 

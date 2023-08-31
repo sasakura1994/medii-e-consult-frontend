@@ -22,13 +22,7 @@ export const useDocumentInputDocument = ({
 }: UseDocumentInputDocumentProps): UseDocumentInputDocument => {
   const { profile } = useFetchProfile();
   const { uploadDocument } = useUploadDocument();
-  const {
-    imageSource,
-    onFileSelected,
-    setImageSource,
-    openFileSelector,
-    fileSelectorRef,
-  } = useSelectedFile();
+  const { imageSource, onFileSelected, setImageSource, openFileSelector, fileSelectorRef } = useSelectedFile();
 
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -47,20 +41,14 @@ export const useDocumentInputDocument = ({
           await uploadDocument(newProfile);
           setSelectedWithRedirect('completed');
         } catch (e) {
-          const error = e as { message: string };
-          setErrorMessage(error.message);
+          const error = e as { message: string; response: { data: { message: string } } };
+          setErrorMessage(error.response.data.message);
         }
       } else {
         setErrorMessage('ファイルの種類が不正です');
       }
     },
-    [
-      profile,
-      imageSource,
-      fileSelectorRef,
-      uploadDocument,
-      setSelectedWithRedirect,
-    ]
+    [profile, imageSource, fileSelectorRef, uploadDocument, setSelectedWithRedirect]
   );
 
   useEffect(() => {

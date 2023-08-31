@@ -326,7 +326,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     const response = await createNewChatRoom(data).catch((error) => {
       console.error(error);
 
-      setErrorMessage(error.message || 'エラーが発生しました');
+      setErrorMessage(error.response.data.message || 'エラーが発生しました');
       return null;
     });
 
@@ -348,7 +348,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
       for (const file of filesForReConsult) {
         await postChatMessageFile(chatRoomId, file.file).catch((error) => {
           console.error(error);
-          errorMessages.push(`${file.file.name}:` + (error.message || 'エラーが発生しました。'));
+          errorMessages.push(`${file.file.name}:` + (error.response.data.message || 'エラーが発生しました。'));
           return null;
         });
       }

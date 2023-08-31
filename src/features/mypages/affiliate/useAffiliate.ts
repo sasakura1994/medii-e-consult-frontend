@@ -45,8 +45,8 @@ export const useAffiliate = (): UseAffiliateType => {
       }
     } catch (e) {
       setIsError(true);
-      const error = e as Error;
-      console.log('*** error ***', error.message);
+      const error = e as { message: string; response: { data: { message: string } } };
+      console.log('*** error ***', error.response.data.message);
       toast('QRコードの取得に失敗しました');
     }
   }, [accountId]);

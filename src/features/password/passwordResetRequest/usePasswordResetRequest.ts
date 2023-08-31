@@ -16,14 +16,12 @@ export const usePasswordResetRequest = () => {
       setIsSending(true);
       setErrorMessage('');
 
-      const response = await requestResetPassword(mailAddress).catch(
-        (error) => {
-          console.error(error);
-          errorMessage = error.message ?? 'エラーが発生しました';
-          setErrorMessage(errorMessage);
-          return error.response;
-        }
-      );
+      const response = await requestResetPassword(mailAddress).catch((error) => {
+        console.error(error);
+        errorMessage = error.response.data.message ?? 'エラーが発生しました';
+        setErrorMessage(errorMessage);
+        return error.response;
+      });
 
       setIsSending(false);
 

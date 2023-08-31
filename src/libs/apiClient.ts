@@ -57,56 +57,12 @@ export const redirectToLoginPage = () => {
 };
 
 const handleApiError = (apiClient: AxiosInstance) => {
-  apiClient.interceptors.response.use(
-    (response) => {
-      //C#のErrorリザルトの場合はエラーを返す
-      if (response.data.code && response.data.code != 1) {
-        //Header.vueの401監視がエラー吐くのでエラー時と型合わせてやる
-        return Promise.reject({ response: response, message: response.data.message });
-      }
-      return response;
-    },
-    (error) => {
-      const errorObj = {
-        message: '',
-        status: error.response?.status,
-        url: error.response?.request.responseURL,
-      };
-
-      switch (error.response?.status) {
-        case 401:
-          redirectToLoginPage();
-          return Promise.reject<ApiErrorType>({
-            ...errorObj,
-            message: '認証に失敗しました',
-          });
-        case 500:
-          return Promise.reject<ApiErrorType>({
-            ...errorObj,
-            message: 'サーバーでエラーが発生しました',
-          });
-      }
-
-      if (error.isAxiosError && error.response?.data?.errors) {
-        const errorMessage = error.response.data.errors.messages.join('\n');
-        return Promise.reject<ApiErrorType>({
-          ...errorObj,
-          message: errorMessage,
-        });
-      }
-
-      if (error.isAxiosError && error.response?.data?.message) {
-        const errorMessage = error.response.data.message;
-        return Promise.reject<ApiErrorType>({
-          ...errorObj,
-          message: errorMessage,
-        });
-      }
-
-      return Promise.reject<ApiErrorType>({
-        ...errorObj,
-        message: 'ネットワークエラー',
-      });
+  apiClient.interceptors.response.use((response) => {
+    //C#のErrorリザルトの場合はエラーを返す
+    if (response.data.code && response.data.code != 1) {
+      //Header.vueの401監視がエラー吐くのでエラー時と型合わせてやる
+      return Promise.reject({ response: response });
     }
-  );
+    return response;
+  });
 };
