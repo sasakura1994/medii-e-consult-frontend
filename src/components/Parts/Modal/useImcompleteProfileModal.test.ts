@@ -46,13 +46,14 @@ describe('useImcompleteProfileModal', () => {
       expect(hookResult?.current.url).toBe('/editProfile?registerMode=1');
     });
 
-    test('need_to_send_confimation', async () => {
+    test('PROFILEだと書類確認待ち', async () => {
       const useFetchProfileMock = useFetchProfileModule as jest.Mocked<typeof useFetchProfileModule>;
       useFetchProfileMock.useFetchProfile.mockReturnValue({
         profile: {
           is_imperfect_profile: false,
           main_speciality: 'naika',
           need_to_send_confimation: true,
+          status: 'PROFILE',
         } as ProfileEntity,
         isLoading: false,
       });
