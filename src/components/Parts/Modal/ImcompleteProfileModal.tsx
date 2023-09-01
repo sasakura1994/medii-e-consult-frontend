@@ -19,7 +19,7 @@ const getMessage = (profile: ProfileEntity) => {
         お手数ですがサービスをご利用頂くためにプロフィール画面のご入力をお願いいたします。
       </>
     );
-  } else if (profile.need_to_send_confimation) {
+  } else if (profile.status === 'PROFILE') {
     return (
       <>
         確認資料が提出されておりません。
@@ -52,10 +52,7 @@ export const ImcompleteProfileModal: React.FC<Props> = (props: Props) => {
       <div className="flex flex-col items-center">
         <div className="my-5 text-sm">{getMessage(profile)}</div>
         <div className="my-6">
-          <Link
-            href={url}
-            className="text-decoration: none; padding-left: 2rem; padding-right: 2rem"
-          >
+          <Link href={url} className="text-decoration: none; padding-left: 2rem; padding-right: 2rem">
             <a>
               <PrimaryButton size="lg">プロフィール画面を開く</PrimaryButton>
             </a>

@@ -26,7 +26,7 @@ export const useImcompleteProfileModal = ({ allowWaiting = false }: Props) => {
       return '/editProfile?registerMode=1';
     } else if (profile.main_speciality === '') {
       return '/editProfile?registerMode=1';
-    } else if (profile.need_to_send_confimation) {
+    } else if (profile.status === 'PROFILE') {
       return '/document';
     }
     return '/EditProfile';
