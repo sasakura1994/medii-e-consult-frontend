@@ -34,13 +34,14 @@ describe('is_imperfect_profile', () => {
       expect(text).toBeInTheDocument();
     });
 
-    test('need_to_send_confimation', async () => {
+    test('statusがPROFILEだと書類確認待ち', async () => {
       const useFetchProfileMock = useFetchProfileModule as jest.Mocked<typeof useFetchProfileModule>;
       useFetchProfileMock.useFetchProfile.mockReturnValue({
         profile: {
           is_imperfect_profile: false,
           main_speciality: 'naika',
           need_to_send_confimation: true,
+          status: 'PROFILE',
         } as ProfileEntity,
         isLoading: false,
       });
