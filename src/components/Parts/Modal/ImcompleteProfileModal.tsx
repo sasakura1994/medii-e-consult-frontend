@@ -19,7 +19,7 @@ const getMessage = (profile: ProfileEntity) => {
         お手数ですがサービスをご利用頂くためにプロフィール画面のご入力をお願いいたします。
       </>
     );
-  } else if (profile.status === 'PROFILE') {
+  } else if (profile.status === 'PROFILE' || (profile.status === 'CREATED' && profile.need_to_send_confimation)) {
     return (
       <>
         確認資料が提出されておりません。
