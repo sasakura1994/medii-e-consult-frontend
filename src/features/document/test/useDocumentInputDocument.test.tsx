@@ -76,8 +76,7 @@ describe('useDocumentInputDocument', () => {
   });
 
   test('ロード時に正しい値がsetImageSourceにセットされていること', () => {
-    const { setImageSource } = renderHook(() => useSelectedFile()).result
-      .current;
+    const { setImageSource } = renderHook(() => useSelectedFile()).result.current;
     const setSelectedWithRedirect = jest.fn();
     renderHook(() => useDocumentInputDocument({ setSelectedWithRedirect }));
 
@@ -86,13 +85,11 @@ describe('useDocumentInputDocument', () => {
 
   test('uploadDocumentに失敗した場合にはcompletedにならないこと', async () => {
     (useUploadDocument as jest.Mock).mockReturnValue({
-      uploadDocument: jest.fn().mockRejectedValue({ message: 'error' }),
+      uploadDocument: jest.fn().mockReturnValue(Promise.reject({ response: { data: { message: 'error' } } })),
     });
 
     const setSelectedWithRedirect = jest.fn();
-    const { submit } = renderHook(() =>
-      useDocumentInputDocument({ setSelectedWithRedirect })
-    ).result.current;
+    const { submit } = renderHook(() => useDocumentInputDocument({ setSelectedWithRedirect })).result.current;
 
     await act(async () => {
       const event = {
@@ -110,9 +107,7 @@ describe('useDocumentInputDocument', () => {
     });
 
     const setSelectedWithRedirect = jest.fn();
-    const { submit } = renderHook(() =>
-      useDocumentInputDocument({ setSelectedWithRedirect })
-    ).result.current;
+    const { submit } = renderHook(() => useDocumentInputDocument({ setSelectedWithRedirect })).result.current;
 
     await act(async () => {
       const event = {
