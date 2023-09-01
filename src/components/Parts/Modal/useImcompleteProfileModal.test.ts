@@ -46,7 +46,7 @@ describe('useImcompleteProfileModal', () => {
       expect(hookResult?.current.url).toBe('/editProfile?registerMode=1');
     });
 
-    test('PROFILEだと書類確認待ち', async () => {
+    test('statusがPROFILEだと書類確認待ち', async () => {
       const useFetchProfileMock = useFetchProfileModule as jest.Mocked<typeof useFetchProfileModule>;
       useFetchProfileMock.useFetchProfile.mockReturnValue({
         profile: {

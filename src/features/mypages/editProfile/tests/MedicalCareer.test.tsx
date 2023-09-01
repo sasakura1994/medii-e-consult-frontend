@@ -31,6 +31,7 @@ describe('MedicalCareer', () => {
         );
       });
 
+      expect(screen.queryByTestId('doctor_qualified_year')).not.toBeInTheDocument();
       expect(screen.queryByTestId('year-input-year')).toBeInTheDocument();
     });
 
