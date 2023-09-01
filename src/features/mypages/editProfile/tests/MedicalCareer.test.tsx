@@ -15,7 +15,7 @@ describe('MedicalCareer', () => {
   });
 
   describe('医師資格取得年', () => {
-    test('表示しない', async () => {
+    test('常に表示', async () => {
       act(() => {
         const props = {
           isRegisterMode: true,
@@ -31,8 +31,7 @@ describe('MedicalCareer', () => {
         );
       });
 
-      expect(screen.queryByTestId('doctor_qualified_year')).not.toBeInTheDocument();
-      expect(screen.queryByTestId('year-input-year')).not.toBeInTheDocument();
+      expect(screen.queryByTestId('year-input-year')).toBeInTheDocument();
     });
 
     test('is_hospital_doctor === true の場合は表示', async () => {
