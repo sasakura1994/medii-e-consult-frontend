@@ -56,9 +56,7 @@ export const NewChatRoomConfirmation: React.FC<Props> = (props: Props) => {
       return (
         <>
           <NewChatRoomConfirmationLabel>専門医指定方法：グループ</NewChatRoomConfirmationLabel>
-          <NewChatRoomConfirmationValue className="my-4">
-            {group.group_name + ' グループ名'}
-          </NewChatRoomConfirmationValue>
+          <NewChatRoomConfirmationValue className="my-4">{group.group_name}</NewChatRoomConfirmationValue>
         </>
       );
     } else {
