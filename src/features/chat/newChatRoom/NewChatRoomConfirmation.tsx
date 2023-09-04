@@ -75,7 +75,7 @@ export const NewChatRoomConfirmation: React.FC<Props> = (props: Props) => {
           質問医である担当医師の判断・責任でご活用ください
         </div>
         {specialistSelectionMethod}
-        <NewChatRoomConfirmationLabel>患者情報</NewChatRoomConfirmationLabel>
+        <NewChatRoomConfirmationLabel className="mt-10">患者情報</NewChatRoomConfirmationLabel>
         <NewChatRoomConfirmationValue className="mt-4 flex gap-4">
           <div>{ageRange === 'child' ? `${childAge}歳` : `${ageRange}代`}</div>
           <div>{chatRoom.gender === 'man' ? '男性' : '女性'}</div>
