@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useNewChatRoom } from '@/features/chat/newChatRoom/useNewChatRoom';
 import { NewChatRoomConfirmationLabel } from './NewChatRoomConfirmationLabel';
 import { NewChatRoomConfirmationValue } from './NewChatRoomConfirmationValue';
@@ -19,7 +19,52 @@ export const NewChatRoomConfirmation: React.FC<Props> = (props: Props) => {
     isSending,
     reConsultFileMessages,
     submit,
+    medicalSpecialities,
+    doctor,
+    group,
   } = props;
+
+  const specialistSelectionMethod = useMemo(() => {
+    if (chatRoom.room_type === 'FREE' && medicalSpecialities) {
+      return (
+        <>
+          <NewChatRoomConfirmationLabel>専門医指定方法：診療科を指定</NewChatRoomConfirmationLabel>
+          <NewChatRoomConfirmationValue className="my-4">
+            {chatRoom.target_specialities.map((speciality) => {
+              const medicalSpeciality = medicalSpecialities.find(
+                (medicalSpeciality) => medicalSpeciality.speciality_code === speciality
+              );
+              return (
+                <li key={speciality} className="list-decimal">
+                  {medicalSpeciality?.name}
+                </li>
+              );
+            })}
+          </NewChatRoomConfirmationValue>
+        </>
+      );
+    } else if (chatRoom.room_type === 'BY_NAME' && doctor) {
+      return (
+        <>
+          <NewChatRoomConfirmationLabel>専門医指定方法：バイネーム(氏名)</NewChatRoomConfirmationLabel>
+          <NewChatRoomConfirmationValue className="my-4">
+            {doctor.last_name + ' ' + doctor.first_name + ' 先生'}
+          </NewChatRoomConfirmationValue>
+        </>
+      );
+    } else if (chatRoom.room_type === 'GROUP' && group) {
+      return (
+        <>
+          <NewChatRoomConfirmationLabel>専門医指定方法：グループ</NewChatRoomConfirmationLabel>
+          <NewChatRoomConfirmationValue className="my-4">
+            {group.group_name + ' グループ名'}
+          </NewChatRoomConfirmationValue>
+        </>
+      );
+    } else {
+      return <></>;
+    }
+  }, [chatRoom, medicalSpecialities, doctor, group]);
 
   return (
     <>
@@ -29,6 +74,7 @@ export const NewChatRoomConfirmation: React.FC<Props> = (props: Props) => {
           &lt;注意&gt;本サービスを通して得た専門的知見に基づくアドバイスは、
           質問医である担当医師の判断・責任でご活用ください
         </div>
+        {specialistSelectionMethod}
         <NewChatRoomConfirmationLabel>患者情報</NewChatRoomConfirmationLabel>
         <NewChatRoomConfirmationValue className="mt-4 flex gap-4">
           <div>{ageRange === 'child' ? `${childAge}歳` : `${ageRange}代`}</div>
