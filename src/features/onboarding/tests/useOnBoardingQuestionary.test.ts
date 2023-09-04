@@ -31,6 +31,7 @@ describe('useOnBoardingQuestionary', () => {
       hooks.current.submit();
     });
 
-    expect(mutateMock).toHaveBeenCalled();
+    expect(mutateMock).toHaveBeenCalledWith('OnboardingAnswered');
+    expect(mutateMock).toHaveBeenCalledWith('FirstConsultCampaign');
   });
 });

@@ -8,9 +8,13 @@ import { TopExamples } from './TopExamples';
 import TutorialExplanation from './TutorialExplanation';
 import { useTop } from './useTop';
 import { TopUpcomingSeminars } from './TopUpcomingSeminars';
+import { useFetchFlag } from '@/hooks/api/account/useFetchFlags';
+import Link from 'next/link';
 
 export const Top = () => {
   const { showTutorialExplanationModal, setShowTutorialExplanationModal } = useTop();
+  const { flag: isOnboardingQuestionaryAnswered } = useFetchFlag('OnboardingAnswered');
+
   return (
     <div className="bg-white">
       <div className="mx-4 flex min-h-screen flex-col pb-12 pt-6 lg:mx-10 lg:flex-row lg:justify-center">
@@ -24,6 +28,15 @@ export const Top = () => {
         </div>
         <div className="mt-2 lg:mx-4 lg:ml-10 lg:mt-0 lg:w-[296px]">
           <TopNewerConsults />
+          {isOnboardingQuestionaryAnswered === false && (
+            <div className="my-6" data-testid="onboarding-questionary-banner">
+              <Link href="/onboarding/questionary">
+                <a>
+                  <img src="/images/onboarding/questionary_banner.png" alt="アンケートに答えて100Mediiポイント進呈" />
+                </a>
+              </Link>
+            </div>
+          )}
           <div className="mt-4">
             <TopNews />
           </div>

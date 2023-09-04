@@ -106,6 +106,8 @@ export const useOnBoardingQuestionary = () => {
       return;
     }
 
+    // バナーの非表示のため
+    mutateFetchFlag('OnboardingAnswered');
     // アンケート結果によって変わるため次のページで取得するためにmutateしておく
     mutateFetchFlag('FirstConsultCampaign');
 
