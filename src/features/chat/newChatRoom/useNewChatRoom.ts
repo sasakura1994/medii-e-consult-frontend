@@ -1,3 +1,4 @@
+import { mutateFetchFlag } from '@/hooks/api/account/useFetchFlags';
 import { useDeleteChatDraftImage } from '@/hooks/api/chat/useDeleteChatDraftImage';
 import { useFetchBaseChatRoomForReConsult } from '@/hooks/api/chat/useFetchBaseChatRoomForReConsult';
 import { useGetChatDraftImages } from '@/hooks/api/chat/useGetChatDraftImages';
@@ -363,6 +364,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
       }
     }
 
+    mutateFetchFlag('FirstConsultCampaign');
     setIsSending(false);
     removeLocalStorage(newChatRoomFormDataKey);
     router.push(`/chat?chat_room_id=${response.data.chat_room_id}`);

@@ -21,8 +21,8 @@ beforeEach(() => {
 });
 
 describe('Top', () => {
-  describe('アンケートバナー', () => {
-    test('表示する', async () => {
+  describe('バナー', () => {
+    test('アンケートバナー表示＆コンサルバナー非表示', async () => {
       (useFetchFlag as jest.Mock).mockReturnValue({
         flag: false,
       });
@@ -36,9 +36,10 @@ describe('Top', () => {
       });
 
       expect(screen.queryByTestId('onboarding-questionary-banner')).toBeInTheDocument();
+      expect(screen.queryByTestId('consult-campaign-banner')).not.toBeInTheDocument();
     });
 
-    test('回答後は表示しない', async () => {
+    test('アンケートバナー非表示＆コンサルバナー表示', async () => {
       (useFetchFlag as jest.Mock).mockReturnValue({
         flag: true,
       });
@@ -52,6 +53,7 @@ describe('Top', () => {
       });
 
       expect(screen.queryByTestId('onboarding-questionary-banner')).not.toBeInTheDocument();
+      expect(screen.queryByTestId('consult-campaign-banner')).toBeInTheDocument();
     });
   });
 });

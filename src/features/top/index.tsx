@@ -14,11 +14,24 @@ import Link from 'next/link';
 export const Top = () => {
   const { showTutorialExplanationModal, setShowTutorialExplanationModal } = useTop();
   const { flag: isOnboardingQuestionaryAnswered } = useFetchFlag('OnboardingAnswered');
+  const { flag: isFirstConsultCampaignAvailable } = useFetchFlag('FirstConsultCampaign');
 
   return (
     <div className="bg-white">
       <div className="mx-4 flex min-h-screen flex-col pb-12 pt-6 lg:mx-10 lg:flex-row lg:justify-center">
         <div className="max-w-[1024px] pb-8 lg:w-0 lg:flex-grow">
+          {isFirstConsultCampaignAvailable && (
+            <div className="mb-6" data-testid="consult-campaign-banner">
+              <Link href="/newchatroom?from=onboarding_banner">
+                <a>
+                  <img
+                    src="/images/onboarding/first_consult_banner.png"
+                    alt="はじめてEコンサルで症例を質問した先生に1000円相当のポイントをもれなくプレゼント"
+                  />
+                </a>
+              </Link>
+            </div>
+          )}
           <TopNotifications />
           <UserConsult setShowTutorialExplanationModal={setShowTutorialExplanationModal} />
           <TopExamples />
