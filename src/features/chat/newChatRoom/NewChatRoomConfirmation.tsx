@@ -122,6 +122,12 @@ export const NewChatRoomConfirmation: React.FC<Props> = (props: Props) => {
             )}
           </>
         )}
+        <NewChatRoomConfirmationLabel className="my-4">コンサル事例掲載許可</NewChatRoomConfirmationLabel>
+        <NewChatRoomConfirmationValue className="my-4">
+          {chatRoom.publishment_accepted
+            ? 'コンサル事例としての掲載を許可する'
+            : 'コンサル事例としての掲載を許可しない'}
+        </NewChatRoomConfirmationValue>
         <div className="mt-8 text-center">
           {!isSending ? (
             <div className="mx-auto w-3/5">
