@@ -57,7 +57,7 @@ export const NewChatRoomConfirmation: React.FC<Props> = (props: Props) => {
       return (
         <>
           <NewChatRoomConfirmationLabel>専門医指定方法：グループ</NewChatRoomConfirmationLabel>
-          <div className="flex flex-row space-x-2">
+          <div className="flex flex-col lg:flex-row lg:gap-2">
             <NewChatRoomConfirmationValue className="my-4">{group.group_name} </NewChatRoomConfirmationValue>
             {group.is_real_name && (
               <Label
