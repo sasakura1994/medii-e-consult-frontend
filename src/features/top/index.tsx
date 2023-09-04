@@ -11,6 +11,8 @@ import { TopUpcomingSeminars } from './TopUpcomingSeminars';
 import { useFetchFlag } from '@/hooks/api/account/useFetchFlags';
 import Link from 'next/link';
 
+const consultCampaignAlt = 'はじめてEコンサルで症例を質問した先生に1000円相当のポイントをもれなくプレゼント';
+
 export const Top = () => {
   const { showTutorialExplanationModal, setShowTutorialExplanationModal } = useTop();
   const { flag: isOnboardingQuestionaryAnswered } = useFetchFlag('OnboardingAnswered');
@@ -25,8 +27,14 @@ export const Top = () => {
               <Link href="/newchatroom?from=onboarding_banner">
                 <a>
                   <img
+                    className="hidden lg:block"
                     src="/images/onboarding/first_consult_banner.png"
-                    alt="はじめてEコンサルで症例を質問した先生に1000円相当のポイントをもれなくプレゼント"
+                    alt={consultCampaignAlt}
+                  />
+                  <img
+                    className="lg:hidden"
+                    src="/images/onboarding/first_consult_banner_sp.png"
+                    alt={consultCampaignAlt}
                   />
                 </a>
               </Link>
@@ -45,7 +53,11 @@ export const Top = () => {
             <div className="my-6" data-testid="onboarding-questionary-banner">
               <Link href="/onboarding/questionary">
                 <a>
-                  <img src="/images/onboarding/questionary_banner.png" alt="アンケートに答えて100Mediiポイント進呈" />
+                  <img
+                    src="/images/onboarding/questionary_banner.png"
+                    alt="アンケートに答えて100Mediiポイント進呈"
+                    className="w-full"
+                  />
                 </a>
               </Link>
             </div>
