@@ -8,6 +8,7 @@ import {
   usePostQuestionaryItemsForOnboarding,
 } from '@/hooks/api/questionary/usePostQuestionaryItemsForOnboarding';
 import { useRouter } from 'next/router';
+import { mutateFetchFlag } from '@/hooks/api/account/useFetchFlags';
 
 type Answer = {
   questionId: string;
@@ -104,6 +105,9 @@ export const useOnBoardingQuestionary = () => {
     if (!response) {
       return;
     }
+
+    // アンケート結果によって変わるため次のページで取得するためにmutateしておく
+    mutateFetchFlag('FirstConsultCampaign');
 
     router.push('/onboarding/questionary/completed');
   }, [postQuestionaryItemsForOnboarding, questionAndAnswers, router]);

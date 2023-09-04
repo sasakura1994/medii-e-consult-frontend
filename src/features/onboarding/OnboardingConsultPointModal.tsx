@@ -3,11 +3,14 @@ import { Modal } from '@/components/Parts/Modal/Modal';
 import Link from 'next/link';
 import TertiaryButton from '@/components/Button/TertiaryButton';
 import PrimaryButton from '@/components/Button/PrimaryButton';
+import { useFetchFlag } from '@/hooks/api/account/useFetchFlags';
 
 export const OnboardingConsultPointModal = () => {
   const [isClosed, setIsClosed] = useState(false);
 
-  if (isClosed) {
+  const { flag: isFirstConsultCampaignAvailable, isLoading: isLoadingFlag } = useFetchFlag('FirstConsultCampaign');
+
+  if (isClosed || isFirstConsultCampaignAvailable !== true || isLoadingFlag) {
     return <></>;
   }
 
