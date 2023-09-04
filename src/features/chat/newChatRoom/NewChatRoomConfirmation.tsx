@@ -5,6 +5,7 @@ import { NewChatRoomConfirmationValue } from './NewChatRoomConfirmationValue';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 import { GrayButton } from '@/components/Parts/Button/GrayButton';
+import Label from '@/components/Parts/Label/Label';
 
 type Props = ReturnType<typeof useNewChatRoom>;
 
@@ -56,7 +57,17 @@ export const NewChatRoomConfirmation: React.FC<Props> = (props: Props) => {
       return (
         <>
           <NewChatRoomConfirmationLabel>専門医指定方法：グループ</NewChatRoomConfirmationLabel>
-          <NewChatRoomConfirmationValue className="my-4">{group.group_name}</NewChatRoomConfirmationValue>
+          <div className="flex flex-row space-x-2">
+            <NewChatRoomConfirmationValue className="my-4">{group.group_name} </NewChatRoomConfirmationValue>
+            {group.is_real_name && (
+              <Label
+                text="実名で投稿されるグループ"
+                color="gray"
+                className="whitespace-nowrap"
+                dataTestId="real-name-note"
+              />
+            )}
+          </div>
         </>
       );
     } else {
