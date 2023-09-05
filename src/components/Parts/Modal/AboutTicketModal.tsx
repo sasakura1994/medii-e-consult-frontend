@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import Link from 'next/link';
-import { PrimaryButton } from '../Button/PrimaryButton';
+import PrimaryButton from '@/components/Button/PrimaryButton';
 
 export type AboutTicketModalPropsType = {
   setShowModal: (isShow: boolean) => void;
@@ -39,14 +39,14 @@ export const AboutTicketModal: React.FC<AboutTicketModalPropsType> = (props) => 
         <div className="mt-4 flex lg:gap-40">
           <Link href="/newchatroom">
             <a>
-              <PrimaryButton size="lg">
+              <PrimaryButton size="large">
                 <p>コンサル作成</p>
               </PrimaryButton>
             </a>
           </Link>
           <Link href="/affiliate">
             <a>
-              <PrimaryButton size="lg">
+              <PrimaryButton size="large">
                 <p>医師を招待</p>
               </PrimaryButton>
             </a>
