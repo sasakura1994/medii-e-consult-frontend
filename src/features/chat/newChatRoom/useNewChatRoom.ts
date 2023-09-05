@@ -125,6 +125,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     first_message: '',
     publishment_accepted: true,
     target_specialities: [],
+    from: query.from || '',
   });
   const [ageRange, setAgeRange] = useState<AgeRange>('');
   const [childAge, setChildAge] = useState<string>('');

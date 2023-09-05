@@ -11,4 +11,5 @@ export type NewChatRoomEntity = {
   disease_name: string;
   first_message: string;
   publishment_accepted: boolean;
+  from: string;
 };
