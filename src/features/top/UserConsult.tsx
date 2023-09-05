@@ -31,7 +31,7 @@ export const UserConsult = (props: UserConsultProps) => {
     // TODO: tmpTopBannerは2023/09/7から2023/09/14までの間だけ一時的に表示する
     const today = new Date();
     const start = new Date('2023/09/05');
-    const end = new Date('2023/09/14');
+    const end = new Date('2023/09/15');
     if (today < start || today > end) {
       return null;
     }
