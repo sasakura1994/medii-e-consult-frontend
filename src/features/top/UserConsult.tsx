@@ -8,6 +8,9 @@ import { UserConsultNoContents } from './UserConsultNoContents';
 import Link from 'next/link';
 import { UserConsultAnswerContent } from './UserConsultAnswerContent';
 import { useUserConsult } from './useUserConsult';
+import { useFetchFlag } from '@/hooks/api/account/useFetchFlags';
+
+const consultCampaignAlt = 'はじめてEコンサルで症例を質問した先生に1000円相当のポイントをもれなくプレゼント';
 
 type UserConsultProps = {
   setShowTutorialExplanationModal: (isShow: boolean) => void;
@@ -26,6 +29,7 @@ export const UserConsult = (props: UserConsultProps) => {
     chatRoomMineOwnData,
     chatRoomMineRespondData,
   } = useUserConsult();
+  const { flag: isFirstConsultCampaignAvailable } = useFetchFlag('FirstConsultCampaign');
 
   return (
     <>
@@ -47,6 +51,25 @@ export const UserConsult = (props: UserConsultProps) => {
           <TertiaryButton size="large">E-コンサルとは？</TertiaryButton>
         </div>
       </div>
+
+      {isFirstConsultCampaignAvailable && (
+        <div className="mb-6 mt-3" data-testid="consult-campaign-banner">
+          <Link href="/newchatroom?from=onboarding_banner">
+            <a>
+              <img
+                className="hidden lg:block"
+                src="/images/onboarding/first_consult_banner.png"
+                alt={consultCampaignAlt}
+              />
+              <img
+                className="lg:hidden"
+                src="/images/onboarding/first_consult_banner_sp.png"
+                alt={consultCampaignAlt}
+              />
+            </a>
+          </Link>
+        </div>
+      )}
 
       <StyledHiddenScrollBar className="mt-5 flex items-end overflow-y-hidden overflow-x-scroll">
         <TopTab
