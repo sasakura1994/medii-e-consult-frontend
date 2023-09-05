@@ -2,7 +2,7 @@ import { useDeleteChatDraftImage } from '@/hooks/api/chat/useDeleteChatDraftImag
 import { useFetchBaseChatRoomForReConsult } from '@/hooks/api/chat/useFetchBaseChatRoomForReConsult';
 import { useGetChatDraftImages } from '@/hooks/api/chat/useGetChatDraftImages';
 import { usePostChatMessageFile } from '@/hooks/api/chat/usePostChatMessageFile';
-import { PostChatRoomRequestData, PostChatRoomResponseData, usePostChatRoom } from '@/hooks/api/chat/usePostChatRoom';
+import { PostChatRoomRequestData, usePostChatRoom } from '@/hooks/api/chat/usePostChatRoom';
 import { usePostDraftImage } from '@/hooks/api/chat/usePostDraftImage';
 import { useFetchDoctorProfile } from '@/hooks/api/doctor/useFetchDoctorProfile';
 import { FetchedGroupEntity, useFetchGroup } from '@/hooks/api/group/useFetchGroup';
@@ -47,6 +47,7 @@ type NewChatRoomQuery = {
   target_group_id?: string;
   reconsult?: string;
   room_type?: ChatRoomType;
+  from?: string;
 };
 
 const getDefaultRoomType = (query: NewChatRoomQuery): ChatRoomType => {
@@ -323,9 +324,14 @@ export const useNewChatRoom = (): UseNewChatRoom => {
       data.re_consult_file_chat_message_ids = reConsultFileMessages.map((chatMessage) => chatMessage.uid);
     }
 
+    if (query.from) {
+      data.create_source = { from: query.from };
+    }
+
     const response = await createNewChatRoom(data).catch((error) => {
       console.error(error);
-      setErrorMessage((error.response.data as PostChatRoomResponseData).message);
+
+      setErrorMessage(error.response?.data?.message || 'エラーが発生しました');
       return null;
     });
 
@@ -335,7 +341,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
       return;
     }
 
-    if (response.data.code !== 1 || !response.data.chat_room_id) {
+    if (!response.data.chat_room_id) {
       setIsSending(false);
       setErrorMessage(response.data.message);
       setModeAndScrollToTop('input');

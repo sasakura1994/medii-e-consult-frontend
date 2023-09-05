@@ -9,6 +9,7 @@ const nextConfig = {
     CASE_BANK_URL: process.env.CASE_BANK_URL,
     INVITATION_URL: process.env.INVITATION_URL,
     WEB_SOCKET_URL: process.env.WEB_SOCKET_URL,
+    NMO_URL: process.env.NMO_URL,
   },
   async redirects() {
     return [

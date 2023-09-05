@@ -31,7 +31,7 @@ export const TopNotifications = () => {
         buttonOnClick={() => router.push('/editprofile?registerMode=1')}
       />
     );
-  } else if (profile.need_to_send_confimation) {
+  } else if (profile.status === 'PROFILE' || (profile.status === 'CREATED' && profile.need_to_send_confimation)) {
     return (
       <InlineNotification
         text="確認資料が提出されておりません。お手数ですがサービスをご利用頂くためにプロフィール画面から確認資料をご提出ください。"

@@ -63,23 +63,20 @@ export const useInitPassword = () => {
       setIsSending(true);
       setErrorMessage('');
 
-      const response = await request().catch((error) => {
-        console.error(error);
+      const response = await request().catch((e) => {
+        const error = e as { message: string; response: { data: { message: string } } };
+        setErrorMessage(error.response?.data?.message || 'エラーが発生しました');
         return null;
       });
 
       setIsSending(false);
 
       if (!response) {
-        setErrorMessage('エラーが発生しました');
         return;
       }
 
-      if (response.data.code !== 1) {
-        setErrorMessage(response.data.message);
-        if (response.data.message === 'すでに有効化されているアカウントです') {
-          setIsEmailDuplicated(true);
-        }
+      if (response.data.message === 'すでに有効化されているアカウントです') {
+        setIsEmailDuplicated(true);
         return;
       }
 

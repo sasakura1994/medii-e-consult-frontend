@@ -113,12 +113,15 @@ export const useNews = (): UseNews => {
           return isDisplay?.booleanValue === true;
         })
         .slice(0, 2)
-        .map((row) => ({
-          title: row.document.fields.default.mapValue.fields.title.stringValue,
-          link: 'https://medii.jp/news/' + row.document.fields.default.mapValue.fields.slug.stringValue,
-          cover: row.document.fields.default.mapValue.fields.wp_cover?.stringValue ?? '/images/top/medii-info.png',
-          date: row.document.fields._meta.mapValue.fields.publishedAt.timestampValue,
-        }))
+        .map((row) => {
+          const image = row.document.fields.default.mapValue.fields.wp_cover?.stringValue;
+          return {
+            title: row.document.fields.default.mapValue.fields.title.stringValue,
+            link: 'https://medii.jp/news/' + row.document.fields.default.mapValue.fields.slug.stringValue,
+            cover: image && image !== '' ? image : '/images/top/medii-info.png',
+            date: row.document.fields._meta.mapValue.fields.publishedAt.timestampValue,
+          };
+        })
     );
   }, [axios]);
 

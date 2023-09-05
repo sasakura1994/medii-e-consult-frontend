@@ -35,8 +35,8 @@ export const useDocumentInputAuto = ({ setSelectedWithRedirect }: UseDocumentInp
         await uploadDocument(newProfile);
         setSelectedWithRedirect('completed');
       } catch (e) {
-        const error = e as { message: string };
-        setErrorMessage(error.message);
+        const error = e as { message: string; response: { data: { message: string } } };
+        setErrorMessage(error.response?.data?.message);
       }
     }
   }, [profile, year, tel, uploadDocument, setSelectedWithRedirect]);

@@ -149,6 +149,7 @@ describe('Seminar component', () => {
         is_imperfect_profile: false,
         main_speciality: 'naika',
         need_to_send_confimation: true,
+        status: 'PROFILE',
       } as ProfileEntity,
     });
 
