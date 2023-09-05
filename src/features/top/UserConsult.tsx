@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import TertiaryButton from '@/components/Button/TertiaryButton';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import { TopTab } from './TopTab';
@@ -27,6 +27,42 @@ export const UserConsult = (props: UserConsultProps) => {
     chatRoomMineRespondData,
   } = useUserConsult();
 
+  const tmpTopBanner = useMemo(() => {
+    // TODO: tmpTopBannerは2023/09/7から2023/09/14までの間だけ一時的に表示する
+    const today = new Date();
+    const start = new Date('2023/09/05');
+    const end = new Date('2023/09/14');
+    if (today < start || today > end) {
+      return null;
+    }
+    return (
+      <>
+        {/* PC */}
+        <Link
+          href={{
+            pathname: '/newchatroom',
+            query: { target_group_id: 'GR019adaef-7526-4155-8498-a663fefc5e04', from: 'top_banner' },
+          }}
+        >
+          <img src="/images/top/tmp_tma_top_banner.png" alt="banner" className="mt-2 hidden cursor-pointer lg:block" />
+        </Link>
+        {/* SP */}
+        <Link
+          href={{
+            pathname: '/newchatroom',
+            query: { target_group_id: 'GR019adaef-7526-4155-8498-a663fefc5e04', from: 'top_banner' },
+          }}
+        >
+          <img
+            src="/images/top/tmp_tma_top_banner_sp.png"
+            alt="banner"
+            className="mt-2 block w-auto cursor-pointer lg:hidden"
+          />
+        </Link>
+      </>
+    );
+  }, []);
+
   return (
     <>
       <div className="mt-5 flex">
@@ -47,7 +83,7 @@ export const UserConsult = (props: UserConsultProps) => {
           <TertiaryButton size="large">E-コンサルとは？</TertiaryButton>
         </div>
       </div>
-
+      {tmpTopBanner}
       <StyledHiddenScrollBar className="mt-5 flex items-end overflow-y-hidden overflow-x-scroll">
         <TopTab
           text="自分が質問"
