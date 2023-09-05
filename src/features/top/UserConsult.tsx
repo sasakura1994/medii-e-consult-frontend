@@ -50,7 +50,7 @@ export const UserConsult = (props: UserConsultProps) => {
           <img
             src="/images/top/top_group_banner_GR019adaef-7526-4155-8498-a663fefc5e04.png"
             alt="banner"
-            className="mt-2 hidden cursor-pointer lg:block"
+            className="mt-2 hidden cursor-pointer sm:block"
           />
         </Link>
         {/* SP */}
@@ -66,7 +66,7 @@ export const UserConsult = (props: UserConsultProps) => {
           <img
             src="/images/top/top_group_banner_GR019adaef-7526-4155-8498-a663fefc5e04_sp.png"
             alt="banner"
-            className="mt-2 block w-auto cursor-pointer lg:hidden"
+            className="mt-2 block cursor-pointer sm:hidden"
           />
         </Link>
       </>
