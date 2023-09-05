@@ -329,7 +329,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
 
     if (draftFrom) {
       data.create_source = { from: draftFrom };
-    } else if (!draftFrom && query.from) {
+    } else if (query.from) {
       data.create_source = { from: query.from };
     }
 
