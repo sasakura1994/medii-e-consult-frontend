@@ -10,7 +10,6 @@ import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
 import { EditProfileNotification } from './EditProfileNotification';
 import { EditProfileQuestionary } from './EditProfileQuestionary';
 import PrimaryButton from '@/components/Button/PrimaryButton';
-import Link from 'next/link';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 
 export type EditProfileProps = {
@@ -20,7 +19,7 @@ export type EditProfileProps = {
 export const EditProfile = (props: EditProfileProps) => {
   const { isRegisterMode } = props;
   const editProfile = useEditProfile(props);
-  const { errorMessage, profile, submit } = editProfile;
+  const { errorMessage, isHospitalDisabled, profile, submit } = editProfile;
   const { profile: fetchedProfile } = useFetchProfile();
 
   if (!profile) {
@@ -48,7 +47,7 @@ export const EditProfile = (props: EditProfileProps) => {
           <div className="mt-4">
             <MedicalCareer {...editProfile} {...props} />
           </div>
-          <HospitalAffiliation {...editProfile} />
+          {!isHospitalDisabled && <HospitalAffiliation {...editProfile} />}
           {fetchedProfile?.registration_source !== 'nmo' && <UsageClassification {...editProfile} />}
           {isRegisterMode && (
             <>

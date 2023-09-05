@@ -38,6 +38,7 @@ export type UseEditProfile = {
   hospitals: HospitalEntity[];
   hospitalSearchText: string;
   isCompleted: boolean;
+  isHospitalDisabled: boolean;
   isSending: boolean;
   profile?: EditingProfile;
   saveProfile: () => Promise<boolean>;
@@ -81,6 +82,8 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
     [profile?.questionary_selected_ids_csv]
   );
 
+  const isHospitalDisabled = ['STUDENT', 'SHIKAKOUKUGEKA'].includes(profile?.main_speciality ?? '');
+
   const isCompleted = useMemo(() => {
     if (!profile) {
       return false;
@@ -100,8 +103,9 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
       }
     }
 
-    if (profile.main_speciality !== 'STUDENT') {
+    if (!isHospitalDisabled) {
       if (
+        profile.qualified_year === '' ||
         profile.prefecture_code === '' ||
         (hospitalInputType === 'select' && profile.hospital_id === '') ||
         (hospitalInputType === 'free' && profile.hospital_name === '')
@@ -111,9 +115,7 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
     }
 
     return profile.main_speciality !== '';
-  }, [profile, isRegisterMode, hospitalInputType]);
-
-  const isHospitalDisabled = ['STUDENT', 'SHIKAKOUKUGEKA'].includes(profile?.main_speciality ?? '');
+  }, [profile, isHospitalDisabled, isRegisterMode, hospitalInputType]);
 
   useEffect(() => {
     if (!defaultHospital) {
@@ -304,6 +306,7 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
     hospitals,
     hospitalSearchText,
     isCompleted,
+    isHospitalDisabled,
     isSending,
     profile,
     saveProfile,

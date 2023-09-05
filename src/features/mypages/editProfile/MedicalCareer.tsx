@@ -10,7 +10,7 @@ import { MedicalCareerSpecialities } from './MedicalCareerSpecialities';
 export type MedicalCareerProps = UseEditProfile & EditProfileProps;
 
 export const MedicalCareer = (props: MedicalCareerProps) => {
-  const { isRegisterMode, profile, selectMedicalSpecialities, setProfileFields } = props;
+  const { isHospitalDisabled, isRegisterMode, profile, selectMedicalSpecialities, setProfileFields } = props;
 
   if (!profile) {
     return <></>;
@@ -25,13 +25,15 @@ export const MedicalCareer = (props: MedicalCareerProps) => {
           <MedicalCareerSpecialities profile={profile} selectMedicalSpecialities={selectMedicalSpecialities} />
         </div>
 
-        <div className="mb-4">
-          <MedicalCareerQualifiedYear
-            isEnabled={isRegisterMode}
-            profile={profile}
-            setProfileFields={setProfileFields}
-          />
-        </div>
+        {!isHospitalDisabled && (
+          <div className="mb-4">
+            <MedicalCareerQualifiedYear
+              isEnabled={isRegisterMode}
+              profile={profile}
+              setProfileFields={setProfileFields}
+            />
+          </div>
+        )}
 
         <div className="mt-4">
           <EditProfileLabel required={false}>特によく診てきた疾患・領域</EditProfileLabel>
