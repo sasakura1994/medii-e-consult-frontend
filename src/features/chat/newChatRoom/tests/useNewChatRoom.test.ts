@@ -430,6 +430,7 @@ describe('useNewChatROom', () => {
         room_type: 'FREE',
         target_doctor: undefined,
         target_specialities: [],
+        from: 'mail',
       });
       expect(createNewChatRoomMock).toBeCalled();
       expect(mutateFetchFlagMock).toHaveBeenCalledWith('FirstConsultCampaign');

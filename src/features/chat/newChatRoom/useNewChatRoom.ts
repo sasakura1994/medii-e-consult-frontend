@@ -126,6 +126,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     first_message: '',
     publishment_accepted: true,
     target_specialities: [],
+    from: query.from || '',
   });
   const [ageRange, setAgeRange] = useState<AgeRange>('');
   const [childAge, setChildAge] = useState<string>('');
@@ -139,6 +140,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
   const [isSearchGroupModalShown, setIsSearchGroupModalShown] = useState(false);
   const [isUseDraftImages, setIsUseDraftImages] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
+  const [draftFrom, setDraftFrom] = useState('');
 
   const { createNewChatRoom } = usePostChatRoom();
   const { createDraftImage } = usePostDraftImage();
@@ -230,6 +232,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
 
     setChatRoom(data);
     initializeAge(data.age);
+    setDraftFrom(data.from);
     setIsUseDraftImages(true);
     setIsInitialized(true);
   }, [fetchBaseChatRoomForReConsult, initializeAge, medicalSpecialities, query.reconsult]);
@@ -325,7 +328,9 @@ export const useNewChatRoom = (): UseNewChatRoom => {
       data.re_consult_file_chat_message_ids = reConsultFileMessages.map((chatMessage) => chatMessage.uid);
     }
 
-    if (query.from) {
+    if (draftFrom) {
+      data.create_source = { from: draftFrom };
+    } else if (query.from) {
       data.create_source = { from: query.from };
     }
 
@@ -371,9 +376,11 @@ export const useNewChatRoom = (): UseNewChatRoom => {
   }, [
     chatDraftImages,
     createNewChatRoom,
+    draftFrom,
     filesForReConsult,
     formData,
     postChatMessageFile,
+    query.from,
     query.reconsult,
     reConsultFileMessages,
     router,

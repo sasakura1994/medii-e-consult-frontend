@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import TertiaryButton from '@/components/Button/TertiaryButton';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import { TopTab } from './TopTab';
@@ -31,9 +31,55 @@ export const UserConsult = (props: UserConsultProps) => {
   } = useUserConsult();
   const { flag: isFirstConsultCampaignAvailable } = useFetchFlag('FirstConsultCampaign');
 
+  const tmpTopBanner = useMemo(() => {
+    // TODO: tmpTopBannerは2023/09/07/20:00から2023/09/14/20:00までの間だけ一時的に表示する
+    const today = new Date();
+    const start = new Date('2023/09/07/20:00');
+    const end = new Date('2023/09/14/20:00');
+    if (today < start || today > end) {
+      return null;
+    }
+    return (
+      <>
+        {/* PC */}
+        <Link
+          href={{
+            pathname: '/newchatroom',
+            query: {
+              target_group_id: 'GR019adaef-7526-4155-8498-a663fefc5e04',
+              from: 'top_group_banner_GR019adaef-7526-4155-8498-a663fefc5e04',
+            },
+          }}
+        >
+          <img
+            src="/images/top/top_group_banner_GR019adaef-7526-4155-8498-a663fefc5e04.png"
+            alt="banner"
+            className="mt-4 hidden cursor-pointer sm:block"
+          />
+        </Link>
+        {/* SP */}
+        <Link
+          href={{
+            pathname: '/newchatroom',
+            query: {
+              target_group_id: 'GR019adaef-7526-4155-8498-a663fefc5e04',
+              from: 'top_group_banner_GR019adaef-7526-4155-8498-a663fefc5e04',
+            },
+          }}
+        >
+          <img
+            src="/images/top/top_group_banner_GR019adaef-7526-4155-8498-a663fefc5e04_sp.png"
+            alt="banner"
+            className="mt-4 block cursor-pointer sm:hidden"
+          />
+        </Link>
+      </>
+    );
+  }, []);
+
   return (
     <>
-      <div className="mt-5 flex">
+      <div className="flex lg:mt-5">
         <p className="flex-grow text-xxl font-bold text-text-primary">あなたに関わるE-コンサル</p>
         <div className="hidden whitespace-nowrap lg:block">
           <Link href="/newchatroom">
@@ -70,6 +116,8 @@ export const UserConsult = (props: UserConsultProps) => {
           </Link>
         </div>
       )}
+
+      {tmpTopBanner}
 
       <StyledHiddenScrollBar className="mt-5 flex items-end overflow-y-hidden overflow-x-scroll">
         <TopTab
