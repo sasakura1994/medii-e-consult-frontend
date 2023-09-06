@@ -28,10 +28,10 @@ export const UserConsult = (props: UserConsultProps) => {
   } = useUserConsult();
 
   const tmpTopBanner = useMemo(() => {
-    // TODO: tmpTopBannerは2023/09/7から2023/09/14までの間だけ一時的に表示する
+    // TODO: tmpTopBannerは2023/09/07/20:00から2023/09/14/20:00までの間だけ一時的に表示する
     const today = new Date();
-    const start = new Date('2023/09/07');
-    const end = new Date('2023/09/15');
+    const start = new Date('2023/09/07/20:00');
+    const end = new Date('2023/09/14/20:00');
     if (today < start || today > end) {
       return null;
     }
