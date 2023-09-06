@@ -18,7 +18,7 @@ export const usePostQuestionaryItemsForOnboarding = () => {
     async (answers: PostQuestionaryItemsForOnboardingAnswer[]) => {
       const data: RequestData = { answers };
 
-      return axios.post('/questionary/servey-answers-onboading', data);
+      return axios.post('/questionary/servey-answers-onboarding', data);
     },
     [axios]
   );
