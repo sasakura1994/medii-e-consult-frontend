@@ -50,7 +50,7 @@ export const UserConsult = (props: UserConsultProps) => {
           <img
             src="/images/top/top_group_banner_GR019adaef-7526-4155-8498-a663fefc5e04.png"
             alt="banner"
-            className="mt-2 hidden cursor-pointer sm:block"
+            className="mt-4 hidden cursor-pointer sm:block"
           />
         </Link>
         {/* SP */}
@@ -66,7 +66,7 @@ export const UserConsult = (props: UserConsultProps) => {
           <img
             src="/images/top/top_group_banner_GR019adaef-7526-4155-8498-a663fefc5e04_sp.png"
             alt="banner"
-            className="mt-2 block cursor-pointer sm:hidden"
+            className="mt-4 block cursor-pointer sm:hidden"
           />
         </Link>
       </>
@@ -75,7 +75,7 @@ export const UserConsult = (props: UserConsultProps) => {
 
   return (
     <>
-      <div className="mt-5 flex">
+      <div className="flex lg:mt-5">
         <p className="flex-grow text-xxl font-bold text-text-primary">あなたに関わるE-コンサル</p>
         <div className="hidden whitespace-nowrap lg:block">
           <Link href="/newchatroom">
