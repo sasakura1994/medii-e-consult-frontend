@@ -35,4 +35,30 @@ describe('/newchatroom', () => {
       expect(screen.queryByTestId('nmo-modal')).toBeInTheDocument();
     });
   });
+
+  test('医学生はコンサルを作成出来ない', async () => {
+    const useRouterMock = useRouter as jest.Mocked<typeof useRouter>;
+    (useRouterMock as jest.Mock).mockReturnValue({
+      query: {},
+    });
+
+    const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
+    (useFetchProfileMock as jest.Mock).mockReturnValue({
+      profile: {
+        main_speciality: 'STUDENT',
+      },
+    });
+
+    await act(() => {
+      render(
+        <RecoilRoot>
+          <NewChatRoomPage />
+        </RecoilRoot>
+      );
+    });
+
+    waitFor(() => {
+      expect(screen.queryByTestId('for-student')).toBeInTheDocument();
+    });
+  });
 });

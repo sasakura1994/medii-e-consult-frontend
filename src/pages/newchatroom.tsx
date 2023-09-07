@@ -10,12 +10,23 @@ import { useNmo } from '@/hooks/alliance/useNmo';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import Link from 'next/link';
+import { useProfile } from '@/hooks/useProfile';
 
 const NewChatRoomPage: NextPageWithLayout = () => {
   const newChatRoom = useNewChatRoom();
   useEventLog({ name: '/NewChatRoom' });
   const { mode } = newChatRoom;
+  const { profile } = useProfile();
   const { isNeedToInputProfile } = useNmo();
+
+  if (profile?.main_speciality === 'STUDENT') {
+    return (
+      <Card className="px-8 py-4 text-center lg:px-0" data-testid="for-student">
+        <h1 className="mt-10 text-2xl leading-9">E-コンサル ルーム作成</h1>
+        <div className="my-10">医学生はコンサルを作成できません。</div>
+      </Card>
+    );
+  }
 
   return (
     <>
