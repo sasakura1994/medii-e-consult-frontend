@@ -18,9 +18,6 @@ export const useDocumentInputAuto = ({ setSelectedWithRedirect }: UseDocumentInp
 
   useEffect(() => {
     if (profile) {
-      if (profile.doctor_qualified_year !== 9999) {
-        setYear(profile.doctor_qualified_year);
-      }
       setTel(profile.tel);
     }
   }, [profile, setTel]);
@@ -28,7 +25,9 @@ export const useDocumentInputAuto = ({ setSelectedWithRedirect }: UseDocumentInp
   const submit = useCallback(async () => {
     if (profile) {
       const newProfile = { ...profile };
-      newProfile.doctor_qualified_year = year;
+      if (year > 0) {
+        newProfile.doctor_qualified_year = year;
+      }
       newProfile.confimation_type = 'auto';
       newProfile.tel = tel;
       try {
