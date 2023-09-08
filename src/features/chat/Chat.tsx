@@ -92,10 +92,13 @@ export const Chat = () => {
           );
         }, 10000);
       } else if (data.type === 'mes') {
-        mutateChatList();
-        mutateChatRoom();
-        mutateChatRoomList();
-        mutateFetchUnreadCounts();
+        // TODO: なぜか100ms待機してチャット情報を更新するとチャットの送信が安定する
+        setTimeout(() => {
+          mutateChatList();
+          mutateChatRoom();
+          mutateChatRoomList();
+          mutateFetchUnreadCounts();
+        }, 100);
       }
     };
 
@@ -106,7 +109,7 @@ export const Chat = () => {
       webSocket.removeEventListener('open', onOpen);
       webSocket.removeEventListener('message', onMessage);
     };
-  }, [accountId, mutateChatList, mutateChatRoom, socket, token]);
+  }, [accountId, mutateChatList, mutateChatRoom, mutateChatRoomList, socket, token]);
 
   return (
     <div className="flex bg-white">
