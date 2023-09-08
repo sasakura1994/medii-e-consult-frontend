@@ -9,6 +9,7 @@ import { useFetchChatRoom } from '@/hooks/api/chat/useFetchChatRoom';
 import { useGetPublishmentStatus } from '@/hooks/api/chat/useGetPublishmentStatus';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { useFetchChatRoomList } from '@/hooks/api/chat/useFetchChatRoomList';
+import { mutateFetchUnreadCounts, useFetchUnreadCounts } from '@/hooks/api/chat/useFetchUnreadCounts';
 
 type WebsocketResponseMessage = {
   type: 'subscribe_response' | 'pong' | 'mes';
@@ -31,6 +32,7 @@ export const Chat = () => {
   const { data: chatRoomData, mutate: mutateChatRoom } = useFetchChatRoom(chatRoomIdStr);
   const { medicalSpecialities } = useFetchMedicalSpecialities();
   const { data: chatListData, mutate: mutateChatList } = useFetchChatList(chatRoomIdStr);
+  const unreadCountList = useFetchUnreadCounts();
 
   useEffect(() => {
     if (!socket.current) {
@@ -90,10 +92,10 @@ export const Chat = () => {
           );
         }, 10000);
       } else if (data.type === 'mes') {
-        // TODO: すぐmutateするとDBに存在しないので一旦0.5秒待機してからmutate
-        setTimeout(() => {
-          mutateChatList();
-        }, 500);
+        mutateChatList();
+        mutateChatRoom();
+        mutateChatRoomList();
+        mutateFetchUnreadCounts();
       }
     };
 
@@ -104,11 +106,16 @@ export const Chat = () => {
       webSocket.removeEventListener('open', onOpen);
       webSocket.removeEventListener('message', onMessage);
     };
-  }, [accountId, mutateChatList, socket, token]);
+  }, [accountId, mutateChatList, mutateChatRoom, socket, token]);
 
   return (
     <div className="flex bg-white">
-      <ConsultList chatRoomList={chatRoomList} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+      <ConsultList
+        chatRoomList={chatRoomList}
+        unreadCountList={unreadCountList}
+        selectedTab={selectedTab}
+        setSelectedTab={setSelectedTab}
+      />
       {chat_room_id ? (
         <ConsultDetail
           publishmentStatusData={publishmentStatusData}

@@ -2,17 +2,17 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import { ConsultTitle } from './ConsultTitle';
 import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
-import { useFetchUnreadCounts } from '@/hooks/api/chat/useFetchUnreadCounts';
+import { FetchUnreadCountsResponseData } from '@/hooks/api/chat/useFetchUnreadCounts';
 
 type OpenConsultListProps = {
   chatRoomList?: ChatRoomEntity[];
+  unreadCountList?: FetchUnreadCountsResponseData;
 };
 
 export const OpenConsultList = (props: OpenConsultListProps) => {
-  const { chatRoomList } = props;
+  const { chatRoomList, unreadCountList } = props;
   const [isOpenedConultList, setIsOpenedConsultList] = useState(true);
   const [isOpenedGroupList, setIsOpenedGroupList] = useState(true);
-  const unreadCountsResponseData = useFetchUnreadCounts();
   return (
     <div className="h-full overflow-auto bg-white pb-36">
       <button
@@ -37,7 +37,7 @@ export const OpenConsultList = (props: OpenConsultListProps) => {
         )}
       </button>
       {isOpenedConultList &&
-        unreadCountsResponseData &&
+        unreadCountList &&
         chatRoomList &&
         chatRoomList
           .filter(
@@ -54,7 +54,7 @@ export const OpenConsultList = (props: OpenConsultListProps) => {
               >
                 <a>
                   <ConsultTitle
-                    isUnreadConsult={unreadCountsResponseData.unread_consult.some(
+                    isUnreadConsult={unreadCountList.unread_consult.some(
                       (c) => c.chat_room_id === chatRoom.chat_room_id
                     )}
                     chatRoomId={chatRoom.chat_room_id}
@@ -89,7 +89,7 @@ export const OpenConsultList = (props: OpenConsultListProps) => {
         )}
       </button>
       {isOpenedGroupList &&
-        unreadCountsResponseData &&
+        unreadCountList &&
         chatRoomList &&
         chatRoomList
           .filter(
@@ -107,7 +107,7 @@ export const OpenConsultList = (props: OpenConsultListProps) => {
                 <a>
                   <ConsultTitle
                     chatRoomId={chatRoom.chat_room_id}
-                    isUnreadConsult={unreadCountsResponseData.unread_consult.some(
+                    isUnreadConsult={unreadCountList.unread_consult.some(
                       (c) => c.chat_room_id === chatRoom.chat_room_id
                     )}
                     title={chatRoom.title}

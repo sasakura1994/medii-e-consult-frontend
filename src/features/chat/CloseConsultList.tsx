@@ -2,18 +2,18 @@ import Link from 'next/link';
 import React from 'react';
 import { ConsultTitle } from './ConsultTitle';
 import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
-import { useFetchUnreadCounts } from '@/hooks/api/chat/useFetchUnreadCounts';
+import { FetchUnreadCountsResponseData } from '@/hooks/api/chat/useFetchUnreadCounts';
 
 type CloseConsultListProps = {
   chatRoomList?: ChatRoomEntity[];
+  unreadCountList?: FetchUnreadCountsResponseData;
 };
 
 export const CloseConsultList = (props: CloseConsultListProps) => {
-  const { chatRoomList } = props;
-  const unreadCountsResponseData = useFetchUnreadCounts();
+  const { chatRoomList, unreadCountList } = props;
   return (
     <div className="h-full overflow-auto bg-white pb-36">
-      {unreadCountsResponseData &&
+      {unreadCountList &&
         chatRoomList &&
         chatRoomList
           .filter((c) => c.status === 'CLOSED' || c.status === 'RESOLVED')
@@ -28,7 +28,7 @@ export const CloseConsultList = (props: CloseConsultListProps) => {
               >
                 <a>
                   <ConsultTitle
-                    isUnreadConsult={unreadCountsResponseData.unread_consult.some(
+                    isUnreadConsult={unreadCountList.unread_consult.some(
                       (c) => c.chat_room_id === chatRoom.chat_room_id
                     )}
                     chatRoomId={chatRoom.chat_room_id}
