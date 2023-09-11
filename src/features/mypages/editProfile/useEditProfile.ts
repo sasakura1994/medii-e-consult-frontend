@@ -239,6 +239,10 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
 
     const formData = new FormData();
     Object.keys(data).forEach((key) => {
+      if (key === 'is_huf_user') {
+        return;
+      }
+
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       formData.append(key, (data as any)[key]);
     });

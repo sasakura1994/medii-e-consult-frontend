@@ -1,11 +1,13 @@
+import { usePostHufUser } from '@/hooks/api/account/usePostHufUser';
 import { usePostSetPassword } from '@/hooks/api/account/usePostSetPassword';
 import { usePasswordInput } from '@/hooks/form/usePasswordInput';
 import { setAuthToken } from '@/libs/cookie';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useCallback } from 'react';
 
 type Query = {
   token?: string;
+  huf_token?: string;
 };
 
 export const useInitPassword = () => {
@@ -19,9 +21,37 @@ export const useInitPassword = () => {
   const [isSending, setIsSending] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState('');
   const { setPassword } = usePostSetPassword();
-  const isTokenExists = React.useMemo(() => query.token !== undefined, [query.token]);
+  const { createHufUser } = usePostHufUser();
+  const isTokenExists = React.useMemo(
+    () =>
+      (query.token !== undefined && query.token !== '') || (query.huf_token !== undefined && query.huf_token !== ''),
+    [query.token, query.huf_token]
+  );
 
-  const onSubmit = React.useCallback(
+  const request = useCallback(() => {
+    if (query.huf_token) {
+      return createHufUser({
+        first_password: passwordInput.firstPassword,
+        second_password: passwordInput.secondPassword,
+        huf_token: query.huf_token || '',
+      });
+    }
+
+    return setPassword({
+      first_password: passwordInput.firstPassword,
+      second_password: passwordInput.secondPassword,
+      token: query.token || '',
+    });
+  }, [
+    createHufUser,
+    passwordInput.firstPassword,
+    passwordInput.secondPassword,
+    query.huf_token,
+    query.token,
+    setPassword,
+  ]);
+
+  const onSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
@@ -33,11 +63,7 @@ export const useInitPassword = () => {
       setIsSending(true);
       setErrorMessage('');
 
-      const response = await setPassword({
-        first_password: passwordInput.firstPassword,
-        second_password: passwordInput.secondPassword,
-        token: query.token || '',
-      }).catch((e) => {
+      const response = await request().catch((e) => {
         const error = e as { message: string; response: { data: { message: string } } };
         setErrorMessage(error.response?.data?.message || 'エラーが発生しました');
         return null;
@@ -58,16 +84,7 @@ export const useInitPassword = () => {
       // @todo Vueの時はヘッダと一緒にプロフィールが読み込まれるがこちらではここでglobalStateにセットする
       router.push('/EditProfile?registerMode=true');
     },
-    [
-      isPrivacyPolicyAgreed,
-      isTermsOfUseAgreed,
-      isRead,
-      setPassword,
-      passwordInput.firstPassword,
-      passwordInput.secondPassword,
-      query.token,
-      router,
-    ]
+    [isPrivacyPolicyAgreed, isTermsOfUseAgreed, isRead, request, router]
   );
 
   return {

@@ -32,7 +32,7 @@ const InitPassword: NextPageWithLayout = () => {
 
   return (
     <>
-      <Card className="py-10 px-4">
+      <Card className="px-4 py-10">
         <h1 className="text-center text-2xl">パスワード登録</h1>
         <form onSubmit={onSubmit}>
           <div className="mt-8 flex  justify-center">
@@ -59,25 +59,18 @@ const InitPassword: NextPageWithLayout = () => {
                   required
                 />
               </div>
-              {isPasswordNotMatched && (
-                <ErrorMessage>パスワードが一致していません</ErrorMessage>
-              )}
+              {isPasswordNotMatched && <ErrorMessage>パスワードが一致していません</ErrorMessage>}
             </div>
           </div>
           <div className="mx-auto mt-7 text-sm lg:w-[476px]">
-            <p>
-              以下の内容をご確認いただき、同意いただけましたらチェックして会員登録にお進みください。
-            </p>
+            <p>以下の内容をご確認いただき、同意いただけましたらチェックして会員登録にお進みください。</p>
             <div className="mt-5">
               <CheckBox
                 id="agree-privacy-policy"
                 name="agree_privacy_policy"
                 label={
                   <>
-                    <Link
-                      href="/PrivacyPolicy"
-                      style={{ color: '-webkit-link' }}
-                    >
+                    <Link href="/PrivacyPolicy" style={{ color: '-webkit-link' }}>
                       プライバシーポリシー
                     </Link>
                     に同意します。
@@ -93,10 +86,7 @@ const InitPassword: NextPageWithLayout = () => {
                 name="agree_terms_of_use"
                 label={
                   <>
-                    <a
-                      href="https://e-consult.medii.jp/doc/terms_of_usage.pdf"
-                      style={{ color: '-webkit-link' }}
-                    >
+                    <a href="https://e-consult.medii.jp/doc/terms_of_usage.pdf" style={{ color: '-webkit-link' }}>
                       利用規約
                     </a>
                     に同意します。
@@ -136,7 +126,7 @@ const InitPassword: NextPageWithLayout = () => {
               </label>
             </div>
           </div>
-          <div className="my-6 text-center">
+          <div className="my-6 flex justify-center">
             {!isSending ? (
               <PrimaryButton type="submit">送信</PrimaryButton>
             ) : (
@@ -146,21 +136,12 @@ const InitPassword: NextPageWithLayout = () => {
             )}
           </div>
         </form>
-        {!isTokenExists && (
-          <ErrorMessage className="text-center">
-            トークンが指定されていません
-          </ErrorMessage>
-        )}
-        {errorMessage !== '' && (
-          <ErrorMessage className="text-center">{errorMessage}</ErrorMessage>
-        )}
+        {!isTokenExists && <ErrorMessage className="text-center">トークンが指定されていません</ErrorMessage>}
+        {errorMessage !== '' && <ErrorMessage className="text-center">{errorMessage}</ErrorMessage>}
         {isEmailDuplicated && (
           <ErrorMessage className="mt-4 text-center">
             <Link href="/login">
-              <a
-                className="text-inherit underline"
-                style={{ color: '-webkit-link' }}
-              >
+              <a className="text-inherit underline" style={{ color: '-webkit-link' }}>
                 ログイン画面
               </a>
             </Link>{' '}

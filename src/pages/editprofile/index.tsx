@@ -4,15 +4,13 @@ import { MyPageMenu } from '@/components/Parts/Menu/MyPageMenu';
 import type { NextPageWithLayout } from '@/pages/_app';
 import { UrlPublish } from '@/features/mypages/editProfile/UrlPublish';
 import { useEditProfilePage } from '@/features/mypages/editProfile/useEditProfilePage';
-import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { ProfileDetail } from '@/features/mypages/editProfile/ProfileDetail';
 import { EditProfile } from '@/features/mypages/editProfile/EditProfile';
 import RegistrationProgress from '@/features/document/RegistrationProgress';
 
 const EditProfilePage: NextPageWithLayout = () => {
   const editProfilePage = useEditProfilePage();
-  const { editProfileMode, isRegisterMode, setSelectedEditProfileMode } = editProfilePage;
-  const { profile } = useFetchProfile();
+  const { editProfileMode, isRegisterMode, profile, setSelectedEditProfileMode } = editProfilePage;
 
   return (
     <>
@@ -25,7 +23,7 @@ const EditProfilePage: NextPageWithLayout = () => {
           </div>
         </>
       ) : (
-        <MyPageMenu />
+        profile && profile.status === 'VERIFIED' && profile.last_name !== '' && <MyPageMenu />
       )}
       {!isRegisterMode && profile?.want_to_be_consultant && <UrlPublish />}
       <div className="mt-4">
