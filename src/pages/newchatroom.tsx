@@ -11,6 +11,7 @@ import { Modal } from '@/components/Parts/Modal/Modal';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import Link from 'next/link';
 import { useProfile } from '@/hooks/useProfile';
+import { ImcompleteProfileModal } from '@/components/Parts/Modal/ImcompleteProfileModal';
 
 const NewChatRoomPage: NextPageWithLayout = () => {
   const newChatRoom = useNewChatRoom();
@@ -50,6 +51,7 @@ const NewChatRoomPage: NextPageWithLayout = () => {
           </div>
         </Modal>
       )}
+      <ImcompleteProfileModal />
     </>
   );
 };

@@ -61,4 +61,30 @@ describe('/newchatroom', () => {
       expect(screen.queryByTestId('for-student')).toBeInTheDocument();
     });
   });
+
+  test('プロフィールが無効の場合はダイアログを表示', async () => {
+    const useRouterMock = useRouter as jest.Mocked<typeof useRouter>;
+    (useRouterMock as jest.Mock).mockReturnValue({
+      query: {},
+    });
+
+    const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
+    (useFetchProfileMock as jest.Mock).mockReturnValue({
+      profile: {
+        is_imperfect_profile: true,
+      },
+    });
+
+    await act(() => {
+      render(
+        <RecoilRoot>
+          <NewChatRoomPage />
+        </RecoilRoot>
+      );
+    });
+
+    waitFor(() => {
+      expect(screen.queryByTestId('imcomplete-profile-modal')).toBeInTheDocument();
+    });
+  });
 });
