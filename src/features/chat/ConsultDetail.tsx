@@ -162,7 +162,11 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
             </div>
 
             <div className="flex-grow overflow-auto bg-bg pb-2" ref={chatListRef}>
-              <ChatList chatListData={chatListDataWithDisplayName} currentUserAccountId={accountId} />
+              <ChatList
+                chatListData={chatListDataWithDisplayName}
+                currentUserAccountId={accountId}
+                chatRoomData={chatRoomData}
+              />
             </div>
             {isCloseRoom && (
               <div className="pointer-events-auto bg-[#5c6bc0] p-2 text-center text-sm text-white">

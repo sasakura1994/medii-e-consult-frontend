@@ -13,6 +13,7 @@ export type ChatData = {
   message: string;
   modified: number;
   uid: number;
+  unread_count: number;
 };
 
 export type FetchChatListResponseData = ChatData[];

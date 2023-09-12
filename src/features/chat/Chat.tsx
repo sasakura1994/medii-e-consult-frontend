@@ -35,6 +35,12 @@ export const Chat = () => {
   const unreadCountList = useFetchUnreadCounts();
 
   useEffect(() => {
+    if (chatRoomIdStr) {
+      mutateFetchUnreadCounts();
+    }
+  }, [chatRoomIdStr]);
+
+  useEffect(() => {
     if (!socket.current) {
       return;
     }
