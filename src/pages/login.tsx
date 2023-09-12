@@ -49,7 +49,7 @@ const Login: NextPageWithLayout = () => {
         <form onSubmit={login} className="flex w-[308px] flex-col items-center">
           <TextField
             placeholder="メールアドレス"
-            type="email"
+            type="text"
             name="mail_address"
             onChange={(e) => {
               setEmail(e.target.value);
