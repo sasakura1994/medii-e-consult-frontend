@@ -53,6 +53,28 @@ export const useLogin = (): UseLogin => {
     async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (email && password) {
+        if (!emailRegex.test(email)) {
+          setErrorMessage("メールフォーマットが正しくありません");
+          return;
+        }
+      } else {
+        if (!email && !password) {
+          setErrorMessage("メールとパスワードを入力してください");
+          return;
+        } else {
+          if (email && !password) {
+            setErrorMessage("パスワードを入力してください");
+            return;
+          } else if (password && !email) {
+            setErrorMessage("メールを入力してください");
+            return;
+          }
+        }
+      }
+
       const res = await postLogin(email, password).catch((error) => {
         console.error(error);
         setErrorMessage(error.response?.data?.message || 'エラーが発生しました');
