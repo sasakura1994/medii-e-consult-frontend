@@ -25,14 +25,14 @@ export const MyChat = (props: MyChatProps) => {
     a.click();
   };
   const unreadView = useMemo(() => {
-    if (chatData.unread_count) {
+    if (chatData.read_count) {
       if (chatRoomData.members.length > 1) {
-        return <p className="mb-3 mr-2 flex items-end text-sm text-block-gray">既読{chatData.unread_count}</p>;
+        return <p className="mb-3 mr-2 flex items-end text-sm text-block-gray">既読{chatData.read_count}</p>;
       }
       return <p className="mb-3 mr-2 flex items-end text-sm text-block-gray">既読</p>;
     }
     return null;
-  }, [chatData.unread_count, chatRoomData]);
+  }, [chatData, chatRoomData]);
 
   return (
     <>

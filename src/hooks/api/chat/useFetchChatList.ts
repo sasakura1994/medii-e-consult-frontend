@@ -13,16 +13,15 @@ export type ChatData = {
   message: string;
   modified: number;
   uid: number;
-  unread_count: number;
+  read_count: number;
 };
 
 export type FetchChatListResponseData = ChatData[];
 
 export const useFetchChatList = (chatRoomId?: string) => {
-  const { error, data, mutate } =
-    useAuthenticatedSWR<FetchChatListResponseData>(
-      chatRoomId ? `/chat_message/chat_list?chat_room_id=${chatRoomId}` : null
-    );
+  const { error, data, mutate } = useAuthenticatedSWR<FetchChatListResponseData>(
+    chatRoomId ? `/chat_message/chat_list?chat_room_id=${chatRoomId}` : null
+  );
 
   return {
     error,
