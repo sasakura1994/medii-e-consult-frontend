@@ -31,8 +31,7 @@ describe('/newchatroom', () => {
       );
     });
 
-    await act(() => true);
-    expect(screen.queryByTestId('nmo-modal')).toBeInTheDocument();
+    expect(await act(() => screen.queryByTestId('nmo-modal'))).toBeInTheDocument();
   });
 
   test('医学生はコンサルを作成出来ない', async () => {
@@ -55,8 +54,7 @@ describe('/newchatroom', () => {
       );
     });
 
-    await act(() => true);
-    expect(screen.queryByTestId('for-student')).toBeInTheDocument();
+    expect(await act(() => screen.queryByTestId('for-student'))).toBeInTheDocument();
   });
 
   test('プロフィールが無効の場合はダイアログを表示', async () => {
@@ -80,7 +78,6 @@ describe('/newchatroom', () => {
       );
     });
 
-    await act(() => true);
-    expect(screen.queryByTestId('imcomplete-profile-modal')).toBeInTheDocument();
+    expect(await act(() => screen.queryByTestId('imcomplete-profile-modal'))).toBeInTheDocument();
   });
 });
