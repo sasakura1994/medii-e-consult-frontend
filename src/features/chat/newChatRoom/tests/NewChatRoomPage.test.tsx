@@ -31,9 +31,7 @@ describe('/newchatroom', () => {
       );
     });
 
-    waitFor(() => {
-      expect(screen.queryByTestId('nmo-modal')).toBeInTheDocument();
-    });
+    expect(await act(() => screen.queryByTestId('nmo-modal'))).toBeInTheDocument();
   });
 
   test('医学生はコンサルを作成出来ない', async () => {
@@ -42,10 +40,33 @@ describe('/newchatroom', () => {
       query: {},
     });
 
+    (useFetchProfile as jest.Mock).mockReturnValue({
+      profile: {
+        main_speciality: 'STUDENT',
+      },
+    });
+
+    await act(async () => {
+      render(
+        <RecoilRoot>
+          <NewChatRoomPage />
+        </RecoilRoot>
+      );
+    });
+
+    expect(await act(() => screen.queryByTestId('for-student'))).toBeInTheDocument();
+  });
+
+  test('プロフィールが無効の場合はダイアログを表示', async () => {
+    const useRouterMock = useRouter as jest.Mocked<typeof useRouter>;
+    (useRouterMock as jest.Mock).mockReturnValue({
+      query: {},
+    });
+
     const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
     (useFetchProfileMock as jest.Mock).mockReturnValue({
       profile: {
-        main_speciality: 'STUDENT',
+        is_imperfect_profile: true,
       },
     });
 
@@ -57,8 +78,6 @@ describe('/newchatroom', () => {
       );
     });
 
-    waitFor(() => {
-      expect(screen.queryByTestId('for-student')).toBeInTheDocument();
-    });
+    expect(await act(() => screen.queryByTestId('imcomplete-profile-modal'))).toBeInTheDocument();
   });
 });
