@@ -49,7 +49,7 @@ export const ImcompleteProfileModal: React.FC<Props> = (props: Props) => {
 
   return (
     <Modal className="py-6 lg:w-[644px]" isCenter>
-      <div className="flex flex-col items-center" data-testid="imcomplete-profile-modal">
+      <div className="flex flex-col items-center">
         <div className="my-5 text-sm">{getMessage(profile)}</div>
         <div className="my-6">
           <Link href={url} className="text-decoration: none; padding-left: 2rem; padding-right: 2rem">
