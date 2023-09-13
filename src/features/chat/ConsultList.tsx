@@ -41,7 +41,7 @@ export const ConsultList = (props: ConsultListProps) => {
           <p className={`text-sm ${selectedTab === 'close' && 'text-primary'}`}>解決済み</p>
         </div>
       </div>
-      {selectedTab === 'open' && <OpenConsultList chatRoomList={chatRoomList} unreadCountList={unreadCountListData} />}
+      {selectedTab === 'open' && <OpenConsultList chatRoomList={chatRoomList} />}
       {selectedTab === 'close' && (
         <CloseConsultList chatRoomList={chatRoomList} unreadCountList={unreadCountListData} />
       )}
