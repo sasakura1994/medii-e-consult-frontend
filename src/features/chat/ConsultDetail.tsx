@@ -12,6 +12,7 @@ import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
 import { useConsultDetail } from './useConsultDetail';
 import { ChatEditModal } from './ChatEditModal';
 import { ChatDeleteModal } from './ChatDeleteModal';
+import { FetchUnreadCountsResponseData } from '@/hooks/api/chat/useFetchUnreadCounts';
 
 type ConsultDetailProps = {
   publishmentStatusData?: {
@@ -22,6 +23,8 @@ type ConsultDetailProps = {
   chatListData?: FetchChatListResponseData;
   mutateChatRoom?: KeyedMutator<FetchChatRoomResponseData>;
   mutateChatRoomList?: KeyedMutator<ChatRoomEntity[]>;
+  mutateChatList?: KeyedMutator<FetchChatListResponseData>;
+  mutateFetchUnreadCounts?: KeyedMutator<FetchUnreadCountsResponseData>;
   setSelectedTab: React.Dispatch<React.SetStateAction<'open' | 'close'>>;
 };
 

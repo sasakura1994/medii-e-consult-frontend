@@ -4,7 +4,9 @@ import { Radio } from '@/components/Parts/Form/Radio';
 import { SelectBox } from '@/components/Parts/Form/SelectBox';
 import { TextField } from '@/components/Parts/Form/TextField';
 import { Modal } from '@/components/Parts/Modal/Modal';
+import { FetchChatListResponseData } from '@/hooks/api/chat/useFetchChatList';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
+import { FetchUnreadCountsResponseData } from '@/hooks/api/chat/useFetchUnreadCounts';
 import { useUpdateChatRoom } from '@/hooks/api/chat/useUpdateChatRoom';
 import { ChatRoomEntity, ChatRoomGender } from '@/types/entities/chat/ChatRoomEntity';
 import React, { useState } from 'react';
@@ -17,11 +19,21 @@ type ChatEditModalProps = {
   accountID: string;
   mutateChatRoom?: KeyedMutator<FetchChatRoomResponseData>;
   mutateChatRoomList?: KeyedMutator<ChatRoomEntity[]>;
+  mutateChatList?: KeyedMutator<FetchChatListResponseData>;
+  mutateFetchUnreadCounts?: KeyedMutator<FetchUnreadCountsResponseData>;
 };
 
 export const ChatEditModal = (props: ChatEditModalProps) => {
-  const { chatRoomData, setIsOpenChatEditModal, setIsOpenDeleteModal, accountID, mutateChatRoom, mutateChatRoomList } =
-    props;
+  const {
+    chatRoomData,
+    setIsOpenChatEditModal,
+    setIsOpenDeleteModal,
+    accountID,
+    mutateChatRoom,
+    mutateChatRoomList,
+    mutateChatList,
+    mutateFetchUnreadCounts,
+  } = props;
   const { updateChatRoom, errorMessage } = useUpdateChatRoom();
   const [selectedGender, setSelectedGender] = useState<ChatRoomGender>(chatRoomData.chat_room.gender);
   const [selectedAge, setSelectedAge] = useState(chatRoomData.chat_room.age);
@@ -107,6 +119,8 @@ export const ChatEditModal = (props: ChatEditModalProps) => {
                 if (res?.data.code) {
                   await mutateChatRoom?.();
                   await mutateChatRoomList?.();
+                  await mutateChatList?.();
+                  await mutateFetchUnreadCounts?.();
                   setIsOpenChatEditModal(false);
                 }
               }}

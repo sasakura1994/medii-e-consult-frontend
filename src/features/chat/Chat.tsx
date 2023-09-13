@@ -133,6 +133,8 @@ export const Chat = () => {
           chatListData={chatListData}
           mutateChatRoom={mutateChatRoom}
           mutateChatRoomList={mutateChatRoomList}
+          mutateChatList={mutateChatList}
+          mutateFetchUnreadCounts={mutateFetchUnreadCounts}
           setSelectedTab={setSelectedTab}
         />
       ) : (
