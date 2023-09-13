@@ -8,7 +8,6 @@ type ChatListProps = {
   chatListData: (ChatData & { displayName: string })[];
   currentUserAccountId: string;
   chatRoomData: FetchChatRoomResponseData;
-  firstUnreadCount: number;
 };
 
 const NewBorder = () => {
@@ -21,18 +20,19 @@ const NewBorder = () => {
 };
 
 export const ChatList = (props: ChatListProps) => {
-  const { chatListData, chatRoomData, currentUserAccountId, firstUnreadCount } = props;
+  const { chatListData, chatRoomData, currentUserAccountId } = props;
   return (
     <div>
       {chatListData &&
         chatRoomData &&
-        chatListData.map((c, index) => {
+        chatListData.map((c) => {
+          const isView = chatRoomData.me?.read_until === c.uid && chatListData[chatListData.length - 1].uid !== c.uid;
           return c.account_id === currentUserAccountId ? (
             <MyChat chatData={c} key={c.uid} chatRoomData={chatRoomData} />
           ) : (
             <>
-              {chatListData.length - firstUnreadCount === index && <NewBorder />}
               <OtherChat chatData={c} key={c.uid} />
+              {isView && <NewBorder />}
             </>
           );
         })}

@@ -7,7 +7,7 @@ import { useChatTextInput } from './useChatTextInput';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import RectSpinnerDialog from './RectSpinnerDialog';
 import { FetchChatListResponseData } from '@/hooks/api/chat/useFetchChatList';
-import { FetchUnreadCountsResponseData } from '@/hooks/api/chat/useFetchUnreadCounts';
+import { mutateFetchUnreadCounts } from '@/hooks/api/chat/useFetchUnreadCounts';
 import { KeyedMutator } from 'swr';
 
 // canvasの関係でサーバー時点でimportできないため、下記のようにdynamic importする
@@ -19,11 +19,10 @@ const ImageEditorComponent = dynamic<ImageEditorProps>(
 type ChatTextInputProps = {
   chatRoomId: string;
   mutateChatList?: KeyedMutator<FetchChatListResponseData>;
-  mutateFetchUnreadCounts?: KeyedMutator<FetchUnreadCountsResponseData>;
 };
 
 export const ChatTextInput = (props: ChatTextInputProps) => {
-  const { chatRoomId, mutateChatList, mutateFetchUnreadCounts } = props;
+  const { chatRoomId, mutateChatList } = props;
   const {
     isOpenFileInputModal,
     setIsOpenFileInputModal,

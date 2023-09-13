@@ -38,9 +38,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     mutateChatRoom,
     mutateChatRoomList,
     mutateChatList,
-    mutateFetchUnreadCounts,
     setSelectedTab,
-    firstUnreadCount,
   } = props;
   const {
     accountId,
@@ -173,7 +171,6 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                 chatListData={chatListDataWithDisplayName}
                 currentUserAccountId={accountId}
                 chatRoomData={chatRoomData}
-                firstUnreadCount={firstUnreadCount}
               />
             </div>
             {isCloseRoom && (
@@ -220,11 +217,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
               </div>
             )}
             <div className="flex-shrink-0 flex-grow-0">
-              <ChatTextInput
-                chatRoomId={chatRoomData.chat_room.chat_room_id}
-                mutateChatList={mutateChatList}
-                mutateFetchUnreadCounts={mutateFetchUnreadCounts}
-              />
+              <ChatTextInput chatRoomId={chatRoomData.chat_room.chat_room_id} mutateChatList={mutateChatList} />
             </div>
           </div>
         </>

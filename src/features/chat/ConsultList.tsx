@@ -2,17 +2,17 @@ import React from 'react';
 import { OpenConsultList } from './OpenConsultList';
 import { CloseConsultList } from './CloseConsultList';
 import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
-import { FetchUnreadCountsResponseData } from '@/hooks/api/chat/useFetchUnreadCounts';
+import { useFetchUnreadCounts } from '@/hooks/api/chat/useFetchUnreadCounts';
 
 type ConsultListProps = {
   chatRoomList?: ChatRoomEntity[];
-  unreadCountList?: FetchUnreadCountsResponseData;
   selectedTab: 'open' | 'close';
   setSelectedTab: React.Dispatch<React.SetStateAction<'open' | 'close'>>;
 };
 
 export const ConsultList = (props: ConsultListProps) => {
-  const { chatRoomList, unreadCountList, selectedTab, setSelectedTab } = props;
+  const { chatRoomList, selectedTab, setSelectedTab } = props;
+  const unreadCountListData = useFetchUnreadCounts();
 
   return (
     <div className="h-[calc(100vh-20px)] w-[336px] border border-[#d5d5d5]">
@@ -41,8 +41,10 @@ export const ConsultList = (props: ConsultListProps) => {
           <p className={`text-sm ${selectedTab === 'close' && 'text-primary'}`}>解決済み</p>
         </div>
       </div>
-      {selectedTab === 'open' && <OpenConsultList chatRoomList={chatRoomList} unreadCountList={unreadCountList} />}
-      {selectedTab === 'close' && <CloseConsultList chatRoomList={chatRoomList} unreadCountList={unreadCountList} />}
+      {selectedTab === 'open' && <OpenConsultList chatRoomList={chatRoomList} unreadCountList={unreadCountListData} />}
+      {selectedTab === 'close' && (
+        <CloseConsultList chatRoomList={chatRoomList} unreadCountList={unreadCountListData} />
+      )}
     </div>
   );
 };

@@ -9,7 +9,7 @@ import { useFetchChatRoom } from '@/hooks/api/chat/useFetchChatRoom';
 import { useGetPublishmentStatus } from '@/hooks/api/chat/useGetPublishmentStatus';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { useFetchChatRoomList } from '@/hooks/api/chat/useFetchChatRoomList';
-import { mutateFetchUnreadCounts, useFetchUnreadCounts } from '@/hooks/api/chat/useFetchUnreadCounts';
+import { mutateFetchUnreadCounts } from '@/hooks/api/chat/useFetchUnreadCounts';
 
 type WebsocketResponseMessage = {
   type: 'subscribe_response' | 'pong' | 'mes';
@@ -33,15 +33,12 @@ export const Chat = () => {
   const { data: chatRoomData, mutate: mutateChatRoom } = useFetchChatRoom(chatRoomIdStr);
   const { medicalSpecialities } = useFetchMedicalSpecialities();
   const { data: chatListData, mutate: mutateChatList } = useFetchChatList(chatRoomIdStr);
-  const unreadCountList = useFetchUnreadCounts();
 
   useEffect(() => {
-    if (unreadCountList && chatRoomIdStr) {
-      firstUnreadCount.current =
-        unreadCountList.unread_consult.find((u) => u.chat_room_id === chatRoomIdStr)?.unread_count ?? 0;
+    if (chatRoomIdStr) {
+      mutateFetchUnreadCounts();
     }
-    mutateFetchUnreadCounts();
-  }, [chatRoomIdStr, unreadCountList]);
+  }, [chatRoomIdStr]);
 
   useEffect(() => {
     if (!socket.current) {
@@ -101,13 +98,13 @@ export const Chat = () => {
           );
         }, 10000);
       } else if (data.type === 'mes') {
-        // TODO: なぜか100ms待機してチャット情報を更新するとチャットの送信が安定する
+        // TODO: なぜか500ms待機してチャット情報を更新するとチャットの送信が安定する
         setTimeout(() => {
           mutateChatList();
           mutateChatRoom();
           mutateChatRoomList();
           mutateFetchUnreadCounts();
-        }, 100);
+        }, 500);
       }
     };
 
@@ -122,12 +119,7 @@ export const Chat = () => {
 
   return (
     <div className="flex bg-white">
-      <ConsultList
-        chatRoomList={chatRoomList}
-        unreadCountList={unreadCountList}
-        selectedTab={selectedTab}
-        setSelectedTab={setSelectedTab}
-      />
+      <ConsultList chatRoomList={chatRoomList} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
       {chat_room_id ? (
         <ConsultDetail
           publishmentStatusData={publishmentStatusData}
@@ -137,7 +129,6 @@ export const Chat = () => {
           mutateChatRoom={mutateChatRoom}
           mutateChatRoomList={mutateChatRoomList}
           mutateChatList={mutateChatList}
-          mutateFetchUnreadCounts={mutateFetchUnreadCounts}
           setSelectedTab={setSelectedTab}
           firstUnreadCount={firstUnreadCount.current}
         />
