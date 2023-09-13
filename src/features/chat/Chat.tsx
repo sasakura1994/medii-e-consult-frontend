@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ConsultList } from './ConsultList';
 import { ConsultDetail } from './ConsultDetail';
 import { useRouter } from 'next/router';
@@ -25,6 +25,7 @@ export const Chat = () => {
   const chatRoomIdStr = chat_room_id as string;
 
   const [selectedTab, setSelectedTab] = useState<'open' | 'close'>('open');
+  const firstUnreadCount = useRef(0);
   const { data: chatRoomList, mutate: mutateChatRoomList } = useFetchChatRoomList({
     query: ['FREE', 'BY_NAME', 'GROUP'],
   });
@@ -35,10 +36,12 @@ export const Chat = () => {
   const unreadCountList = useFetchUnreadCounts();
 
   useEffect(() => {
-    if (chatRoomIdStr) {
-      mutateFetchUnreadCounts();
+    if (unreadCountList && chatRoomIdStr) {
+      firstUnreadCount.current =
+        unreadCountList.unread_consult.find((u) => u.chat_room_id === chatRoomIdStr)?.unread_count ?? 0;
     }
-  }, [chatRoomIdStr]);
+    mutateFetchUnreadCounts();
+  }, [chatRoomIdStr, unreadCountList]);
 
   useEffect(() => {
     if (!socket.current) {
@@ -136,6 +139,7 @@ export const Chat = () => {
           mutateChatList={mutateChatList}
           mutateFetchUnreadCounts={mutateFetchUnreadCounts}
           setSelectedTab={setSelectedTab}
+          firstUnreadCount={firstUnreadCount.current}
         />
       ) : (
         <div className="flex h-screen w-[787px] flex-col border border-[#d5d5d5] bg-bg" />
