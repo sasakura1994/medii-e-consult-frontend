@@ -17,12 +17,16 @@ type WebsocketResponseMessage = {
   data: string;
 };
 
+type Query = {
+  chat_room_id?: string;
+};
+
 export const Chat = () => {
   const router = useRouter();
   const { socket } = useWebSocket();
   const { token, accountId } = useToken();
-  const { chat_room_id } = router.query;
-  const chatRoomIdStr = chat_room_id as string;
+  const { chat_room_id } = router.query as Query;
+  const chatRoomIdStr = chat_room_id;
 
   const [selectedTab, setSelectedTab] = useState<'open' | 'close'>('open');
   const firstUnreadCount = useRef(0);
