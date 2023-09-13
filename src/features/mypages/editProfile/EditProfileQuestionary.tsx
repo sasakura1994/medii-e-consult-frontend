@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { UseEditProfile } from './useEditProfile';
 import { EditProfileLabel } from './EditProfileLabel';
 import { TextArea } from '@/components/Parts/Form/TextArea';
@@ -9,7 +9,7 @@ import { EditProfileHeading } from './EditProfileHeading';
 export const EditProfileQuestionary = (props: UseEditProfile) => {
   const { profile, selectedQuestionaryItemIds, setProfileFields, toggleQuestionaryItem } = props;
   const { questionaryItems } = useFetchQuestionaryItems();
-
+  const [other, setOther] = useState(false);
   if (!profile) {
     return <></>;
   }
@@ -32,14 +32,20 @@ export const EditProfileQuestionary = (props: UseEditProfile) => {
             />
           </div>
         ))}
-        <div>
-          <div>その他</div>
+        <div className='flex flex-row items-start'>
+          <CheckBox
+            name="questionary_item[]"
+            value=''
+            label=""
+            checked={other}
+            onChange={() => setOther(!other)}
+          />
           <TextArea
             name="questionary_other"
             value={profile.questionary_other ?? ''}
             className="h-[100px]"
             onChange={(e) => setProfileFields({ questionary_other: e.target.value })}
-            placeholder="上記以外でのきっかけをご記入ください"
+            placeholder="その他"
           />
         </div>
       </div>
