@@ -31,6 +31,7 @@ describe('/newchatroom', () => {
       );
     });
 
+    await act(() => true);
     expect(screen.queryByTestId('nmo-modal')).toBeInTheDocument();
   });
 
@@ -47,13 +48,14 @@ describe('/newchatroom', () => {
     });
 
     await act(async () => {
-      await render(
+      render(
         <RecoilRoot>
           <NewChatRoomPage />
         </RecoilRoot>
       );
     });
 
+    await act(() => true);
     expect(screen.queryByTestId('for-student')).toBeInTheDocument();
   });
 
@@ -70,14 +72,15 @@ describe('/newchatroom', () => {
       },
     });
 
-    await act(async () => {
-      await render(
+    await act(() => {
+      render(
         <RecoilRoot>
           <NewChatRoomPage />
         </RecoilRoot>
       );
     });
 
+    await act(() => true);
     expect(screen.queryByTestId('imcomplete-profile-modal')).toBeInTheDocument();
   });
 });
