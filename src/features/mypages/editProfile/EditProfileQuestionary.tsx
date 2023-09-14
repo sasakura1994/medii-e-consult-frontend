@@ -45,7 +45,7 @@ export const EditProfileQuestionary = (props: UseEditProfile) => {
             value={profile.questionary_other ?? ''}
             className="h-[100px]"
             onChange={(e) => setProfileFields({ questionary_other: e.target.value })}
-            placeholder="その他"
+            placeholder="上記以外でのきっかけをご記入ください"
           />
         </div>
       </div>
