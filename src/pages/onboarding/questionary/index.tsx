@@ -11,8 +11,17 @@ import { useOnBoardingQuestionary } from '@/features/onboarding/useOnBoardingQue
 import React from 'react';
 
 const OnBoardingQuestionaryPage = () => {
-  const { checkIsCheckboxRequired, isSending, questionAndAnswers, setAnswer, setOther, submit, toggleAnswers } =
-    useOnBoardingQuestionary();
+  const {
+    checkIsCheckboxRequired,
+    isSending,
+    otherOpenedQuestionIds,
+    questionAndAnswers,
+    setAnswer,
+    setOther,
+    submit,
+    toggleAnswers,
+    toggleOther,
+  } = useOnBoardingQuestionary();
 
   return (
     <div className="mx-6 mb-10 mt-5 max-w-[1024px] lg:mx-auto lg:mt-10">
@@ -69,12 +78,25 @@ const OnBoardingQuestionaryPage = () => {
                 </QuestionaryItems>
               )}
               {question.other_enable && (
-                <TextField
-                  className="mt-1 w-[350px]"
-                  value={answer.other}
-                  placeholder="その他を選んだ方は具体的に教えてください。"
-                  onChange={(e) => setOther(question.id, e.target.value)}
-                />
+                <>
+                  <div className="mt-1">
+                    <CheckBox
+                      label="その他"
+                      name={`questionary_item${question.id}_other`}
+                      checked={otherOpenedQuestionIds.includes(question.id)}
+                      onChange={() => toggleOther(question.id)}
+                    />
+                  </div>
+                  {otherOpenedQuestionIds.includes(question.id) && (
+                    <TextField
+                      className="mt-1 w-[350px]"
+                      value={answer.other}
+                      placeholder="その他を選んだ方は具体的に教えてください。"
+                      onChange={(e) => setOther(question.id, e.target.value)}
+                      required
+                    />
+                  )}
+                </>
               )}
             </section>
           ))}

@@ -25,6 +25,7 @@ type QuestionAndAnswer = {
 export const useOnBoardingQuestionary = () => {
   const router = useRouter();
   const [questionAndAnswers, setQuestionAndAnswers] = useState<QuestionAndAnswer[]>([]);
+  const [otherOpenedQuestionIds, setOtherOpenedQuestionIds] = useState<string[]>([]);
   const [isSending, setIsSending] = useState(false);
   const { questions } = useFetchQuestionaryItemsForOnboarding();
   const { postQuestionaryItemsForOnboarding } = usePostQuestionaryItemsForOnboarding();
@@ -121,10 +122,34 @@ export const useOnBoardingQuestionary = () => {
         return false;
       }
 
+      if (questionAndAnswer.answer.other) {
+        return false;
+      }
+
       return questionAndAnswer.answer.values.length === 0;
     },
     [questionAndAnswers]
   );
 
-  return { checkIsCheckboxRequired, isSending, questionAndAnswers, setAnswer, setOther, submit, toggleAnswers };
+  const toggleOther = useCallback((questionId: string) => {
+    setOtherOpenedQuestionIds((otherOpenedQuestionIds) => {
+      if (otherOpenedQuestionIds.includes(questionId)) {
+        return otherOpenedQuestionIds.filter((qid) => qid !== questionId);
+      } else {
+        return [...otherOpenedQuestionIds, questionId];
+      }
+    });
+  }, []);
+
+  return {
+    checkIsCheckboxRequired,
+    isSending,
+    otherOpenedQuestionIds,
+    questionAndAnswers,
+    setAnswer,
+    setOther,
+    submit,
+    toggleAnswers,
+    toggleOther,
+  };
 };
