@@ -122,6 +122,10 @@ export const useOnBoardingQuestionary = () => {
         return false;
       }
 
+      if (!questionAndAnswer.question.required) {
+        return false;
+      }
+
       if (questionAndAnswer.answer.other) {
         return false;
       }

@@ -58,7 +58,7 @@ const OnBoardingQuestionaryPage = () => {
                       value={item.id.toString()}
                       checked={item.id === answer.value}
                       onChange={() => setAnswer(question.id, item.id)}
-                      required
+                      required={question.required}
                     />
                   ))}
                 </QuestionaryItems>
