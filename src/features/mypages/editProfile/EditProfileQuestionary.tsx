@@ -1,3 +1,4 @@
+import React from 'react';
 import { UseEditProfile } from './useEditProfile';
 import { EditProfileLabel } from './EditProfileLabel';
 import { TextArea } from '@/components/Parts/Form/TextArea';
