@@ -13,6 +13,8 @@ import { useConsultDetail } from './useConsultDetail';
 import { ChatEditModal } from './ChatEditModal';
 import { ChatDeleteModal } from './ChatDeleteModal';
 import { FetchUnreadCountsResponseData } from '@/hooks/api/chat/useFetchUnreadCounts';
+import { ChatDoctorDetailModal } from './ChatDoctorDetailModal';
+import { OpenConsultDetailButton } from './OpenConsultDetailButton';
 
 type ConsultDetailProps = {
   publishmentStatusData?: {
@@ -53,6 +55,8 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     setIsOpenChatEditModal,
     isOpenDeleteModal,
     setIsOpenDeleteModal,
+    isOpenDoctorDetailModal,
+    setIsOpenDoctorDetailModal,
     getSpecialityName,
     getExperienceYear,
   } = useConsultDetail({
@@ -112,28 +116,15 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                   </div>
                 )}
                 <p className="ml-2 flex-grow font-bold">{chatRoomData.chat_room.title}</p>
-                {!isCloseRoom ? (
-                  <>
-                    <button className="h-9 w-[78px] rounded-full bg-primary">
-                      <p className="text-xs text-white">返答依頼</p>
-                    </button>
-                    <button className="h-9 w-[126px] rounded-full bg-primary">
-                      <p className="text-xs text-white">コンサル終了依頼</p>
-                    </button>
-                    <button className="h-9 w-[78px] rounded-full bg-strong">
-                      <p className="text-xs text-white">回答パス</p>
-                    </button>
-                  </>
-                ) : isChatRoomOwner && chatRoomData.chat_room.room_type !== 'GROUP' ? (
-                  <button
-                    className="h-9 w-[138px] rounded-full bg-primary"
-                    onClick={() => setIsOpenReConsultConfirmModal(true)}
-                  >
-                    <p className="text-xs text-white">他の医師に相談する</p>
-                  </button>
-                ) : (
-                  <></>
-                )}
+
+                <OpenConsultDetailButton
+                  isCloseRoom={isCloseRoom}
+                  isChatRoomOwner={isChatRoomOwner}
+                  chatRoomData={chatRoomData}
+                  setIsOpenReConsultConfirmModal={setIsOpenReConsultConfirmModal}
+                  setIsOpenRoomReopenModal={setIsOpenRoomReopenModal}
+                />
+
                 <img
                   src="/icons/btn_menu.svg"
                   alt=""
@@ -143,19 +134,26 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
               </div>
               <div className="flex h-5 items-center space-x-1 border">
                 {chatRoomData.members[0] && <p className="text-xxs">E-コンサル</p>}
-                <p className="text-md font-bold">
-                  {chatRoomData.chat_room.room_type === 'GROUP' ? (
-                    chatRoomData.members.length + '人の専門医メンバー'
-                  ) : chatRoomData.members[0] ? (
-                    chatRoomData.members[0].first_name ? (
-                      chatRoomData.members[0].last_name + ' ' + chatRoomData.members[0].first_name + ' 先生'
-                    ) : (
-                      '質問医'
-                    )
+
+                {chatRoomData.chat_room.room_type === 'GROUP' ? (
+                  <p className="cursor-pointer text-md font-bold underline">
+                    {chatRoomData.members.length + '人の専門医メンバー'}
+                  </p>
+                ) : chatRoomData.members[0] ? (
+                  chatRoomData.members[0].first_name ? (
+                    <p
+                      className="cursor-pointer text-md font-bold underline"
+                      onClick={() => setIsOpenDoctorDetailModal(true)}
+                    >
+                      {chatRoomData.members[0].last_name + ' ' + chatRoomData.members[0].first_name + ' 先生'}
+                    </p>
                   ) : (
-                    <p className="font-normal text-strong">回答してくださる専門医の先生を探しています</p>
-                  )}
-                </p>
+                    <p className="cursor-pointer text-md font-bold underline">質問医</p>
+                  )
+                ) : (
+                  <p className="font-normal text-strong">回答してくださる専門医の先生を探しています</p>
+                )}
+
                 {chatRoomData.chat_room.room_type !== 'GROUP' && chatRoomData.members[0] && (
                   <p className="text-xs">
                     ({getSpecialityName(chatRoomData.chat_room.target_speciality)}・
