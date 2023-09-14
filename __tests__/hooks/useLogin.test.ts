@@ -84,9 +84,15 @@ describe('useLogin', () => {
         wrapper: RecoilRoot,
       }).result;
 
-      await act(() =>
+      
+      await act(() => {
+        hooks.current.setEmail("test@email.com");
+        hooks.current.setPassword("testPassword");      
+      });
+      
+      await act(() => {      
         hooks.current.login({ preventDefault: jest.fn() } as unknown as React.FormEvent<HTMLFormElement>)
-      );
+      });
 
       expect(window.location.href).toBe(process.env.CASE_BANK_URL + '/login/callback?t=token');
     });
