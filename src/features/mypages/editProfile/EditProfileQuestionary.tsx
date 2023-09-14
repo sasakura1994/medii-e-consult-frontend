@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { UseEditProfile } from './useEditProfile';
 import { EditProfileLabel } from './EditProfileLabel';
 import { TextArea } from '@/components/Parts/Form/TextArea';
@@ -9,7 +8,6 @@ import { EditProfileHeading } from './EditProfileHeading';
 export const EditProfileQuestionary = (props: UseEditProfile) => {
   const { profile, selectedQuestionaryItemIds, setProfileFields, toggleQuestionaryItem } = props;
   const { questionaryItems } = useFetchQuestionaryItems();
-  const [other, setOther] = useState(false);
   if (!profile) {
     return <></>;
   }
@@ -33,13 +31,6 @@ export const EditProfileQuestionary = (props: UseEditProfile) => {
           </div>
         ))}
         <div className='flex flex-row items-start'>
-          <CheckBox
-            name="questionary_item[]"
-            value=''
-            label=""
-            checked={other}
-            onChange={() => setOther(!other)}
-          />
           <TextArea
             name="questionary_other"
             value={profile.questionary_other ?? ''}
