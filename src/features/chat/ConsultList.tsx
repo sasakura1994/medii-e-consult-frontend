@@ -2,6 +2,7 @@ import React from 'react';
 import { OpenConsultList } from './OpenConsultList';
 import { CloseConsultList } from './CloseConsultList';
 import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
+import { useFetchUnreadCounts } from '@/hooks/api/chat/useFetchUnreadCounts';
 
 type ConsultListProps = {
   chatRoomList?: ChatRoomEntity[];
@@ -11,6 +12,7 @@ type ConsultListProps = {
 
 export const ConsultList = (props: ConsultListProps) => {
   const { chatRoomList, selectedTab, setSelectedTab } = props;
+  const unreadCountListData = useFetchUnreadCounts();
 
   return (
     <div className="h-[calc(100vh-20px)] w-[336px] border border-[#d5d5d5]">
@@ -40,7 +42,9 @@ export const ConsultList = (props: ConsultListProps) => {
         </div>
       </div>
       {selectedTab === 'open' && <OpenConsultList chatRoomList={chatRoomList} />}
-      {selectedTab === 'close' && <CloseConsultList chatRoomList={chatRoomList} />}
+      {selectedTab === 'close' && (
+        <CloseConsultList chatRoomList={chatRoomList} unreadCountList={unreadCountListData} />
+      )}
     </div>
   );
 };

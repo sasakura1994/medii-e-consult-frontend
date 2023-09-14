@@ -9,6 +9,7 @@ import { useFetchChatRoom } from '@/hooks/api/chat/useFetchChatRoom';
 import { useGetPublishmentStatus } from '@/hooks/api/chat/useGetPublishmentStatus';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { useFetchChatRoomList } from '@/hooks/api/chat/useFetchChatRoomList';
+import { mutateFetchUnreadCounts } from '@/hooks/api/chat/useFetchUnreadCounts';
 
 type WebsocketResponseMessage = {
   type: 'subscribe_response' | 'pong' | 'mes';
@@ -16,12 +17,16 @@ type WebsocketResponseMessage = {
   data: string;
 };
 
+type Query = {
+  chat_room_id?: string;
+};
+
 export const Chat = () => {
   const router = useRouter();
   const { socket } = useWebSocket();
   const { token, accountId } = useToken();
-  const { chat_room_id } = router.query;
-  const chatRoomIdStr = chat_room_id as string;
+  const { chat_room_id } = router.query as Query;
+  const chatRoomIdStr = chat_room_id;
 
   const [selectedTab, setSelectedTab] = useState<'open' | 'close'>('open');
   const { data: chatRoomList, mutate: mutateChatRoomList } = useFetchChatRoomList({
@@ -31,6 +36,12 @@ export const Chat = () => {
   const { data: chatRoomData, mutate: mutateChatRoom } = useFetchChatRoom(chatRoomIdStr);
   const { medicalSpecialities } = useFetchMedicalSpecialities();
   const { data: chatListData, mutate: mutateChatList } = useFetchChatList(chatRoomIdStr);
+
+  useEffect(() => {
+    if (chatRoomIdStr) {
+      mutateFetchUnreadCounts();
+    }
+  }, [chatRoomIdStr]);
 
   useEffect(() => {
     if (!socket.current) {
@@ -90,9 +101,12 @@ export const Chat = () => {
           );
         }, 10000);
       } else if (data.type === 'mes') {
-        // TODO: すぐmutateするとDBに存在しないので一旦0.5秒待機してからmutate
+        // TODO: なぜか500ms待機してチャット情報を更新するとチャットの送信が安定する
         setTimeout(() => {
           mutateChatList();
+          mutateChatRoom();
+          mutateChatRoomList();
+          mutateFetchUnreadCounts();
         }, 500);
       }
     };
@@ -104,7 +118,7 @@ export const Chat = () => {
       webSocket.removeEventListener('open', onOpen);
       webSocket.removeEventListener('message', onMessage);
     };
-  }, [accountId, mutateChatList, socket, token]);
+  }, [accountId, mutateChatList, mutateChatRoom, mutateChatRoomList, socket, token]);
 
   return (
     <div className="flex bg-white">
@@ -117,6 +131,7 @@ export const Chat = () => {
           chatListData={chatListData}
           mutateChatRoom={mutateChatRoom}
           mutateChatRoomList={mutateChatRoomList}
+          mutateChatList={mutateChatList}
           setSelectedTab={setSelectedTab}
         />
       ) : (

@@ -6,6 +6,10 @@ import React from 'react';
 import { useChatTextInput } from './useChatTextInput';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import RectSpinnerDialog from './RectSpinnerDialog';
+import { FetchChatListResponseData } from '@/hooks/api/chat/useFetchChatList';
+import { mutateFetchUnreadCounts } from '@/hooks/api/chat/useFetchUnreadCounts';
+import { KeyedMutator } from 'swr';
+import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 
 // canvasの関係でサーバー時点でimportできないため、下記のようにdynamic importする
 const ImageEditorComponent = dynamic<ImageEditorProps>(
@@ -15,10 +19,12 @@ const ImageEditorComponent = dynamic<ImageEditorProps>(
 
 type ChatTextInputProps = {
   chatRoomId: string;
+  mutateChatList?: KeyedMutator<FetchChatListResponseData>;
+  mutateChatRoom?: KeyedMutator<FetchChatRoomResponseData>;
 };
 
 export const ChatTextInput = (props: ChatTextInputProps) => {
-  const { chatRoomId } = props;
+  const { chatRoomId, mutateChatList, mutateChatRoom } = props;
   const {
     isOpenFileInputModal,
     setIsOpenFileInputModal,
@@ -69,10 +75,13 @@ export const ChatTextInput = (props: ChatTextInputProps) => {
           className="ml-2 flex w-[682px] resize-none rounded border border-solid border-block-gray px-2 py-1
           placeholder-gray-600 disabled:bg-[#d5d5d5] disabled:text-block-gray"
           placeholder="メッセージを入力 (Shift + Enterキーで送信)"
-          onKeyDown={(e) => {
+          onKeyDown={async (e) => {
             if (e.key === 'Enter' && e.shiftKey) {
               e.preventDefault();
-              postTextMessage();
+              await postTextMessage();
+              mutateChatList?.();
+              mutateChatRoom?.();
+              mutateFetchUnreadCounts?.();
             }
           }}
         />
@@ -94,8 +103,11 @@ export const ChatTextInput = (props: ChatTextInputProps) => {
           src="/icons/send_message.svg"
           alt=""
           className="my-auto ml-3 h-[30px] w-[30px] cursor-pointer"
-          onClick={() => {
-            postTextMessage();
+          onClick={async () => {
+            await postTextMessage();
+            mutateChatList?.();
+            mutateChatRoom?.();
+            mutateFetchUnreadCounts?.();
           }}
         />
         {editingImage && (
