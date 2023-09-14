@@ -216,7 +216,11 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
               </div>
             )}
             <div className="flex-shrink-0 flex-grow-0">
-              <ChatTextInput chatRoomId={chatRoomData.chat_room.chat_room_id} mutateChatList={mutateChatList} />
+              <ChatTextInput
+                chatRoomId={chatRoomData.chat_room.chat_room_id}
+                mutateChatList={mutateChatList}
+                mutateChatRoom={mutateChatRoom}
+              />
             </div>
           </div>
         </>

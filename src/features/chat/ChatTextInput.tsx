@@ -9,6 +9,7 @@ import RectSpinnerDialog from './RectSpinnerDialog';
 import { FetchChatListResponseData } from '@/hooks/api/chat/useFetchChatList';
 import { mutateFetchUnreadCounts } from '@/hooks/api/chat/useFetchUnreadCounts';
 import { KeyedMutator } from 'swr';
+import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 
 // canvasの関係でサーバー時点でimportできないため、下記のようにdynamic importする
 const ImageEditorComponent = dynamic<ImageEditorProps>(
@@ -19,10 +20,11 @@ const ImageEditorComponent = dynamic<ImageEditorProps>(
 type ChatTextInputProps = {
   chatRoomId: string;
   mutateChatList?: KeyedMutator<FetchChatListResponseData>;
+  mutateChatRoom?: KeyedMutator<FetchChatRoomResponseData>;
 };
 
 export const ChatTextInput = (props: ChatTextInputProps) => {
-  const { chatRoomId, mutateChatList } = props;
+  const { chatRoomId, mutateChatList, mutateChatRoom } = props;
   const {
     isOpenFileInputModal,
     setIsOpenFileInputModal,
@@ -77,7 +79,8 @@ export const ChatTextInput = (props: ChatTextInputProps) => {
             if (e.key === 'Enter' && e.shiftKey) {
               e.preventDefault();
               await postTextMessage();
-              await mutateChatList?.();
+              mutateChatList?.();
+              mutateChatRoom?.();
               mutateFetchUnreadCounts?.();
             }
           }}
@@ -102,7 +105,8 @@ export const ChatTextInput = (props: ChatTextInputProps) => {
           className="my-auto ml-3 h-[30px] w-[30px] cursor-pointer"
           onClick={async () => {
             await postTextMessage();
-            await mutateChatList?.();
+            mutateChatList?.();
+            mutateChatRoom?.();
             mutateFetchUnreadCounts?.();
           }}
         />

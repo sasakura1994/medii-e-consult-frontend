@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { OtherChat } from './OtherChat';
 import { MyChat } from './MyChat';
 import { ChatData } from '@/hooks/api/chat/useFetchChatList';
@@ -21,18 +21,25 @@ const NewBorder = () => {
 
 export const ChatList = (props: ChatListProps) => {
   const { chatListData, chatRoomData, currentUserAccountId } = props;
+
+  const isLastMyChat = useMemo(() => {
+    return chatListData[chatListData.length - 1].account_id === currentUserAccountId;
+  }, [chatListData, currentUserAccountId]);
+
   return (
     <div>
       {chatListData &&
         chatRoomData &&
         chatListData.map((c) => {
           const isView = chatRoomData.me?.read_until === c.uid && chatListData[chatListData.length - 1].uid !== c.uid;
+          console.log(`c=${c.message}, isView=${isView}`);
+
           return c.account_id === currentUserAccountId ? (
             <MyChat chatData={c} key={c.uid} chatRoomData={chatRoomData} />
           ) : (
             <>
               <OtherChat chatData={c} key={c.uid} />
-              {isView && <NewBorder />}
+              {isView && !isLastMyChat && <NewBorder />}
             </>
           );
         })}
