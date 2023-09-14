@@ -26,7 +26,6 @@ type ConsultDetailProps = {
   mutateChatList?: KeyedMutator<FetchChatListResponseData>;
   mutateFetchUnreadCounts?: KeyedMutator<FetchUnreadCountsResponseData>;
   setSelectedTab: React.Dispatch<React.SetStateAction<'open' | 'close'>>;
-  firstUnreadCount: number;
 };
 
 export const ConsultDetail = (props: ConsultDetailProps) => {

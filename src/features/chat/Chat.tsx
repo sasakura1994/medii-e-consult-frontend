@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ConsultList } from './ConsultList';
 import { ConsultDetail } from './ConsultDetail';
 import { useRouter } from 'next/router';
@@ -29,7 +29,6 @@ export const Chat = () => {
   const chatRoomIdStr = chat_room_id;
 
   const [selectedTab, setSelectedTab] = useState<'open' | 'close'>('open');
-  const firstUnreadCount = useRef(0);
   const { data: chatRoomList, mutate: mutateChatRoomList } = useFetchChatRoomList({
     query: ['FREE', 'BY_NAME', 'GROUP'],
   });
@@ -134,7 +133,6 @@ export const Chat = () => {
           mutateChatRoomList={mutateChatRoomList}
           mutateChatList={mutateChatList}
           setSelectedTab={setSelectedTab}
-          firstUnreadCount={firstUnreadCount.current}
         />
       ) : (
         <div className="flex h-screen w-[787px] flex-col border border-[#d5d5d5] bg-bg" />
