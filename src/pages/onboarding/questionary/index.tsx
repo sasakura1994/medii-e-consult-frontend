@@ -70,8 +70,9 @@ const OnBoardingQuestionaryPage = () => {
               )}
               {question.other_enable && (
                 <TextField
-                  className="mt-1"
+                  className="mt-1 w-[350px]"
                   value={answer.other}
+                  placeholder="その他を選んだ方は具体的に教えてください。"
                   onChange={(e) => setOther(question.id, e.target.value)}
                 />
               )}
