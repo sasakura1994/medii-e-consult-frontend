@@ -133,6 +133,16 @@ describe('Document', () => {
     });
   });
 
+  test('HUFユーザーの場合、/welcomeに遷移すること', async () => {
+    (useProfile as jest.Mock).mockReturnValue({
+      profile: { is_huf_user: true },
+    });
+    await getRender();
+    await waitFor(() => {
+      expect(mockRouter.push).toHaveBeenCalledWith('/welcome');
+    });
+  });
+
   test('selectedがdocumentの場合、DocumentInputDocumentがレンダリングされること', async () => {
     await getRender();
     act(() => {
@@ -177,9 +187,7 @@ describe('Document', () => {
     });
     await getRender();
 
-    expect(
-      screen.getByTestId('document-input-student-document')
-    ).toBeInTheDocument();
+    expect(screen.getByTestId('document-input-student-document')).toBeInTheDocument();
   });
 
   test('selectedがconmpeteの場合、welcomeページへ遷移すること', async () => {

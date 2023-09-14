@@ -10,12 +10,26 @@ import { useNmo } from '@/hooks/alliance/useNmo';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import Link from 'next/link';
+import { ImcompleteProfileModal } from '@/components/Parts/Modal/ImcompleteProfileModal';
+import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 
 const NewChatRoomPage: NextPageWithLayout = () => {
   const newChatRoom = useNewChatRoom();
   useEventLog({ name: '/NewChatRoom' });
   const { mode } = newChatRoom;
+  const { profile } = useFetchProfile();
   const { isNeedToInputProfile } = useNmo();
+
+  if (profile?.main_speciality === 'STUDENT') {
+    return (
+      <Card className="px-8 py-4 text-center lg:px-0">
+        <h1 className="mt-10 text-2xl leading-9">E-コンサル ルーム作成</h1>
+        <div className="my-10" data-testid="for-student">
+          医学生はコンサルを作成できません。
+        </div>
+      </Card>
+    );
+  }
 
   return (
     <>
@@ -23,8 +37,8 @@ const NewChatRoomPage: NextPageWithLayout = () => {
         {mode === 'input' ? <NewChatRoomInput {...newChatRoom} /> : <NewChatRoomConfirmation {...newChatRoom} />}
       </Card>
       {isNeedToInputProfile && (
-        <Modal className="w-lg-breakpoint px-8 py-20 lg:px-20" data-testid="nmo-modal">
-          <p>
+        <Modal className="w-lg-breakpoint px-8 py-20 lg:px-20">
+          <p data-testid="nmo-modal">
             すべてのサービスをご利用いただくには、追加のプロフィール入力が必要です。
             以下のボタンからプロフィールの入力をお願いいたします。
           </p>
@@ -39,6 +53,7 @@ const NewChatRoomPage: NextPageWithLayout = () => {
           </div>
         </Modal>
       )}
+      <ImcompleteProfileModal />
     </>
   );
 };

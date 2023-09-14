@@ -50,6 +50,7 @@ const Login: NextPageWithLayout = () => {
           <TextField
             placeholder="メールアドレス"
             type="email"
+            required
             name="mail_address"
             onChange={(e) => {
               setEmail(e.target.value);
@@ -58,6 +59,7 @@ const Login: NextPageWithLayout = () => {
           <TextField
             placeholder="パスワード"
             type="password"
+            required
             name="password"
             className="mt-5"
             onChange={(e) => {

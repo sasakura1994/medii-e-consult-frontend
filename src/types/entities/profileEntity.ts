@@ -42,6 +42,7 @@ export type ProfileEntity = {
   registration_source: string;
   is_invited: boolean;
   is_skip_confirmation_by_utm_source: boolean;
+  is_huf_user?: boolean;
   questionary_selected_ids_csv: string | undefined | null;
   questionary_other: string | undefined | null;
   is_guest: boolean;
