@@ -12,6 +12,7 @@ import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
 import { useConsultDetail } from './useConsultDetail';
 import { ChatEditModal } from './ChatEditModal';
 import { ChatDeleteModal } from './ChatDeleteModal';
+import { FetchUnreadCountsResponseData } from '@/hooks/api/chat/useFetchUnreadCounts';
 
 type ConsultDetailProps = {
   publishmentStatusData?: {
@@ -22,6 +23,8 @@ type ConsultDetailProps = {
   chatListData?: FetchChatListResponseData;
   mutateChatRoom?: KeyedMutator<FetchChatRoomResponseData>;
   mutateChatRoomList?: KeyedMutator<ChatRoomEntity[]>;
+  mutateChatList?: KeyedMutator<FetchChatListResponseData>;
+  mutateFetchUnreadCounts?: KeyedMutator<FetchUnreadCountsResponseData>;
   setSelectedTab: React.Dispatch<React.SetStateAction<'open' | 'close'>>;
 };
 
@@ -33,6 +36,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     chatListData,
     mutateChatRoom,
     mutateChatRoomList,
+    mutateChatList,
     setSelectedTab,
   } = props;
   const {
@@ -162,7 +166,11 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
             </div>
 
             <div className="flex-grow overflow-auto bg-bg pb-2" ref={chatListRef}>
-              <ChatList chatListData={chatListDataWithDisplayName} currentUserAccountId={accountId} />
+              <ChatList
+                chatListData={chatListDataWithDisplayName}
+                currentUserAccountId={accountId}
+                chatRoomData={chatRoomData}
+              />
             </div>
             {isCloseRoom && (
               <div className="pointer-events-auto bg-[#5c6bc0] p-2 text-center text-sm text-white">
@@ -208,7 +216,11 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
               </div>
             )}
             <div className="flex-shrink-0 flex-grow-0">
-              <ChatTextInput chatRoomId={chatRoomData.chat_room.chat_room_id} />
+              <ChatTextInput
+                chatRoomId={chatRoomData.chat_room.chat_room_id}
+                mutateChatList={mutateChatList}
+                mutateChatRoom={mutateChatRoom}
+              />
             </div>
           </div>
         </>

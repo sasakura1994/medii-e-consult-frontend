@@ -1,12 +1,14 @@
 import { ChatData } from '@/hooks/api/chat/useFetchChatList';
-import React from 'react';
+import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
+import React, { useMemo } from 'react';
 
 type MyChatProps = {
   chatData: ChatData & { displayName: string };
+  chatRoomData: FetchChatRoomResponseData;
 };
 
 export const MyChat = (props: MyChatProps) => {
-  const { chatData } = props;
+  const { chatData, chatRoomData } = props;
   const date = new Date(chatData.created_date);
   const formattedDate = date.toLocaleString(undefined, {
     month: 'numeric',
@@ -22,6 +24,15 @@ export const MyChat = (props: MyChatProps) => {
     a.rel = 'noreferrer';
     a.click();
   };
+  const unreadView = useMemo(() => {
+    if (chatData.read_count) {
+      if (chatRoomData.members.length > 1) {
+        return <p className="mb-3 mr-2 flex items-end text-sm text-block-gray">既読{chatData.read_count}</p>;
+      }
+      return <p className="mb-3 mr-2 flex items-end text-sm text-block-gray">既読</p>;
+    }
+    return null;
+  }, [chatData, chatRoomData]);
 
   return (
     <>
@@ -47,12 +58,15 @@ export const MyChat = (props: MyChatProps) => {
             <p className="max-w-[670px] whitespace-pre-wrap break-words">{chatData.file_name}</p>
           </div>
         ) : (
-          <p
-            className="mb-3 mr-3 max-w-[670px] whitespace-pre-wrap break-words rounded-lg rounded-tr-none
+          <>
+            {unreadView}
+            <p
+              className="mb-3 mr-3 max-w-[670px] whitespace-pre-wrap break-words rounded-lg rounded-tr-none
            bg-primary-light p-2"
-          >
-            {chatData.message}
-          </p>
+            >
+              {chatData.message}
+            </p>
+          </>
         )}
       </div>
     </>
