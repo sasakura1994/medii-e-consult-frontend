@@ -11,12 +11,10 @@ export type GroupEntity = {
   member_ids: string[];
   notification_frequency: string;
   speciality_name: string;
-  templates:
-    | {
-        group_id: string;
-        priority: number;
-        text: string;
-        title: string;
-      }[]
-    | [];
+  templates: {
+    group_id: string;
+    priority: number;
+    text: string;
+    title: string;
+  }[];
 };
