@@ -1,8 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import {
-  Question,
-  useFetchQuestionaryItemsForOnboarding,
-} from '@/hooks/api/questionary/useFetchQuestionaryItemsForOnboarding';
+import { Question, useFetchQuestionaryItemsById } from '@/hooks/api/questionary/useFetchQuestionaryItemsById';
 import {
   PostQuestionaryItemsForOnboardingAnswer,
   usePostQuestionaryItemsForOnboarding,
@@ -27,7 +24,7 @@ export const useOnBoardingQuestionary = () => {
   const [questionAndAnswers, setQuestionAndAnswers] = useState<QuestionAndAnswer[]>([]);
   const [otherOpenedQuestionIds, setOtherOpenedQuestionIds] = useState<string[]>([]);
   const [isSending, setIsSending] = useState(false);
-  const { questions } = useFetchQuestionaryItemsForOnboarding();
+  const { questions } = useFetchQuestionaryItemsById('onboarding');
   const { postQuestionaryItemsForOnboarding } = usePostQuestionaryItemsForOnboarding();
 
   // questionAndAnswersを初期化

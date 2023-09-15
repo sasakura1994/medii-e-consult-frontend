@@ -15,10 +15,8 @@ type ResponseData = {
   questions: Question[];
 };
 
-const endpoint = '/questionary/onboarding-questions';
-
-export const useFetchQuestionaryItemsForOnboarding = () => {
-  const { isLoading, error, data } = useAuthenticatedSWR<ResponseData>(endpoint);
+export const useFetchQuestionaryItemsById = (id: 'onboarding') => {
+  const { isLoading, error, data } = useAuthenticatedSWR<ResponseData>(`/questionary/questions?id=${id}`);
 
   return {
     isLoading,
