@@ -4,6 +4,7 @@ import { BreadcrumbLink } from '@/components/Breadcrumb/BreadcrumbLink';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import { CheckBox } from '@/components/Parts/Form/CheckBox';
 import { Radio } from '@/components/Parts/Form/Radio';
+import { Required } from '@/components/Parts/Form/Required';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 import TextField from '@/components/TextField/TextField';
 import { QuestionaryItems } from '@/features/onboarding/QuestionaryItems';
@@ -47,7 +48,10 @@ const OnBoardingQuestionaryPage = () => {
         <div className="mt-10 flex flex-col gap-6">
           {questionAndAnswers.map(({ question, answer }) => (
             <section key={question.id}>
-              <h3 className="text-md font-bold">{question.text}</h3>
+              <div className="flex items-center gap-2">
+                <h3 className="text-md font-bold">{question.text}</h3>
+                {question.required && <Required>必須</Required>}
+              </div>
               {question.type === 'SingleChoice' ? (
                 <QuestionaryItems itemCount={question.items.length}>
                   {question.items.map((item) => (

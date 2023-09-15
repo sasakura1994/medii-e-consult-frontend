@@ -24,6 +24,7 @@ module.exports = {
         error: '#f27474',
         strong: '#f5847d',
         bg: '#eff3f6',
+        alert: '#e41d07',
         distructive: '#e41d07',
         'distructive-hover': '#b21705',
         'toast-success': '#3f51b5',
@@ -88,6 +89,7 @@ module.exports = {
         'medii-sky-800': '#017182',
         'medii-sky-900': '#015B69',
         'medii-sky-950': '#01454F',
+        'medii-red-100': '#FEEDEB',
       },
       width: {
         'login-container': '476px',
