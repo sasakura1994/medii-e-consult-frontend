@@ -18,14 +18,19 @@ export const OnboardingQuestionaryModal = () => {
 
   return (
     <Modal
-      className="flex min-w-0 justify-center border-none bg-transparent"
+      className="flex min-w-0 justify-center rounded-full border-none"
       isCenter
       setShowModal={() => setIsClosed(true)}
       dataTestId="onboarding-questionary-modal"
     >
       <Link href="/onboarding/questionary">
         <a>
-          <img src="/images/onboarding/questionary_modal.png" alt="100Mediiポイントもらえるアンケートに答える" />
+          <img
+            src="/images/onboarding/questionary_modal.png"
+            alt="100Mediiポイントもらえるアンケートに答える"
+            width="423"
+            height="423"
+          />
         </a>
       </Link>
     </Modal>
