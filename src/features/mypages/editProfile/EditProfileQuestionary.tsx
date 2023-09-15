@@ -31,7 +31,7 @@ export const EditProfileQuestionary = (props: UseEditProfile) => {
             />
           </div>
         ))}
-        <div className='flex flex-row items-start'>
+        <div>
           <TextArea
             name="questionary_other"
             value={profile.questionary_other ?? ''}
