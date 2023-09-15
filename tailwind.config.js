@@ -67,6 +67,7 @@ module.exports = {
         'button-disabled': '#D7DAE0',
         'monotone-300': '#BAC0CA',
         'text-place-holder': '#BAC0CA',
+        caption: '#9DA6B4',
         'monotone-400': '#9DA6B4',
         'text-caption': '#16191D',
         'monotone-500': '#808C9D',

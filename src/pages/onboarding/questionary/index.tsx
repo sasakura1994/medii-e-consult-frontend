@@ -3,6 +3,7 @@ import { BreadcrumbItem } from '@/components/Breadcrumb/BreadcrumbItem';
 import { BreadcrumbLink } from '@/components/Breadcrumb/BreadcrumbLink';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import { CheckBox } from '@/components/Parts/Form/CheckBox';
+import { Optional } from '@/components/Parts/Form/Optional';
 import { Radio } from '@/components/Parts/Form/Radio';
 import { Required } from '@/components/Parts/Form/Required';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
@@ -50,7 +51,7 @@ const OnBoardingQuestionaryPage = () => {
             <section key={question.id}>
               <div className="flex items-center gap-2">
                 <h3 className="text-md font-bold">{question.text}</h3>
-                {question.required && <Required>必須</Required>}
+                {question.required ? <Required>必須</Required> : <Optional>任意</Optional>}
               </div>
               {question.type === 'SingleChoice' ? (
                 <QuestionaryItems itemCount={question.items.length}>
