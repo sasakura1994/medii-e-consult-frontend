@@ -102,6 +102,7 @@ describe('NewChatRoomInput', () => {
             } as NewChatRoomEntity,
             group: {
               is_real_name: true,
+              templates: [],
             } as GroupEntity,
           }}
         />
