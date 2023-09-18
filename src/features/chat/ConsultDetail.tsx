@@ -66,6 +66,9 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
   });
   return (
     <>
+      {isOpenDoctorDetailModal && chatRoomData && (
+        <ChatDoctorDetailModal setIsOpen={setIsOpenDoctorDetailModal} member={chatRoomData.members[0]} />
+      )}
       {chatRoomData && publishmentStatusData && accountId && chatListDataWithDisplayName && (
         <>
           {isOpenReConsultConfirmModal && (
