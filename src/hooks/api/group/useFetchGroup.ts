@@ -3,7 +3,16 @@ import { GroupEntity } from '@/types/entities/GroupEntity';
 
 export type FetchedGroupEntity = Pick<
   GroupEntity,
-  'group_id' | 'group_name' | 'area' | 'disease' | 'explanation' | 'is_real_name'
+  | 'group_id'
+  | 'group_name'
+  | 'area'
+  | 'disease'
+  | 'explanation'
+  | 'is_real_name'
+  | 'is_public'
+  | 'member_ids'
+  | 'speciality_name'
+  | 'templates'
 >;
 
 export type UseFetchGroup = {

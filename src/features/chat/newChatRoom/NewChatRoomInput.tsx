@@ -279,14 +279,23 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
           <NewChatRoomFormLabel className="mt-4">コンサル文</NewChatRoomFormLabel>
           <div className="mt-6 text-xs font-bold">テンプレートを反映</div>
           <div className="mt-4 flex flex-row flex-wrap gap-x-6">
-            {consultMessageTemplates.map((consultMessageTemplate) => (
-              <Radio
-                key={consultMessageTemplate.title}
-                name="consult_message_template"
-                label={consultMessageTemplate.title}
-                onChange={() => selectConsultMessageTemplate(consultMessageTemplate.text)}
-              />
-            ))}
+            {chatRoom.room_type === 'GROUP' && group && group.templates.length > 0
+              ? group.templates.map((consultMessageTemplate) => (
+                  <Radio
+                    key={consultMessageTemplate.title}
+                    name="consult_message_template"
+                    label={consultMessageTemplate.title}
+                    onChange={() => selectConsultMessageTemplate(consultMessageTemplate.text)}
+                  />
+                ))
+              : consultMessageTemplates.map((consultMessageTemplate) => (
+                  <Radio
+                    key={consultMessageTemplate.title}
+                    name="consult_message_template"
+                    label={consultMessageTemplate.title}
+                    onChange={() => selectConsultMessageTemplate(consultMessageTemplate.text)}
+                  />
+                ))}
           </div>
           <div className="mt-6">
             <ExpandTextArea
