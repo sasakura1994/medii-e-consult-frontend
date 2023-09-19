@@ -15,6 +15,7 @@ import { ChatDeleteModal } from './ChatDeleteModal';
 import { FetchUnreadCountsResponseData } from '@/hooks/api/chat/useFetchUnreadCounts';
 import { ChatDoctorDetailModal } from './ChatDoctorDetailModal';
 import { OpenConsultDetailButton } from './OpenConsultDetailButton';
+import { ChatGroupMemberModal } from './ChatGroupMemberModal';
 
 type ConsultDetailProps = {
   publishmentStatusData?: {
@@ -57,6 +58,8 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     setIsOpenDeleteModal,
     isOpenDoctorDetailModal,
     setIsOpenDoctorDetailModal,
+    isOpenGroupMemberModal,
+    setIsOpenGroupMemberModal,
     getSpecialityName,
     getExperienceYear,
   } = useConsultDetail({
@@ -68,6 +71,9 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     <>
       {isOpenDoctorDetailModal && chatRoomData && (
         <ChatDoctorDetailModal setIsOpen={setIsOpenDoctorDetailModal} member={chatRoomData.members[0]} />
+      )}
+      {chatRoomData && isOpenGroupMemberModal && (
+        <ChatGroupMemberModal setIsOpen={setIsOpenGroupMemberModal} members={chatRoomData.members} />
       )}
       {chatRoomData && publishmentStatusData && accountId && chatListDataWithDisplayName && (
         <>
@@ -139,7 +145,10 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                 {chatRoomData.members[0] && <p className="text-xxs">E-コンサル</p>}
 
                 {chatRoomData.chat_room.room_type === 'GROUP' ? (
-                  <p className="cursor-pointer text-md font-bold underline">
+                  <p
+                    className="cursor-pointer text-md font-bold underline"
+                    onClick={() => setIsOpenGroupMemberModal(true)}
+                  >
                     {chatRoomData.members.length + '人の専門医メンバー'}
                   </p>
                 ) : chatRoomData.members[0] ? (

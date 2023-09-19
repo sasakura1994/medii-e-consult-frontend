@@ -1,12 +1,11 @@
-import Button from '@/components/Button/Button';
 import { GrayButton } from '@/components/Parts/Button/GrayButton';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { ChatMemberEntity } from '@/types/entities/chat/ChatMemberEntity';
-import React, { useCallback } from 'react';
+import React, { Dispatch, SetStateAction, useCallback } from 'react';
 
 type ChatDoctorDetailModalProps = {
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
   member: ChatMemberEntity;
 };
 
