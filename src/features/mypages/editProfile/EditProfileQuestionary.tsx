@@ -9,7 +9,6 @@ import { EditProfileHeading } from './EditProfileHeading';
 export const EditProfileQuestionary = (props: UseEditProfile) => {
   const { profile, selectedQuestionaryItemIds, setProfileFields, toggleQuestionaryItem } = props;
   const { questionaryItems } = useFetchQuestionaryItems();
-
   if (!profile) {
     return <></>;
   }
@@ -33,7 +32,6 @@ export const EditProfileQuestionary = (props: UseEditProfile) => {
           </div>
         ))}
         <div>
-          <div>その他</div>
           <TextArea
             name="questionary_other"
             value={profile.questionary_other ?? ''}
