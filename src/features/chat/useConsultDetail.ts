@@ -1,6 +1,7 @@
 import { FetchChatListResponseData } from '@/hooks/api/chat/useFetchChatList';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import { useToken } from '@/hooks/authentication/useToken';
+import { useMedicalSpeciality } from '@/hooks/medicalSpeciality/useMedicalSpeciality';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 import { useState, useRef, useCallback, useMemo, useEffect } from 'react';
 
@@ -11,7 +12,7 @@ type useConsultDetailProps = {
 };
 
 export const useConsultDetail = (props: useConsultDetailProps) => {
-  const { medicalSpecialities, chatListData, chatRoomData } = props;
+  const { chatListData, chatRoomData } = props;
   const [isOpenReConsultConfirmModal, setIsOpenReConsultConfirmModal] = useState(false);
   const [isOpenRoomReopenModal, setIsOpenRoomReopenModal] = useState(false);
   const [isOpenChatEditModal, setIsOpenChatEditModal] = useState(false);
@@ -20,15 +21,7 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
   const [isOpenGroupMemberModal, setIsOpenGroupMemberModal] = useState(false);
   const { accountId } = useToken();
   const chatListRef = useRef<HTMLDivElement | null>(null);
-  const getSpecialityName = useCallback(
-    (specialityCode: string) => {
-      if (chatRoomData && medicalSpecialities) {
-        const speciality = medicalSpecialities.find((m) => m.speciality_code === specialityCode);
-        return speciality ? speciality.name : '';
-      }
-    },
-    [chatRoomData, medicalSpecialities]
-  );
+  const { getMedicalSpecialityName } = useMedicalSpeciality();
 
   const getExperienceYear = useCallback((year: number) => {
     const date = new Date();
@@ -49,7 +42,7 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
             return {
               ...c,
               displayName:
-                getSpecialityName(chatRoomData.me.speciality_1) +
+                getMedicalSpecialityName(chatRoomData.me.speciality_1) +
                 ' ' +
                 getExperienceYear(chatRoomData.me.qualified_year) +
                 '年目',
@@ -66,7 +59,7 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
             return {
               ...c,
               displayName:
-                getSpecialityName(chatRoomData.members[0].speciality_1) +
+                getMedicalSpecialityName(chatRoomData.members[0].speciality_1) +
                 ' ' +
                 getExperienceYear(chatRoomData.members[0].qualified_year) +
                 '年目',
@@ -82,7 +75,7 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
         return { ...c, displayName: '' };
       });
     }
-  }, [chatListData, chatRoomData, getExperienceYear, getSpecialityName]);
+  }, [chatListData, chatRoomData, getExperienceYear, getMedicalSpecialityName]);
 
   const isCloseRoom = useMemo(() => {
     if (chatRoomData) {
@@ -121,7 +114,7 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
     setIsOpenDoctorDetailModal,
     isOpenGroupMemberModal,
     setIsOpenGroupMemberModal,
-    getSpecialityName,
+    getMedicalSpecialityName,
     getExperienceYear,
   };
 };

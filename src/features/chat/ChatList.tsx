@@ -32,8 +32,6 @@ export const ChatList = (props: ChatListProps) => {
         chatRoomData &&
         chatListData.map((c) => {
           const isView = chatRoomData.me?.read_until === c.uid && chatListData[chatListData.length - 1].uid !== c.uid;
-          console.log(`c=${c.message}, isView=${isView}`);
-
           return c.account_id === currentUserAccountId ? (
             <MyChat chatData={c} key={c.uid} chatRoomData={chatRoomData} />
           ) : (

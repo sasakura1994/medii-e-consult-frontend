@@ -2,13 +2,7 @@ export type ChatRoomType = 'FREE' | 'BY_NAME' | 'GROUP';
 
 export type ChatRoomGender = 'man' | 'woman';
 
-export type ChatRoomStatus =
-  | 'CREATED'
-  | 'ACTIVE'
-  | 'TEMP_RESOLVED'
-  | 'RESOLVED'
-  | 'CLOSED'
-  | 'REOPEN';
+export type ChatRoomStatus = 'CREATED' | 'ACTIVE' | 'TEMP_RESOLVED' | 'RESOLVED' | 'CLOSED' | 'REOPEN';
 
 export type ChatRoomEntity = {
   chat_room_id: string;
@@ -31,4 +25,5 @@ export type ChatRoomEntity = {
   last_updated_date: string;
   dont_close: number;
   group_id: string | null;
+  is_real_name: boolean;
 };
