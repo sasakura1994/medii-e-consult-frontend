@@ -160,7 +160,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                       {chatRoomData.members[0].last_name + ' ' + chatRoomData.members[0].first_name + ' 先生'}
                     </p>
                   ) : (
-                    <p className="cursor-pointer text-md font-bold underline">質問医</p>
+                    <p className="text-md font-bold">質問医</p>
                   )
                 ) : (
                   <p className="font-normal text-strong">回答してくださる専門医の先生を探しています</p>
