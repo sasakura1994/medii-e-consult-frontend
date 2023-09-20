@@ -2,8 +2,8 @@ import React, { useCallback, useState } from 'react';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import { ChatMemberEntity } from '@/types/entities/chat/ChatMemberEntity';
 import { Dispatch, SetStateAction } from 'react';
-import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { ChatDoctorDetailModal } from './ChatDoctorDetailModal';
+import { useMedicalSpeciality } from '@/hooks/medicalSpeciality/useMedicalSpeciality';
 
 type ChatGroupMemberModalProps = {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
@@ -12,16 +12,9 @@ type ChatGroupMemberModalProps = {
 
 export const ChatGroupMemberModal = (props: ChatGroupMemberModalProps) => {
   const { setIsOpen, members } = props;
-  const { medicalSpecialities } = useFetchMedicalSpecialities();
   const [isOpenDoctorDetailModal, setIsOpenDoctorDetailModal] = useState(false);
   const [selectedMember, setSelectedMember] = useState<ChatMemberEntity | null>(null);
-
-  const getMedicalSpecialityName = useCallback(
-    (specialityCode: string) =>
-      medicalSpecialities?.find((medicalSpeciality) => medicalSpeciality.speciality_code === specialityCode)?.name ||
-      '',
-    [medicalSpecialities]
-  );
+  const { getMedicalSpecialityName } = useMedicalSpeciality();
 
   const calculateExperienceYear = useCallback((qualifiedYear: number) => {
     const experienceYear = Math.max(1, new Date().getFullYear() - qualifiedYear + 1);
