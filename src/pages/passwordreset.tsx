@@ -65,7 +65,7 @@ const PasswordResetPage: NextPageWithLayout = () => {
                         <SpinnerBorder />
                       </div>
                     )}
-                    {errorMessage !== '' && <ErrorMessage className="text-center">{errorMessage}</ErrorMessage>}
+                    {errorMessage !== '' && <ErrorMessage className="mt-4 text-center">{errorMessage}</ErrorMessage>}
                   </div>
                 </div>
               </div>
