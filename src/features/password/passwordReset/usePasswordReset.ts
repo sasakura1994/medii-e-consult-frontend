@@ -32,15 +32,12 @@ export const usePasswordReset = () => {
         console.error(error);
         errorMessage = error.response?.data?.message ?? 'エラーが発生しました';
         setErrorMessage(errorMessage);
-        return error.response;
+        return null;
       });
 
       setIsSending(false);
 
-      if (!response) return;
-
-      if (response.status !== 204 && !errorMessage) {
-        setErrorMessage(response.data.message ?? 'エラーが発生しました');
+      if (!response) {
         return;
       }
 
