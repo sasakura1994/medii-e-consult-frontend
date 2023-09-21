@@ -7,7 +7,7 @@ import { usePasswordReset } from '@/features/password/passwordReset/usePasswordR
 import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 import Link from 'next/link';
-import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
+import PrimaryButton from '@/components/Button/PrimaryButton';
 
 const PasswordResetPage: NextPageWithLayout = () => {
   const {
@@ -57,7 +57,7 @@ const PasswordResetPage: NextPageWithLayout = () => {
                   {isPasswordNotMatched && <div className="text-center">パスワードが一致していません</div>}
                   <div className="my-6 text-center">
                     {!isSending ? (
-                      <PrimaryButton type="submit" className="mx-auto">
+                      <PrimaryButton type="submit" className="mx-auto" size="large">
                         パスワード設定
                       </PrimaryButton>
                     ) : (

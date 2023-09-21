@@ -6,7 +6,7 @@ import { TextField } from '@/components/Parts/Form/TextField';
 import { usePasswordResetRequest } from '@/features/password/passwordResetRequest/usePasswordResetRequest';
 import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
-import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
+import PrimaryButton from '@/components/Button/PrimaryButton';
 
 const PasswordResetRequestPage: NextPageWithLayout = () => {
   const { errorMessage, isCompleted, isSending, mailAddress, sendPasswordResetRequest, setMailAddress } =
@@ -33,7 +33,7 @@ const PasswordResetRequestPage: NextPageWithLayout = () => {
                   </div>
                   {!isSending ? (
                     <div className="my-6 text-center">
-                      <PrimaryButton type="submit" className="mx-auto">
+                      <PrimaryButton type="submit" className="mx-auto w-[100px]" size="large">
                         送信
                       </PrimaryButton>
                     </div>
