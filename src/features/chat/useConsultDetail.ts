@@ -19,6 +19,7 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
   const [isOpenDoctorDetailModal, setIsOpenDoctorDetailModal] = useState(false);
   const [isOpenGroupMemberModal, setIsOpenGroupMemberModal] = useState(false);
+  const [isOpenReplyRequestModal, setIsOpenReplyRequestModal] = useState(false);
   const { accountId } = useToken();
   const chatListRef = useRef<HTMLDivElement | null>(null);
   const { getMedicalSpecialityName } = useMedicalSpeciality();
@@ -32,7 +33,6 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
   }, []);
 
   const chatListDataWithDisplayName = useMemo(() => {
-    // TODO: 一旦first_nameがある場合は名前を表示し、ない場合はspecialityとexperienceYearを表示する
     if (chatListData && chatRoomData) {
       return chatListData.map((c) => {
         if (chatRoomData.me?.account_id === c.account_id) {
@@ -114,6 +114,8 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
     setIsOpenDoctorDetailModal,
     isOpenGroupMemberModal,
     setIsOpenGroupMemberModal,
+    isOpenReplyRequestModal,
+    setIsOpenReplyRequestModal,
     getMedicalSpecialityName,
     getExperienceYear,
   };
