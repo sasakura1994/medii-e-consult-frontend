@@ -15,18 +15,11 @@ const GuideLink = ({ children, href }: { children: string; href: string }) => {
 };
 
 const Registration: NextPageWithLayout = () => {
-  const {
-    setEmail,
-    register,
-    setIsPrivacyPolicyAgree,
-    setIsTermsAgree,
-    isSent,
-    errorMessage,
-  } = useRegister();
+  const { setEmail, register, setIsPrivacyPolicyAgree, setIsTermsAgree, isSent, errorMessage } = useRegister();
   return (
     <div className="bg-[url('/images/registration/bg.png')] bg-cover md:py-14">
       {isSent ? (
-        <div className="mx-auto flex w-fit items-stretch justify-center rounded-md border border-slate-300 bg-white py-4 px-8 md:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
+        <div className="mx-auto flex w-fit items-stretch justify-center rounded-md border border-slate-300 bg-white px-8 py-4 md:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
           <p>
             ご入力頂いたメールアドレスに確認用のメールをお送りしました。
             <br />
@@ -36,21 +29,10 @@ const Registration: NextPageWithLayout = () => {
       ) : (
         <div className="mx-auto flex justify-center md:py-4">
           <div className="mb-8 flex flex-col items-stretch justify-center md:flex-row md:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
-            <img
-              src="/images/registration/left.png"
-              className="hidden max-w-[480px] bg-white md:block"
-            />
-            <img
-              src="/images/registration/mobile_main.png"
-              className="max-w-[480px] bg-white md:hidden"
-            />
-            <div className="flex max-w-[480px] flex-col items-center justify-items-stretch bg-white px-4 pb-6 md:pl-8 md:pr-12 md:pt-16 md:pb-4">
-              <h1 className="my-6 text-center text-2xl text-primary">
-                新規会員登録
-              </h1>
-              <p className="mb-4">
-                E-コンサルは医師・医学生専用のサービスです。
-              </p>
+            <img src="/images/registration/left.png" className="hidden max-w-[480px] bg-white md:block" />
+            <img src="/images/registration/mobile_main.png" className="bg-white md:hidden lg:max-w-[480px]" />
+            <div className="flex max-w-[480px] flex-col items-center justify-items-stretch bg-white px-4 pb-6 md:pb-4 md:pl-8 md:pr-12 md:pt-16">
+              <h1 className="my-6 text-center text-2xl text-primary">新規会員登録</h1>
               <TextField
                 name="email"
                 placeholder="メールアドレス"
@@ -113,35 +95,29 @@ const Registration: NextPageWithLayout = () => {
                       setIsTermsAgree(e.target.checked);
                     }}
                   />
-                  <a
-                    href="https://e-consult.medii.jp/doc/terms_of_usage.pdf"
-                    className="text-[-webkit-link]"
-                  >
+                  <a href="https://e-consult.medii.jp/doc/terms_of_usage.pdf" className="text-[-webkit-link]">
                     利用規約
                   </a>
                   の取り扱いについて同意します。
                 </label>
               </div>
-              {errorMessage != '' && (
-                <p className="mt-6 text-center font-bold text-red-500">
-                  {errorMessage}
-                </p>
-              )}
+              {errorMessage != '' && <p className="mt-6 text-center font-bold text-red-500">{errorMessage}</p>}
               <button
                 onClick={() => register()}
-                className="mt-10 mb-2 rounded-full bg-primary py-3 px-10 text-lg font-bold text-white  drop-shadow-[0_4px_10px_rgba(92,107,192,.3)]"
+                className="mb-2 mt-10 rounded-full bg-primary px-10 py-3 text-lg font-bold text-white  drop-shadow-[0_4px_10px_rgba(92,107,192,.3)]"
               >
                 確認メールを送信
               </button>
-              <GuideLink href="/sns-registration">
-                SNSアカウントで登録はこちら
-              </GuideLink>
+              <GuideLink href="/sns-registration">SNSアカウントで登録はこちら</GuideLink>
               <GuideLink href="/login">ログインはこちら</GuideLink>
-              <Link href="https://tayori.com/faq/4cb3c7c0fd09ab493d1efcbf01dcf76729c62202/category/fea2bb08831c952f089f3f8a91b98f72c6ec300b/">
-                <a className="mt-6 text-sm underline">
-                  登録にお困りの方はこちら
-                </a>
-              </Link>
+              <a
+                href="https://tayori.com/faq/4cb3c7c0fd09ab493d1efcbf01dcf76729c62202/category/fea2bb08831c952f089f3f8a91b98f72c6ec300b/"
+                className="mt-6 text-sm underline"
+                target="_blank"
+                rel="noreferrer nofollow"
+              >
+                登録にお困りの方はこちら
+              </a>
             </div>
           </div>
         </div>
