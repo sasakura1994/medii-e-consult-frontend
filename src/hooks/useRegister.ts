@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useAxios } from './network/useAxios';
 import { useRouter } from 'next/router';
 import { loginRedirectUrlKey } from '@/data/localStorage';
@@ -17,6 +17,7 @@ type CreateAccountRequestData = {
 
 export type UseRegisterType = {
   email: string;
+  queryString: string;
   setEmail: React.Dispatch<React.SetStateAction<string>>;
   errorMessage: string;
   goToSnsLogin: () => void;
@@ -32,13 +33,18 @@ export const useRegister = (): UseRegisterType => {
   const router = useRouter();
   const { redirect, p: parentAccountId } = router.query as Query;
   const { axios } = useAxios();
-  const [email, setEmail] = React.useState('');
-  const [errorMessage, setErrorMessage] = React.useState('');
-  const [isPrivacyPolicyAgree, setIsPrivacyPolicyAgree] = React.useState(false);
-  const [isTermsAgree, setIsTermsAgree] = React.useState(false);
-  const [isSent, setIsSent] = React.useState(false);
+  const [email, setEmail] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isPrivacyPolicyAgree, setIsPrivacyPolicyAgree] = useState(false);
+  const [isTermsAgree, setIsTermsAgree] = useState(false);
+  const [isSent, setIsSent] = useState(false);
+  const [queryString, setQueryString] = useState('');
 
   const isEmailDuplicated = errorMessage === 'すでに登録されているメールアドレスです';
+
+  useEffect(() => {
+    setQueryString(location.search);
+  }, []);
 
   const saveRedirect = useCallback(() => {
     if (!redirect) {
@@ -98,6 +104,7 @@ export const useRegister = (): UseRegisterType => {
 
   return {
     email,
+    queryString,
     setEmail,
     errorMessage,
     goToSnsLogin,

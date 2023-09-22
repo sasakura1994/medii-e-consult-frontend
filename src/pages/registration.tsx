@@ -19,6 +19,7 @@ const Registration: NextPageWithLayout = () => {
   const {
     setEmail,
     register,
+    queryString,
     goToSnsLogin,
     setIsPrivacyPolicyAgree,
     setIsTermsAgree,
@@ -162,7 +163,7 @@ const Registration: NextPageWithLayout = () => {
               >
                 SNSアカウントで登録はこちら
               </a>
-              <GuideLink href="/login">ログインはこちら</GuideLink>
+              <GuideLink href={`/login${queryString}`}>ログインはこちら</GuideLink>
               <a
                 // eslint-disable-next-line max-len
                 href="https://tayori.com/faq/4cb3c7c0fd09ab493d1efcbf01dcf76729c62202/category/fea2bb08831c952f089f3f8a91b98f72c6ec300b/"
