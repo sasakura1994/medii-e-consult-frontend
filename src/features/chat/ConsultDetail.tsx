@@ -16,6 +16,7 @@ import { FetchUnreadCountsResponseData } from '@/hooks/api/chat/useFetchUnreadCo
 import { ChatDoctorDetailModal } from './ChatDoctorDetailModal';
 import { OpenConsultDetailButton } from './OpenConsultDetailButton';
 import { ChatGroupMemberModal } from './ChatGroupMemberModal';
+import { ChatReplyRequestModal } from './ChatReplyRequestModal';
 
 type ConsultDetailProps = {
   publishmentStatusData?: {
@@ -60,6 +61,8 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     setIsOpenDoctorDetailModal,
     isOpenGroupMemberModal,
     setIsOpenGroupMemberModal,
+    isOpenReplyRequestModal,
+    setIsOpenReplyRequestModal,
     getMedicalSpecialityName,
     getExperienceYear,
   } = useConsultDetail({
@@ -172,6 +175,9 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
       {chatRoomData && isOpenGroupMemberModal && (
         <ChatGroupMemberModal setIsOpen={setIsOpenGroupMemberModal} members={chatRoomData.members} />
       )}
+      {chatRoomData && isOpenReplyRequestModal && (
+        <ChatReplyRequestModal setIsOpen={setIsOpenReplyRequestModal} chatRoomData={chatRoomData} />
+      )}
       {chatRoomData && publishmentStatusData && accountId && chatListDataWithDisplayName && (
         <>
           {isOpenReConsultConfirmModal && (
@@ -228,7 +234,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                   isChatRoomOwner={isChatRoomOwner}
                   chatRoomData={chatRoomData}
                   setIsOpenReConsultConfirmModal={setIsOpenReConsultConfirmModal}
-                  setIsOpenRoomReopenModal={setIsOpenRoomReopenModal}
+                  setIsOpenReplyRequestModal={setIsOpenReplyRequestModal}
                 />
 
                 <img

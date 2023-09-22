@@ -5,17 +5,17 @@ type OpenConsultDetailButtonProps = {
   isChatRoomOwner?: boolean;
   chatRoomData: FetchChatRoomResponseData;
   setIsOpenReConsultConfirmModal: Dispatch<SetStateAction<boolean>>;
-  setIsOpenRoomReopenModal: Dispatch<SetStateAction<boolean>>;
+  setIsOpenReplyRequestModal: Dispatch<SetStateAction<boolean>>;
 };
 
 export const OpenConsultDetailButton = (props: OpenConsultDetailButtonProps) => {
-  const { isCloseRoom, isChatRoomOwner, chatRoomData, setIsOpenReConsultConfirmModal, setIsOpenRoomReopenModal } =
+  const { isCloseRoom, isChatRoomOwner, chatRoomData, setIsOpenReConsultConfirmModal, setIsOpenReplyRequestModal } =
     props;
   return (
     <>
       {!isCloseRoom && !isChatRoomOwner && (
         <>
-          <button className="h-9 w-[78px] rounded-full bg-primary">
+          <button className="h-9 w-[78px] rounded-full bg-primary" onClick={() => setIsOpenReplyRequestModal(true)}>
             <p className="text-xs text-white">返答依頼</p>
           </button>
           <button className="h-9 w-[126px] rounded-full bg-primary">
@@ -27,19 +27,14 @@ export const OpenConsultDetailButton = (props: OpenConsultDetailButtonProps) => 
         </>
       )}
 
-      {isChatRoomOwner && chatRoomData.chat_room.room_type !== 'GROUP' && (
+      {isChatRoomOwner && chatRoomData.chat_room.room_type !== 'GROUP' && chatRoomData.members.length > 0 && (
         <button className="h-9 w-[138px] rounded-full bg-primary" onClick={() => setIsOpenReConsultConfirmModal(true)}>
           <p className="text-xs text-white">他の医師に相談する</p>
         </button>
       )}
-      {!isCloseRoom && isChatRoomOwner && (
+      {!isCloseRoom && isChatRoomOwner && chatRoomData.members.length > 0 && (
         <button className="h-9 w-[78px] rounded-full bg-strong">
           <p className="text-xs text-white">解決する</p>
-        </button>
-      )}
-      {isCloseRoom && (
-        <button className="h-9 w-[138px] rounded-full bg-primary" onClick={() => setIsOpenRoomReopenModal(true)}>
-          <p className="text-xs text-white">このコンサルを再開する</p>
         </button>
       )}
     </>
