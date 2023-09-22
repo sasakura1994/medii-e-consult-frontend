@@ -27,7 +27,7 @@ const Registration: NextPageWithLayout = () => {
     errorMessage,
   } = useRegister();
   return (
-    <div className="bg-[url('/images/registration/bg.png')] bg-cover md:py-14">
+    <>
       {isSent ? (
         <div
           className="
@@ -53,7 +53,7 @@ const Registration: NextPageWithLayout = () => {
             <div
               className="
                 flex max-w-[480px] flex-col items-center justify-items-stretch bg-white
-                px-4 pb-6 md:pb-4 md:pl-8 md:pr-12 md:pt-16
+                px-4 pb-6 md:pb-4 md:pl-8 md:pr-12 md:pt-12
                 "
             >
               <h1 className="my-6 text-center text-2xl text-primary">新規会員登録</h1>
@@ -176,7 +176,7 @@ const Registration: NextPageWithLayout = () => {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
