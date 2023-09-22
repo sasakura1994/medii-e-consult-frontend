@@ -13,7 +13,7 @@ export const OpenConsultDetailButton = (props: OpenConsultDetailButtonProps) => 
     props;
   return (
     <>
-      {!isCloseRoom ? (
+      {!isCloseRoom && !isChatRoomOwner && (
         <>
           <button className="h-9 w-[78px] rounded-full bg-primary">
             <p className="text-xs text-white">返答依頼</p>
@@ -25,12 +25,17 @@ export const OpenConsultDetailButton = (props: OpenConsultDetailButtonProps) => 
             <p className="text-xs text-white">回答パス</p>
           </button>
         </>
-      ) : isChatRoomOwner && chatRoomData.chat_room.room_type !== 'GROUP' ? (
+      )}
+
+      {isChatRoomOwner && chatRoomData.chat_room.room_type !== 'GROUP' && (
         <button className="h-9 w-[138px] rounded-full bg-primary" onClick={() => setIsOpenReConsultConfirmModal(true)}>
           <p className="text-xs text-white">他の医師に相談する</p>
         </button>
-      ) : (
-        <></>
+      )}
+      {!isCloseRoom && isChatRoomOwner && (
+        <button className="h-9 w-[78px] rounded-full bg-strong">
+          <p className="text-xs text-white">解決する</p>
+        </button>
       )}
       {isCloseRoom && (
         <button className="h-9 w-[138px] rounded-full bg-primary" onClick={() => setIsOpenRoomReopenModal(true)}>
