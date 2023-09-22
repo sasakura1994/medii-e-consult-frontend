@@ -55,10 +55,6 @@ export const useRegister = (): UseRegisterType => {
   }, [redirect]);
 
   const register = useCallback(async () => {
-    if (email === '') {
-      setErrorMessage('メールアドレスを入力してください');
-      return;
-    }
     if (!isPrivacyPolicyAgree) {
       setErrorMessage('個人情報の取扱いについて確認してください');
       return;
