@@ -15,7 +15,8 @@ const GuideLink = ({ children, href }: { children: string; href: string }) => {
 };
 
 const Registration: NextPageWithLayout = () => {
-  const { setEmail, register, setIsPrivacyPolicyAgree, setIsTermsAgree, isSent, errorMessage } = useRegister();
+  const { setEmail, register, goToSnsLogin, setIsPrivacyPolicyAgree, setIsTermsAgree, isSent, errorMessage } =
+    useRegister();
   return (
     <div className="bg-[url('/images/registration/bg.png')] bg-cover md:py-14">
       {isSent ? (
@@ -108,7 +109,16 @@ const Registration: NextPageWithLayout = () => {
               >
                 確認メールを送信
               </button>
-              <GuideLink href="/sns-registration">SNSアカウントで登録はこちら</GuideLink>
+              <a
+                href="#"
+                className="mt-6 text-sm text-guide-link underline"
+                onClick={(e) => {
+                  e.preventDefault();
+                  goToSnsLogin();
+                }}
+              >
+                SNSアカウントで登録はこちら
+              </a>
               <GuideLink href="/login">ログインはこちら</GuideLink>
               <a
                 href="https://tayori.com/faq/4cb3c7c0fd09ab493d1efcbf01dcf76729c62202/category/fea2bb08831c952f089f3f8a91b98f72c6ec300b/"

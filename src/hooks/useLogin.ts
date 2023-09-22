@@ -3,8 +3,7 @@ import { useToken } from './authentication/useToken';
 import { usePostLogin } from './api/doctor/usePostLogin';
 import { useRouter } from 'next/router';
 import { mutateFetchProfile } from './api/doctor/useFetchProfile';
-
-export const loginRedirectUrlKey = 'Login:redirectUrl';
+import { loginRedirectUrlKey } from '@/data/localStorage';
 
 type Query = {
   from?: 'case_bank';
