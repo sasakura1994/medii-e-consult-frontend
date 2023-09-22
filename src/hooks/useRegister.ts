@@ -2,12 +2,17 @@ import React, { useCallback } from 'react';
 import { useAxios } from './network/useAxios';
 import { useRouter } from 'next/router';
 import { loginRedirectUrlKey } from '@/data/localStorage';
-
-const dummyUrl = 'https://jsonplaceholder.typicode.com/users';
+import { ParsedUrlQuery } from 'querystring';
 
 type Query = {
   redirect?: string;
   p?: string;
+};
+
+type CreateAccountRequestData = {
+  mail_address: string;
+  parent_account_id?: string;
+  queries: ParsedUrlQuery;
 };
 
 export type UseRegisterType = {
@@ -19,19 +24,21 @@ export type UseRegisterType = {
   setIsPrivacyPolicyAgree: React.Dispatch<React.SetStateAction<boolean>>;
   setIsTermsAgree: React.Dispatch<React.SetStateAction<boolean>>;
   register: () => void;
+  isEmailDuplicated: boolean;
   isSent: boolean;
 };
 
 export const useRegister = (): UseRegisterType => {
   const router = useRouter();
-  const query = router.query as Query;
-  const { redirect } = query;
+  const { redirect, p: parentAccountId } = router.query as Query;
   const { axios } = useAxios();
   const [email, setEmail] = React.useState('');
   const [errorMessage, setErrorMessage] = React.useState('');
   const [isPrivacyPolicyAgree, setIsPrivacyPolicyAgree] = React.useState(false);
   const [isTermsAgree, setIsTermsAgree] = React.useState(false);
   const [isSent, setIsSent] = React.useState(false);
+
+  const isEmailDuplicated = errorMessage === 'すでに登録されているメールアドレスです';
 
   const saveRedirect = useCallback(() => {
     if (!redirect) {
@@ -54,14 +61,17 @@ export const useRegister = (): UseRegisterType => {
       setErrorMessage('利用規約を確認してください');
       return;
     }
-    const res = await axios
-      .post(dummyUrl, {
-        mail_address: email,
-      })
-      .catch((error) => {
-        setErrorMessage(error.response?.data?.message);
-        return null;
-      });
+
+    const data: CreateAccountRequestData = {
+      mail_address: email,
+      parent_account_id: parentAccountId,
+      queries: router.query,
+    };
+
+    const res = await axios.post('/doctor/create_account', data).catch((error) => {
+      setErrorMessage(error.response?.data?.message ?? 'エラーが発生しました');
+      return null;
+    });
 
     if (!res) {
       return;
@@ -69,7 +79,7 @@ export const useRegister = (): UseRegisterType => {
 
     setIsSent(true);
     saveRedirect();
-  }, [axios, email, isPrivacyPolicyAgree, isTermsAgree, saveRedirect]);
+  }, [axios, email, isPrivacyPolicyAgree, isTermsAgree, parentAccountId, router.query, saveRedirect]);
 
   const goToSnsLogin = useCallback(() => {
     if (!isPrivacyPolicyAgree) {
@@ -83,8 +93,8 @@ export const useRegister = (): UseRegisterType => {
 
     saveRedirect();
 
-    router.push(`/snsregistration?p=${query.p ?? ''}`);
-  }, [isPrivacyPolicyAgree, isTermsAgree, query.p, router, saveRedirect]);
+    router.push(`/snsregistration?p=${parentAccountId ?? ''}`);
+  }, [isPrivacyPolicyAgree, isTermsAgree, parentAccountId, router, saveRedirect]);
 
   return {
     email,
@@ -95,6 +105,7 @@ export const useRegister = (): UseRegisterType => {
     register,
     setIsPrivacyPolicyAgree,
     setIsTermsAgree,
+    isEmailDuplicated,
     isSent,
   };
 };
