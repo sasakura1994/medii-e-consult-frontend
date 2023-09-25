@@ -128,29 +128,30 @@ const Registration: NextPageWithLayout = () => {
                       取締役個人情報保護管理者 e-mail: info@medii.jp
                     </div>
                     <div className="mt-2 w-full">
-                      <label>
-                        <CheckBox
-                          name="privacyPolicy"
-                          onChange={(e) => {
-                            setIsPrivacyPolicyAgree(e.target.checked);
-                          }}
-                        />
-                        個人情報の取り扱いについて同意します。
-                      </label>
+                      <CheckBox
+                        name="privacyPolicy"
+                        label="個人情報の取り扱いについて同意します。"
+                        onChange={(e) => {
+                          setIsPrivacyPolicyAgree(e.target.checked);
+                        }}
+                      />
                     </div>
                     <div className="mt-2 w-full">
-                      <label>
-                        <CheckBox
-                          name="termsAgree"
-                          onChange={(e) => {
-                            setIsTermsAgree(e.target.checked);
-                          }}
-                        />
-                        <a href="https://e-consult.medii.jp/doc/terms_of_usage.pdf" className="text-[-webkit-link]">
-                          利用規約
-                        </a>
-                        の取り扱いについて同意します。
-                      </label>
+                      <CheckBox
+                        name="termsAgree"
+                        label={
+                          <>
+                            {' '}
+                            <a href="https://e-consult.medii.jp/doc/terms_of_usage.pdf" className="text-[-webkit-link]">
+                              利用規約
+                            </a>
+                            の取り扱いについて同意します。
+                          </>
+                        }
+                        onChange={(e) => {
+                          setIsTermsAgree(e.target.checked);
+                        }}
+                      />
                     </div>
                     {errorMessage != '' && <ErrorMessage className="mt-6 text-center">{errorMessage}</ErrorMessage>}
                     {isEmailDuplicated && (

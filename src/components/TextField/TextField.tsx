@@ -8,11 +8,11 @@ type TextFieldProps = {
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   subText?: string;
+  required?: boolean;
 };
 
 const TextField = (props: TextFieldProps) => {
-  const { label, disabled, className, placeholder, value, onChange, subText } =
-    props;
+  const { label, disabled, className, placeholder, value, onChange, subText, required } = props;
   return (
     <>
       <label className="text-md text-text-primary">{label}</label>
@@ -22,6 +22,7 @@ const TextField = (props: TextFieldProps) => {
         value={value}
         onChange={onChange}
         placeholder={placeholder}
+        required={required}
       ></input>
       <p className="text-medii-sm text-text-secondary">{subText}</p>
     </>
