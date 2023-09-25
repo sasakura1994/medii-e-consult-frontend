@@ -32,7 +32,7 @@ describe('useRegister', () => {
         wrapper: RecoilRoot,
       }).result;
 
-      expect(hooks.current.queryString).toBe('?redirect=/seminar');
+      expect(hooks.current.loginUrl).toBe('/login?redirect=/seminar');
     });
   });
 
