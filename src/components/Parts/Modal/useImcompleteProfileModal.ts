@@ -1,8 +1,7 @@
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { useMemo } from 'react';
-import { Props } from './ImcompleteProfileModal';
 
-export const useImcompleteProfileModal = ({ allowWaiting = false }: Props) => {
+export const useImcompleteProfileModal = () => {
   const { profile } = useFetchProfile();
 
   const isModalShown = useMemo(() => {
@@ -11,12 +10,8 @@ export const useImcompleteProfileModal = ({ allowWaiting = false }: Props) => {
       return false;
     }
 
-    if (!allowWaiting) {
-      return profile.status !== 'VERIFIED';
-    }
-
     return profile.is_imperfect_profile || profile.need_to_send_confimation;
-  }, [allowWaiting, profile]);
+  }, [profile]);
 
   const url = useMemo(() => {
     if (!profile) {
