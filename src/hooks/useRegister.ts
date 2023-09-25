@@ -17,10 +17,10 @@ type CreateAccountRequestData = {
 
 export type UseRegisterType = {
   email: string;
-  queryString: string;
   setEmail: React.Dispatch<React.SetStateAction<string>>;
   errorMessage: string;
   goToSnsLogin: () => void;
+  loginUrl: string;
   setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
   setIsPrivacyPolicyAgree: React.Dispatch<React.SetStateAction<boolean>>;
   setIsTermsAgree: React.Dispatch<React.SetStateAction<boolean>>;
@@ -41,6 +41,7 @@ export const useRegister = (): UseRegisterType => {
   const [queryString, setQueryString] = useState('');
 
   const isEmailDuplicated = errorMessage === 'すでに登録されているメールアドレスです';
+  const loginUrl = `/login${queryString}`;
 
   useEffect(() => {
     setQueryString(location.search);
@@ -100,10 +101,10 @@ export const useRegister = (): UseRegisterType => {
 
   return {
     email,
-    queryString,
     setEmail,
     errorMessage,
     goToSnsLogin,
+    loginUrl,
     setErrorMessage,
     register,
     setIsPrivacyPolicyAgree,

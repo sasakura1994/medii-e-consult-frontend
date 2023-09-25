@@ -23,8 +23,8 @@ const Registration: NextPageWithLayout = () => {
   const {
     setEmail,
     register,
-    queryString,
     goToSnsLogin,
+    loginUrl,
     setIsPrivacyPolicyAgree,
     setIsTermsAgree,
     isEmailDuplicated,
@@ -36,9 +36,9 @@ const Registration: NextPageWithLayout = () => {
       <div className="flex h-full min-h-screen w-full flex-col bg-[#eff3f6]">
         <HeaderContainer>
           <div className="flex items-center">
-            <HeaderLogo />
+            <HeaderLogo href={loginUrl} />
             <HeaderMenuList>
-              <HeaderMenuListItem href="/login">ログイン</HeaderMenuListItem>
+              <HeaderMenuListItem href={loginUrl}>ログイン</HeaderMenuListItem>
             </HeaderMenuList>
           </div>
         </HeaderContainer>
@@ -181,7 +181,7 @@ const Registration: NextPageWithLayout = () => {
                   >
                     SNSアカウントで登録はこちら
                   </a>
-                  <GuideLink href={`/login${queryString}`}>ログインはこちら</GuideLink>
+                  <GuideLink href={loginUrl}>ログインはこちら</GuideLink>
                   <a
                     // eslint-disable-next-line max-len
                     href="https://tayori.com/faq/4cb3c7c0fd09ab493d1efcbf01dcf76729c62202/category/fea2bb08831c952f089f3f8a91b98f72c6ec300b/"
