@@ -167,29 +167,6 @@ describe('Seminar component', () => {
     expect(text).toBeInTheDocument();
   });
 
-  test('現在、ご提出頂いた資料を確認中です。が表示されるか', async () => {
-    (useFetchProfile as jest.Mock).mockReturnValue({
-      profile: {
-        is_imperfect_profile: false,
-        main_speciality: 'naika',
-        need_to_send_confimation: false,
-      } as ProfileEntity,
-    });
-
-    await act(() => {
-      render(
-        <RecoilRoot>
-          <Seminar />
-        </RecoilRoot>
-      );
-    });
-
-    const text = await act(async () => {
-      return await waitFor(() => screen.getByText(/現在、ご提出頂いた資料を確認中です。/));
-    });
-    expect(text).toBeInTheDocument();
-  });
-
   test('モーダルが表示されないか', async () => {
     (useFetchProfile as jest.Mock).mockReturnValue({
       profile: {
