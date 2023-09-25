@@ -1,7 +1,5 @@
-import { emailSubmitState } from '@/globalStates/editSubmitState';
 import { useEditEmail } from '@/hooks/api/account/useEditEmail';
 import { useCallback, useState } from 'react';
-import { useRecoilState } from 'recoil';
 
 export type UseEditEmail = {
   errorMessage: string;
@@ -15,8 +13,7 @@ export type UseEditEmail = {
 export const useUpdateEmail = (): UseEditEmail => {
   const [email, setEmail] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState('');
-
-  const [editEmailStatus, setEditEmailStatus] = useRecoilState(emailSubmitState);
+  const [editEmailStatus, setEditEmailStatus] = useState(false);
 
   const { editEmail } = useEditEmail();
 
@@ -47,9 +44,9 @@ export const useUpdateEmail = (): UseEditEmail => {
     if (!result) {
       return;
     }
-
     setEditEmailStatus(true);
   }, [email, saveEditEmail]);
+
   return {
     errorMessage,
     email,

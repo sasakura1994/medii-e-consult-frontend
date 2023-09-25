@@ -1,17 +1,17 @@
 import React from 'react';
 import Completed from './completed';
-import Editing from './editing';
+import EditEmail from '../../features/mypages/editEmail/EditEmail';
 import { MyPageLayout } from '@/components/Layouts/MyPageLayout';
-import { emailSubmitState } from '@/globalStates/editSubmitState';
-import { useRecoilState } from 'recoil';
+import { useUpdateEmail } from '@/features/mypages/editEmail/useUpdateEmail';
 
 const EditEmailPage = () => {
-  const [editEmailStatus] = useRecoilState(emailSubmitState);
+  const updateEmail = useUpdateEmail();
+  const { editEmailStatus, ...props } = updateEmail;
 
   return (
     <div className="flex h-[100vh] bg-bg">
       <div className="m-auto mt-9 w-[662px] rounded border border-[#ddd] bg-white py-[60px] text-left">
-        {!editEmailStatus ? <Editing /> : <Completed />}
+        {!editEmailStatus ? <EditEmail {...props} /> : <Completed />}
       </div>
     </div>
   );

@@ -3,14 +3,10 @@ import SecondaryButton from '@/components/Button/SecondaryButton';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import { useProfile } from '@/hooks/useProfile';
 import Link from 'next/link';
-import { useUpdateEmail } from '@/features/mypages/editEmail/useUpdateEmail';
+import { UseEditEmail } from '@/features/mypages/editEmail/useUpdateEmail';
 
-const Editing = () => {
+const EditEmail = ({ submit, setEmail, email, errorMessage }: Omit<UseEditEmail, 'editEmailStatus'>) => {
   const { email: oldEmail } = useProfile();
-
-  const updateEmail = useUpdateEmail();
-
-  const { email, setEmail, submit } = updateEmail;
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -23,6 +19,7 @@ const Editing = () => {
 
   return (
     <div className="px-[84px]">
+      <h2 className="mt-2 text-center font-bold text-[#f27474]">{errorMessage}</h2>
       <h2 className="mb-3 font-bold">現在のメールアドレス</h2>
       <p>{oldEmail?.mail_address}</p>
       <div>
@@ -57,4 +54,4 @@ const Editing = () => {
   );
 };
 
-export default Editing;
+export default EditEmail;
