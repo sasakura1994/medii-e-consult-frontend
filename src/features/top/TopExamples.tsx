@@ -13,7 +13,9 @@ export const TopExamples = () => {
       <StyledHiddenScrollBar className="mt-10 flex items-center">
         <p className="flex-grow text-xl font-bold text-text-primary lg:text-xxl">E-コンサル事例集</p>
         <Link href="/examplelist">
-          <SecondaryButton className="whitespace-nowrap">コンサル事例を見る</SecondaryButton>
+          <a>
+            <SecondaryButton className="whitespace-nowrap">コンサル事例を見る</SecondaryButton>
+          </a>
         </Link>
       </StyledHiddenScrollBar>
       <StyledHiddenScrollBar className="flex max-w-[1024px] space-x-2 overflow-x-auto px-1 py-4">

@@ -6,10 +6,11 @@ export type ModalPropsType = {
   className?: string;
   isCenter?: boolean;
   setShowModal?: (isShow: boolean) => void;
+  dataTestId?: string;
 };
 
 export const Modal: React.FC<ModalPropsType> = (props) => {
-  const { children, className } = props;
+  const { children, className, dataTestId } = props;
   const { hideModal, modalRef } = useModal(props);
 
   return (
@@ -20,6 +21,7 @@ export const Modal: React.FC<ModalPropsType> = (props) => {
       }`}
       style={{ height: '100dvh' }}
       onMouseDown={hideModal}
+      data-testid={dataTestId}
     >
       <div
         className={`rounded border border-[#d5d5d5] bg-white ${className} z-[210] mx-auto ${

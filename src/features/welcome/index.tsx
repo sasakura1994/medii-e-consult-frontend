@@ -37,14 +37,14 @@ const Welcome = () => {
               imageSrc="/images/document/conference.svg"
               description="専門医の先生をお招きして、各診療科・症例の知見を広く提供するオンラインセミナーを実施しています。"
               buttonOutline="E-カンファを見る"
-              linkOutline="/seminar"
+              linkOutline="/seminar?fromwelcome=1"
               logOutline="click-seminar-in-welcome"
             />
           </div>
           <div
             onClick={async () => {
               await postEventLog({ name: 'click-top-in-welcome' });
-              router.push('/top');
+              router.push('/top?fromwelcome=1');
             }}
           >
             <div className="mb-4 mt-16 flex cursor-pointer items-center justify-center space-x-1">
