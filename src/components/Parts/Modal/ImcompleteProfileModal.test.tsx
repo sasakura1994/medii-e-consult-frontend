@@ -59,30 +59,30 @@ describe('is_imperfect_profile', () => {
       });
       expect(text).toBeInTheDocument();
     });
-  });
 
-  test('表示しない', async () => {
-    const useFetchProfileMock = useFetchProfileModule as jest.Mocked<typeof useFetchProfileModule>;
-    useFetchProfileMock.useFetchProfile.mockReturnValue({
-      profile: {
-        is_imperfect_profile: false,
-        main_speciality: 'naika',
-        need_to_send_confimation: false,
-      } as ProfileEntity,
-      isLoading: false,
-    });
+    test('デフォルト', async () => {
+      const useFetchProfileMock = useFetchProfileModule as jest.Mocked<typeof useFetchProfileModule>;
+      useFetchProfileMock.useFetchProfile.mockReturnValue({
+        profile: {
+          is_imperfect_profile: false,
+          main_speciality: 'naika',
+          need_to_send_confimation: false,
+        } as ProfileEntity,
+        isLoading: false,
+      });
 
-    await act(() => {
-      render(
-        <RecoilRoot>
-          <ImcompleteProfileModal />
-        </RecoilRoot>
-      );
-    });
+      await act(() => {
+        render(
+          <RecoilRoot>
+            <ImcompleteProfileModal />
+          </RecoilRoot>
+        );
+      });
 
-    const text = await act(async () => {
-      return waitFor(() => screen.queryByTestId('imcomplete-profile-modal'));
+      const text = await act(async () => {
+        return waitFor(() => screen.getByText(/現在、ご提出頂いた資料を確認中です。/));
+      });
+      expect(text).toBeInTheDocument();
     });
-    expect(text).not.toBeInTheDocument();
   });
 });

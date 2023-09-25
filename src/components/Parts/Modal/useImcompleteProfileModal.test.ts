@@ -21,7 +21,7 @@ describe('useImcompleteProfileModal', () => {
       let hookResult: { current: ReturnType<typeof useImcompleteProfileModal> } | undefined;
 
       await act(() => {
-        hookResult = renderHook(() => useImcompleteProfileModal()).result;
+        hookResult = renderHook(() => useImcompleteProfileModal({})).result;
       });
 
       expect(hookResult?.current.url).toBe('/editProfile?registerMode=1');
@@ -40,7 +40,7 @@ describe('useImcompleteProfileModal', () => {
       let hookResult: { current: ReturnType<typeof useImcompleteProfileModal> } | undefined;
 
       await act(() => {
-        hookResult = renderHook(() => useImcompleteProfileModal()).result;
+        hookResult = renderHook(() => useImcompleteProfileModal({})).result;
       });
 
       expect(hookResult?.current.url).toBe('/editProfile?registerMode=1');
@@ -60,7 +60,7 @@ describe('useImcompleteProfileModal', () => {
       let hookResult: { current: ReturnType<typeof useImcompleteProfileModal> } | undefined;
 
       await act(() => {
-        hookResult = renderHook(() => useImcompleteProfileModal()).result;
+        hookResult = renderHook(() => useImcompleteProfileModal({})).result;
       });
 
       expect(hookResult?.current.url).toBe('/document');
@@ -79,7 +79,7 @@ describe('useImcompleteProfileModal', () => {
       let hookResult: { current: ReturnType<typeof useImcompleteProfileModal> } | undefined;
 
       await act(() => {
-        hookResult = renderHook(() => useImcompleteProfileModal()).result;
+        hookResult = renderHook(() => useImcompleteProfileModal({})).result;
       });
 
       expect(hookResult?.current.url).toBe('/EditProfile');
@@ -96,7 +96,7 @@ describe('useImcompleteProfileModal', () => {
       let hookResult: { current: ReturnType<typeof useImcompleteProfileModal> } | undefined;
 
       await act(() => {
-        hookResult = renderHook(() => useImcompleteProfileModal()).result;
+        hookResult = renderHook(() => useImcompleteProfileModal({})).result;
       });
 
       expect(hookResult?.current.isModalShown).toBeFalsy();
@@ -113,7 +113,7 @@ describe('useImcompleteProfileModal', () => {
       let hookResult: { current: ReturnType<typeof useImcompleteProfileModal> } | undefined;
 
       await act(() => {
-        hookResult = renderHook(() => useImcompleteProfileModal()).result;
+        hookResult = renderHook(() => useImcompleteProfileModal({})).result;
       });
 
       expect(hookResult?.current.isModalShown).toBeFalsy();
@@ -133,10 +133,10 @@ describe('useImcompleteProfileModal', () => {
       let hookResult: { current: ReturnType<typeof useImcompleteProfileModal> } | undefined;
 
       await act(() => {
-        hookResult = renderHook(() => useImcompleteProfileModal()).result;
+        hookResult = renderHook(() => useImcompleteProfileModal({})).result;
       });
 
-      expect(hookResult?.current.isModalShown).toBeFalsy();
+      expect(hookResult?.current.isModalShown).toBeTruthy();
     });
 
     test('Allow waiting', async () => {
@@ -153,7 +153,7 @@ describe('useImcompleteProfileModal', () => {
       let hookResult: { current: ReturnType<typeof useImcompleteProfileModal> } | undefined;
 
       await act(() => {
-        hookResult = renderHook(() => useImcompleteProfileModal()).result;
+        hookResult = renderHook(() => useImcompleteProfileModal({ allowWaiting: true })).result;
       });
 
       expect(hookResult?.current.isModalShown).toBeFalsy();
@@ -172,7 +172,7 @@ describe('useImcompleteProfileModal', () => {
       let hookResult: { current: ReturnType<typeof useImcompleteProfileModal> } | undefined;
 
       await act(() => {
-        hookResult = renderHook(() => useImcompleteProfileModal()).result;
+        hookResult = renderHook(() => useImcompleteProfileModal({ allowWaiting: true })).result;
       });
 
       expect(hookResult?.current.isModalShown).toBeTruthy();
