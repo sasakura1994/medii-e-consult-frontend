@@ -1,14 +1,9 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Modal } from './Modal';
 import Link from 'next/link';
 import { useImcompleteProfileModal } from './useImcompleteProfileModal';
 import { ProfileEntity } from '@/types/entities/profileEntity';
 import { PrimaryButton } from '../Button/PrimaryButton';
-
-export type Props = {
-  // 医師確認待ちの場合に操作を許容するかどうか
-  allowWaiting?: boolean;
-};
 
 const getMessage = (profile: ProfileEntity) => {
   if (profile.is_imperfect_profile) {
@@ -29,19 +24,11 @@ const getMessage = (profile: ProfileEntity) => {
     );
   }
 
-  return (
-    <>
-      現在、ご提出頂いた資料を確認中です。
-      <br />
-      恐れ入りますが確認完了までしばらくお待ち下さい。
-      <br />
-      確認完了次第、メールにてご連絡いたします。
-    </>
-  );
+  return <></>;
 };
 
-export const ImcompleteProfileModal: React.FC<Props> = (props: Props) => {
-  const { isModalShown, profile, url } = useImcompleteProfileModal(props);
+export const ImcompleteProfileModal = () => {
+  const { isModalShown, profile, url } = useImcompleteProfileModal();
 
   if (!profile || !isModalShown) {
     return <></>;
