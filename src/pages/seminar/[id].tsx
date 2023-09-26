@@ -33,7 +33,7 @@ const Seminar: NextPage = () => {
   const [showModal, setShowModal] = React.useState(false);
   const [, setSwiperRef] = React.useState<SwiperRef | null>(null);
   return (
-    <div className="bg-[url('images/seminar/SP_back.png')] bg-cover bg-no-repeat pb-12 lg:pt-32 lg:bg-[url('images/seminar/PC_back.png')] lg:pt-10">
+    <div className="bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat pb-12 lg:pt-32 lg:bg-[url('/images/seminar/PC_back.png')] lg:pt-10">
       <div className="mx-auto pt-28 lg:max-w-[960px] lg:rounded-2xl lg:bg-white lg:p-10  lg:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
         <div className="relative
         mx-auto

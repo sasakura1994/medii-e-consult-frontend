@@ -42,7 +42,7 @@ const Registration: NextPageWithLayout = () => {
             </HeaderMenuList>
           </div>
         </HeaderContainer>
-        <main className="flex-grow bg-[url('images/registration/bg.png')] bg-cover md:py-10">
+        <main className="flex-grow bg-[url('/images/registration/bg.png')] bg-cover md:py-10">
           {isSent ? (
             <div
               className="
