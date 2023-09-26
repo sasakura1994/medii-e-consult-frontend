@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, cloneElement, ReactElement, ReactHTML, ReactNode } from 'react';
 import '@/styles/globals.scss';
 import '@/styles/swiperjs-custom.scss';
 import 'react-toastify/dist/ReactToastify.css';
@@ -25,7 +25,31 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
-const baseDir = process.env.EX_WEB_DIR ? process.env.EX_WEB_DIR + '/' : '/';
+
+// Headタグを追加する
+function addBaseTagToHead(node: React.ReactNode): ReactNode {
+  const baseDir = process.env.EX_WEB_DIR ? process.env.EX_WEB_DIR + '/' : '/';
+  // ReactNodeがReact要素であることを確認
+  if (!React.isValidElement(node)) {
+    return node;
+  }
+  // React要素の型を取得
+  const elementType = node.type as keyof ReactHTML;
+  if (elementType !== 'head') {
+    return node;
+  }
+  // ReactElementをReactElementとしてキャスト
+  const headElement = node as ReactElement;
+  // head要素にbase要素を追加
+  return cloneElement(
+    headElement,
+    {},
+    headElement.props.children,
+    (<base href={baseDir} />)
+  );
+}
+
+
 const AppInner = ({ Component, pageProps }: AppPropsWithLayout) => {
   const { fetcher } = useFetcher();
   const { accountId, isTokenInitialized } = useToken();
@@ -38,7 +62,6 @@ const AppInner = ({ Component, pageProps }: AppPropsWithLayout) => {
         <Layout>{page}</Layout>
       </>
     ));
-
   return (
     <CookiesProvider>
       {/* GTMタグだけ先に描画されるのを避けるため必ず両方同時にチェック */}
@@ -65,7 +88,7 @@ const AppInner = ({ Component, pageProps }: AppPropsWithLayout) => {
           revalidateOnReconnect: false,
         }}
       >
-        {getLayout(<Component {...pageProps} />)}
+        {addBaseTagToHead(getLayout(<Component {...pageProps} />))}
       </SWRConfig>
     </CookiesProvider>
   );
@@ -120,7 +143,6 @@ const App = (props: AppPropsWithLayout) => {
   return (
     <RecoilRoot>
       <AppInner {...props} />
-      <base href={baseDir} />
     </RecoilRoot>
   );
 };
