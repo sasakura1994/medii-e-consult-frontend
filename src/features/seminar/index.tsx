@@ -15,8 +15,8 @@ export const Seminar = () => {
   if (seminars) {
     return (
       <div
-        className="bg-[url('/images/seminar/sp_back.png')] bg-cover
-       bg-no-repeat lg:bg-[url('/images/seminar/pc_back.png')]"
+        className="bg-[url('images/seminar/sp_back.png')] bg-cover
+       bg-no-repeat lg:bg-[url('images/seminar/pc_back.png')]"
       >
         <div className="flex w-full flex-col items-center justify-center py-4 pt-10">
           <div className="mb-8 h-auto rounded-lg bg-white pl-6 pt-6 shadow-low lg:max-w-[976px]">

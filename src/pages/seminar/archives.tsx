@@ -19,7 +19,7 @@ const Archives: NextPage = () => {
   const endNumber = current * numberPerPage - 1;
   return (
     <>
-      <div className="-mt-10 bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat pb-12 pt-10 lg:bg-[url('/images/seminar/PC_back.png')]">
+      <div className="-mt-10 bg-[url('images/seminar/SP_back.png')] bg-cover bg-no-repeat pb-12 pt-10 lg:bg-[url('images/seminar/PC_back.png')]">
         <div className="mx-auto flex w-full flex-col items-center rounded-lg px-6 pb-20 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] lg:max-w-[960px] lg:bg-white lg:px-20 lg:pt-14">
           <SeminarArchiveHeader ticketCount={ticketCount} />
           <p className="w-full pb-4">

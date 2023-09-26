@@ -43,7 +43,7 @@ export const MedicalCareerSpecialities = (props: MedicalCareerSpecialitiesProps)
                      after:h-[15px]
                      after:w-[14px]
                      after:-translate-y-1/2
-                     after:bg-[url('/icons/pull.svg')]
+                     after:bg-[url('icons/pull.svg')]
                      after:content-['']"
         onClick={() => setIsMedicalSpecialitiesSelectDialogShown(true)}
       >

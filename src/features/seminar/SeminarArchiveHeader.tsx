@@ -25,7 +25,7 @@ export const SeminarArchiveHeader: React.FC<Props> = ({
       text-lg
       text-[#6c6c6c]
       md:h-32
-      md:bg-[url('/images/seminar/list_fukidashi.svg')]
+      md:bg-[url('images/seminar/list_fukidashi.svg')]
       md:px-12
       md:pt-6
       md:pb-0
