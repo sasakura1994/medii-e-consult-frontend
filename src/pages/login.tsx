@@ -125,7 +125,7 @@ const Login: NextPageWithLayout = () => {
             authOptions={{
               clientId: 'jp.medii.e-consult',
               scope: 'email',
-              redirectURI: `${process.env.ENDPOINT_URL}/api/apple_auth/callback`,
+              redirectURI: `${process.env.ENDPOINT_URL}/apple_auth/callback`,
               state: '',
               nonce: 'nonce',
               usePopup: false,
