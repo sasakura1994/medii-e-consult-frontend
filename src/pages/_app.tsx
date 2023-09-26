@@ -25,6 +25,7 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
+const baseDir = process.env.EX_WEB_DIR ? process.env.EX_WEB_DIR + '/' : '/';
 const AppInner = ({ Component, pageProps }: AppPropsWithLayout) => {
   const { fetcher } = useFetcher();
   const { accountId, isTokenInitialized } = useToken();
@@ -119,6 +120,7 @@ const App = (props: AppPropsWithLayout) => {
   return (
     <RecoilRoot>
       <AppInner {...props} />
+      <base href={baseDir} />
     </RecoilRoot>
   );
 };
