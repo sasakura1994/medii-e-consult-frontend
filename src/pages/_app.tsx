@@ -1,4 +1,4 @@
-import React, { useEffect, cloneElement, ReactElement, ReactHTML, ReactNode } from 'react';
+import React, { useEffect } from 'react';
 import '@/styles/globals.scss';
 import '@/styles/swiperjs-custom.scss';
 import 'react-toastify/dist/ReactToastify.css';
