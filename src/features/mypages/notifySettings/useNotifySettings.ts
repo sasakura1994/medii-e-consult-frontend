@@ -1,11 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
-import { useUpdateProfile } from '@/hooks/api/doctor/useUpdateProfile';
-import type { ProfileEntity } from '@/types/entities/profileEntity';
+import { UpdateNotfySettingsRequestData, useUpdateNotifySettings } from '@/hooks/api/doctor/useUpdateNotifySettings';
 
 export type UseNotifySettings = {
-  profile?: ProfileEntity;
+  notifySettings: UpdateNotfySettingsRequestData;
   isError: boolean;
   changeNotifyNew: (e: React.ChangeEvent<HTMLInputElement>) => void;
   changeNotifySeminar: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -14,112 +13,100 @@ export type UseNotifySettings = {
 
 export const useNotifySettings = (): UseNotifySettings => {
   const [isInitialized, setIsInitialized] = useState(false);
-  const [profile, setProfile] = useState<ProfileEntity>();
+  const [notifySettings, setNotifySettings] = useState<UpdateNotfySettingsRequestData>({
+    is_mail_notify: false,
+    is_push_notify: false,
+    not_seminar_mail_target: false,
+  });
   const [isError, setIsError] = useState(false);
 
-  const { profile: defaultProfile } = useFetchProfile();
-  const { updateProfile } = useUpdateProfile();
+  const { profile } = useFetchProfile();
+  const { updateNotifySettings } = useUpdateNotifySettings();
 
   useEffect(() => {
     if (isInitialized) {
       return;
     }
-    if (!defaultProfile) {
+    if (!profile) {
       return;
     }
 
-    setProfile({ ...defaultProfile });
+    setNotifySettings({
+      is_mail_notify: profile.is_mail_notify,
+      is_push_notify: profile.is_push_notify,
+      not_seminar_mail_target: profile.not_seminar_mail_target,
+    });
     setIsInitialized(true);
-  }, [isInitialized, defaultProfile]);
+  }, [isInitialized, profile]);
 
   /**
    * 新着メッセージ通知の選択処理
    */
-  const changeNotifyNew = React.useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      let notifyNewFlags = {
-        is_mail_notify: true,
-        is_push_notify: true,
-      };
+  const changeNotifyNew = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    let notifyNewFlags = {
+      is_mail_notify: true,
+      is_push_notify: true,
+    };
 
-      switch (e.target.value) {
-        case 'mail-push':
-          notifyNewFlags = {
-            is_mail_notify: true,
-            is_push_notify: true,
-          };
-          break;
-        case 'mail':
-          notifyNewFlags = {
-            is_mail_notify: true,
-            is_push_notify: false,
-          };
-          break;
-        case 'push':
-          notifyNewFlags = {
-            is_mail_notify: false,
-            is_push_notify: true,
-          };
-          break;
-        default:
-          break;
-      }
+    switch (e.target.value) {
+      case 'mail-push':
+        notifyNewFlags = {
+          is_mail_notify: true,
+          is_push_notify: true,
+        };
+        break;
+      case 'mail':
+        notifyNewFlags = {
+          is_mail_notify: true,
+          is_push_notify: false,
+        };
+        break;
+      case 'push':
+        notifyNewFlags = {
+          is_mail_notify: false,
+          is_push_notify: true,
+        };
+        break;
+      default:
+        break;
+    }
 
-      setProfile((oldValues?: ProfileEntity) =>
-        oldValues
-          ? {
-              ...oldValues,
-              ...notifyNewFlags,
-            }
-          : undefined
-      );
-    },
-    [setProfile]
-  );
+    setNotifySettings((oldValues) => ({
+      ...oldValues,
+      ...notifyNewFlags,
+    }));
+  }, []);
 
   /**
    * お知らせメールの選択処理
    */
-  const changeNotifySeminar = React.useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      let notifySeminarFlags = true;
+  const changeNotifySeminar = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    let notifySeminarFlags = true;
 
-      switch (e.target.value) {
-        case 'permit':
-          notifySeminarFlags = false;
-          break;
-        case 'deny':
-          notifySeminarFlags = true;
-          break;
-        default:
-          break;
-      }
+    switch (e.target.value) {
+      case 'permit':
+        notifySeminarFlags = false;
+        break;
+      case 'deny':
+        notifySeminarFlags = true;
+        break;
+      default:
+        break;
+    }
 
-      setProfile((oldValues?: ProfileEntity) =>
-        oldValues
-          ? {
-              ...oldValues,
-              not_seminar_mail_target: notifySeminarFlags,
-            }
-          : undefined
-      );
-    },
-    [setProfile]
-  );
+    setNotifySettings((oldValues) => ({
+      ...oldValues,
+      not_seminar_mail_target: notifySeminarFlags,
+    }));
+  }, []);
 
   /**
    * 更新実行
    */
   const update = useCallback(async () => {
     setIsError(false);
-    const data = { ...profile };
-    const formData = new FormData();
-    Object.keys(data).forEach((key) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      formData.append(key, (data as any)[key]);
-    });
 
-    const response = await updateProfile(formData).catch((error) => {
+    const response = await updateNotifySettings(notifySettings).catch((error) => {
       console.error(error);
       return null;
     });
@@ -131,10 +118,10 @@ export const useNotifySettings = (): UseNotifySettings => {
     }
 
     toast('通知設定を変更しました');
-  }, [profile, updateProfile]);
+  }, [notifySettings, updateNotifySettings]);
 
   return {
-    profile,
+    notifySettings,
     isError,
     changeNotifyNew,
     changeNotifySeminar,
