@@ -11,6 +11,8 @@
 }
 
 .radio {
+  display: flex;
+
   &__label {
     padding-left: 22px;
     position: relative;

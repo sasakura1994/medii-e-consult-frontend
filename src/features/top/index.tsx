@@ -1,36 +1,46 @@
-import SecondaryButton from '@/components/Button/SecondaryButton';
 import React from 'react';
-import { StyledHiddenScrollBar } from './styled';
 import { UserConsult } from './UserConsult';
-import { TopItem } from './TopItem';
 import { TopNotifications } from './TopNotifications';
 import { TopNews } from './TopNews';
 import { TopInterviews } from './TopInterviews';
 import { TopNewerConsults } from './TopNewerConsults';
+import { TopExamples } from './TopExamples';
 import TutorialExplanation from './TutorialExplanation';
 import { useTop } from './useTop';
+import { TopUpcomingSeminars } from './TopUpcomingSeminars';
+import { useFetchFlag } from '@/hooks/api/account/useFetchFlags';
+import Link from 'next/link';
 
 export const Top = () => {
   const { showTutorialExplanationModal, setShowTutorialExplanationModal } = useTop();
+  const { flag: isOnboardingQuestionaryAnswered } = useFetchFlag('OnboardingAnswered');
+
   return (
     <div className="bg-white">
-      <div className="mx-4 flex min-h-screen flex-col pb-12 pt-6 lg:mx-10 lg:flex-row lg:pb-0">
-        <div className="lg:flex-grow">
+      <div className="mx-4 flex min-h-screen flex-col pb-12 pt-6 lg:mx-10 lg:flex-row lg:justify-center">
+        <div className="max-w-[1024px] pb-8 lg:w-0 lg:flex-grow">
           <TopNotifications />
           <UserConsult setShowTutorialExplanationModal={setShowTutorialExplanationModal} />
-          <StyledHiddenScrollBar className="mt-10 flex items-center">
-            <p className="flex-grow text-xxl font-bold text-text-primary">E-コンサル事例集</p>
-            <SecondaryButton size="large">解決済みのコンサル事例を見る</SecondaryButton>
-          </StyledHiddenScrollBar>
-          <StyledHiddenScrollBar className="flex space-x-2 overflow-x-auto py-4">
-            <TopItem />
-            <TopItem />
-            <TopItem />
-          </StyledHiddenScrollBar>
-          <p className="text-md text-text-secondary">※ 掲載を許諾されたE-コンサルを掲載しています。</p>
+          <TopExamples />
+          <div className="mt-10">
+            <TopUpcomingSeminars />
+          </div>
         </div>
         <div className="mt-2 lg:mx-4 lg:ml-10 lg:mt-0 lg:w-[296px]">
           <TopNewerConsults />
+          {isOnboardingQuestionaryAnswered === false && (
+            <div className="my-6" data-testid="onboarding-questionary-banner">
+              <Link href="/onboarding/questionary">
+                <a>
+                  <img
+                    src="/images/onboarding/questionary_banner.png"
+                    alt="アンケートに答えて100Mediiポイント進呈"
+                    className="w-full"
+                  />
+                </a>
+              </Link>
+            </div>
+          )}
           <div className="mt-4">
             <TopNews />
           </div>

@@ -10,11 +10,9 @@ const Welcome = () => {
   return (
     <>
       <div className="h-72 bg-medii-blue-100" />
-      <div className="absolute top-0 left-0 right-0 flex items-center justify-center">
+      <div className="absolute left-0 right-0 top-0 flex items-center justify-center">
         <div className="mx-auto px-8">
-          <p className="mt-28 text-center text-xxxl font-bold text-medii-blue-base">
-            Mediiにようこそ
-          </p>
+          <p className="mt-28 text-center text-xxxl font-bold text-medii-blue-base">Mediiにようこそ</p>
           <p className="mt-6 text-md text-monotone-950 lg:text-center">
             Mediiでは医師の臨床疑問や不安を解消する3つのサービスをご利用いただけます。
             <br />
@@ -27,9 +25,9 @@ const Welcome = () => {
               imageSrc="images/document/consult.svg"
               description="臨床疑問をエキスパートの医師とチャット形式で相談できます。相談内容に適した医師をMediiがマッチングします。"
               buttonSolid="専門医に相談"
-              linkSolid="/NewChatRoom"
+              linkSolid="/newchatroom?from=welcome"
               logSolid="click-chat-in-welcome"
-              buttonOutline="使い方を見る"
+              buttonOutline="E-コンサルとは"
               linkOutline="/top?tutorial=true"
               logOutline="click-tutorial-in-welcome"
             />
@@ -39,33 +37,19 @@ const Welcome = () => {
               imageSrc="images/document/conference.svg"
               description="専門医の先生をお招きして、各診療科・症例の知見を広く提供するオンラインセミナーを実施しています。"
               buttonOutline="E-カンファを見る"
-              linkOutline="/seminar"
+              linkOutline="/seminar?fromwelcome=1"
               logOutline="click-seminar-in-welcome"
-            />
-            <CompleteCard
-              title="症例バンク"
-              imageSrc="images/document/bank.svg"
-              description="論文・ガイドラインだけではわからない、臨床経験から蓄積された知見をスライド形式で閲覧できます。"
-              buttonOutline="症例スライドを見る"
-              linkOutline={process.env.CASE_BANK_URL ?? ''}
-              logOutline="click-case-bank-in-welcome"
             />
           </div>
           <div
             onClick={async () => {
               await postEventLog({ name: 'click-top-in-welcome' });
-              router.push('/top');
+              router.push('/top?fromwelcome=1');
             }}
           >
-            <div className="mt-16 mb-4 flex cursor-pointer items-center justify-center space-x-1">
-              <p className="text-md text-text-secondary">
-                トップページに移動する
-              </p>
-              <img
-                className="mt-0.5 text-text-secondary"
-                src="icons/arrow_right_short.svg"
-                alt="arrow_right_short"
-              />
+            <div className="mb-4 mt-16 flex cursor-pointer items-center justify-center space-x-1">
+              <p className="text-md text-text-secondary">トップページに移動する</p>
+              <img className="mt-0.5 text-text-secondary" src="icons/arrow_right_short.svg" alt="arrow_right_short" />
             </div>
           </div>
         </div>

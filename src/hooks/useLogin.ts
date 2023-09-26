@@ -1,32 +1,39 @@
-import React, { useEffect } from 'react';
+import { Dispatch, FormEvent, SetStateAction, useCallback, useEffect, useMemo, useState } from 'react';
 import { useToken } from './authentication/useToken';
 import { usePostLogin } from './api/doctor/usePostLogin';
 import { useRouter } from 'next/router';
 import { mutateFetchProfile } from './api/doctor/useFetchProfile';
-
-export const loginRedirectUrlKey = 'Login:redirectUrl';
+import { loginRedirectUrlKey } from '@/data/localStorage';
 
 type Query = {
+  from?: 'case_bank';
   redirect?: string;
 };
 
 export type UseLogin = {
-  setEmail: React.Dispatch<React.SetStateAction<string>>;
-  setPassword: React.Dispatch<React.SetStateAction<string>>;
+  setEmail: Dispatch<SetStateAction<string>>;
+  setPassword: Dispatch<SetStateAction<string>>;
   errorMessage: string;
-  login: (e: React.FormEvent<HTMLFormElement>) => void;
+  nmoLoginUrl: string;
+  login: (e: FormEvent<HTMLFormElement>) => void;
+  goToRegistration: () => void;
   saveRedirectUrl: () => void;
 };
 
 export const useLogin = (): UseLogin => {
   const router = useRouter();
-  const { redirect } = router.query as Query;
-  const [redirectUrl, setRedirectUrl] = React.useState('');
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [errorMessage, setErrorMessage] = React.useState('');
+  const { redirect, from } = router.query as Query;
+  const [redirectUrl, setRedirectUrl] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const { setTokenAndMarkInitialized } = useToken();
   const { login: postLogin } = usePostLogin();
+
+  const nmoLoginUrl = useMemo(() => {
+    const url = process.env.WEB_SERVER_URL + (redirectUrl === '' ? '/top' : redirectUrl);
+    return process.env.NMO_URL + `/mreach/simple_member_register/medii?furl=${encodeURIComponent(url)}`;
+  }, [redirectUrl]);
 
   useEffect(() => {
     if (redirect) {
@@ -41,13 +48,13 @@ export const useLogin = (): UseLogin => {
     }
   }, [redirect]);
 
-  const login = React.useCallback(
-    async (e: React.FormEvent<HTMLFormElement>) => {
+  const login = useCallback(
+    async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
       const res = await postLogin(email, password).catch((error) => {
         console.error(error);
-        setErrorMessage(error.message || 'エラーが発生しました');
+        setErrorMessage(error.response?.data?.message || 'エラーが発生しました');
         return null;
       });
 
@@ -55,37 +62,56 @@ export const useLogin = (): UseLogin => {
         return;
       }
 
-      if (res.data.jwt_token) {
-        setTokenAndMarkInitialized(res.data.jwt_token);
-        mutateFetchProfile();
-        localStorage.removeItem(loginRedirectUrlKey);
-
-        router.push(redirectUrl === '' ? 'top' : redirectUrl);
+      if (!res.data.jwt_token) {
+        setErrorMessage('エラーが発生しました');
         return;
       }
-      setErrorMessage('エラーが発生しました');
+
+      if (from === 'case_bank') {
+        location.href = process.env.CASE_BANK_URL + `/login/callback?t=${res.data.jwt_token}`;
+        return;
+      }
+
+      setTokenAndMarkInitialized(res.data.jwt_token);
+      mutateFetchProfile();
+      localStorage.removeItem(loginRedirectUrlKey);
+
+      router.push(redirectUrl === '' ? 'top' : redirectUrl);
     },
-    [
-      email,
-      password,
-      postLogin,
-      redirectUrl,
-      router,
-      setTokenAndMarkInitialized,
-    ]
+    [email, from, password, postLogin, redirectUrl, router, setTokenAndMarkInitialized]
   );
 
-  const saveRedirectUrl = React.useCallback(() => {
+  const saveRedirectUrl = useCallback(() => {
     if (redirect) {
       localStorage.setItem(loginRedirectUrlKey, redirect);
     }
   }, [redirect]);
+
+  const goToRegistration = useCallback(() => {
+    const parts: string[] = [];
+
+    for (const key in router.query) {
+      const value = router.query[key];
+      if (typeof value === 'string' || value instanceof String) {
+        parts.push(`${key}=${encodeURIComponent(value as string)}`);
+      } else {
+        (value as string[]).forEach((value) => {
+          parts.push(`${key}=${encodeURIComponent(value as string)}`);
+        });
+      }
+    }
+
+    saveRedirectUrl();
+    router.push(parts.length === 0 ? '/registration' : `/registration?${parts.join('&')}`);
+  }, [router, saveRedirectUrl]);
 
   return {
     setEmail,
     setPassword,
     login,
     errorMessage,
+    nmoLoginUrl,
+    goToRegistration,
     saveRedirectUrl,
   };
 };

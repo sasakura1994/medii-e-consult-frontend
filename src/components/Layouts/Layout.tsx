@@ -16,7 +16,7 @@ export const Layout = (props: PropsType) => {
   useAuthenticationOnPage();
 
   return (
-    <div className="h-full min-h-screen w-full bg-bg">
+    <div className="h-full min-h-screen w-full bg-bg-primary pb-16 lg:pb-0">
       {!headerFigure || headerFigure === 'default' ? (
         <Header />
       ) : headerFigure === 'simple' ? (

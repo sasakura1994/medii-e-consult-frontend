@@ -65,14 +65,20 @@ const DocumentInputAuto: React.FC<DocumentInputAutoProps> = ({ setSelectedWithRe
             placeholder="連絡可能な電話番号を入力してください"
           />
         </div>
-        <div className="mt-6 flex text-left">
-          <div className="mr-1 rounded-md border border-red-500 px-1 py-0.5 text-xs font-bold text-red-500">必須</div>
-          <div className="text-left font-bold">医師免許取得年</div>
-        </div>
-        <div className="mt-2 text-left text-sm text-gray-500">（例）西暦：2022年 和暦：令和4年</div>
-        <div className="mt-1">
-          <YearInput {...eraConverter} value={year} onChange={setYear} />
-        </div>
+        {profile?.doctor_qualified_year === 9999 && (
+          <>
+            <div className="mt-6 flex text-left">
+              <div className="mr-1 rounded-md border border-red-500 px-1 py-0.5 text-xs font-bold text-red-500">
+                必須
+              </div>
+              <div className="text-left font-bold">医師免許取得年</div>
+            </div>
+            <div className="mt-2 text-left text-sm text-gray-500">（例）西暦：2022年 和暦：令和4年</div>
+            <div className="mt-1">
+              <YearInput {...eraConverter} value={year} onChange={setYear} />
+            </div>
+          </>
+        )}
       </div>
       {errorMessage && <div className="mt-5 text-center text-base font-bold text-red-400">{errorMessage}</div>}
       <div className="-mb-20 mt-7 flex justify-center lg:mb-0 lg:mt-0">

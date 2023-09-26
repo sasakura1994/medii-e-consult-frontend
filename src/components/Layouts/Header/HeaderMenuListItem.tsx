@@ -17,7 +17,9 @@ export const HeaderMenuListItem: React.FC<Props> = ({
   return (
     <li className={styles.header_menu__item}>
       <Link href={href}>
-        <a className="relative block text-[#333333] no-underline">{children}</a>
+        <a className="relative block text-md font-bold text-secondary no-underline">
+          {children}
+        </a>
       </Link>
       {badgeText && (
         <Badge

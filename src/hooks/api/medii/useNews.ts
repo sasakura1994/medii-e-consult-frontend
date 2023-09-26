@@ -109,22 +109,19 @@ export const useNews = (): UseNews => {
     setNewsList(
       response.data
         .filter((row) => {
-          const isDisplay =
-            row.document.fields.default.mapValue.fields.MQRJlwFO;
+          const isDisplay = row.document.fields.default.mapValue.fields.MQRJlwFO;
           return isDisplay?.booleanValue === true;
         })
         .slice(0, 2)
-        .map((row) => ({
-          title: row.document.fields.default.mapValue.fields.title.stringValue,
-          link:
-            'https://medii.jp/news/' +
-            row.document.fields.default.mapValue.fields.slug.stringValue,
-          cover:
-            row.document.fields.default.mapValue.fields.wp_cover?.stringValue ??
-            '', // TODO: エラーが出るので、一旦画像がない場合は空文字を入れるが、後で修正する必要あり
-          date: row.document.fields._meta.mapValue.fields.publishedAt
-            .timestampValue,
-        }))
+        .map((row) => {
+          const image = row.document.fields.default.mapValue.fields.wp_cover?.stringValue;
+          return {
+            title: row.document.fields.default.mapValue.fields.title.stringValue,
+            link: 'https://medii.jp/news/' + row.document.fields.default.mapValue.fields.slug.stringValue,
+            cover: image && image !== '' ? image : '/images/top/medii-info.png',
+            date: row.document.fields._meta.mapValue.fields.publishedAt.timestampValue,
+          };
+        })
     );
   }, [axios]);
 

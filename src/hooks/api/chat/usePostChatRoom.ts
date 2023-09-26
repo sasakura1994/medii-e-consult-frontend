@@ -5,8 +5,8 @@ import React from 'react';
 export type PostChatRoomRequestData = NewChatRoomEntity & {
   chat_draft_image_ids: string[];
   re_consult_chat_room_id?: string;
-  re_consult_file_chat_message_ids?: string[];
-  target_specialities: string[];
+  re_consult_file_chat_message_ids?: number[];
+  create_source?: { [key: string]: string };
 };
 
 export type PostChatRoomResponseData = {
@@ -20,10 +20,7 @@ export const usePostChatRoom = () => {
 
   const createNewChatRoom = React.useCallback(
     (data: PostChatRoomRequestData) => {
-      return axios.post<PostChatRoomResponseData>(
-        '/chat_room/new_chat_room',
-        data
-      );
+      return axios.post<PostChatRoomResponseData>('/chat_room/new_chat_room', data);
     },
     [axios]
   );

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render, screen } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import * as useMedicalSpeciality from '@/hooks/medicalSpeciality/useMedicalSpeciality';
 import { ConsultExampleDetail } from './ConsultExampleDetail';
 import { ConsultExampleDetailEntity } from '@/types/entities/ConsultExampleDetailEntity';
@@ -30,9 +30,7 @@ const baseConsultExample: ConsultExampleDetailEntity = {
 
 describe('ConsultExampleDetail', () => {
   beforeEach(() => {
-    const useMedicalSpecialityMock = useMedicalSpeciality as jest.Mocked<
-      typeof useMedicalSpeciality
-    >;
+    const useMedicalSpecialityMock = useMedicalSpeciality as jest.Mocked<typeof useMedicalSpeciality>;
     useMedicalSpecialityMock.useMedicalSpeciality.mockReturnValue({
       getMedicalSpecialityName: jest.fn(() => '内科'),
     } as unknown as ReturnType<typeof useMedicalSpecialityMock.useMedicalSpeciality>);
@@ -43,17 +41,13 @@ describe('ConsultExampleDetail', () => {
       ...baseConsultExample,
     };
 
-    await render(
+    render(
       <RecoilRoot>
-        <ConsultExampleDetail
-          consultExample={consultExample}
-          consultExampleMessages={[]}
-        />
+        <ConsultExampleDetail consultExample={consultExample} consultExampleMessages={[]} />
       </RecoilRoot>
     );
 
-    const firstAnswerMinutesText = screen.getByText('初回回答まで');
-    expect(firstAnswerMinutesText).toBeInTheDocument();
+    expect(await act(async () => await waitFor(() => screen.getByText('初回回答まで')))).toBeInTheDocument();
   });
 
   test('初回回答時間がない', async () => {
@@ -62,17 +56,13 @@ describe('ConsultExampleDetail', () => {
       first_answer_minutes: 0,
     };
 
-    await render(
+    render(
       <RecoilRoot>
-        <ConsultExampleDetail
-          consultExample={consultExample}
-          consultExampleMessages={[]}
-        />
+        <ConsultExampleDetail consultExample={consultExample} consultExampleMessages={[]} />
       </RecoilRoot>
     );
 
-    const firstAnswerMinutesText = screen.queryByText('初回回答まで');
-    expect(firstAnswerMinutesText).not.toBeInTheDocument();
+    expect(await act(async () => await waitFor(() => screen.queryByText('初回回答まで')))).not.toBeInTheDocument();
   });
 
   test('グループではない場合', async () => {
@@ -81,17 +71,13 @@ describe('ConsultExampleDetail', () => {
       speciality_code: 'not empty',
     };
 
-    await render(
+    render(
       <RecoilRoot>
-        <ConsultExampleDetail
-          consultExample={consultExample}
-          consultExampleMessages={[]}
-        />
+        <ConsultExampleDetail consultExample={consultExample} consultExampleMessages={[]} />
       </RecoilRoot>
     );
 
-    const specialityText = screen.getByText('内科');
-    expect(specialityText).toBeInTheDocument();
+    expect(await act(async () => await waitFor(() => screen.getByText('内科')))).toBeInTheDocument();
   });
 
   test('グループの場合', async () => {
@@ -100,19 +86,14 @@ describe('ConsultExampleDetail', () => {
       category_name: 'グループ1',
     };
 
-    await render(
+    render(
       <RecoilRoot>
-        <ConsultExampleDetail
-          consultExample={consultExample}
-          consultExampleMessages={[]}
-        />
+        <ConsultExampleDetail consultExample={consultExample} consultExampleMessages={[]} />
       </RecoilRoot>
     );
 
-    const groupText = screen.getByText('グループ1');
-    expect(groupText).toBeInTheDocument();
-    const specialityText = screen.queryByText('内科');
-    expect(specialityText).not.toBeInTheDocument();
+    expect(await act(async () => await waitFor(() => screen.getByText('グループ1')))).toBeInTheDocument();
+    expect(await act(async () => await waitFor(() => screen.queryByText('内科')))).not.toBeInTheDocument();
   });
 
   test('いいねされている', async () => {
@@ -123,15 +104,11 @@ describe('ConsultExampleDetail', () => {
 
     const { getByAltText } = await render(
       <RecoilRoot>
-        <ConsultExampleDetail
-          consultExample={consultExample}
-          consultExampleMessages={[]}
-        />
+        <ConsultExampleDetail consultExample={consultExample} consultExampleMessages={[]} />
       </RecoilRoot>
     );
 
-    const likedButtonIcon = getByAltText('いいね済み');
-    expect(likedButtonIcon).toBeInTheDocument();
+    expect(await act(async () => await waitFor(() => getByAltText('いいね済み')))).toBeInTheDocument();
   });
 
   test('メッセージがいいねされている', async () => {
@@ -164,7 +141,6 @@ describe('ConsultExampleDetail', () => {
       </RecoilRoot>
     );
 
-    const likedButtonIcon = getByAltText('いいね済み');
-    expect(likedButtonIcon).toBeInTheDocument();
+    expect(await act(async () => await waitFor(() => getByAltText('いいね済み')))).toBeInTheDocument();
   });
 });

@@ -106,10 +106,18 @@ afterEach(() => {
 
 describe('Seminar component', () => {
   test('初期表示テスト', async () => {
-    await getRender();
-    act(() => {
-      expect(screen.getByText('最新のE-カンファ')).toBeInTheDocument();
+    await act(() => {
+      render(
+        <RecoilRoot>
+          <Seminar />
+        </RecoilRoot>
+      );
     });
+
+    const text = await act(async () => {
+      return await waitFor(() => screen.getByText('最新のE-カンファ'));
+    });
+    expect(text).toBeInTheDocument();
   });
 
   test('プロフィール情報が入力されておりません。が表示されるか', async () => {
@@ -120,10 +128,19 @@ describe('Seminar component', () => {
         need_to_send_confimation: true,
       } as ProfileEntity,
     });
-    await getRender();
-    expect(
-      screen.getByText(/プロフィール情報が入力されておりません。/)
-    ).toBeInTheDocument();
+
+    await act(() => {
+      render(
+        <RecoilRoot>
+          <Seminar />
+        </RecoilRoot>
+      );
+    });
+
+    const text = await act(async () => {
+      return await waitFor(() => screen.getByText(/プロフィール情報が入力されておりません。/));
+    });
+    expect(text).toBeInTheDocument();
   });
 
   test('確認資料が提出されておりません。が表示されるか', async () => {
@@ -132,12 +149,22 @@ describe('Seminar component', () => {
         is_imperfect_profile: false,
         main_speciality: 'naika',
         need_to_send_confimation: true,
+        status: 'PROFILE',
       } as ProfileEntity,
     });
-    await getRender();
-    expect(
-      screen.getByText(/確認資料が提出されておりません。/)
-    ).toBeInTheDocument();
+
+    await act(() => {
+      render(
+        <RecoilRoot>
+          <Seminar />
+        </RecoilRoot>
+      );
+    });
+
+    const text = await act(async () => {
+      return await waitFor(() => screen.getByText(/確認資料が提出されておりません。/));
+    });
+    expect(text).toBeInTheDocument();
   });
 
   test('現在、ご提出頂いた資料を確認中です。が表示されるか', async () => {
@@ -148,10 +175,19 @@ describe('Seminar component', () => {
         need_to_send_confimation: false,
       } as ProfileEntity,
     });
-    await getRender();
-    expect(
-      screen.getByText(/現在、ご提出頂いた資料を確認中です。/)
-    ).toBeInTheDocument();
+
+    await act(() => {
+      render(
+        <RecoilRoot>
+          <Seminar />
+        </RecoilRoot>
+      );
+    });
+
+    const text = await act(async () => {
+      return await waitFor(() => screen.getByText(/現在、ご提出頂いた資料を確認中です。/));
+    });
+    expect(text).toBeInTheDocument();
   });
 
   test('モーダルが表示されないか', async () => {
@@ -163,17 +199,35 @@ describe('Seminar component', () => {
         status: 'VERIFIED',
       } as ProfileEntity,
     });
-    await getRender();
+
+    await act(() => {
+      render(
+        <RecoilRoot>
+          <Seminar />
+        </RecoilRoot>
+      );
+    });
+
     expect(
-      screen.queryByText(/プロフィール情報が入力されておりません。/)
+      await act(async () => {
+        return await waitFor(() => screen.queryByText(/プロフィール情報が入力されておりません。/));
+      })
     ).not.toBeInTheDocument();
     expect(
-      screen.queryByText(/確認資料が提出されておりません。/)
+      await act(async () => {
+        return await waitFor(() => screen.queryByText(/確認資料が提出されておりません。/));
+      })
     ).not.toBeInTheDocument();
     expect(
-      screen.queryByText(/現在、ご提出頂いた資料を確認中です。/)
+      await act(async () => {
+        return await waitFor(() => screen.queryByText(/現在、ご提出頂いた資料を確認中です。/));
+      })
     ).not.toBeInTheDocument();
-    expect(screen.getByText('最新のE-カンファ')).toBeInTheDocument();
+    expect(
+      await act(async () => {
+        return await waitFor(() => screen.getByText('最新のE-カンファ'));
+      })
+    ).toBeInTheDocument();
   });
 
   test('ボタン押下でモーダルが閉じるかテスト', async () => {
@@ -185,10 +239,19 @@ describe('Seminar component', () => {
       showModal: true,
       setShowModal: setShowModalMock,
     });
-    await getRender();
-    act(() => {
+
+    await act(() => {
+      render(
+        <RecoilRoot>
+          <Seminar />
+        </RecoilRoot>
+      );
+    });
+
+    await act(() => {
       userEvent.click(screen.getByTestId('close-modal'));
     });
+
     await waitFor(() => {
       expect(setShowModalMock).toHaveBeenCalledWith(false);
     });

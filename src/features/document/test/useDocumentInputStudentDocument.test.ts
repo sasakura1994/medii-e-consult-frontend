@@ -75,8 +75,7 @@ describe('useDocumentInputStudentDocument', () => {
   });
 
   test('ロード時に正しい値がsetImageSourceにセットされていること', () => {
-    const { setImageSource } = renderHook(() => useSelectedFile()).result
-      .current;
+    const { setImageSource } = renderHook(() => useSelectedFile()).result.current;
     renderHook(() =>
       useDocumentInputStudentDocument({
         selected: '',
@@ -126,9 +125,7 @@ describe('useDocumentInputStudentDocument', () => {
   test('uploadDocumentに失敗した場合にはsetSelectedが呼び出されないこと', async () => {
     const setSelected = jest.fn();
     (useUploadDocument as jest.Mock).mockReturnValue({
-      uploadDocument: jest
-        .fn()
-        .mockReturnValue(Promise.reject({ message: 'error' })),
+      uploadDocument: jest.fn().mockReturnValue(Promise.reject({ response: { data: { message: 'error' } } })),
     });
 
     const { submit } = renderHook(() =>

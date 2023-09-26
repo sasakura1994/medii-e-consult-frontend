@@ -1,26 +1,19 @@
-import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 import React from 'react';
 import { MedicalSpecialitySelectDialogProps } from './MedicalSpecialitySelectDialog';
 import { useMedicalSpecialitySelect } from './useMedicalSpecialitySelect';
+import { useFetchMedicalSpecialitiesWithContract } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialitiesWithContract';
 
-export const useMedicalSpecialitySelectDialog = (
-  props: MedicalSpecialitySelectDialogProps
-) => {
+export const useMedicalSpecialitySelectDialog = (props: MedicalSpecialitySelectDialogProps) => {
   const { defaultSpecialityCode, onChange } = props;
-  const {
-    getMedicalSpecialitiesForCategory,
-    isCategoryOpened,
-    medicalSpecialityCategories,
-    medicalSpecialities,
-    toggleCategory,
-  } = useMedicalSpecialitySelect();
+  const { medicalSpecialities } = useFetchMedicalSpecialitiesWithContract();
+  const { getMedicalSpecialitiesForCategory, isCategoryOpened, medicalSpecialityCategories, toggleCategory } =
+    useMedicalSpecialitySelect(medicalSpecialities);
 
-  const [selectedSpecialityCode, setSelectedSpecialityCode] =
-    React.useState<string>(defaultSpecialityCode);
+  const [selectedSpecialityCode, setSelectedSpecialityCode] = React.useState<string>(defaultSpecialityCode);
 
   const submit = React.useCallback(() => {
     onChange(selectedSpecialityCode);
-  }, [selectedSpecialityCode]);
+  }, [onChange, selectedSpecialityCode]);
 
   return {
     getMedicalSpecialitiesForCategory,

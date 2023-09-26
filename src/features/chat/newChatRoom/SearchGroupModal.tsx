@@ -8,16 +8,14 @@ import { TextField } from '@/components/Parts/Form/TextField';
 import { useSearchGroupModal } from './useSearchGroupModal';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 import { GroupDetailModal } from './GroupDetailModal';
-import { GroupEntity } from '@/types/entities/GroupEntity';
+import { SearchedGroupEntity } from '@/hooks/api/group/useSearchGroup';
 
 export type SearchGroupModalProps = {
-  onChange: (doctor: GroupEntity) => void;
+  onChange: (group: SearchedGroupEntity) => void;
   setShowModal: (isShow: boolean) => void;
 };
 
-export const SearchGroupModal: React.FC<SearchGroupModalProps> = (
-  props: SearchGroupModalProps
-) => {
+export const SearchGroupModal: React.FC<SearchGroupModalProps> = (props: SearchGroupModalProps) => {
   const { onChange, setShowModal } = props;
   const {
     getMedicalSpecialityNames,
@@ -34,10 +32,7 @@ export const SearchGroupModal: React.FC<SearchGroupModalProps> = (
     <>
       <Modal setShowModal={setShowModal} className="lg:w-[644px]">
         <div className="mx-6 my-10 lg:mx-20">
-          <ModalTitleWithCloseButton
-            title="E-コンサルするグループを選択"
-            onClose={() => setShowModal(false)}
-          />
+          <ModalTitleWithCloseButton title="E-コンサルするグループを選択" onClose={() => setShowModal(false)} />
           <div className="mt-10 flex gap-4">
             <SearchGroupModalLabelAndInput label="対象疾患" className="flex-1">
               <TextField
@@ -55,16 +50,11 @@ export const SearchGroupModal: React.FC<SearchGroupModalProps> = (
             <SearchGroupModalLabelAndInput label="診療科目" className="flex-1">
               <MedicalSpecialitySelectButton
                 specialityCode={searchConditions.specialityCode}
-                onChange={(specialityCode) =>
-                  setSearchConditions({ ...searchConditions, specialityCode })
-                }
+                onChange={(specialityCode) => setSearchConditions({ ...searchConditions, specialityCode })}
               />
             </SearchGroupModalLabelAndInput>
           </div>
-          <SearchGroupModalLabelAndInput
-            label="エリア・施設名"
-            className="mt-3"
-          >
+          <SearchGroupModalLabelAndInput label="エリア・施設名" className="mt-3">
             <TextField
               name="area"
               value={searchConditions.area}
@@ -91,12 +81,7 @@ export const SearchGroupModal: React.FC<SearchGroupModalProps> = (
             />
           </SearchGroupModalLabelAndInput>
           <div className="mt-6">
-            <PrimaryButton
-              type="button"
-              size="lg"
-              className="mx-auto w-full max-w-[260px]"
-              onClick={search}
-            >
+            <PrimaryButton type="button" size="lg" className="mx-auto w-full max-w-[260px]" onClick={search}>
               絞り込み検索
             </PrimaryButton>
           </div>
@@ -124,18 +109,10 @@ export const SearchGroupModal: React.FC<SearchGroupModalProps> = (
                 </thead>
                 <tbody>
                   {groups.map((group) => (
-                    <tr
-                      key={group.group_id}
-                      className="hover:bg-primary-light"
-                      onClick={() => setGroup(group)}
-                    >
+                    <tr key={group.group_id} className="hover:bg-primary-light" onClick={() => setGroup(group)}>
                       <td className="whitespace-nowrap py-3">{group.area}</td>
-                      <td className="whitespace-nowrap py-3">
-                        {group.disease}
-                      </td>
-                      <td className="whitespace-pre-wrap break-words py-3">
-                        {getMedicalSpecialityNames(group)}
-                      </td>
+                      <td className="whitespace-nowrap py-3">{group.disease}</td>
+                      <td className="whitespace-pre-wrap break-words py-3">{getMedicalSpecialityNames(group)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -145,11 +122,7 @@ export const SearchGroupModal: React.FC<SearchGroupModalProps> = (
         </div>
       </Modal>
       {group && (
-        <GroupDetailModal
-          group={group}
-          onSubmit={() => onChange(group)}
-          setShowModal={() => setGroup(undefined)}
-        />
+        <GroupDetailModal group={group} onSubmit={() => onChange(group)} setShowModal={() => setGroup(undefined)} />
       )}
     </>
   );

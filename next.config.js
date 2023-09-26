@@ -10,6 +10,17 @@ const nextConfig = {
     INVITATION_URL: process.env.INVITATION_URL,
     EX_WEB_DIR: process.env.EX_WEB_DIR || '',
     EX_API_DIR: process.env.EX_API_DIR || '',
+    WEB_SOCKET_URL: process.env.WEB_SOCKET_URL,
+    NMO_URL: process.env.NMO_URL,
+  },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/top',
+        permanent: true,
+      },
+    ];
   },
   basePath: process.env.EX_WEB_DIR || '',
   assetPrefix: process.env.EX_WEB_DIR || '',

@@ -2,7 +2,6 @@ import { ConsultExampleEntity } from '@/types/entities/ConsultExampleEntity';
 import Link from 'next/link';
 import React from 'react';
 import { ConsultExampleTag } from './ConsultExampleTag';
-import { useMedicalSpeciality } from '@/hooks/medicalSpeciality/useMedicalSpeciality';
 import { ConsultExampleFirstAnswerTime } from './ConsultExampleFirstAnswerTime';
 import { useConsultExample } from '@/features/consultExample/useConsultExample';
 import { dateFormat } from '@/libs/date';
@@ -14,8 +13,7 @@ type Props = {
 export const ConsultExampleListItem: React.FC<Props> = ({
   consultExample,
 }: Props) => {
-  const { getMedicalSpecialityName } = useMedicalSpeciality();
-  const { getAgeText, getGenderText } = useConsultExample();
+  const { getAgeText, getCategoryName, getGenderText } = useConsultExample();
 
   return (
     <Link href={`/example/${consultExample.example_id}`}>
@@ -31,11 +29,7 @@ export const ConsultExampleListItem: React.FC<Props> = ({
             <div className="flex gap-2">
               <div>
                 <ConsultExampleTag>
-                  {consultExample.speciality_code === ''
-                    ? consultExample.category_name
-                    : getMedicalSpecialityName(
-                        consultExample.speciality_code
-                      ) || ''}
+                  {getCategoryName(consultExample)}
                 </ConsultExampleTag>
               </div>
             </div>
