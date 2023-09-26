@@ -117,7 +117,7 @@ const Login: NextPageWithLayout = () => {
                 hover:bg-monotone-100
               "
             >
-              <img src="/images/alliance/logo-nmo-sp.png" alt="" width="100" />
+              <img src="images/alliance/logo-nmo-sp.png" alt="" width="100" />
               <div>日経メディカルアカウントでログイン</div>
             </div>
           </a>

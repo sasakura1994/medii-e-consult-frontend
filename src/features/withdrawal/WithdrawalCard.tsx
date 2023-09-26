@@ -17,7 +17,7 @@ export const WithdrawalCard = (props: Props) => {
       <a href={href} target="_blank" rel="noreferrer">
         <TertiaryButton size="large" className="flex items-center gap-1">
           <div>{buttonLabel}</div>
-          <img src="/icons/box-arrow-up-right.svg" width="16" height="16" alt="" />
+          <img src="icons/box-arrow-up-right.svg" width="16" height="16" alt="" />
         </TertiaryButton>
       </a>
     </div>

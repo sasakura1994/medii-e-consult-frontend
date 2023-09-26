@@ -15,7 +15,7 @@ export const HeaderMyPageButton = () => {
         <span className="hidden lg:inline">マイページ</span>
         <img
           className="lg:hidden"
-          src="/icons/list.svg"
+          src="icons/list.svg"
           width="32"
           height="32"
           alt="マイページ"

@@ -63,9 +63,9 @@ const Registration: NextPageWithLayout = () => {
               mb-8 flex flex-col items-stretch justify-center md:flex-row md:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]
             "
               >
-                <img src="/images/registration/left.png" className="hidden max-w-[480px] bg-white md:block" alt="" />
+                <img src="images/registration/left.png" className="hidden max-w-[480px] bg-white md:block" alt="" />
                 <img
-                  src="/images/registration/mobile_main.png"
+                  src="images/registration/mobile_main.png"
                   className="bg-white md:hidden lg:max-w-[480px]"
                   alt=""
                 />

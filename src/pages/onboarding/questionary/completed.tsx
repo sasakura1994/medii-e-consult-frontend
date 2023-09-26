@@ -30,7 +30,7 @@ const OnBoardingQuestionaryCompletedPage = () => {
           <a>
             <div className="mt-6 flex gap-1 text-md text-secondary">
               <div>トップページに移動する</div>
-              <img src="/icons/arrow-right-short.svg" alt="" width="16" height="16" />
+              <img src="icons/arrow-right-short.svg" alt="" width="16" height="16" />
             </div>
           </a>
         </Link>
