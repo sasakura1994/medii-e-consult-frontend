@@ -10,18 +10,23 @@ export const useImcompleteProfileModal = () => {
       return false;
     }
 
-    return profile.is_imperfect_profile || profile.need_to_send_confimation;
+    if (profile.registration_source === 'nmo') {
+      return false;
+    }
+
+    return profile.status === 'CREATED' || profile.status === 'PROFILE';
   }, [profile]);
 
   const url = useMemo(() => {
     if (!profile) {
       return '';
     }
-    if (profile.is_imperfect_profile) {
+    if (profile.status === 'CREATED') {
       return '/editProfile?registerMode=1';
     } else if (profile.main_speciality === '') {
+      // 何の条件かわからないので要コメント
       return '/editProfile?registerMode=1';
-    } else if (profile.status === 'PROFILE' || (profile.status === 'CREATED' && profile.need_to_send_confimation)) {
+    } else if (profile.status === 'PROFILE') {
       return '/document';
     }
     return '/EditProfile';

@@ -23,7 +23,7 @@ export const TopNotifications = () => {
       );
     }
 
-    if (profile.is_imperfect_profile) {
+    if (profile.status === 'CREATED') {
       return (
         <InlineNotification
           text="プロフィール情報が入力されておりません。サービスをご利用いただくためにプロフィールのご入力をお願いいたします。"
@@ -34,7 +34,7 @@ export const TopNotifications = () => {
       );
     }
 
-    if (profile.status === 'PROFILE' || (profile.status === 'CREATED' && profile.need_to_send_confimation)) {
+    if (profile.status === 'PROFILE') {
       return (
         <InlineNotification
           text="医師確認資料が提出されておりません。サービスをご利用いただくために医師確認資料のご提出をお願いいたします。"
@@ -50,16 +50,20 @@ export const TopNotifications = () => {
     return <></>;
   }
 
-  if (isNeedToInputProfile) {
-    return (
-      <InlineNotification
-        text="すべてのサービスをご利用いただくには、追加のプロフィール入力が必要です。"
-        dataTestId="top-notification-nmo-input-profile"
-        buttonText="プロフィール入力"
-        buttonOnClick={() => router.push('/nmo/input-profile')}
-      />
-    );
-  }
-
-  return <>{profileNotification}</>;
+  return (
+    <>
+      {isNeedToInputProfile ? (
+        <>
+          <InlineNotification
+            text="すべてのサービスをご利用いただくには、追加のプロフィール入力が必要です。"
+            dataTestId="top-notification-nmo-input-profile"
+            buttonText="プロフィール入力"
+            buttonOnClick={() => router.push('/nmo/input-profile')}
+          />
+        </>
+      ) : (
+        profileNotification
+      )}
+    </>
+  );
 };

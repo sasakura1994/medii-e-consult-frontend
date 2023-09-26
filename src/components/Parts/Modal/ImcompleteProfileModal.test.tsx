@@ -9,38 +9,62 @@ jest.mock('@/hooks/api/doctor/useFetchProfile');
 
 describe('is_imperfect_profile', () => {
   describe('message', () => {
-    test('is_imperfect_profile', async () => {
-      const useFetchProfileMock = useFetchProfileModule as jest.Mocked<typeof useFetchProfileModule>;
-      useFetchProfileMock.useFetchProfile.mockReturnValue({
-        profile: {
-          is_imperfect_profile: true,
-          main_speciality: 'naika',
-          need_to_send_confimation: true,
-        } as ProfileEntity,
-        isLoading: false,
+    describe('status === CREATED', () => {
+      test('プロフィール情報入力が必要', async () => {
+        const useFetchProfileMock = useFetchProfileModule as jest.Mocked<typeof useFetchProfileModule>;
+        useFetchProfileMock.useFetchProfile.mockReturnValue({
+          profile: {
+            main_speciality: 'naika',
+            status: 'CREATED',
+          } as ProfileEntity,
+          isLoading: false,
+        });
+
+        await act(() => {
+          render(
+            <RecoilRoot>
+              <ImcompleteProfileModal />
+            </RecoilRoot>
+          );
+        });
+
+        const text = await act(async () => {
+          return waitFor(() => screen.getByText(/プロフィール情報が入力されておりません。/));
+        });
+        expect(text).toBeInTheDocument();
       });
 
-      await act(() => {
-        render(
-          <RecoilRoot>
-            <ImcompleteProfileModal />
-          </RecoilRoot>
-        );
-      });
+      test('nmoの場合は条件に該当しても表示しない', async () => {
+        const useFetchProfileMock = useFetchProfileModule as jest.Mocked<typeof useFetchProfileModule>;
+        useFetchProfileMock.useFetchProfile.mockReturnValue({
+          profile: {
+            main_speciality: 'naika',
+            status: 'CREATED',
+            registration_source: 'nmo',
+          } as ProfileEntity,
+          isLoading: false,
+        });
 
-      const text = await act(async () => {
-        return waitFor(() => screen.getByText(/プロフィール情報が入力されておりません。/));
+        await act(() => {
+          render(
+            <RecoilRoot>
+              <ImcompleteProfileModal />
+            </RecoilRoot>
+          );
+        });
+
+        const text = await act(async () => {
+          return waitFor(() => screen.queryByText(/プロフィール情報が入力されておりません。/));
+        });
+        expect(text).not.toBeInTheDocument();
       });
-      expect(text).toBeInTheDocument();
     });
 
-    test('statusがPROFILEだと書類確認待ち', async () => {
+    test('status === PROFILE', async () => {
       const useFetchProfileMock = useFetchProfileModule as jest.Mocked<typeof useFetchProfileModule>;
       useFetchProfileMock.useFetchProfile.mockReturnValue({
         profile: {
-          is_imperfect_profile: false,
           main_speciality: 'naika',
-          need_to_send_confimation: true,
           status: 'PROFILE',
         } as ProfileEntity,
         isLoading: false,
@@ -65,9 +89,8 @@ describe('is_imperfect_profile', () => {
     const useFetchProfileMock = useFetchProfileModule as jest.Mocked<typeof useFetchProfileModule>;
     useFetchProfileMock.useFetchProfile.mockReturnValue({
       profile: {
-        is_imperfect_profile: false,
+        status: 'VERIFIED',
         main_speciality: 'naika',
-        need_to_send_confimation: false,
       } as ProfileEntity,
       isLoading: false,
     });

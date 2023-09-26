@@ -6,7 +6,7 @@ import { ProfileEntity } from '@/types/entities/profileEntity';
 import { PrimaryButton } from '../Button/PrimaryButton';
 
 const getMessage = (profile: ProfileEntity) => {
-  if (profile.is_imperfect_profile) {
+  if (profile.status === 'CREATED') {
     return (
       <>
         プロフィール情報が入力されておりません。
@@ -14,7 +14,7 @@ const getMessage = (profile: ProfileEntity) => {
         お手数ですがサービスをご利用頂くためにプロフィール画面のご入力をお願いいたします。
       </>
     );
-  } else if (profile.status === 'PROFILE' || (profile.status === 'CREATED' && profile.need_to_send_confimation)) {
+  } else if (profile.status === 'PROFILE') {
     return (
       <>
         確認資料が提出されておりません。

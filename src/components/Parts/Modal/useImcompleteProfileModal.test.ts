@@ -8,13 +8,12 @@ jest.mock('@/hooks/api/doctor/useFetchProfile');
 
 describe('useImcompleteProfileModal', () => {
   describe('url', () => {
-    test('is_imperfect_profile', async () => {
+    test('status === CREATED', async () => {
       const useFetchProfileMock = useFetchProfileModule as jest.Mocked<typeof useFetchProfileModule>;
       useFetchProfileMock.useFetchProfile.mockReturnValue({
         profile: {
-          is_imperfect_profile: true,
+          status: 'CREATED',
           main_speciality: 'naika',
-          need_to_send_confimation: false,
         } as ProfileEntity,
         isLoading: false,
       });
@@ -31,9 +30,8 @@ describe('useImcompleteProfileModal', () => {
       const useFetchProfileMock = useFetchProfileModule as jest.Mocked<typeof useFetchProfileModule>;
       useFetchProfileMock.useFetchProfile.mockReturnValue({
         profile: {
-          is_imperfect_profile: false,
+          status: 'VERIFIED',
           main_speciality: '',
-          need_to_send_confimation: false,
         } as ProfileEntity,
         isLoading: false,
       });
@@ -50,9 +48,7 @@ describe('useImcompleteProfileModal', () => {
       const useFetchProfileMock = useFetchProfileModule as jest.Mocked<typeof useFetchProfileModule>;
       useFetchProfileMock.useFetchProfile.mockReturnValue({
         profile: {
-          is_imperfect_profile: false,
           main_speciality: 'naika',
-          need_to_send_confimation: true,
           status: 'PROFILE',
         } as ProfileEntity,
         isLoading: false,
@@ -70,9 +66,8 @@ describe('useImcompleteProfileModal', () => {
       const useFetchProfileMock = useFetchProfileModule as jest.Mocked<typeof useFetchProfileModule>;
       useFetchProfileMock.useFetchProfile.mockReturnValue({
         profile: {
-          is_imperfect_profile: false,
           main_speciality: 'naika',
-          need_to_send_confimation: false,
+          status: 'VERIFIED',
         } as ProfileEntity,
         isLoading: false,
       });
@@ -124,48 +119,7 @@ describe('useImcompleteProfileModal', () => {
       useFetchProfileMock.useFetchProfile.mockReturnValue({
         profile: {
           status: 'PROFILE',
-          is_imperfect_profile: false,
           main_speciality: 'naika',
-          need_to_send_confimation: false,
-        } as ProfileEntity,
-        isLoading: false,
-      });
-      let hookResult: { current: ReturnType<typeof useImcompleteProfileModal> } | undefined;
-
-      await act(() => {
-        hookResult = renderHook(() => useImcompleteProfileModal()).result;
-      });
-
-      expect(hookResult?.current.isModalShown).toBeFalsy();
-    });
-
-    test('Allow waiting', async () => {
-      const useFetchProfileMock = useFetchProfileModule as jest.Mocked<typeof useFetchProfileModule>;
-      useFetchProfileMock.useFetchProfile.mockReturnValue({
-        profile: {
-          status: 'PROFILE',
-          is_imperfect_profile: false,
-          main_speciality: 'naika',
-          need_to_send_confimation: false,
-        } as ProfileEntity,
-        isLoading: false,
-      });
-      let hookResult: { current: ReturnType<typeof useImcompleteProfileModal> } | undefined;
-
-      await act(() => {
-        hookResult = renderHook(() => useImcompleteProfileModal()).result;
-      });
-
-      expect(hookResult?.current.isModalShown).toBeFalsy();
-    });
-
-    test('Imcomplete', async () => {
-      const useFetchProfileMock = useFetchProfileModule as jest.Mocked<typeof useFetchProfileModule>;
-      useFetchProfileMock.useFetchProfile.mockReturnValue({
-        profile: {
-          is_imperfect_profile: true,
-          main_speciality: 'naika',
-          need_to_send_confimation: true,
         } as ProfileEntity,
         isLoading: false,
       });
@@ -176,6 +130,25 @@ describe('useImcompleteProfileModal', () => {
       });
 
       expect(hookResult?.current.isModalShown).toBeTruthy();
+    });
+
+    test('nmoの場合は他の条件に関わらず非表示', async () => {
+      const useFetchProfileMock = useFetchProfileModule as jest.Mocked<typeof useFetchProfileModule>;
+      useFetchProfileMock.useFetchProfile.mockReturnValue({
+        profile: {
+          main_speciality: 'naika',
+          status: 'PROFILE',
+          registration_source: 'nmo',
+        } as ProfileEntity,
+        isLoading: false,
+      });
+      let hookResult: { current: ReturnType<typeof useImcompleteProfileModal> } | undefined;
+
+      await act(() => {
+        hookResult = renderHook(() => useImcompleteProfileModal()).result;
+      });
+
+      expect(hookResult?.current.isModalShown).toBeFalsy();
     });
   });
 });

@@ -13,7 +13,6 @@ describe('TopNotifications', () => {
       (useFetchProfile as jest.Mock).mockReturnValue({
         profile: {
           status: 'CREATED',
-          is_imperfect_profile: true,
         },
       });
 
@@ -32,8 +31,6 @@ describe('TopNotifications', () => {
       (useFetchProfile as jest.Mock).mockReturnValue({
         profile: {
           status: 'PROFILE',
-          is_imperfect_profile: false,
-          need_to_send_confimation: true,
         },
       });
 
@@ -52,8 +49,6 @@ describe('TopNotifications', () => {
       (useFetchProfile as jest.Mock).mockReturnValue({
         profile: {
           status: 'PENDING_AUTO',
-          is_imperfect_profile: false,
-          need_to_send_confimation: false,
         },
       });
 
