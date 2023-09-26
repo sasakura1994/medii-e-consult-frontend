@@ -66,7 +66,7 @@ describe('/newchatroom', () => {
     const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
     (useFetchProfileMock as jest.Mock).mockReturnValue({
       profile: {
-        is_imperfect_profile: true,
+        status: 'CREATED',
       },
     });
 
