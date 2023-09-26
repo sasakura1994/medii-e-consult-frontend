@@ -123,9 +123,8 @@ describe('Seminar component', () => {
   test('プロフィール情報が入力されておりません。が表示されるか', async () => {
     (useFetchProfile as jest.Mock).mockReturnValue({
       profile: {
-        is_imperfect_profile: true,
+        status: 'CREATED',
         main_speciality: 'naika',
-        need_to_send_confimation: true,
       } as ProfileEntity,
     });
 
@@ -146,9 +145,7 @@ describe('Seminar component', () => {
   test('確認資料が提出されておりません。が表示されるか', async () => {
     (useFetchProfile as jest.Mock).mockReturnValue({
       profile: {
-        is_imperfect_profile: false,
         main_speciality: 'naika',
-        need_to_send_confimation: true,
         status: 'PROFILE',
       } as ProfileEntity,
     });
@@ -170,9 +167,7 @@ describe('Seminar component', () => {
   test('モーダルが表示されないか', async () => {
     (useFetchProfile as jest.Mock).mockReturnValue({
       profile: {
-        is_imperfect_profile: false,
         main_speciality: 'naika',
-        need_to_send_confimation: false,
         status: 'VERIFIED',
       } as ProfileEntity,
     });
