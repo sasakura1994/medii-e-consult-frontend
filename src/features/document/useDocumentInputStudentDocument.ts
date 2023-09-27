@@ -36,8 +36,8 @@ export const useDocumentInputStudentDocument = ({ selected, setSelected }: UseDo
           await uploadDocument(newProfile);
           setSelected('studentCompleted');
         } catch (e) {
-          const error = e as { message: string };
-          setErrorMessage(error.message);
+          const error = e as { message: string; response: { data: { message: string } } };
+          setErrorMessage(error.response?.data?.message);
         }
       } else {
         setErrorMessage('ファイルの種類が不正です');

@@ -17,19 +17,16 @@ export type ChatRoomMineOwnEntity = {
   unread_count: number;
 };
 
-type FetchChatRoomMineOwnResponseData = {
+export type FetchChatRoomMineOwnResponseData = {
   next_token: string;
   rooms: ChatRoomMineOwnEntity[];
 };
 
-export const useFetchChatRoomMineOwn = (
-  props: UseFetchChatRoomMineOwnProps
-) => {
+export const useFetchChatRoomMineOwn = (props: UseFetchChatRoomMineOwnProps) => {
   const { limit } = props;
-  const { error, data, mutate } =
-    useAuthenticatedSWR<FetchChatRoomMineOwnResponseData>(
-      `/chat_room/mine/own${limit && '?limit=' + limit}`
-    );
+  const { error, data, mutate } = useAuthenticatedSWR<FetchChatRoomMineOwnResponseData>(
+    `/chat_room/mine/own${limit && '?limit=' + limit}`
+  );
 
   return {
     error,

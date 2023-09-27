@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import '@/styles/globals.scss';
 import '@/styles/swiperjs-custom.scss';
 import 'react-toastify/dist/ReactToastify.css';
+import 'react-popper-tooltip/dist/styles.css';
 import { SWRConfig } from 'swr';
 import { useFetcher } from '@/hooks/network/useFetcher';
 import { CookiesProvider } from 'react-cookie';
@@ -72,6 +73,12 @@ const AppInner = ({ Component, pageProps }: AppPropsWithLayout) => {
 const App = (props: AppPropsWithLayout) => {
   const router = useRouter();
   const handleStart = (url: string) => {
+    const absoluteUrl = new URL(url, window.location.origin);
+    const pathname = absoluteUrl.pathname.toLowerCase();
+    // 同じページに遷移する場合は画面のリダイレクトを行わない
+    if (router.pathname.toLowerCase() === pathname) {
+      return;
+    }
     if (
       [
         '/',
@@ -94,9 +101,10 @@ const App = (props: AppPropsWithLayout) => {
         '/seminar',
         '/seminar/archives',
         '/top',
-      ].some((str) => url.toLowerCase().includes(str))
+      ].some((str) => pathname.includes(str))
     ) {
-      window.location.href = url.toLowerCase();
+      absoluteUrl.pathname = pathname;
+      window.location.href = absoluteUrl.toString();
       throw 'routeChange aborted.';
     }
   };
@@ -106,6 +114,7 @@ const App = (props: AppPropsWithLayout) => {
     return () => {
       router.events.off('routeChangeStart', handleStart);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 
   return (

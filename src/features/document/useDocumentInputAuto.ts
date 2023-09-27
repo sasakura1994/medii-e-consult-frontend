@@ -18,9 +18,6 @@ export const useDocumentInputAuto = ({ setSelectedWithRedirect }: UseDocumentInp
 
   useEffect(() => {
     if (profile) {
-      if (profile.doctor_qualified_year !== 9999) {
-        setYear(profile.doctor_qualified_year);
-      }
       setTel(profile.tel);
     }
   }, [profile, setTel]);
@@ -28,15 +25,17 @@ export const useDocumentInputAuto = ({ setSelectedWithRedirect }: UseDocumentInp
   const submit = useCallback(async () => {
     if (profile) {
       const newProfile = { ...profile };
-      newProfile.doctor_qualified_year = year;
+      if (year > 0) {
+        newProfile.doctor_qualified_year = year;
+      }
       newProfile.confimation_type = 'auto';
       newProfile.tel = tel;
       try {
         await uploadDocument(newProfile);
         setSelectedWithRedirect('completed');
       } catch (e) {
-        const error = e as { message: string };
-        setErrorMessage(error.message);
+        const error = e as { message: string; response: { data: { message: string } } };
+        setErrorMessage(error.response?.data?.message);
       }
     }
   }, [profile, year, tel, uploadDocument, setSelectedWithRedirect]);

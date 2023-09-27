@@ -4,7 +4,6 @@ import { ConsultExampleMessageEntity } from '@/types/entities/ConsultExampleMess
 import React from 'react';
 import { ConsultExampleTag } from './ConsultExampleTag';
 import { useConsultExample } from '@/features/consultExample/useConsultExample';
-import { useMedicalSpeciality } from '@/hooks/medicalSpeciality/useMedicalSpeciality';
 import { ConsultExampleFirstAnswerTime } from './ConsultExampleFirstAnswerTime';
 import { dateFormat } from '@/libs/date';
 import { ConsultExampleActions } from './ConsultExampleActions';
@@ -18,12 +17,8 @@ type Props = {
   consultExampleMessages: ConsultExampleMessageEntity[];
   onComment?: () => void;
   onShowComments?: () => void;
-  onCommentForMessage?: (
-    consultExampleMessage: ConsultExampleMessageEntity
-  ) => void;
-  onShowCommentsForMessage?: (
-    consultExampleMessage: ConsultExampleMessageEntity
-  ) => void;
+  onCommentForMessage?: (consultExampleMessage: ConsultExampleMessageEntity) => void;
+  onShowCommentsForMessage?: (consultExampleMessage: ConsultExampleMessageEntity) => void;
   onShowAllComments?: () => void;
 };
 
@@ -36,42 +31,29 @@ export const ConsultExampleDetail: React.FC<Props> = ({
   onShowAllComments,
   onShowCommentsForMessage,
 }: Props) => {
-  const { getMedicalSpecialityName } = useMedicalSpeciality();
-  const { getAgeText, getGenderText } = useConsultExample();
-  const {
-    likeAndMutate,
-    likeMessageAndMutate,
-    unlikeAndMutate,
-    unlikeMessageAndMutate,
-  } = useConsultExampleActions(consultExample.example_id);
+  const { getAgeText, getCategoryName, getGenderText } = useConsultExample();
+  const { likeAndMutate, likeMessageAndMutate, unlikeAndMutate, unlikeMessageAndMutate } = useConsultExampleActions(
+    consultExample.example_id
+  );
 
   return (
     <>
       <Card className="px-5 py-10 lg:px-10">
         <div className="flex gap-2">
-          <div>
-            <ConsultExampleTag>
-              {consultExample.speciality_code !== ''
-                ? getMedicalSpecialityName(consultExample.speciality_code)
-                : consultExample.category_name}
-            </ConsultExampleTag>
+          <div className="flex-grow">
+            <ConsultExampleTag>{getCategoryName(consultExample)}</ConsultExampleTag>
           </div>
-          <div className="flex flex-1 flex-col items-end gap-4 lg:flex-row lg:items-center lg:justify-between lg:gap-0">
+          <div
+            className="flex flex-none flex-col items-end gap-4
+          lg:flex-row lg:items-center lg:justify-between lg:gap-0"
+          >
             {consultExample.first_answer_minutes > 0 ? (
-              <ConsultExampleFirstAnswerTime
-                firstAnswerMinutes={consultExample.first_answer_minutes}
-              />
+              <ConsultExampleFirstAnswerTime firstAnswerMinutes={consultExample.first_answer_minutes} />
             ) : (
               <div></div>
             )}
             <div className="flex items-center text-sm lg:text-primary">
-              <img
-                className="lg:hidden"
-                src="/icons/good_out.svg"
-                width="24"
-                height="24"
-                alt="いいねの数"
-              />
+              <img className="lg:hidden" src="/icons/good_out.svg" width="24" height="24" alt="いいねの数" />
               <img
                 className="hidden lg:block"
                 src="/icons/good_out_primary.svg"
@@ -114,12 +96,8 @@ export const ConsultExampleDetail: React.FC<Props> = ({
         <div className="mt-4 text-2xl font-bold">{consultExample.title}</div>
         <div className="mt-5 flex flex-col justify-between text-sm lg:mt-10 lg:flex-row">
           <div className="flex gap-1">
-            {consultExample.age !== null && (
-              <div>{getAgeText(consultExample.age)}</div>
-            )}
-            <div>
-              {getGenderText(consultExample.gender, consultExample.age)}
-            </div>
+            {consultExample.age !== null && <div className="whitespace-nowrap">{getAgeText(consultExample.age)}</div>}
+            <div className="whitespace-nowrap">{getGenderText(consultExample.gender, consultExample.age)}</div>
             <div>{consultExample.disease_name}</div>
           </div>
           <div className="text-right">
@@ -177,11 +155,9 @@ export const ConsultExampleDetail: React.FC<Props> = ({
             <br />
             オンラインを通して、専門・知見のある医師に質問・相談することができます
           </p>
-          <div className="mt-10 text-center font-medium text-primary">
-            小さな課題でも、まずは相談してみませんか？
-          </div>
+          <div className="mt-10 text-center font-medium text-primary">小さな課題でも、まずは相談してみませんか？</div>
           <div className="mb-20 mt-4 flex justify-center lg:mb-10">
-            <Link href="/newchatroom">
+            <Link href={`/newchatroom?from=example_${consultExample.example_id}`}>
               <a>
                 <PrimaryButton>匿名でコンサル作成</PrimaryButton>
               </a>

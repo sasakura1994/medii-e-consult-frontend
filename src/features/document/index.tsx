@@ -10,13 +10,7 @@ import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 import { useProfile } from '@/hooks/useProfile';
 import DocumentInputStudentDocument from './DocumentInputStudentDocument';
 
-export type DocumentSelected =
-  | ''
-  | 'number'
-  | 'document'
-  | 'auto'
-  | 'completed'
-  | 'studentCompleted';
+export type DocumentSelected = '' | 'number' | 'document' | 'auto' | 'completed' | 'studentCompleted';
 
 export const Document = () => {
   const [selected, setSelected] = useState<DocumentSelected>('');
@@ -36,11 +30,7 @@ export const Document = () => {
       setSelected(value);
       if (value === 'completed' && localStorage) {
         const savedRedirectUrl = localStorage.getItem(loginRedirectUrlKey);
-        if (
-          savedRedirectUrl &&
-          savedRedirectUrl !== '' &&
-          savedRedirectUrl.toLocaleLowerCase() !== '/top'
-        ) {
+        if (savedRedirectUrl && savedRedirectUrl !== '' && savedRedirectUrl.toLocaleLowerCase() !== '/top') {
           router.push(savedRedirectUrl);
         } else {
           routerPushToWelcomePage();
@@ -53,7 +43,7 @@ export const Document = () => {
 
   if (!profile) return <></>;
 
-  if (profile.is_invited || profile.is_skip_confirmation_by_utm_source) {
+  if (profile.is_invited || profile.is_skip_confirmation_by_utm_source || profile.is_huf_user) {
     router.push('/welcome');
     return <></>;
   }
@@ -63,10 +53,7 @@ export const Document = () => {
       <Container className="mt-4 lg:pb-4">
         <div className="mt-5 flex h-full w-full flex-col items-center justify-center">
           <h1 className="text-2xl font-bold lg:mt-5">Medii 会員登録</h1>
-          <DocumentInputStudentDocument
-            selected={selected}
-            setSelected={setSelected}
-          />
+          <DocumentInputStudentDocument selected={selected} setSelected={setSelected} />
         </div>
       </Container>
     );
@@ -84,19 +71,9 @@ export const Document = () => {
             <DocumentTypeSelect setSelected={setSelected} />
           </div>
         )}
-        {selected === 'number' && (
-          <DoctorNumberForm setSelectedWithRedirect={setSelectedWithRedirect} />
-        )}
-        {selected === 'document' && (
-          <DocumentInputDocument
-            setSelectedWithRedirect={setSelectedWithRedirect}
-          />
-        )}
-        {selected === 'auto' && (
-          <DocumentInputAuto
-            setSelectedWithRedirect={setSelectedWithRedirect}
-          />
-        )}
+        {selected === 'number' && <DoctorNumberForm setSelectedWithRedirect={setSelectedWithRedirect} />}
+        {selected === 'document' && <DocumentInputDocument setSelectedWithRedirect={setSelectedWithRedirect} />}
+        {selected === 'auto' && <DocumentInputAuto setSelectedWithRedirect={setSelectedWithRedirect} />}
       </div>
     </Container>
   );

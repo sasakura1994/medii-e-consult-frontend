@@ -6,17 +6,11 @@ import { TextField } from '@/components/Parts/Form/TextField';
 import { usePasswordResetRequest } from '@/features/password/passwordResetRequest/usePasswordResetRequest';
 import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
-import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
+import PrimaryButton from '@/components/Button/PrimaryButton';
 
 const PasswordResetRequestPage: NextPageWithLayout = () => {
-  const {
-    errorMessage,
-    isCompleted,
-    isSending,
-    mailAddress,
-    sendPasswordResetRequest,
-    setMailAddress,
-  } = usePasswordResetRequest();
+  const { errorMessage, isCompleted, isSending, mailAddress, sendPasswordResetRequest, setMailAddress } =
+    usePasswordResetRequest();
 
   return (
     <>
@@ -26,8 +20,8 @@ const PasswordResetRequestPage: NextPageWithLayout = () => {
             <h1 className="text-center text-2xl">Medii パスワードリセット</h1>
             <form onSubmit={sendPasswordResetRequest}>
               <div className="mt-4 flex justify-center">
-                <div className='mx-auto w-52'>
-                  <div className="font-bold text-left">メールアドレス</div>
+                <div className="mx-auto w-52">
+                  <div className="text-left font-bold">メールアドレス</div>
                   <div className="mt-1">
                     <TextField
                       name="mail_address"
@@ -39,18 +33,16 @@ const PasswordResetRequestPage: NextPageWithLayout = () => {
                   </div>
                   {!isSending ? (
                     <div className="my-6 text-center">
-                      <PrimaryButton type="submit">送信</PrimaryButton>
+                      <PrimaryButton type="submit" className="mx-auto w-[100px]" size="large">
+                        送信
+                      </PrimaryButton>
                     </div>
                   ) : (
                     <div className="mt-4 text-center">
                       <SpinnerBorder />
                     </div>
                   )}
-                  {errorMessage !== '' && (
-                    <ErrorMessage className="text-center">
-                      {errorMessage}
-                    </ErrorMessage>
-                  )}
+                  {errorMessage !== '' && <ErrorMessage className="text-center">{errorMessage}</ErrorMessage>}
                 </div>
               </div>
             </form>

@@ -6,19 +6,22 @@ export type ModalPropsType = {
   className?: string;
   isCenter?: boolean;
   setShowModal?: (isShow: boolean) => void;
+  dataTestId?: string;
 };
 
 export const Modal: React.FC<ModalPropsType> = (props) => {
-  const { children, className } = props;
+  const { children, className, dataTestId } = props;
   const { hideModal, modalRef } = useModal(props);
 
   return (
     <div
       ref={modalRef}
-      className={`modal fixed left-0 top-0 z-[200] h-screen w-screen overflow-y-auto bg-black/20 ${
+      className={`modal fixed left-0 top-0 z-[200] w-screen overflow-y-auto bg-bg-overlay ${
         props.isCenter === true ? 'flex items-center justify-center' : ''
       }`}
+      style={{ height: '100dvh' }}
       onMouseDown={hideModal}
+      data-testid={dataTestId}
     >
       <div
         className={`rounded border border-[#d5d5d5] bg-white ${className} z-[210] mx-auto ${

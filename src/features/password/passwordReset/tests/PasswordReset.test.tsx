@@ -1,7 +1,7 @@
 import React from 'react';
 
 import userEvent from '@testing-library/user-event';
-import { render, screen, act } from '@testing-library/react';
+import { render, screen, act, waitFor } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
 import * as apiClient from '@/libs/apiClient';
 import { AxiosInstance } from 'axios';
@@ -40,7 +40,7 @@ describe('PasswordReset', () => {
       userEvent.click(screen.getByRole('button'));
     });
 
-    const headingEditProfileEdit = screen.getByTestId('result-text');
+    const headingEditProfileEdit = await act(async () => await waitFor(() => screen.getByTestId('result-text')));
     expect(headingEditProfileEdit).toBeInTheDocument();
   });
 });
