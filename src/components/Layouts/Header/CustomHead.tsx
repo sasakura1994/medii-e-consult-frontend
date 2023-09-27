@@ -31,7 +31,6 @@ export const CustomHead: React.FC<PropsType> = (props) => {
     <Head>
       <meta charSet="utf-8"></meta>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <link rel="icon" href="/favicon.ico" />
       <title>{pageTitle}</title>
       {description && <meta name="description" content={description} />}
     </Head>

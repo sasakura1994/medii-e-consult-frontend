@@ -8,6 +8,7 @@ export const Document = () => {
       {/* This head tag is common to all pages */}
       <Head>
         <base href={baseDir} />
+        <link rel="icon" href="favicon.ico" />
       </Head>
       <body>
         <Main />
