@@ -40,7 +40,7 @@ const Archives: NextPage = () => {
           <div>
             <div className="grid grid-cols-[1fr] gap-4 lg:grid-cols-[1fr_1fr]">
               {seminars?.map((seminar) => (
-                <SeminarCard seminar={seminar} key={seminar.seminar_id} />
+                <SeminarCard seminar={seminar} key={seminar.seminar_id} className="h-full" />
               ))}
             </div>
           </div>
