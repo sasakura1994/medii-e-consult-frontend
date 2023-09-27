@@ -75,7 +75,7 @@ const Archives: NextPage = () => {
             </Link>
           </div>
           <p className="text-center text-sm">
-            ※アーカイブ動画に表示している医師の方々の経歴などの情報は、セミナー当時のものとなっております。
+            ※アーカイブ動画に表示している医師の方々の経歴などの情報は、E-カンファ当時のものとなっております。
           </p>
         </div>
       </div>
