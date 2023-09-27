@@ -113,6 +113,8 @@ export type UseNewChatRoom = {
 
 export const useNewChatRoom = (): UseNewChatRoom => {
   const router = useRouter();
+  console.log(router);
+  console.log(location.search);
   const query = router.query as NewChatRoomQuery;
 
   const [mode, setMode] = useState<Mode>('input');
