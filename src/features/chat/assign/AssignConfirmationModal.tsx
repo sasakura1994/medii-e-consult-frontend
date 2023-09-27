@@ -1,9 +1,9 @@
 import React from 'react';
 import { Modal } from '@/components/Parts/Modal/Modal';
-import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
-import { GrayButton } from '@/components/Parts/Button/GrayButton';
+import PrimaryButton from '@/components/Button/PrimaryButton';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
+import SecondaryButton from '@/components/Button/SecondaryButton';
 
 type Props = {
   errorMessage?: string;
@@ -26,27 +26,27 @@ export const AssignConfirmationModal: React.FC<Props> = ({
             本コンサルの回答医として担当しますか？
           </div>
           <p className="mt-4 text-center">
-            担当後は速やかに質問医にメッセージを送ってください。
+            担当いただきましたら、お早めに質問医にメッセージをお送りいただけますと幸甚に存じます。
           </p>
           {!isSending ? (
             <>
               <div className="mt-[60px] flex flex-col gap-10 lg:flex-row-reverse lg:gap-4">
                 <PrimaryButton
                   type="button"
-                  size="lg"
+                  size="large"
                   className="w-full flex-1 break-keep"
                   onClick={onSubmit}
                 >
                   回答医として担当する
                 </PrimaryButton>
-                <GrayButton
+                <SecondaryButton
                   type="button"
-                  size="lg"
+                  size="large"
                   className="w-full flex-1 break-keep"
                   onClick={() => setShowModal(false)}
                 >
                   戻る
-                </GrayButton>
+                </SecondaryButton>
               </div>
               {errorMessage && (
                 <ErrorMessage className="mt-8 text-center">
