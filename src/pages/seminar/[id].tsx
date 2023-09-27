@@ -12,6 +12,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { getSeminarDateTime } from '@/features/seminar/useSeminar';
+import { AboutTicketModal } from '@/components/Parts/Modal/AboutTicketModal';
 
 const Seminar: NextPage = () => {
   const router = useRouter();
@@ -190,6 +191,7 @@ const Seminar: NextPage = () => {
           ))}
         </Swiper>
       </div>
+      {showModal && <AboutTicketModal setShowModal={setShowModal} />}
       {isTicketConfirmDialogShown && (
         <SeminarConfirmModal
           setShowModal={setIsTicketConfirmDialogShown}
