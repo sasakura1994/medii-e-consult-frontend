@@ -9,11 +9,13 @@ ARG web_server_url
 ARG case_bank_url
 ARG ex_api_dir
 ARG ex_web_dir
+ARG invitation_url
 ENV ENDPOINT_URL=$endpoint_url
 ENV WEB_SERVER_URL=$web_server_url
 ENV CASE_BANK_URL=$case_bank_url
 ENV EX_WEB_DIR=$ex_web_dir
 ENV EX_API_DIR=$ex_api_dir
+ENV INVITATION_URL=$invitation_url
 
 RUN npm ci
 RUN npm run build
