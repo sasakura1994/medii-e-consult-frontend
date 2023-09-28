@@ -2,19 +2,18 @@ import { renderHook, act } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
 import { useNotifySettings } from '../useNotifySettings';
 import * as useFetchProfileModule from '@/hooks/api/doctor/useFetchProfile';
-import * as useUpdateProfileModule from '@/hooks/api/doctor/useUpdateProfile';
 import { ProfileEntity } from '@/types/entities/profileEntity';
+import { useUpdateNotifySettings } from '@/hooks/api/doctor/useUpdateNotifySettings';
 
 jest.mock('@/hooks/api/doctor/useFetchProfile');
-jest.mock('@/hooks/api/doctor/useUpdateProfile');
+jest.mock('@/hooks/api/doctor/useUpdateNotifySettings');
 
 type UseNotifySettingsType = ReturnType<typeof useNotifySettings>;
 
 describe('NotifySettings', () => {
   beforeEach(() => {
-    const useUpdateProfileMock = useUpdateProfileModule as jest.Mocked<typeof useUpdateProfileModule>;
-    useUpdateProfileMock.useUpdateProfile.mockReturnValue({
-      updateProfile: jest.fn().mockResolvedValue({}),
+    (useUpdateNotifySettings as jest.Mock).mockReturnValue({
+      updateNotifySettings: jest.fn().mockResolvedValue({}),
     });
   });
 
@@ -43,8 +42,8 @@ describe('NotifySettings', () => {
       hoooResult?.current.changeNotifyNew(target);
     });
 
-    expect(hoooResult?.current.profile?.is_mail_notify).toBe(true);
-    expect(hoooResult?.current.profile?.is_push_notify).toBe(true);
+    expect(hoooResult?.current.notifySettings?.is_mail_notify).toBe(true);
+    expect(hoooResult?.current.notifySettings?.is_push_notify).toBe(true);
   });
 
   test('メール通知を選択した場合に状態が変わること', async () => {
@@ -71,8 +70,8 @@ describe('NotifySettings', () => {
       hoooResult?.current.changeNotifyNew(target);
     });
 
-    expect(hoooResult?.current.profile?.is_mail_notify).toBe(true);
-    expect(hoooResult?.current.profile?.is_push_notify).toBe(false);
+    expect(hoooResult?.current.notifySettings?.is_mail_notify).toBe(true);
+    expect(hoooResult?.current.notifySettings?.is_push_notify).toBe(false);
   });
 
   test('プッシュ通知を選択した場合に状態が変わること', async () => {
@@ -99,8 +98,8 @@ describe('NotifySettings', () => {
       hoooResult?.current.changeNotifyNew(target);
     });
 
-    expect(hoooResult?.current.profile?.is_mail_notify).toBe(false);
-    expect(hoooResult?.current.profile?.is_push_notify).toBe(true);
+    expect(hoooResult?.current.notifySettings?.is_mail_notify).toBe(false);
+    expect(hoooResult?.current.notifySettings?.is_push_notify).toBe(true);
   });
 
   test('メール通知を受け取るを選択した場合に状態が変わること', async () => {
@@ -126,7 +125,7 @@ describe('NotifySettings', () => {
       hoooResult?.current.changeNotifySeminar(target);
     });
 
-    expect(hoooResult?.current.profile?.not_seminar_mail_target).toBe(false);
+    expect(hoooResult?.current.notifySettings?.not_seminar_mail_target).toBe(false);
   });
 
   test('メール通知を受け取らないを選択した場合に状態が変わること', async () => {
@@ -152,7 +151,7 @@ describe('NotifySettings', () => {
       hoooResult?.current.changeNotifySeminar(target);
     });
 
-    expect(hoooResult?.current.profile?.not_seminar_mail_target).toBe(true);
+    expect(hoooResult?.current.notifySettings?.not_seminar_mail_target).toBe(true);
   });
 
   test('通知設定の更新が正常に完了した場合 isError は false であること', async () => {
