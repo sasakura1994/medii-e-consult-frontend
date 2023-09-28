@@ -17,6 +17,28 @@ describe('NotifySettings', () => {
     });
   });
 
+  test('初期化時にメールもプッシュもオフの場合は両方オンにする', async () => {
+    const useFetchProfileMock = useFetchProfileModule as jest.Mocked<typeof useFetchProfileModule>;
+    useFetchProfileMock.useFetchProfile.mockReturnValue({
+      profile: {
+        is_mail_notify: false,
+        is_push_notify: false,
+      } as ProfileEntity,
+      isLoading: false,
+    });
+
+    let hoooResult: { current: UseNotifySettingsType } | undefined;
+    await act(() => {
+      // useNotifySettings が呼ばれると 非同期（useFetchProfile）が走るので act で処理の完了を待つ
+      hoooResult = renderHook(() => useNotifySettings(), {
+        wrapper: RecoilRoot,
+      }).result;
+    });
+
+    expect(hoooResult?.current.notifySettings?.is_mail_notify).toBe(true);
+    expect(hoooResult?.current.notifySettings?.is_push_notify).toBe(true);
+  });
+
   test('メール・プッシュ通知両方受け取るを選択した場合に状態が変わること', async () => {
     const useFetchProfileMock = useFetchProfileModule as jest.Mocked<typeof useFetchProfileModule>;
     useFetchProfileMock.useFetchProfile.mockReturnValue({

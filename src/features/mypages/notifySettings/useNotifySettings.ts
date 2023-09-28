@@ -32,8 +32,8 @@ export const useNotifySettings = (): UseNotifySettings => {
     }
 
     setNotifySettings({
-      is_mail_notify: profile.is_mail_notify,
-      is_push_notify: profile.is_push_notify,
+      is_mail_notify: !profile.is_mail_notify && !profile.is_push_notify ? true : profile.is_mail_notify,
+      is_push_notify: !profile.is_mail_notify && !profile.is_push_notify ? true : profile.is_push_notify,
       not_seminar_mail_target: profile.not_seminar_mail_target,
     });
     setIsInitialized(true);
