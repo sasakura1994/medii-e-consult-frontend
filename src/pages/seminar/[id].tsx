@@ -12,7 +12,6 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { getSeminarDateTime } from '@/features/seminar/useSeminar';
-import { AboutTicketModal } from '@/components/Parts/Modal/AboutTicketModal';
 import { ImcompleteProfileModal } from '@/components/Parts/Modal/ImcompleteProfileModal';
 
 const Seminar: NextPage = () => {
@@ -29,8 +28,8 @@ const Seminar: NextPage = () => {
     setIsTicketConfirmDialogShown,
     setIsTicketNotEnoughDialogShown,
   } = UseSeminarDetail(id as string);
-  const [showModal, setShowModal] = React.useState(false);
   const [, setSwiperRef] = React.useState<SwiperRef | null>(null);
+
   return (
     <>
       <div
@@ -194,7 +193,6 @@ const Seminar: NextPage = () => {
             ))}
           </Swiper>
         </div>
-        {showModal && <AboutTicketModal setShowModal={setShowModal} />}
         {isTicketConfirmDialogShown && (
           <SeminarConfirmModal
             setShowModal={setIsTicketConfirmDialogShown}
