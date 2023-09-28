@@ -64,7 +64,7 @@ export const AlreadyAssigned: React.FC<Props> = ({
             </Container>
           </div>
           <div
-            className="fixed bottom-0 left-0 right-0 p-5 text-center"
+            className="fixed bottom-12 left-0 right-0 p-5 text-center lg:bottom-0"
             style={{ backgroundColor: 'rgba(239, 243, 246, 0.8)' }}
           >
             <Link href={`/example/${consultExample.example_id}`}>
