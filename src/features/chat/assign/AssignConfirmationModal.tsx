@@ -30,11 +30,11 @@ export const AssignConfirmationModal: React.FC<Props> = ({
           </p>
           {!isSending ? (
             <>
-              <div className="mt-[60px] flex flex-col gap-10 lg:flex-row-reverse lg:gap-4">
+              <div className="mt-[60px] flex flex-col gap-10 px-6 lg:px-0 lg:flex-row-reverse lg:gap-4">
                 <PrimaryButton
                   type="button"
                   size="large"
-                  className="w-full flex-1 break-keep"
+                  className="mx-12 lg:mx-0 lg:w-full lg:flex-1 lg:break-keep"
                   onClick={onSubmit}
                 >
                   回答医として担当する
@@ -42,7 +42,7 @@ export const AssignConfirmationModal: React.FC<Props> = ({
                 <SecondaryButton
                   type="button"
                   size="large"
-                  className="w-full flex-1 break-keep"
+                  className="mx-12 lg:mx-0 lg:w-full lg:flex-1 lg:break-keep"
                   onClick={() => setShowModal(false)}
                 >
                   戻る
