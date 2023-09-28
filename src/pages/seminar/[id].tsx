@@ -28,6 +28,7 @@ const Seminar: NextPage = () => {
     setIsTicketConfirmDialogShown,
     setIsTicketNotEnoughDialogShown,
   } = UseSeminarDetail(id as string);
+  const [showModal, setShowModal] = React.useState(false);
   const [, setSwiperRef] = React.useState<SwiperRef | null>(null);
   return (
     <div
