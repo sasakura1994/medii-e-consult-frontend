@@ -13,7 +13,7 @@ export const SeminarCard: React.FC<Props> = ({ seminar, className }: Props) => {
       className={`m-auto mb-2 w-[374px] rounded-2xl  border bg-white shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] ${className ?? ''
         }`}
     >
-      <List href={`/seminar/${seminar.seminar_id}`}>
+      <Link href={`/seminar/${seminar.seminar_id}`}>
         <a className="block p-6" >
           <div className="w-full">
             <img src={seminar.image_url} className="aspect-video w-full" alt="" />
@@ -28,7 +28,7 @@ export const SeminarCard: React.FC<Props> = ({ seminar, className }: Props) => {
                 className={`absolute bottom-0 left-2 top-0 m-auto flex h-14 w-14 items-center justify-center 
               rounded-full ${seminar.movie_url ? 'bg-primary' : 'bg-[#f5847d]'}`}
               >
-                <img src="/images/seminar/key_locked.svg" alt="" />
+                <img src="images/seminar/key_locked.svg" alt="" />
               </div>
             </div>
             <div className="lg:mx-3">
@@ -42,7 +42,7 @@ export const SeminarCard: React.FC<Props> = ({ seminar, className }: Props) => {
             </div>
           </div>
         </a>
-      </List>
+      </Link>
     </div>
   );
 };
