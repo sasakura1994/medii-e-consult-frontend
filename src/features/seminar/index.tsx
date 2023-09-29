@@ -7,6 +7,8 @@ import { SeminarCard } from './SeminarCard';
 import SecondaryButton from '@/components/Button/SecondaryButton';
 import { useSeminar } from './useSeminar';
 import { ImcompleteProfileModal } from '@/components/Parts/Modal/ImcompleteProfileModal';
+import PrimaryButton from '@/components/Button/PrimaryButton';
+import { AboutTicketModal } from '@/components/Parts/Modal/AboutTicketModal';
 
 export const Seminar = () => {
   const { seminars, upcomingSeminars, ticketCount, showModal, setShowModal } =
@@ -84,37 +86,7 @@ export const Seminar = () => {
           </div>
         </div>
 
-        {showModal && (
-          <Modal setShowModal={setShowModal} className="lg:w-[800px]">
-            <div className="align-center relative flex flex-col items-center bg-white px-6 py-4 lg:px-28 lg:py-20">
-              <img
-                data-testid="close-modal"
-                onClick={() => setShowModal(false)}
-                src="icons/close_primary.svg"
-                className="absolute right-4 top-4 lg:right-10 lg:top-14"
-                alt=""
-              />
-              <h3 className="text-center text-2xl text-primary">
-                チケットとは?
-              </h3>
-              <p className="py-10">
-                チケットとはE-カンファアーカイブ動画を閲覧するために必要なものです。
-                <br />
-                E-コンサルで相談するとチケット1枚獲得できます。
-              </p>
-              <img
-                className="hidden md:block"
-                src="images/seminar/about_ticket_pc.png"
-                alt=""
-              />
-              <img
-                className="md:hidden"
-                src="images/seminar/about_ticket_sp.png"
-                alt=""
-              />
-            </div>
-          </Modal>
-        )}
+        { showModal && <AboutTicketModal setShowModal={setShowModal} />}
         <ImcompleteProfileModal />
       </div>
     );
