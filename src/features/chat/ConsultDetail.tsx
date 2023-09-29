@@ -18,6 +18,7 @@ import { OpenConsultDetailButton } from './OpenConsultDetailButton';
 import { ChatGroupMemberModal } from './ChatGroupMemberModal';
 import { ChatReplyRequestModal } from './ChatReplyRequestModal';
 import { ChatTempResolveRequestModal } from './ChatTempResolveRequestModal';
+import { CloseChatRoomModal } from './CloseChatRoomModal';
 
 type ConsultDetailProps = {
   publishmentStatusData?: {
@@ -66,6 +67,8 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     setIsOpenReplyRequestModal,
     isOpenTempResolveRequestModal,
     setIsOpenTempResolveRequestModal,
+    isOpenCloseChatRoomModal,
+    setIsOpenCloseChatRoomModal,
     getMedicalSpecialityName,
     getExperienceYear,
   } = useConsultDetail({
@@ -182,7 +185,18 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
         <ChatReplyRequestModal setIsOpen={setIsOpenReplyRequestModal} chatRoomData={chatRoomData} />
       )}
       {chatRoomData && isOpenTempResolveRequestModal && (
-        <ChatTempResolveRequestModal setIsOpen={setIsOpenTempResolveRequestModal} chatRoomData={chatRoomData} />
+        <ChatTempResolveRequestModal
+          setIsOpen={setIsOpenTempResolveRequestModal}
+          chatRoomData={chatRoomData}
+          mutateChatRoom={mutateChatRoom}
+        />
+      )}
+      {chatRoomData && isOpenCloseChatRoomModal && (
+        <CloseChatRoomModal
+          setIsOpen={setIsOpenCloseChatRoomModal}
+          chatRoomData={chatRoomData}
+          mutateChatRoom={mutateChatRoom}
+        />
       )}
       {chatRoomData && publishmentStatusData && accountId && chatListDataWithDisplayName && (
         <>
@@ -242,6 +256,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                   setIsOpenReConsultConfirmModal={setIsOpenReConsultConfirmModal}
                   setIsOpenReplyRequestModal={setIsOpenReplyRequestModal}
                   setIsOpenTempResolveRequestModal={setIsOpenTempResolveRequestModal}
+                  setIsOpenCloseChatRoomModal={setIsOpenCloseChatRoomModal}
                 />
 
                 <img
