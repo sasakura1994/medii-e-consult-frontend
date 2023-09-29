@@ -15,7 +15,6 @@ export const useUpdateOpenStatus = (chatRoomID?: string) => {
       const response = await axios.patch<updateOpenStatusResponseData>(
         `recruitment/${chatRoomID}/open-status`,
         {}
-        // createTokenHeader()
       );
       console.log(response.data);
     } catch (error) {
