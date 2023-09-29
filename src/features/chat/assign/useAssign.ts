@@ -41,9 +41,11 @@ export const useAssign = () => {
     // 自身がアサインされてる場合はチャットページに飛ばす
     if (fetchChatRoomResultData.assigned_to_me) {
       router.push(`/chat?chat_room_id=${id}`);
-    } else {
-      updateOpenStatus();
+      return;
     }
+    
+    updateOpenStatus();
+    
   }, [fetchChatRoomResultData, id, router, updateOpenStatus]);
 
   const assign = React.useCallback(async () => {
