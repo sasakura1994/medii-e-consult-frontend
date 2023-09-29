@@ -20,6 +20,7 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
   const [isOpenDoctorDetailModal, setIsOpenDoctorDetailModal] = useState(false);
   const [isOpenGroupMemberModal, setIsOpenGroupMemberModal] = useState(false);
   const [isOpenReplyRequestModal, setIsOpenReplyRequestModal] = useState(false);
+  const [isOpenTempResolveRequestModal, setIsOpenTempResolveRequestModal] = useState(false);
   const { accountId } = useToken();
   const chatListRef = useRef<HTMLDivElement | null>(null);
   const { getMedicalSpecialityName } = useMedicalSpeciality();
@@ -116,6 +117,8 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
     setIsOpenGroupMemberModal,
     isOpenReplyRequestModal,
     setIsOpenReplyRequestModal,
+    isOpenTempResolveRequestModal,
+    setIsOpenTempResolveRequestModal,
     getMedicalSpecialityName,
     getExperienceYear,
   };

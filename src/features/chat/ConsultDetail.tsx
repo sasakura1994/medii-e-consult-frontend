@@ -17,6 +17,7 @@ import { ChatDoctorDetailModal } from './ChatDoctorDetailModal';
 import { OpenConsultDetailButton } from './OpenConsultDetailButton';
 import { ChatGroupMemberModal } from './ChatGroupMemberModal';
 import { ChatReplyRequestModal } from './ChatReplyRequestModal';
+import { ChatTempResolveRequestModal } from './ChatTempResolveRequestModal';
 
 type ConsultDetailProps = {
   publishmentStatusData?: {
@@ -63,6 +64,8 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     setIsOpenGroupMemberModal,
     isOpenReplyRequestModal,
     setIsOpenReplyRequestModal,
+    isOpenTempResolveRequestModal,
+    setIsOpenTempResolveRequestModal,
     getMedicalSpecialityName,
     getExperienceYear,
   } = useConsultDetail({
@@ -178,6 +181,9 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
       {chatRoomData && isOpenReplyRequestModal && (
         <ChatReplyRequestModal setIsOpen={setIsOpenReplyRequestModal} chatRoomData={chatRoomData} />
       )}
+      {chatRoomData && isOpenTempResolveRequestModal && (
+        <ChatTempResolveRequestModal setIsOpen={setIsOpenTempResolveRequestModal} chatRoomData={chatRoomData} />
+      )}
       {chatRoomData && publishmentStatusData && accountId && chatListDataWithDisplayName && (
         <>
           {isOpenReConsultConfirmModal && (
@@ -235,6 +241,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                   chatRoomData={chatRoomData}
                   setIsOpenReConsultConfirmModal={setIsOpenReConsultConfirmModal}
                   setIsOpenReplyRequestModal={setIsOpenReplyRequestModal}
+                  setIsOpenTempResolveRequestModal={setIsOpenTempResolveRequestModal}
                 />
 
                 <img
