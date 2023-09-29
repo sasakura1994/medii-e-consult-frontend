@@ -6,11 +6,18 @@ type OpenConsultDetailButtonProps = {
   chatRoomData: FetchChatRoomResponseData;
   setIsOpenReConsultConfirmModal: Dispatch<SetStateAction<boolean>>;
   setIsOpenReplyRequestModal: Dispatch<SetStateAction<boolean>>;
+  setIsOpenTempResolveRequestModal: Dispatch<SetStateAction<boolean>>;
 };
 
 export const OpenConsultDetailButton = (props: OpenConsultDetailButtonProps) => {
-  const { isCloseRoom, isChatRoomOwner, chatRoomData, setIsOpenReConsultConfirmModal, setIsOpenReplyRequestModal } =
-    props;
+  const {
+    isCloseRoom,
+    isChatRoomOwner,
+    chatRoomData,
+    setIsOpenReConsultConfirmModal,
+    setIsOpenReplyRequestModal,
+    setIsOpenTempResolveRequestModal,
+  } = props;
   return (
     <>
       {!isCloseRoom && !isChatRoomOwner && (
@@ -18,7 +25,10 @@ export const OpenConsultDetailButton = (props: OpenConsultDetailButtonProps) => 
           <button className="h-9 w-[78px] rounded-full bg-primary" onClick={() => setIsOpenReplyRequestModal(true)}>
             <p className="text-xs text-white">返答依頼</p>
           </button>
-          <button className="h-9 w-[126px] rounded-full bg-primary">
+          <button
+            className="h-9 w-[126px] rounded-full bg-primary"
+            onClick={() => setIsOpenTempResolveRequestModal(true)}
+          >
             <p className="text-xs text-white">コンサル終了依頼</p>
           </button>
           <button className="h-9 w-[78px] rounded-full bg-strong">

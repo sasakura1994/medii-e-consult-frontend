@@ -3,31 +3,31 @@ import { OutlinedButton } from '@/components/Parts/Button/OutlinedButton';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import React, { useState } from 'react';
-import {
-  PostChatRoomSendResponseRequestResponseData,
-  usePostChatRoomSendResponseRequest,
-} from '@/hooks/api/chat/usePostChatRoomSendResponseRequest';
 import { AxiosError } from 'axios';
+import {
+  TempResolveChatRoomResponseData,
+  usePostTempResolveChatRoom,
+} from '@/hooks/api/chat/usePostTempResolveChatRoom';
 
-type ChatReplyRequestModalProps = {
+type ChatTempResolveRequestModalProps = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   chatRoomData: FetchChatRoomResponseData;
 };
 
-export const ChatReplyRequestModal = (props: ChatReplyRequestModalProps) => {
+export const ChatTempResolveRequestModal = (props: ChatTempResolveRequestModalProps) => {
   const { setIsOpen, chatRoomData } = props;
-  const { sendResponseRequest } = usePostChatRoomSendResponseRequest();
+  const { tempResolveChatRoom } = usePostTempResolveChatRoom();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   return (
     <Modal className="w-[644px] px-20 py-4" isCenter setShowModal={setIsOpen}>
-      <p className="text-center text-2xl font-bold">返答依頼を送信しますか？</p>
-      <p className="mt-4 text-center">返答を依頼するシステムメッセージが質問医師へ通知されます</p>
+      <p className="text-center text-2xl font-bold">コンサル終了依頼を送信しますか？</p>
+      <p className="mt-4 text-center">コンサル終了を促すシステムメッセージが質問医師へ通知されます</p>
       <div className="mt-6 flex justify-center space-x-8">
         <OutlinedButton onClick={() => setIsOpen(false)}>キャンセル</OutlinedButton>
         <PrimaryButton
           onClick={async () => {
-            await sendResponseRequest({ chat_room_id: chatRoomData.chat_room.chat_room_id }).catch((e) => {
-              const error = e as AxiosError<PostChatRoomSendResponseRequestResponseData>;
+            await tempResolveChatRoom({ chat_room_id: chatRoomData.chat_room.chat_room_id }).catch((e) => {
+              const error = e as AxiosError<TempResolveChatRoomResponseData>;
               if (error.response) {
                 setErrorMessage(error.response.data.message);
                 return;

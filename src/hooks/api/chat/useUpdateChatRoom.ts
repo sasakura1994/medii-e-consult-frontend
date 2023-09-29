@@ -22,13 +22,11 @@ export const useUpdateChatRoom = () => {
 
   const updateChatRoom = useCallback(
     async (data: UpdateChatRoomRequestData) => {
-      try {
-        setErrorMessage('');
-        return await axios.post<UpdateChatRoomResponseData>('/chat_room/update_chat_room', data);
-      } catch (e) {
+      setErrorMessage('');
+      return await axios.post<UpdateChatRoomResponseData>('/chat_room/update_chat_room', data).catch((e) => {
         const error = e as AxiosError<UpdateChatRoomResponseData>;
         setErrorMessage(error.response?.data.message);
-      }
+      });
     },
     [axios]
   );
