@@ -77,7 +77,7 @@ export const AlreadyAssigned: React.FC<Props> = ({
             <div className="mt-4">
               <Link href="/examplelist">
                 <a>
-                  <SecondaryButton className="text-[11px] font-normal m-auto">
+                  <SecondaryButton className="m-auto">
                     事例集一覧を見る
                   </SecondaryButton>
                 </a>
