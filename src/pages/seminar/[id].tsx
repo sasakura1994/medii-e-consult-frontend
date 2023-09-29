@@ -3,6 +3,7 @@ import type { NextPage } from 'next';
 import { SeminarEntityType } from '@/types/entities/seminarEntity';
 import { SeminarCard } from '@/features/seminar/SeminarCard';
 import { Modal } from '@/components/Parts/Modal/Modal';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { UseSeminarDetail } from '@/features/seminar/useSeminarDetail';
 import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
@@ -141,13 +142,15 @@ const Seminar: NextPage = () => {
               {seminar &&
                 seminar.account_id &&
                 seminar.is_consult_available && (
-                  <a
+                  <Link
                     href={`/newChatRoom?target_account_id=${seminar?.account_id}`}
                   >
-                    <PrimaryButton className="mt-8 text-left m-auto text-sm lg:text-md">
-                      この先生にE-コンサルで相談をする
-                    </PrimaryButton>
-                  </a>
+                    <a>
+                      <PrimaryButton className="mt-8 text-left m-auto text-sm lg:text-md">
+                        この先生にE-コンサルで相談をする
+                      </PrimaryButton>
+                    </a>
+                  </Link>
                 )}
               {seminar && seminar?.seminar_reviews.length > 0 && (
                 <div>
