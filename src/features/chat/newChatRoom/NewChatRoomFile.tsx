@@ -27,7 +27,7 @@ export const NewChatRoomFile = (props: Props) => {
             onDelete();
           }}
         >
-          <img src="/icons/close.png" width="16" height="16" alt="Close" />
+          <img src="icons/close.png" width="16" height="16" alt="Close" />
         </a>
       </div>
     </div>

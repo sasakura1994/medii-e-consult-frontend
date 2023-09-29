@@ -33,7 +33,7 @@ export const Top = () => {
               <Link href="/onboarding/questionary">
                 <a>
                   <img
-                    src="/images/onboarding/questionary_banner.png"
+                    src="images/onboarding/questionary_banner.png"
                     alt="アンケートに答えて100Mediiポイント進呈"
                     className="w-full"
                   />

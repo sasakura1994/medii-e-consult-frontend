@@ -33,7 +33,7 @@ export const HeaderSubMenu = () => {
             >
               <div>
                 <img
-                  src="/icons/ticket-perferated.svg"
+                  src="icons/ticket-perferated.svg"
                   width="24"
                   height="24"
                   alt="セミナーチケット"
@@ -49,7 +49,7 @@ export const HeaderSubMenu = () => {
             >
               <div>
                 <img
-                  src="/icons/medii_point.svg"
+                  src="icons/medii_point.svg"
                   width="24"
                   height="24"
                   alt="Mediiポイント"

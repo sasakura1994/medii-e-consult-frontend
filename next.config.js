@@ -8,6 +8,8 @@ const nextConfig = {
     ENDPOINT_URL: process.env.ENDPOINT_URL,
     CASE_BANK_URL: process.env.CASE_BANK_URL,
     INVITATION_URL: process.env.INVITATION_URL,
+    EX_WEB_DIR: process.env.EX_WEB_DIR || '',
+    EX_API_DIR: process.env.EX_API_DIR || '',
     WEB_SOCKET_URL: process.env.WEB_SOCKET_URL,
     NMO_URL: process.env.NMO_URL,
   },
@@ -20,6 +22,8 @@ const nextConfig = {
       },
     ];
   },
+  basePath: process.env.EX_WEB_DIR || '',
+  assetPrefix: process.env.EX_WEB_DIR || '',
 };
 
 module.exports = nextConfig;

@@ -22,7 +22,7 @@ const Welcome = () => {
             <CompleteCard
               title="専門医にコンサル"
               label="完全無料・匿名"
-              imageSrc="/images/document/consult.svg"
+              imageSrc="images/document/consult.svg"
               description="臨床疑問をエキスパートの医師とチャット形式で相談できます。相談内容に適した医師をMediiがマッチングします。"
               buttonSolid="専門医に相談"
               linkSolid="/newchatroom?from=welcome"
@@ -34,7 +34,7 @@ const Welcome = () => {
             <CompleteCard
               title="E-カンファ"
               label="視聴チケット1枚プレゼント"
-              imageSrc="/images/document/conference.svg"
+              imageSrc="images/document/conference.svg"
               description="専門医の先生をお招きして、各診療科・症例の知見を広く提供するオンラインセミナーを実施しています。"
               buttonOutline="E-カンファを見る"
               linkOutline="/seminar?fromwelcome=1"

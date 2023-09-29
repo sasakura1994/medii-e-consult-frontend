@@ -73,7 +73,7 @@ export const Seminar = () => {
                 >
                   すべてのアーカイブ動画を見る
                   <img
-                    src="/icons/arrow_right.svg"
+                    src="icons/arrow_right.svg"
                     className="ml-2 inline h-3"
                     alt=""
                   />

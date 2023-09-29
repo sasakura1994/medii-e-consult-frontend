@@ -55,14 +55,14 @@ export const ConsultExampleListItem: React.FC<Props> = ({
               )}
               <div className="flex items-center">
                 <img
-                  src="/icons/good_out.svg"
+                  src="icons/good_out.svg"
                   width="24"
                   height="24"
                   alt="いいねの数"
                 />
                 <div className="ml-1">{consultExample.all_like_count}</div>
                 <img
-                  src="/icons/comment.svg"
+                  src="icons/comment.svg"
                   width="24"
                   height="24"
                   className="ml-4 block"
