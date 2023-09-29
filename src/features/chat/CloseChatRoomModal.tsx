@@ -4,32 +4,33 @@ import { Modal } from '@/components/Parts/Modal/Modal';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import React, { useState } from 'react';
 import { AxiosError } from 'axios';
-import {
-  TempResolveChatRoomResponseData,
-  usePostTempResolveChatRoom,
-} from '@/hooks/api/chat/usePostTempResolveChatRoom';
+import { PostCloseChatRoomResponseData, usePostCloseChatRoom } from '@/hooks/api/chat/usePostCloseChatRoom';
 import { KeyedMutator } from 'swr';
 
-type ChatTempResolveRequestModalProps = {
+type CloseChatRoomModalProps = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   chatRoomData: FetchChatRoomResponseData;
   mutateChatRoom?: KeyedMutator<FetchChatRoomResponseData>;
 };
 
-export const ChatTempResolveRequestModal = (props: ChatTempResolveRequestModalProps) => {
+export const CloseChatRoomModal = (props: CloseChatRoomModalProps) => {
   const { setIsOpen, chatRoomData, mutateChatRoom } = props;
-  const { tempResolveChatRoom } = usePostTempResolveChatRoom();
+  const { closeChatRoom } = usePostCloseChatRoom();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   return (
     <Modal className="w-[644px] px-20 py-4" isCenter setShowModal={setIsOpen}>
-      <p className="text-center text-2xl font-bold">コンサル終了依頼を送信しますか？</p>
-      <p className="mt-4 text-center">コンサル終了を促すシステムメッセージが質問医師へ通知されます</p>
+      <p className="text-center text-2xl font-bold">回答をパスしてこのルームを閉じます</p>
       <div className="mt-6 flex justify-center space-x-8">
-        <OutlinedButton onClick={() => setIsOpen(false)}>キャンセル</OutlinedButton>
+        <OutlinedButton onClick={() => setIsOpen(false)}>ルームに戻る</OutlinedButton>
         <PrimaryButton
           onClick={async () => {
-            await tempResolveChatRoom({ chat_room_id: chatRoomData.chat_room.chat_room_id }).catch((e) => {
-              const error = e as AxiosError<TempResolveChatRoomResponseData>;
+            await closeChatRoom({
+              chat_room_id: chatRoomData.chat_room.chat_room_id,
+              comment: '',
+              score: 0,
+              system_comment: '',
+            }).catch((e) => {
+              const error = e as AxiosError<PostCloseChatRoomResponseData>;
               if (error.response) {
                 setErrorMessage(error.response.data.message);
                 return;
@@ -39,7 +40,7 @@ export const ChatTempResolveRequestModal = (props: ChatTempResolveRequestModalPr
             setIsOpen(false);
           }}
         >
-          送信する
+          送信
         </PrimaryButton>
       </div>
       {errorMessage && <p className="mt-2 text-center text-sm text-red-500">{errorMessage}</p>}
