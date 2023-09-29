@@ -1,10 +1,8 @@
 import { Card } from '@/components/Parts/Card/Card';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { AssignLabelAndContent } from './AssignLabelAndContent';
 import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
 import PrimaryButton from '@/components/Button/PrimaryButton';
-import { useUpdateOpenStatus } from '@/hooks/api/chat/usePatchUpdateOpenStatus';
-
 
 type Props = {
   chatRoom: ChatRoomEntity;
@@ -17,10 +15,6 @@ export const Assign: React.FC<Props> = ({
   images,
   onConfirm,
 }: Props) => {
-  const openStatus = useUpdateOpenStatus(chatRoom.chat_room_id)
-  useEffect(() => {
-    openStatus.updateOpenStatus();
-  }, [openStatus]);
   
   return (
     <Card className="px-4 py-8 lg:px-20 lg:py-8" spNoBorder>

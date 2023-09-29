@@ -5,6 +5,7 @@ import { usePostAssign } from '@/hooks/api/chat/usePostAssign';
 import { useFetchInduceConsultExampleId } from '@/hooks/api/consultExample/useFetchInduceConsultExample';
 import { useFetchConsultExampleMessages } from '@/hooks/api/consultExample/useFetchConsultExampleMessages';
 import { useFetchConsultExample } from '@/hooks/api/consultExample/useFetchConsultExample';
+import { useUpdateOpenStatus } from '@/hooks/api/chat/usePatchUpdateOpenStatus';
 
 type Query = {
   id?: string;
@@ -29,7 +30,7 @@ export const useAssign = () => {
   const { data: consultExample } = useFetchConsultExample(consultExampleId);
   const { data: consultExampleMessages } =
     useFetchConsultExampleMessages(consultExampleId);
-
+  const openStatus = useUpdateOpenStatus(id);
   React.useEffect(() => {
     if (!fetchChatRoomResultData) {
       return;
@@ -40,7 +41,9 @@ export const useAssign = () => {
       router.push(`/chat?chat_room_id=${id}`);
       return;
     }
-  }, [fetchChatRoomResultData, id, router]);
+
+    openStatus.updateOpenStatus();
+  }, [fetchChatRoomResultData, id, router, openStatus]);
 
   const assign = React.useCallback(async () => {
     if (!id) {
