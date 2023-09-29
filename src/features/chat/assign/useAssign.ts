@@ -5,6 +5,7 @@ import { usePostAssign } from '@/hooks/api/chat/usePostAssign';
 import { useFetchInduceConsultExampleId } from '@/hooks/api/consultExample/useFetchInduceConsultExample';
 import { useFetchConsultExampleMessages } from '@/hooks/api/consultExample/useFetchConsultExampleMessages';
 import { useFetchConsultExample } from '@/hooks/api/consultExample/useFetchConsultExample';
+import { useUpdateOpenStatus } from '@/hooks/api/chat/usePatchUpdateOpenStatus';
 
 type Query = {
   id?: string;
@@ -30,6 +31,8 @@ export const useAssign = () => {
   const { data: consultExampleMessages } =
     useFetchConsultExampleMessages(consultExampleId);
 
+  const { updateOpenStatus } = useUpdateOpenStatus(id);
+
   React.useEffect(() => {
     if (!fetchChatRoomResultData) {
       return;
@@ -38,9 +41,10 @@ export const useAssign = () => {
     // 自身がアサインされてる場合はチャットページに飛ばす
     if (fetchChatRoomResultData.assigned_to_me) {
       router.push(`/chat?chat_room_id=${id}`);
-      return;
+    } else {
+      updateOpenStatus();
     }
-  }, [fetchChatRoomResultData, id, router]);
+  }, [fetchChatRoomResultData, id, router, updateOpenStatus]);
 
   const assign = React.useCallback(async () => {
     if (!id) {
