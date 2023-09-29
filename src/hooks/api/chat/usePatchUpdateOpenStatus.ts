@@ -16,7 +16,6 @@ export const useUpdateOpenStatus = (chatRoomID?: string) => {
         `recruitment/${chatRoomID}/open-status`,
         {}
       );
-      console.log(response.data);
     } catch (error) {
       console.error(error);
     }
