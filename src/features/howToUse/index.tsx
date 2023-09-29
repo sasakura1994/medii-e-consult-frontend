@@ -10,29 +10,45 @@ export const HowToUse: React.FC = () => {
     <div className="flex justify-center bg-white lg:mt-6 lg:bg-transparent">
       <div className="hidden md:block">
         <p className="my-2 text-base text-gray-700">
-          <a href="#consult-sample">E-コンサルの事例集</a>
+          <Link href="#consult-sample">
+            <a>E-コンサルの事例集</a>
+          </Link>
         </p>
         <p className="text-base text-gray-700">
-          <a href="#use">E-コンサルの使い方</a>
+          <Link href="#use">
+            <a>E-コンサルの使い方</a>
+          </Link>
         </p>
         <div className="ml-2 align-baseline text-sm font-light">
           <p className="my-2">
-            <a href="#home">ホーム画面について</a>
+            <Link href="#home">
+              <a>ホーム画面について</a>
+            </Link>
           </p>
           <p className="my-2">
-            <a href="#start">E-コンサルの始め方</a>
+            <Link href="#start">
+              <a>E-コンサルの始め方</a>
+            </Link>
           </p>
           <p className="my-2">
-            <Link href="#resolve">E-コンサルの解決方法（質問受ける医師）</Link>
+            <Link href="#resolve">
+              <a>E-コンサルの解決方法（質問受ける医師）</a>
+            </Link>
           </p>
           <p className="my-2">
-            <a href="#file">ファイル添付</a>
+            <Link href="#file">
+              <a>ファイル添付</a>
+            </Link>
           </p>
           <p>
-            <a href="#profile">プロフィールの変更</a>
+            <Link href="#profile">
+              <a>プロフィールの変更</a>
+            </Link>
           </p>
           <p className="my-2">
-            <a href="#inquiry">お問合せ・ご要望</a>
+            <Link href="#inquiry">
+              <a>お問合せ・ご要望</a>
+            </Link>
           </p>
         </div>
       </div>
