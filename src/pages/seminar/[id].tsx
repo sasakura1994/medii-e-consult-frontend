@@ -202,37 +202,7 @@ const Seminar: NextPage = () => {
           ))}
         </Swiper>
       </div>
-<<<<<<< HEAD
-  {
-    showModal && (
-      <Modal setShowModal={setShowModal} className="lg:w-[800px]">
-        <div className="align-center relative flex flex-col items-center bg-white px-6 py-4 lg:py-20 lg:px-28">
-          <img
-            onClick={() => setShowModal(false)}
-            src="icons/close_primary.svg"
-            className="absolute right-4 top-4 lg:right-10 lg:top-14"
-          />
-          <h3 className="text-center text-2xl text-primary">チケットとは?</h3>
-          <p className="py-10">
-            チケットとはE-カンファアーカイブ動画を閲覧するために必要なものです。
-            <br />
-            E-コンサルで相談するとセミナーチケット1枚獲得できます。
-          </p>
-          <img
-            className="hidden lg:block"
-            src="images/seminar/about_ticket_pc.png"
-          />
-          <img
-            className="lg:hidden"
-            src="images/seminar/about_ticket_sp.png"
-          />
-        </div>
-      </Modal>
-    )
-  }
-=======
       {showModal && <AboutTicketModal setShowModal={setShowModal} />}
->>>>>>> master
   {
     isTicketConfirmDialogShown && (
       <SeminarConfirmModal
