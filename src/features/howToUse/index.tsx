@@ -1,5 +1,6 @@
 import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import React from 'react';
 
 export const HowToUse: React.FC = () => {
@@ -22,7 +23,7 @@ export const HowToUse: React.FC = () => {
             <a href="#start">E-コンサルの始め方</a>
           </p>
           <p className="my-2">
-            <a href="#resolve">E-コンサルの解決方法</a>
+            <Link href="#resolve">E-コンサルの解決方法（質問受ける医師）</Link>
           </p>
           <p className="my-2">
             <a href="#file">ファイル添付</a>
