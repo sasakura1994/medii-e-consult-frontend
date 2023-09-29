@@ -113,10 +113,6 @@ export type UseNewChatRoom = {
 
 export const useNewChatRoom = (): UseNewChatRoom => {
   const router = useRouter();
-  if (typeof window !== 'undefined') {
-    console.log(router);
-    console.log(location.search);
-  }
   const query = router.query as NewChatRoomQuery;
 
   const [mode, setMode] = useState<Mode>('input');
