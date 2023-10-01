@@ -11,13 +11,14 @@ export const useUpdateOpenStatus = (chatRoomID?: string) => {
   const { axios } = useAxios();
 
   const updateOpenStatus = useCallback(async () => {
-    try {
-      const response = await axios.patch<updateOpenStatusResponseData>(
-        `recruitment/${chatRoomID}/open-status`,
-        {}
-      );
-    } catch (error) {
-      console.error(error);
+    const response = await axios
+      .patch<updateOpenStatusResponseData>(`recruitment/${chatRoomID}/open-status`, {})
+      .catch((error) => {
+        console.error(error);
+      });
+
+    if (!response) {
+      return false;
     }
   }, [axios, chatRoomID]);
 
