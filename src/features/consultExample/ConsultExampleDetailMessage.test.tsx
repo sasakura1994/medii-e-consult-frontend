@@ -22,7 +22,6 @@ const baseConsultExampleMessage: ConsultExampleMessageEntity = {
   deleted: 0,
   created_date: '',
   is_liked: false,
-  showConsultQuestionFlag: false
 };
 
 describe('ConsultExampleDetailMessage', () => {

@@ -115,20 +115,17 @@ export const ConsultExampleDetail: React.FC<Props> = ({
           </div>
         </div>
         <div className="mt-5">{consultExample.background}</div>
-        {
-          consultExample.showConsultQuestionFlag &&
-          <div className="mt-4">
-            <ConsultExampleActions
-              likeCount={consultExample.like_count}
-              commentCount={consultExample.comment_count}
-              isLiked={consultExample.is_liked}
-              onLike={likeAndMutate}
-              onUnlike={unlikeAndMutate}
-              onComment={onComment}
-              onShowComments={onShowComments}
-            />
-          </div>
-        }
+        <div className="mt-4">
+          <ConsultExampleActions
+            likeCount={consultExample.like_count}
+            commentCount={consultExample.comment_count}
+            isLiked={consultExample.is_liked}
+            onLike={likeAndMutate}
+            onUnlike={unlikeAndMutate}
+            onComment={onComment}
+            onShowComments={onShowComments}
+          />
+        </div>
       </Card>
       <Card className="mt-4 px-4 pb-[80px] pt-10 lg:px-7 lg:pb-10">
         <div className="flex flex-col gap-8">
@@ -144,33 +141,30 @@ export const ConsultExampleDetail: React.FC<Props> = ({
           ))}
         </div>
       </Card>
-      {
-        consultExample.showConsultQuestionFlag &&
-        <Card className="mt-10">
-          <section className="mt-10 px-5">
-            <h3 className="text-center text-[36px] font-bold leading-[1.33] text-primary">
-              E-コンサルで
-              <br className="lg:hidden" />
-              質問してみませんか?
-            </h3>
-            <p className="mt-8 text-center text-sm leading-7">
-              さまざまな理由から解決困難な
-              <br className="lg:hidden" />
-              医療現場の課題を
-              <br />
-              オンラインを通して、専門・知見のある医師に質問・相談することができます
-            </p>
-            <div className="mt-10 text-center font-medium text-primary">小さな課題でも、まずは相談してみませんか？</div>
-            <div className="mb-20 mt-4 flex justify-center lg:mb-10">
-              <Link href={`/newchatroom?from=example_${consultExample.example_id}`}>
-                <a>
-                  <PrimaryButton>匿名でコンサル作成</PrimaryButton>
-                </a>
-              </Link>
-            </div>
-          </section>
-        </Card>
-      }
+      <Card className="mt-10">
+        <section className="mt-10 px-5">
+          <h3 className="text-center text-[36px] font-bold leading-[1.33] text-primary">
+            E-コンサルで
+            <br className="lg:hidden" />
+            質問してみませんか?
+          </h3>
+          <p className="mt-8 text-center text-sm leading-7">
+            さまざまな理由から解決困難な
+            <br className="lg:hidden" />
+            医療現場の課題を
+            <br />
+            オンラインを通して、専門・知見のある医師に質問・相談することができます
+          </p>
+          <div className="mt-10 text-center font-medium text-primary">小さな課題でも、まずは相談してみませんか？</div>
+          <div className="mb-20 mt-4 flex justify-center lg:mb-10">
+            <Link href={`/newchatroom?from=example_${consultExample.example_id}`}>
+              <a>
+                <PrimaryButton>匿名でコンサル作成</PrimaryButton>
+              </a>
+            </Link>
+          </div>
+        </section>
+      </Card>
     </>
   );
 };
