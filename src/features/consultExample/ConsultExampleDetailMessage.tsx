@@ -53,31 +53,28 @@ export const ConsultExampleDetailMessage: React.FC<Props> = ({
             <img src={consultExampleMessage.file_path} alt='image' />
           )}
         </div>
-        {
-          consultExampleMessage.showConsultQuestionFlag &&
-          <div className="mt-2 lg:w-full">
-            <ConsultExampleActions
-              likeCount={consultExampleMessage.like_count}
-              commentCount={consultExampleMessage.comment_count}
-              isLiked={consultExampleMessage.is_liked}
-              isShortOnMobile
-              onLike={
-                onLike ? () => onLike(consultExampleMessage.uid) : undefined
-              }
-              onUnlike={
-                onUnlike ? () => onUnlike(consultExampleMessage.uid) : undefined
-              }
-              onComment={
-                onComment ? () => onComment(consultExampleMessage) : undefined
-              }
-              onShowComments={
-                onShowComments
-                  ? () => onShowComments(consultExampleMessage)
-                  : undefined
-              }
-            />
-          </div>
-        }
+        <div className="mt-2 lg:w-full">
+          <ConsultExampleActions
+            likeCount={consultExampleMessage.like_count}
+            commentCount={consultExampleMessage.comment_count}
+            isLiked={consultExampleMessage.is_liked}
+            isShortOnMobile
+            onLike={
+              onLike ? () => onLike(consultExampleMessage.uid) : undefined
+            }
+            onUnlike={
+              onUnlike ? () => onUnlike(consultExampleMessage.uid) : undefined
+            }
+            onComment={
+              onComment ? () => onComment(consultExampleMessage) : undefined
+            }
+            onShowComments={
+              onShowComments
+                ? () => onShowComments(consultExampleMessage)
+                : undefined
+            }
+          />
+        </div>
       </div>
     </div>
   );
