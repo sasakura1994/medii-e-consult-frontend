@@ -240,16 +240,17 @@ export const HowToUse: React.FC = () => {
           </div>
         </div>
 
-        <a
-          href="#consult-sample"
-          className={
-            test === '1'
-              ? 'fixed bottom-10 right-6 md:bottom-10 md:right-28'
-              : 'fixed bottom-16 right-6 md:bottom-10 md:right-28'
-          }
-        >
-          <PrimaryButton>上へ戻る</PrimaryButton>
-        </a>
+        <Link href="#consult-sample">
+          <a
+            className={
+              test === '1'
+                ? 'fixed bottom-10 right-6 md:bottom-10 md:right-28'
+                : 'fixed bottom-16 right-6 md:bottom-10 md:right-28'
+            }
+          >
+            <PrimaryButton>上へ戻る</PrimaryButton>
+          </a>
+        </Link>
       </div>
     </div>
   );
