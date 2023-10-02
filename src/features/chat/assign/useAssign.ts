@@ -60,7 +60,7 @@ export const useAssign = () => {
 
     const response = await postAssign(id).catch((error) => {
       console.error(error);
-      setErrorMessage('エラーが発生しました。');
+      setErrorMessage('回答権がないアカウントです。');
       return null;
     });
 
