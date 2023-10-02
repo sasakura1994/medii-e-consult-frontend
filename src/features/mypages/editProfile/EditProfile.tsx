@@ -11,6 +11,7 @@ import { EditProfileNotification } from './EditProfileNotification';
 import { EditProfileQuestionary } from './EditProfileQuestionary';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
+import Link from 'next/link';
 
 export type EditProfileProps = {
   isRegisterMode: boolean;
@@ -63,6 +64,11 @@ export const EditProfile = (props: EditProfileProps) => {
           <PrimaryButton type="submit" className="mx-auto" disabled={!editProfile.isCompleted} size="large">
             {isRegisterMode ? '医師資格確認へ進む' : 'プロフィール登録'}
           </PrimaryButton>
+        </div>
+        <div className="mt-10 text-center">
+          <Link href="/withdrawal/confirm">
+            <a className="text-md text-distructive underline">アカウントを削除</a>
+          </Link>
         </div>
       </form>
     </div>

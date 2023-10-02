@@ -20,6 +20,7 @@ describe('/newchatroom', () => {
       profile: {
         registration_source: 'nmo',
         last_name_hira: '',
+        status: 'VERIFIED',
       },
     });
 
@@ -43,6 +44,7 @@ describe('/newchatroom', () => {
     (useFetchProfile as jest.Mock).mockReturnValue({
       profile: {
         main_speciality: 'STUDENT',
+        status: 'VERIFIED',
       },
     });
 
@@ -66,7 +68,7 @@ describe('/newchatroom', () => {
     const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
     (useFetchProfileMock as jest.Mock).mockReturnValue({
       profile: {
-        is_imperfect_profile: true,
+        status: 'CREATED',
       },
     });
 
@@ -79,5 +81,29 @@ describe('/newchatroom', () => {
     });
 
     expect(await act(() => screen.queryByTestId('imcomplete-profile-modal'))).toBeInTheDocument();
+  });
+
+  test('医師確認中のメッセージを表示', async () => {
+    const useRouterMock = useRouter as jest.Mocked<typeof useRouter>;
+    (useRouterMock as jest.Mock).mockReturnValue({
+      query: {},
+    });
+
+    const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
+    (useFetchProfileMock as jest.Mock).mockReturnValue({
+      profile: {
+        status: 'PENDING_AUTO',
+      },
+    });
+
+    await act(() => {
+      render(
+        <RecoilRoot>
+          <NewChatRoomPage />
+        </RecoilRoot>
+      );
+    });
+
+    expect(await act(() => screen.queryByTestId('document-confirming-message'))).toBeInTheDocument();
   });
 });
