@@ -108,9 +108,6 @@ module.exports = {
       blur: {
         xs: '2px',
       },
-      screens: {
-        xx: '480px',
-      },
     },
   },
   plugins: [require('@tailwindcss/line-clamp')],

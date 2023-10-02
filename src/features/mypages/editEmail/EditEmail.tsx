@@ -18,7 +18,7 @@ const EditEmail = ({ submit, setEmail, email, errorMessage }: Omit<UseEditEmail,
   };
 
   return (
-    <div className="px-[28px] xx:px-[84px]">
+    <div className="px-[28px] lg:px-[84px]">
       <h2 className="mt-2 text-center font-bold text-[#f27474]">{errorMessage}</h2>
       <h2 className="mb-3 font-bold">現在のメールアドレス</h2>
       <p>{oldEmail?.mail_address}</p>
@@ -38,13 +38,13 @@ const EditEmail = ({ submit, setEmail, email, errorMessage }: Omit<UseEditEmail,
               />
             </div>
           </div>
-          <div className="mt-10 flex flex-col gap-6 xx:flex-row">
+          <div className="mt-10 flex flex-col gap-6 lg:flex-row">
             <Link href="/editprofile">
-              <SecondaryButton size="large" className="mx-12 xx:mx-0 xx:flex-1">
+              <SecondaryButton size="large" className="mx-12 lg:mx-0 lg:flex-1">
                 キャンセル
               </SecondaryButton>
             </Link>
-            <PrimaryButton size="large" type="submit" className="mx-12 xx:mx-0 xx:flex-1">
+            <PrimaryButton size="large" type="submit" className="mx-12 lg:mx-0 lg:flex-1">
               アドレスを変更
             </PrimaryButton>
           </div>
