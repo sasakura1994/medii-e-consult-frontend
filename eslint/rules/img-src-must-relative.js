@@ -1,6 +1,5 @@
 "use strict";
 
-/** @type {import('eslint').Rule.RuleModule} */
 module.exports = {
   meta: {
     // type (string) indicates the type of rule, which is one of "problem", "suggestion", or "layout":

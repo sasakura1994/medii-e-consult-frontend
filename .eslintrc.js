@@ -34,6 +34,7 @@ module.exports = {
     'react/prop-types': 'off', // TS で型を縛ってるので props の厳密な検証は不要
     'rulesdir/img-src-must-relative': 'error',
     'rulesdir/inner-href-use-link': 'error',
+    'rulesdir/dont-use-url-properties': 'warn',
   },
   // ESLint の除外ファイル
   ignorePatterns: [
