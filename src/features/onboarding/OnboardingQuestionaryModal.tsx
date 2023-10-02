@@ -26,7 +26,7 @@ export const OnboardingQuestionaryModal = () => {
       <Link href="/onboarding/questionary">
         <a>
           <img
-            src="/images/onboarding/questionary_modal.png"
+            src="images/onboarding/questionary_modal.png"
             alt="100Mediiポイントもらえるアンケートに答える"
             width="423"
             height="423"

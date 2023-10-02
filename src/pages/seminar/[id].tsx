@@ -1,6 +1,7 @@
 import React from 'react';
 import type { NextPage } from 'next';
 import { SeminarCard } from '@/features/seminar/SeminarCard';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { UseSeminarDetail } from '@/features/seminar/useSeminarDetail';
 import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
@@ -145,11 +146,13 @@ const Seminar: NextPage = () => {
                   <p className="whitespace-pre-wrap text-primary">{seminar && seminar?.doctor_profile}</p>
                 </div>
                 {seminar && seminar.account_id && seminar.is_consult_available && (
-                  <a href={`/newChatRoom?target_account_id=${seminar?.account_id}`}>
-                    <PrimaryButton className="m-auto mt-8 text-left text-sm lg:text-md">
-                      この先生にE-コンサルで相談をする
-                    </PrimaryButton>
-                  </a>
+                  <Link href={`/newChatRoom?target_account_id=${seminar?.account_id}`}>
+                    <a>
+                      <PrimaryButton className="m-auto mt-8 text-left text-sm lg:text-md">
+                        この先生にE-コンサルで相談をする
+                      </PrimaryButton>
+                    </a>
+                  </Link>
                 )}
                 {seminar && seminar?.seminar_reviews.length > 0 && (
                   <div>

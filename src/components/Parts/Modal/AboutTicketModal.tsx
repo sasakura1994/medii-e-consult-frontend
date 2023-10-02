@@ -16,7 +16,7 @@ export const AboutTicketModal: React.FC<AboutTicketModalPropsType> = (props) => 
         <img
           data-testid="close-modal"
           onClick={() => setShowModal(false)}
-          src="/icons/close_primary.svg"
+          src="icons/close_primary.svg"
           className="absolute right-4 top-4 lg:right-10 lg:top-14"
           alt=""
         />
@@ -28,12 +28,12 @@ export const AboutTicketModal: React.FC<AboutTicketModalPropsType> = (props) => 
         </p>
         <img
           className="hidden md:block"
-          src="/images/seminar/about_ticket_pc.png"
+          src="images/seminar/about_ticket_pc.png"
           alt=""
         />
         <img
           className="md:hidden"
-          src="/images/seminar/about_ticket_sp.png"
+          src="images/seminar/about_ticket_sp.png"
           alt=""
         />
         <div className="mt-4 flex lg:gap-40">

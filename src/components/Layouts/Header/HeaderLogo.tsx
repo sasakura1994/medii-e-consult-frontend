@@ -12,7 +12,7 @@ export const HeaderLogo = (props: Props) => {
     <div className="-mt-1 h-[27px] w-[100.28px]">
       <Link href={href ?? '/top'}>
         <a className="inline-block no-underline">
-          <img src="/images/side_logo.svg" alt="Medii E-コンサル" className="h-full w-full" />
+          <img src="images/side_logo.svg" alt="Medii E-コンサル" className="h-full w-full" />
         </a>
       </Link>
     </div>

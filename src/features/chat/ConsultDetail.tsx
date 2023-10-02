@@ -232,7 +232,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                 />
 
                 <img
-                  src="/icons/btn_menu.svg"
+                  src="icons/btn_menu.svg"
                   alt=""
                   className="h-9 w-9 cursor-pointer"
                   onClick={() => setIsOpenChatEditModal(true)}

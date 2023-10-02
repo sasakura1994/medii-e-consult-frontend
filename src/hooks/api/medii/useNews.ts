@@ -118,7 +118,7 @@ export const useNews = (): UseNews => {
           return {
             title: row.document.fields.default.mapValue.fields.title.stringValue,
             link: 'https://medii.jp/news/' + row.document.fields.default.mapValue.fields.slug.stringValue,
-            cover: image && image !== '' ? image : '/images/top/medii-info.png',
+            cover: image && image !== '' ? image : 'images/top/medii-info.png',
             date: row.document.fields._meta.mapValue.fields.publishedAt.timestampValue,
           };
         })

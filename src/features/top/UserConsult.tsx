@@ -52,7 +52,7 @@ export const UserConsult = (props: UserConsultProps) => {
           }}
         >
           <img
-            src="/images/top/top_group_banner_GR019adaef-7526-4155-8498-a663fefc5e04.png"
+            src="images/top/top_group_banner_GR019adaef-7526-4155-8498-a663fefc5e04.png"
             alt="banner"
             className="mt-4 hidden cursor-pointer sm:block"
           />
@@ -68,7 +68,7 @@ export const UserConsult = (props: UserConsultProps) => {
           }}
         >
           <img
-            src="/images/top/top_group_banner_GR019adaef-7526-4155-8498-a663fefc5e04_sp.png"
+            src="images/top/top_group_banner_GR019adaef-7526-4155-8498-a663fefc5e04_sp.png"
             alt="banner"
             className="mt-4 block cursor-pointer sm:hidden"
           />
@@ -104,12 +104,12 @@ export const UserConsult = (props: UserConsultProps) => {
             <a>
               <img
                 className="hidden lg:block"
-                src="/images/onboarding/first_consult_banner.png"
+                src="images/onboarding/first_consult_banner.png"
                 alt={consultCampaignAlt}
               />
               <img
                 className="lg:hidden"
-                src="/images/onboarding/first_consult_banner_sp.png"
+                src="images/onboarding/first_consult_banner_sp.png"
                 alt={consultCampaignAlt}
               />
             </a>

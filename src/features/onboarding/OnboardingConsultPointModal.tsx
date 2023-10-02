@@ -23,7 +23,7 @@ export const OnboardingConsultPointModal = () => {
     >
       <div className="overflow-hidden rounded-lg bg-white">
         <img
-          src="/images/onboarding/consult_point_modal.png"
+          src="images/onboarding/consult_point_modal.png"
           width="400"
           height="400"
           alt="はじめてEコンサルで質問するともれなく1000円分相当ポイントをプレゼント"

@@ -49,7 +49,7 @@ export const ConsultExampleActions: React.FC<Props> = ({
           }}
         >
           <img
-            src={isLiked ? '/icons/good_fill.svg' : '/icons/good_out.svg'}
+            src={isLiked ? 'icons/good_fill.svg' : 'icons/good_out.svg'}
             width="24"
             height="24"
             alt={isLiked ? 'いいね済み' : '未いいね'}
@@ -66,7 +66,7 @@ export const ConsultExampleActions: React.FC<Props> = ({
             }}
           >
             <img
-              src="/icons/comment.svg"
+              src="icons/comment.svg"
               width="24"
               height="24"
               className="ml-4 block"
@@ -78,7 +78,7 @@ export const ConsultExampleActions: React.FC<Props> = ({
       </div>
       <div className="flex items-center text-xs">
         <img
-          src="/icons/good_out.svg"
+          src="icons/good_out.svg"
           width="18"
           height="18"
           alt="いいねの数"
@@ -94,7 +94,7 @@ export const ConsultExampleActions: React.FC<Props> = ({
             }}
           >
             <img
-              src="/icons/comment.svg"
+              src="icons/comment.svg"
               width="18"
               height="18"
               className="ml-4 block"

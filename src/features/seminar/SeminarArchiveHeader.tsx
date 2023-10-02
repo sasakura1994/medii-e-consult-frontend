@@ -42,7 +42,7 @@ export const SeminarArchiveHeader: React.FC<Props> = ({
             border border-[#c4c4c4] bg-white blur-xs md:rounded-3xl"
             ></div>
             <div className="relative flex items-center p-5 md:p-6">
-              <img src="/images/seminar/ticket.png" alt="" />
+              <img src="images/seminar/ticket.png" alt="" />
               <p className="hidden pl-2 lg:block lg:text-2xl">
                 現在のチケット所持枚数
                 <span className="pl-2 text-4xl font-bold text-[#f5847d]">

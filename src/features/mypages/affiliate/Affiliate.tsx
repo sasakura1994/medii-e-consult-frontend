@@ -20,7 +20,7 @@ export const Affiliate: React.FC = () => {
           <div className="mt-4 h-[76px] w-[327px] shadow-low lg:w-[290px]">
             <p className="my-2 text-center text-md font-bold">ご紹介者様</p>
             <div className="flex items-center justify-center space-x-2">
-              <img src="/icons/seminar_ticket.svg" alt="" />
+              <img src="icons/seminar_ticket.svg" alt="" />
               <p className="text-md">E-カンファ視聴チケット</p>
             </div>
           </div>
@@ -29,7 +29,7 @@ export const Affiliate: React.FC = () => {
               ご入会いただいた方
             </p>
             <div className="flex items-center justify-center space-x-2">
-              <img src="/icons/point_invitation.svg" alt="" />
+              <img src="icons/point_invitation.svg" alt="" />
               <p className="text-md">Mediiのポイント(1000pt)</p>
             </div>
           </div>

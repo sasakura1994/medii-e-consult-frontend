@@ -14,7 +14,7 @@ export const Breadcrumb = (props: Props) => {
       {childrenArray.map((child, index) => (
         <div className="flex items-center gap-2" key={`breadcrumb-item${index}`}>
           {child}
-          {index < childrenArray.length - 1 && <img src="/icons/chevron.svg" alt="0" width="12" height="12" />}
+          {index < childrenArray.length - 1 && <img src="icons/chevron.svg" alt="0" width="12" height="12" />}
         </div>
       ))}
     </div>
