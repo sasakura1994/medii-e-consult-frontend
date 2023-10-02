@@ -14,5 +14,4 @@ export type ConsultExampleMessageEntity = {
   deleted: number;
   created_date: string;
   is_liked: boolean;
-  showConsultQuestionFlag: boolean;
 };

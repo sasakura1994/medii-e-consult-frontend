@@ -26,7 +26,6 @@ const baseConsultExample: ConsultExampleDetailEntity = {
   consultant_date: null,
   created_date: '',
   is_liked: false,
-  showConsultQuestionFlag: false,
 };
 
 describe('ConsultExampleDetail', () => {
@@ -101,7 +100,6 @@ describe('ConsultExampleDetail', () => {
     const consultExample: ConsultExampleDetailEntity = {
       ...baseConsultExample,
       is_liked: true,
-      showConsultQuestionFlag: true,
     };
 
     const { getByAltText } = await render(
@@ -137,7 +135,6 @@ describe('ConsultExampleDetail', () => {
               deleted: 0,
               created_date: '',
               is_liked: true,
-              showConsultQuestionFlag: true,
             },
           ]}
         />

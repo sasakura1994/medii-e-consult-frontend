@@ -20,5 +20,4 @@ export type ConsultExampleDetailEntity = Pick<
   | 'created_date'
 > & {
   is_liked: boolean;
-  showConsultQuestionFlag: boolean;
 };

@@ -11,6 +11,7 @@ import { ConsultExampleDetailMessage } from './ConsultExampleDetailMessage';
 import { useConsultExampleActions } from './useConsultExampleActions';
 import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 type Props = {
   consultExample: ConsultExampleDetailEntity;
@@ -35,6 +36,9 @@ export const ConsultExampleDetail: React.FC<Props> = ({
   const { likeAndMutate, likeMessageAndMutate, unlikeAndMutate, unlikeMessageAndMutate } = useConsultExampleActions(
     consultExample.example_id
   );
+
+  const router = useRouter();
+  const showConsultQuestionFlag = router?.route.includes('assign');
 
   return (
     <>
@@ -115,8 +119,6 @@ export const ConsultExampleDetail: React.FC<Props> = ({
           </div>
         </div>
         <div className="mt-5">{consultExample.background}</div>
-        {
-          consultExample.showConsultQuestionFlag &&
           <div className="mt-4">
             <ConsultExampleActions
               likeCount={consultExample.like_count}
@@ -128,7 +130,6 @@ export const ConsultExampleDetail: React.FC<Props> = ({
               onShowComments={onShowComments}
             />
           </div>
-        }
       </Card>
       <Card className="mt-4 px-4 pb-[80px] pt-10 lg:px-7 lg:pb-10">
         <div className="flex flex-col gap-8">
@@ -144,8 +145,7 @@ export const ConsultExampleDetail: React.FC<Props> = ({
           ))}
         </div>
       </Card>
-      {
-        consultExample.showConsultQuestionFlag &&
+      {!showConsultQuestionFlag && (
         <Card className="mt-10">
           <section className="mt-10 px-5">
             <h3 className="text-center text-[36px] font-bold leading-[1.33] text-primary">
@@ -170,7 +170,7 @@ export const ConsultExampleDetail: React.FC<Props> = ({
             </div>
           </section>
         </Card>
-      }
+      )}
     </>
   );
 };
