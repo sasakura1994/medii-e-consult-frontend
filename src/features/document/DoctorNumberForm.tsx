@@ -36,7 +36,7 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelectedWithRedi
         <div className="mx-2 mb-6 mt-6">
           <div className="relative flex text-left text-2xl font-bold lg:mt-10 lg:text-center">
             <div className="hidden cursor-pointer lg:block">
-              <img src="/icons/arrow_left.svg" className="mt-1.5 h-3 w-3" alt="arrow_left" />
+              <img src="icons/arrow_left.svg" className="mt-1.5 h-3 w-3" alt="arrow_left" />
               <div
                 className="absolute left-0 top-0 pl-4 text-base "
                 onClick={() => {

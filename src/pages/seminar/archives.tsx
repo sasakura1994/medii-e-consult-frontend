@@ -52,7 +52,7 @@ const Archives: NextPage = () => {
                     className="inline-flex items-center rounded-full border
                border-primary px-10 py-3 text-center text-sm text-primary"
                   >
-                    <img src="/icons/arrow_left.svg" className="mr-2 inline h-3" alt="" />
+                    <img src="icons/arrow_left.svg" className="mr-2 inline h-3" alt="" />
                     TOPへ戻る
                   </div>
                 </a>
@@ -68,7 +68,7 @@ const Archives: NextPage = () => {
                   className="inline-flex items-center rounded-full border border-primary
              bg-white px-14 py-4 text-center text-sm text-primary lg:px-10 lg:py-3"
                 >
-                  <img src="/icons/arrow_left.svg" className="mr-2 inline h-3" alt="" />
+                  <img src="icons/arrow_left.svg" className="mr-2 inline h-3" alt="" />
                   TOPへ戻る
                 </div>
               </a>

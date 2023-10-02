@@ -7,7 +7,7 @@ export const Footer: React.FC = () => {
       <div className="flex flex-col justify-center gap-10 pl-20 md:flex-row md:gap-[126px] md:pl-0">
         <div className="flex flex-col justify-center gap-[40px] md:flex-row">
           <img
-            src="/images/side_logo.svg"
+            src="images/side_logo.svg"
             alt="Medii E-コンサル"
             className="h-fit w-[156px]"
           />
@@ -40,13 +40,13 @@ export const Footer: React.FC = () => {
       </div>
       <div className="flex items-center justify-center gap-[32px] py-6 md:py-0">
         <a href="https://www.facebook.com/medii0220/">
-          <img src="/icons/facebook.svg" />
+          <img src="icons/facebook.svg" />
         </a>
         <a href="https://twitter.com/medii_inc">
-          <img src="/icons/twitter.svg" />
+          <img src="icons/twitter.svg" />
         </a>
         <a href="https://note.com/medii_ecns/">
-          <img src="/icons/note.svg" />
+          <img src="icons/note.svg" />
         </a>
       </div>
       <div>

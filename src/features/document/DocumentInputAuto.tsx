@@ -25,7 +25,7 @@ const DocumentInputAuto: React.FC<DocumentInputAutoProps> = ({ setSelectedWithRe
       >
         <div className="relative mt-7 flex text-left text-2xl font-bold lg:mt-7 lg:text-center">
           <div className="hidden cursor-pointer lg:block">
-            <img src="/icons/arrow_left.svg" className="mt-1.5 h-3 w-3" alt="arrow_left" />
+            <img src="icons/arrow_left.svg" className="mt-1.5 h-3 w-3" alt="arrow_left" />
             <div
               className="absolute left-0 top-0 pl-4 text-base"
               onClick={() => {

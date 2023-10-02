@@ -12,11 +12,11 @@ const RegistrationProgress: React.FC<RegistrationProgressProps> = ({
   const getArrowImage = (currentMode: DocumentMode) => {
     switch (true) {
       case mode === currentMode:
-        return '/icons/arrow_right_alt_primary.svg';
+        return 'icons/arrow_right_alt_primary.svg';
       case mode === 'document' && currentMode === 'edit':
-        return '/icons/arrow_right_alt.svg';
+        return 'icons/arrow_right_alt.svg';
       default:
-        return '/icons/arrow_right_alt_disabled.svg';
+        return 'icons/arrow_right_alt_disabled.svg';
     }
   };
 

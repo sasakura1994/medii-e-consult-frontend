@@ -26,7 +26,7 @@ const DocumentTypeSelect: React.FC<DocumentTypeSelectProps> = ({
             <DocumentTypeSelectButton
               id={'number'}
               text="医師番号を入力"
-              image="/icons/doctor.svg"
+              image="icons/doctor.svg"
               onClick={() => setSelected('number')}
             >
               医師番号・取得年を
@@ -38,7 +38,7 @@ const DocumentTypeSelect: React.FC<DocumentTypeSelectProps> = ({
             <DocumentTypeSelectButton
               id={'document'}
               text="画像アップロード"
-              image="/icons/doctor_id1.svg"
+              image="icons/doctor_id1.svg"
               onClick={() => setSelected('document')}
             >
               医師であることを証明できる画像を
@@ -50,7 +50,7 @@ const DocumentTypeSelect: React.FC<DocumentTypeSelectProps> = ({
             <DocumentTypeSelectButton
               id={'auto'}
               text="Mediiにおまかせ"
-              image="/icons/medii.svg"
+              image="icons/medii.svg"
               onClick={() => setSelected('auto')}
             >
               入力された情報を元に

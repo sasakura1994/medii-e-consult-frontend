@@ -1,8 +1,7 @@
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { useMemo } from 'react';
-import { Props } from './ImcompleteProfileModal';
 
-export const useImcompleteProfileModal = ({ allowWaiting = false }: Props) => {
+export const useImcompleteProfileModal = () => {
   const { profile } = useFetchProfile();
 
   const isModalShown = useMemo(() => {
@@ -11,22 +10,23 @@ export const useImcompleteProfileModal = ({ allowWaiting = false }: Props) => {
       return false;
     }
 
-    if (!allowWaiting) {
-      return profile.status !== 'VERIFIED';
+    if (profile.registration_source === 'nmo') {
+      return false;
     }
 
-    return profile.is_imperfect_profile || profile.need_to_send_confimation;
-  }, [allowWaiting, profile]);
+    return profile.status === 'CREATED' || profile.status === 'PROFILE';
+  }, [profile]);
 
   const url = useMemo(() => {
     if (!profile) {
       return '';
     }
-    if (profile.is_imperfect_profile) {
+    if (profile.status === 'CREATED') {
       return '/editProfile?registerMode=1';
     } else if (profile.main_speciality === '') {
+      // 何の条件かわからないので要コメント
       return '/editProfile?registerMode=1';
-    } else if (profile.status === 'PROFILE' || (profile.status === 'CREATED' && profile.need_to_send_confimation)) {
+    } else if (profile.status === 'PROFILE') {
       return '/document';
     }
     return '/EditProfile';

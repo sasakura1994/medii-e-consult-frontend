@@ -37,7 +37,6 @@ const AppInner = ({ Component, pageProps }: AppPropsWithLayout) => {
         <Layout>{page}</Layout>
       </>
     ));
-
   return (
     <CookiesProvider>
       {/* GTMタグだけ先に描画されるのを避けるため必ず両方同時にチェック */}
@@ -110,7 +109,6 @@ const App = (props: AppPropsWithLayout) => {
   };
   useEffect(() => {
     router.events.on('routeChangeStart', handleStart);
-
     return () => {
       router.events.off('routeChangeStart', handleStart);
     };

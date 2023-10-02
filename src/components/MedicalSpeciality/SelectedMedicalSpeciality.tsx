@@ -47,7 +47,7 @@ export const SelectedMedicalSpeciality: React.FC<SelectedMedicalSpecialityProps>
           onDelete();
         }}
       >
-        <img src="/icons/close_gray.svg" width="12" height="12" alt="" />
+        <img src="icons/close_gray.svg" width="12" height="12" alt="" />
         <div>削除</div>
       </a>
     </div>

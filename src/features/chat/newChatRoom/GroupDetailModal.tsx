@@ -22,7 +22,7 @@ export const GroupDetailModal: React.FC<Props> = ({ group, onSubmit, setShowModa
         <div className="mt-10">
           {group.is_real_name && (
             <div className="mb-6 flex gap-2 bg-[#FEEDEB] p-4" data-testid="real-name-note">
-              <img className="m-2 block" src="/icons/exclamation-triangle.svg" width="16" height="16" alt="" />
+              <img className="m-2 block" src="icons/exclamation-triangle.svg" width="16" height="16" alt="" />
               <div className="text-md">
                 回答医側から意向により、グループへのコンサルは匿名ではなく実名で投稿されます。
               </div>

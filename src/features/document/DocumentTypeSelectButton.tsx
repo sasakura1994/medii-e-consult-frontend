@@ -34,7 +34,7 @@ const DocumentTypeSelectButton: React.FC<DocumentTypeSelectButtonProps> = ({
             </div>
             <img
               className="ml-1 inline-block h-3 w-3"
-              src="/icons/arrow_right.svg"
+              src="icons/arrow_right.svg"
               alt="arrow_right"
             />
           </div>

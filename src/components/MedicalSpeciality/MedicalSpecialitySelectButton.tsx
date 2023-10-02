@@ -26,7 +26,7 @@ export const MedicalSpecialitySelectButton: React.FC<
         }}
       >
         <div className="grow">{medicalSpecialityName || '担当科を選択'}</div>
-        <img src="/icons/pull.svg" alt="" width="16" />
+        <img src="icons/pull.svg" alt="" width="16" />
       </a>
       {isOpen && (
         <MedicalSpecialitySelectDialog

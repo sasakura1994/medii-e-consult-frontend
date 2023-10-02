@@ -17,7 +17,7 @@ export const ConsultList = (props: ConsultListProps) => {
   return (
     <div className="h-[calc(100vh-20px)] w-[336px] border border-[#d5d5d5]">
       <div className="flex h-14 items-center bg-primary">
-        <img src="/icons/consult_list.svg" alt="" className="ml-2 h-7 w-8" />
+        <img src="icons/consult_list.svg" alt="" className="ml-2 h-7 w-8" />
         <p className="text-md font-bold text-white">コンサル一覧</p>
         <button className="ml-3 rounded-full border border-white px-2 py-1 text-md font-bold text-white">
           ＋匿名でコンサル作成

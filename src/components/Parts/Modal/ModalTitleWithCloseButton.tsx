@@ -21,7 +21,7 @@ export const ModalTitleWithCloseButton: React.FC<Props> = ({
           }}
         >
           <img
-            src="/icons/close_primary.svg"
+            src="icons/close_primary.svg"
             width="18"
             height="18"
             alt="閉じる"

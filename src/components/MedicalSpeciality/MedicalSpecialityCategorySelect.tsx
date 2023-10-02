@@ -33,7 +33,7 @@ export const MedicalSpecialityCategorySelect: React.FC<Props> = ({
         </div>
         <div className="grow-0">
           <img
-            src="/icons/arrow_down.svg"
+            src="icons/arrow_down.svg"
             width="12"
             className={isSelected ? 'rotate-180 transform' : ''}
           />
