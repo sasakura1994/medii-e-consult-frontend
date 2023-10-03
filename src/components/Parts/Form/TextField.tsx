@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
 export type PropsType = {
   name: string;
@@ -16,7 +16,7 @@ export type PropsType = {
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
 };
 
-export const TextField: React.FC<PropsType> = (props) => {
+export const TextField = forwardRef<HTMLInputElement, PropsType>((props, ref) => {
   const {
     name,
     value,
@@ -44,6 +44,7 @@ export const TextField: React.FC<PropsType> = (props) => {
     <div className="w-full">
       <div className="flex items-end">
         <input
+          ref={ref}
           type={type}
           name={name}
           value={value}
@@ -62,4 +63,4 @@ export const TextField: React.FC<PropsType> = (props) => {
       </div>
     </div>
   );
-};
+});
