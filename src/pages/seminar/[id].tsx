@@ -106,7 +106,7 @@ const Seminar: NextPage = () => {
               <div className="mt-4 flex w-full flex-col items-center">
                 <div className="flex w-full items-center justify-center rounded-md bg-[#e2e7ff] px-6 py-4">
                   <div className="m-2 flex h-8 w-8 items-center justify-center rounded-full bg-primary lg:h-20 lg:w-20">
-                    <img src="/images/seminar/video.svg" className="w-[19px] lg:w-auto" alt="タイトル" />
+                    <img src="images/seminar/video.svg" className="w-[19px] lg:w-auto" alt="タイトル" />
                   </div>
                   <p className="flex-1 font-bold text-primary lg:pl-4 lg:text-2xl">{seminar && seminar.subject}</p>
                 </div>

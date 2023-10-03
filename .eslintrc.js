@@ -1,3 +1,6 @@
+const rulesDirPlugin = require('eslint-plugin-rulesdir');
+rulesDirPlugin.RULES_DIR = 'eslint/rules';
+
 module.exports = {
   env: {
     browser: true,
@@ -16,7 +19,7 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['react', '@typescript-eslint', 'prefer-arrow'],
+  plugins: ['react', '@typescript-eslint', 'prefer-arrow', 'rulesdir'],
   rules: {
     'max-len': ['warn', { code: 120, ignorePattern: '^import\\s.+\\sfrom\\s.+;$' }],
     '@next/next/no-img-element': 'off',
@@ -29,6 +32,9 @@ module.exports = {
       },
     ],
     'react/prop-types': 'off', // TS で型を縛ってるので props の厳密な検証は不要
+    'rulesdir/img-src-must-relative': 'error',
+    'rulesdir/inner-href-use-link': 'error',
+    'rulesdir/dont-use-url-properties': 'warn',
   },
   // ESLint の除外ファイル
   ignorePatterns: [
