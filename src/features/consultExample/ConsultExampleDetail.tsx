@@ -137,6 +137,7 @@ export const ConsultExampleDetail: React.FC<Props> = ({
             <ConsultExampleDetailMessage
               key={consultExampleMesasge.uid}
               consultExampleMessage={consultExampleMesasge}
+              isShowAction={isShowAction}
               onLike={likeMessageAndMutate}
               onUnlike={unlikeMessageAndMutate}
               onComment={onCommentForMessage}
