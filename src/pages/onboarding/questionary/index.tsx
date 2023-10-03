@@ -2,6 +2,7 @@ import { Breadcrumb } from '@/components/Breadcrumb/Breadcrumb';
 import { BreadcrumbItem } from '@/components/Breadcrumb/BreadcrumbItem';
 import { BreadcrumbLink } from '@/components/Breadcrumb/BreadcrumbLink';
 import PrimaryButton from '@/components/Button/PrimaryButton';
+import { ColoredImage } from '@/components/Image/ColoredImage';
 import { CheckBox } from '@/components/Parts/Form/CheckBox';
 import { Optional } from '@/components/Parts/Form/Optional';
 import { Radio } from '@/components/Parts/Form/Radio';
@@ -105,6 +106,27 @@ const OnBoardingQuestionaryPage = () => {
               )}
             </section>
           ))}
+        </div>
+        <div className="mt-2 flex gap-2 bg-bg-secondary p-4">
+          <div className="pt-1">
+            <ColoredImage
+              src="icons/exclamation-triangle.svg"
+              color="#16191D"
+              width="16"
+              height="16"
+              className="opacity-20"
+            />
+          </div>
+          <div className="text-base font-light leading-6">
+            <div>
+              E-コンサルでは、診断・治療方針における疑問をMediiが審査した信頼できる専門医に
+              <span className="font-semibold text-medii-blue-base">無料・匿名</span>で相談できます。
+            </div>
+            <ul className="ml-6 list-disc">
+              <li>指定難病 99%※を含む、全診療科の相談に対応</li>
+              <li>患者情報を取り扱い等、日本の医療機関が準拠するセキュリティ基準に対応した安全な仕組み</li>
+            </ul>
+          </div>
         </div>
         <div className="mt-10 flex justify-center">
           {isSending ? (
