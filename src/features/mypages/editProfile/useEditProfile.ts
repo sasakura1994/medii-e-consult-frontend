@@ -161,6 +161,10 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
         birthday_day: fetchedProfile.birthday_year === 9999 ? '' : numberToString(fetchedProfile.birthday_day),
         qualified_year: numberToString(fetchedProfile.qualified_year),
         graduated_university: fetchedProfile.graduated_university === 'null' ? '' : fetchedProfile.graduated_university,
+        is_mail_notify:
+          !fetchedProfile.is_mail_notify && !fetchedProfile.is_push_notify ? true : fetchedProfile.is_mail_notify,
+        is_push_notify:
+          !fetchedProfile.is_mail_notify && !fetchedProfile.is_push_notify ? true : fetchedProfile.is_push_notify,
       });
     }
 

@@ -43,6 +43,52 @@ describe('useEditProfile', () => {
       });
     });
 
+    test('通知設定が両方falseの場合はtrueにする', async () => {
+      const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
+      (useFetchProfileMock as jest.Mock).mockReturnValue({
+        profile: {
+          birthday_year: 2000,
+          birthday_month: 4,
+          birthday_day: 1,
+          qualified_year: 2020,
+          hospital_id: 'hospital1',
+          hospital_name: '',
+          is_mail_notify: false,
+          is_push_notify: false,
+        } as ProfileEntity,
+      });
+
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {
+        wrapper: RecoilRoot,
+      }).result;
+
+      expect(hooks.current.profile?.is_mail_notify).toBeTruthy();
+      expect(hooks.current.profile?.is_push_notify).toBeTruthy();
+    });
+
+    test('通知設定が両方falseでなければそのまま', async () => {
+      const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
+      (useFetchProfileMock as jest.Mock).mockReturnValue({
+        profile: {
+          birthday_year: 2000,
+          birthday_month: 4,
+          birthday_day: 1,
+          qualified_year: 2020,
+          hospital_id: 'hospital1',
+          hospital_name: '',
+          is_mail_notify: false,
+          is_push_notify: true,
+        } as ProfileEntity,
+      });
+
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {
+        wrapper: RecoilRoot,
+      }).result;
+
+      expect(hooks.current.profile?.is_mail_notify).toBeFalsy();
+      expect(hooks.current.profile?.is_push_notify).toBeTruthy();
+    });
+
     test('病院を選択している場合', async () => {
       const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
       (useFetchProfileMock as jest.Mock).mockReturnValue({
