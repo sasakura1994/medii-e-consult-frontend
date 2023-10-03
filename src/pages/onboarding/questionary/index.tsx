@@ -7,24 +7,15 @@ import { CheckBox } from '@/components/Parts/Form/CheckBox';
 import { Optional } from '@/components/Parts/Form/Optional';
 import { Radio } from '@/components/Parts/Form/Radio';
 import { Required } from '@/components/Parts/Form/Required';
+import { TextArea } from '@/components/Parts/Form/TextArea';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
-import TextField from '@/components/TextField/TextField';
 import { QuestionaryItems } from '@/features/onboarding/QuestionaryItems';
 import { useOnBoardingQuestionary } from '@/features/onboarding/useOnBoardingQuestionary';
 import React from 'react';
 
 const OnBoardingQuestionaryPage = () => {
-  const {
-    checkIsCheckboxRequired,
-    isSending,
-    otherOpenedQuestionIds,
-    questionAndAnswers,
-    setAnswer,
-    setOther,
-    submit,
-    toggleAnswers,
-    toggleOther,
-  } = useOnBoardingQuestionary();
+  const { checkIsCheckboxRequired, isSending, questionAndAnswers, setAnswer, setOther, submit, toggleAnswers } =
+    useOnBoardingQuestionary();
 
   return (
     <div className="mx-6 mb-10 mt-5 max-w-[1024px] lg:mx-auto lg:mt-10">
@@ -54,7 +45,7 @@ const OnBoardingQuestionaryPage = () => {
                 <h3 className="text-md font-bold">{question.text}</h3>
                 {question.required ? <Required>必須</Required> : <Optional>任意</Optional>}
               </div>
-              {question.type === 'SingleChoice' ? (
+              {question.type === 'SingleChoice' && (
                 <QuestionaryItems itemCount={question.items.length}>
                   {question.items.map((item) => (
                     <Radio
@@ -68,7 +59,8 @@ const OnBoardingQuestionaryPage = () => {
                     />
                   ))}
                 </QuestionaryItems>
-              ) : (
+              )}
+              {question.type === 'MultiChoice' && (
                 <QuestionaryItems itemCount={question.items.length}>
                   {question.items.map((item) => (
                     <CheckBox
@@ -83,26 +75,15 @@ const OnBoardingQuestionaryPage = () => {
                   ))}
                 </QuestionaryItems>
               )}
-              {question.other_enable && (
-                <>
-                  <div className="mt-1">
-                    <CheckBox
-                      label="その他"
-                      name={`questionary_item${question.id}_other`}
-                      checked={otherOpenedQuestionIds.includes(question.id)}
-                      onChange={() => toggleOther(question.id)}
-                    />
-                  </div>
-                  {otherOpenedQuestionIds.includes(question.id) && (
-                    <TextField
-                      className="mt-1 w-[350px]"
-                      value={answer.other}
-                      placeholder="その他を選んだ方は具体的に教えてください。"
-                      onChange={(e) => setOther(question.id, e.target.value)}
-                      required
-                    />
-                  )}
-                </>
+              {question.type === 'TextOnly' && (
+                <TextArea
+                  name={`other${question.id}`}
+                  className="mt-2 h-[112px] w-full"
+                  value={answer.other}
+                  placeholder={question.other_hint}
+                  onChange={(e) => setOther(question.id, e.target.value)}
+                  required={question.required}
+                />
               )}
             </section>
           ))}
