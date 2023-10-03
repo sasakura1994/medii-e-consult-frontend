@@ -228,6 +228,11 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
 
     const data = { ...profile };
 
+    if (!data.is_mail_notify && !data.is_push_notify) {
+      data.is_mail_notify = true;
+      data.is_push_notify = true;
+    }
+
     if (isHospitalDisabled) {
       data.hospital_id = '';
       data.hospital_name = '';
