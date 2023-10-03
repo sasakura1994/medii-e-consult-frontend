@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, act, waitFor } from '@testing-library/react';
+import { render, screen, act } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
 import NewChatRoomPage from '@/pages/newchatroom';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';

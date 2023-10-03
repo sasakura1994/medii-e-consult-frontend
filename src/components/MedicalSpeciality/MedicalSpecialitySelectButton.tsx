@@ -1,4 +1,3 @@
-import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 import React from 'react';
 import { useMedicalSpecialitySelectButton } from './useMedicalSpecialitySelectButton';
 import { MedicalSpecialitySelectDialog } from './MedicalSpecialitySelectDialog';

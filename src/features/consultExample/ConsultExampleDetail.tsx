@@ -158,9 +158,7 @@ export const ConsultExampleDetail: React.FC<Props> = ({
           <div className="mt-10 text-center font-medium text-primary">小さな課題でも、まずは相談してみませんか？</div>
           <div className="mb-20 mt-4 flex justify-center lg:mb-10">
             <Link href={`/newchatroom?from=example_${consultExample.example_id}`}>
-              <a>
-                <PrimaryButton>匿名でコンサル作成</PrimaryButton>
-              </a>
+              <PrimaryButton>匿名でコンサル作成</PrimaryButton>
             </Link>
           </div>
         </section>

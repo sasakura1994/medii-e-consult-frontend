@@ -1,5 +1,4 @@
 import { AboutTicketModal } from '@/components/Parts/Modal/AboutTicketModal';
-import { Modal } from '@/components/Parts/Modal/Modal';
 import { ticketCountEntity } from '@/types/entities/ticketCountEntity';
 import React from 'react';
 

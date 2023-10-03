@@ -31,13 +31,11 @@ export const Top = () => {
           {isOnboardingQuestionaryAnswered === false && (
             <div className="my-6" data-testid="onboarding-questionary-banner">
               <Link href="/onboarding/questionary">
-                <a>
-                  <img
-                    src="images/onboarding/questionary_banner.png"
-                    alt="アンケートに答えて100Mediiポイント進呈"
-                    className="w-full"
-                  />
-                </a>
+                <img
+                  src="images/onboarding/questionary_banner.png"
+                  alt="アンケートに答えて100Mediiポイント進呈"
+                  className="w-full"
+                />
               </Link>
             </div>
           )}

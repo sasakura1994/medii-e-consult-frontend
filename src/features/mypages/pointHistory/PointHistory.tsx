@@ -33,9 +33,7 @@ export const PointHistory: React.FC = () => {
       </div>
 
       <div>
-        <h2 className="mb-3 border-b border-solid border-b-heading-line pb-1">
-          Medii ポイント履歴
-        </h2>
+        <h2 className="mb-3 border-b border-solid border-b-heading-line pb-1">Medii ポイント履歴</h2>
 
         <table className={styles.history_table}>
           <thead>
@@ -51,16 +49,12 @@ export const PointHistory: React.FC = () => {
               pointHistories.map((pointHistory) => (
                 <tr key={pointHistory.ref_id}>
                   <td>{getActionNameFromRefId(pointHistory.ref_id)}</td>
-                  <td>
-                    {dateFormat(pointHistory.created_date, 'YYYY/M/D HH:mm')}
-                  </td>
+                  <td>{dateFormat(pointHistory.created_date, 'YYYY/M/D HH:mm')}</td>
                   <td className="text-right">{pointHistory.delta}</td>
                   <td>
                     {pointHistory.ref_id.startsWith('con') && (
-                      <Link href={getChatRoomLink(pointHistory.ref_id)}>
-                        <a className="text-[#0000ee] underline">
-                          該当E-コンサル
-                        </a>
+                      <Link href={getChatRoomLink(pointHistory.ref_id)} className="text-[#0000ee] underline">
+                        該当E-コンサル
                       </Link>
                     )}
                   </td>

@@ -2,7 +2,6 @@ import React from 'react';
 
 import { render, screen } from '@testing-library/react';
 import * as useMedicalSpeciality from '@/hooks/medicalSpeciality/useMedicalSpeciality';
-import { ConsultExampleDetailEntity } from '@/types/entities/ConsultExampleDetailEntity';
 import { ConsultExampleDetailMessage } from './ConsultExampleDetailMessage';
 import { ConsultExampleMessageEntity } from '@/types/entities/ConsultExampleMessageEntity';
 

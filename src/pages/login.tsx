@@ -17,10 +17,8 @@ const GuideLink = ({
   onClick: React.MouseEventHandler<HTMLAnchorElement>;
 }) => {
   return (
-    <Link href={href}>
-      <a className="text-sm text-guide-link underline" onClick={onClick}>
-        {children}
-      </a>
+    <Link href={href} className="text-sm text-guide-link underline" onClick={onClick}>
+      {children}
     </Link>
   );
 };
@@ -130,7 +128,9 @@ const Login: NextPageWithLayout = () => {
               nonce: 'nonce',
               usePopup: false,
             }}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             onSuccess={(response: any) => console.log(response)}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             render={(props: any) => (
               <button
                 className="

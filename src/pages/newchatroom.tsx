@@ -1,5 +1,4 @@
 import React from 'react';
-import { MyPageLayout } from '@/components/Layouts/MyPageLayout';
 import type { NextPageWithLayout } from '@/pages/_app';
 import { Card } from '@/components/Parts/Card/Card';
 import { useNewChatRoom } from '@/features/chat/newChatRoom/useNewChatRoom';
@@ -59,11 +58,9 @@ const NewChatRoomPage: NextPageWithLayout = () => {
             </p>
             <div className="mt-10">
               <Link href={`/nmo/input-profile?redirect=${encodeURIComponent('/newchatroom')}`}>
-                <a>
-                  <PrimaryButton size="large" className="mx-auto">
-                    プロフィール入力
-                  </PrimaryButton>
-                </a>
+                <PrimaryButton size="large" className="mx-auto">
+                  プロフィール入力
+                </PrimaryButton>
               </Link>
             </div>
           </Modal>
