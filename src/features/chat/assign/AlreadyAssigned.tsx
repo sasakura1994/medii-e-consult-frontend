@@ -8,7 +8,6 @@ import PrimaryButton from '@/components/Button/PrimaryButton';
 import SecondaryButton from '@/components/Button/SecondaryButton';
 import Link from 'next/link';
 
-
 type Props = {
   chatRoom: ChatRoomEntity;
   consultExample?: ConsultExampleDetailEntity;
@@ -60,6 +59,7 @@ export const AlreadyAssigned: React.FC<Props> = ({
               <ConsultExampleDetail
                 consultExample={consultExample}
                 consultExampleMessages={consultExampleMessages}
+                isShowAction={false}
               />
             </Container>
           </div>
