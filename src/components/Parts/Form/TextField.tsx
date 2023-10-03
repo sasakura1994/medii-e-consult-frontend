@@ -64,3 +64,5 @@ export const TextField = forwardRef<HTMLInputElement, PropsType>((props, ref) =>
     </div>
   );
 });
+
+TextField.displayName = 'TextField';
