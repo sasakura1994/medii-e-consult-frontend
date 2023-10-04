@@ -74,6 +74,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     setIsOpenResolveChatRoomModal,
     getMedicalSpecialityName,
     getExperienceYear,
+    activateChatRoom,
   } = useConsultDetail({
     medicalSpecialities: medicalSpecialities,
     chatRoomData: chatRoomData,
@@ -326,6 +327,30 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                         </div>
                       </Link>
                     ))}
+                </div>
+              </div>
+            )}
+            {chatRoomData.chat_room.status === 'TEMP_RESOLVED' && isChatRoomOwner && (
+              <div className="pointer-events-auto bg-[#5c6bc0] p-2 text-center text-sm text-white">
+                <p>専門医よりコンサル終了の依頼が届きました</p>
+                <div className="flex justify-center">
+                  <div
+                    className="mx-3 mt-4 min-w-[40%] cursor-pointer rounded-full bg-white px-4 py-1 text-primary"
+                    onClick={async () => {
+                      await activateChatRoom({ chat_room_id: chatRoomData.chat_room.chat_room_id });
+                      await mutateChatRoom?.();
+                      mutateChatList?.();
+                    }}
+                  >
+                    <p className="text-sm">コンサルを継続</p>
+                  </div>
+                  <div
+                    className="mx-3 mt-4 min-w-[40%] cursor-pointer
+                      rounded-full bg-white px-4 py-1 text-primary"
+                    onClick={() => setIsOpenResolveChatRoomModal(true)}
+                  >
+                    <p className="text-sm">解決しました</p>
+                  </div>
                 </div>
               </div>
             )}

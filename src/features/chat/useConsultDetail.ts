@@ -1,5 +1,6 @@
 import { FetchChatListResponseData } from '@/hooks/api/chat/useFetchChatList';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
+import { usePostActivateChatRoom } from '@/hooks/api/chat/usePostActivateChatRoom';
 import { useToken } from '@/hooks/authentication/useToken';
 import { useMedicalSpeciality } from '@/hooks/medicalSpeciality/useMedicalSpeciality';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
@@ -26,6 +27,7 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
   const { accountId } = useToken();
   const chatListRef = useRef<HTMLDivElement | null>(null);
   const { getMedicalSpecialityName } = useMedicalSpeciality();
+  const { activateChatRoom } = usePostActivateChatRoom();
 
   const getExperienceYear = useCallback((year: number) => {
     const date = new Date();
@@ -127,5 +129,6 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
     setIsOpenResolveChatRoomModal,
     getMedicalSpecialityName,
     getExperienceYear,
+    activateChatRoom,
   };
 };

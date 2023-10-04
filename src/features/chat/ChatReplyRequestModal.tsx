@@ -26,15 +26,16 @@ export const ChatReplyRequestModal = (props: ChatReplyRequestModalProps) => {
         <OutlinedButton onClick={() => setIsOpen(false)}>キャンセル</OutlinedButton>
         <PrimaryButton
           onClick={async () => {
-            await sendResponseRequest({ chat_room_id: chatRoomData.chat_room.chat_room_id }).catch((e) => {
+            const res = await sendResponseRequest({ chat_room_id: chatRoomData.chat_room.chat_room_id }).catch((e) => {
               const error = e as AxiosError<PostChatRoomSendResponseRequestResponseData>;
               if (error.response) {
                 setErrorMessage(error.response.data.message);
                 return;
               }
             });
-
-            setIsOpen(false);
+            if (res) {
+              setIsOpen(false);
+            }
           }}
         >
           送信する
