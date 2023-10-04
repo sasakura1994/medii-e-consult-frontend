@@ -1,5 +1,4 @@
 import React from 'react';
-import { Modal } from '@/components/Parts/Modal/Modal';
 import Link from 'next/link';
 import { SeminarConferenceCard } from './SeminarConferenceCard';
 import { SeminarArchiveHeader } from './SeminarArchiveHeader';
@@ -7,12 +6,10 @@ import { SeminarCard } from './SeminarCard';
 import SecondaryButton from '@/components/Button/SecondaryButton';
 import { useSeminar } from './useSeminar';
 import { ImcompleteProfileModal } from '@/components/Parts/Modal/ImcompleteProfileModal';
-import PrimaryButton from '@/components/Button/PrimaryButton';
 import { AboutTicketModal } from '@/components/Parts/Modal/AboutTicketModal';
 
 export const Seminar = () => {
-  const { seminars, upcomingSeminars, ticketCount, showModal, setShowModal } =
-    useSeminar();
+  const { seminars, upcomingSeminars, ticketCount, showModal, setShowModal } = useSeminar();
 
   if (seminars) {
     return (
@@ -22,19 +19,14 @@ export const Seminar = () => {
       >
         <div className="flex w-full flex-col items-center justify-center py-4 pt-10">
           <div className="mb-8 h-auto rounded-lg bg-white pl-6 pt-6 shadow-low lg:max-w-[976px]">
-            <p className="text-xxxl font-bold text-medii-blue-base">
-              最新のE-カンファ
-            </p>
+            <p className="text-xxxl font-bold text-medii-blue-base">最新のE-カンファ</p>
             <div className="flex flex-col flex-wrap justify-start lg:flex-row">
               {upcomingSeminars &&
                 upcomingSeminars.map((seminar, index) => {
                   if (index < 3) {
                     return (
                       <div key={seminar.seminar_id}>
-                        <SeminarConferenceCard
-                          index={index}
-                          seminar={seminar}
-                        />
+                        <SeminarConferenceCard index={index} seminar={seminar} />
                       </div>
                     );
                   }
@@ -72,11 +64,7 @@ export const Seminar = () => {
                lg:px-6 lg:py-3 lg:text-sm"
                 >
                   すべてのアーカイブ動画を見る
-                  <img
-                    src="icons/arrow_right.svg"
-                    className="ml-2 inline h-3"
-                    alt=""
-                  />
+                  <img src="icons/arrow_right.svg" className="ml-2 inline h-3" alt="" />
                 </div>
               </a>
             </Link>
@@ -86,7 +74,7 @@ export const Seminar = () => {
           </div>
         </div>
 
-        { showModal && <AboutTicketModal setShowModal={setShowModal} />}
+        {showModal && <AboutTicketModal setShowModal={setShowModal} />}
         <ImcompleteProfileModal />
       </div>
     );
