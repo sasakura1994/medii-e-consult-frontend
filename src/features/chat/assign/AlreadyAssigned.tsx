@@ -69,7 +69,7 @@ export const AlreadyAssigned: React.FC<Props> = ({
           >
             <Link href={`/example/${consultExample.example_id}`}>
               <a>
-                <PrimaryButton className="text-sm m-auto">
+                <PrimaryButton className="m-auto">
                   この事例のページへ行く
                 </PrimaryButton>
               </a>
