@@ -30,7 +30,10 @@ export const OpenConsultDetailButton = (props: OpenConsultDetailButtonProps) => 
             <p className="text-xs text-white">返答依頼</p>
           </button>
           <button
-            className="h-9 w-[126px] rounded-full bg-primary"
+            className={`h-9 w-[126px] rounded-full ${
+              chatRoomData.chat_room.status === 'TEMP_RESOLVED' ? 'bg-[#999999]' : 'bg-primary'
+            } `}
+            disabled={chatRoomData.chat_room.status === 'TEMP_RESOLVED'}
             onClick={() => setIsOpenTempResolveRequestModal(true)}
           >
             <p className="text-xs text-white">コンサル終了依頼</p>
