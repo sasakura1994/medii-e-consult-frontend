@@ -1,5 +1,5 @@
 import React from 'react';
-
+import '@testing-library/jest-dom';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import * as useMedicalSpeciality from '@/hooks/medicalSpeciality/useMedicalSpeciality';
 import { ConsultExampleDetail } from './ConsultExampleDetail';

@@ -1,4 +1,5 @@
 import React from 'react';
+import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { Top } from '../index';
 import { act } from 'react-dom/test-utils';

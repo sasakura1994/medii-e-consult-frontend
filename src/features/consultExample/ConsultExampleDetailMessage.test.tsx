@@ -1,5 +1,5 @@
 import React from 'react';
-
+import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import * as useMedicalSpeciality from '@/hooks/medicalSpeciality/useMedicalSpeciality';
 import { ConsultExampleDetailMessage } from './ConsultExampleDetailMessage';
@@ -25,9 +25,7 @@ const baseConsultExampleMessage: ConsultExampleMessageEntity = {
 
 describe('ConsultExampleDetailMessage', () => {
   beforeEach(() => {
-    const useMedicalSpecialityMock = useMedicalSpeciality as jest.Mocked<
-      typeof useMedicalSpeciality
-    >;
+    const useMedicalSpecialityMock = useMedicalSpeciality as jest.Mocked<typeof useMedicalSpeciality>;
     useMedicalSpecialityMock.useMedicalSpeciality.mockReturnValue({
       getMedicalSpecialityName: jest.fn(() => '内科'),
     } as unknown as ReturnType<typeof useMedicalSpecialityMock.useMedicalSpeciality>);
@@ -38,11 +36,7 @@ describe('ConsultExampleDetailMessage', () => {
       ...baseConsultExampleMessage,
     };
 
-    await render(
-      <ConsultExampleDetailMessage
-        consultExampleMessage={consultExampleMessage}
-      />
-    );
+    await render(<ConsultExampleDetailMessage consultExampleMessage={consultExampleMessage} />);
 
     const accountTypeText = screen.getByText('主治医');
     expect(accountTypeText).toBeInTheDocument();
@@ -56,11 +50,7 @@ describe('ConsultExampleDetailMessage', () => {
       account_type: 'consultant',
     };
 
-    await render(
-      <ConsultExampleDetailMessage
-        consultExampleMessage={consultExampleMessage}
-      />
-    );
+    await render(<ConsultExampleDetailMessage consultExampleMessage={consultExampleMessage} />);
 
     const accountTypeText = screen.getByText('専門医');
     expect(accountTypeText).toBeInTheDocument();
@@ -75,11 +65,7 @@ describe('ConsultExampleDetailMessage', () => {
       doctor_name: '医師山',
     };
 
-    await render(
-      <ConsultExampleDetailMessage
-        consultExampleMessage={consultExampleMessage}
-      />
-    );
+    await render(<ConsultExampleDetailMessage consultExampleMessage={consultExampleMessage} />);
 
     const accountTypeText = screen.getByText('医師山');
     expect(accountTypeText).toBeInTheDocument();

@@ -1,4 +1,5 @@
 import React from 'react';
+import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import { render, screen, act, waitFor, cleanup } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';

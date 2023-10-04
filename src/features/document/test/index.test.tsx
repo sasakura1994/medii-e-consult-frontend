@@ -1,4 +1,5 @@
 import React from 'react';
+import '@testing-library/jest-dom';
 import { render, screen, act, waitFor, cleanup } from '@testing-library/react';
 import { Document } from '../index';
 import { useRouter } from 'next/router';
