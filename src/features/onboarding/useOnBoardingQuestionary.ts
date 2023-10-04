@@ -100,6 +100,7 @@ export const useOnBoardingQuestionary = () => {
     setIsSending(false);
 
     if (!response) {
+      alert('既に回答済みです');
       return;
     }
 
