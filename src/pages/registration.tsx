@@ -9,7 +9,7 @@ import { Footer } from '@/components/Layouts/Footer/Footer';
 import { HeaderContainer } from '@/components/Layouts/Header/HeaderContainer';
 import { HeaderLogo } from '@/components/Layouts/Header/HeaderLogo';
 import { HeaderMenuList } from '@/components/Layouts/Header/HeaderMenuList';
-import { HeaderMenuListItem } from '@/components/Layouts/Header/HeaderMenuListItem';
+import TertiaryButton from '@/components/Button/TertiaryButton';
 
 const GuideLink = ({ children, href }: { children: string; href: string }) => {
   return (
@@ -35,10 +35,14 @@ const Registration: NextPageWithLayout = () => {
     <>
       <div className="flex h-full min-h-screen w-full flex-col bg-[#eff3f6]">
         <HeaderContainer>
-          <div className="flex items-center">
+          <div className="flex w-full items-center justify-between">
             <HeaderLogo href={loginUrl} />
             <HeaderMenuList>
-              <HeaderMenuListItem href={loginUrl}>ログイン</HeaderMenuListItem>
+              <Link href={loginUrl}>
+                <a>
+                  <TertiaryButton size="large">ログイン</TertiaryButton>
+                </a>
+              </Link>
             </HeaderMenuList>
           </div>
         </HeaderContainer>
@@ -64,11 +68,7 @@ const Registration: NextPageWithLayout = () => {
             "
               >
                 <img src="images/registration/left.png" className="hidden max-w-[480px] bg-white md:block" alt="" />
-                <img
-                  src="images/registration/mobile_main.png"
-                  className="bg-white md:hidden lg:max-w-[480px]"
-                  alt=""
-                />
+                <img src="images/registration/mobile_main.png" className="bg-white md:hidden lg:max-w-[480px]" alt="" />
                 <div
                   className="
                 flex max-w-[480px] flex-col items-center justify-items-stretch bg-white
