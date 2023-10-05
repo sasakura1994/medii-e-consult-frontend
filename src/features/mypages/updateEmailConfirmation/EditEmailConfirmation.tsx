@@ -2,7 +2,7 @@ import React from 'react';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import { TextField } from '@/components/Parts/Form/TextField';
 import { UseEditEmailConfirmationType } from './useUpdateEmailConfirmation';
-import Completed from '@/features/mypages/updateEmailConfirmation/Completed';
+import Completed from './Completed';
 
 const EditEmailConfirmation = ({
   firstPassword,
