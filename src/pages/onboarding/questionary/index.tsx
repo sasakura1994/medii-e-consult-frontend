@@ -1,3 +1,4 @@
+/* eslint-disable no-irregular-whitespace */
 import { Breadcrumb } from '@/components/Breadcrumb/Breadcrumb';
 import { BreadcrumbItem } from '@/components/Breadcrumb/BreadcrumbItem';
 import { BreadcrumbLink } from '@/components/Breadcrumb/BreadcrumbLink';
@@ -89,12 +90,12 @@ const OnBoardingQuestionaryPage = () => {
           ))}
         </div>
         <div className="mt-2 flex gap-2 bg-bg-secondary p-4">
-          <div className="pt-1">
+          <div className="shrink-0 pt-1">
             <ColoredImage
               src="icons/exclamation-triangle.svg"
               color="#16191D"
-              width="16"
-              height="16"
+              width="16px"
+              height="16px"
               className="opacity-20"
             />
           </div>
@@ -107,6 +108,9 @@ const OnBoardingQuestionaryPage = () => {
               <li>指定難病 99%※を含む、全診療科の相談に対応</li>
               <li>患者情報を取り扱い等、日本の医療機関が準拠するセキュリティ基準に対応した安全な仕組み</li>
             </ul>
+            <div className="mt-4 text-medii-sm font-light leading-[18px] text-secondary">
+              ※難病情報センター「令和３年度末現在　特定医療費（指定難病）受給者証所持者数」を元に、E-コンサルで相談可能な指定難病の患者数の割合を算出。
+            </div>
           </div>
         </div>
         <div className="mt-10 flex justify-center">
