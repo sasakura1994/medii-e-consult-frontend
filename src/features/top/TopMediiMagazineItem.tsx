@@ -1,30 +1,23 @@
+import { MediiMagazinePost } from '@/hooks/api/medii/useMediiMagazine';
+import { dateFormat } from '@/libs/date';
 import React from 'react';
 
-export type Interview = {
-  title: string;
-  url: string;
-  medicalSpeciality: string;
-  doctorName: string;
-  thumbnailUrl: string;
-};
-
 type Props = {
-  interview: Interview;
+  post: MediiMagazinePost;
 };
 
 export const TopMediiMagazineItem = (props: Props) => {
-  const { interview } = props;
+  const { post } = props;
 
   return (
-    <a href={interview.url} target="_blank" rel="noreferrer">
+    <a href={post.link} target="_blank" rel="noreferrer">
       <div className="flex cursor-pointer gap-2 border-b py-4">
         <div className="w-[200px]">
-          <p className="text-md text-text-primary line-clamp-3">{interview.title}</p>
-          <p className="mt-1 text-sm font-light text-text-secondary">{interview.medicalSpeciality}</p>
-          <p className="text-sm font-light text-text-secondary">{interview.doctorName}</p>
+          <p className="text-md text-text-primary line-clamp-3">{post.title}</p>
+          <p className="mt-1 text-medii-sm font-light text-text-secondary">{dateFormat(post.date, 'YYYY/MM/DD')}</p>
         </div>
         <div className="mr-2">
-          <img className="h-[60px] w-[88px] object-cover" src={interview.thumbnailUrl} alt="" />
+          <img className="h-[60px] w-[88px] object-cover" src={post.cover} alt="" />
         </div>
       </div>
     </a>
