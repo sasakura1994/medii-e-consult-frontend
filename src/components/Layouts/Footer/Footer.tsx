@@ -1,59 +1,43 @@
 import Link from 'next/link';
 import React from 'react';
 
-export const Footer: React.FC = () => {
+type Props = {
+  noMenu?: boolean;
+};
+
+export const Footer = (props: Props) => {
+  const { noMenu = false } = props;
+
   return (
-    <div className="bg-white pt-20 pb-6">
-      <div className="flex flex-col justify-center gap-10 pl-20 md:flex-row md:gap-[126px] md:pl-0">
-        <div className="flex flex-col justify-center gap-[40px] md:flex-row">
-          <img
-            src="images/side_logo.svg"
-            alt="Medii E-コンサル"
-            className="h-fit w-[156px]"
-          />
-          <p className="text-sm font-bold">
-            どこにいても より良い医療を
-            <br />
-            全ての人に
-          </p>
-        </div>
-        <div className="flex flex-col">
-          {[
-            { label: 'E-コンサルとは?', href: 'https://medii.jp/service' },
-            { label: 'コーポレートサイト', href: 'https://medii.jp' },
-            {
-              label: 'お問い合わせ',
-              href: 'https://tayori.com/form/62897c986d36f5b573fec1a04508f24b70b11fe6/',
-            },
-            {
-              label: 'プライバシーポリシー',
-              href: 'https://e-consult.medii.jp/PrivacyPolicy',
-            },
-          ].map((e) => (
-            <Link href={e.href} key={e.href}>
-              <a className="mb-4 text-[14px] font-bold text-primary">
-                {e.label}
-              </a>
+    <div className="flex flex-col gap-4 bg-white py-4">
+      {!noMenu && (
+        <div className="flex flex-col justify-center gap-4 text-sm font-light lg:flex-row">
+          <div className="flex justify-center gap-4">
+            <a href="https://tayori.com/faq/4cb3c7c0fd09ab493d1efcbf01dcf76729c62202/" target="_blank" rel="noreferrer">
+              よくある質問
+            </a>
+            <a
+              href="https://tayori.com/form/62897c986d36f5b573fec1a04508f24b70b11fe6/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              お問い合わせ
+            </a>
+            <a href="https://e-consult.medii.jp/doc/terms_of_usage.pdf" target="_blank" rel="noreferrer">
+              利用規約
+            </a>
+          </div>
+          <div className="flex justify-center gap-4">
+            <Link href="/privacypolicy">
+              <a>プライバシーポリシー</a>
             </Link>
-          ))}
+            <a href="https://medii.jp" target="_blank" rel="noreferrer">
+              運営会社
+            </a>
+          </div>
         </div>
-      </div>
-      <div className="flex items-center justify-center gap-[32px] py-6 md:py-0">
-        <a href="https://www.facebook.com/medii0220/">
-          <img src="icons/facebook.svg" />
-        </a>
-        <a href="https://twitter.com/medii_inc">
-          <img src="icons/twitter.svg" />
-        </a>
-        <a href="https://note.com/medii_ecns/">
-          <img src="icons/note.svg" />
-        </a>
-      </div>
-      <div>
-        <p className="mt-4 text-center text-[11px] font-bold">
-          ©Medii, Inc. All Rights Reserved
-        </p>
-      </div>
+      )}
+      <div className="text-center text-medii-sm font-light">&copy;Medii, Inc. All Right Reserved</div>
     </div>
   );
 };
