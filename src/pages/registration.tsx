@@ -13,7 +13,7 @@ import { Required } from '@/components/Parts/Form/Required';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 
 const Registration: NextPageWithLayout = () => {
-  const { setEmail, register, loginUrl, isEmailDuplicated, isSent, errorMessage } = useRegister();
+  const { email, setEmail, register, loginUrl, isEmailDuplicated, isSent, errorMessage } = useRegister();
   return (
     <>
       <div className="flex h-full min-h-screen w-full flex-col bg-[#eff3f6]">
@@ -93,7 +93,12 @@ const Registration: NextPageWithLayout = () => {
                       </ErrorMessage>
                     )}
                     <div className="mt-4 flex justify-center">
-                      <PrimaryButton size="large" type="submit" className="w-full lg:w-auto">
+                      <PrimaryButton
+                        size="large"
+                        type="submit"
+                        className="w-full lg:w-auto"
+                        disabled={email.trim() === ''}
+                      >
                         同意して登録
                       </PrimaryButton>
                     </div>
