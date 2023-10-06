@@ -17,9 +17,6 @@ type StudioItem = {
             slug: {
               stringValue: string;
             };
-            MQRJlwFO?: {
-              booleanValue: boolean;
-            };
           };
         };
       };
