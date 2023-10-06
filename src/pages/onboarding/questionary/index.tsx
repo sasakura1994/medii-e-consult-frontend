@@ -43,8 +43,18 @@ const OnBoardingQuestionaryPage = () => {
           {questionAndAnswers.map(({ question, answer }) => (
             <section key={question.id}>
               <div className="flex items-center gap-2">
-                <h3 className="text-md font-bold">{question.text}</h3>
-                {question.required ? <Required>必須</Required> : <Optional>任意</Optional>}
+                <h3 className="text-md font-bold">
+                  {question.text}
+                  {question.required ? (
+                    <Required className="lg:relative lg:top-[-2px]" isInline>
+                      必須
+                    </Required>
+                  ) : (
+                    <Optional className="lg:relative lg:top-[-2px]" isInline>
+                      任意
+                    </Optional>
+                  )}
+                </h3>
               </div>
               {question.type === 'SingleChoice' && (
                 <QuestionaryItems itemCount={question.items.length}>
