@@ -37,7 +37,7 @@ export const Assign: React.FC<Props> = ({
       </AssignLabelAndContent>
       {images.length > 0 && (
         <AssignLabelAndContent label="参考画像" className="mt-4">
-          <div className="flex flex-row gap-3">
+          <div className="flex flex-col gap-3">
             {images.map((imageUrl) => (
               <img
                 key={imageUrl}
