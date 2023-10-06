@@ -24,7 +24,7 @@ const EditEmailConfirmation = ({
         <div>
           <h2 className="mt-2 text-center text-[24px] font-bold">パスワード変更</h2>
           <form onSubmit={onSubmit}>
-            <div className="mt-6">
+            <div className="mt-6 w-[308px]">
               <h2 className="font-bold">パスワード</h2>
               <TextField
                 type="password"
@@ -46,7 +46,7 @@ const EditEmailConfirmation = ({
                 required
               />
             </div>
-            {errorMessage && <div className="text-center text-red">{errorMessage}</div>}
+            {errorMessage && <div className="mt-2 text-center text-red-400 w-[300px] font-bold overflow-auto">{errorMessage}</div>}
             <div className="mt-12 flex">
               <PrimaryButton size="large" type="submit" className="mx-7 flex-1">
                 送信
