@@ -1,6 +1,7 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { usePatchEditPassword } from '@/hooks/api/account/useEditEmailConfirmation';
 import { useRouter } from 'next/router';
+import { useGetIsTokenExists } from '@/hooks/api/account/useIsTokenExists';
 
 type Query = {
   token?: string;
@@ -15,17 +16,43 @@ export type UseEditEmailConfirmationType = {
   submit: () => void;
   editConfirmEmail: () => Promise<boolean>;
   emailConfirmStatus: boolean;
+  isTokenExist: boolean | null;
+  isSending: boolean;
 };
 
 export const useUpdateEmailConfirmation = (): UseEditEmailConfirmationType => {
   const [firstPassword, setFirstPassword] = useState('');
   const [secondPassword, setSecondPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [emailConfirmStatus, setEmailConfirmStatus] = useState(false);
+  const [emailConfirmStatus, setEmailConfirmStatus] = useState(true);
+  const [isTokenExist, setIsTokenExist] = useState<boolean | null>(null);
+  const [isSending, setIsSending] = useState(true);
   const router = useRouter();
   const { token } = router.query as Query;
 
   const { editPassword } = usePatchEditPassword();
+  const { isTokenExists } = useGetIsTokenExists();
+
+  useEffect(() => {
+    const fetchIstoken = async () => {
+      const data = {
+        token,
+      };
+      const response = await isTokenExists(data).catch((error) => {
+        console.error(error);
+        return null;
+      });
+
+      if (!response) {
+        return false;
+      }
+
+      setIsTokenExist(response && response.data.has_email_updating);
+      setIsSending(false);
+    };
+
+    fetchIstoken();
+  }, [token, isTokenExists]);
 
   const editConfirmEmail = useCallback(async (): Promise<boolean> => {
     const formData = {
@@ -38,21 +65,18 @@ export const useUpdateEmailConfirmation = (): UseEditEmailConfirmationType => {
     });
 
     if (!response) {
-      return true;
-    }
-
-    if (response.status !== 204 && !errorMessage) {
-      setErrorMessage(response.data.message ?? 'エラーが発生しました');
       return false;
     }
-    return false;
-  }, [firstPassword, editPassword, token, setErrorMessage, errorMessage]);
+
+    return true;
+  }, [firstPassword, editPassword, token, setErrorMessage]);
 
   const submit = useCallback(async () => {
+    setErrorMessage('');
     if (!token) {
       return;
     }
-    setErrorMessage('');
+
     if (firstPassword !== secondPassword) {
       setErrorMessage('パスワードが一致していません');
       return;
@@ -60,10 +84,10 @@ export const useUpdateEmailConfirmation = (): UseEditEmailConfirmationType => {
 
     const result = await editConfirmEmail();
     if (result) {
-      setEmailConfirmStatus(!emailConfirmStatus);
+      setEmailConfirmStatus(false);
       return;
     }
-  }, [firstPassword, secondPassword, editConfirmEmail, token, emailConfirmStatus]);
+  }, [firstPassword, secondPassword, editConfirmEmail, token, setErrorMessage, setEmailConfirmStatus]);
 
   return {
     firstPassword,
@@ -74,5 +98,7 @@ export const useUpdateEmailConfirmation = (): UseEditEmailConfirmationType => {
     submit,
     editConfirmEmail,
     emailConfirmStatus,
+    isTokenExist,
+    isSending,
   };
 };
