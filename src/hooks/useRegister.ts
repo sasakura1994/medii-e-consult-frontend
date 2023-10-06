@@ -19,11 +19,8 @@ export type UseRegisterType = {
   email: string;
   setEmail: React.Dispatch<React.SetStateAction<string>>;
   errorMessage: string;
-  goToSnsLogin: () => void;
   loginUrl: string;
   setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
-  setIsPrivacyPolicyAgree: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsTermsAgree: React.Dispatch<React.SetStateAction<boolean>>;
   register: () => void;
   isEmailDuplicated: boolean;
   isSent: boolean;
@@ -35,8 +32,6 @@ export const useRegister = (): UseRegisterType => {
   const { axios } = useAxios();
   const [email, setEmail] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [isPrivacyPolicyAgree, setIsPrivacyPolicyAgree] = useState(false);
-  const [isTermsAgree, setIsTermsAgree] = useState(false);
   const [isSent, setIsSent] = useState(false);
   const [queryString, setQueryString] = useState('');
 
@@ -56,15 +51,6 @@ export const useRegister = (): UseRegisterType => {
   }, [redirect]);
 
   const register = useCallback(async () => {
-    if (!isPrivacyPolicyAgree) {
-      setErrorMessage('個人情報の取扱いについて確認してください');
-      return;
-    }
-    if (!isTermsAgree) {
-      setErrorMessage('利用規約を確認してください');
-      return;
-    }
-
     const data: CreateAccountRequestData = {
       mail_address: email,
       parent_account_id: parentAccountId,
@@ -82,33 +68,15 @@ export const useRegister = (): UseRegisterType => {
 
     setIsSent(true);
     saveRedirect();
-  }, [axios, email, isPrivacyPolicyAgree, isTermsAgree, parentAccountId, router.query, saveRedirect]);
-
-  const goToSnsLogin = useCallback(() => {
-    if (!isPrivacyPolicyAgree) {
-      setErrorMessage('個人情報の取扱いについて確認してください');
-      return;
-    }
-    if (!isTermsAgree) {
-      setErrorMessage('利用規約を確認してください');
-      return;
-    }
-
-    saveRedirect();
-
-    router.push(`/snsregistration?p=${parentAccountId ?? ''}`);
-  }, [isPrivacyPolicyAgree, isTermsAgree, parentAccountId, router, saveRedirect]);
+  }, [axios, email, parentAccountId, router.query, saveRedirect]);
 
   return {
     email,
     setEmail,
     errorMessage,
-    goToSnsLogin,
     loginUrl,
     setErrorMessage,
     register,
-    setIsPrivacyPolicyAgree,
-    setIsTermsAgree,
     isEmailDuplicated,
     isSent,
   };
