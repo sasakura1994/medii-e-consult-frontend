@@ -4,7 +4,7 @@ const PrivacyPolicy = () => {
       <div className="m-auto mt-6 w-[644px] rounded border border-[#ddd] bg-white py-4">
         <div className="mx-4 px-8 text-[#333] font-[400] font-[Arimo] leading-[1.1500000000000001] text-[10.5pt]">
             <h1 className="text-center pt-[20pt] pb-[6pt] break-after-avoid-page">
-                <span className="text-[#000] text-[20pt]">プライバシーポリシー</span>
+                <span className="text-[#000] text-[20pt] font-[400]">プライバシーポリシー</span>
             </h1>
             <p className="pt-[11pt]">
                 <span>株式会社Medii（以下「当社」といいます。）は、「E-コンサル」</span>
