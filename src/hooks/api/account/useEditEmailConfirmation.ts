@@ -24,7 +24,6 @@ export const usePatchEditPassword = () => {
     [axios]
   );
 
-  return { 
-    editPassword,
-  };
+  return { editPassword };
+
 };

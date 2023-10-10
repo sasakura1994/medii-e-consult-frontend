@@ -20,7 +20,6 @@ export const useGetIsTokenExists = () => {
     [axios]
   );
 
-  return { 
-    isTokenExists,
-  };
+  return { isTokenExists };
+  
 };
