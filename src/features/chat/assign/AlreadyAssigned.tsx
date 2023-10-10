@@ -4,8 +4,8 @@ import { Container } from '@/components/Layouts/Container';
 import { ConsultExampleDetailEntity } from '@/types/entities/ConsultExampleDetailEntity';
 import { ConsultExampleMessageEntity } from '@/types/entities/ConsultExampleMessageEntity';
 import { ConsultExampleDetail } from '@/features/consultExample/ConsultExampleDetail';
-import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
-import { OutlinedButton } from '@/components/Parts/Button/OutlinedButton';
+import PrimaryButton from '@/components/Button/PrimaryButton';
+import SecondaryButton from '@/components/Button/SecondaryButton';
 import Link from 'next/link';
 
 type Props = {
@@ -31,7 +31,7 @@ export const AlreadyAssigned: React.FC<Props> = ({
             className="mx-auto"
           />
           <div className="mt-2 text-center font-bold text-primary">
-            申し訳ございません。以下のコンサルは他の先生がご対応して下さいました。
+            申し訳ございません。以下のコンサルは他の先生に回答いただきました。
           </div>
           <div className="mt-4 flex justify-center">
             <div className="rounded border border-[#dddddd] px-[46px] py-2 text-center">
@@ -43,9 +43,9 @@ export const AlreadyAssigned: React.FC<Props> = ({
             </div>
           </div>
           <div className="mt-8 text-center text-sm">
-            もしよろしければ、以下の症例相談のやり取りに先生の持つご知見を
+            もしよろしければ、過去の症例相談事例に先生のご知見で
             <br className="hidden lg:inline" />
-            コメントいただくことはお願いできますでしょうか？
+            コメントいただけますと幸甚に存じます。
           </div>
           <div className="mt-1 text-center text-[11px] font-bold">
             どうぞよろしくお願いいたします。
@@ -59,16 +59,17 @@ export const AlreadyAssigned: React.FC<Props> = ({
               <ConsultExampleDetail
                 consultExample={consultExample}
                 consultExampleMessages={consultExampleMessages}
+                isShowAction={false}
               />
             </Container>
           </div>
           <div
-            className="fixed bottom-0 left-0 right-0 p-5 text-center"
+            className="fixed bottom-12 left-0 right-0 p-5 text-center lg:bottom-0"
             style={{ backgroundColor: 'rgba(239, 243, 246, 0.8)' }}
           >
             <Link href={`/example/${consultExample.example_id}`}>
               <a>
-                <PrimaryButton className="text-sm">
+                <PrimaryButton className="m-auto">
                   この事例のページへ行く
                 </PrimaryButton>
               </a>
@@ -76,9 +77,9 @@ export const AlreadyAssigned: React.FC<Props> = ({
             <div className="mt-4">
               <Link href="/examplelist">
                 <a>
-                  <OutlinedButton className="text-[11px] font-normal">
+                  <SecondaryButton className="m-auto">
                     事例集一覧を見る
-                  </OutlinedButton>
+                  </SecondaryButton>
                 </a>
               </Link>
             </div>

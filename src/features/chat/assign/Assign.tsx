@@ -2,9 +2,7 @@ import { Card } from '@/components/Parts/Card/Card';
 import React from 'react';
 import { AssignLabelAndContent } from './AssignLabelAndContent';
 import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
-import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
-import { GrayButton } from '@/components/Parts/Button/GrayButton';
-import Link from 'next/link';
+import PrimaryButton from '@/components/Button/PrimaryButton';
 
 type Props = {
   chatRoom: ChatRoomEntity;
@@ -39,7 +37,7 @@ export const Assign: React.FC<Props> = ({
       </AssignLabelAndContent>
       {images.length > 0 && (
         <AssignLabelAndContent label="参考画像" className="mt-4">
-          <div className="flex flex-row gap-3">
+          <div className="flex flex-col gap-3">
             {images.map((imageUrl) => (
               <img
                 key={imageUrl}
@@ -54,18 +52,12 @@ export const Assign: React.FC<Props> = ({
       <div className="mx-auto mt-[60px] flex w-4/5 flex-col gap-10 lg:w-full lg:flex-row-reverse lg:gap-6">
         <PrimaryButton
           type="button"
-          className="w-full flex-1 px-0"
+          size="large"
+          className="m-auto"
           onClick={onConfirm}
         >
           E-コンサルに回答する
         </PrimaryButton>
-        <Link href="/chat">
-          <a className="block w-full flex-1">
-            <GrayButton type="button" className="w-full">
-              依頼を断る
-            </GrayButton>
-          </a>
-        </Link>
       </div>
     </Card>
   );
