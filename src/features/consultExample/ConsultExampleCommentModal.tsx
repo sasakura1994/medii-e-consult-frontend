@@ -46,7 +46,6 @@ export const ConsultExampleCommentModal: React.FC<Props> = ({
         <ModalTitleWithCloseButton title="コメントする" onClose={onClose} />
       </div>
       <div className="p-6 lg:px-20 lg:pb-10 lg:pt-5">
-        <p>{message}</p>
         <div className="ml-2 mt-2 h-8 border-l-[3px] border-[#c4c4c4]"></div>
         <form
           onSubmit={(e) => {
@@ -59,7 +58,7 @@ export const ConsultExampleCommentModal: React.FC<Props> = ({
           }}
         >
           <div className="mt-2 flex gap-4">
-            <div>
+            <div className='flex'>
               <Radio
                 id="is-anonymous-false"
                 name="is_anonymous"
@@ -69,7 +68,7 @@ export const ConsultExampleCommentModal: React.FC<Props> = ({
               />
               <label htmlFor="is-anonymous-false">実名で投稿</label>
             </div>
-            <div>
+            <div className='flex'>
               <Radio
                 id="is-anonymous-true"
                 name="is_anonymous"
