@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import type { NextPageWithLayout } from '@/pages/_app';
 import { AiFillApple } from 'react-icons/ai';
 import { useLogin } from '@/hooks/useLogin';
@@ -24,7 +24,8 @@ const GuideLink = ({
 };
 
 const Login: NextPageWithLayout = () => {
-  const { setEmail, setPassword, login, errorMessage, nmoLoginUrl, goToRegistration, saveRedirectUrl } = useLogin();
+  const { setEmail, setPassword, login, errorMessage, nmoLoginUrl, mailAddressRef, goToRegistration, saveRedirectUrl } =
+    useLogin();
 
   return (
     <div className="mb-12 md:mt-6">
@@ -46,6 +47,7 @@ const Login: NextPageWithLayout = () => {
         <h1 className="my-7 text-center text-2xl">E-コンサルにログイン</h1>
         <form onSubmit={login} className="flex w-[308px] flex-col items-center">
           <TextField
+            ref={mailAddressRef}
             placeholder="メールアドレス"
             type="email"
             required

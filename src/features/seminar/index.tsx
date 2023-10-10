@@ -57,10 +57,10 @@ export const Seminar = () => {
                 className="inline-flex items-center rounded-full border
                  border-primary bg-white px-8 py-2 text-[11px] text-primary
                lg:px-6 lg:py-3 lg:text-sm"
-              >
-                すべてのアーカイブ動画を見る
-                <img src="icons/arrow_right.svg" className="ml-2 inline h-3" alt="" />
-              </div>
+                >
+                  すべてのアーカイブ動画を見る
+                  <img src="icons/arrow_right.svg" className="ml-2 inline h-3" alt="" />
+                </div>
             </Link>
             <p className="text-center text-sm">
               ※アーカイブ動画に表示している医師の方々の経歴などの情報は、E-カンファ当時のものとなっております。

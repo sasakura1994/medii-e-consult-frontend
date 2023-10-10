@@ -14,7 +14,7 @@ const Welcome = () => {
         <div className="mx-auto px-8">
           <p className="mt-28 text-center text-xxxl font-bold text-medii-blue-base">Mediiにようこそ</p>
           <p className="mt-6 text-md text-monotone-950 lg:text-center">
-            Mediiでは医師の臨床疑問や不安を解消する3つのサービスをご利用いただけます。
+            Mediiでは医師の臨床疑問や不安を解消する2つのサービスをご利用いただけます。
             <br />
             Mediiのすべての機能は無料です。
           </p>

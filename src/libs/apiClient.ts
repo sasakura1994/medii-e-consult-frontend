@@ -33,11 +33,9 @@ export const createApiClient = (options: ApiClientOption = {}): AxiosInstance =>
   }
 
   let endpoint = process.env.ENDPOINT_URL;
-  if (typeof window !== "undefined" ){
-    if(!location.hostname.includes("medii.jp") &&
-       location.hostname !== "localhost" &&
-       process.env.EX_API_DIR){
-      endpoint = location.origin + process.env.EX_API_DIR
+  if (typeof window !== 'undefined') {
+    if (!location.hostname.includes('medii.jp') && location.hostname !== 'localhost' && process.env.EX_API_DIR) {
+      endpoint = location.origin + process.env.EX_API_DIR;
     }
   }
 
@@ -57,20 +55,26 @@ export const redirectToLoginPage = () => {
   const loginPageUrl = externalDir + '/login';
   // 外部ドメイン経由の場合は常にExternalディレクトリに展開されるので、リダイレクト時には除去
   const redirectParam =
-    '?redirect=' +
-    encodeURIComponent(
-      window.location.pathname.replace(externalDir, '') + window.location.search
-    );
+    '?redirect=' + encodeURIComponent(window.location.pathname.replace(externalDir, '') + window.location.search);
   window.location.href = loginPageUrl + redirectParam;
 };
 
 const handleApiError = (apiClient: AxiosInstance) => {
-  apiClient.interceptors.response.use((response) => {
-    //C#のErrorリザルトの場合はエラーを返す
-    if (response.data.code && response.data.code != 1) {
-      //Header.vueの401監視がエラー吐くのでエラー時と型合わせてやる
-      return Promise.reject({ response: response });
+  apiClient.interceptors.response.use(
+    (response) => {
+      //C#のErrorリザルトの場合はエラーを返す
+      if (response.data.code && response.data.code != 1) {
+        //Header.vueの401監視がエラー吐くのでエラー時と型合わせてやる
+        return Promise.reject({ response: response });
+      }
+      return response;
+    },
+    (error) => {
+      if (error.response?.status === 401) {
+        redirectToLoginPage();
+      }
+
+      return Promise.reject(error);
     }
-    return response;
-  });
+  );
 };

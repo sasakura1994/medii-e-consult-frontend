@@ -8,7 +8,7 @@ import { StyledHiddenScrollBar } from './styled';
 export const TopUpcomingSeminars = () => {
   const { seminars } = useFetchUpcomingSeminar();
 
-  if (!seminars) {
+  if (!seminars || seminars.length === 0) {
     return <></>;
   }
 

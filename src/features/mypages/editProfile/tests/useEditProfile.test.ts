@@ -37,14 +37,60 @@ describe('useEditProfile', () => {
     hospitals: [],
   });
 
-  beforeEach(() => {
-    const useUpdateProfileMock = useUpdateProfile as unknown as jest.Mock<typeof useUpdateProfile>;
-    (useUpdateProfileMock as jest.Mock).mockReturnValue({
-      updateProfile: jest.fn().mockResolvedValue({ data: {} }),
-    });
-  });
-
   describe('初期化', () => {
+    beforeEach(() => {
+      const useUpdateProfileMock = useUpdateProfile as unknown as jest.Mock<typeof useUpdateProfile>;
+      (useUpdateProfileMock as jest.Mock).mockReturnValue({
+        updateProfile: jest.fn().mockResolvedValue({ data: {} }),
+      });
+    });
+
+    test('通知設定が両方falseの場合はtrueにする', async () => {
+      const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
+      (useFetchProfileMock as jest.Mock).mockReturnValue({
+        profile: {
+          birthday_year: 2000,
+          birthday_month: 4,
+          birthday_day: 1,
+          qualified_year: 2020,
+          hospital_id: 'hospital1',
+          hospital_name: '',
+          is_mail_notify: false,
+          is_push_notify: false,
+        } as ProfileEntity,
+      });
+
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {
+        wrapper: RecoilRoot,
+      }).result;
+
+      expect(hooks.current.profile?.is_mail_notify).toBeTruthy();
+      expect(hooks.current.profile?.is_push_notify).toBeTruthy();
+    });
+
+    test('通知設定が両方falseでなければそのまま', async () => {
+      const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
+      (useFetchProfileMock as jest.Mock).mockReturnValue({
+        profile: {
+          birthday_year: 2000,
+          birthday_month: 4,
+          birthday_day: 1,
+          qualified_year: 2020,
+          hospital_id: 'hospital1',
+          hospital_name: '',
+          is_mail_notify: false,
+          is_push_notify: true,
+        } as ProfileEntity,
+      });
+
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {
+        wrapper: RecoilRoot,
+      }).result;
+
+      expect(hooks.current.profile?.is_mail_notify).toBeFalsy();
+      expect(hooks.current.profile?.is_push_notify).toBeTruthy();
+    });
+
     test('病院を選択している場合', async () => {
       const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
       (useFetchProfileMock as jest.Mock).mockReturnValue({
@@ -140,6 +186,13 @@ describe('useEditProfile', () => {
   });
 
   describe('setProfileFields', () => {
+    beforeEach(() => {
+      const useUpdateProfileMock = useUpdateProfile as unknown as jest.Mock<typeof useUpdateProfile>;
+      (useUpdateProfileMock as jest.Mock).mockReturnValue({
+        updateProfile: jest.fn().mockResolvedValue({ data: {} }),
+      });
+    });
+
     test('プロフィールを更新', async () => {
       const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
       (useFetchProfileMock as jest.Mock).mockReturnValue({
@@ -194,6 +247,13 @@ describe('useEditProfile', () => {
   });
 
   describe('setHospitalName', () => {
+    beforeEach(() => {
+      const useUpdateProfileMock = useUpdateProfile as unknown as jest.Mock<typeof useUpdateProfile>;
+      (useUpdateProfileMock as jest.Mock).mockReturnValue({
+        updateProfile: jest.fn().mockResolvedValue({ data: {} }),
+      });
+    });
+
     test('病院の自由入力', async () => {
       const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
       (useFetchProfileMock as jest.Mock).mockReturnValue({
@@ -221,6 +281,13 @@ describe('useEditProfile', () => {
   });
 
   describe('selectedHospital', () => {
+    beforeEach(() => {
+      const useUpdateProfileMock = useUpdateProfile as unknown as jest.Mock<typeof useUpdateProfile>;
+      (useUpdateProfileMock as jest.Mock).mockReturnValue({
+        updateProfile: jest.fn().mockResolvedValue({ data: {} }),
+      });
+    });
+
     test('デフォルトの病院を選択肢として初期化', async () => {
       const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
       (useFetchProfileMock as jest.Mock).mockReturnValue({
@@ -257,6 +324,13 @@ describe('useEditProfile', () => {
   });
 
   describe('selectedHospital', () => {
+    beforeEach(() => {
+      const useUpdateProfileMock = useUpdateProfile as unknown as jest.Mock<typeof useUpdateProfile>;
+      (useUpdateProfileMock as jest.Mock).mockReturnValue({
+        updateProfile: jest.fn().mockResolvedValue({ data: {} }),
+      });
+    });
+
     test('初期化時はプロフィールで選択された病院', async () => {
       const hospital = {
         hospital_id: 'hospital1',
@@ -340,6 +414,13 @@ describe('useEditProfile', () => {
   });
 
   describe('selectMedicalSpecialities', () => {
+    beforeEach(() => {
+      const useUpdateProfileMock = useUpdateProfile as unknown as jest.Mock<typeof useUpdateProfile>;
+      (useUpdateProfileMock as jest.Mock).mockReturnValue({
+        updateProfile: jest.fn().mockResolvedValue({ data: {} }),
+      });
+    });
+
     test('科を選択', async () => {
       const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
       (useFetchProfileMock as jest.Mock).mockReturnValue({
@@ -395,7 +476,6 @@ describe('useEditProfile', () => {
 
       const updateProfileMock = jest.fn().mockResolvedValue({ response: { data: {} } });
       const useUpdateProfileMock = useUpdateProfile as unknown as jest.Mock<typeof useUpdateProfile>;
-      useUpdateProfileMock.mockRestore();
       (useUpdateProfileMock as jest.Mock).mockReturnValue({
         updateProfile: updateProfileMock,
       });
@@ -424,6 +504,11 @@ describe('useEditProfile', () => {
         } as ProfileEntity,
       });
 
+      const useUpdateProfileMock = useUpdateProfile as unknown as jest.Mock<typeof useUpdateProfile>;
+      (useUpdateProfileMock as jest.Mock).mockReturnValue({
+        updateProfile: jest.fn().mockResolvedValue({ data: {} }),
+      });
+
       const pushMock = jest.fn();
       const useRouterMock = useRouter as jest.Mocked<typeof useRouter>;
       (useRouterMock as jest.Mock).mockReturnValue({
@@ -443,6 +528,13 @@ describe('useEditProfile', () => {
   });
 
   describe('toggleQuestionaryItem', () => {
+    beforeEach(() => {
+      const useUpdateProfileMock = useUpdateProfile as unknown as jest.Mock<typeof useUpdateProfile>;
+      (useUpdateProfileMock as jest.Mock).mockReturnValue({
+        updateProfile: jest.fn().mockResolvedValue({ data: {} }),
+      });
+    });
+
     test('アンケート項目を追加で選択', async () => {
       const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
       (useFetchProfileMock as jest.Mock).mockReturnValue({
@@ -487,6 +579,55 @@ describe('useEditProfile', () => {
       });
 
       expect(hooks.current.profile?.questionary_selected_ids_csv).toEqual('1,3');
+    });
+  });
+
+  describe('saveProfile', () => {
+    test('通知設定がデフォルト（両方オフ）の場合は両方オンにする', async () => {
+      (loadLocalStorage as jest.Mock).mockReturnValue(undefined);
+
+      (useFetchProfile as jest.Mock).mockReturnValue({
+        profile: {
+          birthday_year: 2000,
+          birthday_month: 4,
+          birthday_day: 1,
+          qualified_year: 2020,
+          is_mail_notify: false,
+          is_push_notify: false,
+          graduated_university: 'uni',
+          hospital_name: '',
+        } as ProfileEntity,
+      });
+
+      const updateProfile = jest.fn();
+      updateProfile.mockResolvedValue({
+        data: {},
+      });
+      const useUpdateProfileMock = useUpdateProfile as jest.Mock;
+      useUpdateProfileMock.mockReturnValue({
+        updateProfile,
+      });
+
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: true }), {
+        wrapper: RecoilRoot,
+      }).result;
+
+      await act(async () => await hooks.current.saveProfile());
+
+      const formData = new FormData();
+      formData.append('birthday_year', '2000');
+      formData.append('birthday_month', '4');
+      formData.append('birthday_day', '1');
+      formData.append('qualified_year', '2020');
+      formData.append('is_mail_notify', 'true');
+      formData.append('is_push_notify', 'true');
+      formData.append('graduated_university', 'uni');
+      formData.append('hospital_name', '');
+
+      const calledFormData = updateProfile.mock.calls[0][0] as FormData;
+
+      expect(Array.from(calledFormData.keys())).toMatchObject(Array.from(formData.keys()));
+      expect(Array.from(calledFormData.values())).toMatchObject(Array.from(formData.values()));
     });
   });
 });
