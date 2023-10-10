@@ -46,6 +46,7 @@ export const ConsultExampleCommentModal: React.FC<Props> = ({
         <ModalTitleWithCloseButton title="コメントする" onClose={onClose} />
       </div>
       <div className="p-6 lg:px-20 lg:pb-10 lg:pt-5">
+        <p>{message}</p>
         <div className="ml-2 mt-2 h-8 border-l-[3px] border-[#c4c4c4]"></div>
         <form
           onSubmit={(e) => {
