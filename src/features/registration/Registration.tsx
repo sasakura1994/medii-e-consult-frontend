@@ -10,6 +10,7 @@ import { HeaderContainer } from '@/components/Layouts/Header/HeaderContainer';
 import { HeaderLogo } from '@/components/Layouts/Header/HeaderLogo';
 import { HeaderMenuList } from '@/components/Layouts/Header/HeaderMenuList';
 import TertiaryButton from '@/components/Button/TertiaryButton';
+import { AppleSignInButton } from '@/components/Button/AppleSignInButton';
 
 export const Registration = (props: UseRegisterType) => {
   const { email, setEmail, register, loginUrl, isEmailDuplicated, errorMessage } = props;
@@ -84,6 +85,10 @@ export const Registration = (props: UseRegisterType) => {
                 </div>
               </form>
               <div className="mt-6 font-light text-text-secondary">または</div>
+
+              <div className="mt-6">
+                <AppleSignInButton borderColorClassName="border-[#DADFE5]">Appleアカウントで登録する</AppleSignInButton>
+              </div>
               <div className="mt-12 text-md text-text-secondary lg:hidden">
                 会員登録には、{' '}
                 <a
