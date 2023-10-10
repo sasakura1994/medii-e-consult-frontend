@@ -1,5 +1,5 @@
 import { useAxios } from '@/hooks/network/useAxios';
-import React from 'react';
+import { useCallback } from 'react';
 
 export type EditPasswordArgs = {
   password: string;
@@ -14,7 +14,7 @@ export type PatchEditPasswordResponseData = {
 export const usePatchEditPassword = () => {
   const { axios } = useAxios();
 
-  const editPassword = React.useCallback(
+  const editPassword = useCallback(
     (data: EditPasswordArgs) => {
       return axios.patch<PatchEditPasswordResponseData>(
         '/account/confirm_email',
@@ -24,5 +24,7 @@ export const usePatchEditPassword = () => {
     [axios]
   );
 
-  return { editPassword };
+  return { 
+    editPassword,
+  };
 };
