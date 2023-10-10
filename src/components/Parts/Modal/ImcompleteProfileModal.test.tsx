@@ -1,5 +1,4 @@
 import React from 'react';
-import '@testing-library/jest-dom';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
 import { ImcompleteProfileModal } from './ImcompleteProfileModal';

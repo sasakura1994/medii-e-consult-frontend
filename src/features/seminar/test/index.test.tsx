@@ -1,5 +1,4 @@
 import React from 'react';
-import '@testing-library/jest-dom';
 import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import { Seminar } from '../index';
 import { useSeminar } from '../useSeminar';

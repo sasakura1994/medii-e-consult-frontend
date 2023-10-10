@@ -1,5 +1,4 @@
 import React from 'react';
-import '@testing-library/jest-dom';
 import { render, screen, act } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
 import NewChatRoomPage from '@/pages/newchatroom';

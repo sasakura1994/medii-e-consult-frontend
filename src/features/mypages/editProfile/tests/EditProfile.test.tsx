@@ -1,5 +1,4 @@
 import React from 'react';
-import '@testing-library/jest-dom';
 import { render, screen, act, waitFor } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
