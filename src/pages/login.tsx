@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import type { NextPageWithLayout } from '@/pages/_app';
 import { AiFillApple } from 'react-icons/ai';
 import { useLogin } from '@/hooks/useLogin';
