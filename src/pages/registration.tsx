@@ -1,9 +1,8 @@
 import React from 'react';
-import Link from 'next/link';
 import { useRegister } from '@/hooks/useRegister';
 import { NextPageWithLayout } from './_app';
 import { RegistrationCompleted } from '@/features/registration/RegistrationCompleted';
-import { Registration } from '@/features/registration/registration';
+import { Registration } from '@/features/registration/Registration';
 
 const RegistrationPage: NextPageWithLayout = () => {
   const register = useRegister();

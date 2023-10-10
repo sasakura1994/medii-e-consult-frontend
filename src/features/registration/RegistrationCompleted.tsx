@@ -1,41 +1,45 @@
 import React from 'react';
 import { UseRegisterType } from '@/hooks/useRegister';
 import { Footer } from '@/components/Layouts/Footer/Footer';
-import { HeaderContainer } from '@/components/Layouts/Header/HeaderContainer';
-import { HeaderLogo } from '@/components/Layouts/Header/HeaderLogo';
-import { HeaderMenuList } from '@/components/Layouts/Header/HeaderMenuList';
+import { HeaderLogoOnly } from '@/components/Layouts/Header/HeaderLogoOnly';
+import { ColoredImage } from '@/components/Image/ColoredImage';
 import TertiaryButton from '@/components/Button/TertiaryButton';
-import Link from 'next/link';
 
 export const RegistrationCompleted = (props: UseRegisterType) => {
-  const { loginUrl } = props;
+  const { back, email } = props;
 
   return (
-    <div className="flex h-full min-h-screen w-full flex-col bg-[#eff3f6]">
-      <HeaderContainer>
-        <div className="flex w-full items-center justify-between">
-          <HeaderLogo href={loginUrl} />
-          <HeaderMenuList>
-            <Link href={loginUrl}>
-              <a>
-                <TertiaryButton size="large">ログイン</TertiaryButton>
-              </a>
-            </Link>
-          </HeaderMenuList>
-        </div>
-      </HeaderContainer>
-      <main className="flex-grow bg-[url('/images/registration/bg.png')] bg-cover md:py-10">
-        <div
-          className="
-            mx-auto flex w-fit items-stretch justify-center rounded-md
-            border border-slate-300 bg-white px-8 py-4 md:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]
-          "
-        >
-          <p>
-            ご入力頂いたメールアドレスに確認用のメールをお送りしました。
+    <div className="flex h-full min-h-screen w-full flex-col">
+      <HeaderLogoOnly />
+      <main className="flex flex-grow justify-center py-10">
+        <div className="px-4 lg:w-[600px] lg:px-0">
+          <h2 className="text-center text-2xl font-semibold">メールアドレスの確認</h2>
+          <p className="mt-6">
+            <span className="text-semibold">{email}</span> に確認用のメールを送信しました。
             <br />
-            メール本文内のリンクからパスワードの設定をお願いいたします。
+            メール本文のURLをクリックして、E-コンサルへの登録を完了してください。
           </p>
+          <div className="mt-6 bg-bg-secondary p-6">
+            <div className="flex items-center gap-2">
+              <ColoredImage src="icons/exclamation-triangle.svg" color="#000000" width="20px" height="20px" />
+              <div className="text-lg font-semibold">メールが届かない方</div>
+            </div>
+            <div className="mt-4 font-light">
+              <p>確認用のメールが届かない場合には、下記の内容を確認してください。</p>
+              <ul className="ml-6 mt-4 list-disc">
+                <li>迷惑メールフォルダや受信ボックス以外のフォルダに振り分けられていないかご確認ください。</li>
+                <li>
+                  ご使用のメールアドレスが正しいかご確認ください。正しくない場合は、新しいメールアドレスせ再設定してください。
+                </li>
+              </ul>
+            </div>
+            <div className="mt-4 flex flex-col justify-center gap-4 lg:flex-row">
+              <TertiaryButton size="large">確認メールを再送信する</TertiaryButton>
+              <TertiaryButton size="large" onClick={back}>
+                他のメールアドレスを使用する
+              </TertiaryButton>
+            </div>
+          </div>
         </div>
       </main>
       <Footer noMenu />

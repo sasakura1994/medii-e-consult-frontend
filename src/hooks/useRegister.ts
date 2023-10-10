@@ -16,6 +16,7 @@ type CreateAccountRequestData = {
 };
 
 export type UseRegisterType = {
+  back: () => void;
   email: string;
   setEmail: React.Dispatch<React.SetStateAction<string>>;
   errorMessage: string;
@@ -70,7 +71,13 @@ export const useRegister = (): UseRegisterType => {
     saveRedirect();
   }, [axios, email, parentAccountId, router.query, saveRedirect]);
 
+  const back = useCallback(() => {
+    setEmail('');
+    setIsSent(false);
+  }, []);
+
   return {
+    back,
     email,
     setEmail,
     errorMessage,
