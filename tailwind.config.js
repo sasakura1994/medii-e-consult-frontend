@@ -104,7 +104,6 @@ module.exports = {
       },
       fontFamily: {
         sans: ['Noto Sans JP', 'Avenir', 'Helvetica', 'Arial', 'sans-serif'],
-        arimo: ['Arimo', 'sans-serif'],
       },
       blur: {
         xs: '2px',
