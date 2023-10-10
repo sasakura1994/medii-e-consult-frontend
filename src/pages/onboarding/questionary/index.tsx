@@ -115,7 +115,10 @@ const OnBoardingQuestionaryPage = () => {
               <span className="font-semibold text-medii-blue-base">無料・匿名</span>で相談できます。
             </div>
             <ul className="ml-6 list-disc">
-              <li>指定難病 99%※を含む、全診療科の相談に対応</li>
+              <li className="relative">
+                指定難病 99%<span className="relative top-[-3px] inline-block text-medii-sm">※</span>
+                を含む、全診療科の相談に対応
+              </li>
               <li>患者情報を取り扱い等、日本の医療機関が準拠するセキュリティ基準に対応した安全な仕組み</li>
             </ul>
             <div className="mt-4 text-medii-sm font-light leading-[18px] text-secondary">
