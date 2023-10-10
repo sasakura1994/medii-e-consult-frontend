@@ -5,7 +5,9 @@ import { act, renderHook } from '@testing-library/react';
 import { useRouter } from 'next/router';
 import { RecoilRoot } from 'recoil';
 
-jest.mock('next/router');
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(),
+}));
 jest.mock('@/hooks/api/doctor/usePostLogin');
 jest.mock('@/hooks/network/useAxios');
 

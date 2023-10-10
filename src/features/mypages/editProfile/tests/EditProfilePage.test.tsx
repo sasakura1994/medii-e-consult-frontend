@@ -9,7 +9,9 @@ import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { loadLocalStorage } from '@/libs/LocalStorageManager';
 import { ProfileEntity } from '@/types/entities/profileEntity';
 
-jest.mock('next/router');
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(),
+}));
 jest.mock('@/hooks/api/doctor/useFetchProfile');
 jest.mock('@/libs/LocalStorageManager');
 

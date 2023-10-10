@@ -7,7 +7,9 @@ import { EditingProfile, UseEditProfile } from '../useEditProfile';
 import { EditProfileProps } from '../EditProfile';
 import { HospitalAffiliation } from '../HospitalAffiliation';
 
-jest.mock('next/router');
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(),
+}));
 
 describe('HospitalAffiliation', () => {
   const useRouterMock = useRouter as jest.Mocked<typeof useRouter>;

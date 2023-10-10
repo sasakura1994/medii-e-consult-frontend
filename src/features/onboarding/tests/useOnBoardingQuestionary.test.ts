@@ -5,7 +5,9 @@ import * as useFetchFlagModule from '@/hooks/api/account/useFetchFlags';
 import { usePostQuestionaryItemsForOnboarding } from '@/hooks/api/questionary/usePostQuestionaryItemsForOnboarding';
 import { useRouter } from 'next/router';
 
-jest.mock('next/router');
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(),
+}));
 jest.mock('@/hooks/api/account/useFetchFlags');
 jest.mock('@/hooks/api/questionary/usePostQuestionaryItemsForOnboarding');
 

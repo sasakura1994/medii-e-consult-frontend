@@ -1,5 +1,4 @@
 import React from 'react';
-import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { Top } from '../index';
 import { act } from 'react-dom/test-utils';
@@ -8,7 +7,9 @@ import { useFetchFlag } from '@/hooks/api/account/useFetchFlags';
 import { useRouter } from 'next/router';
 import { useNews } from '@/hooks/api/medii/useNews';
 
-jest.mock('next/router');
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(),
+}));
 jest.mock('@/hooks/api/account/useFetchFlags');
 jest.mock('@/hooks/api/medii/useNews');
 

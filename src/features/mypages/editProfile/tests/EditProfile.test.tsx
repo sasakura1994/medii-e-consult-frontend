@@ -6,7 +6,9 @@ import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { EditProfile } from '../EditProfile';
 
 jest.mock('@/hooks/api/doctor/useFetchProfile');
-
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(),
+}));
 describe('EditProfile', () => {
   test('nmoの場合は利用区分を表示しない', async () => {
     const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;

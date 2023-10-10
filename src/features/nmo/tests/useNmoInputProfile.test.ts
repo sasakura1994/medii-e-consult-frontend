@@ -7,7 +7,9 @@ import { useUpdateProfile } from '@/hooks/api/doctor/useUpdateProfile';
 import { useEditProfile } from '@/features/mypages/editProfile/useEditProfile';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 
-jest.mock('next/router');
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(),
+}));
 jest.mock('@/hooks/api/doctor/useUpdateProfile');
 jest.mock('@/features/mypages/editProfile/useEditProfile');
 jest.mock('@/hooks/api/doctor/useFetchProfile');

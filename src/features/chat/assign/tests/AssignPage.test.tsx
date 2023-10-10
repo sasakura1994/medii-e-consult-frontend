@@ -8,7 +8,9 @@ import * as useFetchChatRoom from '@/hooks/api/chat/useFetchChatRoom';
 import { useRouter } from 'next/router';
 
 jest.mock('@/hooks/api/chat/useFetchChatRoom');
-jest.mock('next/router');
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(),
+}));
 
 describe('Assign', () => {
   test('アサインページが表示される', async () => {

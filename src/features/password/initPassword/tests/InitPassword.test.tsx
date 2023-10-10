@@ -11,7 +11,9 @@ import { useRouter } from 'next/router';
 import InitPassword from '@/pages/initpassword';
 
 jest.mock('@/libs/apiClient');
-jest.mock('next/router');
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(),
+}));
 
 describe('InitPassword', () => {
   test('完了してリダイレクトする', async () => {
