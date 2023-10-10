@@ -5,10 +5,10 @@ import { BreadcrumbLink } from '@/components/Breadcrumb/BreadcrumbLink';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import { ColoredImage } from '@/components/Image/ColoredImage';
 import { CheckBox } from '@/components/Parts/Form/CheckBox';
+import { ExpandTextArea } from '@/components/Parts/Form/ExpandTextArea';
 import { Optional } from '@/components/Parts/Form/Optional';
 import { Radio } from '@/components/Parts/Form/Radio';
 import { Required } from '@/components/Parts/Form/Required';
-import { TextArea } from '@/components/Parts/Form/TextArea';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 import { QuestionaryItems } from '@/features/onboarding/QuestionaryItems';
 import { useOnBoardingQuestionary } from '@/features/onboarding/useOnBoardingQuestionary';
@@ -87,9 +87,9 @@ const OnBoardingQuestionaryPage = () => {
                 </QuestionaryItems>
               )}
               {question.type === 'TextOnly' && (
-                <TextArea
+                <ExpandTextArea
                   name={`other${question.id}`}
-                  className="mt-2 h-[112px] w-full"
+                  className="mt-2 min-h-[112px] w-full"
                   value={answer.other}
                   placeholder={question.other_hint}
                   onChange={(e) => setOther(question.id, e.target.value)}
