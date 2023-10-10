@@ -15,7 +15,7 @@ export const useGetIsTokenExists = () => {
     (data: IsTokenExistsArgs) => {
       return axios.get<GetIsTokenExistsResponseData>(
         `/account/has_email_updating?token=${data.token}`,
-      )
+      );
     },
     [axios]
   );
