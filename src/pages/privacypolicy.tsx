@@ -4,8 +4,8 @@ const PrivacyPolicy = () => {
   return (
     <div className="flex bg-bg">
       <div className="m-auto mt-6 w-[644px] rounded border border-[#ddd] bg-white py-4">
-        <div className="mx-4 px-8 font-normal text-[10.5pt]  leading-[1.1500000000000001] text-[#000]">
-          <h1 className="break-after-avoid-page pb-[6pt] pt-[20pt] text-center">
+        <div className="mx-4 px-8 font-normal text-[10.5pt]  leading-[1.15] text-[#000]">
+          <h1 className="break-after-avoid-page pb-[6pt] pt-5 text-center">
             <span className="text-[20pt] font-normal text-[#000]">プライバシーポリシー</span>
           </h1>
           <p className="pt-[11pt]">
