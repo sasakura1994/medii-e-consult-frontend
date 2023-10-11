@@ -4,16 +4,15 @@ import { HeaderLogoOnly } from './Header/HeaderLogoOnly';
 
 type PropsType = {
   children: React.ReactNode;
-  isPublicPage: boolean;
 };
 
 export const LayoutLogoOnly = (props: PropsType) => {
-  const { children, isPublicPage } = props;
+  const { children } = props;
   useAuthenticationOnPage();
 
   return (
     <>
-      <HeaderLogoOnly isPublicPage = {isPublicPage} />
+      <HeaderLogoOnly />
       <main className="bg-white">{children}</main>
     </>
   );

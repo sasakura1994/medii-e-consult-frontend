@@ -15,7 +15,7 @@ const GuestPage: NextPageWithLayout = () => {
 
   return (
     <div className="flex h-[100vh] flex-col bg-bg">
-      <HeaderLogoOnly isPublicPage={false}/>
+      <HeaderLogoOnly/>
       <div className="flex flex-1 items-center justify-center">
         <Card className="mx-auto p-20 lg:max-w-[700px]">
           <div>

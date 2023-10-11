@@ -13,6 +13,6 @@ export default WelcomePage;
 WelcomePage.getLayout = (page) => (
   <>
     <CustomHead />
-    <LayoutLogoOnly isPublicPage = {false}>{page}</LayoutLogoOnly>
+    <LayoutLogoOnly>{page}</LayoutLogoOnly>
   </>
 );
