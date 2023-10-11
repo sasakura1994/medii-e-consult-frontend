@@ -2,7 +2,7 @@ import React from 'react';
 import { UserConsult } from './UserConsult';
 import { TopNotifications } from './TopNotifications';
 import { TopNews } from './TopNews';
-import { TopInterviews } from './TopInterviews';
+import { TopMediiMagazine } from './TopMediiMagazine';
 import { TopNewerConsults } from './TopNewerConsults';
 import { TopExamples } from './TopExamples';
 import TutorialExplanation from './TutorialExplanation';
@@ -43,7 +43,7 @@ export const Top = () => {
             <TopNews />
           </div>
           <div className="mt-4 hidden lg:block">
-            <TopInterviews />
+            <TopMediiMagazine />
           </div>
         </div>
       </div>

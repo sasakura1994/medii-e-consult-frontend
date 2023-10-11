@@ -63,7 +63,7 @@ export const ConsultExampleCommentsModal: React.FC<Props> = ({
           }}
         >
           <div className="mt-2 flex gap-4">
-            <div>
+            <div className='flex'>
               <Radio
                 id="is-anonymous-false"
                 name="is_anonymous"
@@ -73,7 +73,7 @@ export const ConsultExampleCommentsModal: React.FC<Props> = ({
               />
               <label htmlFor="is-anonymous-false">実名で投稿</label>
             </div>
-            <div>
+            <div className='flex'>
               <Radio
                 id="is-anonymous-true"
                 name="is_anonymous"

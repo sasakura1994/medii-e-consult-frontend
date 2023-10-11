@@ -1,8 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import styles from './PointHistory.module.scss';
 import { dateFormat } from '@/libs/date';
-import { usePointHistory } from './usePointHisotry';
+import { usePointHistory } from './usePointHistory';
 
 export const PointHistory: React.FC = () => {
   const {
@@ -23,8 +22,8 @@ export const PointHistory: React.FC = () => {
   }
 
   return (
-    <div className={styles.point_history}>
-      <div className="mb-6">
+    <div className="mt-10 rounded border-[1px] border-solid border-[#d5d5d5] bg-white px-4 pt-4">
+      <div className="mb-3">
         <h2>Medii ポイント残高</h2>
         <p className="text-[28px]">
           {currentPoint}
@@ -35,23 +34,23 @@ export const PointHistory: React.FC = () => {
       <div>
         <h2 className="mb-3 border-b border-solid border-b-heading-line pb-1">Medii ポイント履歴</h2>
 
-        <table className={styles.history_table}>
-          <thead>
+        <table className="border-separate">
+          <thead className="text-left text-[#999999]">
             <tr>
-              <th>アクション</th>
-              <th>日時</th>
-              <th>ポイント差分</th>
-              <th>備考</th>
+              <th className="pr-4">アクション</th>
+              <th className="pr-4">日時</th>
+              <th className="pr-4">ポイント差分</th>
+              <th className="pr-4">備考</th>
             </tr>
           </thead>
           <tbody>
             {pointHistories &&
               pointHistories.map((pointHistory) => (
-                <tr key={pointHistory.ref_id}>
-                  <td>{getActionNameFromRefId(pointHistory.ref_id)}</td>
-                  <td>{dateFormat(pointHistory.created_date, 'YYYY/M/D HH:mm')}</td>
-                  <td className="text-right">{pointHistory.delta}</td>
-                  <td>
+                <tr className="pb-3" key={pointHistory.uid}>
+                  <td className="pr-5 text-md">{getActionNameFromRefId(pointHistory.ref_id)}</td>
+                  <td className="pr-5 text-md">{dateFormat(pointHistory.created_date, 'YYYY/M/D HH:mm')}</td>
+                  <td className="pr-5 text-right text-md">{pointHistory.delta}</td>
+                  <td className="pr-5 text-md">
                     {pointHistory.ref_id.startsWith('con') && (
                       <Link href={getChatRoomLink(pointHistory.ref_id)} className="text-[#0000ee] underline">
                         該当E-コンサル
