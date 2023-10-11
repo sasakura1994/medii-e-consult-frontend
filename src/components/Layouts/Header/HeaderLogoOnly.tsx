@@ -2,11 +2,11 @@ import React from 'react';
 import { HeaderContainer } from './HeaderContainer';
 import { HeaderLogo } from './HeaderLogo';
 
-export const HeaderLogoOnly = () => {
+export const HeaderLogoOnly: React.FC = () => {
 
   return (
     <HeaderContainer>
-      <div className="flex z-10">
+      <div className="z-10">
         <HeaderLogo />
       </div>
     </HeaderContainer>

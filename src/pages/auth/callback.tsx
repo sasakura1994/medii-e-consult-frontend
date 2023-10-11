@@ -11,7 +11,7 @@ const AuthCallbackPage: NextPageWithLayout = () => {
 
   return (
     <div className="flex h-[100vh] flex-col bg-bg">
-      <HeaderLogoOnly/>
+      <HeaderLogoOnly />
       <div className="flex flex-1 items-center justify-center">
         <Card className="mx-auto px-8 py-20 lg:max-w-[750px] lg:px-20">
           {isFailed ? (
