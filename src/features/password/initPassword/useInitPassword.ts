@@ -14,10 +14,7 @@ export const useInitPassword = () => {
   const router = useRouter();
   const query = router.query as Query;
   const passwordInput = usePasswordInput();
-  const [isPrivacyPolicyAgreed, setIsPrivacyPolicyAgreed] = React.useState(false);
-  const [isTermsOfUseAgreed, setIsTermsOfUseAgreed] = React.useState(false);
   const [isEmailDuplicated, setIsEmailDuplicated] = React.useState(false);
-  const [isRead, setIsRead] = React.useState(false);
   const [isSending, setIsSending] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState('');
   const { setPassword } = usePostSetPassword();
@@ -27,6 +24,8 @@ export const useInitPassword = () => {
       (query.token !== undefined && query.token !== '') || (query.huf_token !== undefined && query.huf_token !== ''),
     [query.token, query.huf_token]
   );
+
+  const isValid = isTokenExists && passwordInput.firstPassword && !passwordInput.isPasswordNotMatched;
 
   const request = useCallback(() => {
     if (query.huf_token) {
@@ -55,11 +54,6 @@ export const useInitPassword = () => {
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      if (!isPrivacyPolicyAgreed || !isTermsOfUseAgreed || !isRead) {
-        setErrorMessage('チェックボックスがチェックされていません');
-        return;
-      }
-
       setIsSending(true);
       setErrorMessage('');
 
@@ -84,21 +78,16 @@ export const useInitPassword = () => {
       // @todo Vueの時はヘッダと一緒にプロフィールが読み込まれるがこちらではここでglobalStateにセットする
       router.push('/EditProfile?registerMode=true');
     },
-    [isPrivacyPolicyAgreed, isTermsOfUseAgreed, isRead, request, router]
+    [request, router]
   );
 
   return {
     ...passwordInput,
     errorMessage,
     isEmailDuplicated,
-    isPrivacyPolicyAgreed,
-    isRead,
     isSending,
-    isTermsOfUseAgreed,
     isTokenExists,
+    isValid,
     onSubmit,
-    setIsRead,
-    setIsTermsOfUseAgreed,
-    setIsPrivacyPolicyAgreed,
   };
 };
