@@ -3,7 +3,6 @@ import { HeaderContainer } from './HeaderContainer';
 import { HeaderLogo } from './HeaderLogo';
 
 export const HeaderLogoOnly: React.FC = () => {
-
   return (
     <HeaderContainer>
       <div className="z-10">
