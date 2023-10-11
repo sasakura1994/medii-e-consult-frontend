@@ -1,6 +1,5 @@
 import React from 'react';
 import type { NextPageWithLayout } from '@/pages/_app';
-import { TextField } from '@/components/Parts/Form/TextField';
 import { useInitPassword } from '@/features/password/initPassword/useInitPassword';
 import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
 import Link from 'next/link';
@@ -9,6 +8,7 @@ import { Footer } from '@/components/Layouts/Footer/Footer';
 import { HeaderLogoOnly } from '@/components/Layouts/Header/HeaderLogoOnly';
 import { Required } from '@/components/Parts/Form/Required';
 import PrimaryButton from '@/components/Button/PrimaryButton';
+import TextField from '@/components/TextField/TextField';
 
 const InitPassword: NextPageWithLayout = () => {
   const {
@@ -38,14 +38,14 @@ const InitPassword: NextPageWithLayout = () => {
             </div>
             <div className="mt-2">
               <TextField
-                className="text-md"
+                className="w-full text-md"
                 type="password"
                 name="first_password"
-                ariaLabel="first_password"
                 value={firstPassword}
                 placeholder="パスワードを入力"
                 onChange={(e) => setFirstPassword(e.target.value)}
                 required
+                hasError={firstPassword !== '' && firstPassword.length < 8}
               />
             </div>
             <div className="mt-2 text-medii-sm font-light">
@@ -62,14 +62,14 @@ const InitPassword: NextPageWithLayout = () => {
             </div>
             <div className="mt-1">
               <TextField
-                className="text-md"
+                className="w-full text-md"
                 type="password"
                 name="second_password"
-                ariaLabel="second_password"
                 value={secondPassword}
                 placeholder="確認のため、同じパスワードを再入力"
                 onChange={(e) => setSecondPassword(e.target.value)}
                 required
+                hasError={isPasswordNotMatched}
               />
             </div>
             {isPasswordNotMatched && (
