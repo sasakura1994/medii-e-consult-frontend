@@ -13,6 +13,6 @@ export default PrivacyPolicyPage;
 PrivacyPolicyPage.getLayout = (page) => (
   <>
     <CustomHead />
-    <LayoutLogoOnly>{page}</LayoutLogoOnly>
+    <LayoutLogoOnly isPublicPage = {true}>{page}</LayoutLogoOnly>
   </>
 );

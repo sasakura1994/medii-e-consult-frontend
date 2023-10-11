@@ -1,12 +1,20 @@
 import React from 'react';
 import { HeaderContainer } from './HeaderContainer';
 import { HeaderLogo } from './HeaderLogo';
+import { HeaderLogin } from './HeaderLogin';
 
-export const HeaderLogoOnly: React.FC = () => {
+type PropsType = {
+  isPublicPage: boolean;
+};
+
+export const HeaderLogoOnly = (props: PropsType) => {
+  const { isPublicPage } = props;
+
   return (
     <HeaderContainer>
-      <div className="z-10">
+      <div className="flex z-10">
         <HeaderLogo />
+        {isPublicPage && <HeaderLogin />}
       </div>
     </HeaderContainer>
   );
