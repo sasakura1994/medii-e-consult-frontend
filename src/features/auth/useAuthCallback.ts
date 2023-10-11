@@ -22,7 +22,7 @@ export const useAuthCallback = (): UseAuthCallback => {
   const { key, redirect } = router.query as Query;
   const [isProcessing, setIsProcessing] = useState(false);
   const [isFailed, setIsFailed] = useState(false);
-  const [isPublicPage, setIsPublicPage] = useState(true);
+  const [isPublicPage, setIsPublicPage] = useState(false);
   const { axios } = useAxios();
   const { setTokenAndMarkInitialized } = useToken();
 
