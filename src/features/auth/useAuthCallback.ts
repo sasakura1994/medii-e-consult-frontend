@@ -14,6 +14,7 @@ type LoginResponseData = {
 
 type UseAuthCallback = {
   isFailed: boolean;
+  isPublicPage: boolean;
 };
 
 export const useAuthCallback = (): UseAuthCallback => {
@@ -21,6 +22,7 @@ export const useAuthCallback = (): UseAuthCallback => {
   const { key, redirect } = router.query as Query;
   const [isProcessing, setIsProcessing] = useState(false);
   const [isFailed, setIsFailed] = useState(false);
+  const [isPublicPage, setIsPublicPage] = useState(true);
   const { axios } = useAxios();
   const { setTokenAndMarkInitialized } = useToken();
 
@@ -49,5 +51,5 @@ export const useAuthCallback = (): UseAuthCallback => {
     initialize();
   }, [initialize]);
 
-  return { isFailed };
+  return { isFailed, isPublicPage };
 };
