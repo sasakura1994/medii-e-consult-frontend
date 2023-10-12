@@ -5,6 +5,7 @@ import { useGetChatDraftImages } from '@/hooks/api/chat/useGetChatDraftImages';
 import { usePostChatMessageFile } from '@/hooks/api/chat/usePostChatMessageFile';
 import { PostChatRoomRequestData, usePostChatRoom } from '@/hooks/api/chat/usePostChatRoom';
 import { usePostDraftImage } from '@/hooks/api/chat/usePostDraftImage';
+import { usePostChatRoomDraft } from '@/hooks/api/chatRoomDraft/usePostChatRoomDraft';
 import { useFetchDoctorProfile } from '@/hooks/api/doctor/useFetchDoctorProfile';
 import { FetchedGroupEntity, useFetchGroup } from '@/hooks/api/group/useFetchGroup';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
@@ -152,6 +153,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
   const { doctor } = useFetchDoctorProfile(chatRoom.target_doctor);
   const { fetchBaseChatRoomForReConsult } = useFetchBaseChatRoomForReConsult();
   const { postChatMessageFile } = usePostChatMessageFile();
+  const { postChatRoomDraft } = usePostChatRoomDraft();
 
   const imageInput = useRef<HTMLInputElement>(null);
 
@@ -245,12 +247,13 @@ export const useNewChatRoom = (): UseNewChatRoom => {
   }, [initialize, isInitialized]);
 
   const setChatRoomFields = useCallback(
-    (data: Partial<NewChatRoomEntity>) => {
+    async (data: Partial<NewChatRoomEntity>) => {
       const newData = { ...formData, ...data };
       saveLocalStorage(newChatRoomFormDataKey, JSON.stringify(newData));
       setChatRoom(newData);
+      await postChatRoomDraft(newData);
     },
-    [formData]
+    [formData, postChatRoomDraft]
   );
 
   const setAgeRangeWrapper = useCallback(
