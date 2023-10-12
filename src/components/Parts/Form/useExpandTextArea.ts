@@ -24,7 +24,7 @@ export const useExpandTextArea = (props: Props) => {
         props.onChange(e);
       }
     },
-    [props]
+    [ref]
   );
 
   return { onChange, ref, style: { height } };
