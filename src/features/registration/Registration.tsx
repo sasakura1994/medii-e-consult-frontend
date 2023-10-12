@@ -46,9 +46,22 @@ export const Registration = (props: UseRegisterType) => {
                 "
             >
               <h1 className="text-center text-2xl">新規会員登録</h1>
-              <div className="mt-2 text-sm font-light lg:text-[16px]">※医師・医学生専用のサービスです</div>
-              <p className="mt-6 hidden text-sm font-light lg:block">
-                E-コンサルに会員登録すると、利用規約とプライバシーポリシーに同意したものとみなされます。
+              <div className="mt-4 text-sm font-light lg:text-[16px]">※医師・医学生専用のサービスです</div>
+              <p className="mt-2 text-sm font-light">
+                E-コンサルに会員登録すると、
+                <a
+                  href="https://e-consult.medii.jp/doc/terms_of_usage.pdf"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="underline"
+                >
+                  利用規約
+                </a>
+                と
+                <Link href="/privacypolicy">
+                  <a className="underline">プライバシーポリシー</a>
+                </Link>
+                に同意したものとみなされます。
               </p>
               <form
                 className="w-full"
@@ -95,22 +108,6 @@ export const Registration = (props: UseRegisterType) => {
 
               <div className="mt-6">
                 <AppleSignInButton borderColorClassName="border-[#DADFE5]">Appleアカウントで登録する</AppleSignInButton>
-              </div>
-              <div className="mt-12 text-md text-text-secondary lg:hidden">
-                会員登録には、{' '}
-                <a
-                  href="https://e-consult.medii.jp/doc/terms_of_usage.pdf"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="underline"
-                >
-                  利用規約
-                </a>{' '}
-                と{' '}
-                <Link href="/privacypolicy">
-                  <a className="underline">プライバシーポリシー</a>
-                </Link>{' '}
-                への同意が必要です。
               </div>
               <hr className="mt-6 w-full border-[1px] border-border-divider" />
               <div className="mt-6 flex items-center justify-center gap-4 text-md text-text-secondary">
