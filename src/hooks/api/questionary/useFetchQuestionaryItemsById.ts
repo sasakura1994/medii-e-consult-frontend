@@ -1,6 +1,6 @@
 import { useAuthenticatedSWR } from '@/hooks/network/useAuthenticatedSWR';
 
-type QuestionaryType = 'SingleChoice' | 'MultiChoice' | 'TextOnly';
+type QuestionaryType = 'SingleChoice' | 'MultiChoice';
 
 export type Question = {
   id: string;
@@ -8,7 +8,6 @@ export type Question = {
   items: { id: number; text: string }[];
   type: QuestionaryType;
   other_enable: boolean;
-  other_hint: string;
   required: boolean;
 };
 
@@ -16,7 +15,7 @@ type ResponseData = {
   questions: Question[];
 };
 
-export const useFetchQuestionaryItemsById = (id: 'onboarding2') => {
+export const useFetchQuestionaryItemsById = (id: 'onboarding') => {
   const { isLoading, error, data } = useAuthenticatedSWR<ResponseData>(`/questionary/questions?id=${id}`);
 
   return {

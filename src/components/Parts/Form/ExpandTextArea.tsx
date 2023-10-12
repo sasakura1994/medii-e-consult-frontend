@@ -5,16 +5,13 @@ import { useExpandTextArea } from './useExpandTextArea';
 export type Props = React.ComponentProps<typeof TextArea>;
 
 export const ExpandTextArea: React.FC<Props> = (props: Props) => {
-  const { style: propsStyle = {}, onChange, ...otherProps } = props;
-  const { onChange: onChangeOfExpandTextArea, ref, style: hooksStyle } = useExpandTextArea(props);
+  const { style: propsStyle = {}, ...otherProps } = props;
+  const { onChange, ref, style: hooksStyle } = useExpandTextArea(props);
 
   return (
     <TextArea
       ref={ref}
-      onChange={(e) => {
-        onChange?.(e);
-        onChangeOfExpandTextArea(e);
-      }}
+      onChange={onChange}
       style={{ ...propsStyle, ...hooksStyle }}
       {...otherProps}
     />
