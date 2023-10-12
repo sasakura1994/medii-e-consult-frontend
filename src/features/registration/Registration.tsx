@@ -74,7 +74,9 @@ export const Registration = (props: UseRegisterType) => {
                 {errorMessage != '' && <ErrorMessage className="mt-6 text-center">{errorMessage}</ErrorMessage>}
                 {isEmailDuplicated && (
                   <ErrorMessage className="text-center">
-                    <Link href="/passwordresetrequest">こちら</Link>
+                    <Link href="/passwordresetrequest">
+                      <span className="underline">こちら</span>
+                    </Link>
                     よりパスワードの設定をお願いします。
                   </ErrorMessage>
                 )}
