@@ -15,6 +15,7 @@ const InitPassword: NextPageWithLayout = () => {
     errorMessage,
     firstPassword,
     isEmailDuplicated,
+    isFirstPasswordValid,
     isPasswordNotMatched,
     isSending,
     isTokenExists,
@@ -28,12 +29,12 @@ const InitPassword: NextPageWithLayout = () => {
   return (
     <div className="flex h-full min-h-screen w-full flex-col">
       <HeaderLogoOnly />
-      <main className="flex flex-grow justify-center py-10">
-        <div className="lg:w-[400px]">
+      <main className="flex flex-grow justify-center px-4 py-10 lg:px-0">
+        <div className="w-full lg:w-[400px]">
           <h2 className="text-center text-2xl font-semibold">パスワードの登録</h2>
           <form onSubmit={onSubmit} className="mt-6">
             <div className="flex items-center gap-2">
-              <div className="font-semibold">パスワード</div>
+              <label className="font-semibold">パスワード</label>
               <Required>必須</Required>
             </div>
             <div className="mt-2">
@@ -41,23 +42,24 @@ const InitPassword: NextPageWithLayout = () => {
                 className="w-full text-md"
                 type="password"
                 name="first_password"
+                dataTestId="first-password"
                 value={firstPassword}
                 placeholder="パスワードを入力"
                 onChange={(e) => setFirstPassword(e.target.value)}
                 required
-                hasError={firstPassword !== '' && firstPassword.length < 8}
+                hasError={!isFirstPasswordValid}
               />
             </div>
             <div className="mt-2 text-medii-sm font-light">
-              {firstPassword && firstPassword.length < 8 ? (
-                <p className="text-error">8文字以上の半角英数字・記号で入力してください</p>
-              ) : (
+              {isFirstPasswordValid ? (
                 <p className="text-text-secondary">8文字以上の半角英数字・記号</p>
+              ) : (
+                <p className="text-error">8文字以上の半角英数字・記号で入力してください</p>
               )}
             </div>
 
             <div className="mt-4 flex items-center gap-2">
-              <div className="font-semibold">パスワード再入力</div>
+              <label className="font-semibold">パスワード再入力</label>
               <Required>必須</Required>
             </div>
             <div className="mt-1">
@@ -65,6 +67,7 @@ const InitPassword: NextPageWithLayout = () => {
                 className="w-full text-md"
                 type="password"
                 name="second_password"
+                dataTestId="second-password"
                 value={secondPassword}
                 placeholder="確認のため、同じパスワードを再入力"
                 onChange={(e) => setSecondPassword(e.target.value)}

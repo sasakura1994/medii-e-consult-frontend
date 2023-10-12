@@ -11,6 +11,7 @@ type TextFieldProps = {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   subText?: string;
   required?: boolean;
+  dataTestId?: string;
   hasError?: boolean;
 };
 
@@ -26,6 +27,7 @@ const TextField = (props: TextFieldProps) => {
     onChange,
     subText,
     required,
+    dataTestId,
     hasError = false,
   } = props;
   return (
@@ -37,12 +39,13 @@ const TextField = (props: TextFieldProps) => {
         disabled={disabled}
         className={`rounded-lg ${
           hasError
-            ? 'border-2 border-alert focus:border-alert'
+            ? 'border-2 border-alert focus:border-alert focus:outline-alert'
             : 'border border-border-field focus:border-border-selected'
         } px-3 py-2 text-md  ${className}`}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
+        data-testid={dataTestId}
         required={required}
       ></input>
       <p className="text-medii-sm text-text-secondary">{subText}</p>

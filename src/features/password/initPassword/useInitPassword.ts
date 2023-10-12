@@ -25,7 +25,7 @@ export const useInitPassword = () => {
     [query.token, query.huf_token]
   );
 
-  const isValid = isTokenExists && passwordInput.firstPassword && !passwordInput.isPasswordNotMatched;
+  const isValid = isTokenExists && passwordInput.isFirstPasswordValid && !passwordInput.isPasswordNotMatched;
 
   const request = useCallback(() => {
     if (query.huf_token) {
@@ -63,13 +63,13 @@ export const useInitPassword = () => {
         return null;
       });
 
-      setIsSending(false);
-
       if (!response) {
+        setIsSending(false);
         return;
       }
 
       if (response.data.message === 'すでに有効化されているアカウントです') {
+        setIsSending(false);
         setIsEmailDuplicated(true);
         return;
       }

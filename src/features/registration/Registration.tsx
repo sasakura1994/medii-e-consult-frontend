@@ -79,7 +79,12 @@ export const Registration = (props: UseRegisterType) => {
                   </ErrorMessage>
                 )}
                 <div className="mt-4 flex justify-center">
-                  <PrimaryButton size="large" type="submit" className="w-full lg:w-auto" disabled={email.trim() === ''}>
+                  <PrimaryButton
+                    size="large"
+                    type="submit"
+                    className="w-full px-4 lg:w-auto"
+                    disabled={email.trim() === ''}
+                  >
                     同意して登録
                   </PrimaryButton>
                 </div>
