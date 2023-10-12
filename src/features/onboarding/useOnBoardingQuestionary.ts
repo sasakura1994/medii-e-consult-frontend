@@ -22,9 +22,8 @@ type QuestionAndAnswer = {
 export const useOnBoardingQuestionary = () => {
   const router = useRouter();
   const [questionAndAnswers, setQuestionAndAnswers] = useState<QuestionAndAnswer[]>([]);
-  const [otherOpenedQuestionIds, setOtherOpenedQuestionIds] = useState<string[]>([]);
   const [isSending, setIsSending] = useState(false);
-  const { questions } = useFetchQuestionaryItemsById('onboarding');
+  const { questions } = useFetchQuestionaryItemsById('onboarding2');
   const { postQuestionaryItemsForOnboarding } = usePostQuestionaryItemsForOnboarding();
 
   // questionAndAnswersを初期化
@@ -101,6 +100,7 @@ export const useOnBoardingQuestionary = () => {
     setIsSending(false);
 
     if (!response) {
+      alert('既に回答済みです');
       return;
     }
 
@@ -132,25 +132,13 @@ export const useOnBoardingQuestionary = () => {
     [questionAndAnswers]
   );
 
-  const toggleOther = useCallback((questionId: string) => {
-    setOtherOpenedQuestionIds((otherOpenedQuestionIds) => {
-      if (otherOpenedQuestionIds.includes(questionId)) {
-        return otherOpenedQuestionIds.filter((qid) => qid !== questionId);
-      } else {
-        return [...otherOpenedQuestionIds, questionId];
-      }
-    });
-  }, []);
-
   return {
     checkIsCheckboxRequired,
     isSending,
-    otherOpenedQuestionIds,
     questionAndAnswers,
     setAnswer,
     setOther,
     submit,
     toggleAnswers,
-    toggleOther,
   };
 };
