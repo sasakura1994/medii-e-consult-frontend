@@ -30,18 +30,11 @@
   background: #999999;
 }
 
-@layer base {
-  html {
-    font-family: $font-family;
-  }
-}
-
 html {
   position: relative;
 }
 
 body {
-  font-family: $font-family;
   color: $font-color-base;
   -webkit-font-smoothing: antialiased;
 }

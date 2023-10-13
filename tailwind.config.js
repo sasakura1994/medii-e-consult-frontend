@@ -103,7 +103,7 @@ module.exports = {
         button: '0 4px 10px rgba(92,107,192,0.3)',
       },
       fontFamily: {
-        sans: ['Noto Sans JP', 'Avenir', 'Helvetica', 'Arial', 'sans-serif'],
+        sans: ['system-ui', 'sans-serif'],
       },
       blur: {
         xs: '2px',

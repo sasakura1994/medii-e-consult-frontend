@@ -10,7 +10,7 @@ export const Document = () => {
         <base href={baseDir} />
         <link rel="icon" href="favicon.ico" />
       </Head>
-      <body>
+      <body className='font-sans'>
         <Main />
         <NextScript />
       </body>
