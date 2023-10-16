@@ -1,7 +1,5 @@
 export type ProfileEntity = {
-  commedical_speciality: string;
   document_file_path: string;
-  is_commedical: number;
   document: File | undefined | null;
   last_name: string;
   first_name: string;
