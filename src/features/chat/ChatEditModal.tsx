@@ -5,8 +5,9 @@ import { SelectBox } from '@/components/Parts/Form/SelectBox';
 import { TextField } from '@/components/Parts/Form/TextField';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
-import { useUpdateChatRoom } from '@/hooks/api/chat/useUpdateChatRoom';
+import { UpdateChatRoomResponseData, useUpdateChatRoom } from '@/hooks/api/chat/useUpdateChatRoom';
 import { ChatRoomEntity, ChatRoomGender } from '@/types/entities/chat/ChatRoomEntity';
+import { AxiosError } from 'axios';
 import React, { useState } from 'react';
 import { KeyedMutator } from 'swr';
 
@@ -22,7 +23,8 @@ type ChatEditModalProps = {
 export const ChatEditModal = (props: ChatEditModalProps) => {
   const { chatRoomData, setIsOpenChatEditModal, setIsOpenDeleteModal, accountID, mutateChatRoom, mutateChatRoomList } =
     props;
-  const { updateChatRoom, errorMessage } = useUpdateChatRoom();
+  const { updateChatRoom } = useUpdateChatRoom();
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
   const [selectedGender, setSelectedGender] = useState<ChatRoomGender>(chatRoomData.chat_room.gender);
   const [selectedAge, setSelectedAge] = useState(chatRoomData.chat_room.age);
   const [summary, setSummary] = useState(chatRoomData.chat_room.disease_name);
@@ -103,6 +105,9 @@ export const ChatEditModal = (props: ChatEditModalProps) => {
                   age: selectedAge,
                   disease_name: summary,
                   gender: selectedGender,
+                }).catch((e) => {
+                  const error = e as AxiosError<UpdateChatRoomResponseData>;
+                  setErrorMessage(error.response?.data.message);
                 });
                 if (res?.data.code) {
                   await mutateChatRoom?.();
