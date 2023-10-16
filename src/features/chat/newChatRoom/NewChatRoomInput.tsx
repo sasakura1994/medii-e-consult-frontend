@@ -65,6 +65,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
     setIsDoctorSearchModalShown,
     setIsMedicalSpecialitiesSelectDialogShown,
     setIsSearchGroupModalShown,
+    updateDraft,
   } = props;
 
   return (
@@ -272,6 +273,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
               name="disease_name"
               value={chatRoom.disease_name}
               onChange={(e) => setChatRoomFields({ disease_name: e.target.value })}
+              onBlur={updateDraft}
               placeholder="例）多関節痛を訴える抗核抗体陽性患者への追加検査"
               required
             />
@@ -303,6 +305,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
               className="min-h-[140px] text-[13px]"
               value={chatRoom.first_message}
               onChange={(e) => setChatRoomFields({ first_message: e.target.value })}
+              onBlur={updateDraft}
               required
             />
             <div className="mt-3 flex items-center gap-2">

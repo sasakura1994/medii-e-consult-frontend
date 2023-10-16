@@ -5,12 +5,14 @@ import { useGetChatDraftImages } from '@/hooks/api/chat/useGetChatDraftImages';
 import { usePostChatMessageFile } from '@/hooks/api/chat/usePostChatMessageFile';
 import { PostChatRoomRequestData, usePostChatRoom } from '@/hooks/api/chat/usePostChatRoom';
 import { usePostDraftImage } from '@/hooks/api/chat/usePostDraftImage';
+import { useDeleteChatRoomDrafts } from '@/hooks/api/chatRoomDraft/useDeleteChatRoomDrafts';
+import { useGetCurrentChatRoomDraft } from '@/hooks/api/chatRoomDraft/useGetCurrentChatRoomDraft';
 import { usePostChatRoomDraft } from '@/hooks/api/chatRoomDraft/usePostChatRoomDraft';
+import { useUpdateChatRoomDraft } from '@/hooks/api/chatRoomDraft/useUpdateChatRoomDraft';
 import { useFetchDoctorProfile } from '@/hooks/api/doctor/useFetchDoctorProfile';
 import { FetchedGroupEntity, useFetchGroup } from '@/hooks/api/group/useFetchGroup';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { useFetchMedicalSpecialityCategories } from '@/hooks/api/medicalCategoryCategory/useFetchMedicalSpecialityCategories';
-import { loadLocalStorage, removeLocalStorage, saveLocalStorage } from '@/libs/LocalStorageManager';
 import { moveItem } from '@/libs/dnd';
 import { ChatDraftImageEntity } from '@/types/entities/chat/ChatDraftImageEntity';
 import { ChatMessageEntity } from '@/types/entities/chat/ChatMessageEntity';
@@ -34,9 +36,14 @@ import {
 } from 'react';
 
 export const newChatRoomFormDataKey = 'NewChatRoom::chatRoom';
+export const newChatRoomDraftIdKey = 'NewChatRoom::chatRoomDraftId';
+
+// 値の更新時にすぐには下書き増進しないフィールドの一覧（テキスト入力などはblurにしたいため）
+const notSaveToDraftImmediatelyFields = ['disease_name', 'first_message'];
 
 type AgeRange = string | 'child';
 type Mode = 'input' | 'confirm';
+type InitializingStatus = 'not_initialized' | 'initializing' | 'initialized';
 
 type FileForReConsult = {
   id: number;
@@ -110,6 +117,7 @@ export type UseNewChatRoom = {
   setIsMedicalSpecialitiesSelectDialogShown: Dispatch<SetStateAction<boolean>>;
   setIsSearchGroupModalShown: Dispatch<SetStateAction<boolean>>;
   submit: () => Promise<void>;
+  updateDraft: () => void;
 };
 
 export const useNewChatRoom = (): UseNewChatRoom => {
@@ -117,6 +125,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
   const query = router.query as NewChatRoomQuery;
 
   const [mode, setMode] = useState<Mode>('input');
+  const [chatRoomDraftId, setChatRoomDraftId] = useState('');
   const [chatRoom, setChatRoom] = useState<NewChatRoomEntity>({
     chat_room_id: '',
     room_type: getDefaultRoomType(query),
@@ -140,7 +149,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
   const [isDoctorSearchModalShown, setIsDoctorSearchModalShown] = useState(false);
   const [isSearchGroupModalShown, setIsSearchGroupModalShown] = useState(false);
   const [isUseDraftImages, setIsUseDraftImages] = useState(false);
-  const [isInitialized, setIsInitialized] = useState(false);
+  const [initializingStatus, setInitializingStatus] = useState<InitializingStatus>('not_initialized');
   const [draftFrom, setDraftFrom] = useState('');
 
   const { createNewChatRoom } = usePostChatRoom();
@@ -153,7 +162,10 @@ export const useNewChatRoom = (): UseNewChatRoom => {
   const { doctor } = useFetchDoctorProfile(chatRoom.target_doctor);
   const { fetchBaseChatRoomForReConsult } = useFetchBaseChatRoomForReConsult();
   const { postChatMessageFile } = usePostChatMessageFile();
+  const { getCurrentChatRoomDraft } = useGetCurrentChatRoomDraft();
   const { postChatRoomDraft } = usePostChatRoomDraft();
+  const { updateChatRoomDraft } = useUpdateChatRoomDraft();
+  const { deleteChatRoomDrafts } = useDeleteChatRoomDrafts();
 
   const imageInput = useRef<HTMLInputElement>(null);
 
@@ -196,9 +208,11 @@ export const useNewChatRoom = (): UseNewChatRoom => {
   }, []);
 
   const initialize = useCallback(async () => {
-    if (!medicalSpecialities) {
+    if (!router.isReady || !medicalSpecialities || initializingStatus !== 'not_initialized') {
       return;
     }
+
+    setInitializingStatus('initializing');
 
     if (query.reconsult) {
       const baseChatRoomData = await fetchBaseChatRoomForReConsult(query.reconsult);
@@ -217,43 +231,91 @@ export const useNewChatRoom = (): UseNewChatRoom => {
       }));
       setReConsultFileMessages(baseChatRoomData.file_messages);
       initializeAge(baseChatRoomData.chat_room.age);
-      setIsInitialized(true);
+      setInitializingStatus('initialized');
       return;
     }
 
-    const draft = loadLocalStorage(newChatRoomFormDataKey);
+    const draft = await getCurrentChatRoomDraft().catch((error) => {
+      console.error(error);
+      return null;
+    });
     if (!draft) {
       return;
     }
+
     if (!confirm('下書きに作成途中のコンサルがあります。作成途中のコンサルを続けて編集しますか？')) {
-      setIsInitialized(true);
+      await deleteChatRoomDrafts();
+      setInitializingStatus('initialized');
       return;
     }
 
-    const data = JSON.parse(draft) as NewChatRoomEntity;
+    const data = draft.data.data as NewChatRoomEntity;
 
+    setChatRoomDraftId(draft.data.chat_room_draft_id);
     setChatRoom(data);
     initializeAge(data.age);
     setDraftFrom(data.from);
     setIsUseDraftImages(true);
-    setIsInitialized(true);
-  }, [fetchBaseChatRoomForReConsult, initializeAge, medicalSpecialities, query.reconsult]);
+    setInitializingStatus('initialized');
+  }, [
+    deleteChatRoomDrafts,
+    fetchBaseChatRoomForReConsult,
+    getCurrentChatRoomDraft,
+    initializeAge,
+    initializingStatus,
+    medicalSpecialities,
+    query.reconsult,
+    router.isReady,
+  ]);
 
   useEffect(() => {
-    if (isInitialized) {
+    if (!router.isReady || initializingStatus !== 'not_initialized') {
       return;
     }
     initialize();
-  }, [initialize, isInitialized]);
+  }, [initialize, initializingStatus, router.isReady]);
+
+  const sendDraft = useCallback(
+    async (data: object) => {
+      if (chatRoomDraftId) {
+        await updateChatRoomDraft(chatRoomDraftId, data).catch((error) => {
+          console.error(error);
+        });
+        return;
+      }
+
+      const response = await postChatRoomDraft(data).catch((error) => {
+        console.error(error);
+        return null;
+      });
+      if (!response) {
+        return;
+      }
+
+      setChatRoomDraftId(response.data.chat_room_draft_id);
+    },
+    [chatRoomDraftId, postChatRoomDraft, updateChatRoomDraft]
+  );
+
+  const updateDraft = useCallback(() => {
+    sendDraft(chatRoom);
+  }, [chatRoom, sendDraft]);
 
   const setChatRoomFields = useCallback(
     async (data: Partial<NewChatRoomEntity>) => {
       const newData = { ...formData, ...data };
-      saveLocalStorage(newChatRoomFormDataKey, JSON.stringify(newData));
+
       setChatRoom(newData);
-      await postChatRoomDraft(newData);
+
+      // 下書き保存しない関数を作っても良いけど、多分いずれ使い分けミスると思うのでここで判別
+      for (const key of Object.keys(data)) {
+        if (!notSaveToDraftImmediatelyFields.includes(key)) {
+          await sendDraft(newData);
+          return;
+        }
+      }
     },
-    [formData, postChatRoomDraft]
+    [formData, sendDraft]
   );
 
   const setAgeRangeWrapper = useCallback(
@@ -287,9 +349,11 @@ export const useNewChatRoom = (): UseNewChatRoom => {
         return;
       }
 
-      setChatRoomFields({ first_message: firstMessage });
+      const newData = { first_message: firstMessage };
+      setChatRoomFields(newData);
+      sendDraft(newData);
     },
-    [chatRoom.first_message, setChatRoomFields]
+    [chatRoom.first_message, sendDraft, setChatRoomFields]
   );
 
   const setModeAndScrollToTop = useCallback((mode: Mode) => {
@@ -374,7 +438,6 @@ export const useNewChatRoom = (): UseNewChatRoom => {
 
     mutateFetchFlag('FirstConsultCampaign');
     setIsSending(false);
-    removeLocalStorage(newChatRoomFormDataKey);
     router.push(`/chat?chat_room_id=${response.data.chat_room_id}`);
   }, [
     chatDraftImages,
@@ -533,5 +596,6 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     setIsMedicalSpecialitiesSelectDialogShown,
     setIsSearchGroupModalShown,
     submit,
+    updateDraft,
   };
 };
