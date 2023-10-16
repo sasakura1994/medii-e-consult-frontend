@@ -92,13 +92,13 @@ beforeEach(() => {
     } as ProfileEntity,
   });
 });
-const getRender = async () => {
-  render(
-    <RecoilRoot>
-      <Seminar />
-    </RecoilRoot>
-  );
-};
+// const getRender = async () => {
+//   render(
+//     <RecoilRoot>
+//       <Seminar />
+//     </RecoilRoot>
+//   );
+// };
 
 afterEach(() => {
   cleanup();
@@ -123,9 +123,8 @@ describe('Seminar component', () => {
   test('プロフィール情報が入力されておりません。が表示されるか', async () => {
     (useFetchProfile as jest.Mock).mockReturnValue({
       profile: {
-        is_imperfect_profile: true,
+        status: 'CREATED',
         main_speciality: 'naika',
-        need_to_send_confimation: true,
       } as ProfileEntity,
     });
 
@@ -146,9 +145,7 @@ describe('Seminar component', () => {
   test('確認資料が提出されておりません。が表示されるか', async () => {
     (useFetchProfile as jest.Mock).mockReturnValue({
       profile: {
-        is_imperfect_profile: false,
         main_speciality: 'naika',
-        need_to_send_confimation: true,
         status: 'PROFILE',
       } as ProfileEntity,
     });
@@ -167,35 +164,10 @@ describe('Seminar component', () => {
     expect(text).toBeInTheDocument();
   });
 
-  test('現在、ご提出頂いた資料を確認中です。が表示されるか', async () => {
-    (useFetchProfile as jest.Mock).mockReturnValue({
-      profile: {
-        is_imperfect_profile: false,
-        main_speciality: 'naika',
-        need_to_send_confimation: false,
-      } as ProfileEntity,
-    });
-
-    await act(() => {
-      render(
-        <RecoilRoot>
-          <Seminar />
-        </RecoilRoot>
-      );
-    });
-
-    const text = await act(async () => {
-      return await waitFor(() => screen.getByText(/現在、ご提出頂いた資料を確認中です。/));
-    });
-    expect(text).toBeInTheDocument();
-  });
-
   test('モーダルが表示されないか', async () => {
     (useFetchProfile as jest.Mock).mockReturnValue({
       profile: {
-        is_imperfect_profile: false,
         main_speciality: 'naika',
-        need_to_send_confimation: false,
         status: 'VERIFIED',
       } as ProfileEntity,
     });

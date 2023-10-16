@@ -8,6 +8,9 @@ import { UserConsultNoContents } from './UserConsultNoContents';
 import Link from 'next/link';
 import { UserConsultAnswerContent } from './UserConsultAnswerContent';
 import { useUserConsult } from './useUserConsult';
+import { useFetchFlag } from '@/hooks/api/account/useFetchFlags';
+
+const consultCampaignAlt = 'はじめてEコンサルで症例を質問した先生に1000円相当のポイントをもれなくプレゼント';
 
 type UserConsultProps = {
   setShowTutorialExplanationModal: (isShow: boolean) => void;
@@ -26,6 +29,7 @@ export const UserConsult = (props: UserConsultProps) => {
     chatRoomMineOwnData,
     chatRoomMineRespondData,
   } = useUserConsult();
+  const { flag: isFirstConsultCampaignAvailable } = useFetchFlag('FirstConsultCampaign');
 
   const tmpTopBanner = useMemo(() => {
     // TODO: tmpTopBannerは2023/09/07/20:00から2023/09/14/20:00までの間だけ一時的に表示する
@@ -48,7 +52,7 @@ export const UserConsult = (props: UserConsultProps) => {
           }}
         >
           <img
-            src="/images/top/top_group_banner_GR019adaef-7526-4155-8498-a663fefc5e04.png"
+            src="images/top/top_group_banner_GR019adaef-7526-4155-8498-a663fefc5e04.png"
             alt="banner"
             className="mt-4 hidden cursor-pointer sm:block"
           />
@@ -64,7 +68,7 @@ export const UserConsult = (props: UserConsultProps) => {
           }}
         >
           <img
-            src="/images/top/top_group_banner_GR019adaef-7526-4155-8498-a663fefc5e04_sp.png"
+            src="images/top/top_group_banner_GR019adaef-7526-4155-8498-a663fefc5e04_sp.png"
             alt="banner"
             className="mt-4 block cursor-pointer sm:hidden"
           />
@@ -79,9 +83,7 @@ export const UserConsult = (props: UserConsultProps) => {
         <p className="flex-grow text-xxl font-bold text-text-primary">あなたに関わるE-コンサル</p>
         <div className="hidden whitespace-nowrap lg:block">
           <Link href="/newchatroom">
-            <a>
-              <PrimaryButton size="large">E-コンサルで質問する</PrimaryButton>
-            </a>
+            <PrimaryButton size="large">E-コンサルで質問する</PrimaryButton>
           </Link>
         </div>
         <div
@@ -93,7 +95,22 @@ export const UserConsult = (props: UserConsultProps) => {
           <TertiaryButton size="large">E-コンサルとは？</TertiaryButton>
         </div>
       </div>
+
+      {isFirstConsultCampaignAvailable && (
+        <div className="mb-6 mt-3" data-testid="consult-campaign-banner">
+          <Link href="/newchatroom?from=onboarding_banner">
+            <img
+              className="hidden lg:block"
+              src="images/onboarding/first_consult_banner.png"
+              alt={consultCampaignAlt}
+            />
+            <img className="lg:hidden" src="images/onboarding/first_consult_banner_sp.png" alt={consultCampaignAlt} />
+          </Link>
+        </div>
+      )}
+
       {tmpTopBanner}
+
       <StyledHiddenScrollBar className="mt-5 flex items-end overflow-y-hidden overflow-x-scroll">
         <TopTab
           text="自分が質問"

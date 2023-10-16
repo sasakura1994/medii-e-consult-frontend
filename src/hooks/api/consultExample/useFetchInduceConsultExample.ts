@@ -1,5 +1,4 @@
 import { useAuthenticatedSWR } from '@/hooks/network/useAuthenticatedSWR';
-import { ConsultExampleDetailEntity } from '@/types/entities/ConsultExampleDetailEntity';
 
 type Args = {
   isFetch: boolean;

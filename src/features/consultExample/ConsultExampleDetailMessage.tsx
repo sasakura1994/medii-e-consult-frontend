@@ -4,6 +4,7 @@ import { ConsultExampleActions } from './ConsultExampleActions';
 
 type Props = {
   consultExampleMessage: ConsultExampleMessageEntity;
+  isShowAction?: boolean;
   onLike?: (consultExampleMessageId: number) => void;
   onUnlike?: (consultExampleMessageId: number) => void;
   onComment?: (consultExampleMessage: ConsultExampleMessageEntity) => void;
@@ -12,6 +13,7 @@ type Props = {
 
 export const ConsultExampleDetailMessage: React.FC<Props> = ({
   consultExampleMessage,
+  isShowAction = true,
   onLike,
   onUnlike,
   onComment,
@@ -53,28 +55,30 @@ export const ConsultExampleDetailMessage: React.FC<Props> = ({
             <img src={consultExampleMessage.file_path} alt='image' />
           )}
         </div>
-        <div className="mt-2 lg:w-full">
-          <ConsultExampleActions
-            likeCount={consultExampleMessage.like_count}
-            commentCount={consultExampleMessage.comment_count}
-            isLiked={consultExampleMessage.is_liked}
-            isShortOnMobile
-            onLike={
-              onLike ? () => onLike(consultExampleMessage.uid) : undefined
-            }
-            onUnlike={
-              onUnlike ? () => onUnlike(consultExampleMessage.uid) : undefined
-            }
-            onComment={
-              onComment ? () => onComment(consultExampleMessage) : undefined
-            }
-            onShowComments={
-              onShowComments
-                ? () => onShowComments(consultExampleMessage)
-                : undefined
-            }
-          />
-        </div>
+        {isShowAction && (
+          <div className="mt-2 lg:w-full">
+            <ConsultExampleActions
+              likeCount={consultExampleMessage.like_count}
+              commentCount={consultExampleMessage.comment_count}
+              isLiked={consultExampleMessage.is_liked}
+              isShortOnMobile
+              onLike={
+                onLike ? () => onLike(consultExampleMessage.uid) : undefined
+              }
+              onUnlike={
+                onUnlike ? () => onUnlike(consultExampleMessage.uid) : undefined
+              }
+              onComment={
+                onComment ? () => onComment(consultExampleMessage) : undefined
+              }
+              onShowComments={
+                onShowComments
+                  ? () => onShowComments(consultExampleMessage)
+                  : undefined
+              }
+            />
+          </div>
+        )}
       </div>
     </div>
   );

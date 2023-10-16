@@ -25,7 +25,7 @@ const AssignPage: NextPageWithLayout = () => {
     <>
       {chatRoom &&
         (chatRoom.status === 'CREATED' ? (
-          <Container className="mb-10 mt-4">
+          <Container className="pt-4 pb-10">
             <Assign chatRoom={chatRoom} images={images || []} onConfirm={() => setIsConfirming(true)} />
           </Container>
         ) : (

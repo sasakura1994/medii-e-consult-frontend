@@ -4,7 +4,9 @@ import { act, renderHook } from '@testing-library/react';
 import { useRouter } from 'next/router';
 import { RecoilRoot } from 'recoil';
 
-jest.mock('next/router');
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(),
+}));
 jest.mock('@/hooks/api/doctor/usePostLogin');
 
 describe('useLogin', () => {
@@ -84,14 +86,13 @@ describe('useLogin', () => {
         wrapper: RecoilRoot,
       }).result;
 
-      
       await act(() => {
-        hooks.current.setEmail("test@email.com");
-        hooks.current.setPassword("testPassword");      
+        hooks.current.setEmail('test@email.com');
+        hooks.current.setPassword('testPassword');
       });
-      
-      await act(() => {      
-        hooks.current.login({ preventDefault: jest.fn() } as unknown as React.FormEvent<HTMLFormElement>)
+
+      await act(() => {
+        hooks.current.login({ preventDefault: jest.fn() } as unknown as React.FormEvent<HTMLFormElement>);
       });
 
       expect(window.location.href).toBe(process.env.CASE_BANK_URL + '/login/callback?t=token');

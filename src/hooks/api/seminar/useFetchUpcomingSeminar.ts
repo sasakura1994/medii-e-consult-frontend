@@ -9,9 +9,9 @@ const endpoint = '/seminar/upcoming';
 
 export const useFetchUpcomingSeminar = (count?: number): UseFetchSeminars => {
   const { data } = useAuthenticatedSWR<{
-    seminors: SeminarEntityType[];
+    seminars: SeminarEntityType[];
   }>(endpoint + (count ? `?count=${count}` : ''));
-  const seminars = data?.seminors;
+  const seminars = data?.seminars;
   return {
     seminars,
   };

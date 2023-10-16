@@ -1,10 +1,19 @@
-import { Dispatch, FormEvent, SetStateAction, useCallback, useEffect, useMemo, useState } from 'react';
+import {
+  Dispatch,
+  FormEvent,
+  RefObject,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useToken } from './authentication/useToken';
 import { usePostLogin } from './api/doctor/usePostLogin';
 import { useRouter } from 'next/router';
 import { mutateFetchProfile } from './api/doctor/useFetchProfile';
-
-export const loginRedirectUrlKey = 'Login:redirectUrl';
+import { loginRedirectUrlKey } from '@/data/localStorage';
 
 type Query = {
   from?: 'case_bank';
@@ -16,6 +25,7 @@ export type UseLogin = {
   setPassword: Dispatch<SetStateAction<string>>;
   errorMessage: string;
   nmoLoginUrl: string;
+  mailAddressRef: RefObject<HTMLInputElement>;
   login: (e: FormEvent<HTMLFormElement>) => void;
   goToRegistration: () => void;
   saveRedirectUrl: () => void;
@@ -30,11 +40,18 @@ export const useLogin = (): UseLogin => {
   const [errorMessage, setErrorMessage] = useState('');
   const { setTokenAndMarkInitialized } = useToken();
   const { login: postLogin } = usePostLogin();
+  const mailAddressRef = useRef<HTMLInputElement>(null);
 
   const nmoLoginUrl = useMemo(() => {
     const url = process.env.WEB_SERVER_URL + (redirectUrl === '' ? '/top' : redirectUrl);
     return process.env.NMO_URL + `/mreach/simple_member_register/medii?furl=${encodeURIComponent(url)}`;
   }, [redirectUrl]);
+
+  useEffect(() => {
+    if (mailAddressRef.current) {
+      setEmail(mailAddressRef.current.value);
+    }
+  }, []);
 
   useEffect(() => {
     if (redirect) {
@@ -112,6 +129,7 @@ export const useLogin = (): UseLogin => {
     login,
     errorMessage,
     nmoLoginUrl,
+    mailAddressRef,
     goToRegistration,
     saveRedirectUrl,
   };

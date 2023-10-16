@@ -7,7 +7,9 @@ import { UserInfo } from '../UserInfo';
 import { EditingProfile, UseEditProfile } from '../useEditProfile';
 import { EditProfileProps } from '../EditProfile';
 
-jest.mock('next/router');
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(),
+}));
 jest.mock('@/hooks/api/doctor/useFetchProfile');
 
 describe('UserInfo', () => {

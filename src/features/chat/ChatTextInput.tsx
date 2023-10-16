@@ -94,13 +94,13 @@ export const ChatTextInput = (props: ChatTextInputProps) => {
           onClick={() => resetFileInput()}
         />
         <img
-          src="/icons/clip_message.svg"
+          src="icons/clip_message.svg"
           alt=""
           className="my-auto ml-3 h-[30px] w-[30px] cursor-pointer"
           onClick={() => fileInputRef.current?.click()}
         />
         <img
-          src="/icons/send_message.svg"
+          src="icons/send_message.svg"
           alt=""
           className="my-auto ml-3 h-[30px] w-[30px] cursor-pointer"
           onClick={async () => {

@@ -19,13 +19,17 @@ import * as usePostChatMessageFileModule from '@/hooks/api/chat/usePostChatMessa
 import * as usePostDraftImageModule from '@/hooks/api/chat/usePostDraftImage';
 import * as useGetChatDraftImagesModule from '@/hooks/api/chat/useGetChatDraftImages';
 import * as useDeleteChatDraftImageModule from '@/hooks/api/chat/useDeleteChatDraftImage';
+import * as useFetchFlagModule from '@/hooks/api/account/useFetchFlags';
 
-jest.mock('next/router');
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(),
+}));
 jest.mock('@/hooks/api/medicalCategory/useFetchMedicalSpecialities');
 jest.mock('@/hooks/api/chat/useFetchBaseChatRoomForReConsult');
 jest.mock('@/hooks/api/chat/usePostChatRoom');
 jest.mock('@/hooks/api/chat/usePostChatMessageFile');
 jest.mock('@/libs/LocalStorageManager');
+jest.mock('@/hooks/api/account/useFetchFlags');
 
 const medicalSpecialitiesMock: MedicalSpecialityEntity[] = [
   { speciality_code: 'ALLERGY' } as MedicalSpecialityEntity,
@@ -405,6 +409,8 @@ describe('useNewChatROom', () => {
         push: pushMock,
       } as unknown as ReturnType<typeof useRouter>);
 
+      const mutateFetchFlagMock = jest.spyOn(useFetchFlagModule, 'mutateFetchFlag');
+
       const { result } = renderHook(() => useNewChatRoom(), {
         wrapper: RecoilRoot,
       });
@@ -428,6 +434,8 @@ describe('useNewChatROom', () => {
         target_specialities: [],
         from: 'mail',
       });
+      expect(createNewChatRoomMock).toBeCalled();
+      expect(mutateFetchFlagMock).toHaveBeenCalledWith('FirstConsultCampaign');
     });
 
     test('再コンサル時', async () => {

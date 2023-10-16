@@ -14,7 +14,7 @@ const Welcome = () => {
         <div className="mx-auto px-8">
           <p className="mt-28 text-center text-xxxl font-bold text-medii-blue-base">Mediiにようこそ</p>
           <p className="mt-6 text-md text-monotone-950 lg:text-center">
-            Mediiでは医師の臨床疑問や不安を解消する3つのサービスをご利用いただけます。
+            Mediiでは医師の臨床疑問や不安を解消する2つのサービスをご利用いただけます。
             <br />
             Mediiのすべての機能は無料です。
           </p>
@@ -22,7 +22,7 @@ const Welcome = () => {
             <CompleteCard
               title="専門医にコンサル"
               label="完全無料・匿名"
-              imageSrc="/images/document/consult.svg"
+              imageSrc="images/document/consult.svg"
               description="臨床疑問をエキスパートの医師とチャット形式で相談できます。相談内容に適した医師をMediiがマッチングします。"
               buttonSolid="専門医に相談"
               linkSolid="/newchatroom?from=welcome"
@@ -34,17 +34,17 @@ const Welcome = () => {
             <CompleteCard
               title="E-カンファ"
               label="視聴チケット1枚プレゼント"
-              imageSrc="/images/document/conference.svg"
+              imageSrc="images/document/conference.svg"
               description="専門医の先生をお招きして、各診療科・症例の知見を広く提供するオンラインセミナーを実施しています。"
               buttonOutline="E-カンファを見る"
-              linkOutline="/seminar"
+              linkOutline="/seminar?fromwelcome=1"
               logOutline="click-seminar-in-welcome"
             />
           </div>
           <div
             onClick={async () => {
               await postEventLog({ name: 'click-top-in-welcome' });
-              router.push('/top');
+              router.push('/top?fromwelcome=1');
             }}
           >
             <div className="mb-4 mt-16 flex cursor-pointer items-center justify-center space-x-1">

@@ -24,6 +24,7 @@ module.exports = {
         error: '#f27474',
         strong: '#f5847d',
         bg: '#eff3f6',
+        alert: '#e41d07',
         distructive: '#e41d07',
         'distructive-hover': '#b21705',
         'toast-success': '#3f51b5',
@@ -66,6 +67,7 @@ module.exports = {
         'button-disabled': '#D7DAE0',
         'monotone-300': '#BAC0CA',
         'text-place-holder': '#BAC0CA',
+        caption: '#9DA6B4',
         'monotone-400': '#9DA6B4',
         'text-caption': '#16191D',
         'monotone-500': '#808C9D',
@@ -88,6 +90,7 @@ module.exports = {
         'medii-sky-800': '#017182',
         'medii-sky-900': '#015B69',
         'medii-sky-950': '#01454F',
+        'medii-red-100': '#FEEDEB',
       },
       width: {
         'login-container': '476px',
@@ -107,5 +110,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require('@tailwindcss/line-clamp')],
+  plugins: [],
 };

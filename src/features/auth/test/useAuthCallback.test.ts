@@ -5,7 +5,9 @@ import { useToken } from '@/hooks/authentication/useToken';
 import { useRouter } from 'next/router';
 import { useAxios } from '@/hooks/network/useAxios';
 
-jest.mock('next/router');
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(),
+}));
 jest.mock('@/hooks/network/useAxios');
 jest.mock('@/hooks/authentication/useToken');
 

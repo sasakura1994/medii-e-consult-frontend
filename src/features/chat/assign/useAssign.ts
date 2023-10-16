@@ -5,6 +5,7 @@ import { usePostAssign } from '@/hooks/api/chat/usePostAssign';
 import { useFetchInduceConsultExampleId } from '@/hooks/api/consultExample/useFetchInduceConsultExample';
 import { useFetchConsultExampleMessages } from '@/hooks/api/consultExample/useFetchConsultExampleMessages';
 import { useFetchConsultExample } from '@/hooks/api/consultExample/useFetchConsultExample';
+import { useUpdateOpenStatus } from '@/hooks/api/chat/usePatchUpdateOpenStatus';
 
 type Query = {
   id?: string;
@@ -30,6 +31,8 @@ export const useAssign = () => {
   const { data: consultExampleMessages } =
     useFetchConsultExampleMessages(consultExampleId);
 
+  const { updateOpenStatus } = useUpdateOpenStatus(id);
+
   React.useEffect(() => {
     if (!fetchChatRoomResultData) {
       return;
@@ -40,7 +43,10 @@ export const useAssign = () => {
       router.push(`/chat?chat_room_id=${id}`);
       return;
     }
-  }, [fetchChatRoomResultData, id, router]);
+    
+    updateOpenStatus();
+    
+  }, [fetchChatRoomResultData, id, router, updateOpenStatus]);
 
   const assign = React.useCallback(async () => {
     if (!id) {
@@ -54,7 +60,7 @@ export const useAssign = () => {
 
     const response = await postAssign(id).catch((error) => {
       console.error(error);
-      setErrorMessage('エラーが発生しました。');
+      setErrorMessage('回答権がないアカウントです。');
       return null;
     });
 

@@ -4,14 +4,14 @@ import { renderHook } from '@testing-library/react';
 import { useRouter } from 'next/router';
 import { RecoilRoot } from 'recoil';
 
-jest.mock('next/router');
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(),
+}));
 jest.mock('@/hooks/api/doctor/useFetchProfile');
 
 describe('useGuest', () => {
   describe('ゲストのアクセスを制限', () => {
-    const useFetchProfileMock = useFetchProfile as jest.Mocked<
-      typeof useFetchProfile
-    >;
+    const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
     (useFetchProfileMock as jest.Mock).mockReturnValue({
       profile: {
         is_guest: true,
@@ -72,9 +72,7 @@ describe('useGuest', () => {
         wrapper: RecoilRoot,
       }).result;
 
-      expect(pushMock).toBeCalledWith(
-        `/guest?redirect=${encodeURIComponent('/examplelist')}`
-      );
+      expect(pushMock).toBeCalledWith(`/guest?redirect=${encodeURIComponent('/examplelist')}`);
     });
   });
 });

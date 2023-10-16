@@ -17,16 +17,15 @@ const GuideLink = ({
   onClick: React.MouseEventHandler<HTMLAnchorElement>;
 }) => {
   return (
-    <Link href={href}>
-      <a className="text-sm text-guide-link underline" onClick={onClick}>
-        {children}
-      </a>
+    <Link href={href} className="text-sm text-guide-link underline" onClick={onClick}>
+      {children}
     </Link>
   );
 };
 
 const Login: NextPageWithLayout = () => {
-  const { setEmail, setPassword, login, errorMessage, nmoLoginUrl, goToRegistration, saveRedirectUrl } = useLogin();
+  const { setEmail, setPassword, login, errorMessage, nmoLoginUrl, mailAddressRef, goToRegistration, saveRedirectUrl } =
+    useLogin();
 
   return (
     <div className="mb-12 md:mt-6">
@@ -48,6 +47,7 @@ const Login: NextPageWithLayout = () => {
         <h1 className="my-7 text-center text-2xl">E-コンサルにログイン</h1>
         <form onSubmit={login} className="flex w-[308px] flex-col items-center">
           <TextField
+            ref={mailAddressRef}
             placeholder="メールアドレス"
             type="email"
             required
@@ -117,7 +117,7 @@ const Login: NextPageWithLayout = () => {
                 hover:bg-monotone-100
               "
             >
-              <img src="/images/alliance/logo-nmo-sp.png" alt="" width="100" />
+              <img src="images/alliance/logo-nmo-sp.png" alt="" width="100" />
               <div>日経メディカルアカウントでログイン</div>
             </div>
           </a>
@@ -125,12 +125,14 @@ const Login: NextPageWithLayout = () => {
             authOptions={{
               clientId: 'jp.medii.e-consult',
               scope: 'email',
-              redirectURI: `${process.env.ENDPOINT_URL}/api/apple_auth/callback`,
+              redirectURI: `${process.env.ENDPOINT_URL}/apple_auth/callback`,
               state: '',
               nonce: 'nonce',
               usePopup: false,
             }}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             onSuccess={(response: any) => console.log(response)}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             render={(props: any) => (
               <button
                 className="
