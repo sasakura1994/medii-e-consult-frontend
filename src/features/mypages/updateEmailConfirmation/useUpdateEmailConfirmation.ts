@@ -29,30 +29,19 @@ export const useUpdateEmailConfirmation = (): UseEditEmailConfirmationType => {
   const [isSending, setIsSending] = useState(true);
   const router = useRouter();
   const { token } = router.query as Query;
-
   const { editPassword } = usePatchEditPassword();
   const { isTokenExists } = useGetIsTokenExists();
+  
+  const dataToken = {
+    token,
+  };
+
+  const { data } = isTokenExists(dataToken);
 
   useEffect(() => {
-    const fetchIstoken = async () => {
-      const data = {
-        token,
-      };
-      const response = await isTokenExists(data).catch((error) => {
-        console.error(error);
-        return null;
-      });
-
-      if (!response) {
-        return false;
-      }
-
-      setIsTokenExist(response && response.data.has_email_updating);
-      setIsSending(false);
-    };
-
-    fetchIstoken();
-  }, [token, isTokenExists]);
+    if(data?.has_email_updating !== undefined) setIsTokenExist(data.has_email_updating);
+    setIsSending(false);
+  }, [data])
 
   const editConfirmEmail = useCallback(async (): Promise<boolean> => {
     const formData = {
