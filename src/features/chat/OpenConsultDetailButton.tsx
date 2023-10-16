@@ -24,7 +24,7 @@ export const OpenConsultDetailButton = (props: OpenConsultDetailButtonProps) => 
   } = props;
   return (
     <>
-      {!isCloseRoom && !isChatRoomOwner && (
+      {!isCloseRoom && !isChatRoomOwner && chatRoomData.chat_room.room_type !== 'GROUP' && (
         <>
           <button className="h-9 w-[78px] rounded-full bg-primary" onClick={() => setIsOpenReplyRequestModal(true)}>
             <p className="text-xs text-white">返答依頼</p>
