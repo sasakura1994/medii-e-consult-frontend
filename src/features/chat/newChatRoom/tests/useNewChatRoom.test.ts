@@ -21,7 +21,9 @@ import * as useGetChatDraftImagesModule from '@/hooks/api/chat/useGetChatDraftIm
 import * as useDeleteChatDraftImageModule from '@/hooks/api/chat/useDeleteChatDraftImage';
 import * as useFetchFlagModule from '@/hooks/api/account/useFetchFlags';
 
-jest.mock('next/router');
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(),
+}));
 jest.mock('@/hooks/api/medicalCategory/useFetchMedicalSpecialities');
 jest.mock('@/hooks/api/chat/useFetchBaseChatRoomForReConsult');
 jest.mock('@/hooks/api/chat/usePostChatRoom');

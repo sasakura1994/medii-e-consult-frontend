@@ -3,8 +3,9 @@ import { render, screen, act } from '@testing-library/react';
 import { OnboardingQuestionaryModal } from '../OnboardingQuestionaryModal';
 import { useRouter } from 'next/router';
 
-jest.mock('next/router');
-
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(),
+}));
 describe('OnboardingQuestionaryModal', () => {
   describe('表示', () => {
     test('クエリパラメータによって表示', () => {

@@ -16,17 +16,13 @@ export const TopNewerConsults = () => {
       <div className="mt-2 rounded-lg bg-bg-secondary p-4">
         <p className="text-xxl font-bold text-text-primary">新着のE-コンサル</p>
         <StyledHiddenScrollBar className="flex space-x-2 overflow-x-scroll px-1 py-4">
-          {consults?.map((consult, index) => (
-            <TopNewerConsult key={consult.consult_name + index} consult={consult} />
-          ))}
+          {consults?.map((consult, index) => <TopNewerConsult key={consult.consult_name + index} consult={consult} />)}
         </StyledHiddenScrollBar>
         <div className="flex justify-center">
           <Link href="/examplelist">
-            <a>
-              <SecondaryButton size="large" className="w-full">
-                解決済みのコンサル事例を見る
-              </SecondaryButton>
-            </a>
+            <SecondaryButton size="large" className="w-full">
+              解決済みのコンサル事例を見る
+            </SecondaryButton>
           </Link>
         </div>
       </div>

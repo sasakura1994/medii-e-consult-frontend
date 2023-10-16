@@ -7,7 +7,9 @@ import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 
 jest.mock('@/hooks/api/doctor/useFetchProfile');
 jest.mock('@/hooks/api/questionary/useFetchQuestionaryItemsForWithdrawal');
-
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(),
+}));
 describe('useWithdrawalPage', () => {
   test('toggleQuestionaryItem', () => {
     const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;

@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { render, screen } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
 import { GroupDetailModal } from '../GroupDetailModal';

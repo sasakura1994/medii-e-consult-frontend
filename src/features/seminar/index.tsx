@@ -35,11 +35,9 @@ export const Seminar = () => {
 
             <div className="my-6 flex w-auto justify-center">
               <Link href="/seminar/archives">
-                <a>
-                  <SecondaryButton size="large">
-                    <p>過去のE-カンファ動画へ</p>
-                  </SecondaryButton>
-                </a>
+                <SecondaryButton size="large">
+                  <p>過去のE-カンファ動画へ</p>
+                </SecondaryButton>
               </Link>
             </div>
           </div>
@@ -51,22 +49,18 @@ export const Seminar = () => {
             <SeminarArchiveHeader ticketCount={ticketCount} />
             <div>
               <div className="grid grid-cols-[1fr] gap-4 lg:grid-cols-[1fr_1fr]">
-                {seminars?.slice(0, 2).map((seminar) => (
-                  <SeminarCard seminar={seminar} key={seminar.seminar_id} />
-                ))}
+                {seminars?.slice(0, 2).map((seminar) => <SeminarCard seminar={seminar} key={seminar.seminar_id} />)}
               </div>
             </div>
-            <Link href="/seminar/archives">
-              <a className="my-6 inline-block lg:my-10">
-                <div
-                  className="inline-flex items-center rounded-full border
+            <Link href="/seminar/archives" className="my-6 inline-block lg:my-10">
+              <div
+                className="inline-flex items-center rounded-full border
                  border-primary bg-white px-8 py-2 text-[11px] text-primary
                lg:px-6 lg:py-3 lg:text-sm"
-                >
-                  すべてのアーカイブ動画を見る
-                  <img src="icons/arrow_right.svg" className="ml-2 inline h-3" alt="" />
-                </div>
-              </a>
+              >
+                すべてのアーカイブ動画を見る
+                <img src="icons/arrow_right.svg" className="ml-2 inline h-3" alt="" />
+              </div>
             </Link>
             <p className="text-center text-sm">
               ※アーカイブ動画に表示している医師の方々の経歴などの情報は、E-カンファ当時のものとなっております。

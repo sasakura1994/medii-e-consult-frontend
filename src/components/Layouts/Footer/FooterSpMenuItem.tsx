@@ -18,23 +18,21 @@ export const FooterSpMenuItem = (props: Props) => {
 
   return (
     <li className="flex flex-1 flex-col items-center gap-1">
-      <Link href={href}>
-        <a className="flex flex-col items-center gap-1">
-          <div className="relative flex h-6 w-full items-center justify-center">
-            <div className="flex h-8 w-8 items-center justify-center">
-              <ColoredImage
-                src={image}
-                color={isCurrent ? '#0758e4' : '#999'}
-                width={`${imageWidth}px`}
-                height={`${imageHeight}px`}
-              />
-            </div>
-            {hasBadge && <FooterNotificationBadge />}
+      <Link href={href} className="flex flex-col items-center gap-1">
+        <div className="relative flex h-6 w-full items-center justify-center">
+          <div className="flex h-8 w-8 items-center justify-center">
+            <ColoredImage
+              src={image}
+              color={isCurrent ? '#0758e4' : '#999'}
+              width={`${imageWidth}px`}
+              height={`${imageHeight}px`}
+            />
           </div>
-          <span className={`text-medii-sm ${isCurrent ? 'font-semibold text-medii-blue-base' : 'font-light'}`}>
-            {children}
-          </span>
-        </a>
+          {hasBadge && <FooterNotificationBadge />}
+        </div>
+        <span className={`text-medii-sm ${isCurrent ? 'font-semibold text-medii-blue-base' : 'font-light'}`}>
+          {children}
+        </span>
       </Link>
     </li>
   );

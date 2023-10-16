@@ -16,32 +16,30 @@ export const TopUpcomingSeminars = () => {
     <>
       <div className="flex items-center justify-between">
         <h3 className="text-xxl font-semibold">開催予定のE-カンファ</h3>
-        <Link href="/seminar">
-          <a className="hidden text-monotone-600 lg:block">開催予定のすべてのE-カンファ</a>
+        <Link href="/seminar" className="hidden text-monotone-600 lg:block">
+          開催予定のすべてのE-カンファ
         </Link>
       </div>
       <div className="mt-6">
         <StyledHiddenScrollBar className="flex gap-8 overflow-x-auto">
           <>
             {seminars.map((seminar) => (
-              <Link href="/seminar" key={seminar.seminar_id}>
-                <a className="min-w-[320px] lg:min-w-0 lg:flex-1">
-                  <img
-                    src={seminar.image_url}
-                    alt=""
-                    width="320"
-                    height="168"
-                    className="h-[168px] w-[320px] object-cover"
-                  />
-                  <div className="mt-4 flex gap-2">
-                    <div className="flex items-center text-md">
-                      {dateFormat(seminar.seminar_date, 'YYYY/MM/DD')}（{getWeekDay(seminar.seminar_date)}）
-                      {seminar.seminar_start_time.substring(0, 5)}-{seminar.seminar_end_time.substring(0, 5)}
-                    </div>
-                    <Label className="shrink-0" text="参加無料" size="sm" />
+              <Link href="/seminar" key={seminar.seminar_id} className="min-w-[320px] lg:min-w-0 lg:flex-1">
+                <img
+                  src={seminar.image_url}
+                  alt=""
+                  width="320"
+                  height="168"
+                  className="h-[168px] w-[320px] object-cover"
+                />
+                <div className="mt-4 flex gap-2">
+                  <div className="flex items-center text-md">
+                    {dateFormat(seminar.seminar_date, 'YYYY/MM/DD')}（{getWeekDay(seminar.seminar_date)}）
+                    {seminar.seminar_start_time.substring(0, 5)}-{seminar.seminar_end_time.substring(0, 5)}
                   </div>
-                  <div className="mt-2 text-l font-semibold line-clamp-2">{seminar.subject}</div>
-                </a>
+                  <Label className="shrink-0" text="参加無料" size="sm" />
+                </div>
+                <div className="mt-2 line-clamp-2 text-l font-semibold">{seminar.subject}</div>
               </Link>
             ))}
             {seminars.length < 3 &&
