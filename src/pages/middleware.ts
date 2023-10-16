@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from 'next/server';
 
-export const middleware = (req: NextRequest) => {
+const Middleware = (req: NextRequest) => {
   if (req.nextUrl.pathname.toLowerCase() !== req.nextUrl.pathname) {
     const url = req.nextUrl.clone();
     url.pathname = req.nextUrl.pathname.toLowerCase();
@@ -9,3 +9,5 @@ export const middleware = (req: NextRequest) => {
   }
   return NextResponse.next();
 };
+
+export default Middleware;
