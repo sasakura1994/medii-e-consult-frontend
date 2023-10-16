@@ -279,14 +279,26 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                 {chatRoomDisplayName}
               </div>
             </div>
-
-            <div className="flex-grow overflow-auto bg-bg pb-2" ref={chatListRef}>
-              <ChatList
-                chatListData={chatListDataWithDisplayName}
-                currentUserAccountId={accountId}
-                chatRoomData={chatRoomData}
-              />
-            </div>
+            {isCloseRoom ? (
+              <div className="relative flex flex-grow overflow-hidden">
+                <div className="flex-grow overflow-scroll" ref={chatListRef}>
+                  <ChatList
+                    chatListData={chatListDataWithDisplayName}
+                    currentUserAccountId={accountId}
+                    chatRoomData={chatRoomData}
+                  />
+                </div>
+                <div className="pointer-events-none absolute inset-0 overflow-hidden bg-black bg-opacity-20" />
+              </div>
+            ) : (
+              <div className="flex-grow overflow-auto bg-bg pb-2" ref={chatListRef}>
+                <ChatList
+                  chatListData={chatListDataWithDisplayName}
+                  currentUserAccountId={accountId}
+                  chatRoomData={chatRoomData}
+                />
+              </div>
+            )}
             {isCloseRoom && (
               <div className="pointer-events-auto bg-[#5c6bc0] p-2 text-center text-sm text-white">
                 <p>解決済みのルームです</p>
