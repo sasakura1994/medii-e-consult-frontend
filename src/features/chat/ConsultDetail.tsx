@@ -203,7 +203,11 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
         />
       )}
       {chatRoomData && isOpenResolveChatRoomModal && (
-        <ResolveChatRoomModal setIsOpen={setIsOpenResolveChatRoomModal} chatRoomData={chatRoomData} />
+        <ResolveChatRoomModal
+          setIsOpen={setIsOpenResolveChatRoomModal}
+          chatRoomData={chatRoomData}
+          setSelectedTab={setSelectedTab}
+        />
       )}
       {chatRoomData && publishmentStatusData && accountId && chatListDataWithDisplayName && (
         <>

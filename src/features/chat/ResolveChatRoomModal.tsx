@@ -10,10 +10,11 @@ type ResolveChatRoomModalProps = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   chatRoomData: FetchChatRoomResponseData;
   mutateChatRoom?: KeyedMutator<FetchChatRoomResponseData>;
+  setSelectedTab: React.Dispatch<React.SetStateAction<'open' | 'close'>>;
 };
 
 export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
-  const { setIsOpen, chatRoomData, mutateChatRoom } = props;
+  const { setIsOpen, chatRoomData, mutateChatRoom, setSelectedTab } = props;
   const [score, setScore] = useState<number>(5);
   const { resolveChatRoom } = usePostResolveChatRoom();
 
@@ -76,6 +77,7 @@ export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
             });
             await mutateChatRoom?.();
             setIsOpen(false);
+            setSelectedTab('close');
           }}
         >
           確定
