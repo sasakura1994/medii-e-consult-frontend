@@ -19,11 +19,9 @@ const OnBoardingQuestionaryCompletedPage = () => {
         </div>
         <div className="mt-6 w-full">
           <Link href="/pointhistory">
-            <a>
-              <TertiaryButton size="large" className="mx-auto w-full px-4 lg:w-auto">
-                ポイントを確認する
-              </TertiaryButton>
-            </a>
+            <TertiaryButton size="large" className="mx-auto w-full px-4 lg:w-auto">
+              ポイントを確認する
+            </TertiaryButton>
           </Link>
         </div>
       </div>

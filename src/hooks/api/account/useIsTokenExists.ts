@@ -1,5 +1,5 @@
-import { useAxios } from '@/hooks/network/useAxios';
-import { useCallback } from 'react';
+import type { AxiosError } from 'axios';
+import { useAuthenticatedSWR } from '@/hooks/network/useAuthenticatedSWR';
 
 export type IsTokenExistsArgs = {
   token: string | undefined;
@@ -9,17 +9,16 @@ export type GetIsTokenExistsResponseData = {
   has_email_updating: boolean;
 };
 
-export const useGetIsTokenExists = () => {
-  const { axios } = useAxios();
-  const isTokenExists = useCallback(
-    (data: IsTokenExistsArgs) => {
-      return axios.get<GetIsTokenExistsResponseData>(
-        `/account/has_email_updating?token=${data.token}`,
-      );
-    },
-    [axios]
+export type GetIsTokenExistsResponseType = {
+  isLoading: boolean;
+  error: AxiosError | undefined;
+  data: GetIsTokenExistsResponseData | undefined;
+};
+
+export const useGetIsTokenExists = (token?: string) => {
+  const { error, data, mutate } = useAuthenticatedSWR<GetIsTokenExistsResponseData>(
+    `/account/has_email_updating?token=${token}`
   );
 
-  return { isTokenExists };
-  
+  return { error, data, mutate };
 };

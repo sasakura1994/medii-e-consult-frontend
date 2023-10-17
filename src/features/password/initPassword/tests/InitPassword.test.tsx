@@ -1,5 +1,4 @@
 import React from 'react';
-
 import userEvent from '@testing-library/user-event';
 import { render, screen, act } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
@@ -11,7 +10,9 @@ import { useRouter } from 'next/router';
 import InitPassword from '@/pages/initpassword';
 
 jest.mock('@/libs/apiClient');
-jest.mock('next/router');
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(),
+}));
 
 describe('InitPassword', () => {
   test('完了してリダイレクトする', async () => {

@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { act, render, screen } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
 import { NewChatRoomInput } from '../NewChatRoomInput';
@@ -30,15 +29,9 @@ describe('NewChatRoomInput', () => {
         </RecoilRoot>
       );
 
-      expect(
-        screen.queryByTestId('reconsult-free-note')
-      ).not.toBeInTheDocument();
-      expect(
-        screen.queryByTestId('room-type-group-container')
-      ).toBeInTheDocument();
-      expect(
-        screen.queryByTestId('reconsult-image-note')
-      ).not.toBeInTheDocument();
+      expect(screen.queryByTestId('reconsult-free-note')).not.toBeInTheDocument();
+      expect(screen.queryByTestId('room-type-group-container')).toBeInTheDocument();
+      expect(screen.queryByTestId('reconsult-image-note')).not.toBeInTheDocument();
     });
 
     test('再コンサルの場合は表示する', () => {
@@ -54,9 +47,7 @@ describe('NewChatRoomInput', () => {
       );
 
       expect(screen.queryByTestId('reconsult-free-note')).toBeInTheDocument();
-      expect(
-        screen.queryByTestId('room-type-group-container')
-      ).not.toBeInTheDocument();
+      expect(screen.queryByTestId('room-type-group-container')).not.toBeInTheDocument();
       expect(screen.queryByTestId('reconsult-image-note')).toBeInTheDocument();
     });
 
@@ -79,9 +70,7 @@ describe('NewChatRoomInput', () => {
         </RecoilRoot>
       );
 
-      act(() =>
-        userEvent.click(screen.getByTestId('doctor-search-modal-search-button'))
-      );
+      act(() => userEvent.click(screen.getByTestId('doctor-search-modal-search-button')));
 
       expect(useSearchDoctorMock).toBeCalledWith({
         experienceYears: '',

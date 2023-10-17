@@ -17,7 +17,9 @@ jest.mock('@/hooks/api/hospital/useFetchHospital');
 jest.mock('@/hooks/api/hospital/useSearchHospitals');
 jest.mock('@/hooks/api/doctor/useUpdateProfile');
 jest.mock('@/libs/LocalStorageManager');
-jest.mock('next/router');
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(),
+}));
 
 describe('useEditProfile', () => {
   const hospital = {

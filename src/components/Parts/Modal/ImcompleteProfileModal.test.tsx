@@ -20,7 +20,7 @@ describe('is_imperfect_profile', () => {
           isLoading: false,
         });
 
-        await act(() => {
+        act(() => {
           render(
             <RecoilRoot>
               <ImcompleteProfileModal />

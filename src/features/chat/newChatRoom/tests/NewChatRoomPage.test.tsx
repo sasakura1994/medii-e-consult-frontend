@@ -1,11 +1,13 @@
 import React from 'react';
-import { render, screen, act, waitFor } from '@testing-library/react';
+import { render, screen, act } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
 import NewChatRoomPage from '@/pages/newchatroom';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { useRouter } from 'next/router';
 
-jest.mock('next/router');
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(),
+}));
 jest.mock('@/hooks/api/doctor/useFetchProfile');
 
 describe('/newchatroom', () => {

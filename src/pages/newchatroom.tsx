@@ -60,11 +60,9 @@ const NewChatRoomPage: NextPageWithLayout = () => {
             </p>
             <div className="mt-10">
               <Link href={`/nmo/input-profile?redirect=${encodeURIComponent('/newchatroom')}`}>
-                <a>
-                  <PrimaryButton size="large" className="mx-auto">
-                    プロフィール入力
-                  </PrimaryButton>
-                </a>
+                <PrimaryButton size="large" className="mx-auto">
+                  プロフィール入力
+                </PrimaryButton>
               </Link>
             </div>
           </Modal>

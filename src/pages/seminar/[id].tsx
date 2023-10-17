@@ -147,11 +147,9 @@ const Seminar: NextPage = () => {
                 </div>
                 {seminar && seminar.account_id && seminar.is_consult_available && (
                   <Link href={`/newChatRoom?target_account_id=${seminar?.account_id}`}>
-                    <a>
-                      <PrimaryButton className="m-auto mt-8 text-left text-sm lg:text-md">
-                        この先生にE-コンサルで相談をする
-                      </PrimaryButton>
-                    </a>
+                    <PrimaryButton className="m-auto mt-8 text-left text-sm lg:text-md">
+                      この先生にE-コンサルで相談をする
+                    </PrimaryButton>
                   </Link>
                 )}
                 {seminar && seminar?.seminar_reviews.length > 0 && (

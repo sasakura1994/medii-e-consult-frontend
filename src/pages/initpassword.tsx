@@ -140,16 +140,12 @@ const InitPassword: NextPageWithLayout = () => {
         {errorMessage !== '' && <ErrorMessage className="text-center">{errorMessage}</ErrorMessage>}
         {isEmailDuplicated && (
           <ErrorMessage className="mt-4 text-center">
-            <Link href="/login">
-              <a className="text-inherit underline" style={{ color: '-webkit-link' }}>
-                ログイン画面
-              </a>
+            <Link href="/login" className="text-inherit underline" style={{ color: '-webkit-link' }}>
+              ログイン画面
             </Link>{' '}
             よりログインし直すか{' '}
-            <Link href="/PasswordResetRequest">
-              <a className="underline" style={{ color: '-webkit-link' }}>
-                パスワードの再設定
-              </a>
+            <Link href="/PasswordResetRequest" className="underline" style={{ color: '-webkit-link' }}>
+              パスワードの再設定
             </Link>{' '}
             をお願いします。
           </ErrorMessage>

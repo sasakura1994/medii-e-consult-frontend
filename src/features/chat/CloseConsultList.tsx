@@ -26,18 +26,14 @@ export const CloseConsultList = (props: CloseConsultListProps) => {
                   query: { chat_room_id: chatRoom.chat_room_id },
                 }}
               >
-                <a>
-                  <ConsultTitle
-                    isUnreadConsult={unreadCountList.unread_consult.some(
-                      (c) => c.chat_room_id === chatRoom.chat_room_id
-                    )}
-                    chatRoomId={chatRoom.chat_room_id}
-                    title={chatRoom.title}
-                    latestMessage={chatRoom.latest_message}
-                    lastUpdatedDate={chatRoom.last_updated_date}
-                    ownerAccountId={chatRoom.owner_account_id}
-                  />
-                </a>
+                <ConsultTitle
+                  isUnreadConsult={unreadCountList.unread_consult.some((c) => c.chat_room_id === chatRoom.chat_room_id)}
+                  chatRoomId={chatRoom.chat_room_id}
+                  title={chatRoom.title}
+                  latestMessage={chatRoom.latest_message}
+                  lastUpdatedDate={chatRoom.last_updated_date}
+                  ownerAccountId={chatRoom.owner_account_id}
+                />
               </Link>
             );
           })}

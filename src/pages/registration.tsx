@@ -13,8 +13,8 @@ import { HeaderMenuListItem } from '@/components/Layouts/Header/HeaderMenuListIt
 
 const GuideLink = ({ children, href }: { children: string; href: string }) => {
   return (
-    <Link href={href}>
-      <a className="mt-6 text-sm text-guide-link underline">{children}</a>
+    <Link href={href} className="mt-6 text-sm text-guide-link underline">
+      {children}
     </Link>
   );
 };
@@ -64,11 +64,7 @@ const Registration: NextPageWithLayout = () => {
             "
               >
                 <img src="images/registration/left.png" className="hidden max-w-[480px] bg-white md:block" alt="" />
-                <img
-                  src="images/registration/mobile_main.png"
-                  className="bg-white md:hidden lg:max-w-[480px]"
-                  alt=""
-                />
+                <img src="images/registration/mobile_main.png" className="bg-white md:hidden lg:max-w-[480px]" alt="" />
                 <div
                   className="
                 flex max-w-[480px] flex-col items-center justify-items-stretch bg-white
@@ -141,7 +137,6 @@ const Registration: NextPageWithLayout = () => {
                         name="termsAgree"
                         label={
                           <>
-                            {' '}
                             <a href="https://e-consult.medii.jp/doc/terms_of_usage.pdf" className="text-[-webkit-link]">
                               利用規約
                             </a>

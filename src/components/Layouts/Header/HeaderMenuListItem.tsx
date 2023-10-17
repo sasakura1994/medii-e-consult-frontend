@@ -9,17 +9,11 @@ type Props = {
   href: string;
 };
 
-export const HeaderMenuListItem: React.FC<Props> = ({
-  badgeText,
-  children,
-  href,
-}: Props) => {
+export const HeaderMenuListItem: React.FC<Props> = ({ badgeText, children, href }: Props) => {
   return (
     <li className={styles.header_menu__item}>
-      <Link href={href}>
-        <a className="relative block text-md font-bold text-secondary no-underline">
-          {children}
-        </a>
+      <Link href={href} className="relative block text-md font-bold text-secondary no-underline">
+        {children}
       </Link>
       {badgeText && (
         <Badge

@@ -37,9 +37,7 @@ const WithdrawalConfirmPage: NextPageWithLayout = () => {
         <div className="mt-1 text-md">通知設定より『Mediiからのお知らせメール』を停止することができます</div>
         <div className="mt-3">
           <Link href="/notifysettings">
-            <a>
-              <SecondaryButton>通知設定</SecondaryButton>
-            </a>
+            <SecondaryButton>通知設定</SecondaryButton>
           </Link>
         </div>
         <h3 className="mt-6 text-l font-semibold">お問い合わせ</h3>
@@ -52,14 +50,10 @@ const WithdrawalConfirmPage: NextPageWithLayout = () => {
       </div>
       <div className="mt-10 flex justify-center gap-3">
         <Link href="/editprofile">
-          <a>
-            <SecondaryButton size="large">戻る</SecondaryButton>
-          </a>
+          <SecondaryButton size="large">戻る</SecondaryButton>
         </Link>
         <Link href="/withdrawal">
-          <a>
-            <PrimaryButton size="large">アカウント削除の手続き</PrimaryButton>
-          </a>
+          <PrimaryButton size="large">アカウント削除の手続き</PrimaryButton>
         </Link>
       </div>
     </div>

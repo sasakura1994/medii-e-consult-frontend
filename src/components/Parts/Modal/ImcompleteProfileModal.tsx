@@ -40,9 +40,7 @@ export const ImcompleteProfileModal = () => {
         <div className="my-5 text-sm">{getMessage(profile)}</div>
         <div className="my-6">
           <Link href={url} className="text-decoration: none; padding-left: 2rem; padding-right: 2rem">
-            <a>
-              <PrimaryButton size="lg">プロフィール画面を開く</PrimaryButton>
-            </a>
+            <PrimaryButton size="lg">プロフィール画面を開く</PrimaryButton>
           </Link>
         </div>
       </div>

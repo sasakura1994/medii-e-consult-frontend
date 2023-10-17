@@ -66,8 +66,8 @@ export const EditProfile = (props: EditProfileProps) => {
           </PrimaryButton>
         </div>
         <div className="mt-10 text-center">
-          <Link href="/withdrawal/confirm">
-            <a className="text-md text-distructive underline">アカウントを削除</a>
+          <Link href="/withdrawal/confirm" className="text-md text-distructive underline">
+            アカウントを削除
           </Link>
         </div>
       </form>

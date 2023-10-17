@@ -29,19 +29,15 @@ export const OnboardingConsultPointModal = () => {
           alt="はじめてEコンサルで質問するともれなく1000円分相当ポイントをプレゼント"
         />
         <div className="flex gap-4 p-4">
-          <Link href="/top?tutorial=true">
-            <a className="flex-1">
-              <TertiaryButton size="large" className="w-full">
-                E-コンサルとは
-              </TertiaryButton>
-            </a>
+          <Link href="/top?tutorial=true" className="flex-1">
+            <TertiaryButton size="large" className="w-full">
+              E-コンサルとは
+            </TertiaryButton>
           </Link>
-          <Link href="/newchatroom?from=onboarding_questionary_completed">
-            <a className="flex-1">
-              <PrimaryButton size="large" className="w-full">
-                E-コンサルで質問する
-              </PrimaryButton>
-            </a>
+          <Link href="/newchatroom?from=onboarding_questionary_completed" className="flex-1">
+            <PrimaryButton size="large" className="w-full">
+              E-コンサルで質問する
+            </PrimaryButton>
           </Link>
         </div>
       </div>
