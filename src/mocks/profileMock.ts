@@ -10,9 +10,7 @@ import type {
  * プロフィールモック
  */
 export const profileMock = {
-  commedical_speciality: 'KOKYUUKI',
   document_file_path: '',
-  is_commedical: 0,
   document: null,
   last_name: '蜂谷',
   first_name: '庸正',
