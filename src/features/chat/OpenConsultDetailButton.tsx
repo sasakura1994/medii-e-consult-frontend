@@ -5,36 +5,53 @@ type OpenConsultDetailButtonProps = {
   isChatRoomOwner?: boolean;
   chatRoomData: FetchChatRoomResponseData;
   setIsOpenReConsultConfirmModal: Dispatch<SetStateAction<boolean>>;
-  setIsOpenRoomReopenModal: Dispatch<SetStateAction<boolean>>;
+  setIsOpenReplyRequestModal: Dispatch<SetStateAction<boolean>>;
+  setIsOpenTempResolveRequestModal: Dispatch<SetStateAction<boolean>>;
+  setIsOpenCloseChatRoomModal: Dispatch<SetStateAction<boolean>>;
+  setIsOpenResolveChatRoomModal: Dispatch<SetStateAction<boolean>>;
 };
 
 export const OpenConsultDetailButton = (props: OpenConsultDetailButtonProps) => {
-  const { isCloseRoom, isChatRoomOwner, chatRoomData, setIsOpenReConsultConfirmModal, setIsOpenRoomReopenModal } =
-    props;
+  const {
+    isCloseRoom,
+    isChatRoomOwner,
+    chatRoomData,
+    setIsOpenReConsultConfirmModal,
+    setIsOpenReplyRequestModal,
+    setIsOpenTempResolveRequestModal,
+    setIsOpenCloseChatRoomModal,
+    setIsOpenResolveChatRoomModal,
+  } = props;
   return (
     <>
-      {!isCloseRoom ? (
+      {!isCloseRoom && !isChatRoomOwner && chatRoomData.chat_room.room_type !== 'GROUP' && (
         <>
-          <button className="h-9 w-[78px] rounded-full bg-primary">
+          <button className="h-9 w-[78px] rounded-full bg-primary" onClick={() => setIsOpenReplyRequestModal(true)}>
             <p className="text-xs text-white">返答依頼</p>
           </button>
-          <button className="h-9 w-[126px] rounded-full bg-primary">
+          <button
+            className={`h-9 w-[126px] rounded-full ${
+              chatRoomData.chat_room.status === 'TEMP_RESOLVED' ? 'bg-[#999999]' : 'bg-primary'
+            } `}
+            disabled={chatRoomData.chat_room.status === 'TEMP_RESOLVED'}
+            onClick={() => setIsOpenTempResolveRequestModal(true)}
+          >
             <p className="text-xs text-white">コンサル終了依頼</p>
           </button>
-          <button className="h-9 w-[78px] rounded-full bg-strong">
+          <button className="h-9 w-[78px] rounded-full bg-strong" onClick={() => setIsOpenCloseChatRoomModal(true)}>
             <p className="text-xs text-white">回答パス</p>
           </button>
         </>
-      ) : isChatRoomOwner && chatRoomData.chat_room.room_type !== 'GROUP' ? (
+      )}
+
+      {isChatRoomOwner && chatRoomData.chat_room.room_type !== 'GROUP' && chatRoomData.members.length > 0 && (
         <button className="h-9 w-[138px] rounded-full bg-primary" onClick={() => setIsOpenReConsultConfirmModal(true)}>
           <p className="text-xs text-white">他の医師に相談する</p>
         </button>
-      ) : (
-        <></>
       )}
-      {isCloseRoom && (
-        <button className="h-9 w-[138px] rounded-full bg-primary" onClick={() => setIsOpenRoomReopenModal(true)}>
-          <p className="text-xs text-white">このコンサルを再開する</p>
+      {!isCloseRoom && isChatRoomOwner && chatRoomData.members.length > 0 && (
+        <button className="h-9 w-[78px] rounded-full bg-strong" onClick={() => setIsOpenResolveChatRoomModal(true)}>
+          <p className="text-xs text-white">解決する</p>
         </button>
       )}
     </>

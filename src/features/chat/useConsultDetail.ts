@@ -1,5 +1,6 @@
 import { FetchChatListResponseData } from '@/hooks/api/chat/useFetchChatList';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
+import { usePostActivateChatRoom } from '@/hooks/api/chat/usePostActivateChatRoom';
 import { useToken } from '@/hooks/authentication/useToken';
 import { useMedicalSpeciality } from '@/hooks/medicalSpeciality/useMedicalSpeciality';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
@@ -19,9 +20,14 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
   const [isOpenDoctorDetailModal, setIsOpenDoctorDetailModal] = useState(false);
   const [isOpenGroupMemberModal, setIsOpenGroupMemberModal] = useState(false);
+  const [isOpenReplyRequestModal, setIsOpenReplyRequestModal] = useState(false);
+  const [isOpenTempResolveRequestModal, setIsOpenTempResolveRequestModal] = useState(false);
+  const [isOpenCloseChatRoomModal, setIsOpenCloseChatRoomModal] = useState(false);
+  const [isOpenResolveChatRoomModal, setIsOpenResolveChatRoomModal] = useState(false);
   const { accountId } = useToken();
   const chatListRef = useRef<HTMLDivElement | null>(null);
   const { getMedicalSpecialityName } = useMedicalSpeciality();
+  const { activateChatRoom } = usePostActivateChatRoom();
 
   const getExperienceYear = useCallback((year: number) => {
     const date = new Date();
@@ -32,7 +38,6 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
   }, []);
 
   const chatListDataWithDisplayName = useMemo(() => {
-    // TODO: 一旦first_nameがある場合は名前を表示し、ない場合はspecialityとexperienceYearを表示する
     if (chatListData && chatRoomData) {
       return chatListData.map((c) => {
         if (chatRoomData.me?.account_id === c.account_id) {
@@ -114,7 +119,16 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
     setIsOpenDoctorDetailModal,
     isOpenGroupMemberModal,
     setIsOpenGroupMemberModal,
+    isOpenReplyRequestModal,
+    setIsOpenReplyRequestModal,
+    isOpenTempResolveRequestModal,
+    setIsOpenTempResolveRequestModal,
+    isOpenCloseChatRoomModal,
+    setIsOpenCloseChatRoomModal,
+    isOpenResolveChatRoomModal,
+    setIsOpenResolveChatRoomModal,
     getMedicalSpecialityName,
     getExperienceYear,
+    activateChatRoom,
   };
 };
