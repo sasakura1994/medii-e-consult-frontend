@@ -2,15 +2,13 @@ import {
   useFetchBaseChatRoomForReConsult,
   FetchBaseChatRoomForReConsultResponseData,
 } from '@/hooks/api/chat/useFetchBaseChatRoomForReConsult';
-import { loadLocalStorage, removeLocalStorage, saveLocalStorage } from '@/libs/LocalStorageManager';
 import 'cross-fetch/polyfill';
 import { act, renderHook, waitFor } from '@testing-library/react';
-import { newChatRoomFormDataKey, useNewChatRoom } from '../useNewChatRoom';
+import { useNewChatRoom } from '../useNewChatRoom';
 import { RecoilRoot } from 'recoil';
 import { useRouter } from 'next/router';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
-import { NewChatRoomEntity } from '@/types/entities/chat/NewChatRoomEntity';
 import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
 import { ChatMessageEntity } from '@/types/entities/chat/ChatMessageEntity';
 import { ChangeEvent, FormEvent } from 'react';
@@ -20,16 +18,26 @@ import * as usePostDraftImageModule from '@/hooks/api/chat/usePostDraftImage';
 import * as useGetChatDraftImagesModule from '@/hooks/api/chat/useGetChatDraftImages';
 import * as useDeleteChatDraftImageModule from '@/hooks/api/chat/useDeleteChatDraftImage';
 import * as useFetchFlagModule from '@/hooks/api/account/useFetchFlags';
+import { useGetCurrentChatRoomDraft } from '@/hooks/api/chatRoomDraft/useGetCurrentChatRoomDraft';
+import { usePostChatRoomDraft } from '@/hooks/api/chatRoomDraft/usePostChatRoomDraft';
+import { useUpdateChatRoomDraft } from '@/hooks/api/chatRoomDraft/useUpdateChatRoomDraft';
+import { useDeleteChatRoomDrafts } from '@/hooks/api/chatRoomDraft/useDeleteChatRoomDrafts';
 
 jest.mock('next/router', () => ({
-  useRouter: jest.fn(),
+  useRouter: jest.fn().mockReturnValue({
+    query: {},
+    isReady: true,
+  }),
 }));
 jest.mock('@/hooks/api/medicalCategory/useFetchMedicalSpecialities');
 jest.mock('@/hooks/api/chat/useFetchBaseChatRoomForReConsult');
 jest.mock('@/hooks/api/chat/usePostChatRoom');
 jest.mock('@/hooks/api/chat/usePostChatMessageFile');
-jest.mock('@/libs/LocalStorageManager');
 jest.mock('@/hooks/api/account/useFetchFlags');
+jest.mock('@/hooks/api/chatRoomDraft/useGetCurrentChatRoomDraft');
+jest.mock('@/hooks/api/chatRoomDraft/usePostChatRoomDraft');
+jest.mock('@/hooks/api/chatRoomDraft/useUpdateChatRoomDraft');
+jest.mock('@/hooks/api/chatRoomDraft/useDeleteChatRoomDrafts');
 
 const medicalSpecialitiesMock: MedicalSpecialityEntity[] = [
   { speciality_code: 'ALLERGY' } as MedicalSpecialityEntity,
@@ -111,61 +119,87 @@ beforeEach(() => {
     isLoading: false,
     error: null,
   });
+
+  (useGetCurrentChatRoomDraft as jest.Mock).mockReturnValue({
+    getCurrentChatRoomDraft: jest.fn().mockResolvedValue(undefined),
+  });
+  (usePostChatRoomDraft as jest.Mock).mockReturnValue({
+    postChatRoomDraft: jest.fn().mockResolvedValue({ data: { chat_room_draft_id: 'draftid' } }),
+  });
+  (useUpdateChatRoomDraft as jest.Mock).mockReturnValue({
+    updateChatRoomDraft: jest.fn().mockResolvedValue({ data: {} }),
+  });
+  (useDeleteChatRoomDrafts as jest.Mock).mockReturnValue({
+    deleteChatRoomDrafts: jest.fn().mockResolvedValue({ data: {} }),
+  });
 });
 
-describe('useNewChatROom', () => {
+describe('useNewChatRoom', () => {
   describe('chatRoom', () => {
-    test('room_type:専門医指定方法のクエリが存在', () => {
+    test('room_type:専門医指定方法のクエリが存在', async () => {
       const useRouterMock = useRouter as jest.Mocked<typeof useRouter>;
       (useRouterMock as jest.Mock).mockReturnValue({
         query: { room_type: 'BY_NAME' },
+        isReady: true,
       });
 
-      const { result } = renderHook(() => useNewChatRoom(), {
-        wrapper: RecoilRoot,
-      });
+      const { result } = await act(
+        async () =>
+          await renderHook(() => useNewChatRoom(), {
+            wrapper: RecoilRoot,
+          })
+      );
 
       expect(result.current.chatRoom.room_type).toBe('BY_NAME');
     });
 
-    test('target_account_id:医師を指定', () => {
+    test('target_account_id:医師を指定', async () => {
       const useRouterMock = useRouter as jest.Mocked<typeof useRouter>;
       (useRouterMock as jest.Mock).mockReturnValue({
         query: { target_account_id: 'accountid' },
+        isReady: true,
       });
 
-      const { result } = renderHook(() => useNewChatRoom(), {
-        wrapper: RecoilRoot,
-      });
+      const { result } = await act(
+        async () =>
+          await renderHook(() => useNewChatRoom(), {
+            wrapper: RecoilRoot,
+          })
+      );
 
       expect(result.current.chatRoom.target_doctor).toBe('accountid');
       expect(result.current.chatRoom.room_type).toBe('BY_NAME');
     });
 
-    test('target_group_id:グループを指定', () => {
+    test('target_group_id:グループを指定', async () => {
       const useRouterMock = useRouter as jest.Mocked<typeof useRouter>;
       (useRouterMock as jest.Mock).mockReturnValue({
         query: { target_group_id: 'group1' },
+        isReady: true,
       });
 
-      const { result } = renderHook(() => useNewChatRoom(), {
-        wrapper: RecoilRoot,
-      });
+      const { result } = await act(
+        async () =>
+          await renderHook(() => useNewChatRoom(), {
+            wrapper: RecoilRoot,
+          })
+      );
 
       expect(result.current.chatRoom.group_id).toBe('group1');
       expect(result.current.chatRoom.room_type).toBe('GROUP');
     });
   });
 
-  test('selectedMedicalSpecialities', () => {
-    const { result } = renderHook(() => useNewChatRoom(), {
+  test('selectedMedicalSpecialities', async () => {
+    const { result } = await renderHook(() => useNewChatRoom(), {
       wrapper: RecoilRoot,
     });
 
-    act(() =>
-      result.current.setChatRoomFields({
-        target_specialities: ['ALLERGY', 'BYOURI', 'GANKA'],
-      })
+    await act(
+      async () =>
+        await result.current.setChatRoomFields({
+          target_specialities: ['ALLERGY', 'BYOURI', 'GANKA'],
+        })
     );
 
     expect(result.current.selectedMedicalSpecialities).toEqual(medicalSpecialitiesMock);
@@ -174,36 +208,57 @@ describe('useNewChatROom', () => {
   describe('initialize', () => {
     describe('下書き', () => {
       beforeEach(() => {
-        const chatRoom = {
-          disease_name: '風邪',
-          target_specialities: [],
-        } as unknown as NewChatRoomEntity;
-        const loadLocalStorageMock = jest.mocked(loadLocalStorage);
-        loadLocalStorageMock.mockReturnValueOnce(JSON.stringify(chatRoom));
+        const getCurrentChatRoomDraft = jest.fn();
+        getCurrentChatRoomDraft.mockResolvedValue({
+          data: {
+            data: {
+              disease_name: '風邪',
+              target_specialities: [],
+            },
+          },
+        });
+        (useGetCurrentChatRoomDraft as jest.Mock).mockReturnValue({
+          getCurrentChatRoomDraft,
+        });
       });
 
       afterEach(() => {
         (global.confirm as jest.Mock).mockClear();
       });
 
-      test('下書きがある場合', () => {
+      test('下書きがある場合', async () => {
         global.confirm = jest.fn().mockReturnValue(true);
 
-        const { result } = renderHook(() => useNewChatRoom(), {
-          wrapper: RecoilRoot,
-        });
+        const { result } = await act(
+          async () =>
+            await renderHook(() => useNewChatRoom(), {
+              wrapper: RecoilRoot,
+            })
+        );
 
-        expect(result.current.chatRoom.disease_name).toBe('風邪');
+        await waitFor(() => expect(result.current.chatRoom.disease_name).toBe('風邪'));
       });
 
-      test('下書きがあるが復元しない場合', () => {
+      test('下書きがあるが復元しない場合', async () => {
         global.confirm = jest.fn().mockReturnValue(false);
 
-        const { result } = renderHook(() => useNewChatRoom(), {
-          wrapper: RecoilRoot,
+        const deleteChatRoomDrafts = jest.fn();
+        (useDeleteChatRoomDrafts as jest.Mock).mockReturnValue({
+          deleteChatRoomDrafts,
         });
 
-        expect(result.current.chatRoom.disease_name).not.toBe('風邪');
+        const { result } = await act(
+          async () =>
+            await renderHook(() => useNewChatRoom(), {
+              wrapper: RecoilRoot,
+            })
+        );
+
+        await waitFor(() => {
+          expect(deleteChatRoomDrafts).toBeCalled();
+          // こちらだけだと関係なくても通ってしまうので必ず上と一緒にチェック
+          expect(result.current.chatRoom.disease_name).not.toBe('風邪');
+        });
       });
     });
 
@@ -211,11 +266,15 @@ describe('useNewChatROom', () => {
       const useRouterMock = useRouter as jest.Mocked<typeof useRouter>;
       (useRouterMock as jest.Mock).mockReturnValue({
         query: { reconsult: 'chatroomid' },
+        isReady: true,
       });
 
-      const { result } = renderHook(() => useNewChatRoom(), {
-        wrapper: RecoilRoot,
-      });
+      const { result } = await act(
+        async () =>
+          await renderHook(() => useNewChatRoom(), {
+            wrapper: RecoilRoot,
+          })
+      );
 
       await waitFor(() => {
         expect(result.current.ageRange).toBe('20');
@@ -227,36 +286,40 @@ describe('useNewChatROom', () => {
     });
   });
 
-  test('setChatRoomFields', () => {
-    const saveLocalStorageMock = jest.mocked(saveLocalStorage);
-
-    const { result } = renderHook(() => useNewChatRoom(), {
-      wrapper: RecoilRoot,
+  test('setChatRoomFields', async () => {
+    const postChatRoomDraft = jest.fn();
+    postChatRoomDraft.mockResolvedValue({
+      data: {
+        chat_room_draft_id: 'draftid',
+      },
+    });
+    (usePostChatRoomDraft as jest.Mock).mockReturnValue({
+      postChatRoomDraft,
     });
 
+    const { result } = await act(
+      async () =>
+        await renderHook(() => useNewChatRoom(), {
+          wrapper: RecoilRoot,
+        })
+    );
+
     const data = { disease_name: 'disease2' };
-    act(() => result.current.setChatRoomFields(data));
+    await act(async () => await result.current.setChatRoomFields(data));
 
     waitFor(() => {
       expect(result.current.chatRoom.disease_name).toBe('disease2');
-      expect(saveLocalStorageMock).toBeCalledWith(
-        newChatRoomFormDataKey,
-        JSON.stringify({
-          ...result.current.chatRoom,
-          age: 0,
-          ...data,
-        })
-      );
+      expect(postChatRoomDraft).toBeCalled();
     });
   });
 
   describe('setAgeRangeWrapper', () => {
-    test('child', () => {
-      const { result } = renderHook(() => useNewChatRoom(), {
+    test('child', async () => {
+      const { result } = await renderHook(() => useNewChatRoom(), {
         wrapper: RecoilRoot,
       });
 
-      act(() => result.current.setAgeRangeWrapper('child'));
+      await act(async () => await result.current.setAgeRangeWrapper('child'));
 
       waitFor(() => {
         expect(result.current.chatRoom.age).toBeUndefined();
@@ -265,12 +328,12 @@ describe('useNewChatROom', () => {
       });
     });
 
-    test('年代', () => {
-      const { result } = renderHook(() => useNewChatRoom(), {
+    test('年代', async () => {
+      const { result } = await renderHook(() => useNewChatRoom(), {
         wrapper: RecoilRoot,
       });
 
-      act(() => result.current.setAgeRangeWrapper('20'));
+      await act(async () => await result.current.setAgeRangeWrapper('20'));
 
       waitFor(() => {
         expect(result.current.chatRoom.age).toEqual(20);
@@ -279,12 +342,12 @@ describe('useNewChatROom', () => {
     });
   });
 
-  test('setChildAgeWrapper', () => {
-    const { result } = renderHook(() => useNewChatRoom(), {
+  test('setChildAgeWrapper', async () => {
+    const { result } = await renderHook(() => useNewChatRoom(), {
       wrapper: RecoilRoot,
     });
 
-    act(() => result.current.setChildAgeWrapper('5'));
+    await act(async () => await result.current.setChildAgeWrapper('5'));
 
     waitFor(() => {
       expect(result.current.chatRoom.age).toEqual(5);
@@ -297,15 +360,15 @@ describe('useNewChatROom', () => {
       (global.confirm as jest.Mock).mockClear();
     });
 
-    test('入力欄が空の時', () => {
+    test('入力欄が空の時', async () => {
       const confirmMock = jest.fn();
       global.confirm = confirmMock;
 
-      const { result } = renderHook(() => useNewChatRoom(), {
+      const { result } = await renderHook(() => useNewChatRoom(), {
         wrapper: RecoilRoot,
       });
 
-      act(() => result.current.selectConsultMessageTemplate('test'));
+      await act(async () => await result.current.selectConsultMessageTemplate('test'));
 
       waitFor(() => {
         expect(confirmMock).not.toBeCalled();
@@ -313,17 +376,17 @@ describe('useNewChatROom', () => {
       });
     });
 
-    test('入力欄に値がありOKした時', () => {
+    test('入力欄に値がありOKした時', async () => {
       const confirmMock = jest.fn();
       confirmMock.mockReturnValueOnce(true);
       global.confirm = confirmMock;
 
-      const { result } = renderHook(() => useNewChatRoom(), {
+      const { result } = await renderHook(() => useNewChatRoom(), {
         wrapper: RecoilRoot,
       });
 
-      act(() => result.current.setChatRoomFields({ first_message: 'first_message' }));
-      act(() => result.current.selectConsultMessageTemplate('test'));
+      await act(async () => await result.current.setChatRoomFields({ first_message: 'first_message' }));
+      await act(async () => await result.current.selectConsultMessageTemplate('test'));
 
       waitFor(() => {
         expect(confirmMock).toBeCalled();
@@ -331,17 +394,17 @@ describe('useNewChatROom', () => {
       });
     });
 
-    test('入力欄に値がありOKしなかった時', () => {
+    test('入力欄に値がありOKしなかった時', async () => {
       const confirmMock = jest.fn();
       confirmMock.mockReturnValueOnce(false);
       global.confirm = confirmMock;
 
-      const { result } = renderHook(() => useNewChatRoom(), {
+      const { result } = await renderHook(() => useNewChatRoom(), {
         wrapper: RecoilRoot,
       });
 
-      act(() => result.current.setChatRoomFields({ first_message: 'first_message' }));
-      act(() => result.current.selectConsultMessageTemplate('test'));
+      await act(async () => await result.current.setChatRoomFields({ first_message: 'first_message' }));
+      await act(async () => await result.current.selectConsultMessageTemplate('test'));
 
       waitFor(() => {
         expect(confirmMock).toBeCalled();
@@ -354,7 +417,7 @@ describe('useNewChatROom', () => {
     const scrollToMock = jest.fn();
     global.scrollTo = scrollToMock;
 
-    const { result } = renderHook(() => useNewChatRoom(), {
+    const { result } = await renderHook(() => useNewChatRoom(), {
       wrapper: RecoilRoot,
     });
 
@@ -372,8 +435,8 @@ describe('useNewChatROom', () => {
     (global.scrollTo as jest.Mock).mockClear();
   });
 
-  test('backToInput', () => {
-    const { result } = renderHook(() => useNewChatRoom(), {
+  test('backToInput', async () => {
+    const { result } = await renderHook(() => useNewChatRoom(), {
       wrapper: RecoilRoot,
     });
 
@@ -398,8 +461,6 @@ describe('useNewChatROom', () => {
         createNewChatRoom: createNewChatRoomMock,
       });
 
-      const removeLocalStorageMock = jest.mocked(removeLocalStorage);
-
       const pushMock = jest.fn();
       const useRouterMock = jest.mocked(useRouter);
       useRouterMock.mockReturnValue({
@@ -407,17 +468,17 @@ describe('useNewChatROom', () => {
           from: 'mail',
         },
         push: pushMock,
+        isReady: true,
       } as unknown as ReturnType<typeof useRouter>);
 
       const mutateFetchFlagMock = jest.spyOn(useFetchFlagModule, 'mutateFetchFlag');
 
-      const { result } = renderHook(() => useNewChatRoom(), {
+      const { result } = await renderHook(() => useNewChatRoom(), {
         wrapper: RecoilRoot,
       });
 
       await act(() => result.current.submit());
 
-      expect(removeLocalStorageMock).toBeCalled();
       expect(pushMock).toBeCalled();
       expect(createNewChatRoomMock).toBeCalledWith({
         age: 0,
@@ -451,13 +512,12 @@ describe('useNewChatROom', () => {
         createNewChatRoom: createNewChatRoomMock,
       });
 
-      const removeLocalStorageMock = jest.mocked(removeLocalStorage);
-
       const pushMock = jest.fn();
       const useRouterMock = jest.mocked(useRouter);
       useRouterMock.mockReturnValue({
         query: { reconsult: 'basechatroomid' },
         push: pushMock,
+        isReady: true,
       } as unknown as ReturnType<typeof useRouter>);
 
       const postChatMessageFileMock = jest.fn();
@@ -467,14 +527,13 @@ describe('useNewChatROom', () => {
         postChatMessageFile: postChatMessageFileMock,
       });
 
-      const { result } = renderHook(() => useNewChatRoom(), {
+      const { result } = await renderHook(() => useNewChatRoom(), {
         wrapper: RecoilRoot,
       });
 
       act(() => result.current.setFilesForReConsult([{ id: 1, file: new File([], ''), image: '' }]));
       await act(() => result.current.submit());
 
-      expect(removeLocalStorageMock).toBeCalled();
       expect(pushMock).toBeCalled();
       expect(createNewChatRoomMock).toBeCalled();
       expect(postChatMessageFileMock).toBeCalled();
@@ -483,7 +542,7 @@ describe('useNewChatROom', () => {
 
   describe('onSelectImage', () => {
     test('画像の場合', async () => {
-      const { result } = renderHook(() => useNewChatRoom(), {
+      const { result } = await renderHook(() => useNewChatRoom(), {
         wrapper: RecoilRoot,
       });
 
@@ -504,7 +563,7 @@ describe('useNewChatROom', () => {
     });
 
     test('画像以外の場合', async () => {
-      const { result } = renderHook(() => useNewChatRoom(), {
+      const { result } = await renderHook(() => useNewChatRoom(), {
         wrapper: RecoilRoot,
       });
 
@@ -544,7 +603,7 @@ describe('useNewChatROom', () => {
 
   describe('onImageEdited', () => {
     test('画像以外の場合', async () => {
-      const { result } = renderHook(() => useNewChatRoom(), {
+      const { result } = await renderHook(() => useNewChatRoom(), {
         wrapper: RecoilRoot,
       });
 
@@ -578,7 +637,7 @@ describe('useNewChatROom', () => {
   });
 
   test('deleteChatDraftImageById', async () => {
-    const { result } = renderHook(() => useNewChatRoom(), {
+    const { result } = await renderHook(() => useNewChatRoom(), {
       wrapper: RecoilRoot,
     });
 
@@ -602,18 +661,19 @@ describe('useNewChatROom', () => {
   });
 
   test('changeMedicalSpecialities', async () => {
-    const { result } = renderHook(() => useNewChatRoom(), {
+    const { result } = await renderHook(() => useNewChatRoom(), {
       wrapper: RecoilRoot,
     });
 
     act(() => result.current.setIsMedicalSpecialitiesSelectDialogShown(true));
 
-    await act(() =>
-      result.current.changeMedicalSpecialities([
-        { speciality_code: 'A' } as MedicalSpecialityEntity,
-        { speciality_code: 'B' } as MedicalSpecialityEntity,
-        { speciality_code: 'C' } as MedicalSpecialityEntity,
-      ])
+    await act(
+      async () =>
+        await result.current.changeMedicalSpecialities([
+          { speciality_code: 'A' } as MedicalSpecialityEntity,
+          { speciality_code: 'B' } as MedicalSpecialityEntity,
+          { speciality_code: 'C' } as MedicalSpecialityEntity,
+        ])
     );
 
     waitFor(() => {
@@ -623,11 +683,11 @@ describe('useNewChatROom', () => {
   });
 
   test('moveSelectedMedicalSpeciality', async () => {
-    const { result } = renderHook(() => useNewChatRoom(), {
+    const { result } = await renderHook(() => useNewChatRoom(), {
       wrapper: RecoilRoot,
     });
 
-    act(() => result.current.setChatRoomFields({ target_specialities: ['A', 'B', 'C'] }));
+    await act(async () => await result.current.setChatRoomFields({ target_specialities: ['A', 'B', 'C'] }));
 
     await act(() => result.current.moveSelectedMedicalSpeciality(1, 2));
 
@@ -636,13 +696,14 @@ describe('useNewChatROom', () => {
     });
   });
 
-  test('deleteReConsultFileMessage', () => {
+  test('deleteReConsultFileMessage', async () => {
     const useRouterMock = useRouter as jest.Mocked<typeof useRouter>;
     (useRouterMock as jest.Mock).mockReturnValue({
       query: { reconsult: 'chatroomid' },
+      isReady: true,
     });
 
-    const { result } = renderHook(() => useNewChatRoom(), {
+    const { result } = await renderHook(() => useNewChatRoom(), {
       wrapper: RecoilRoot,
     });
 
@@ -653,22 +714,22 @@ describe('useNewChatROom', () => {
     });
   });
 
-  test('deleteFileForReConsult', () => {
-    const { result } = renderHook(() => useNewChatRoom(), {
+  test('deleteFileForReConsult', async () => {
+    const hooks = await renderHook(() => useNewChatRoom(), {
       wrapper: RecoilRoot,
     });
 
-    act(() =>
-      result.current.setFilesForReConsult([
+    await act(() =>
+      hooks.result.current.setFilesForReConsult([
         { id: 1, file: new File([], ''), image: '' },
         { id: 2, file: new File([], ''), image: '' },
         { id: 3, file: new File([], ''), image: '' },
       ])
     );
-    act(() => result.current.deleteFileForReConsult(1));
+    act(() => hooks.result.current.deleteFileForReConsult(1));
 
     waitFor(() => {
-      expect(result.current.filesForReConsult).toEqual([
+      expect(hooks.result.current.filesForReConsult).toEqual([
         { id: 2, file: new File([], ''), image: '' },
         { id: 3, file: new File([], ''), image: '' },
       ]);

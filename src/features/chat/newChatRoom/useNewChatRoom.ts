@@ -319,29 +319,29 @@ export const useNewChatRoom = (): UseNewChatRoom => {
   );
 
   const setAgeRangeWrapper = useCallback(
-    (age: AgeRange) => {
+    async (age: AgeRange) => {
       setAgeRange(age);
 
       if (age === 'child') {
         setChildAge('');
-        setChatRoomFields({ age: undefined });
+        await setChatRoomFields({ age: undefined });
       } else {
-        setChatRoomFields({ age: Number(age) });
+        await setChatRoomFields({ age: Number(age) });
       }
     },
     [setChatRoomFields]
   );
 
   const setChildAgeWrapper = useCallback(
-    (age: string) => {
+    async (age: string) => {
       setChildAge(age);
-      setChatRoomFields({ age: Number(age) });
+      await setChatRoomFields({ age: Number(age) });
     },
     [setChatRoomFields]
   );
 
   const selectConsultMessageTemplate = useCallback(
-    (firstMessage: string) => {
+    async (firstMessage: string) => {
       if (
         chatRoom.first_message.trim() !== '' &&
         !confirm('コンサル文にテンプレートを反映します。現在書かれている内容は消えてしまいますがよろしいですか？')
@@ -350,8 +350,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
       }
 
       const newData = { first_message: firstMessage };
-      setChatRoomFields(newData);
-      sendDraft(newData);
+      await Promise.all([setChatRoomFields(newData), sendDraft(newData)]);
     },
     [chatRoom.first_message, sendDraft, setChatRoomFields]
   );
@@ -526,8 +525,8 @@ export const useNewChatRoom = (): UseNewChatRoom => {
   );
 
   const changeMedicalSpecialities = useCallback(
-    (medicalSpecialities: MedicalSpecialityEntity[]) => {
-      setChatRoomFields({
+    async (medicalSpecialities: MedicalSpecialityEntity[]) => {
+      await setChatRoomFields({
         target_specialities: medicalSpecialities.map((medicalSpeciality) => medicalSpeciality.speciality_code),
       });
       setIsMedicalSpecialitiesSelectDialogShown(false);
@@ -536,8 +535,8 @@ export const useNewChatRoom = (): UseNewChatRoom => {
   );
 
   const moveSelectedMedicalSpeciality = useCallback(
-    (dragIndex: number, hoverIndex: number) => {
-      setChatRoomFields({
+    async (dragIndex: number, hoverIndex: number) => {
+      await setChatRoomFields({
         target_specialities: moveItem(chatRoom.target_specialities, dragIndex, hoverIndex),
       });
     },
