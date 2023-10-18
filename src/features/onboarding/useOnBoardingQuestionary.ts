@@ -6,6 +6,7 @@ import {
 } from '@/hooks/api/questionary/usePostQuestionaryItemsForOnboarding';
 import { useRouter } from 'next/router';
 import { mutateFetchFlag } from '@/hooks/api/account/useFetchFlags';
+import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 
 type Answer = {
   questionId: string;
@@ -83,6 +84,8 @@ export const useOnBoardingQuestionary = () => {
     );
   }, []);
 
+  const { postEventLog } = useEventLog();
+
   const submit = useCallback(async () => {
     setIsSending(true);
 
@@ -109,8 +112,9 @@ export const useOnBoardingQuestionary = () => {
     // アンケート結果によって変わるため次のページで取得するためにmutateしておく
     mutateFetchFlag('FirstConsultCampaign');
 
+    await postEventLog({ name: 'onboarding-questionary-complete' })
     router.push('/onboarding/questionary/completed');
-  }, [postQuestionaryItemsForOnboarding, questionAndAnswers, router]);
+  }, [postEventLog, postQuestionaryItemsForOnboarding, questionAndAnswers, router]);
 
   const checkIsCheckboxRequired = useCallback(
     (questionId: string) => {
