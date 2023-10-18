@@ -21,7 +21,9 @@ export const AppleSignInButton = (props: Props) => {
         nonce: 'nonce',
         usePopup: false,
       }}
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       onSuccess={(response: any) => console.log(response)}
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       render={(props: any) => (
         <button
           className={`

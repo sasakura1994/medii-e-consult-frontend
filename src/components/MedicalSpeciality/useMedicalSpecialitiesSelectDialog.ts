@@ -3,7 +3,6 @@ import React from 'react';
 import { MedicalSpecialitiesSelectDialogProps } from './MedicalSpecialitiesSelectDialog';
 import { useMedicalSpecialitySelect } from './useMedicalSpecialitySelect';
 import { moveItem } from '@/libs/dnd';
-import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 
 export const useMedicalSpecialitiesSelectDialog = (
   props: MedicalSpecialitiesSelectDialogProps,

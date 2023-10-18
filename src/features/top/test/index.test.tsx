@@ -7,7 +7,9 @@ import { useFetchFlag } from '@/hooks/api/account/useFetchFlags';
 import { useRouter } from 'next/router';
 import { useNews } from '@/hooks/api/medii/useNews';
 
-jest.mock('next/router');
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(),
+}));
 jest.mock('@/hooks/api/account/useFetchFlags');
 jest.mock('@/hooks/api/medii/useNews');
 

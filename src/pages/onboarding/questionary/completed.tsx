@@ -1,4 +1,4 @@
-import SecondaryButton from '@/components/Button/SecondaryButton';
+import TertiaryButton from '@/components/Button/TertiaryButton';
 import { OnboardingConsultPointModal } from '@/features/onboarding/OnboardingConsultPointModal';
 import Link from 'next/link';
 import React from 'react';
@@ -7,7 +7,7 @@ const OnBoardingQuestionaryCompletedPage = () => {
   return (
     <>
       <div className="mx-6 mt-[64px] flex flex-col items-center">
-        <div className="text-center text-xxxl font-semibold text-medii-blue-base">
+        <div className="text-center text-[24px] font-semibold">
           アンケートの回答
           <br className="lg:hidden" />
           ありがとうございます
@@ -19,21 +19,11 @@ const OnBoardingQuestionaryCompletedPage = () => {
         </div>
         <div className="mt-6 w-full">
           <Link href="/pointhistory">
-            <a>
-              <SecondaryButton size="large" className="mx-auto w-full px-4 lg:w-auto">
-                ポイントを確認する
-              </SecondaryButton>
-            </a>
+            <TertiaryButton size="large" className="mx-auto w-full px-4 lg:w-auto">
+              ポイントを確認する
+            </TertiaryButton>
           </Link>
         </div>
-        <Link href="/top">
-          <a>
-            <div className="mt-6 flex gap-1 text-md text-secondary">
-              <div>トップページに移動する</div>
-              <img src="icons/arrow-right-short.svg" alt="" width="16" height="16" />
-            </div>
-          </a>
-        </Link>
       </div>
       <OnboardingConsultPointModal />
     </>

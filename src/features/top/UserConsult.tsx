@@ -83,9 +83,7 @@ export const UserConsult = (props: UserConsultProps) => {
         <p className="flex-grow text-xxl font-bold text-text-primary">あなたに関わるE-コンサル</p>
         <div className="hidden whitespace-nowrap lg:block">
           <Link href="/newchatroom">
-            <a>
-              <PrimaryButton size="large">E-コンサルで質問する</PrimaryButton>
-            </a>
+            <PrimaryButton size="large">E-コンサルで質問する</PrimaryButton>
           </Link>
         </div>
         <div
@@ -101,18 +99,12 @@ export const UserConsult = (props: UserConsultProps) => {
       {isFirstConsultCampaignAvailable && (
         <div className="mb-6 mt-3" data-testid="consult-campaign-banner">
           <Link href="/newchatroom?from=onboarding_banner">
-            <a>
-              <img
-                className="hidden lg:block"
-                src="images/onboarding/first_consult_banner.png"
-                alt={consultCampaignAlt}
-              />
-              <img
-                className="lg:hidden"
-                src="images/onboarding/first_consult_banner_sp.png"
-                alt={consultCampaignAlt}
-              />
-            </a>
+            <img
+              className="hidden lg:block"
+              src="images/onboarding/first_consult_banner.png"
+              alt={consultCampaignAlt}
+            />
+            <img className="lg:hidden" src="images/onboarding/first_consult_banner_sp.png" alt={consultCampaignAlt} />
           </Link>
         </div>
       )}

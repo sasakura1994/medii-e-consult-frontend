@@ -16,10 +16,8 @@ const GuideLink = ({
   onClick: React.MouseEventHandler<HTMLAnchorElement>;
 }) => {
   return (
-    <Link href={href}>
-      <a className="text-sm text-guide-link underline" onClick={onClick}>
-        {children}
-      </a>
+    <Link href={href} className="text-sm text-guide-link underline" onClick={onClick}>
+      {children}
     </Link>
   );
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import { UserConsult } from './UserConsult';
 import { TopNotifications } from './TopNotifications';
 import { TopNews } from './TopNews';
-import { TopInterviews } from './TopInterviews';
+import { TopMediiMagazine } from './TopMediiMagazine';
 import { TopNewerConsults } from './TopNewerConsults';
 import { TopExamples } from './TopExamples';
 import TutorialExplanation from './TutorialExplanation';
@@ -31,13 +31,11 @@ export const Top = () => {
           {isOnboardingQuestionaryAnswered === false && (
             <div className="my-6" data-testid="onboarding-questionary-banner">
               <Link href="/onboarding/questionary">
-                <a>
-                  <img
-                    src="images/onboarding/questionary_banner.png"
-                    alt="アンケートに答えて100Mediiポイント進呈"
-                    className="w-full"
-                  />
-                </a>
+                <img
+                  src="images/onboarding/questionary_banner.png"
+                  alt="アンケートに答えて100Mediiポイント進呈"
+                  className="w-full"
+                />
               </Link>
             </div>
           )}
@@ -45,7 +43,7 @@ export const Top = () => {
             <TopNews />
           </div>
           <div className="mt-4 hidden lg:block">
-            <TopInterviews />
+            <TopMediiMagazine />
           </div>
         </div>
       </div>

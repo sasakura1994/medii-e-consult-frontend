@@ -12,8 +12,8 @@ export const BreadcrumbLink = (props: Props) => {
 
   return (
     <BreadcrumbItem>
-      <Link href={href}>
-        <a className="hover:underline">{children}</a>
+      <Link href={href} className="hover:underline">
+        {children}
       </Link>
     </BreadcrumbItem>
   );

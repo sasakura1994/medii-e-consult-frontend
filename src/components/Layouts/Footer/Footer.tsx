@@ -29,7 +29,7 @@ export const Footer = (props: Props) => {
           </div>
           <div className="flex justify-center gap-4">
             <Link href="/privacypolicy">
-              <a>プライバシーポリシー</a>
+              プライバシーポリシー
             </Link>
             <a href="https://medii.jp" target="_blank" rel="noreferrer">
               運営会社

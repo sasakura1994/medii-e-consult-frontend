@@ -1,5 +1,5 @@
 import { useAuthenticatedSWR } from '@/hooks/network/useAuthenticatedSWR';
-import type { AxiosError, AxiosResponse } from 'axios';
+import type { AxiosError } from 'axios';
 import { SeminarEntityType } from '@/types/entities/seminarEntity';
 import { KeyedMutator } from 'swr';
 

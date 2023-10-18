@@ -6,7 +6,9 @@ import { usePostSetPassword } from '@/hooks/api/account/usePostSetPassword';
 import { usePostHufUser } from '@/hooks/api/account/usePostHufUser';
 import { FormEvent } from 'react';
 
-jest.mock('next/router');
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(),
+}));
 jest.mock('@/hooks/api/account/usePostSetPassword');
 jest.mock('@/hooks/api/account/usePostHufUser');
 

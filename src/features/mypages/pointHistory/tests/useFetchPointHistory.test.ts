@@ -1,12 +1,12 @@
-import { renderHook, act, waitFor } from '@testing-library/react';
-import { rest } from 'msw';
-import { server } from '@/mocks/server';
-import { fromNullToUndefined } from '@/libs/apiResponse';
-import { useFetchPointHistory } from '../useFetchPointHistory';
-import { pointHistoriesMock } from '../pointMock';
-import type { PointHistoryEntityType } from '../pointHistoryEntity';
+// import { renderHook, act, waitFor } from '@testing-library/react';
+// import { rest } from 'msw';
+// import { server } from '@/mocks/server';
+// import { fromNullToUndefined } from '@/libs/apiResponse';
+// import { useFetchPointHistory } from '../useFetchPointHistory';
+// import { pointHistoriesMock } from '../pointMock';
+// import type { PointHistoryEntityType } from '../pointHistoryEntity';
 
-const dummyUrl = 'https://jsonplaceholder.typicode.com/users/3'; // TODO: 正規のURLに変更する
+// const dummyUrl = 'https://jsonplaceholder.typicode.com/users/3'; // TODO: 正規のURLに変更する
 
 describe('useFetchPointHistory', () => {
   test.todo(

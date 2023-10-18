@@ -5,6 +5,9 @@ import { RecoilRoot } from 'recoil';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { TopNotifications } from '../TopNotifications';
 
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(),
+}));
 jest.mock('@/hooks/api/doctor/useFetchProfile');
 
 describe('TopNotifications', () => {

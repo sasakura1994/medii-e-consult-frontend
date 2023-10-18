@@ -5,7 +5,9 @@ import { useEditProfilePage } from '../useEditProfilePage';
 import { useRouter } from 'next/router';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 
-jest.mock('next/router');
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(),
+}));
 jest.mock('@/hooks/api/doctor/useFetchProfile');
 
 describe('useEditProfilePage', () => {

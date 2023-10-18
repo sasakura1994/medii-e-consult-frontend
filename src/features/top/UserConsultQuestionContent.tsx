@@ -45,24 +45,22 @@ export const UserConsultQuestionContent = (props: UserConsultQuestionContentProp
   return (
     <div className="flex min-h-[112px] items-center border-b border-border-divider p-4">
       {/* SP */}
-      <Link href={`/chat?chat_room_id=${chatRoomMineOwn.chat_room_id}`}>
-        <a className="block lg:hidden">
-          <div className="w-full lg:w-5/6">
-            <p className="text-l font-bold line-clamp-1">{chatRoomMineOwn.title}</p>
-            <div className="flex items-center">
-              {chatRoomMineOwn.unread_count > 0 && (
-                <div className="mr-1 aspect-square h-2 w-2 rounded-full bg-medii-sky-base" />
-              )}
-              <p className="text-md text-text-secondary line-clamp-1">{chatRoomMineOwn.latest_message}</p>
-            </div>
-            <div className="mt-2 flex items-center">
-              {labelText}
-              <p className="test-md ml-2 font-bold text-text-secondary">{respondentLabel}</p>
-              <p className="test-md text-text-secondary">・</p>
-              <p className="test-md text-text-secondary">{getTimeIntervalText(chatRoomMineOwn.last_updated_date)}</p>
-            </div>
+      <Link href={`/chat?chat_room_id=${chatRoomMineOwn.chat_room_id}`} className="block lg:hidden">
+        <div className="w-full lg:w-5/6">
+          <p className="line-clamp-1 text-l font-bold">{chatRoomMineOwn.title}</p>
+          <div className="flex items-center">
+            {chatRoomMineOwn.unread_count > 0 && (
+              <div className="mr-1 aspect-square h-2 w-2 rounded-full bg-medii-sky-base" />
+            )}
+            <p className="line-clamp-1 text-md text-text-secondary">{chatRoomMineOwn.latest_message}</p>
           </div>
-        </a>
+          <div className="mt-2 flex items-center">
+            {labelText}
+            <p className="test-md ml-2 font-bold text-text-secondary">{respondentLabel}</p>
+            <p className="test-md text-text-secondary">・</p>
+            <p className="test-md text-text-secondary">{getTimeIntervalText(chatRoomMineOwn.last_updated_date)}</p>
+          </div>
+        </div>
       </Link>
       {/* PC */}
       <div className="hidden w-full lg:block lg:w-5/6">
@@ -71,7 +69,7 @@ export const UserConsultQuestionContent = (props: UserConsultQuestionContentProp
           {chatRoomMineOwn.unread_count > 0 && (
             <div className="mr-1 aspect-square h-2 w-2 rounded-full bg-medii-sky-base" />
           )}
-          <p className="text-md text-text-secondary line-clamp-1">{chatRoomMineOwn.latest_message}</p>
+          <p className="line-clamp-1 text-md text-text-secondary">{chatRoomMineOwn.latest_message}</p>
         </div>
 
         <div className="mt-2 flex">

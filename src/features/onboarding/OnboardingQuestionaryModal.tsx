@@ -24,14 +24,12 @@ export const OnboardingQuestionaryModal = () => {
       dataTestId="onboarding-questionary-modal"
     >
       <Link href="/onboarding/questionary">
-        <a>
-          <img
-            src="images/onboarding/questionary_modal.png"
-            alt="100Mediiポイントもらえるアンケートに答える"
-            width="423"
-            height="423"
-          />
-        </a>
+        <img
+          src="images/onboarding/questionary_modal.png"
+          alt="100Mediiポイントもらえるアンケートに答える"
+          width="423"
+          height="423"
+        />
       </Link>
     </Modal>
   );
