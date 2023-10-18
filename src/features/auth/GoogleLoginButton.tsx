@@ -18,9 +18,8 @@ const LoginButton = () => {
       console.error('ID Token not found:', credentialResponse);
       return;
     }
-    
+
     try {
-      console.log(idToken)
       const response = await axios.post('http://localhost:8080/verify-token', {
         id_token: idToken,
       });
