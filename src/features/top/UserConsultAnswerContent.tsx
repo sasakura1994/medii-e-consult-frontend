@@ -24,10 +24,10 @@ export const UserConsultAnswerContent = (props: UserConsultAnswerContentProps) =
         return <p className={activeClass}>新着</p>;
       case 'ACTIVE':
       case 'REOPEN':
-      case 'TEMP_RESOLVED':
         return <p className={activeClass}>進行中</p>;
       case 'CLOSED':
       case 'RESOLVED':
+      case 'TEMP_RESOLVED':
         return <p className={disabledClass}>解決済み</p>;
       default:
         return '';
