@@ -11,9 +11,10 @@ import { HeaderLogo } from '@/components/Layouts/Header/HeaderLogo';
 import { HeaderMenuList } from '@/components/Layouts/Header/HeaderMenuList';
 import TertiaryButton from '@/components/Button/TertiaryButton';
 import { AppleSignInButton } from '@/components/Button/AppleSignInButton';
+import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 
 export const Registration = (props: UseRegisterType) => {
-  const { email, setEmail, register, loginUrl, isEmailDuplicated, errorMessage } = props;
+  const { email, setEmail, register, loginUrl, isEmailDuplicated, isSending, errorMessage } = props;
 
   return (
     <div className="flex h-full min-h-screen w-full flex-col bg-[#eff3f6]">
@@ -92,14 +93,18 @@ export const Registration = (props: UseRegisterType) => {
                   </ErrorMessage>
                 )}
                 <div className="mt-4 flex justify-center">
-                  <PrimaryButton
-                    size="large"
-                    type="submit"
-                    className="w-full px-4 lg:w-auto"
-                    disabled={email.trim() === ''}
-                  >
-                    同意して登録
-                  </PrimaryButton>
+                  {isSending ? (
+                    <SpinnerBorder />
+                  ) : (
+                    <PrimaryButton
+                      size="large"
+                      type="submit"
+                      className="w-full px-4 lg:w-auto"
+                      disabled={email.trim() === ''}
+                    >
+                      同意して登録
+                    </PrimaryButton>
+                  )}
                 </div>
               </form>
               <div className="mt-6 font-light text-text-secondary">または</div>

@@ -3,6 +3,7 @@ import { useAxios } from './network/useAxios';
 import { useRouter } from 'next/router';
 import { loginRedirectUrlKey } from '@/data/localStorage';
 import { ParsedUrlQuery } from 'querystring';
+import { toast } from 'react-toastify';
 
 type Query = {
   redirect?: string;
@@ -23,7 +24,9 @@ export type UseRegisterType = {
   loginUrl: string;
   setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
   register: () => void;
+  registerAgain: () => void;
   isEmailDuplicated: boolean;
+  isSending: boolean;
   isSent: boolean;
 };
 
@@ -33,6 +36,7 @@ export const useRegister = (): UseRegisterType => {
   const { axios } = useAxios();
   const [email, setEmail] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [isSending, setIsSending] = useState(false);
   const [isSent, setIsSent] = useState(false);
   const [queryString, setQueryString] = useState('');
 
@@ -51,17 +55,25 @@ export const useRegister = (): UseRegisterType => {
     localStorage.setItem(loginRedirectUrlKey, redirect);
   }, [redirect]);
 
-  const register = useCallback(async () => {
+  const createAccount = useCallback(() => {
     const data: CreateAccountRequestData = {
       mail_address: email,
       parent_account_id: parentAccountId,
       queries: router.query,
     };
 
-    const res = await axios.post('/doctor/create_account', data).catch((error) => {
+    return axios.post('/doctor/create_account', data);
+  }, [axios, email, parentAccountId, router.query]);
+
+  const register = useCallback(async () => {
+    setIsSending(true);
+
+    const res = await createAccount().catch((error) => {
       setErrorMessage(error.response?.data?.message ?? 'エラーが発生しました');
       return null;
     });
+
+    setIsSending(false);
 
     if (!res) {
       return;
@@ -69,7 +81,24 @@ export const useRegister = (): UseRegisterType => {
 
     setIsSent(true);
     saveRedirect();
-  }, [axios, email, parentAccountId, router.query, saveRedirect]);
+  }, [createAccount, saveRedirect]);
+
+  const registerAgain = useCallback(async () => {
+    setIsSending(true);
+
+    const res = await createAccount().catch((error) => {
+      setErrorMessage(error.response?.data?.message ?? 'エラーが発生しました');
+      return null;
+    });
+
+    setIsSending(false);
+
+    if (!res) {
+      return;
+    }
+
+    toast('再送しました。');
+  }, [createAccount]);
 
   const back = useCallback(() => {
     setEmail('');
@@ -84,7 +113,9 @@ export const useRegister = (): UseRegisterType => {
     loginUrl,
     setErrorMessage,
     register,
+    registerAgain,
     isEmailDuplicated,
+    isSending,
     isSent,
   };
 };
