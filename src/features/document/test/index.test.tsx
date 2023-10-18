@@ -111,33 +111,33 @@ describe('Document', () => {
     });
   });
 
-  test('is_invitedがtrueの場合、/welcomeに遷移すること', async () => {
+  test('is_invitedがtrueの場合、/onboarding/questionaryに遷移すること', async () => {
     (useProfile as jest.Mock).mockReturnValue({
       profile: { is_invited: true },
     });
     await getRender();
     await waitFor(() => {
-      expect(mockRouter.push).toHaveBeenCalledWith('/welcome');
+      expect(mockRouter.push).toHaveBeenCalledWith('/onboarding/questionary');
     });
   });
 
-  test('is_skip_confirmation_by_utm_sourceがtrueの場合、/welcomeに遷移すること', async () => {
+  test('is_skip_confirmation_by_utm_sourceがtrueの場合、/onboarding/questionaryに遷移すること', async () => {
     (useProfile as jest.Mock).mockReturnValue({
       profile: { is_invited: true },
     });
     await getRender();
     await waitFor(() => {
-      expect(mockRouter.push).toHaveBeenCalledWith('/welcome');
+      expect(mockRouter.push).toHaveBeenCalledWith('/onboarding/questionary');
     });
   });
 
-  test('HUFユーザーの場合、/welcomeに遷移すること', async () => {
+  test('HUFユーザーの場合、/onboarding/questionaryに遷移すること', async () => {
     (useProfile as jest.Mock).mockReturnValue({
       profile: { is_huf_user: true },
     });
     await getRender();
     await waitFor(() => {
-      expect(mockRouter.push).toHaveBeenCalledWith('/welcome');
+      expect(mockRouter.push).toHaveBeenCalledWith('/onboarding/questionary');
     });
   });
 
@@ -188,7 +188,7 @@ describe('Document', () => {
     expect(screen.getByTestId('document-input-student-document')).toBeInTheDocument();
   });
 
-  test('selectedがconmpeteの場合、welcomeページへ遷移すること', async () => {
+  test('selectedがconmpeteの場合、onboarding/questionaryページへ遷移すること', async () => {
     await getRender();
     await act(async () => {
       const number = screen.getByTestId('number');
@@ -220,7 +220,7 @@ describe('Document', () => {
       userEvent.click(submit);
     });
     await waitFor(() => {
-      expect(mockRouter.push).toHaveBeenCalledWith('/welcome');
+      expect(mockRouter.push).toHaveBeenCalledWith('/onboarding/questionary');
     });
   });
 });
