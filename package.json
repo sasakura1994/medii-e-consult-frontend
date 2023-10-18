@@ -12,6 +12,7 @@
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'"
   },
   "dependencies": {
+    "@react-oauth/google": "^0.11.1",
     "@tailwindcss/line-clamp": "^0.4.4",
     "axios": "^1.2.3",
     "body-scroll-lock": "^4.0.0-beta.0",
