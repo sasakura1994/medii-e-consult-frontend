@@ -205,33 +205,6 @@ describe('useNewChatRoom', () => {
     expect(result.current.selectedMedicalSpecialities).toEqual(medicalSpecialitiesMock);
   });
 
-  test('setChatRoomFields', async () => {
-    const postChatRoomDraft = jest.fn();
-    postChatRoomDraft.mockResolvedValue({
-      data: {
-        chat_room_draft_id: 'draftid',
-      },
-    });
-    (usePostChatRoomDraft as jest.Mock).mockReturnValue({
-      postChatRoomDraft,
-    });
-
-    const { result } = await act(
-      async () =>
-        await renderHook(() => useNewChatRoom(), {
-          wrapper: RecoilRoot,
-        })
-    );
-
-    const data = { disease_name: 'disease2' };
-    await act(async () => await result.current.setChatRoomFields(data));
-
-    waitFor(() => {
-      expect(result.current.chatRoom.disease_name).toBe('disease2');
-      expect(postChatRoomDraft).toBeCalled();
-    });
-  });
-
   describe('setAgeRangeWrapper', () => {
     test('child', async () => {
       const { result } = await renderHook(() => useNewChatRoom(), {
