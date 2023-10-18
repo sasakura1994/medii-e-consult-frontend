@@ -22,9 +22,7 @@ export const Registration = (props: UseRegisterType) => {
           <HeaderLogo href={loginUrl} />
           <HeaderMenuList>
             <Link href={loginUrl}>
-              <a>
-                <TertiaryButton size="large">ログイン</TertiaryButton>
-              </a>
+              <TertiaryButton size="large">ログイン</TertiaryButton>
             </Link>
           </HeaderMenuList>
         </div>
@@ -58,8 +56,8 @@ export const Registration = (props: UseRegisterType) => {
                   利用規約
                 </a>
                 と
-                <Link href="/privacypolicy">
-                  <a className="underline">プライバシーポリシー</a>
+                <Link href="/privacypolicy" className="underline">
+                  プライバシーポリシー
                 </Link>
                 に同意したものとみなされます。
               </p>
@@ -87,8 +85,8 @@ export const Registration = (props: UseRegisterType) => {
                 {errorMessage != '' && <ErrorMessage className="mt-6 text-center">{errorMessage}</ErrorMessage>}
                 {isEmailDuplicated && (
                   <ErrorMessage className="text-center">
-                    <Link href="/passwordresetrequest">
-                      <span className="underline">こちら</span>
+                    <Link href="/passwordresetrequest" className="underline">
+                      こちら
                     </Link>
                     よりパスワードの設定をお願いします。
                   </ErrorMessage>
@@ -111,8 +109,8 @@ export const Registration = (props: UseRegisterType) => {
               </div>
               <hr className="mt-6 w-full border-[1px] border-border-divider" />
               <div className="mt-6 flex items-center justify-center gap-4 text-md text-text-secondary">
-                <Link href={loginUrl}>
-                  <a className="underline">ログイン</a>
+                <Link href={loginUrl} className="underline">
+                  ログイン
                 </Link>
                 <div>/</div>
                 <a
