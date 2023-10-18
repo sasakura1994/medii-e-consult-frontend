@@ -13,6 +13,7 @@ import { useFetchDoctorProfile } from '@/hooks/api/doctor/useFetchDoctorProfile'
 import { FetchedGroupEntity, useFetchGroup } from '@/hooks/api/group/useFetchGroup';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { useFetchMedicalSpecialityCategories } from '@/hooks/api/medicalCategoryCategory/useFetchMedicalSpecialityCategories';
+import { loadLocalStorage, removeLocalStorage } from '@/libs/LocalStorageManager';
 import { moveItem } from '@/libs/dnd';
 import { ChatDraftImageEntity } from '@/types/entities/chat/ChatDraftImageEntity';
 import { ChatMessageEntity } from '@/types/entities/chat/ChatMessageEntity';
@@ -36,9 +37,8 @@ import {
 } from 'react';
 
 export const newChatRoomFormDataKey = 'NewChatRoom::chatRoom';
-export const newChatRoomDraftIdKey = 'NewChatRoom::chatRoomDraftId';
 
-// 値の更新時にすぐには下書き増進しないフィールドの一覧（テキスト入力などはblurにしたいため）
+// 値の更新時にすぐには下書き更新しないフィールドの一覧（テキスト入力などはblurにしたいため）
 const notSaveToDraftImmediatelyFields = ['disease_name', 'first_message'];
 
 type AgeRange = string | 'child';
@@ -235,23 +235,27 @@ export const useNewChatRoom = (): UseNewChatRoom => {
       return;
     }
 
+    const draftOnLocalStorage = loadLocalStorage(newChatRoomFormDataKey);
     const draft = await getCurrentChatRoomDraft().catch((error) => {
       console.error(error);
       return null;
     });
-    if (!draft) {
+    if (!draft && !draftOnLocalStorage) {
       return;
     }
 
     if (!confirm('下書きに作成途中のコンサルがあります。作成途中のコンサルを続けて編集しますか？')) {
       await deleteChatRoomDrafts();
+      removeLocalStorage(newChatRoomFormDataKey);
       setInitializingStatus('initialized');
       return;
     }
 
-    const data = draft.data.data as NewChatRoomEntity;
+    const data = (draft?.data.data ?? JSON.parse(draftOnLocalStorage!)) as NewChatRoomEntity;
 
-    setChatRoomDraftId(draft.data.chat_room_draft_id);
+    if (draft) {
+      setChatRoomDraftId(draft.data.chat_room_draft_id);
+    }
     setChatRoom(data);
     initializeAge(data.age);
     setDraftFrom(data.from);
@@ -437,6 +441,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
 
     mutateFetchFlag('FirstConsultCampaign');
     setIsSending(false);
+    removeLocalStorage(newChatRoomFormDataKey);
     router.push(`/chat?chat_room_id=${response.data.chat_room_id}`);
   }, [
     chatDraftImages,
