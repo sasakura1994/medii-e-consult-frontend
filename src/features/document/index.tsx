@@ -23,7 +23,8 @@ export const Document = () => {
 
   const routerPushToWelcomePage = useCallback(async () => {
     await postEventLog({ name: 'document-complete' });
-    router.push('/welcome');
+    await postEventLog({ name: 'view-onboarding-questionary' })
+    router.push('/onboarding/questionary');
   }, [postEventLog, router]);
   const setSelectedWithRedirect = useCallback(
     (value: DocumentSelected) => {
@@ -44,7 +45,7 @@ export const Document = () => {
   if (!profile) return <></>;
 
   if (profile.is_invited || profile.is_skip_confirmation_by_utm_source || profile.is_huf_user) {
-    router.push('/welcome');
+    router.push('/onboarding/questionary');
     return <></>;
   }
 

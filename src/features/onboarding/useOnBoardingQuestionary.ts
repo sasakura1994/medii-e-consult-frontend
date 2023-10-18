@@ -6,6 +6,7 @@ import {
 } from '@/hooks/api/questionary/usePostQuestionaryItemsForOnboarding';
 import { useRouter } from 'next/router';
 import { mutateFetchFlag } from '@/hooks/api/account/useFetchFlags';
+import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 
 type Answer = {
   questionId: string;
@@ -25,6 +26,7 @@ export const useOnBoardingQuestionary = () => {
   const [isSending, setIsSending] = useState(false);
   const { questions } = useFetchQuestionaryItemsById('onboarding2');
   const { postQuestionaryItemsForOnboarding } = usePostQuestionaryItemsForOnboarding();
+  const { postEventLog } = useEventLog();
 
   // questionAndAnswersを初期化
   useEffect(() => {
@@ -109,6 +111,7 @@ export const useOnBoardingQuestionary = () => {
     // アンケート結果によって変わるため次のページで取得するためにmutateしておく
     mutateFetchFlag('FirstConsultCampaign');
 
+    await postEventLog({ name: 'show-first-consult-campaign-popup' })
     router.push('/onboarding/questionary/completed');
   }, [postQuestionaryItemsForOnboarding, questionAndAnswers, router]);
 

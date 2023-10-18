@@ -3,6 +3,7 @@ import { Breadcrumb } from '@/components/Breadcrumb/Breadcrumb';
 import { BreadcrumbItem } from '@/components/Breadcrumb/BreadcrumbItem';
 import { BreadcrumbLink } from '@/components/Breadcrumb/BreadcrumbLink';
 import PrimaryButton from '@/components/Button/PrimaryButton';
+import SecondaryButton from '@/components/Button/SecondaryButton';
 import { ColoredImage } from '@/components/Image/ColoredImage';
 import { CheckBox } from '@/components/Parts/Form/CheckBox';
 import { ExpandTextArea } from '@/components/Parts/Form/ExpandTextArea';
@@ -12,11 +13,14 @@ import { Required } from '@/components/Parts/Form/Required';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 import { QuestionaryItems } from '@/features/onboarding/QuestionaryItems';
 import { useOnBoardingQuestionary } from '@/features/onboarding/useOnBoardingQuestionary';
+import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
+import Link from 'next/link';
 import React from 'react';
 
 const OnBoardingQuestionaryPage = () => {
   const { checkIsCheckboxRequired, isSending, questionAndAnswers, setAnswer, setOther, submit, toggleAnswers } =
     useOnBoardingQuestionary();
+  const { postEventLog } = useEventLog();
 
   return (
     <div className="mx-6 mb-10 mt-5 max-w-[1024px] lg:mx-auto lg:mt-4">
@@ -130,9 +134,22 @@ const OnBoardingQuestionaryPage = () => {
           {isSending ? (
             <SpinnerBorder />
           ) : (
-            <PrimaryButton size="large" className="px-4">
-              アンケートを送信する
-            </PrimaryButton>
+            <div className='flex'>
+              <div
+                onClick={async () => {
+                  await postEventLog({ name: 'click-answer-later' })
+                }}
+              >
+                <Link href={"/top"}>
+                  <SecondaryButton size='large' className="px-4 mr-10">
+                    あとでアンケートに回答する
+                  </SecondaryButton>
+                </Link>
+              </div>
+              <PrimaryButton size="large" className="px-4">
+                アンケートを送信する
+              </PrimaryButton>
+            </div>
           )}
         </div>
       </form>

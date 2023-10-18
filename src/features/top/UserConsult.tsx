@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { UserConsultAnswerContent } from './UserConsultAnswerContent';
 import { useUserConsult } from './useUserConsult';
 import { useFetchFlag } from '@/hooks/api/account/useFetchFlags';
+import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 
 const consultCampaignAlt = 'はじめてEコンサルで症例を質問した先生に1000円相当のポイントをもれなくプレゼント';
 
@@ -30,6 +31,7 @@ export const UserConsult = (props: UserConsultProps) => {
     chatRoomMineRespondData,
   } = useUserConsult();
   const { flag: isFirstConsultCampaignAvailable } = useFetchFlag('FirstConsultCampaign');
+  const { postEventLog } = useEventLog();
 
   const tmpTopBanner = useMemo(() => {
     // TODO: tmpTopBannerは2023/09/07/20:00から2023/09/14/20:00までの間だけ一時的に表示する
@@ -97,7 +99,13 @@ export const UserConsult = (props: UserConsultProps) => {
       </div>
 
       {isFirstConsultCampaignAvailable && (
-        <div className="mb-6 mt-3" data-testid="consult-campaign-banner">
+        <div
+          className="mb-6 mt-3" 
+          data-testid="consult-campaign-banner"
+          onClick={async () => {
+            await postEventLog({ name: 'click-first-consult-campaign-banner' })
+          }}
+        >
           <Link href="/newchatroom?from=onboarding_banner">
             <img
               className="hidden lg:block"
