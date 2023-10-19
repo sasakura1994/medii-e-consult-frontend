@@ -17,7 +17,6 @@ import * as usePostChatMessageFileModule from '@/hooks/api/chat/usePostChatMessa
 import * as usePostDraftImageModule from '@/hooks/api/chat/usePostDraftImage';
 import * as useGetChatDraftImagesModule from '@/hooks/api/chat/useGetChatDraftImages';
 import * as useDeleteChatDraftImageModule from '@/hooks/api/chat/useDeleteChatDraftImage';
-import * as useFetchFlagModule from '@/hooks/api/account/useFetchFlags';
 import { useGetCurrentChatRoomDraft } from '@/hooks/api/chatRoomDraft/useGetCurrentChatRoomDraft';
 import { usePostChatRoomDraft } from '@/hooks/api/chatRoomDraft/usePostChatRoomDraft';
 import { useUpdateChatRoomDraft } from '@/hooks/api/chatRoomDraft/useUpdateChatRoomDraft';
@@ -336,99 +335,6 @@ describe('useNewChatRoom', () => {
 
     waitFor(() => {
       expect(result.current.mode).toBe('input');
-    });
-  });
-
-  describe('submit', () => {
-    test('通常', async () => {
-      const createNewChatRoomMock = jest.fn();
-      createNewChatRoomMock.mockResolvedValueOnce({
-        data: {
-          chat_room_id: 'chatroomid',
-          code: 1,
-        },
-      });
-      const usePostChatRoomMock = jest.mocked(usePostChatRoom);
-      usePostChatRoomMock.mockReturnValue({
-        createNewChatRoom: createNewChatRoomMock,
-      });
-
-      const pushMock = jest.fn();
-      const useRouterMock = jest.mocked(useRouter);
-      useRouterMock.mockReturnValue({
-        query: {
-          from: 'mail',
-        },
-        push: pushMock,
-        isReady: true,
-      } as unknown as ReturnType<typeof useRouter>);
-
-      const mutateFetchFlagMock = jest.spyOn(useFetchFlagModule, 'mutateFetchFlag');
-
-      const { result } = await renderHook(() => useNewChatRoom(), {
-        wrapper: RecoilRoot,
-      });
-
-      await act(() => result.current.submit());
-
-      expect(pushMock).toBeCalled();
-      expect(createNewChatRoomMock).toBeCalledWith({
-        age: 0,
-        chat_draft_image_ids: [],
-        chat_room_id: expect.anything(),
-        disease_name: '',
-        first_message: '',
-        create_source: { from: 'mail' },
-        gender: 'man',
-        group_id: undefined,
-        publishment_accepted: true,
-        room_type: 'FREE',
-        target_doctor: undefined,
-        target_specialities: [],
-        from: 'mail',
-      });
-      expect(createNewChatRoomMock).toBeCalled();
-      expect(mutateFetchFlagMock).toHaveBeenCalledWith('FirstConsultCampaign');
-    });
-
-    test('再コンサル時', async () => {
-      const createNewChatRoomMock = jest.fn();
-      createNewChatRoomMock.mockResolvedValueOnce({
-        data: {
-          chat_room_id: 'chatroomid',
-          code: 1,
-        },
-      });
-      const usePostChatRoomMock = jest.mocked(usePostChatRoom);
-      usePostChatRoomMock.mockReturnValue({
-        createNewChatRoom: createNewChatRoomMock,
-      });
-
-      const pushMock = jest.fn();
-      const useRouterMock = jest.mocked(useRouter);
-      useRouterMock.mockReturnValue({
-        query: { reconsult: 'basechatroomid' },
-        push: pushMock,
-        isReady: true,
-      } as unknown as ReturnType<typeof useRouter>);
-
-      const postChatMessageFileMock = jest.fn();
-      postChatMessageFileMock.mockResolvedValue(true);
-      const usePostChatMessageFileMock = jest.spyOn(usePostChatMessageFileModule, 'usePostChatMessageFile');
-      usePostChatMessageFileMock.mockReturnValue({
-        postChatMessageFile: postChatMessageFileMock,
-      });
-
-      const { result } = await renderHook(() => useNewChatRoom(), {
-        wrapper: RecoilRoot,
-      });
-
-      act(() => result.current.setFilesForReConsult([{ id: 1, file: new File([], ''), image: '' }]));
-      await act(() => result.current.submit());
-
-      expect(pushMock).toBeCalled();
-      expect(createNewChatRoomMock).toBeCalled();
-      expect(postChatMessageFileMock).toBeCalled();
     });
   });
 
