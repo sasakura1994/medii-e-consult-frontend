@@ -1,7 +1,7 @@
 import { useAxios } from '@/hooks/network/useAxios';
 import { useCallback } from 'react';
 
-type GetCurrentChatRoomDraftResponeData = {
+export type GetCurrentChatRoomDraftResponeData = {
   chat_room_draft_id: string;
   data: object;
 };
