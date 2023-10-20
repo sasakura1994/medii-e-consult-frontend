@@ -86,12 +86,10 @@ const WithdrawalPage: NextPageWithLayout = () => {
               <SpinnerBorder />
             ) : (
               <div className="flex justify-center gap-3">
-                <Link href="/editprofile">
-                  <a className="block flex-1">
-                    <SecondaryButton size="large" className="px-8">
-                      戻る
-                    </SecondaryButton>
-                  </a>
+                <Link href="/editprofile" className="block flex-1">
+                  <SecondaryButton size="large" className="px-8">
+                    戻る
+                  </SecondaryButton>
                 </Link>
                 <ErrorButton type="button" size="large" onClick={withdraw}>
                   アカウントを削除

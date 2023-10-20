@@ -5,7 +5,9 @@ import { ProfileDetail } from '../ProfileDetail';
 import { useProfile } from '@/hooks/useProfile';
 
 jest.mock('@/hooks/useProfile');
-
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(),
+}));
 describe('ProfileDetail', () => {
   describe('nmo', () => {
     test('nmoでない場合は利用区分を表示する', async () => {

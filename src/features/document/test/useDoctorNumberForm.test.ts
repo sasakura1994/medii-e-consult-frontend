@@ -8,9 +8,7 @@ jest.mock('@/hooks/useProfile');
 beforeEach(() => {
   (useProfile as jest.Mock).mockReturnValue({
     profile: {
-      commedical_speciality: 'Test Speciality',
       document_file_path: 'path/to/document',
-      is_commedical: 1,
       document: null,
       last_name: 'Doe',
       first_name: 'John',

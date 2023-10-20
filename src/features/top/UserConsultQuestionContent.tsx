@@ -71,7 +71,7 @@ export const UserConsultQuestionContent = (props: UserConsultQuestionContentProp
           {chatRoomMineOwn.unread_count > 0 && (
             <div className="mr-1 aspect-square h-2 w-2 rounded-full bg-medii-sky-base" />
           )}
-          <p className="text-md text-text-secondary line-clamp-1">{chatRoomMineOwn.latest_message}</p>
+          <p className="line-clamp-1 text-md text-text-secondary">{chatRoomMineOwn.latest_message}</p>
         </div>
 
         <div className="mt-2 flex">

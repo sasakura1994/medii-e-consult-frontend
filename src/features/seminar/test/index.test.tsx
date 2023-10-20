@@ -92,13 +92,13 @@ beforeEach(() => {
     } as ProfileEntity,
   });
 });
-const getRender = async () => {
-  render(
-    <RecoilRoot>
-      <Seminar />
-    </RecoilRoot>
-  );
-};
+// const getRender = async () => {
+//   render(
+//     <RecoilRoot>
+//       <Seminar />
+//     </RecoilRoot>
+//   );
+// };
 
 afterEach(() => {
   cleanup();

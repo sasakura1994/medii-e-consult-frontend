@@ -5,7 +5,7 @@ import { KonvaEventObject } from 'konva/lib/Node';
 
 const props: ImageEditorProps = {
   file: new File([], 'test.png'),
-  onSubmit: (_) => {
+  onSubmit: () => {
     return;
   },
   onClose: () => {

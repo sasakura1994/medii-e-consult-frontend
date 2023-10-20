@@ -27,8 +27,8 @@ const EditProfileCompletedPage: NextPageWithLayout = () => {
             <p>プロフィールを更新しました。</p>
 
             <div className="pt-4">
-              <Link href="/top">
-                <a className="text-primary underline">ホーム画面に戻る</a>
+              <Link href="/top" className="text-primary underline">
+                ホーム画面に戻る
               </Link>
             </div>
           </div>
