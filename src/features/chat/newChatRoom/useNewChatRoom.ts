@@ -5,7 +5,6 @@ import { useGetChatDraftImages } from '@/hooks/api/chat/useGetChatDraftImages';
 import { usePostChatMessageFile } from '@/hooks/api/chat/usePostChatMessageFile';
 import { PostChatRoomRequestData, usePostChatRoom } from '@/hooks/api/chat/usePostChatRoom';
 import { usePostDraftImage } from '@/hooks/api/chat/usePostDraftImage';
-import { useDeleteChatRoomDrafts } from '@/hooks/api/chatRoomDraft/useDeleteChatRoomDrafts';
 import {
   GetCurrentChatRoomDraftResponeData,
   useGetCurrentChatRoomDraft,
@@ -175,7 +174,6 @@ export const useNewChatRoom = (): UseNewChatRoom => {
   const { getCurrentChatRoomDraft } = useGetCurrentChatRoomDraft();
   const { postChatRoomDraft } = usePostChatRoomDraft();
   const { updateChatRoomDraft } = useUpdateChatRoomDraft();
-  const { deleteChatRoomDrafts } = useDeleteChatRoomDrafts();
 
   const imageInput = useRef<HTMLInputElement>(null);
 
@@ -268,12 +266,10 @@ export const useNewChatRoom = (): UseNewChatRoom => {
   ]);
 
   const dontUseDraft = useCallback(async () => {
-    await deleteChatRoomDrafts();
-    removeLocalStorage(newChatRoomFormDataKey);
     setIsDraftConfirming(false);
     setConfirmingDraft(undefined);
     setInitializingStatus('initialized');
-  }, [deleteChatRoomDrafts]);
+  }, []);
 
   const applyDraft = useCallback(async () => {
     if (!confirmingDraft) {

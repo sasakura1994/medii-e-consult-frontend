@@ -13,7 +13,6 @@ import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
 import { ChatMessageEntity } from '@/types/entities/chat/ChatMessageEntity';
 import * as useDeleteChatDraftImageModule from '@/hooks/api/chat/useDeleteChatDraftImage';
 import { useGetCurrentChatRoomDraft } from '@/hooks/api/chatRoomDraft/useGetCurrentChatRoomDraft';
-import { useDeleteChatRoomDrafts } from '@/hooks/api/chatRoomDraft/useDeleteChatRoomDrafts';
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn().mockReturnValue({
@@ -24,7 +23,6 @@ jest.mock('next/router', () => ({
 jest.mock('@/hooks/api/medicalCategory/useFetchMedicalSpecialities');
 jest.mock('@/hooks/api/chat/useFetchBaseChatRoomForReConsult');
 jest.mock('@/hooks/api/chatRoomDraft/useGetCurrentChatRoomDraft');
-jest.mock('@/hooks/api/chatRoomDraft/useDeleteChatRoomDrafts');
 
 const medicalSpecialitiesMock: MedicalSpecialityEntity[] = [
   { speciality_code: 'ALLERGY' } as MedicalSpecialityEntity,
@@ -87,9 +85,6 @@ beforeEach(() => {
   (useGetCurrentChatRoomDraft as jest.Mock).mockReturnValue({
     getCurrentChatRoomDraft: jest.fn().mockResolvedValue(undefined),
   });
-  (useDeleteChatRoomDrafts as jest.Mock).mockReturnValue({
-    deleteChatRoomDrafts: jest.fn().mockResolvedValue({ data: {} }),
-  });
 });
 
 describe('useNewChatRoom', () => {
@@ -110,13 +105,7 @@ describe('useNewChatRoom', () => {
         });
       });
 
-      afterEach(() => {
-        (global.confirm as jest.Mock).mockClear();
-      });
-
       test('下書きがある場合', async () => {
-        global.confirm = jest.fn().mockReturnValue(true);
-
         const { result } = await act(
           async () =>
             await renderHook(() => useNewChatRoom(), {
@@ -130,13 +119,6 @@ describe('useNewChatRoom', () => {
       });
 
       test('下書きがあるが復元しない場合', async () => {
-        global.confirm = jest.fn().mockReturnValue(false);
-
-        const deleteChatRoomDrafts = jest.fn();
-        (useDeleteChatRoomDrafts as jest.Mock).mockReturnValue({
-          deleteChatRoomDrafts,
-        });
-
         const { result } = await act(
           async () =>
             await renderHook(() => useNewChatRoom(), {
@@ -147,7 +129,7 @@ describe('useNewChatRoom', () => {
         await act(async () => await result.current.dontUseDraft());
 
         await waitFor(() => {
-          expect(deleteChatRoomDrafts).toBeCalled();
+          expect(result.current.isDraftConfirming).toBeFalsy();
           // こちらだけだと関係なくても通ってしまうので必ず上と一緒にチェック
           expect(result.current.chatRoom.disease_name).not.toBe('風邪');
         });

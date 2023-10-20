@@ -20,7 +20,6 @@ import * as useDeleteChatDraftImageModule from '@/hooks/api/chat/useDeleteChatDr
 import { useGetCurrentChatRoomDraft } from '@/hooks/api/chatRoomDraft/useGetCurrentChatRoomDraft';
 import { usePostChatRoomDraft } from '@/hooks/api/chatRoomDraft/usePostChatRoomDraft';
 import { useUpdateChatRoomDraft } from '@/hooks/api/chatRoomDraft/useUpdateChatRoomDraft';
-import { useDeleteChatRoomDrafts } from '@/hooks/api/chatRoomDraft/useDeleteChatRoomDrafts';
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn().mockReturnValue({
@@ -36,7 +35,6 @@ jest.mock('@/hooks/api/account/useFetchFlags');
 jest.mock('@/hooks/api/chatRoomDraft/useGetCurrentChatRoomDraft');
 jest.mock('@/hooks/api/chatRoomDraft/usePostChatRoomDraft');
 jest.mock('@/hooks/api/chatRoomDraft/useUpdateChatRoomDraft');
-jest.mock('@/hooks/api/chatRoomDraft/useDeleteChatRoomDrafts');
 
 const medicalSpecialitiesMock: MedicalSpecialityEntity[] = [
   { speciality_code: 'ALLERGY' } as MedicalSpecialityEntity,
@@ -127,9 +125,6 @@ beforeEach(() => {
   });
   (useUpdateChatRoomDraft as jest.Mock).mockReturnValue({
     updateChatRoomDraft: jest.fn().mockResolvedValue({ data: {} }),
-  });
-  (useDeleteChatRoomDrafts as jest.Mock).mockReturnValue({
-    deleteChatRoomDrafts: jest.fn().mockResolvedValue({ data: {} }),
   });
 });
 
