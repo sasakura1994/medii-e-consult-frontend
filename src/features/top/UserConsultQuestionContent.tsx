@@ -57,7 +57,7 @@ export const UserConsultQuestionContent = (props: UserConsultQuestionContentProp
             </div>
             <div className="mt-2 flex items-center">
               {labelText}
-              <p className="test-md ml-2 font-bold text-text-secondary">{respondentLabel}</p>
+              <p className="test-md ml-2 font-bold text-text-secondary max-w-[130px]">{respondentLabel}</p>
               <p className="test-md text-text-secondary">・</p>
               <p className="test-md text-text-secondary">{getTimeIntervalText(chatRoomMineOwn.last_updated_date)}</p>
             </div>
