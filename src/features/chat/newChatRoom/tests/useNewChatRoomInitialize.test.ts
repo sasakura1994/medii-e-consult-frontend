@@ -124,6 +124,8 @@ describe('useNewChatRoom', () => {
             })
         );
 
+        await act(async () => await result.current.applyDraft());
+
         await waitFor(() => expect(result.current.chatRoom.disease_name).toBe('風邪'));
       });
 
@@ -141,6 +143,8 @@ describe('useNewChatRoom', () => {
               wrapper: RecoilRoot,
             })
         );
+
+        await act(async () => await result.current.dontUseDraft());
 
         await waitFor(() => {
           expect(deleteChatRoomDrafts).toBeCalled();

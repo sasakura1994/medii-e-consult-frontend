@@ -6,7 +6,10 @@ import { usePostChatMessageFile } from '@/hooks/api/chat/usePostChatMessageFile'
 import { PostChatRoomRequestData, usePostChatRoom } from '@/hooks/api/chat/usePostChatRoom';
 import { usePostDraftImage } from '@/hooks/api/chat/usePostDraftImage';
 import { useDeleteChatRoomDrafts } from '@/hooks/api/chatRoomDraft/useDeleteChatRoomDrafts';
-import { useGetCurrentChatRoomDraft } from '@/hooks/api/chatRoomDraft/useGetCurrentChatRoomDraft';
+import {
+  GetCurrentChatRoomDraftResponeData,
+  useGetCurrentChatRoomDraft,
+} from '@/hooks/api/chatRoomDraft/useGetCurrentChatRoomDraft';
 import { usePostChatRoomDraft } from '@/hooks/api/chatRoomDraft/usePostChatRoomDraft';
 import { useUpdateChatRoomDraft } from '@/hooks/api/chatRoomDraft/useUpdateChatRoomDraft';
 import { useFetchDoctorProfile } from '@/hooks/api/doctor/useFetchDoctorProfile';
@@ -77,6 +80,7 @@ const getDefaultRoomType = (query: NewChatRoomQuery): ChatRoomType => {
 
 export type UseNewChatRoom = {
   ageRange: string;
+  applyDraft: () => void;
   backToInput: () => void;
   childAge: string;
   changeMedicalSpecialities: (medicalSpecialities: MedicalSpecialityEntity[]) => void;
@@ -89,10 +93,12 @@ export type UseNewChatRoom = {
   editingImage?: File;
   errorMessage: string;
   chatRoom: NewChatRoomEntity;
+  dontUseDraft: () => void;
   filesForReConsult: FileForReConsult[];
   group?: FetchedGroupEntity;
   imageInput: RefObject<HTMLInputElement>;
   isDoctorSearchModalShown: boolean;
+  isDraftConfirming: boolean;
   isMedicalSpecialitiesSelectDialogShown: boolean;
   isSearchGroupModalShown: boolean;
   isSending: boolean;
@@ -152,6 +158,9 @@ export const useNewChatRoom = (): UseNewChatRoom => {
   const [initializingStatus, setInitializingStatus] = useState<InitializingStatus>('not_initialized');
   const [draftFrom, setDraftFrom] = useState('');
   const [draftSavingTimeoutId, setDraftSavingTimeoutId] = useState<NodeJS.Timeout | undefined>();
+  const [isDraftConfirming, setIsDraftConfirming] = useState(false);
+  const [confirmingDraft, setConfirmingDraft] = useState<NewChatRoomEntity>();
+  const [draftOnDb, setDraftOnDb] = useState<GetCurrentChatRoomDraftResponeData>();
 
   const { createNewChatRoom } = usePostChatRoom();
   const { createDraftImage } = usePostDraftImage();
@@ -245,25 +254,10 @@ export const useNewChatRoom = (): UseNewChatRoom => {
       return;
     }
 
-    if (!confirm('下書きに作成途中のコンサルがあります。作成途中のコンサルを続けて編集しますか？')) {
-      await deleteChatRoomDrafts();
-      removeLocalStorage(newChatRoomFormDataKey);
-      setInitializingStatus('initialized');
-      return;
-    }
-
-    const data = (draft?.data.data ?? JSON.parse(draftOnLocalStorage!)) as NewChatRoomEntity;
-
-    if (draft) {
-      setChatRoomDraftId(draft.data.chat_room_draft_id);
-    }
-    setChatRoom(data);
-    initializeAge(data.age);
-    setDraftFrom(data.from);
-    setIsUseDraftImages(true);
-    setInitializingStatus('initialized');
+    setDraftOnDb(draft?.data);
+    setConfirmingDraft((draft?.data.data ?? JSON.parse(draftOnLocalStorage!)) as NewChatRoomEntity);
+    setIsDraftConfirming(true);
   }, [
-    deleteChatRoomDrafts,
     fetchBaseChatRoomForReConsult,
     getCurrentChatRoomDraft,
     initializeAge,
@@ -272,6 +266,30 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     query.reconsult,
     router.isReady,
   ]);
+
+  const dontUseDraft = useCallback(async () => {
+    await deleteChatRoomDrafts();
+    removeLocalStorage(newChatRoomFormDataKey);
+    setIsDraftConfirming(false);
+    setConfirmingDraft(undefined);
+    setInitializingStatus('initialized');
+  }, [deleteChatRoomDrafts]);
+
+  const applyDraft = useCallback(async () => {
+    if (!confirmingDraft) {
+      return;
+    }
+    if (draftOnDb) {
+      setChatRoomDraftId(draftOnDb.chat_room_draft_id);
+    }
+    setChatRoom(confirmingDraft);
+    initializeAge(confirmingDraft.age);
+    setDraftFrom(confirmingDraft.from);
+    setIsUseDraftImages(true);
+    setIsDraftConfirming(false);
+    setConfirmingDraft(undefined);
+    setInitializingStatus('initialized');
+  }, [confirmingDraft, draftOnDb, initializeAge]);
 
   useEffect(() => {
     if (!router.isReady || initializingStatus !== 'not_initialized') {
@@ -572,6 +590,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
 
   return {
     ageRange,
+    applyDraft,
     backToInput,
     childAge,
     changeMedicalSpecialities,
@@ -581,6 +600,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     deleteFileForReConsult,
     deleteReConsultFileMessage,
     doctor,
+    dontUseDraft,
     editingImage,
     errorMessage,
     chatRoom,
@@ -588,6 +608,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     group,
     imageInput,
     isDoctorSearchModalShown,
+    isDraftConfirming,
     isMedicalSpecialitiesSelectDialogShown,
     isSearchGroupModalShown,
     isSending,
