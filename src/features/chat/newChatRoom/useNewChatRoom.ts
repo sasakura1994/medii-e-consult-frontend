@@ -151,6 +151,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
   const [isUseDraftImages, setIsUseDraftImages] = useState(false);
   const [initializingStatus, setInitializingStatus] = useState<InitializingStatus>('not_initialized');
   const [draftFrom, setDraftFrom] = useState('');
+  const [draftSavingTimeoutId, setDraftSavingTimeoutId] = useState<NodeJS.Timeout | undefined>();
 
   const { createNewChatRoom } = usePostChatRoom();
   const { createDraftImage } = usePostDraftImage();
@@ -318,8 +319,19 @@ export const useNewChatRoom = (): UseNewChatRoom => {
           return;
         }
       }
+
+      // テキスト入力の場合はすぐに保存しない
+      if (draftSavingTimeoutId) {
+        clearTimeout(draftSavingTimeoutId);
+      }
+
+      const timeoutId = setTimeout(() => {
+        sendDraft(newData);
+        setDraftSavingTimeoutId(undefined);
+      }, 3000);
+      setDraftSavingTimeoutId(timeoutId);
     },
-    [formData, sendDraft]
+    [draftSavingTimeoutId, formData, sendDraft]
   );
 
   const setAgeRangeWrapper = useCallback(
