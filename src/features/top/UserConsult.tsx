@@ -11,7 +11,15 @@ import { useUserConsult } from './useUserConsult';
 import { useFetchFlag } from '@/hooks/api/account/useFetchFlags';
 import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 
-const consultCampaignAlt = 'はじめてEコンサルで症例を質問した先生に1000円相当のポイントをもれなくプレゼント';
+const consultCampaignAlt = '今ならご相談で3000円相当のポイント進呈';
+const tmpBannerUrl = {
+  pathname: '/newchatroom',
+  query: {
+    target_group_id: 'GR8b47ed6b-6f43-4cf1-a684-17574a56cea9',
+    utm_source: '2310top_banner',
+    from: 'top_banner',
+  },
+};
 
 type UserConsultProps = {
   setShowTutorialExplanationModal: (isShow: boolean) => void;
@@ -34,43 +42,27 @@ export const UserConsult = (props: UserConsultProps) => {
   const { postEventLog } = useEventLog();
 
   const tmpTopBanner = useMemo(() => {
-    // TODO: tmpTopBannerは2023/09/07/20:00から2023/09/14/20:00までの間だけ一時的に表示する
+    // TODO: tmpTopBannerは2023/09/07 20:00から2023/11/10 23:59までの間だけ一時的に表示する
     const today = new Date();
     const start = new Date('2023/09/07 20:00:00');
-    const end = new Date('2023/09/14 20:00:00');
+    const end = new Date('2023/11/10 23:59:59');
     if (today < start || today > end) {
       return null;
     }
     return (
       <>
         {/* PC */}
-        <Link
-          href={{
-            pathname: '/newchatroom',
-            query: {
-              target_group_id: 'GR019adaef-7526-4155-8498-a663fefc5e04',
-              from: 'top_group_banner_GR019adaef-7526-4155-8498-a663fefc5e04',
-            },
-          }}
-        >
+        <Link href={tmpBannerUrl}>
           <img
-            src="images/top/top_group_banner_GR019adaef-7526-4155-8498-a663fefc5e04.png"
+            src="images/top/231023_banner_muscular-dystrophy_pc.png"
             alt="banner"
             className="mt-4 hidden cursor-pointer sm:block"
           />
         </Link>
         {/* SP */}
-        <Link
-          href={{
-            pathname: '/newchatroom',
-            query: {
-              target_group_id: 'GR019adaef-7526-4155-8498-a663fefc5e04',
-              from: 'top_group_banner_GR019adaef-7526-4155-8498-a663fefc5e04',
-            },
-          }}
-        >
+        <Link href={tmpBannerUrl}>
           <img
-            src="images/top/top_group_banner_GR019adaef-7526-4155-8498-a663fefc5e04_sp.png"
+            src="images/top/231023_banner_muscular-dystrophy_sp.png"
             alt="banner"
             className="mt-4 block cursor-pointer sm:hidden"
           />
@@ -100,10 +92,10 @@ export const UserConsult = (props: UserConsultProps) => {
 
       {isFirstConsultCampaignAvailable && (
         <div
-          className="mb-6 mt-3" 
+          className="mb-6 mt-3"
           data-testid="consult-campaign-banner"
           onClick={async () => {
-            await postEventLog({ name: 'click-first-consult-campaign-banner' })
+            await postEventLog({ name: 'click-first-consult-campaign-banner' });
           }}
         >
           <Link href="/newchatroom?from=onboarding_banner">
