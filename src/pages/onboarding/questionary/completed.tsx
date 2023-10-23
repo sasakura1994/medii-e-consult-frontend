@@ -13,7 +13,7 @@ const OnBoardingQuestionaryCompletedPage = () => {
           ありがとうございます
         </div>
         <div className="mt-6 text-md leading-6 lg:text-center">
-          アンケート回答のお礼として100ポイントを付与いたします。
+          アンケート回答のお礼として500ポイントを付与いたします。
           <br className="hidden lg:inline" />
           1,000ポイント以上貯まると、1ポイントを1円のAmazonポイントに変換してお使いいただけます。
         </div>

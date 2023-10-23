@@ -1,5 +1,6 @@
 import { useAxios } from '@/hooks/network/useAxios';
-import { useCallback } from 'react';
+import { AxiosError } from 'axios';
+import { useCallback, useState } from 'react';
 
 export type UpdateChatRoomRequestData = {
   age: number | null;
@@ -17,15 +18,23 @@ export type UpdateChatRoomResponseData = {
 
 export const useUpdateChatRoom = () => {
   const { axios } = useAxios();
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
 
   const updateChatRoom = useCallback(
     async (data: UpdateChatRoomRequestData) => {
-      return await axios.post<UpdateChatRoomResponseData>('/chat_room/update_chat_room', data);
+      try {
+        setErrorMessage('');
+        return await axios.post<UpdateChatRoomResponseData>('/chat_room/update_chat_room', data);
+      } catch (e) {
+        const error = e as AxiosError<UpdateChatRoomResponseData>;
+        setErrorMessage(error.response?.data.message);
+      }
     },
     [axios]
   );
 
   return {
     updateChatRoom,
+    errorMessage,
   };
 };

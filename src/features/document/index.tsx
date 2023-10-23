@@ -21,7 +21,7 @@ export const Document = () => {
 
   const loginRedirectUrlKey = 'Login::RedirectURL';
 
-  const routerPushToWelcomePage = useCallback(async () => {
+  const routerPushToQuestionaryPage = useCallback(async () => {
     await postEventLog({ name: 'document-complete' });
     router.push('/onboarding/questionary');
   }, [postEventLog, router]);
@@ -33,12 +33,12 @@ export const Document = () => {
         if (savedRedirectUrl && savedRedirectUrl !== '' && savedRedirectUrl.toLocaleLowerCase() !== '/top') {
           router.push(savedRedirectUrl);
         } else {
-          routerPushToWelcomePage();
+          routerPushToQuestionaryPage();
         }
         localStorage.removeItem(loginRedirectUrlKey);
       }
     },
-    [router, routerPushToWelcomePage]
+    [router, routerPushToQuestionaryPage]
   );
 
   if (!profile) return <></>;

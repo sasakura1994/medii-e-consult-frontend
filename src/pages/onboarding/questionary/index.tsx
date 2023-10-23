@@ -35,7 +35,11 @@ const OnBoardingQuestionaryPage = () => {
       </Breadcrumb>
       <h2 className="mt-2 text-xxl font-semibold">日常診療についてのアンケート</h2>
       <div className="mt-2 text-md">
-        アンケート回答のお礼として100ポイントをプレゼントします。ポイント付与はおひとりさま１回のみです。
+        E-コンサルへのご登録ありがとうございます。
+        <br />
+        先生方が日常診療で感じる臨床疑問•不安を解決すべく、どのような課題や不安をお抱えになっているかお伺いしています。
+        <br />
+        アンケート回答のお礼として500ポイントを進呈いたします。ポイント付与はおひとりさま1回のみです。
       </div>
       <div className="mt-2 text-medii-sm font-light text-secondary">
         ※アンケートの回答は統計的に処理され、特定の個人が識別できる情報として公表されることはありません。
