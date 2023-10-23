@@ -89,9 +89,6 @@ describe('useInitPassword', () => {
       wrapper: RecoilRoot,
     }).result;
 
-    act(() => hooks.current.setIsPrivacyPolicyAgreed(true));
-    act(() => hooks.current.setIsTermsOfUseAgreed(true));
-    act(() => hooks.current.setIsRead(true));
     await act(async () => {
       await hooks.current.onSubmit({
         preventDefault: () => {
@@ -131,9 +128,6 @@ describe('useInitPassword', () => {
       wrapper: RecoilRoot,
     }).result;
 
-    act(() => hooks.current.setIsPrivacyPolicyAgreed(true));
-    act(() => hooks.current.setIsTermsOfUseAgreed(true));
-    act(() => hooks.current.setIsRead(true));
     await act(async () => {
       await hooks.current.onSubmit({
         preventDefault: () => {

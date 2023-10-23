@@ -1,11 +1,10 @@
 import React from 'react';
 import type { NextPageWithLayout } from '@/pages/_app';
-import { AiFillApple } from 'react-icons/ai';
 import { useLogin } from '@/hooks/useLogin';
-import AppleSignin from 'react-apple-signin-auth';
 import Link from 'next/link';
 import { TextField } from '@/components/Parts/Form/TextField';
 import { PublicLayout } from '@/components/Layouts/PublicLayout';
+import { AppleSignInButton } from '@/components/Button/AppleSignInButton';
 
 const GuideLink = ({
   children,
@@ -121,41 +120,9 @@ const Login: NextPageWithLayout = () => {
               <div>日経メディカルアカウントでログイン</div>
             </div>
           </a>
-          <AppleSignin
-            authOptions={{
-              clientId: 'jp.medii.e-consult',
-              scope: 'email',
-              redirectURI: `${process.env.ENDPOINT_URL}/apple_auth/callback`,
-              state: '',
-              nonce: 'nonce',
-              usePopup: false,
-            }}
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            onSuccess={(response: any) => console.log(response)}
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            render={(props: any) => (
-              <button
-                className="
-                  mt-4
-                  inline-flex
-                  w-full
-                  items-center
-                  justify-center
-                  rounded-md
-                  border
-                  border-solid
-                  border-black
-                  px-10
-                  py-2
-                  hover:bg-monotone-100
-                "
-                {...props}
-              >
-                <AiFillApple className="inline" size="30" />
-                Appleでログイン
-              </button>
-            )}
-          />
+          <div className="mt-4">
+            <AppleSignInButton>Appleでログイン</AppleSignInButton>
+          </div>
         </div>
       </div>
       {errorMessage != '' && <p className="text-center font-bold text-red-500">{errorMessage}</p>}
