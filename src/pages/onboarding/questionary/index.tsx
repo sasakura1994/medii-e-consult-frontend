@@ -13,12 +13,19 @@ import { Required } from '@/components/Parts/Form/Required';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 import { QuestionaryItems } from '@/features/onboarding/QuestionaryItems';
 import { useOnBoardingQuestionary } from '@/features/onboarding/useOnBoardingQuestionary';
+import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 import Link from 'next/link';
-import React from 'react';
+import React, { useCallback } from 'react';
 
 const OnBoardingQuestionaryPage = () => {
   const { checkIsCheckboxRequired, isSending, questionAndAnswers, setAnswer, setOther, submit, toggleAnswers } =
     useOnBoardingQuestionary();
+  const { postEventLog } = useEventLog();
+  const showOnBoardingQuestionary = useCallback(async () => {
+    await postEventLog({ name: 'view-onboarding-questionary' })
+  }, [postEventLog]);
+
+  showOnBoardingQuestionary();
 
   return (
     <div className="mx-6 mb-10 mt-5 max-w-[1024px] lg:mx-auto lg:mt-4">
@@ -137,11 +144,17 @@ const OnBoardingQuestionaryPage = () => {
             <SpinnerBorder />
           ) : (
             <div className='flex'>
-              <Link href={"/top"}>
-                <SecondaryButton size='large' className="px-4 mr-10">
-                  あとでアンケートに回答する
-                </SecondaryButton>
-              </Link>
+              <div
+                onClick={async () => {
+                  await postEventLog({ name: 'click-answer-later' })
+                }}
+              >
+                <Link href={"/top"}>
+                  <SecondaryButton size='large' className="px-4 mr-10">
+                    あとでアンケートに回答する
+                  </SecondaryButton>
+                </Link>
+              </div>
               <PrimaryButton size="large" className="px-4">
                 アンケートを送信する
               </PrimaryButton>
