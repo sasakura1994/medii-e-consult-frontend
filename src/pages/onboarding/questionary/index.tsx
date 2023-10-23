@@ -15,12 +15,17 @@ import { QuestionaryItems } from '@/features/onboarding/QuestionaryItems';
 import { useOnBoardingQuestionary } from '@/features/onboarding/useOnBoardingQuestionary';
 import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 import Link from 'next/link';
-import React from 'react';
+import React, { useCallback } from 'react';
 
 const OnBoardingQuestionaryPage = () => {
   const { checkIsCheckboxRequired, isSending, questionAndAnswers, setAnswer, setOther, submit, toggleAnswers } =
     useOnBoardingQuestionary();
   const { postEventLog } = useEventLog();
+  const showOnBoardingQuestionary = useCallback(async () => {
+    await postEventLog({ name: 'view-onboarding-questionary' })
+  }, [postEventLog]);
+
+  showOnBoardingQuestionary();
 
   return (
     <div className="mx-6 mb-10 mt-5 max-w-[1024px] lg:mx-auto lg:mt-4">

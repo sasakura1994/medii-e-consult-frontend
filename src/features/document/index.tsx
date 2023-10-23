@@ -23,7 +23,6 @@ export const Document = () => {
 
   const routerPushToWelcomePage = useCallback(async () => {
     await postEventLog({ name: 'document-complete' });
-    await postEventLog({ name: 'view-onboarding-questionary' })
     router.push('/onboarding/questionary');
   }, [postEventLog, router]);
   const setSelectedWithRedirect = useCallback(
