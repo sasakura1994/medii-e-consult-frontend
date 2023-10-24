@@ -297,6 +297,10 @@ export const useNewChatRoom = (): UseNewChatRoom => {
 
   const sendDraft = useCallback(
     async (data: object) => {
+      if (query.reconsult) {
+        return;
+      }
+
       if (draftSavingTimeoutId) {
         clearTimeout(draftSavingTimeoutId);
         setDraftSavingTimeoutId(undefined);
@@ -319,18 +323,25 @@ export const useNewChatRoom = (): UseNewChatRoom => {
 
       setChatRoomDraftId(response.data.chat_room_draft_id);
     },
-    [chatRoomDraftId, draftSavingTimeoutId, postChatRoomDraft, updateChatRoomDraft]
+    [chatRoomDraftId, draftSavingTimeoutId, postChatRoomDraft, query.reconsult, updateChatRoomDraft]
   );
 
   const updateDraft = useCallback(() => {
+    if (query.reconsult) {
+      return;
+    }
     sendDraft(chatRoom);
-  }, [chatRoom, sendDraft]);
+  }, [chatRoom, query.reconsult, sendDraft]);
 
   const setChatRoomFields = useCallback(
     async (data: Partial<NewChatRoomEntity>) => {
       const newData = { ...formData, ...data };
 
       setChatRoom(newData);
+
+      if (query.reconsult) {
+        return;
+      }
 
       // 下書き保存しない関数を作っても良いけど、多分いずれ使い分けミスると思うのでここで判別
       for (const key of Object.keys(data)) {
@@ -351,7 +362,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
       }, 3000);
       setDraftSavingTimeoutId(timeoutId);
     },
-    [draftSavingTimeoutId, formData, sendDraft]
+    [draftSavingTimeoutId, formData, query.reconsult, sendDraft]
   );
 
   const setAgeRangeWrapper = useCallback(

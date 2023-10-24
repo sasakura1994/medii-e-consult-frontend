@@ -7,6 +7,13 @@ import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntit
 import { useGetCurrentChatRoomDraft } from '@/hooks/api/chatRoomDraft/useGetCurrentChatRoomDraft';
 import { usePostChatRoomDraft } from '@/hooks/api/chatRoomDraft/usePostChatRoomDraft';
 import { useUpdateChatRoomDraft } from '@/hooks/api/chatRoomDraft/useUpdateChatRoomDraft';
+import { useRouter } from 'next/router';
+import {
+  FetchBaseChatRoomForReConsultResponseData,
+  useFetchBaseChatRoomForReConsult,
+} from '@/hooks/api/chat/useFetchBaseChatRoomForReConsult';
+import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
+import { ChatMessageEntity } from '@/types/entities/chat/ChatMessageEntity';
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn().mockReturnValue({
@@ -18,6 +25,7 @@ jest.mock('@/hooks/api/medicalCategory/useFetchMedicalSpecialities');
 jest.mock('@/hooks/api/chatRoomDraft/useGetCurrentChatRoomDraft');
 jest.mock('@/hooks/api/chatRoomDraft/usePostChatRoomDraft');
 jest.mock('@/hooks/api/chatRoomDraft/useUpdateChatRoomDraft');
+jest.mock('@/hooks/api/chat/useFetchBaseChatRoomForReConsult');
 
 const medicalSpecialitiesMock: MedicalSpecialityEntity[] = [
   { speciality_code: 'ALLERGY' } as MedicalSpecialityEntity,
@@ -30,6 +38,44 @@ useFetchMedicalSpecialitiesMock.mockReturnValue({
   medicalSpecialities: medicalSpecialitiesMock,
   isLoading: false,
   error: undefined,
+});
+
+const baseChatRoomForReConsultData: FetchBaseChatRoomForReConsultResponseData = {
+  chat_room: {
+    chat_room_id: 'chatroomid',
+    disease_name: 'disease',
+    age: 20,
+  } as ChatRoomEntity,
+  first_message: 'first message',
+  medical_specialities: [
+    {
+      speciality_code: 'ALLERGY',
+      name: 'アレルギー内科',
+    } as MedicalSpecialityEntity,
+    {
+      speciality_code: 'BYOURI',
+      name: '病理科',
+    } as MedicalSpecialityEntity,
+    {
+      speciality_code: 'GANKA',
+      name: '眼科',
+    } as MedicalSpecialityEntity,
+  ],
+  file_messages: [
+    {
+      uid: 1,
+      file_id: 'file1',
+    } as ChatMessageEntity,
+    {
+      uid: 2,
+      file_id: 'file2',
+    } as ChatMessageEntity,
+  ],
+};
+const fetchBaseChatRoomForReConsult = jest.fn();
+fetchBaseChatRoomForReConsult.mockResolvedValue(baseChatRoomForReConsultData);
+(useFetchBaseChatRoomForReConsult as jest.Mock).mockReturnValue({
+  fetchBaseChatRoomForReConsult,
 });
 
 beforeEach(() => {
@@ -74,8 +120,48 @@ describe('useNewChatRoom', () => {
       });
     });
 
+    test('再コンサルの場合は下書き送信しない', async () => {
+      (useRouter as jest.Mock).mockReturnValue({
+        query: {
+          reconsult: 'chatroomid',
+        },
+        isReady: true,
+      });
+
+      const postChatRoomDraft = jest.fn();
+      postChatRoomDraft.mockResolvedValue({
+        data: {
+          chat_room_draft_id: 'draftid',
+        },
+      });
+      (usePostChatRoomDraft as jest.Mock).mockReturnValue({
+        postChatRoomDraft,
+      });
+
+      const { result } = await act(
+        async () =>
+          await renderHook(() => useNewChatRoom(), {
+            wrapper: RecoilRoot,
+          })
+      );
+
+      const data = { disease_name: 'disease2', age: 30 };
+      await act(async () => await result.current.setChatRoomFields(data));
+
+      await waitFor(() => {
+        expect(result.current.chatRoom.disease_name).toBe('disease2');
+        expect(result.current.chatRoom.age).toBe(30);
+        expect(postChatRoomDraft).not.toBeCalled();
+      });
+    });
+
     describe('テキスト入力のみ', () => {
       test('下書き送信しない＆別の更新でタイマーは解除', async () => {
+        (useRouter as jest.Mock).mockReturnValue({
+          query: {},
+          isReady: true,
+        });
+
         const postChatRoomDraft = jest.fn();
         postChatRoomDraft.mockResolvedValue({
           data: {

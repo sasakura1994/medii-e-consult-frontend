@@ -69,9 +69,10 @@ const baseChatRoomForReConsultData: FetchBaseChatRoomForReConsultResponseData = 
     } as ChatMessageEntity,
   ],
 };
-const useFetchBaseChatRoomForReConsultMock = jest.mocked(useFetchBaseChatRoomForReConsult);
-useFetchBaseChatRoomForReConsultMock.mockReturnValue({
-  fetchBaseChatRoomForReConsult: jest.fn().mockReturnValue(baseChatRoomForReConsultData),
+const fetchBaseChatRoomForReConsult = jest.fn();
+fetchBaseChatRoomForReConsult.mockResolvedValue(baseChatRoomForReConsultData);
+(useFetchBaseChatRoomForReConsult as jest.Mock).mockReturnValue({
+  fetchBaseChatRoomForReConsult,
 });
 
 const deleteChatDraftImageMock = jest.fn();
@@ -138,6 +139,11 @@ describe('useNewChatRoom', () => {
 
     test('再コンサル', async () => {
       const useRouterMock = useRouter as jest.Mocked<typeof useRouter>;
+      const getCurrentChatRoomDraft = jest.fn();
+      (useGetCurrentChatRoomDraft as jest.Mock).mockReturnValue({
+        getCurrentChatRoomDraft,
+      });
+
       (useRouterMock as jest.Mock).mockReturnValue({
         query: { reconsult: 'chatroomid' },
         isReady: true,
@@ -156,6 +162,7 @@ describe('useNewChatRoom', () => {
         expect(result.current.chatRoom.first_message).toBe('first message');
         expect(result.current.chatRoom.target_specialities).toEqual(['ALLERGY', 'BYOURI', 'GANKA']);
         expect(result.current.reConsultFileMessages).toEqual(baseChatRoomForReConsultData.file_messages);
+        expect(getCurrentChatRoomDraft).not.toBeCalled();
       });
     });
   });
