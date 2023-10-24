@@ -139,34 +139,25 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                 </>
               )}
             </div>
-            <div>
-              <NewChatRoomRoomType
-                id="room-type-by-name"
-                label="バイネーム(氏名)で指定する"
-                note="相談したい先生が決まっている場合"
-                checked={chatRoom.room_type === 'BY_NAME'}
-                value="BY_NAME"
-                onChange={() => setChatRoomFields({ room_type: 'BY_NAME' })}
-              />
-            </div>
-            {chatRoom.room_type === 'BY_NAME' && (
+            {doctor && (
               <>
-                <div className="my-2 flex items-center gap-2">
-                  <OutlinedSquareButton
-                    dataTestId="by-name-search-button"
-                    type="button"
-                    onClick={() => setIsDoctorSearchModalShown(true)}
-                  >
-                    専門医検索
-                  </OutlinedSquareButton>
-                  {doctor ? (
+                <div>
+                  <NewChatRoomRoomType
+                    id="room-type-by-name"
+                    label="バイネーム(氏名)で指定する"
+                    note="相談したい先生が決まっている場合"
+                    checked={chatRoom.room_type === 'BY_NAME'}
+                    value="BY_NAME"
+                    onChange={() => setChatRoomFields({ room_type: 'BY_NAME' })}
+                  />
+                </div>
+                {chatRoom.room_type === 'BY_NAME' && (
+                  <div className="my-2 flex items-center gap-2">
                     <div>
                       {doctor.last_name} {doctor.first_name} 先生
                     </div>
-                  ) : (
-                    <div>未選択</div>
-                  )}
-                </div>
+                  </div>
+                )}
               </>
             )}
             {!query.reconsult && (
