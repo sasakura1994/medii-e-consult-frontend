@@ -89,6 +89,7 @@ export type UseNewChatRoom = {
   deleteFileForReConsult: (id: number) => void;
   deleteReConsultFileMessage: (chatMessageId: number) => void;
   doctor?: DoctorEntity;
+  draftSavingTimeoutId?: NodeJS.Timeout;
   editingImage?: File;
   errorMessage: string;
   chatRoom: NewChatRoomEntity;
@@ -296,6 +297,11 @@ export const useNewChatRoom = (): UseNewChatRoom => {
 
   const sendDraft = useCallback(
     async (data: object) => {
+      if (draftSavingTimeoutId) {
+        clearTimeout(draftSavingTimeoutId);
+        setDraftSavingTimeoutId(undefined);
+      }
+
       if (chatRoomDraftId) {
         await updateChatRoomDraft(chatRoomDraftId, data).catch((error) => {
           console.error(error);
@@ -313,7 +319,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
 
       setChatRoomDraftId(response.data.chat_room_draft_id);
     },
-    [chatRoomDraftId, postChatRoomDraft, updateChatRoomDraft]
+    [chatRoomDraftId, draftSavingTimeoutId, postChatRoomDraft, updateChatRoomDraft]
   );
 
   const updateDraft = useCallback(() => {
@@ -597,6 +603,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     deleteReConsultFileMessage,
     doctor,
     dontUseDraft,
+    draftSavingTimeoutId,
     editingImage,
     errorMessage,
     chatRoom,

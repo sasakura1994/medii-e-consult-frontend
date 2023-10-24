@@ -74,31 +74,40 @@ describe('useNewChatRoom', () => {
       });
     });
 
-    test('テキスト入力のみは下書き送信しない', async () => {
-      const postChatRoomDraft = jest.fn();
-      postChatRoomDraft.mockResolvedValue({
-        data: {
-          chat_room_draft_id: 'draftid',
-        },
-      });
-      (usePostChatRoomDraft as jest.Mock).mockReturnValue({
-        postChatRoomDraft,
-      });
+    describe('テキスト入力のみ', () => {
+      test('下書き送信しない＆別の更新でタイマーは解除', async () => {
+        const postChatRoomDraft = jest.fn();
+        postChatRoomDraft.mockResolvedValue({
+          data: {
+            chat_room_draft_id: 'draftid',
+          },
+        });
+        (usePostChatRoomDraft as jest.Mock).mockReturnValue({
+          postChatRoomDraft,
+        });
 
-      const { result } = await act(
-        async () =>
-          await renderHook(() => useNewChatRoom(), {
-            wrapper: RecoilRoot,
-          })
-      );
+        const { result } = await act(
+          async () =>
+            await renderHook(() => useNewChatRoom(), {
+              wrapper: RecoilRoot,
+            })
+        );
 
-      const data = { disease_name: 'disease2', first_message: 'first message' };
-      await act(async () => await result.current.setChatRoomFields(data));
+        const data = { disease_name: 'disease2', first_message: 'first message' };
+        await act(async () => await result.current.setChatRoomFields(data));
 
-      await waitFor(() => {
-        expect(result.current.chatRoom.disease_name).toBe('disease2');
-        expect(result.current.chatRoom.first_message).toBe('first message');
-        expect(postChatRoomDraft).not.toBeCalled();
+        await waitFor(() => {
+          expect(result.current.chatRoom.disease_name).toBe('disease2');
+          expect(result.current.chatRoom.first_message).toBe('first message');
+          expect(postChatRoomDraft).not.toBeCalled();
+          expect(result.current.draftSavingTimeoutId).not.toBeUndefined();
+        });
+
+        await act(async () => await result.current.updateDraft());
+
+        await waitFor(() => {
+          expect(result.current.draftSavingTimeoutId).toBeUndefined();
+        });
       });
     });
   });
