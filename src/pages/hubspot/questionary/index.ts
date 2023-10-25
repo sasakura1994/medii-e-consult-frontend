@@ -8,7 +8,7 @@ const HubSpotQuestionaryPage = () => {
   const { redirect } = router.query;
 
   useEffect(() => {
-    router.push(redirect + '?accountId=' + accountId);
+    router.push(redirect + '?accountid=' + accountId);
   }, [accountId]);
 };
 
