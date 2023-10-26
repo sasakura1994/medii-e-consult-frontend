@@ -5,11 +5,20 @@ import { useEffect } from 'react';
 const HubSpotQuestionaryPage = () => {
   const router = useRouter();
   const { accountId } = useToken();
-  const { redirect } = router.query;
 
   useEffect(() => {
-    router.push(redirect + '?accountid=' + accountId);
-  }, [accountId]);
+
+    const redirectMatch = router.asPath.match(/redirect=([^&]+(&[^&]+)*)/);
+    const redirect = redirectMatch ? decodeURIComponent(redirectMatch[1]) : null;
+
+    if (!redirect || !accountId) {
+      return;
+    }
+
+    const url = new URL(redirect);
+    url.searchParams.append('accountid', accountId);
+    router.push(url.toString());
+  }, [accountId, router]);
 };
 
 export default HubSpotQuestionaryPage;
