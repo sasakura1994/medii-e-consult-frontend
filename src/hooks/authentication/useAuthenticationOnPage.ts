@@ -15,7 +15,14 @@ export const useAuthenticationOnPage = (currentPath: string) => {
   const tokenIsEmpty = token === '';
 
   // 認証が不要なページはここに追加する
-  const unauthenticatedPages = ['/initpassword', '/login', '/passwordreset', '/passwordresetrequest', '/registration'];
+  const unauthenticatedPages = [
+    '/initpassword',
+    '/login',
+    '/passwordreset',
+    '/passwordresetrequest',
+    '/registration',
+    '/auth/callback',
+  ];
 
   const refreshToken = useCallback(async () => {
     const response = await getRefreshToken().catch((error) => {
