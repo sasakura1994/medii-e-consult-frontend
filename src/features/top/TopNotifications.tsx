@@ -7,7 +7,9 @@ import React, { useMemo } from 'react';
 export const TopNotifications = () => {
   const router = useRouter();
   const { profile } = useFetchProfile();
-  const { isNeedToInputProfile } = useNmo();
+  const { isNeedToInputProfile: isNeedToInputProfileForNmo } = useNmo();
+
+  const isNeedToInputProfile = useMemo(() => profile !== undefined && profile.birthday_year === 9999, [profile]);
 
   const profileNotification = useMemo(() => {
     if (!profile) {
@@ -52,7 +54,17 @@ export const TopNotifications = () => {
 
   return (
     <>
-      {isNeedToInputProfile ? (
+      {isNeedToInputProfile && (
+        <>
+          <InlineNotification
+            text="すべてのサービスをご利用いただくには、追加のプロフィール入力が必要です。"
+            dataTestId="top-notification-input-profile"
+            buttonText="プロフィール入力"
+            buttonOnClick={() => router.push('/fill-profile')}
+          />
+        </>
+      )}
+      {isNeedToInputProfileForNmo ? (
         <>
           <InlineNotification
             text="すべてのサービスをご利用いただくには、追加のプロフィール入力が必要です。"

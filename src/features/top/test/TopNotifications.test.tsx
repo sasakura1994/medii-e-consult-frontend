@@ -67,6 +67,27 @@ describe('TopNotifications', () => {
     });
   });
 
+  test('代理登録のためプロフィールが不足している場合', async () => {
+    (useFetchProfile as jest.Mock).mockReturnValue({
+      profile: {
+        registration_source: '',
+        last_name_hira: 'name',
+        status: 'VERIFIED',
+        birthday_year: 9999,
+      },
+    });
+
+    await act(async () => {
+      await render(
+        <RecoilRoot>
+          <TopNotifications />
+        </RecoilRoot>
+      );
+    });
+
+    expect(screen.queryByTestId('top-notification-input-profile')).toBeInTheDocument();
+  });
+
   test('nmoのためプロフィールが不足している場合', async () => {
     (useFetchProfile as jest.Mock).mockReturnValue({
       profile: {
