@@ -1,4 +1,4 @@
-import React from 'react';
+import { useCallback, useEffect } from 'react';
 import { useToken } from './useToken';
 import { redirectToLoginPage } from '@/libs/apiClient';
 import { useRefreshToken } from '../api/doctor/useRefreshToken';
@@ -7,20 +7,17 @@ import { useGuest } from './useGuest';
 /**
  * 認証が必要なページに配置する
  */
-export const useAuthenticationOnPage = () => {
-  const {
-    token,
-    isTokenInitialized,
-    isTokenRefreshed,
-    setIsTokenRefreshed,
-    setTokenAndMarkInitialized,
-  } = useToken();
+export const useAuthenticationOnPage = (currentPath: string) => {
+  const { token, isTokenInitialized, isTokenRefreshed, setIsTokenRefreshed, setTokenAndMarkInitialized } = useToken();
   const { refreshToken: getRefreshToken } = useRefreshToken();
   useGuest();
 
   const tokenIsEmpty = token === '';
 
-  const refreshToken = React.useCallback(async () => {
+  // 認証が不要なページはここに追加する
+  const unauthenticatedPages = ['/initpassword', '/login', '/passwordreset', '/passwordresetrequest', '/registration'];
+
+  const refreshToken = useCallback(async () => {
     const response = await getRefreshToken().catch((error) => {
       console.error(error);
       return null;
@@ -35,7 +32,11 @@ export const useAuthenticationOnPage = () => {
     setIsTokenRefreshed(true);
   }, [getRefreshToken, setIsTokenRefreshed, setTokenAndMarkInitialized]);
 
-  React.useEffect(() => {
+  useEffect(() => {
+    // 現在のページが認証が不要なページのリストに含まれている場合は処理をスキップする
+    if (unauthenticatedPages.includes(currentPath)) {
+      return;
+    }
     if (!isTokenInitialized) {
       return;
     }

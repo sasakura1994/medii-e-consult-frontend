@@ -14,10 +14,8 @@ import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { DocumentConfirmingMessage } from '@/components/Doctor/DocumentConfirmingMessage';
 import { Header } from '@/components/Layouts/Header/Header';
 import { FooterSpMenu } from '@/components/Layouts/Footer/FooterSpMenu';
-import { useAuthenticationOnPage } from '@/hooks/authentication/useAuthenticationOnPage';
 
 const NewChatRoomPage: NextPageWithLayout = () => {
-  useAuthenticationOnPage();
   const newChatRoom = useNewChatRoom();
   useEventLog({ name: '/NewChatRoom' });
   const { mode } = newChatRoom;
