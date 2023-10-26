@@ -84,6 +84,19 @@ export const useChatTextInput = (props: UseChatTextInputProps) => {
   useEffect(() => {
     resizeHeight();
   }, []);
+
+  // ローカルストレージから下書きを取得する
+  useEffect(() => {
+    const currentDrafts = JSON.parse(loadLocalStorage('ChatDraft::List') || '{}');
+    if (textInputRef.current && currentDrafts[chatRoomId]) {
+      textInputRef.current.value = currentDrafts[chatRoomId];
+      resizeHeight();
+      return;
+    }
+    textInputRef.current!.value = '';
+    resizeHeight();
+  }, [chatRoomId]);
+
   return {
     isOpenFileInputModal,
     setIsOpenFileInputModal,
