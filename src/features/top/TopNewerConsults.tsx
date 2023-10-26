@@ -11,7 +11,7 @@ export const TopNewerConsults = () => {
   return (
     <>
       <div className="flex justify-center">
-        <img src="images/top/top-popup.png" alt="" />
+        <img className='w-full' src="images/top/top-popup.png" alt="" />
       </div>
       <div className="mt-2 rounded-lg bg-bg-secondary p-4">
         <p className="text-xxl font-bold text-text-primary">新着のE-コンサル</p>
