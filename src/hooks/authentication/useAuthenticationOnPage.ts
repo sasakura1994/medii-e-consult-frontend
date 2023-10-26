@@ -22,6 +22,7 @@ export const useAuthenticationOnPage = (currentPath: string) => {
     '/passwordresetrequest',
     '/registration',
     '/auth/callback',
+    '/privacypolicy',
   ];
 
   const refreshToken = useCallback(async () => {
