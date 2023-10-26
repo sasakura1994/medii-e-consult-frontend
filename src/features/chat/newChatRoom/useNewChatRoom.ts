@@ -244,6 +244,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
       return;
     }
 
+    // @todo localStorageの方は古い仕様のためそのうち消す
     const draftOnLocalStorage = loadLocalStorage(newChatRoomFormDataKey);
     const draft = await getCurrentChatRoomDraft().catch((error) => {
       console.error(error);
