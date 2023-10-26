@@ -1,15 +1,13 @@
 import { InlineNotification } from '@/components/Notification/InlineNotification';
 import { useNmo } from '@/hooks/alliance/useNmo';
-import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
+import { useProfile } from '@/hooks/useProfile';
 import { useRouter } from 'next/router';
 import React, { useMemo } from 'react';
 
 export const TopNotifications = () => {
   const router = useRouter();
-  const { profile } = useFetchProfile();
+  const { isNeedToInputProfile, profile } = useProfile();
   const { isNeedToInputProfile: isNeedToInputProfileForNmo } = useNmo();
-
-  const isNeedToInputProfile = useMemo(() => profile !== undefined && profile.birthday_year === 9999, [profile]);
 
   const profileNotification = useMemo(() => {
     if (!profile) {

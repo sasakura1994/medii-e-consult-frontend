@@ -1,7 +1,8 @@
 import { useCallback, useEffect } from 'react';
 import { useEditProfile } from './editProfile/useEditProfile';
 import { useRouter } from 'next/router';
-import { mutateFetchProfile, useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
+import { mutateFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
+import { useProfile } from '@/hooks/useProfile';
 
 type Query = {
   redirect?: string;
@@ -13,9 +14,7 @@ export const useFillProfile = () => {
   const { redirect } = router.query as Query;
   const editProfile = useEditProfile({ isRegisterMode: false });
   const { profile, saveProfile } = editProfile;
-  const { profile: fetchedProfile } = useFetchProfile();
-
-  const isNeedToInputProfile = fetchedProfile?.birthday_year === 9999;
+  const { isNeedToInputProfile } = useProfile();
 
   useEffect(() => {
     if (!profile) {

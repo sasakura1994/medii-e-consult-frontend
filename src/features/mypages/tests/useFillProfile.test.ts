@@ -25,6 +25,7 @@ describe('useFillProfile', () => {
       const profile = {
         last_name_hira: 'name',
         birthday_year: 9999,
+        status: 'VERIFIED',
       };
 
       const saveProfileMock = jest.fn();
@@ -58,6 +59,7 @@ describe('useFillProfile', () => {
       const profile = {
         last_name_hira: 'なまえ',
         birthday_year: 1999,
+        status: 'VERIFIED',
       };
       const saveProfileMock = jest.fn();
       saveProfileMock.mockResolvedValue(true);
@@ -91,6 +93,7 @@ describe('useFillProfile', () => {
     const profile = {
       last_name_hira: 'name',
       birthday_year: 9999,
+      status: 'VERIFIED',
     };
     const saveProfileMock = jest.fn();
     saveProfileMock.mockResolvedValue(true);
