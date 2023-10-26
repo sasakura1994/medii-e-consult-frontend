@@ -1,5 +1,6 @@
 import { usePostChatMessageNewFiles } from '@/hooks/api/chat/usePostChatMessageNewFiles';
 import { usePostChatMessageNewText } from '@/hooks/api/chat/usePostChatMessageNewText';
+import { loadLocalStorage, saveLocalStorage } from '@/libs/LocalStorageManager';
 import { useRef, useState, useCallback, ChangeEvent, useEffect } from 'react';
 
 type UseChatTextInputProps = {
@@ -71,6 +72,13 @@ export const useChatTextInput = (props: UseChatTextInputProps) => {
       setIsOpenFileInputModal(false);
     }
   };
+  const updateDraftMessage = (value: string) => {
+    const currentDrafts = JSON.parse(loadLocalStorage('ChatDraft::List') || '{}');
+
+    currentDrafts[chatRoomId] = value;
+
+    saveLocalStorage('ChatDraft::List', JSON.stringify(currentDrafts));
+  };
   useEffect(() => {
     resizeHeight();
   }, []);
@@ -89,5 +97,6 @@ export const useChatTextInput = (props: UseChatTextInputProps) => {
     setIsUploading,
     resetFileInput,
     postNewFile,
+    updateDraftMessage,
   };
 };

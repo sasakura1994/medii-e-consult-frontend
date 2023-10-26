@@ -40,7 +40,15 @@ export const ChatTextInput = (props: ChatTextInputProps) => {
     setIsUploading,
     resetFileInput,
     postNewFile,
+    updateDraftMessage,
   } = useChatTextInput({ chatRoomId: chatRoomId });
+
+  const submit = async () => {
+    await postTextMessage();
+    mutateChatList?.();
+    mutateChatRoom?.();
+    mutateFetchUnreadCounts?.();
+  };
 
   return (
     <>
@@ -71,17 +79,17 @@ export const ChatTextInput = (props: ChatTextInputProps) => {
       <div className="flex w-full bg-white py-1">
         <textarea
           ref={textInputRef}
-          onChange={resizeHeight}
+          onChange={(e) => {
+            resizeHeight();
+            updateDraftMessage(e.target.value);
+          }}
           className="ml-2 flex w-[682px] resize-none rounded border border-solid border-block-gray px-2 py-1
           placeholder-gray-600 disabled:bg-[#d5d5d5] disabled:text-block-gray"
           placeholder="メッセージを入力 (Shift + Enterキーで送信)"
           onKeyDown={async (e) => {
             if (e.key === 'Enter' && e.shiftKey) {
               e.preventDefault();
-              await postTextMessage();
-              mutateChatList?.();
-              mutateChatRoom?.();
-              mutateFetchUnreadCounts?.();
+              submit();
             }
           }}
         />
@@ -104,10 +112,7 @@ export const ChatTextInput = (props: ChatTextInputProps) => {
           alt=""
           className="my-auto ml-3 h-[30px] w-[30px] cursor-pointer"
           onClick={async () => {
-            await postTextMessage();
-            mutateChatList?.();
-            mutateChatRoom?.();
-            mutateFetchUnreadCounts?.();
+            submit();
           }}
         />
         {editingImage && (
