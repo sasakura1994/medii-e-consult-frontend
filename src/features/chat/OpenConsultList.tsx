@@ -25,7 +25,11 @@ export const OpenConsultList = (props: OpenConsultListProps) => {
           {chatRoomList
             ? chatRoomList.filter(
                 (c) =>
-                  c.room_type !== 'GROUP' && (c.status === 'CREATED' || c.status === 'ACTIVE' || c.status === 'REOPEN')
+                  c.room_type !== 'GROUP' &&
+                  (c.status === 'CREATED' ||
+                    c.status === 'ACTIVE' ||
+                    c.status === 'REOPEN' ||
+                    c.status === 'TEMP_RESOLVED')
               ).length
             : 0}
           ]
@@ -41,7 +45,9 @@ export const OpenConsultList = (props: OpenConsultListProps) => {
         chatRoomList &&
         chatRoomList
           .filter(
-            (c) => c.room_type !== 'GROUP' && (c.status === 'CREATED' || c.status === 'ACTIVE' || c.status === 'REOPEN')
+            (c) =>
+              c.room_type !== 'GROUP' &&
+              (c.status === 'CREATED' || c.status === 'ACTIVE' || c.status === 'REOPEN' || c.status === 'TEMP_RESOLVED')
           )
           .map((chatRoom) => {
             return (
@@ -75,7 +81,11 @@ export const OpenConsultList = (props: OpenConsultListProps) => {
           {chatRoomList
             ? chatRoomList.filter(
                 (c) =>
-                  c.room_type === 'GROUP' && (c.status === 'CREATED' || c.status === 'ACTIVE' || c.status === 'REOPEN')
+                  c.room_type === 'GROUP' &&
+                  (c.status === 'CREATED' ||
+                    c.status === 'ACTIVE' ||
+                    c.status === 'REOPEN' ||
+                    c.status === 'TEMP_RESOLVED')
               ).length
             : 0}
           ]
@@ -91,7 +101,9 @@ export const OpenConsultList = (props: OpenConsultListProps) => {
         chatRoomList &&
         chatRoomList
           .filter(
-            (c) => c.room_type === 'GROUP' && (c.status === 'CREATED' || c.status === 'ACTIVE' || c.status === 'REOPEN')
+            (c) =>
+              c.room_type === 'GROUP' &&
+              (c.status === 'CREATED' || c.status === 'ACTIVE' || c.status === 'REOPEN' || c.status === 'TEMP_RESOLVED')
           )
           .map((chatRoom) => {
             return (

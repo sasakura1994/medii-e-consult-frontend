@@ -16,6 +16,10 @@ import { FetchUnreadCountsResponseData } from '@/hooks/api/chat/useFetchUnreadCo
 import { ChatDoctorDetailModal } from './ChatDoctorDetailModal';
 import { OpenConsultDetailButton } from './OpenConsultDetailButton';
 import { ChatGroupMemberModal } from './ChatGroupMemberModal';
+import { ChatReplyRequestModal } from './ChatReplyRequestModal';
+import { ChatTempResolveRequestModal } from './ChatTempResolveRequestModal';
+import { CloseChatRoomModal } from './CloseChatRoomModal';
+import { ResolveChatRoomModal } from './ResolveChatRoomModal';
 
 type ConsultDetailProps = {
   publishmentStatusData?: {
@@ -60,8 +64,17 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     setIsOpenDoctorDetailModal,
     isOpenGroupMemberModal,
     setIsOpenGroupMemberModal,
+    isOpenReplyRequestModal,
+    setIsOpenReplyRequestModal,
+    isOpenTempResolveRequestModal,
+    setIsOpenTempResolveRequestModal,
+    isOpenCloseChatRoomModal,
+    setIsOpenCloseChatRoomModal,
+    isOpenResolveChatRoomModal,
+    setIsOpenResolveChatRoomModal,
     getMedicalSpecialityName,
     getExperienceYear,
+    activateChatRoom,
   } = useConsultDetail({
     medicalSpecialities: medicalSpecialities,
     chatRoomData: chatRoomData,
@@ -172,6 +185,30 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
       {chatRoomData && isOpenGroupMemberModal && (
         <ChatGroupMemberModal setIsOpen={setIsOpenGroupMemberModal} members={chatRoomData.members} />
       )}
+      {chatRoomData && isOpenReplyRequestModal && (
+        <ChatReplyRequestModal setIsOpen={setIsOpenReplyRequestModal} chatRoomData={chatRoomData} />
+      )}
+      {chatRoomData && isOpenTempResolveRequestModal && (
+        <ChatTempResolveRequestModal
+          setIsOpen={setIsOpenTempResolveRequestModal}
+          chatRoomData={chatRoomData}
+          mutateChatRoom={mutateChatRoom}
+        />
+      )}
+      {chatRoomData && isOpenCloseChatRoomModal && (
+        <CloseChatRoomModal
+          setIsOpen={setIsOpenCloseChatRoomModal}
+          chatRoomData={chatRoomData}
+          mutateChatRoom={mutateChatRoom}
+        />
+      )}
+      {chatRoomData && isOpenResolveChatRoomModal && (
+        <ResolveChatRoomModal
+          setIsOpen={setIsOpenResolveChatRoomModal}
+          chatRoomData={chatRoomData}
+          setSelectedTab={setSelectedTab}
+        />
+      )}
       {chatRoomData && publishmentStatusData && accountId && chatListDataWithDisplayName && (
         <>
           {isOpenReConsultConfirmModal && (
@@ -228,7 +265,10 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                   isChatRoomOwner={isChatRoomOwner}
                   chatRoomData={chatRoomData}
                   setIsOpenReConsultConfirmModal={setIsOpenReConsultConfirmModal}
-                  setIsOpenRoomReopenModal={setIsOpenRoomReopenModal}
+                  setIsOpenReplyRequestModal={setIsOpenReplyRequestModal}
+                  setIsOpenTempResolveRequestModal={setIsOpenTempResolveRequestModal}
+                  setIsOpenCloseChatRoomModal={setIsOpenCloseChatRoomModal}
+                  setIsOpenResolveChatRoomModal={setIsOpenResolveChatRoomModal}
                 />
 
                 <img
@@ -243,14 +283,26 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                 {chatRoomDisplayName}
               </div>
             </div>
-
-            <div className="flex-grow overflow-auto bg-bg pb-2" ref={chatListRef}>
-              <ChatList
-                chatListData={chatListDataWithDisplayName}
-                currentUserAccountId={accountId}
-                chatRoomData={chatRoomData}
-              />
-            </div>
+            {isCloseRoom ? (
+              <div className="relative flex flex-grow overflow-hidden">
+                <div className="flex-grow overflow-scroll" ref={chatListRef}>
+                  <ChatList
+                    chatListData={chatListDataWithDisplayName}
+                    currentUserAccountId={accountId}
+                    chatRoomData={chatRoomData}
+                  />
+                </div>
+                <div className="pointer-events-none absolute inset-0 overflow-hidden bg-black bg-opacity-20" />
+              </div>
+            ) : (
+              <div className="flex-grow overflow-auto bg-bg pb-2" ref={chatListRef}>
+                <ChatList
+                  chatListData={chatListDataWithDisplayName}
+                  currentUserAccountId={accountId}
+                  chatRoomData={chatRoomData}
+                />
+              </div>
+            )}
             {isCloseRoom && (
               <div className="pointer-events-auto bg-[#5c6bc0] p-2 text-center text-sm text-white">
                 <p>解決済みのルームです</p>
@@ -291,6 +343,30 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                         </div>
                       </Link>
                     ))}
+                </div>
+              </div>
+            )}
+            {chatRoomData.chat_room.status === 'TEMP_RESOLVED' && isChatRoomOwner && (
+              <div className="pointer-events-auto bg-[#5c6bc0] p-2 text-center text-sm text-white">
+                <p>専門医よりコンサル終了の依頼が届きました</p>
+                <div className="flex justify-center">
+                  <div
+                    className="mx-3 mt-4 min-w-[40%] cursor-pointer rounded-full bg-white px-4 py-1 text-primary"
+                    onClick={async () => {
+                      await activateChatRoom({ chat_room_id: chatRoomData.chat_room.chat_room_id });
+                      await mutateChatRoom?.();
+                      mutateChatList?.();
+                    }}
+                  >
+                    <p className="text-sm">コンサルを継続</p>
+                  </div>
+                  <div
+                    className="mx-3 mt-4 min-w-[40%] cursor-pointer
+                      rounded-full bg-white px-4 py-1 text-primary"
+                    onClick={() => setIsOpenResolveChatRoomModal(true)}
+                  >
+                    <p className="text-sm">解決しました</p>
+                  </div>
                 </div>
               </div>
             )}
