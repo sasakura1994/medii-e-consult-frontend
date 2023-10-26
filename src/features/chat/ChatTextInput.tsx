@@ -48,6 +48,7 @@ export const ChatTextInput = (props: ChatTextInputProps) => {
     mutateChatList?.();
     mutateChatRoom?.();
     mutateFetchUnreadCounts?.();
+    updateDraftMessage('');
   };
 
   return (

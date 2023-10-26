@@ -74,9 +74,11 @@ export const useChatTextInput = (props: UseChatTextInputProps) => {
   };
   const updateDraftMessage = (value: string) => {
     const currentDrafts = JSON.parse(loadLocalStorage('ChatDraft::List') || '{}');
-
-    currentDrafts[chatRoomId] = value;
-
+    if (!value) {
+      delete currentDrafts[chatRoomId];
+    } else {
+      currentDrafts[chatRoomId] = value;
+    }
     saveLocalStorage('ChatDraft::List', JSON.stringify(currentDrafts));
   };
   useEffect(() => {
