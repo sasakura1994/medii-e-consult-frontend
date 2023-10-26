@@ -3,6 +3,7 @@ import React from 'react';
 import { useDocumentInputAuto } from './useDocumentInputAuto';
 import { DocumentSelected } from '.';
 import { YearInput } from '@/components/Parts/Form/YearInput';
+import PrimaryButton from '@/components/Button/PrimaryButton';
 
 type DocumentInputAutoProps = {
   setSelectedWithRedirect: (value: DocumentSelected) => void;
@@ -82,15 +83,17 @@ const DocumentInputAuto: React.FC<DocumentInputAutoProps> = ({ setSelectedWithRe
       </div>
       {errorMessage && <div className="mt-5 text-center text-base font-bold text-red-400">{errorMessage}</div>}
       <div className="-mb-20 mt-7 flex justify-center lg:mb-0 lg:mt-0">
-        <input
+        <PrimaryButton
           type="submit"
+          size='large'
           className={
             year
-              ? ' my-10 cursor-pointer rounded-full bg-primary px-10 pb-2 pt-1.5 font-bold text-white shadow-lg'
-              : ' my-10 cursor-pointer rounded-full bg-btn-gray px-10 pb-2 pt-1.5 font-bold text-white shadow-lg'
+              ? ' my-10 bg-primary pb-2 pt-1.5 shadow-lg'
+              : ' my-10 bg-btn-gray pb-2 pt-1.5 shadow-lg'
           }
-          value="登録を完了する"
-        />
+        >
+          登録を完了する
+        </PrimaryButton>
       </div>
     </form>
   );
