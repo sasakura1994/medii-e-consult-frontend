@@ -54,7 +54,7 @@ export const MyChat = (props: MyChatProps) => {
             <img
               src={chatData.file_path}
               alt=""
-              className="aspect-auto h-[250px]"
+              className="aspect-auto h-[250px] cursor-pointer"
               onClick={() => {
                 setSelectedImage(chatData.file_path);
               }}

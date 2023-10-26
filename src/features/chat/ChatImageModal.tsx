@@ -22,13 +22,6 @@ const ChatImageModal = ({ fileName, url, onClose }: ChatImageModalProps) => {
   const [isMoving, setIsMoving] = useState<boolean>(false);
 
   const imageAreaRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLImageElement>(null);
-
-  useEffect(() => {
-    console.log('width', width);
-    console.log('height', height);
-    console.log('scale', scale);
-  }, [width, height, scale]);
 
   useEffect(() => {
     if (imageAreaRef.current) {
@@ -75,9 +68,13 @@ const ChatImageModal = ({ fileName, url, onClose }: ChatImageModalProps) => {
     setIsMoving(false);
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const getEvent = (e: any, type: string) => {
-    return e.type === type ? e : e.changedTouches[0];
+  const getEvent = (e: MouseEvent | TouchEvent, type: string): MouseEvent | Touch => {
+    if ('changedTouches' in e) {
+      return e.changedTouches[0];
+    } else if (e.type === type) {
+      return e;
+    }
+    throw new Error(`Unexpected event type: ${e.type}`);
   };
 
   const zoomIn = () => {
@@ -133,7 +130,6 @@ const ChatImageModal = ({ fileName, url, onClose }: ChatImageModalProps) => {
         <div ref={imageAreaRef} className="relative flex-grow overflow-hidden bg-[#d9d9d9]">
           {url && (
             <img
-              ref={imageRef}
               src={url}
               alt={fileName}
               style={{
@@ -145,6 +141,7 @@ const ChatImageModal = ({ fileName, url, onClose }: ChatImageModalProps) => {
                 top: `${imageY()}px`,
                 width: width * scale + 'px',
                 height: height * scale + 'px',
+                maxWidth: 'none',
               }}
               onMouseDown={dragStart}
             />

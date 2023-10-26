@@ -37,7 +37,7 @@ export const ChatList = (props: ChatListProps) => {
             <MyChat chatData={c} key={c.uid} chatRoomData={chatRoomData} setSelectedImage={setSelectedImage} />
           ) : (
             <>
-              <OtherChat chatData={c} key={c.uid} />
+              <OtherChat chatData={c} key={c.uid} setSelectedImage={setSelectedImage} />
               {isView && !isLastMyChat && <NewBorder />}
             </>
           );
