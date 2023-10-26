@@ -88,9 +88,10 @@ const DocumentInputAuto: React.FC<DocumentInputAutoProps> = ({ setSelectedWithRe
           size='large'
           className={
             year
-              ? ' my-10 bg-primary pb-2 pt-1.5 shadow-lg'
-              : ' my-10 bg-btn-gray pb-2 pt-1.5 shadow-lg'
+              ? ' my-10 pb-2 pt-1.5 shadow-lg'
+              : ' my-10 pb-2 pt-1.5 shadow-lg'
           }
+          disabled={year ? false : true}
         >
           登録を完了する
         </PrimaryButton>
