@@ -32,7 +32,7 @@ export const RegistrationCompleted = (props: UseRegisterType) => {
                 <ul className="ml-6 mt-4 list-disc">
                   <li>迷惑メールフォルダや受信ボックス以外のフォルダに振り分けられていないかご確認ください。</li>
                   <li>
-                    ご使用のメールアドレスが正しいかご確認ください。正しくない場合は、新しいメールアドレスせ再設定してください。
+                    ご使用のメールアドレスが正しいかご確認ください。正しくない場合は、新しいメールアドレスを再設定してください。
                   </li>
                 </ul>
               </div>
