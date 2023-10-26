@@ -35,7 +35,7 @@ export const OnboardingConsultPointModal = () => {
             </TertiaryButton>
           </Link>
           <Link href="/newchatroom?from=onboarding_questionary_completed" className="flex-1">
-            <PrimaryButton size="large" className="w-full">
+            <PrimaryButton size="large" className="w-full px-[1px] tracking-[-1.6px]">
               E-コンサルで質問する
             </PrimaryButton>
           </Link>
