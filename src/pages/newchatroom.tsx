@@ -6,23 +6,21 @@ import { NewChatRoomInput } from '@/features/chat/newChatRoom/NewChatRoomInput';
 import { NewChatRoomConfirmation } from '@/features/chat/newChatRoom/NewChatRoomConfirmation';
 import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 import { useNmo } from '@/hooks/alliance/useNmo';
-import { Modal } from '@/components/Parts/Modal/Modal';
-import PrimaryButton from '@/components/Button/PrimaryButton';
-import Link from 'next/link';
 import { ImcompleteProfileModal } from '@/components/Parts/Modal/ImcompleteProfileModal';
-import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { DocumentConfirmingMessage } from '@/components/Doctor/DocumentConfirmingMessage';
 import { Header } from '@/components/Layouts/Header/Header';
 import { FooterSpMenu } from '@/components/Layouts/Footer/FooterSpMenu';
 import { useAuthenticationOnPage } from '@/hooks/authentication/useAuthenticationOnPage';
+import { useProfile } from '@/hooks/useProfile';
+import { NeedToInputProfileModal } from '@/components/Parts/Modal/NeedToInputProfileModal';
 
 const NewChatRoomPage: NextPageWithLayout = () => {
   useAuthenticationOnPage();
   const newChatRoom = useNewChatRoom();
   useEventLog({ name: '/NewChatRoom' });
   const { mode } = newChatRoom;
-  const { profile } = useFetchProfile();
-  const { isNeedToInputProfile } = useNmo();
+  const { profile, isNeedToInputProfile } = useProfile();
+  const { isNeedToInputProfile: isNeedToInputProfileForNmo } = useNmo();
 
   if (profile?.main_speciality === 'STUDENT') {
     return (
@@ -53,19 +51,16 @@ const NewChatRoomPage: NextPageWithLayout = () => {
           {mode === 'input' ? <NewChatRoomInput {...newChatRoom} /> : <NewChatRoomConfirmation {...newChatRoom} />}
         </Card>
         {isNeedToInputProfile && (
-          <Modal className="w-lg-breakpoint px-8 py-20 lg:px-20">
-            <p data-testid="nmo-modal">
-              すべてのサービスをご利用いただくには、追加のプロフィール入力が必要です。
-              以下のボタンからプロフィールの入力をお願いいたします。
-            </p>
-            <div className="mt-10">
-              <Link href={`/nmo/input-profile?redirect=${encodeURIComponent('/newchatroom')}`}>
-                <PrimaryButton size="large" className="mx-auto">
-                  プロフィール入力
-                </PrimaryButton>
-              </Link>
-            </div>
-          </Modal>
+          <NeedToInputProfileModal
+            href={`/fill-profile?redirect=${encodeURIComponent('/newchatroom')}`}
+            dataTestId="need-to-fill-profile-modal"
+          />
+        )}
+        {isNeedToInputProfileForNmo && (
+          <NeedToInputProfileModal
+            href={`/nmo/input-profile?redirect=${encodeURIComponent('/newchatroom')}`}
+            dataTestId="nmo-modal"
+          />
         )}
       </main>
       <ImcompleteProfileModal />
