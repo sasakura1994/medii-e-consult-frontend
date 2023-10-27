@@ -63,7 +63,6 @@ export const MyChat = (props: MyChatProps) => {
           </p>
         ) : chatData.content_type.startsWith('image/') ? (
           <div
-            className="mb-3 mr-3 p-2"
             onMouseOver={() => {
               setIsMouseOver(true);
             }}
@@ -71,28 +70,8 @@ export const MyChat = (props: MyChatProps) => {
               setIsMouseOver(false);
             }}
           >
-            <img src={chatData.file_path} alt="" className="aspect-auto h-[250px]" />
-          </div>
-        ) : chatData.content_type.startsWith('application/') ? (
-          <div
-            className="mb-3 mr-3 flex cursor-pointer items-center rounded-lg bg-white p-2"
-            onClick={downloadFile}
-            onMouseOver={() => {
-              setIsMouseOver(true);
-            }}
-            onMouseLeave={() => {
-              setIsMouseOver(false);
-            }}
-          >
-            <img src="icons/insert_drive_file.svg" alt="" className="h-10 w-10" />
-            <p className="max-w-[670px] whitespace-pre-wrap break-words">{chatData.file_name}</p>
-          </div>
-        ) : (
-          <>
-            {unreadView}
-            <p
-              className="mb-3 mr-3 min-w-[200px] max-w-[670px] whitespace-pre-wrap break-words rounded-lg
-              rounded-tr-none bg-primary-light p-2"
+            <div
+              className="mb-3 mr-3 p-2"
               onMouseOver={() => {
                 setIsMouseOver(true);
               }}
@@ -100,22 +79,64 @@ export const MyChat = (props: MyChatProps) => {
                 setIsMouseOver(false);
               }}
             >
-              {chatData.message}
-            </p>
-          </>
-        )}
-      </div>
-      {isMouseOver && (
-        <div className="flex justify-end">
+              <img src={chatData.file_path} alt="" className="aspect-auto h-[250px]" />
+            </div>
+          </div>
+        ) : chatData.content_type.startsWith('application/') ? (
           <div
-            className="float-right -mt-3 mb-3 mr-4 flex h-10 w-24 cursor-pointer items-center justify-center
-         gap-1 rounded-b-xl bg-primary"
             onMouseOver={() => {
               setIsMouseOver(true);
             }}
             onMouseLeave={() => {
               setIsMouseOver(false);
             }}
+          >
+            <div
+              className="mb-3 mr-3 flex cursor-pointer items-center rounded-lg bg-white p-2"
+              onClick={downloadFile}
+              onMouseOver={() => {
+                setIsMouseOver(true);
+              }}
+              onMouseLeave={() => {
+                setIsMouseOver(false);
+              }}
+            >
+              <img src="icons/insert_drive_file.svg" alt="" className="h-10 w-10" />
+              <p className="max-w-[670px] whitespace-pre-wrap break-words">{chatData.file_name}</p>
+            </div>
+          </div>
+        ) : (
+          <div
+            onMouseOver={() => {
+              setIsMouseOver(true);
+            }}
+            onMouseLeave={() => {
+              setIsMouseOver(false);
+            }}
+          >
+            {unreadView}
+            <p
+              className="mb-3 mr-3 min-w-[200px] max-w-[670px] whitespace-pre-wrap break-words rounded-lg
+              rounded-tr-none bg-primary-light p-2"
+            >
+              {chatData.message}
+            </p>
+          </div>
+        )}
+      </div>
+      {isMouseOver && (
+        <div
+          className="flex justify-end"
+          onMouseOver={() => {
+            setIsMouseOver(true);
+          }}
+          onMouseLeave={() => {
+            setIsMouseOver(false);
+          }}
+        >
+          <div
+            className="float-right -mt-3 mb-3 mr-4 flex h-10 w-24 cursor-pointer items-center justify-center
+         gap-1 rounded-b-xl bg-primary"
             onClick={() => {
               setIsOpenDeleteModal(true);
             }}
