@@ -5,10 +5,11 @@ import React, { useMemo } from 'react';
 type MyChatProps = {
   chatData: ChatData & { displayName: string };
   chatRoomData: FetchChatRoomResponseData;
+  setSelectedImage: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export const MyChat = (props: MyChatProps) => {
-  const { chatData, chatRoomData } = props;
+  const { chatData, chatRoomData, setSelectedImage } = props;
   const date = new Date(chatData.created_date);
   const formattedDate = date.toLocaleString(undefined, {
     month: 'numeric',
@@ -50,7 +51,14 @@ export const MyChat = (props: MyChatProps) => {
           </p>
         ) : chatData.content_type.startsWith('image/') ? (
           <div className="mb-3 mr-3 p-2">
-            <img src={chatData.file_path} alt="" className="aspect-auto h-[250px]" />
+            <img
+              src={chatData.file_path}
+              alt=""
+              className="aspect-auto h-[250px] cursor-pointer"
+              onClick={() => {
+                setSelectedImage(chatData.file_path);
+              }}
+            />
           </div>
         ) : chatData.content_type.startsWith('application/') ? (
           <div className="mb-3 mr-3 flex cursor-pointer items-center rounded-lg bg-white p-2" onClick={downloadFile}>

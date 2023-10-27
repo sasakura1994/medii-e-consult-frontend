@@ -20,6 +20,7 @@ import { ChatReplyRequestModal } from './ChatReplyRequestModal';
 import { ChatTempResolveRequestModal } from './ChatTempResolveRequestModal';
 import { CloseChatRoomModal } from './CloseChatRoomModal';
 import { ResolveChatRoomModal } from './ResolveChatRoomModal';
+import ChatImageModal from './ChatImageModal';
 
 type ConsultDetailProps = {
   publishmentStatusData?: {
@@ -72,6 +73,8 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     setIsOpenCloseChatRoomModal,
     isOpenResolveChatRoomModal,
     setIsOpenResolveChatRoomModal,
+    selectedImage,
+    setSelectedImage,
     getMedicalSpecialityName,
     getExperienceYear,
     activateChatRoom,
@@ -209,6 +212,14 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
           setSelectedTab={setSelectedTab}
         />
       )}
+      {selectedImage && (
+        <ChatImageModal
+          url={selectedImage}
+          onClose={() => {
+            setSelectedImage('');
+          }}
+        />
+      )}
       {chatRoomData && publishmentStatusData && accountId && chatListDataWithDisplayName && (
         <>
           {isOpenReConsultConfirmModal && (
@@ -246,6 +257,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
               mutateChatRoomList={mutateChatRoomList}
             />
           )}
+
           <div className="flex h-[calc(100vh-62px)] w-[787px] flex-col border border-[#d5d5d5]">
             <div className="flex-shrink-0 flex-grow-0">
               <div className="mr-2 flex h-14 items-center space-x-1">
@@ -290,6 +302,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                     chatListData={chatListDataWithDisplayName}
                     currentUserAccountId={accountId}
                     chatRoomData={chatRoomData}
+                    setSelectedImage={setSelectedImage}
                   />
                 </div>
                 <div className="pointer-events-none absolute inset-0 overflow-hidden bg-black bg-opacity-20" />
@@ -300,6 +313,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                   chatListData={chatListDataWithDisplayName}
                   currentUserAccountId={accountId}
                   chatRoomData={chatRoomData}
+                  setSelectedImage={setSelectedImage}
                 />
               </div>
             )}
