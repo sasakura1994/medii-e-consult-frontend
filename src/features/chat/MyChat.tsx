@@ -8,10 +8,11 @@ type MyChatProps = {
   chatData: ChatData & { displayName: string };
   chatRoomData: FetchChatRoomResponseData;
   mutateChatRoom?: KeyedMutator<FetchChatRoomResponseData>;
+  setSelectedImage: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export const MyChat = (props: MyChatProps) => {
-  const { chatData, chatRoomData, mutateChatRoom } = props;
+  const { chatData, chatRoomData, setSelectedImage, mutateChatRoom } = props;
   const [isMouseOver, setIsMouseOver] = useState(false);
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
   const date = new Date(chatData.created_date);
@@ -79,7 +80,14 @@ export const MyChat = (props: MyChatProps) => {
                 setIsMouseOver(false);
               }}
             >
-              <img src={chatData.file_path} alt="" className="aspect-auto h-[250px]" />
+              <img
+                src={chatData.file_path}
+                alt=""
+                className="aspect-auto h-[250px] cursor-pointer"
+                onClick={() => {
+                  setSelectedImage(chatData.file_path);
+                }}
+              />
             </div>
           </div>
         ) : chatData.content_type.startsWith('application/') ? (

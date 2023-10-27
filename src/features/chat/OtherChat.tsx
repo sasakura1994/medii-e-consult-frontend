@@ -3,10 +3,11 @@ import React from 'react';
 
 type OtherChatProps = {
   chatData: ChatData & { displayName: string };
+  setSelectedImage: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export const OtherChat = (props: OtherChatProps) => {
-  const { chatData } = props;
+  const { chatData, setSelectedImage } = props;
   const date = new Date(chatData.created_date);
   const formattedDate = date.toLocaleString(undefined, {
     month: 'numeric',
@@ -30,7 +31,14 @@ export const OtherChat = (props: OtherChatProps) => {
           </p>
         ) : chatData.content_type.startsWith('image/') ? (
           <div className="mb-3 mr-3 p-2">
-            <img src={chatData.file_path} alt="" className="aspect-auto h-[250px]" />
+            <img
+              src={chatData.file_path}
+              alt=""
+              className="aspect-auto h-[250px] cursor-pointer"
+              onClick={() => {
+                setSelectedImage(chatData.file_path);
+              }}
+            />
           </div>
         ) : (
           <p

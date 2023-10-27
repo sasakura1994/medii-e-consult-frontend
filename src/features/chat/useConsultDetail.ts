@@ -24,6 +24,7 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
   const [isOpenTempResolveRequestModal, setIsOpenTempResolveRequestModal] = useState(false);
   const [isOpenCloseChatRoomModal, setIsOpenCloseChatRoomModal] = useState(false);
   const [isOpenResolveChatRoomModal, setIsOpenResolveChatRoomModal] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string>('');
   const { accountId } = useToken();
   const chatListRef = useRef<HTMLDivElement | null>(null);
   const { getMedicalSpecialityName } = useMedicalSpeciality();
@@ -127,6 +128,8 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
     setIsOpenCloseChatRoomModal,
     isOpenResolveChatRoomModal,
     setIsOpenResolveChatRoomModal,
+    selectedImage,
+    setSelectedImage,
     getMedicalSpecialityName,
     getExperienceYear,
     activateChatRoom,
