@@ -29,6 +29,7 @@ export const useChatTextInput = (props: UseChatTextInputProps) => {
       setEditingImage(files[0]);
       return;
     }
+    setIsOpenFileInputModal(true);
   }, []);
 
   const resetFileInput = () => {
