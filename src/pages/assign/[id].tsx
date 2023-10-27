@@ -53,7 +53,7 @@ const AssignPage: NextPageWithLayout = () => {
             </p>
           </div>
           <div className="mt-8 flex justify-center gap-4">
-            <Link href="/login">
+            <Link href={`/login?redirect=${encodeURIComponent(`/assign/${chatRoom?.chat_room_id ?? ''}`)}`}>
               <TertiaryButton>ログイン</TertiaryButton>
             </Link>
             <a
