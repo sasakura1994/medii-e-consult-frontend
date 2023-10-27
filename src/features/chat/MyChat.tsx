@@ -1,15 +1,19 @@
 import { ChatData } from '@/hooks/api/chat/useFetchChatList';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import React, { useMemo, useState } from 'react';
+import { ChatDeleteModal } from './ChatDeleteModal';
+import { KeyedMutator } from 'swr';
 
 type MyChatProps = {
   chatData: ChatData & { displayName: string };
   chatRoomData: FetchChatRoomResponseData;
+  mutateChatRoom?: KeyedMutator<FetchChatRoomResponseData>;
 };
 
 export const MyChat = (props: MyChatProps) => {
-  const { chatData, chatRoomData } = props;
+  const { chatData, chatRoomData, mutateChatRoom } = props;
   const [isMouseOver, setIsMouseOver] = useState(false);
+  const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
   const date = new Date(chatData.created_date);
   const formattedDate = date.toLocaleString(undefined, {
     month: 'numeric',
@@ -37,6 +41,14 @@ export const MyChat = (props: MyChatProps) => {
 
   return (
     <>
+      {isOpenDeleteModal && (
+        <ChatDeleteModal
+          chatRoomId={chatRoomData.chat_room.chat_room_id}
+          chatUid={chatData.uid}
+          setIsOpenDeleteModal={setIsOpenDeleteModal}
+          mutateChatRoom={mutateChatRoom}
+        />
+      )}
       <div className="mr-3 flex justify-end">
         <p className="text-sm text-block-gray">{chatData.displayName}</p>
         <p className="ml-1 text-sm text-block-gray">{formattedDate}</p>
@@ -103,6 +115,9 @@ export const MyChat = (props: MyChatProps) => {
             }}
             onMouseLeave={() => {
               setIsMouseOver(false);
+            }}
+            onClick={() => {
+              setIsOpenDeleteModal(true);
             }}
           >
             <img src="icons/delete.svg" alt="" className="h-6" />

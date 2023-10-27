@@ -3,11 +3,13 @@ import { OtherChat } from './OtherChat';
 import { MyChat } from './MyChat';
 import { ChatData } from '@/hooks/api/chat/useFetchChatList';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
+import { KeyedMutator } from 'swr';
 
 type ChatListProps = {
   chatListData: (ChatData & { displayName: string })[];
   currentUserAccountId: string;
   chatRoomData: FetchChatRoomResponseData;
+  mutateChatRoom?: KeyedMutator<FetchChatRoomResponseData>;
 };
 
 const NewBorder = () => {
@@ -20,7 +22,7 @@ const NewBorder = () => {
 };
 
 export const ChatList = (props: ChatListProps) => {
-  const { chatListData, chatRoomData, currentUserAccountId } = props;
+  const { chatListData, chatRoomData, currentUserAccountId, mutateChatRoom } = props;
 
   const isLastMyChat = useMemo(() => {
     return chatListData[chatListData.length - 1].account_id === currentUserAccountId;
@@ -33,7 +35,7 @@ export const ChatList = (props: ChatListProps) => {
         chatListData.map((c) => {
           const isView = chatRoomData.me?.read_until === c.uid && chatListData[chatListData.length - 1].uid !== c.uid;
           return c.account_id === currentUserAccountId ? (
-            <MyChat chatData={c} key={c.uid} chatRoomData={chatRoomData} />
+            <MyChat chatData={c} key={c.uid} chatRoomData={chatRoomData} mutateChatRoom={mutateChatRoom} />
           ) : (
             <>
               <OtherChat chatData={c} key={c.uid} />

@@ -11,7 +11,7 @@ import { KeyedMutator } from 'swr';
 import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
 import { useConsultDetail } from './useConsultDetail';
 import { ChatEditModal } from './ChatEditModal';
-import { ChatDeleteModal } from './ChatDeleteModal';
+import { ConsultDeleteModal } from './ConsultDeleteModal';
 import { FetchUnreadCountsResponseData } from '@/hooks/api/chat/useFetchUnreadCounts';
 import { ChatDoctorDetailModal } from './ChatDoctorDetailModal';
 import { OpenConsultDetailButton } from './OpenConsultDetailButton';
@@ -239,7 +239,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
           )}
 
           {isOpenDeleteModal && (
-            <ChatDeleteModal
+            <ConsultDeleteModal
               chatRoomData={chatRoomData}
               setIsOpenDeleteModal={setIsOpenDeleteModal}
               mutateChatRoom={mutateChatRoom}
