@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDocumentInputDocument } from './useDocumentInputDocument';
 import { DocumentSelected } from '.';
+import PrimaryButton from '@/components/Button/PrimaryButton';
 
 type DocumentInputDocumentProps = {
   setSelectedWithRedirect: (value: DocumentSelected) => void;
@@ -91,15 +92,14 @@ const DocumentInputDocument = ({
         </div>
       )}
       <div className="mt-7 -mb-20 flex justify-center lg:mb-0 lg:mt-0">
-        <input
+        <PrimaryButton
           type="submit"
-          className={
-            imageSource
-              ? ' my-10 cursor-pointer rounded-full bg-primary px-10 pt-1.5 pb-2 font-bold text-white shadow-lg'
-              : ' my-10 cursor-pointer rounded-full bg-btn-gray px-10 pt-1.5 pb-2 font-bold text-white shadow-lg'
-          }
-          value="登録を完了する"
-        />
+          size="large"
+          className="px-10 pt-1.5 pb-2 shadow-lg"
+          disabled={imageSource ? false : true}
+        >
+          登録を完了する
+        </PrimaryButton>
       </div>
     </form>
   );
