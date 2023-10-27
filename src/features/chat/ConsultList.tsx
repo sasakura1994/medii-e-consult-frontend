@@ -3,6 +3,7 @@ import { OpenConsultList } from './OpenConsultList';
 import { CloseConsultList } from './CloseConsultList';
 import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
 import { useFetchUnreadCounts } from '@/hooks/api/chat/useFetchUnreadCounts';
+import Link from 'next/link';
 
 type ConsultListProps = {
   chatRoomList?: ChatRoomEntity[];
@@ -19,9 +20,12 @@ export const ConsultList = (props: ConsultListProps) => {
       <div className="flex h-14 items-center bg-primary">
         <img src="icons/consult_list.svg" alt="" className="ml-2 h-7 w-8" />
         <p className="text-md font-bold text-white">コンサル一覧</p>
-        <button className="ml-3 rounded-full border border-white px-2 py-1 text-md font-bold text-white">
+        <Link
+          href="newchatroom"
+          className="ml-3 rounded-full border border-white px-2 py-1 text-md font-bold text-white"
+        >
           ＋匿名でコンサル作成
-        </button>
+        </Link>
       </div>
       <div className="flex h-10 bg-white">
         <div
