@@ -34,6 +34,16 @@ const ChatImageModal = ({ fileName, url, onClose }: ChatImageModalProps) => {
     image.onload = () => {
       setWidth(image.width);
       setHeight(image.height);
+      if (imageAreaRef.current) {
+        const fitWidthScale = imageAreaRef.current?.clientWidth / image.width;
+        const fitHeightScale = imageAreaRef.current?.clientHeight / image.height;
+
+        if (fitWidthScale < fitHeightScale) {
+          setScale(fitWidthScale);
+        } else {
+          setScale(fitHeightScale);
+        }
+      }
     };
 
     image.src = url;
