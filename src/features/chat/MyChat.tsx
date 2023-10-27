@@ -1,6 +1,6 @@
 import { ChatData } from '@/hooks/api/chat/useFetchChatList';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 
 type MyChatProps = {
   chatData: ChatData & { displayName: string };
@@ -9,6 +9,7 @@ type MyChatProps = {
 
 export const MyChat = (props: MyChatProps) => {
   const { chatData, chatRoomData } = props;
+  const [isMouseOver, setIsMouseOver] = useState(false);
   const date = new Date(chatData.created_date);
   const formattedDate = date.toLocaleString(undefined, {
     month: 'numeric',
@@ -49,11 +50,28 @@ export const MyChat = (props: MyChatProps) => {
             削除済みメッセージ
           </p>
         ) : chatData.content_type.startsWith('image/') ? (
-          <div className="mb-3 mr-3 p-2">
+          <div
+            className="mb-3 mr-3 p-2"
+            onMouseOver={() => {
+              setIsMouseOver(true);
+            }}
+            onMouseLeave={() => {
+              setIsMouseOver(false);
+            }}
+          >
             <img src={chatData.file_path} alt="" className="aspect-auto h-[250px]" />
           </div>
         ) : chatData.content_type.startsWith('application/') ? (
-          <div className="mb-3 mr-3 flex cursor-pointer items-center rounded-lg bg-white p-2" onClick={downloadFile}>
+          <div
+            className="mb-3 mr-3 flex cursor-pointer items-center rounded-lg bg-white p-2"
+            onClick={downloadFile}
+            onMouseOver={() => {
+              setIsMouseOver(true);
+            }}
+            onMouseLeave={() => {
+              setIsMouseOver(false);
+            }}
+          >
             <img src="icons/insert_drive_file.svg" alt="" className="h-10 w-10" />
             <p className="max-w-[670px] whitespace-pre-wrap break-words">{chatData.file_name}</p>
           </div>
@@ -61,14 +79,37 @@ export const MyChat = (props: MyChatProps) => {
           <>
             {unreadView}
             <p
-              className="mb-3 mr-3 max-w-[670px] whitespace-pre-wrap break-words rounded-lg rounded-tr-none
-           bg-primary-light p-2"
+              className="mb-3 mr-3 min-w-[200px] max-w-[670px] whitespace-pre-wrap break-words rounded-lg
+              rounded-tr-none bg-primary-light p-2"
+              onMouseOver={() => {
+                setIsMouseOver(true);
+              }}
+              onMouseLeave={() => {
+                setIsMouseOver(false);
+              }}
             >
               {chatData.message}
             </p>
           </>
         )}
       </div>
+      {isMouseOver && (
+        <div className="flex justify-end">
+          <div
+            className="float-right -mt-3 mb-3 mr-4 flex h-10 w-24 cursor-pointer items-center justify-center
+         gap-1 rounded-b-xl bg-primary"
+            onMouseOver={() => {
+              setIsMouseOver(true);
+            }}
+            onMouseLeave={() => {
+              setIsMouseOver(false);
+            }}
+          >
+            <img src="icons/delete.svg" alt="" className="h-6" />
+            <span className=" whitespace-nowrap text-sm text-white">削除</span>
+          </div>
+        </div>
+      )}
     </>
   );
 };
