@@ -10,10 +10,11 @@ export type ButtonProps = {
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
   className?: string;
+  dataTestId?: string;
 };
 
 const Button = (props: ButtonProps) => {
-  const { children, className, onClick, size = 'medium', disabled = false, type } = props;
+  const { children, className, onClick, size = 'medium', disabled = false, type, dataTestId } = props;
 
   const bottunSizes: { [key: string]: string } = {
     small: 'h-6',
@@ -23,6 +24,7 @@ const Button = (props: ButtonProps) => {
   return (
     <button
       type={type}
+      data-testid = {dataTestId}
       className={`
         flex
         items-center

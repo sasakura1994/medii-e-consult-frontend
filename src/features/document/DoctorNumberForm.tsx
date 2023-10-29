@@ -111,7 +111,7 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelectedWithRedi
       <div className="-mb-10 mt-7 flex justify-center lg:mb-0 lg:mt-0">
         <PrimaryButton
           type="submit"
-          data-testid="document-input-number-form-submit"
+          dataTestId="document-input-number-form-submit"
           className='px-10 pb-2 pt-1.5 shadow-lg lg:my-10'
           disabled={!isUpdatePrepared}
         >
