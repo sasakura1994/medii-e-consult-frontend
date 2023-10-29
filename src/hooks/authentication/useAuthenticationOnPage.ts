@@ -24,6 +24,7 @@ export const useAuthenticationOnPage = (currentPath: string) => {
     '/auth/callback',
     '/privacypolicy',
     '/guest',
+    '/howtouse',
   ];
 
   const refreshToken = useCallback(async () => {
