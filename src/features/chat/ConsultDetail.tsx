@@ -260,7 +260,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
           )}
 
           <div
-            className="flex h-[100dvh] w-full flex-col border border-[#d5d5d5]
+            className="flex h-[100svh] w-full flex-col border border-[#d5d5d5]
           lg:h-[calc(100vh-62px)] lg:w-[787px]"
           >
             <div className="flex-shrink-0 flex-grow-0">
