@@ -43,10 +43,10 @@ export const ChatList = (props: ChatListProps) => {
               setSelectedImage={setSelectedImage}
             />
           ) : (
-            <>
-              <OtherChat chatData={c} key={c.uid} setSelectedImage={setSelectedImage} />
+            <div key={c.uid}>
+              <OtherChat chatData={c} setSelectedImage={setSelectedImage} />
               {isView && !isLastMyChat && <NewBorder />}
-            </>
+            </div>
           );
         })}
     </div>

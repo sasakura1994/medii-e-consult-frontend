@@ -41,6 +41,7 @@ export const ChatTextInput = (props: ChatTextInputProps) => {
     resetFileInput,
     postNewFile,
     updateDraftMessage,
+    windowWidth,
   } = useChatTextInput({ chatRoomId: chatRoomId });
 
   const submit = async () => {
@@ -77,25 +78,7 @@ export const ChatTextInput = (props: ChatTextInputProps) => {
         </Modal>
       )}
       {isUploading && <RectSpinnerDialog />}
-      <div className="flex w-full bg-white py-1">
-        {/* PC */}
-        <textarea
-          ref={textInputRef}
-          onChange={(e) => {
-            resizeHeight();
-            updateDraftMessage(e.target.value);
-          }}
-          className="ml-2 hidden w-[682px] resize-none rounded border border-solid border-block-gray px-2 py-1
-          placeholder-gray-600 disabled:bg-[#d5d5d5] disabled:text-block-gray lg:flex"
-          placeholder="メッセージを入力 (Shift + Enterキーで送信)"
-          onKeyDown={async (e) => {
-            if (e.key === 'Enter' && e.shiftKey) {
-              e.preventDefault();
-              submit();
-            }
-          }}
-        />
-        {/* SP */}
+      <div className="sticky flex w-full bg-white py-1">
         <img
           src="icons/icon_image.svg"
           alt=""
@@ -108,9 +91,15 @@ export const ChatTextInput = (props: ChatTextInputProps) => {
             resizeHeight();
             updateDraftMessage(e.target.value);
           }}
-          className="ml-2 flex w-[682px] resize-none rounded border border-solid border-block-gray px-2 py-1
-          placeholder-gray-600 disabled:bg-[#d5d5d5] disabled:text-block-gray lg:hidden"
-          placeholder="メッセージを入力"
+          className="ml-2 flex w-[682px] resize-none rounded border border-solid border-block-gray px-2
+          py-1 placeholder-gray-600 disabled:bg-[#d5d5d5] disabled:text-block-gray"
+          placeholder={windowWidth >= 1024 ? 'メッセージを入力 (Shift + Enterキーで送信)' : 'メッセージを入力'}
+          onKeyDown={async (e) => {
+            if (e.key === 'Enter' && e.shiftKey) {
+              e.preventDefault();
+              submit();
+            }
+          }}
         />
         <input
           type="file"

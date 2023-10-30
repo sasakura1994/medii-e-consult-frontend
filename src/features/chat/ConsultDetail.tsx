@@ -309,7 +309,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
               <div className="flex flex-wrap items-center space-x-1 border-t lg:h-7 lg:border-b">
                 {chatRoomData.members[0] && <p className="-mb-2 mt-2 text-xxs lg:mt-0 lg:border-t-0">E-コンサル</p>}
                 <div className="block h-0 w-full lg:hidden" />
-                <p className="flex flex-grow items-center lg:flex-grow-0">{chatRoomDisplayName}</p>
+                <div className="flex flex-grow items-center lg:flex-grow-0">{chatRoomDisplayName}</div>
 
                 <img
                   src="icons/btn_menu.svg"

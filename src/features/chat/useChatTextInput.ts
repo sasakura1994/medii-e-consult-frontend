@@ -16,6 +16,7 @@ export const useChatTextInput = (props: UseChatTextInputProps) => {
   const [isOpenFileInputModal, setIsOpenFileInputModal] = useState(false);
   const [editingImage, setEditingImage] = useState<File>();
   const [isUploading, setIsUploading] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(0);
 
   const onSelectFile = useCallback(async (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -98,6 +99,16 @@ export const useChatTextInput = (props: UseChatTextInputProps) => {
     resizeHeight();
   }, [chatRoomId]);
 
+  // ブレイクポイントを取得する
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return {
     isOpenFileInputModal,
     setIsOpenFileInputModal,
@@ -114,5 +125,6 @@ export const useChatTextInput = (props: UseChatTextInputProps) => {
     resetFileInput,
     postNewFile,
     updateDraftMessage,
+    windowWidth,
   };
 };
