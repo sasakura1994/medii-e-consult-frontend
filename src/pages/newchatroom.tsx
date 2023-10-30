@@ -14,11 +14,12 @@ import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { DocumentConfirmingMessage } from '@/components/Doctor/DocumentConfirmingMessage';
 import { Header } from '@/components/Layouts/Header/Header';
 import { FooterSpMenu } from '@/components/Layouts/Footer/FooterSpMenu';
+import { ConfirmModal } from '@/components/Parts/Modal/ConfirmModal';
 
 const NewChatRoomPage: NextPageWithLayout = () => {
   const newChatRoom = useNewChatRoom();
   useEventLog({ name: '/NewChatRoom' });
-  const { mode } = newChatRoom;
+  const { mode, isDraftConfirming, applyDraft, dontUseDraft } = newChatRoom;
   const { profile } = useFetchProfile();
   const { isNeedToInputProfile } = useNmo();
 
@@ -67,6 +68,11 @@ const NewChatRoomPage: NextPageWithLayout = () => {
         )}
       </main>
       <ImcompleteProfileModal />
+      {isDraftConfirming && (
+        <ConfirmModal onOk={applyDraft} onCancel={dontUseDraft}>
+          下書きに作成途中のコンサルがあります。作成途中のコンサルを続けて編集しますか？
+        </ConfirmModal>
+      )}
     </>
   );
 };
