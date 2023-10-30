@@ -91,7 +91,7 @@ const DocumentInputDocument = ({
           {errorMessage}
         </div>
       )}
-      <div className="mt-7 -mb-20 flex justify-center lg:mb-0 lg:mt-0">
+      <div className="mt-12 -mb-19 flex justify-center lg:mb-0 lg:mt-4">
         <PrimaryButton
           type="submit"
           size="large"
