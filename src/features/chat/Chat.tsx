@@ -30,13 +30,15 @@ export const Chat = () => {
   const { chat_room_id } = router.query as Query;
   const chatRoomIdStr = chat_room_id;
 
-  const [selectedTab, setSelectedTab] = useState<'open' | 'close'>('open');
   const isChatRoomSelected = useRecoilValue(isChatRoomSelectedState);
   const { data: chatRoomList, mutate: mutateChatRoomList } = useFetchChatRoomList({
     query: ['FREE', 'BY_NAME', 'GROUP'],
   });
   const { data: publishmentStatusData } = useGetPublishmentStatus(chatRoomIdStr);
   const { data: chatRoomData, mutate: mutateChatRoom } = useFetchChatRoom(chatRoomIdStr);
+  const [selectedTab, setSelectedTab] = useState<'open' | 'close'>(
+    chatRoomData?.chat_room.status === 'RESOLVED' || chatRoomData?.chat_room.status === 'CLOSED' ? 'close' : 'open'
+  );
   const { medicalSpecialities } = useFetchMedicalSpecialities();
   const { data: chatListData, mutate: mutateChatList } = useFetchChatList(chatRoomIdStr);
 
