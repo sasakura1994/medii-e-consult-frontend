@@ -12,7 +12,7 @@ export const NeedToInputProfileModal = (props: Props) => {
   const { href, dataTestId } = props;
 
   return (
-    <Modal className="w-lg-breakpoint px-8 py-20 lg:px-20">
+    <Modal className="px-8 py-20 lg:w-lg-breakpoint lg:px-20">
       <p data-testid={dataTestId}>
         すべてのサービスをご利用いただくには、追加のプロフィール入力が必要です。
         以下のボタンからプロフィールの入力をお願いいたします。
