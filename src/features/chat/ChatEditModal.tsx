@@ -30,29 +30,25 @@ export const ChatEditModal = (props: ChatEditModalProps) => {
   const [summary, setSummary] = useState(chatRoomData.chat_room.disease_name);
   const isOwner = chatRoomData.chat_room.owner_account_id === accountID;
   return (
-    <Modal className="w-[644px]" isCenter setShowModal={setIsOpenChatEditModal}>
-      <div className="mx-[82px] my-[15px]">
+    <Modal className="w-full lg:w-[644px]" isCenter setShowModal={setIsOpenChatEditModal}>
+      <div className="p-3 lg:mx-[82px] lg:my-[15px]">
         <p className="my-8 text-center text-2xl font-bold">E-コンサル ルーム編集</p>
         <div className="mb-4 text-base font-bold">患者情報</div>
-        <div className="flex">
-          <label className="mr-4">
-            <Radio
-              name="gender"
-              value="man"
-              checked={selectedGender === 'man'}
-              onChange={() => setSelectedGender('man')}
-            />
-            男性
-          </label>
-          <label>
-            <Radio
-              name="gender"
-              value="woman"
-              checked={selectedGender === 'woman'}
-              onChange={() => setSelectedGender('woman')}
-            />
-            女性
-          </label>
+        <div className="flex space-x-2">
+          <Radio
+            name="gender"
+            value="man"
+            checked={selectedGender === 'man'}
+            onChange={() => setSelectedGender('man')}
+            label="男性"
+          />
+          <Radio
+            name="gender"
+            value="woman"
+            checked={selectedGender === 'woman'}
+            onChange={() => setSelectedGender('woman')}
+            label="女性"
+          />
         </div>
         <div className="mt-6 w-[308px] ">
           <SelectBox

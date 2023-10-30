@@ -12,8 +12,8 @@ type ReConsultConfirmModalProps = {
 export const ReConsultConfirmModal = (props: ReConsultConfirmModalProps) => {
   const { chatRoomID, setIsOpenReConsultConfirmModal } = props;
   return (
-    <Modal className="w-[644px]" isCenter setShowModal={setIsOpenReConsultConfirmModal}>
-      <div className="mx-[82px] my-[15px]">
+    <Modal className="w-full overflow-y-auto px-3 lg:w-[644px]" isCenter setShowModal={setIsOpenReConsultConfirmModal}>
+      <div className="mx-2 lg:mx-[82px] lg:my-[15px]">
         <p className="my-9 text-2xl font-bold">他の医師に同様のコンサルを作成します</p>
 
         <ul className="mb-12">
@@ -23,10 +23,12 @@ export const ReConsultConfirmModal = (props: ReConsultConfirmModalProps) => {
           </li>
           <li className="list-disc">すでに回答をもらった医師には送信されません。</li>
         </ul>
-        <div className="mb-10 flex justify-center space-x-4">
-          <OutlinedButton onClick={() => setIsOpenReConsultConfirmModal(false)}>キャンセル</OutlinedButton>
-          <Link href={{ pathname: 'newchatroom', query: `reconsult=${chatRoomID}` }}>
-            <PrimaryButton>コンサルに進む</PrimaryButton>
+        <div className="mb-10 flex justify-center space-x-1 lg:space-x-9">
+          <OutlinedButton className="w-auto lg:w-[223px]" onClick={() => setIsOpenReConsultConfirmModal(false)}>
+            キャンセル
+          </OutlinedButton>
+          <Link className="w-[180px] lg:w-[223px]" href={{ pathname: 'newchatroom', query: `reconsult=${chatRoomID}` }}>
+            <PrimaryButton className="w-full">コンサルに進む</PrimaryButton>
           </Link>
         </div>
       </div>

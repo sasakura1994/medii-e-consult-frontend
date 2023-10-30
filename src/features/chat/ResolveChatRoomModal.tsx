@@ -19,7 +19,7 @@ export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
   const { resolveChatRoom } = usePostResolveChatRoom();
 
   return (
-    <Modal className="w-[644px] px-20 py-4" isCenter setShowModal={setIsOpen}>
+    <Modal className="w-full py-4 lg:w-[644px] lg:px-20" isCenter setShowModal={setIsOpen}>
       <p className="text-center text-sm text-text-secondary">解決済みとしてルームを閉じます</p>
       <p className="mt-2 text-center text-2xl font-bold">コンサルの評価を行ってください</p>
       <div className="my-5 border-b-2 border-border-divider" />

@@ -333,7 +333,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
             </div>
             {isCloseRoom ? (
               <div className="relative flex flex-grow overflow-hidden">
-                <div className="flex-grow overflow-scroll" ref={chatListRef}>
+                <div className="flex-grow overflow-y-scroll" ref={chatListRef}>
                   <ChatList
                     chatListData={chatListDataWithDisplayName}
                     currentUserAccountId={accountId}
@@ -356,7 +356,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
             {isCloseRoom && (
               <div className="pointer-events-auto bg-[#5c6bc0] p-2 text-center text-sm text-white">
                 <p>解決済みのルームです</p>
-                <div className="flex justify-center">
+                <div className="flex flex-col justify-center lg:flex-row">
                   <div
                     className="mx-3 mt-4 min-w-[40%] cursor-pointer rounded-full bg-white px-4 py-1 text-primary"
                     onClick={() => setIsOpenRoomReopenModal(true)}

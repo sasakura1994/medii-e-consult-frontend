@@ -19,12 +19,15 @@ export const ChatReplyRequestModal = (props: ChatReplyRequestModalProps) => {
   const { sendResponseRequest } = usePostChatRoomSendResponseRequest();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   return (
-    <Modal className="w-[644px] px-20 py-4" isCenter setShowModal={setIsOpen}>
+    <Modal className="w-full px-3 py-6 lg:w-[644px]" isCenter setShowModal={setIsOpen}>
       <p className="text-center text-2xl font-bold">返答依頼を送信しますか？</p>
       <p className="mt-4 text-center">返答を依頼するシステムメッセージが質問医師へ通知されます</p>
       <div className="mt-6 flex justify-center space-x-8">
-        <OutlinedButton onClick={() => setIsOpen(false)}>キャンセル</OutlinedButton>
+        <OutlinedButton className="w-[223px]" onClick={() => setIsOpen(false)}>
+          キャンセル
+        </OutlinedButton>
         <PrimaryButton
+          className="w-[223px]"
           onClick={async () => {
             const res = await sendResponseRequest({ chat_room_id: chatRoomData.chat_room.chat_room_id }).catch((e) => {
               const error = e as AxiosError<PostChatRoomSendResponseRequestResponseData>;

@@ -18,8 +18,8 @@ export const ConsultDeleteModal = (props: ConsultDeleteModalProps) => {
   const { chatRoomData, setIsOpenDeleteModal, mutateChatRoom, mutateChatRoomList } = props;
   const { deleteChatRoom } = useDeleteChatRoom();
   return (
-    <Modal className="w-[644px]" isCenter setShowModal={setIsOpenDeleteModal}>
-      <div className="mx-[82px] my-[15px]">
+    <Modal className="w-full lg:w-[644px]" isCenter setShowModal={setIsOpenDeleteModal}>
+      <div className="lg:mx-[82px] lg:my-[15px]">
         <p className="my-8 text-center text-2xl font-bold">E-コンサル ルーム削除</p>
         <p className="text-center text-base"> このルームを削除します。</p>
         <p className="text-center text-base"> よろしいですか？</p>
