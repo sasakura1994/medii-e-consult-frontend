@@ -260,10 +260,10 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
           )}
 
           <div
-            className="flex h-[100svh] w-full flex-col border border-[#d5d5d5]
+            className="flex h-[100dvh] w-full flex-col border border-[#d5d5d5]
           lg:h-[calc(100vh-62px)] lg:w-[787px]"
           >
-            <div className="flex-shrink-0 flex-grow-0">
+            <div className="flex-shrink-0 flex-grow-0 select-none">
               <div className="mr-2 items-center space-x-1 lg:flex lg:h-14">
                 <div className="flex flex-none items-center lg:flex-grow">
                   <img
@@ -332,7 +332,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
               </div>
             </div>
             {isCloseRoom ? (
-              <div className="relative flex flex-grow overflow-hidden">
+              <div className="relative flex flex-grow select-none overflow-hidden">
                 <div className="flex-grow overflow-y-scroll" ref={chatListRef}>
                   <ChatList
                     chatListData={chatListDataWithDisplayName}
@@ -354,7 +354,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
               </div>
             )}
             {isCloseRoom && (
-              <div className="pointer-events-auto bg-[#5c6bc0] p-2 text-center text-sm text-white">
+              <div className="pointer-events-auto select-none bg-[#5c6bc0] p-2 text-center text-sm text-white">
                 <p>解決済みのルームです</p>
                 <div className="flex flex-col justify-center lg:flex-row">
                   <div
@@ -397,7 +397,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
               </div>
             )}
             {chatRoomData.chat_room.status === 'TEMP_RESOLVED' && isChatRoomOwner && (
-              <div className="pointer-events-auto bg-[#5c6bc0] p-2 text-center text-sm text-white">
+              <div className="pointer-events-auto select-none bg-[#5c6bc0] p-2 text-center text-sm text-white">
                 <p>専門医よりコンサル終了の依頼が届きました</p>
                 <div className="flex justify-center">
                   <div
@@ -420,7 +420,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                 </div>
               </div>
             )}
-            <div className="flex-shrink-0 flex-grow-0">
+            <div className="flex-shrink-0 flex-grow-0 select-none">
               <ChatTextInput
                 chatRoomId={chatRoomData.chat_room.chat_room_id}
                 mutateChatList={mutateChatList}
