@@ -118,7 +118,7 @@ const ChatImageModal = ({ fileName, url, onClose }: ChatImageModalProps) => {
           <PrimaryButton className="cursor-pointer px-[40px] py-[8px] text-base" onClick={onClose}>
             閉じる
           </PrimaryButton>
-          <div className="hidden items-center gap-x-[40px] lg:flex">
+          <div className="flex items-center gap-x-[40px]">
             <a
               href="#"
               onClick={(e) => {
