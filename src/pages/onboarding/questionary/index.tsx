@@ -21,10 +21,8 @@ const OnBoardingQuestionaryPage = () => {
   const { checkIsCheckboxRequired, isSending, questionAndAnswers, setAnswer, setOther, submit, toggleAnswers } =
     useOnBoardingQuestionary();
   const { postEventLog } = useEventLog();
-
-  useEffect(() => {
-    postEventLog({ name: 'view-onboarding-questionary' });
-  }, [])
+  
+  useEventLog({ name: 'view-onboarding-questionary' });
   
   return (
     <div className="mx-6 mb-10 mt-5 max-w-[1024px] lg:mx-auto lg:mt-4">
