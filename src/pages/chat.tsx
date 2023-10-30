@@ -36,7 +36,7 @@ const ChatPage: NextPageWithLayout = () => {
   }, [chat_room_id, setIsChatRoomSelected]);
 
   return (
-    <div className="h-screen overflow-hidden">
+    <div className="h-[100dvh] overflow-hidden">
       <CustomHead />
       {(windowWidth && windowWidth >= 1024) || (!isChatRoomSelected && windowWidth && windowWidth < 1024) ? (
         <Layout>
