@@ -124,7 +124,7 @@ export const Chat = () => {
   }, [accountId, mutateChatList, mutateChatRoom, mutateChatRoomList, socket, token]);
 
   return (
-    <div className="flex h-full bg-white">
+    <div className="flex h-[100dvh] bg-white">
       <ConsultList chatRoomList={chatRoomList} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
       {chat_room_id && isChatRoomSelected ? (
         <ConsultDetail
