@@ -4,22 +4,24 @@ import { CloseConsultList } from './CloseConsultList';
 import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
 import { useFetchUnreadCounts } from '@/hooks/api/chat/useFetchUnreadCounts';
 import Link from 'next/link';
+import { useRecoilValue } from 'recoil';
+import { isChatRoomSelectedState } from '@/globalStates/chat';
 
 type ConsultListProps = {
-  chat_room_id: string | undefined;
   chatRoomList?: ChatRoomEntity[];
   selectedTab: 'open' | 'close';
   setSelectedTab: React.Dispatch<React.SetStateAction<'open' | 'close'>>;
 };
 
 export const ConsultList = (props: ConsultListProps) => {
-  const { chat_room_id, chatRoomList, selectedTab, setSelectedTab } = props;
+  const { chatRoomList, selectedTab, setSelectedTab } = props;
+  const isChatRoomSelected = useRecoilValue(isChatRoomSelectedState);
   const unreadCountListData = useFetchUnreadCounts();
 
   return (
     <div
       className={`h-[calc(100vh-20px)] w-full border border-[#d5d5d5] lg:w-[336px] ${
-        chat_room_id ? 'hidden lg:block' : 'block'
+        isChatRoomSelected ? 'hidden lg:block' : 'block'
       }`}
     >
       <div className="flex h-14 items-center bg-primary">

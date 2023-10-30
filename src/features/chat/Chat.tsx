@@ -122,12 +122,7 @@ export const Chat = () => {
 
   return (
     <div className="flex bg-white">
-      <ConsultList
-        chat_room_id={chat_room_id}
-        chatRoomList={chatRoomList}
-        selectedTab={selectedTab}
-        setSelectedTab={setSelectedTab}
-      />
+      <ConsultList chatRoomList={chatRoomList} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
       {chat_room_id ? (
         <ConsultDetail
           publishmentStatusData={publishmentStatusData}
