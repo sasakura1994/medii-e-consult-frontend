@@ -260,7 +260,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
           )}
 
           <div
-            className="flex h-[100dvh] w-full flex-col overflow-hidden border border-[#d5d5d5]
+            className="flex h-full w-full flex-col overflow-hidden border border-[#d5d5d5]
           lg:h-[calc(100vh-62px)] lg:w-[787px]"
           >
             <div className="flex-shrink-0 flex-grow-0 select-none">
@@ -344,7 +344,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                 <div className="pointer-events-none absolute inset-0 overflow-hidden bg-black bg-opacity-20" />
               </div>
             ) : (
-              <div className="flex-grow overflow-auto bg-bg pb-2" ref={chatListRef}>
+              <div className="flex-shrink flex-grow overflow-auto bg-bg pb-2" ref={chatListRef}>
                 <ChatList
                   chatListData={chatListDataWithDisplayName}
                   currentUserAccountId={accountId}
@@ -420,7 +420,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                 </div>
               </div>
             )}
-            <div className="sticky bottom-0 lg:flex-shrink-0 lg:flex-grow-0">
+            <div className="flex-shrink-0 flex-grow-0">
               <ChatTextInput
                 chatRoomId={chatRoomData.chat_room.chat_room_id}
                 mutateChatList={mutateChatList}
