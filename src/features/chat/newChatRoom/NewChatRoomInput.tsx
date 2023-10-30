@@ -12,7 +12,6 @@ import { CheckBox } from '@/components/Parts/Form/CheckBox';
 import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
 import ImageEditor, { ImageEditorProps } from '@/components/Parts/ImageEditor/ImageEditor';
 import dynamic, { DynamicOptions } from 'next/dynamic';
-import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 import { OutlinedSquareButton } from '@/components/Parts/Button/OutlinedSquareButton';
 import { MedicalSpecialitiesSelectDialog } from '@/components/MedicalSpeciality/MedicalSpecialitiesSelectDialog';
 import { SelectedMedicalSpecialities } from '@/components/MedicalSpeciality/SelectedMedicalSpecialities';
@@ -20,6 +19,7 @@ import { DoctorSearchModal } from './DoctorSearchModal';
 import { SearchGroupModal } from './SearchGroupModal';
 import { NewChatRoomFile } from './NewChatRoomFile';
 import Label from '@/components/Parts/Label/Label';
+import PrimaryButton from '@/components/Button/PrimaryButton';
 // canvasの関係でサーバー時点でimportされているとエラーになるためこうするしかないらしい
 const ImageEditorComponent = dynamic<ImageEditorProps>(
   (() => import('@/components/Parts/ImageEditor/ImageEditor')) as DynamicOptions<ImageEditorProps>,
@@ -360,7 +360,11 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                 プレビュー
               </PrimaryButton>
             </div>
-            {errorMessage !== '' && <ErrorMessage className="text-center">{errorMessage}</ErrorMessage>}
+            {errorMessage !== '' && (
+              <div className="flex justify-center">
+                <ErrorMessage className="text-md">{errorMessage}</ErrorMessage>
+              </div>
+            )}
             <div className="mt-12">
               <CheckBox
                 name="publishment_accepted"
