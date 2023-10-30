@@ -58,7 +58,7 @@ export const TopNotifications = () => {
             text="すべてのサービスをご利用いただくには、追加のプロフィール入力が必要です。"
             dataTestId="top-notification-input-profile"
             buttonText="プロフィール入力"
-            buttonOnClick={() => router.push('/fill-profile')}
+            buttonOnClick={() => router.push('/fillprofile')}
           />
         </>
       )}

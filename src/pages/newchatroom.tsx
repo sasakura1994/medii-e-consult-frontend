@@ -53,7 +53,7 @@ const NewChatRoomPage: NextPageWithLayout = () => {
         </Card>
         {isNeedToInputProfile && (
           <NeedToInputProfileModal
-            href={`/fill-profile?redirect=${encodeURIComponent('/newchatroom')}`}
+            href={`/fillprofile?redirect=${encodeURIComponent('/newchatroom')}`}
             dataTestId="need-to-fill-profile-modal"
           />
         )}
