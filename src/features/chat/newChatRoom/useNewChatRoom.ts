@@ -5,11 +5,17 @@ import { useGetChatDraftImages } from '@/hooks/api/chat/useGetChatDraftImages';
 import { usePostChatMessageFile } from '@/hooks/api/chat/usePostChatMessageFile';
 import { PostChatRoomRequestData, usePostChatRoom } from '@/hooks/api/chat/usePostChatRoom';
 import { usePostDraftImage } from '@/hooks/api/chat/usePostDraftImage';
+import {
+  GetCurrentChatRoomDraftResponeData,
+  useGetCurrentChatRoomDraft,
+} from '@/hooks/api/chatRoomDraft/useGetCurrentChatRoomDraft';
+import { usePostChatRoomDraft } from '@/hooks/api/chatRoomDraft/usePostChatRoomDraft';
+import { useUpdateChatRoomDraft } from '@/hooks/api/chatRoomDraft/useUpdateChatRoomDraft';
 import { useFetchDoctorProfile } from '@/hooks/api/doctor/useFetchDoctorProfile';
 import { FetchedGroupEntity, useFetchGroup } from '@/hooks/api/group/useFetchGroup';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { useFetchMedicalSpecialityCategories } from '@/hooks/api/medicalCategoryCategory/useFetchMedicalSpecialityCategories';
-import { loadLocalStorage, removeLocalStorage, saveLocalStorage } from '@/libs/LocalStorageManager';
+import { loadLocalStorage, removeLocalStorage } from '@/libs/LocalStorageManager';
 import { moveItem } from '@/libs/dnd';
 import { ChatDraftImageEntity } from '@/types/entities/chat/ChatDraftImageEntity';
 import { ChatMessageEntity } from '@/types/entities/chat/ChatMessageEntity';
@@ -34,8 +40,12 @@ import {
 
 export const newChatRoomFormDataKey = 'NewChatRoom::chatRoom';
 
+// 値の更新時にすぐには下書き更新しないフィールドの一覧（テキスト入力などはblurにしたいため）
+const notSaveToDraftImmediatelyFields = ['disease_name', 'first_message'];
+
 type AgeRange = string | 'child';
 type Mode = 'input' | 'confirm';
+type InitializingStatus = 'not_initialized' | 'initializing' | 'initialized';
 
 type FileForReConsult = {
   id: number;
@@ -69,6 +79,7 @@ const getDefaultRoomType = (query: NewChatRoomQuery): ChatRoomType => {
 
 export type UseNewChatRoom = {
   ageRange: string;
+  applyDraft: () => void;
   backToInput: () => void;
   childAge: string;
   changeMedicalSpecialities: (medicalSpecialities: MedicalSpecialityEntity[]) => void;
@@ -78,13 +89,16 @@ export type UseNewChatRoom = {
   deleteFileForReConsult: (id: number) => void;
   deleteReConsultFileMessage: (chatMessageId: number) => void;
   doctor?: DoctorEntity;
+  draftSavingTimeoutId?: NodeJS.Timeout;
   editingImage?: File;
   errorMessage: string;
   chatRoom: NewChatRoomEntity;
+  dontUseDraft: () => void;
   filesForReConsult: FileForReConsult[];
   group?: FetchedGroupEntity;
   imageInput: RefObject<HTMLInputElement>;
   isDoctorSearchModalShown: boolean;
+  isDraftConfirming: boolean;
   isMedicalSpecialitiesSelectDialogShown: boolean;
   isSearchGroupModalShown: boolean;
   isSending: boolean;
@@ -109,6 +123,7 @@ export type UseNewChatRoom = {
   setIsMedicalSpecialitiesSelectDialogShown: Dispatch<SetStateAction<boolean>>;
   setIsSearchGroupModalShown: Dispatch<SetStateAction<boolean>>;
   submit: () => Promise<void>;
+  updateDraft: () => void;
 };
 
 export const useNewChatRoom = (): UseNewChatRoom => {
@@ -116,6 +131,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
   const query = router.query as NewChatRoomQuery;
 
   const [mode, setMode] = useState<Mode>('input');
+  const [chatRoomDraftId, setChatRoomDraftId] = useState('');
   const [chatRoom, setChatRoom] = useState<NewChatRoomEntity>({
     chat_room_id: '',
     room_type: getDefaultRoomType(query),
@@ -139,8 +155,12 @@ export const useNewChatRoom = (): UseNewChatRoom => {
   const [isDoctorSearchModalShown, setIsDoctorSearchModalShown] = useState(false);
   const [isSearchGroupModalShown, setIsSearchGroupModalShown] = useState(false);
   const [isUseDraftImages, setIsUseDraftImages] = useState(false);
-  const [isInitialized, setIsInitialized] = useState(false);
+  const [initializingStatus, setInitializingStatus] = useState<InitializingStatus>('not_initialized');
   const [draftFrom, setDraftFrom] = useState('');
+  const [draftSavingTimeoutId, setDraftSavingTimeoutId] = useState<NodeJS.Timeout | undefined>();
+  const [isDraftConfirming, setIsDraftConfirming] = useState(false);
+  const [confirmingDraft, setConfirmingDraft] = useState<NewChatRoomEntity>();
+  const [draftOnDb, setDraftOnDb] = useState<GetCurrentChatRoomDraftResponeData>();
 
   const { createNewChatRoom } = usePostChatRoom();
   const { createDraftImage } = usePostDraftImage();
@@ -152,6 +172,9 @@ export const useNewChatRoom = (): UseNewChatRoom => {
   const { doctor } = useFetchDoctorProfile(chatRoom.target_doctor);
   const { fetchBaseChatRoomForReConsult } = useFetchBaseChatRoomForReConsult();
   const { postChatMessageFile } = usePostChatMessageFile();
+  const { getCurrentChatRoomDraft } = useGetCurrentChatRoomDraft();
+  const { postChatRoomDraft } = usePostChatRoomDraft();
+  const { updateChatRoomDraft } = useUpdateChatRoomDraft();
 
   const imageInput = useRef<HTMLInputElement>(null);
 
@@ -194,9 +217,11 @@ export const useNewChatRoom = (): UseNewChatRoom => {
   }, []);
 
   const initialize = useCallback(async () => {
-    if (!medicalSpecialities) {
+    if (!router.isReady || !medicalSpecialities || initializingStatus !== 'not_initialized') {
       return;
     }
+
+    setInitializingStatus('initializing');
 
     if (query.reconsult) {
       const baseChatRoomData = await fetchBaseChatRoomForReConsult(query.reconsult);
@@ -215,68 +240,156 @@ export const useNewChatRoom = (): UseNewChatRoom => {
       }));
       setReConsultFileMessages(baseChatRoomData.file_messages);
       initializeAge(baseChatRoomData.chat_room.age);
-      setIsInitialized(true);
+      setInitializingStatus('initialized');
       return;
     }
 
-    const draft = loadLocalStorage(newChatRoomFormDataKey);
-    if (!draft) {
-      return;
-    }
-    if (!confirm('下書きに作成途中のコンサルがあります。作成途中のコンサルを続けて編集しますか？')) {
-      setIsInitialized(true);
+    // @todo localStorageの方は古い仕様のためそのうち消す
+    const draftOnLocalStorage = loadLocalStorage(newChatRoomFormDataKey);
+    const draft = await getCurrentChatRoomDraft().catch((error) => {
+      console.error(error);
+      return null;
+    });
+    if (!draft && !draftOnLocalStorage) {
       return;
     }
 
-    const data = JSON.parse(draft) as NewChatRoomEntity;
+    setDraftOnDb(draft?.data);
+    setConfirmingDraft((draft?.data.data ?? JSON.parse(draftOnLocalStorage!)) as NewChatRoomEntity);
+    setIsDraftConfirming(true);
+  }, [
+    fetchBaseChatRoomForReConsult,
+    getCurrentChatRoomDraft,
+    initializeAge,
+    initializingStatus,
+    medicalSpecialities,
+    query.reconsult,
+    router.isReady,
+  ]);
 
-    setChatRoom(data);
-    initializeAge(data.age);
-    setDraftFrom(data.from);
+  const dontUseDraft = useCallback(async () => {
+    setIsDraftConfirming(false);
+    setConfirmingDraft(undefined);
+    setInitializingStatus('initialized');
+  }, []);
+
+  const applyDraft = useCallback(async () => {
+    if (!confirmingDraft) {
+      return;
+    }
+    if (draftOnDb) {
+      setChatRoomDraftId(draftOnDb.chat_room_draft_id);
+    }
+    setChatRoom(confirmingDraft);
+    initializeAge(confirmingDraft.age);
+    setDraftFrom(confirmingDraft.from);
     setIsUseDraftImages(true);
-    setIsInitialized(true);
-  }, [fetchBaseChatRoomForReConsult, initializeAge, medicalSpecialities, query.reconsult]);
+    setIsDraftConfirming(false);
+    setConfirmingDraft(undefined);
+    setInitializingStatus('initialized');
+  }, [confirmingDraft, draftOnDb, initializeAge]);
 
   useEffect(() => {
-    if (isInitialized) {
+    if (!router.isReady || initializingStatus !== 'not_initialized') {
       return;
     }
     initialize();
-  }, [initialize, isInitialized]);
+  }, [initialize, initializingStatus, router.isReady]);
+
+  const sendDraft = useCallback(
+    async (data: object) => {
+      if (query.reconsult) {
+        return;
+      }
+
+      if (draftSavingTimeoutId) {
+        clearTimeout(draftSavingTimeoutId);
+        setDraftSavingTimeoutId(undefined);
+      }
+
+      if (chatRoomDraftId) {
+        await updateChatRoomDraft(chatRoomDraftId, data).catch((error) => {
+          console.error(error);
+        });
+        return;
+      }
+
+      const response = await postChatRoomDraft(data).catch((error) => {
+        console.error(error);
+        return null;
+      });
+      if (!response) {
+        return;
+      }
+
+      setChatRoomDraftId(response.data.chat_room_draft_id);
+    },
+    [chatRoomDraftId, draftSavingTimeoutId, postChatRoomDraft, query.reconsult, updateChatRoomDraft]
+  );
+
+  const updateDraft = useCallback(() => {
+    if (query.reconsult) {
+      return;
+    }
+    sendDraft(chatRoom);
+  }, [chatRoom, query.reconsult, sendDraft]);
 
   const setChatRoomFields = useCallback(
-    (data: Partial<NewChatRoomEntity>) => {
+    async (data: Partial<NewChatRoomEntity>) => {
       const newData = { ...formData, ...data };
-      saveLocalStorage(newChatRoomFormDataKey, JSON.stringify(newData));
+
       setChatRoom(newData);
+
+      if (query.reconsult) {
+        return;
+      }
+
+      // 下書き保存しない関数を作っても良いけど、多分いずれ使い分けミスると思うのでここで判別
+      for (const key of Object.keys(data)) {
+        if (!notSaveToDraftImmediatelyFields.includes(key)) {
+          await sendDraft(newData);
+          return;
+        }
+      }
+
+      // テキスト入力の場合はすぐに保存しない
+      if (draftSavingTimeoutId) {
+        clearTimeout(draftSavingTimeoutId);
+      }
+
+      const timeoutId = setTimeout(() => {
+        sendDraft(newData);
+        setDraftSavingTimeoutId(undefined);
+      }, 3000);
+      setDraftSavingTimeoutId(timeoutId);
     },
-    [formData]
+    [draftSavingTimeoutId, formData, query.reconsult, sendDraft]
   );
 
   const setAgeRangeWrapper = useCallback(
-    (age: AgeRange) => {
+    async (age: AgeRange) => {
       setAgeRange(age);
 
       if (age === 'child') {
         setChildAge('');
-        setChatRoomFields({ age: undefined });
+        await setChatRoomFields({ age: undefined });
       } else {
-        setChatRoomFields({ age: Number(age) });
+        await setChatRoomFields({ age: Number(age) });
       }
     },
     [setChatRoomFields]
   );
 
   const setChildAgeWrapper = useCallback(
-    (age: string) => {
+    async (age: string) => {
       setChildAge(age);
-      setChatRoomFields({ age: Number(age) });
+      await setChatRoomFields({ age: Number(age) });
     },
     [setChatRoomFields]
   );
 
   const selectConsultMessageTemplate = useCallback(
-    (firstMessage: string) => {
+    async (firstMessage: string) => {
       if (
         chatRoom.first_message.trim() !== '' &&
         !confirm('コンサル文にテンプレートを反映します。現在書かれている内容は消えてしまいますがよろしいですか？')
@@ -284,9 +397,10 @@ export const useNewChatRoom = (): UseNewChatRoom => {
         return;
       }
 
-      setChatRoomFields({ first_message: firstMessage });
+      const newData = { first_message: firstMessage };
+      await Promise.all([setChatRoomFields(newData), sendDraft(newData)]);
     },
-    [chatRoom.first_message, setChatRoomFields]
+    [chatRoom.first_message, sendDraft, setChatRoomFields]
   );
 
   const setModeAndScrollToTop = useCallback((mode: Mode) => {
@@ -460,8 +574,8 @@ export const useNewChatRoom = (): UseNewChatRoom => {
   );
 
   const changeMedicalSpecialities = useCallback(
-    (medicalSpecialities: MedicalSpecialityEntity[]) => {
-      setChatRoomFields({
+    async (medicalSpecialities: MedicalSpecialityEntity[]) => {
+      await setChatRoomFields({
         target_specialities: medicalSpecialities.map((medicalSpeciality) => medicalSpeciality.speciality_code),
       });
       setIsMedicalSpecialitiesSelectDialogShown(false);
@@ -470,8 +584,8 @@ export const useNewChatRoom = (): UseNewChatRoom => {
   );
 
   const moveSelectedMedicalSpeciality = useCallback(
-    (dragIndex: number, hoverIndex: number) => {
-      setChatRoomFields({
+    async (dragIndex: number, hoverIndex: number) => {
+      await setChatRoomFields({
         target_specialities: moveItem(chatRoom.target_specialities, dragIndex, hoverIndex),
       });
     },
@@ -490,6 +604,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
 
   return {
     ageRange,
+    applyDraft,
     backToInput,
     childAge,
     changeMedicalSpecialities,
@@ -499,6 +614,8 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     deleteFileForReConsult,
     deleteReConsultFileMessage,
     doctor,
+    dontUseDraft,
+    draftSavingTimeoutId,
     editingImage,
     errorMessage,
     chatRoom,
@@ -506,6 +623,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     group,
     imageInput,
     isDoctorSearchModalShown,
+    isDraftConfirming,
     isMedicalSpecialitiesSelectDialogShown,
     isSearchGroupModalShown,
     isSending,
@@ -530,5 +648,6 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     setIsMedicalSpecialitiesSelectDialogShown,
     setIsSearchGroupModalShown,
     submit,
+    updateDraft,
   };
 };

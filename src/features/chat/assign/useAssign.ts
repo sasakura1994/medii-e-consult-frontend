@@ -6,6 +6,7 @@ import { useFetchInduceConsultExampleId } from '@/hooks/api/consultExample/useFe
 import { useFetchConsultExampleMessages } from '@/hooks/api/consultExample/useFetchConsultExampleMessages';
 import { useFetchConsultExample } from '@/hooks/api/consultExample/useFetchConsultExample';
 import { useUpdateOpenStatus } from '@/hooks/api/chat/usePatchUpdateOpenStatus';
+import { useCanAnswer } from '@/hooks/api/chat/useCanAnswer';
 
 type Query = {
   id?: string;
@@ -28,8 +29,8 @@ export const useAssign = () => {
     isFetch: chatRoom !== undefined && chatRoom.status !== 'CREATED',
   });
   const { data: consultExample } = useFetchConsultExample(consultExampleId);
-  const { data: consultExampleMessages } =
-    useFetchConsultExampleMessages(consultExampleId);
+  const { data: consultExampleMessages } = useFetchConsultExampleMessages(consultExampleId);
+  const { data: { enable: isEnableToAssign } = {} } = useCanAnswer(id);
 
   const { updateOpenStatus } = useUpdateOpenStatus(id);
 
@@ -43,9 +44,8 @@ export const useAssign = () => {
       router.push(`/chat?chat_room_id=${id}`);
       return;
     }
-    
+
     updateOpenStatus();
-    
   }, [fetchChatRoomResultData, id, router, updateOpenStatus]);
 
   const assign = React.useCallback(async () => {
@@ -81,6 +81,7 @@ export const useAssign = () => {
     errorMessage,
     images,
     isConfirming,
+    isEnableToAssign,
     isSending,
     setIsConfirming,
   };

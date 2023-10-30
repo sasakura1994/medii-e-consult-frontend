@@ -1,7 +1,6 @@
 import React from 'react';
-import { Props } from './ExpandTextArea';
 
-export const useExpandTextArea = (props: Props) => {
+export const useExpandTextArea = () => {
   const ref = React.useRef<HTMLTextAreaElement>(null);
   const [height, setHeight] = React.useState<string | number>();
 
@@ -9,23 +8,16 @@ export const useExpandTextArea = (props: Props) => {
     setHeight('auto');
   }, []);
 
-  const onChange = React.useCallback(
-    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      if (ref.current) {
-        setHeight('auto');
-        if (e.target.value === '') {
-          setHeight(0);
-        } else {
-          setHeight(ref.current.scrollHeight);
-        }
+  const onChange = React.useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (ref.current) {
+      setHeight('auto');
+      if (e.target.value === '') {
+        setHeight(0);
+      } else {
+        setHeight(ref.current.scrollHeight);
       }
-
-      if (props.onChange) {
-        props.onChange(e);
-      }
-    },
-    [props]
-  );
+    }
+  }, []);
 
   return { onChange, ref, style: { height } };
 };
