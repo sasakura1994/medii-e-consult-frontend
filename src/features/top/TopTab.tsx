@@ -16,11 +16,11 @@ export const TopTab = (props: TopTabType) => {
       <div
         onClick={onClick}
         className={`flex w-auto cursor-pointer items-center rounded-t-lg border-x border-t px-6 py-3 ${
-          isActive ? 'h-12 bg-white' : 'h-10 border-b bg-bg-secondary'
+          isActive ? 'h-12 bg-medii-blue-base' : 'h-10 border-b bg-bg-secondary'
         }`}
       >
         {isExistUnread && <div className="mr-1 aspect-square h-2 w-2 rounded-full bg-medii-sky-base" />}
-        <p className={`whitespace-nowrap  text-md font-bold ${isActive ? 'text-text-primary' : 'text-monotone-400'}`}>
+        <p className={`whitespace-nowrap  text-md font-bold ${isActive ? 'text-white' : 'text-monotone-400'}`}>
           {text}
         </p>
       </div>
