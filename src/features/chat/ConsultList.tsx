@@ -20,7 +20,7 @@ export const ConsultList = (props: ConsultListProps) => {
 
   return (
     <div
-      className={`h-[calc(100vh-20px)] w-full border border-[#d5d5d5] lg:w-[336px] ${
+      className={`h-[calc(100vh-20px)] w-full border border-[#d5d5d5] pb-20 lg:w-[336px] lg:pb-0 ${
         isChatRoomSelected ? 'hidden lg:block' : 'block'
       }`}
     >

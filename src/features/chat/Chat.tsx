@@ -10,6 +10,8 @@ import { useGetPublishmentStatus } from '@/hooks/api/chat/useGetPublishmentStatu
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { useFetchChatRoomList } from '@/hooks/api/chat/useFetchChatRoomList';
 import { mutateFetchUnreadCounts } from '@/hooks/api/chat/useFetchUnreadCounts';
+import { useRecoilValue } from 'recoil';
+import { isChatRoomSelectedState } from '@/globalStates/chat';
 
 type WebsocketResponseMessage = {
   type: 'subscribe_response' | 'pong' | 'mes';
@@ -29,6 +31,7 @@ export const Chat = () => {
   const chatRoomIdStr = chat_room_id;
 
   const [selectedTab, setSelectedTab] = useState<'open' | 'close'>('open');
+  const isChatRoomSelected = useRecoilValue(isChatRoomSelectedState);
   const { data: chatRoomList, mutate: mutateChatRoomList } = useFetchChatRoomList({
     query: ['FREE', 'BY_NAME', 'GROUP'],
   });
@@ -123,7 +126,7 @@ export const Chat = () => {
   return (
     <div className="flex bg-white">
       <ConsultList chatRoomList={chatRoomList} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-      {chat_room_id ? (
+      {chat_room_id && isChatRoomSelected ? (
         <ConsultDetail
           publishmentStatusData={publishmentStatusData}
           chatRoomData={chatRoomData}

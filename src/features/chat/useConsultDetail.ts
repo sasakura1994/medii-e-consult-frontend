@@ -1,3 +1,4 @@
+import { isChatRoomSelectedState } from '@/globalStates/chat';
 import { FetchChatListResponseData } from '@/hooks/api/chat/useFetchChatList';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import { usePostActivateChatRoom } from '@/hooks/api/chat/usePostActivateChatRoom';
@@ -5,6 +6,7 @@ import { useToken } from '@/hooks/authentication/useToken';
 import { useMedicalSpeciality } from '@/hooks/medicalSpeciality/useMedicalSpeciality';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 import { useState, useRef, useCallback, useMemo, useEffect } from 'react';
+import { useSetRecoilState } from 'recoil';
 
 type useConsultDetailProps = {
   medicalSpecialities?: MedicalSpecialityEntity[];
@@ -24,6 +26,7 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
   const [isOpenTempResolveRequestModal, setIsOpenTempResolveRequestModal] = useState(false);
   const [isOpenCloseChatRoomModal, setIsOpenCloseChatRoomModal] = useState(false);
   const [isOpenResolveChatRoomModal, setIsOpenResolveChatRoomModal] = useState(false);
+  const setIsChatRoomSelected = useSetRecoilState(isChatRoomSelectedState);
   const [selectedImage, setSelectedImage] = useState<string>('');
   const { accountId } = useToken();
   const chatListRef = useRef<HTMLDivElement | null>(null);
@@ -130,6 +133,7 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
     setIsOpenResolveChatRoomModal,
     selectedImage,
     setSelectedImage,
+    setIsChatRoomSelected,
     getMedicalSpecialityName,
     getExperienceYear,
     activateChatRoom,

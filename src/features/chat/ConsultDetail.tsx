@@ -75,6 +75,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     setIsOpenResolveChatRoomModal,
     selectedImage,
     setSelectedImage,
+    setIsChatRoomSelected,
     getMedicalSpecialityName,
     getExperienceYear,
     activateChatRoom,
@@ -263,18 +264,61 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
           lg:h-[calc(100vh-62px)] lg:w-[787px]"
           >
             <div className="flex-shrink-0 flex-grow-0">
-              <div className="mr-2 flex h-14 items-center space-x-1">
-                {isCloseRoom ? (
-                  <div className="ml-4 flex w-[53px] items-center justify-center rounded-full bg-[#64abc4]">
-                    <p className="py-0.5 text-xs text-white">解決済</p>
+              <div className="mr-2 items-center space-x-1 lg:flex lg:h-14">
+                <div className="flex flex-none items-center lg:flex-grow">
+                  <img
+                    src="icons/arrow_left.svg"
+                    alt=""
+                    className="block h-5 w-5 lg:hidden"
+                    onClick={() => setIsChatRoomSelected(false)}
+                  />
+                  <div className="flex flex-wrap lg:flex-none">
+                    {isCloseRoom ? (
+                      <div className="ml-4 flex w-[53px] items-center justify-center rounded-full bg-[#64abc4]">
+                        <p className="py-0.5 text-xs text-white">解決済</p>
+                      </div>
+                    ) : (
+                      <div className="ml-4 flex w-[53px] items-center justify-center rounded-full bg-strong">
+                        <p className="py-0.5 text-xs text-white">未解決</p>
+                      </div>
+                    )}
+                    <div className="block h-0 w-full lg:hidden" />
+                    <p className="ml-2 flex-grow font-bold">{chatRoomData.chat_room.title}</p>
                   </div>
-                ) : (
-                  <div className="ml-4 flex w-[53px] items-center justify-center rounded-full bg-strong">
-                    <p className="py-0.5 text-xs text-white">未解決</p>
-                  </div>
-                )}
-                <p className="ml-2 flex-grow font-bold">{chatRoomData.chat_room.title}</p>
+                </div>
 
+                <div className="hidden space-x-1 lg:flex">
+                  <OpenConsultDetailButton
+                    isCloseRoom={isCloseRoom}
+                    isChatRoomOwner={isChatRoomOwner}
+                    chatRoomData={chatRoomData}
+                    setIsOpenReConsultConfirmModal={setIsOpenReConsultConfirmModal}
+                    setIsOpenReplyRequestModal={setIsOpenReplyRequestModal}
+                    setIsOpenTempResolveRequestModal={setIsOpenTempResolveRequestModal}
+                    setIsOpenCloseChatRoomModal={setIsOpenCloseChatRoomModal}
+                    setIsOpenResolveChatRoomModal={setIsOpenResolveChatRoomModal}
+                  />
+                </div>
+                <img
+                  src="icons/btn_menu.svg"
+                  alt=""
+                  className="hidden h-9 w-9 cursor-pointer lg:block"
+                  onClick={() => setIsOpenChatEditModal(true)}
+                />
+              </div>
+              <div className="flex flex-wrap items-center space-x-1 border-t lg:h-7 lg:border-b">
+                {chatRoomData.members[0] && <p className="-mb-2 mt-2 text-xxs lg:mt-0 lg:border-t-0">E-コンサル</p>}
+                <div className="block h-0 w-full lg:hidden" />
+                <p className="flex flex-grow items-center lg:flex-grow-0">{chatRoomDisplayName}</p>
+
+                <img
+                  src="icons/btn_menu.svg"
+                  alt=""
+                  className="block h-9 w-9 lg:hidden"
+                  onClick={() => setIsOpenChatEditModal(true)}
+                />
+              </div>
+              <div className="flex space-x-1 border-b pb-1 lg:hidden">
                 <OpenConsultDetailButton
                   isCloseRoom={isCloseRoom}
                   isChatRoomOwner={isChatRoomOwner}
@@ -285,17 +329,6 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                   setIsOpenCloseChatRoomModal={setIsOpenCloseChatRoomModal}
                   setIsOpenResolveChatRoomModal={setIsOpenResolveChatRoomModal}
                 />
-
-                <img
-                  src="icons/btn_menu.svg"
-                  alt=""
-                  className="h-9 w-9 cursor-pointer"
-                  onClick={() => setIsOpenChatEditModal(true)}
-                />
-              </div>
-              <div className="flex h-5 items-center space-x-1 border">
-                {chatRoomData.members[0] && <p className="text-xxs">E-コンサル</p>}
-                {chatRoomDisplayName}
               </div>
             </div>
             {isCloseRoom ? (

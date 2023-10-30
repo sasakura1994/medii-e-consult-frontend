@@ -78,14 +78,15 @@ export const ChatTextInput = (props: ChatTextInputProps) => {
       )}
       {isUploading && <RectSpinnerDialog />}
       <div className="flex w-full bg-white py-1">
+        {/* PC */}
         <textarea
           ref={textInputRef}
           onChange={(e) => {
             resizeHeight();
             updateDraftMessage(e.target.value);
           }}
-          className="ml-2 flex w-[682px] resize-none rounded border border-solid border-block-gray px-2 py-1
-          placeholder-gray-600 disabled:bg-[#d5d5d5] disabled:text-block-gray"
+          className="ml-2 hidden w-[682px] resize-none rounded border border-solid border-block-gray px-2 py-1
+          placeholder-gray-600 disabled:bg-[#d5d5d5] disabled:text-block-gray lg:flex"
           placeholder="メッセージを入力 (Shift + Enterキーで送信)"
           onKeyDown={async (e) => {
             if (e.key === 'Enter' && e.shiftKey) {
@@ -93,6 +94,23 @@ export const ChatTextInput = (props: ChatTextInputProps) => {
               submit();
             }
           }}
+        />
+        {/* SP */}
+        <img
+          src="icons/icon_image.svg"
+          alt=""
+          className="my-auto ml-3 block h-[30px] w-[30px] cursor-pointer lg:hidden"
+          onClick={() => fileInputRef.current?.click()}
+        />
+        <textarea
+          ref={textInputRef}
+          onChange={(e) => {
+            resizeHeight();
+            updateDraftMessage(e.target.value);
+          }}
+          className="ml-2 flex w-[682px] resize-none rounded border border-solid border-block-gray px-2 py-1
+          placeholder-gray-600 disabled:bg-[#d5d5d5] disabled:text-block-gray lg:hidden"
+          placeholder="メッセージを入力"
         />
         <input
           type="file"
@@ -105,13 +123,13 @@ export const ChatTextInput = (props: ChatTextInputProps) => {
         <img
           src="icons/clip_message.svg"
           alt=""
-          className="my-auto ml-3 h-[30px] w-[30px] cursor-pointer"
+          className="my-auto ml-3 hidden h-[30px] w-[30px] cursor-pointer lg:block"
           onClick={() => fileInputRef.current?.click()}
         />
         <img
           src="icons/send_message.svg"
           alt=""
-          className="my-auto ml-3 h-[30px] w-[30px] cursor-pointer"
+          className="mx-3 my-auto h-[30px] w-[30px] cursor-pointer"
           onClick={async () => {
             submit();
           }}
