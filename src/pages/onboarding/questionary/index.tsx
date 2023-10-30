@@ -15,7 +15,7 @@ import { QuestionaryItems } from '@/features/onboarding/QuestionaryItems';
 import { useOnBoardingQuestionary } from '@/features/onboarding/useOnBoardingQuestionary';
 import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 import Link from 'next/link';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 const OnBoardingQuestionaryPage = () => {
   const { checkIsCheckboxRequired, isSending, questionAndAnswers, setAnswer, setOther, submit, toggleAnswers } =
