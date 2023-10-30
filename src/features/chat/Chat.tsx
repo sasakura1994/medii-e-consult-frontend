@@ -122,7 +122,12 @@ export const Chat = () => {
 
   return (
     <div className="flex bg-white">
-      <ConsultList chatRoomList={chatRoomList} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+      <ConsultList
+        chat_room_id={chat_room_id}
+        chatRoomList={chatRoomList}
+        selectedTab={selectedTab}
+        setSelectedTab={setSelectedTab}
+      />
       {chat_room_id ? (
         <ConsultDetail
           publishmentStatusData={publishmentStatusData}
@@ -135,7 +140,7 @@ export const Chat = () => {
           setSelectedTab={setSelectedTab}
         />
       ) : (
-        <div className="flex h-screen w-[787px] flex-col border border-[#d5d5d5] bg-bg" />
+        <div className="hidden h-screen w-[787px] flex-col border border-[#d5d5d5] bg-bg lg:flex" />
       )}
     </div>
   );

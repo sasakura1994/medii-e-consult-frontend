@@ -6,17 +6,22 @@ import { useFetchUnreadCounts } from '@/hooks/api/chat/useFetchUnreadCounts';
 import Link from 'next/link';
 
 type ConsultListProps = {
+  chat_room_id: string | undefined;
   chatRoomList?: ChatRoomEntity[];
   selectedTab: 'open' | 'close';
   setSelectedTab: React.Dispatch<React.SetStateAction<'open' | 'close'>>;
 };
 
 export const ConsultList = (props: ConsultListProps) => {
-  const { chatRoomList, selectedTab, setSelectedTab } = props;
+  const { chat_room_id, chatRoomList, selectedTab, setSelectedTab } = props;
   const unreadCountListData = useFetchUnreadCounts();
 
   return (
-    <div className="h-[calc(100vh-20px)] w-[336px] border border-[#d5d5d5]">
+    <div
+      className={`h-[calc(100vh-20px)] w-full border border-[#d5d5d5] lg:w-[336px] ${
+        chat_room_id ? 'hidden lg:block' : 'block'
+      }`}
+    >
       <div className="flex h-14 items-center bg-primary">
         <img src="icons/consult_list.svg" alt="" className="ml-2 h-7 w-8" />
         <p className="text-md font-bold text-white">コンサル一覧</p>
