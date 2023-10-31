@@ -33,9 +33,13 @@ export const MyChat = (props: MyChatProps) => {
   const unreadView = useMemo(() => {
     if (chatData.read_count) {
       if (chatRoomData.members.length > 1) {
-        return <p className="mb-3 mr-2 flex items-end text-sm text-block-gray">既読{chatData.read_count}</p>;
+        return (
+          <p className="mb-3 mr-2 flex items-end  whitespace-nowrap text-sm text-block-gray">
+            既読{chatData.read_count}
+          </p>
+        );
       }
-      return <p className="mb-3 mr-2 flex items-end text-sm text-block-gray">既読</p>;
+      return <p className="mb-3 mr-2 flex items-end whitespace-nowrap text-sm text-block-gray">既読</p>;
     }
     return null;
   }, [chatData, chatRoomData]);
@@ -63,73 +67,109 @@ export const MyChat = (props: MyChatProps) => {
             削除済みメッセージ
           </p>
         ) : chatData.content_type.startsWith('image/') ? (
-          <div
-            onMouseOver={() => {
-              setIsMouseOver(true);
-            }}
-            onMouseLeave={() => {
-              setIsMouseOver(false);
-            }}
-          >
-            <div
-              className="mb-3 mr-3 p-2"
-              onMouseOver={() => {
-                setIsMouseOver(true);
-              }}
-              onMouseLeave={() => {
-                setIsMouseOver(false);
-              }}
-            >
-              <img
-                src={chatData.file_path}
-                alt=""
-                className="aspect-auto h-[250px] cursor-pointer"
-                onClick={() => {
-                  setSelectedImage(chatData.file_path);
-                }}
-              />
-            </div>
-          </div>
-        ) : chatData.content_type.startsWith('application/') ? (
-          <div
-            onMouseOver={() => {
-              setIsMouseOver(true);
-            }}
-            onMouseLeave={() => {
-              setIsMouseOver(false);
-            }}
-          >
-            <div
-              className="mb-3 mr-3 flex cursor-pointer items-center rounded-lg bg-white p-2"
-              onClick={downloadFile}
-              onMouseOver={() => {
-                setIsMouseOver(true);
-              }}
-              onMouseLeave={() => {
-                setIsMouseOver(false);
-              }}
-            >
-              <img src="icons/insert_drive_file.svg" alt="" className="h-10 w-10" />
-              <p className="max-w-[670px] whitespace-pre-wrap break-words">{chatData.file_name}</p>
-            </div>
-          </div>
-        ) : (
-          <div
-            onMouseOver={() => {
-              setIsMouseOver(true);
-            }}
-            onMouseLeave={() => {
-              setIsMouseOver(false);
-            }}
-          >
+          <>
             {unreadView}
-            <p
-              className="mb-3 mr-3 min-w-[200px] max-w-[670px] whitespace-pre-wrap break-words rounded-lg
-              rounded-tr-none bg-primary-light p-2"
+            <div
+              onMouseOver={() => {
+                setIsMouseOver(true);
+              }}
+              onMouseLeave={() => {
+                setIsMouseOver(false);
+              }}
             >
-              {chatData.message}
-            </p>
-          </div>
+              <div
+                className="mb-3 mr-3 p-2"
+                onMouseOver={() => {
+                  setIsMouseOver(true);
+                }}
+                onMouseLeave={() => {
+                  setIsMouseOver(false);
+                }}
+              >
+                <img
+                  src={chatData.file_path}
+                  alt=""
+                  className="aspect-auto h-[250px] cursor-pointer object-contain"
+                  onClick={() => {
+                    setSelectedImage(chatData.file_path);
+                  }}
+                />
+              </div>
+            </div>
+          </>
+        ) : chatData.content_type.startsWith('video/') ? (
+          <>
+            {unreadView}
+            <div
+              onMouseOver={() => {
+                setIsMouseOver(true);
+              }}
+              onMouseLeave={() => {
+                setIsMouseOver(false);
+              }}
+            >
+              <div
+                className="mb-3 mr-3 p-2"
+                onMouseOver={() => {
+                  setIsMouseOver(true);
+                }}
+                onMouseLeave={() => {
+                  setIsMouseOver(false);
+                }}
+              >
+                <video
+                  src={chatData.file_path}
+                  className="aspect-auto h-[250px] cursor-pointer object-contain"
+                  controls
+                />
+              </div>
+            </div>
+          </>
+        ) : chatData.content_type.startsWith('application/') ? (
+          <>
+            {unreadView}
+            <div
+              onMouseOver={() => {
+                setIsMouseOver(true);
+              }}
+              onMouseLeave={() => {
+                setIsMouseOver(false);
+              }}
+            >
+              <div
+                className="mb-3 mr-3 flex cursor-pointer items-center rounded-lg bg-white p-2"
+                onClick={downloadFile}
+                onMouseOver={() => {
+                  setIsMouseOver(true);
+                }}
+                onMouseLeave={() => {
+                  setIsMouseOver(false);
+                }}
+              >
+                <img src="icons/insert_drive_file.svg" alt="" className="h-10 w-10" />
+                <p className="max-w-[670px] whitespace-pre-wrap break-words">{chatData.file_name}</p>
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            {unreadView}
+            <div
+              onMouseOver={() => {
+                setIsMouseOver(true);
+              }}
+              onMouseLeave={() => {
+                setIsMouseOver(false);
+              }}
+            >
+              <p
+                className="mb-3 mr-3 min-w-[200px] max-w-[670px] whitespace-pre-wrap break-words rounded-lg
+              rounded-tr-none bg-primary-light p-2"
+              >
+                {chatData.message}
+              </p>
+            </div>
+          </>
         )}
       </div>
       {isMouseOver && (
