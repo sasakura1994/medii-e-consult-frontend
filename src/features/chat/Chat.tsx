@@ -35,7 +35,7 @@ export const Chat = () => {
   const { data: chatRoomList, mutate: mutateChatRoomList } = useFetchChatRoomList({
     query: ['FREE', 'BY_NAME', 'GROUP'],
   });
-  const { data: publishmentStatusData } = useGetPublishmentStatus(chatRoomIdStr);
+  const { data: publishmentStatusData, mutate: mutatePublishmentStatusData } = useGetPublishmentStatus(chatRoomIdStr);
   const { data: chatRoomData, mutate: mutateChatRoom } = useFetchChatRoom(chatRoomIdStr);
   const [selectedTab, setSelectedTab] = useState<'open' | 'close'>(
     chatRoomData?.chat_room.status === 'RESOLVED' || chatRoomData?.chat_room.status === 'CLOSED' ? 'close' : 'open'
@@ -137,6 +137,7 @@ export const Chat = () => {
           chatListData={chatListData}
           mutateChatRoom={mutateChatRoom}
           mutateChatRoomList={mutateChatRoomList}
+          mutatePublishmentStatusData={mutatePublishmentStatusData}
           mutateChatList={mutateChatList}
           setSelectedTab={setSelectedTab}
         />

@@ -21,6 +21,7 @@ import { ChatTempResolveRequestModal } from './ChatTempResolveRequestModal';
 import { CloseChatRoomModal } from './CloseChatRoomModal';
 import { ResolveChatRoomModal } from './ResolveChatRoomModal';
 import ChatImageModal from './ChatImageModal';
+import { AllowAddToConsultExampleListModal } from './AllowAddToConsultExampleListModal';
 
 type ConsultDetailProps = {
   publishmentStatusData?: {
@@ -33,6 +34,9 @@ type ConsultDetailProps = {
   mutateChatRoomList?: KeyedMutator<ChatRoomEntity[]>;
   mutateChatList?: KeyedMutator<FetchChatListResponseData>;
   mutateFetchUnreadCounts?: KeyedMutator<FetchUnreadCountsResponseData>;
+  mutatePublishmentStatusData?: KeyedMutator<{
+    publishment_accepted: number;
+  }>;
   setSelectedTab: React.Dispatch<React.SetStateAction<'open' | 'close'>>;
 };
 
@@ -45,6 +49,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     mutateChatRoom,
     mutateChatRoomList,
     mutateChatList,
+    mutatePublishmentStatusData,
     setSelectedTab,
   } = props;
   const {
@@ -219,6 +224,12 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
           onClose={() => {
             setSelectedImage('');
           }}
+        />
+      )}
+      {publishmentStatusData && publishmentStatusData.publishment_accepted === null && chatRoomData && (
+        <AllowAddToConsultExampleListModal
+          chatRoomId={chatRoomData.chat_room.chat_room_id}
+          mutatePublishmentStatusData={mutatePublishmentStatusData}
         />
       )}
       {chatRoomData && publishmentStatusData && accountId && chatListDataWithDisplayName && (
