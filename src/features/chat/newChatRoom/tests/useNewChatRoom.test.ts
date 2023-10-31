@@ -20,6 +20,7 @@ import * as useDeleteChatDraftImageModule from '@/hooks/api/chat/useDeleteChatDr
 import { useGetCurrentChatRoomDraft } from '@/hooks/api/chatRoomDraft/useGetCurrentChatRoomDraft';
 import { usePostChatRoomDraft } from '@/hooks/api/chatRoomDraft/usePostChatRoomDraft';
 import { useUpdateChatRoomDraft } from '@/hooks/api/chatRoomDraft/useUpdateChatRoomDraft';
+import { consultMessageTemplates } from '@/data/chatRoom';
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn().mockReturnValue({
@@ -487,6 +488,31 @@ describe('useNewChatRoom', () => {
     waitFor(() => {
       expect(result.current.chatRoom.target_specialities).toEqual(['A', 'C', 'B']);
     });
+  });
+
+  test('コンサル分がテンプレートと同じ場合はエラー', async () => {
+    const { result } = await renderHook(() => useNewChatRoom(), {
+      wrapper: RecoilRoot,
+    });
+
+    await act(
+      async () =>
+        await result.current.setChatRoomFields({
+          room_type: 'FREE',
+          gender: 'man',
+          age: 40,
+          disease_name: 'disease',
+        })
+    );
+    await act(async () => await result.current.selectConsultMessageTemplate(consultMessageTemplates[0].text));
+    await act(
+      async () =>
+        await result.current.confirmInput({ preventDefault: jest.fn() } as unknown as FormEvent<HTMLFormElement>)
+    );
+
+    expect(result.current.errorMessage).toEqual(
+      'コンサル文がテンプレートのままになっているため、コンサルを作成できません。コンサル文を編集してからプレビューボタンを選択して下さい。'
+    );
   });
 
   test('deleteReConsultFileMessage', async () => {

@@ -1,3 +1,4 @@
+import { consultMessageTemplates } from '@/data/chatRoom';
 import { mutateFetchFlag } from '@/hooks/api/account/useFetchFlags';
 import { useDeleteChatDraftImage } from '@/hooks/api/chat/useDeleteChatDraftImage';
 import { useFetchBaseChatRoomForReConsult } from '@/hooks/api/chat/useFetchBaseChatRoomForReConsult';
@@ -408,13 +409,33 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     window.scrollTo(0, 0);
   }, []);
 
+  const validate = useCallback(() => {
+    const errors: string[] = [];
+
+    if (
+      consultMessageTemplates.some((consultMessageTemplate) => consultMessageTemplate.text === formData.first_message)
+    ) {
+      errors.push(
+        'コンサル文がテンプレートのままになっているため、コンサルを作成できません。コンサル文を編集してからプレビューボタンを選択して下さい。'
+      );
+    }
+
+    const error = errors.join('\n');
+    setErrorMessage(error);
+    return error === '';
+  }, [formData]);
+
   const confirmInput = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
+      if (!validate()) {
+        return;
+      }
+
       setModeAndScrollToTop('confirm');
     },
-    [setModeAndScrollToTop]
+    [setModeAndScrollToTop, validate]
   );
 
   const backToInput = useCallback(() => {
