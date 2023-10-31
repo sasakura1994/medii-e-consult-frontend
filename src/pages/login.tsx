@@ -7,6 +7,8 @@ import { PublicLayout } from '@/components/Layouts/PublicLayout';
 import GoogleLoginButton from '@/features/auth/GoogleLoginButton';
 import { AppleSignInButton } from '@/components/Button/AppleSignInButton';
 import PrimaryButton from '@/components/Button/PrimaryButton';
+import { AiFillApple } from 'react-icons/ai';
+import AppleSignin from 'react-apple-signin-auth';
 
 const GuideLink = ({
   children,
