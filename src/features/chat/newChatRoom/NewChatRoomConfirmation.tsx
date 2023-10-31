@@ -3,9 +3,9 @@ import { useNewChatRoom } from '@/features/chat/newChatRoom/useNewChatRoom';
 import { NewChatRoomConfirmationLabel } from './NewChatRoomConfirmationLabel';
 import { NewChatRoomConfirmationValue } from './NewChatRoomConfirmationValue';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
-import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
-import { GrayButton } from '@/components/Parts/Button/GrayButton';
 import Label from '@/components/Parts/Label/Label';
+import PrimaryButton from '@/components/Button/PrimaryButton';
+import TertiaryButton from '@/components/Button/TertiaryButton';
 
 type Props = ReturnType<typeof useNewChatRoom>;
 
@@ -141,12 +141,12 @@ export const NewChatRoomConfirmation: React.FC<Props> = (props: Props) => {
           {!isSending ? (
             <div className="mx-auto w-3/5">
               <div>
-                <GrayButton type="button" onClick={() => backToInput()} className="w-full">
+                <TertiaryButton type="button" onClick={() => backToInput()} className="w-full" size="large">
                   編集
-                </GrayButton>
+                </TertiaryButton>
               </div>
               <div className="mt-4">
-                <PrimaryButton type="button" onClick={() => submit()} className="w-full">
+                <PrimaryButton type="button" onClick={() => submit()} className="w-full" size="large">
                   E-コンサルを開始
                 </PrimaryButton>
               </div>

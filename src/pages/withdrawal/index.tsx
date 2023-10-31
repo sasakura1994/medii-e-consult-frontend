@@ -4,7 +4,6 @@ import ErrorButton from '@/components/Button/ErrorButton';
 import Link from 'next/link';
 import { useWithdrawalPage } from '@/features/mypages/editProfile/useWithdrawalPage';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
-import { useAuthenticationOnPage } from '@/hooks/authentication/useAuthenticationOnPage';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { Breadcrumb } from '@/components/Breadcrumb/Breadcrumb';
 import { BreadcrumbLink } from '@/components/Breadcrumb/BreadcrumbLink';
@@ -13,7 +12,6 @@ import { CheckBox } from '@/components/Parts/Form/CheckBox';
 import { TextArea } from '@/components/Parts/Form/TextArea';
 
 const WithdrawalPage: NextPageWithLayout = () => {
-  useAuthenticationOnPage();
   const {
     isSending,
     other,

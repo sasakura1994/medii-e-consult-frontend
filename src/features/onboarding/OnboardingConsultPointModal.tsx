@@ -1,18 +1,27 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import Link from 'next/link';
 import TertiaryButton from '@/components/Button/TertiaryButton';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import { useFetchFlag } from '@/hooks/api/account/useFetchFlags';
+import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 
 export const OnboardingConsultPointModal = () => {
   const [isClosed, setIsClosed] = useState(false);
 
   const { flag: isFirstConsultCampaignAvailable, isLoading: isLoadingFlag } = useFetchFlag('FirstConsultCampaign');
 
+  const { postEventLog } = useEventLog();
+  
+  const showOnboardingConsultPointModal = useCallback(async () => {
+    await postEventLog({ name: 'show-first-consult-campaign-popup' })
+  }, [postEventLog]);
+  
   if (isClosed || isFirstConsultCampaignAvailable !== true || isLoadingFlag) {
     return <></>;
   }
+
+  showOnboardingConsultPointModal();
 
   return (
     <Modal
@@ -36,7 +45,7 @@ export const OnboardingConsultPointModal = () => {
           </Link>
           <Link href="/newchatroom?from=onboarding_questionary_completed" className="flex-1">
             <PrimaryButton size="large" className="w-full">
-              E-コンサルで質問する
+              E-コンサルで相談する
             </PrimaryButton>
           </Link>
         </div>

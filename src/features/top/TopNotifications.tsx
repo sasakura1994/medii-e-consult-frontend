@@ -1,13 +1,13 @@
 import { InlineNotification } from '@/components/Notification/InlineNotification';
 import { useNmo } from '@/hooks/alliance/useNmo';
-import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
+import { useProfile } from '@/hooks/useProfile';
 import { useRouter } from 'next/router';
 import React, { useMemo } from 'react';
 
 export const TopNotifications = () => {
   const router = useRouter();
-  const { profile } = useFetchProfile();
-  const { isNeedToInputProfile } = useNmo();
+  const { isNeedToInputProfile, profile } = useProfile();
+  const { isNeedToInputProfile: isNeedToInputProfileForNmo } = useNmo();
 
   const profileNotification = useMemo(() => {
     if (!profile) {
@@ -52,7 +52,17 @@ export const TopNotifications = () => {
 
   return (
     <>
-      {isNeedToInputProfile ? (
+      {isNeedToInputProfile && (
+        <>
+          <InlineNotification
+            text="すべてのサービスをご利用いただくには、追加のプロフィール入力が必要です。"
+            dataTestId="top-notification-input-profile"
+            buttonText="プロフィール入力"
+            buttonOnClick={() => router.push('/fill-profile')}
+          />
+        </>
+      )}
+      {isNeedToInputProfileForNmo ? (
         <>
           <InlineNotification
             text="すべてのサービスをご利用いただくには、追加のプロフィール入力が必要です。"

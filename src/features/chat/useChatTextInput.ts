@@ -1,5 +1,6 @@
 import { usePostChatMessageNewFiles } from '@/hooks/api/chat/usePostChatMessageNewFiles';
 import { usePostChatMessageNewText } from '@/hooks/api/chat/usePostChatMessageNewText';
+import { loadLocalStorage, saveLocalStorage } from '@/libs/LocalStorageManager';
 import { useRef, useState, useCallback, ChangeEvent, useEffect } from 'react';
 
 type UseChatTextInputProps = {
@@ -15,6 +16,7 @@ export const useChatTextInput = (props: UseChatTextInputProps) => {
   const [isOpenFileInputModal, setIsOpenFileInputModal] = useState(false);
   const [editingImage, setEditingImage] = useState<File>();
   const [isUploading, setIsUploading] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(0);
 
   const onSelectFile = useCallback(async (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -28,6 +30,7 @@ export const useChatTextInput = (props: UseChatTextInputProps) => {
       setEditingImage(files[0]);
       return;
     }
+    setIsOpenFileInputModal(true);
   }, []);
 
   const resetFileInput = () => {
@@ -71,9 +74,41 @@ export const useChatTextInput = (props: UseChatTextInputProps) => {
       setIsOpenFileInputModal(false);
     }
   };
+  const updateDraftMessage = (value: string) => {
+    const currentDrafts = JSON.parse(loadLocalStorage('ChatDraft::List') || '{}');
+    if (!value) {
+      delete currentDrafts[chatRoomId];
+    } else {
+      currentDrafts[chatRoomId] = value;
+    }
+    saveLocalStorage('ChatDraft::List', JSON.stringify(currentDrafts));
+  };
   useEffect(() => {
     resizeHeight();
   }, []);
+
+  // ローカルストレージから下書きを取得する
+  useEffect(() => {
+    const currentDrafts = JSON.parse(loadLocalStorage('ChatDraft::List') || '{}');
+    if (textInputRef.current && currentDrafts[chatRoomId]) {
+      textInputRef.current.value = currentDrafts[chatRoomId];
+      resizeHeight();
+      return;
+    }
+    textInputRef.current!.value = '';
+    resizeHeight();
+  }, [chatRoomId]);
+
+  // ブレイクポイントを取得する
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return {
     isOpenFileInputModal,
     setIsOpenFileInputModal,
@@ -89,5 +124,7 @@ export const useChatTextInput = (props: UseChatTextInputProps) => {
     setIsUploading,
     resetFileInput,
     postNewFile,
+    updateDraftMessage,
+    windowWidth,
   };
 };

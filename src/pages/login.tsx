@@ -1,12 +1,12 @@
 import React from 'react';
 import type { NextPageWithLayout } from '@/pages/_app';
-import { AiFillApple } from 'react-icons/ai';
 import { useLogin } from '@/hooks/useLogin';
-import AppleSignin from 'react-apple-signin-auth';
 import Link from 'next/link';
 import { TextField } from '@/components/Parts/Form/TextField';
 import { PublicLayout } from '@/components/Layouts/PublicLayout';
 import GoogleLoginButton from '@/features/auth/GoogleLoginButton';
+import { AppleSignInButton } from '@/components/Button/AppleSignInButton';
+import PrimaryButton from '@/components/Button/PrimaryButton';
 
 const GuideLink = ({
   children,
@@ -84,21 +84,22 @@ const Login: NextPageWithLayout = () => {
             </GuideLink>
           </div>
           <div>
-            <button
+            <PrimaryButton
+              size="large"
               type="submit"
               className="
                 my-4
                 rounded-full
-                bg-primary
                 px-14
                 py-2
-                text-white
+                w-[190px]
                 drop-shadow-[0_4px_10px_rgba(92,107,192,.3)]
               "
             >
               ログイン
-            </button>
+            </PrimaryButton>
           </div>
+          {errorMessage != '' && <p className="text-center font-bold text-red-500">{errorMessage}</p>}
         </form>
         <div className="mt-6 text-center">
           <a href={nmoLoginUrl}>
@@ -157,12 +158,14 @@ const Login: NextPageWithLayout = () => {
               </button>
             )}
           />
+          <div className="mt-4">
+            <AppleSignInButton>Appleでログイン</AppleSignInButton>
+          </div>
           <div className="mt-4 rounded-md border border-solid border-black px-10 py-2">
             <GoogleLoginButton />
           </div>
         </div>
       </div>
-      {errorMessage != '' && <p className="text-center font-bold text-red-500">{errorMessage}</p>}
     </div>
   );
 };

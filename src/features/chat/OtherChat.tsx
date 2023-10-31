@@ -3,10 +3,11 @@ import React from 'react';
 
 type OtherChatProps = {
   chatData: ChatData & { displayName: string };
+  setSelectedImage: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export const OtherChat = (props: OtherChatProps) => {
-  const { chatData } = props;
+  const { chatData, setSelectedImage } = props;
   const date = new Date(chatData.created_date);
   const formattedDate = date.toLocaleString(undefined, {
     month: 'numeric',
@@ -14,6 +15,14 @@ export const OtherChat = (props: OtherChatProps) => {
     hour: 'numeric',
     minute: 'numeric',
   });
+  const downloadFile = async () => {
+    const a = document.createElement('a');
+    a.href = chatData.file_path;
+    a.download = chatData.file_name;
+    a.target = '_blank';
+    a.rel = 'noreferrer';
+    a.click();
+  };
   return (
     <>
       <div className="ml-3 flex">
@@ -30,8 +39,22 @@ export const OtherChat = (props: OtherChatProps) => {
           </p>
         ) : chatData.content_type.startsWith('image/') ? (
           <div className="mb-3 mr-3 p-2">
-            <img src={chatData.file_path} alt="" className="aspect-auto h-[250px]" />
+            <img
+              src={chatData.file_path}
+              alt=""
+              className="aspect-auto h-[250px] cursor-pointer object-contain"
+              onClick={() => {
+                setSelectedImage(chatData.file_path);
+              }}
+            />
           </div>
+        ) : chatData.content_type.startsWith('application/') ? (
+          <div className="mb-3 mr-3 flex cursor-pointer items-center rounded-lg bg-white p-2" onClick={downloadFile}>
+            <img src="icons/insert_drive_file.svg" alt="" className="h-10 w-10" />
+            <p className="max-w-[670px] whitespace-pre-wrap break-words">{chatData.file_name}</p>
+          </div>
+        ) : chatData.content_type.startsWith('video/') ? (
+          <video src={chatData.file_path} className="aspect-auto h-[250px] cursor-pointer object-contain" controls />
         ) : (
           <p
             className="mb-3 mr-3 max-w-[670px] whitespace-pre-wrap break-words rounded-lg rounded-tl-none

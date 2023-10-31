@@ -27,7 +27,7 @@ export const ChatGroupMemberModal = (props: ChatGroupMemberModalProps) => {
     return experienceYear;
   }, []);
   return (
-    <Modal setShowModal={setIsOpen} isCenter className="min-w-[500px] overflow-auto py-4">
+    <Modal setShowModal={setIsOpen} isCenter className="overflow-y-auto py-4 lg:min-w-[500px]">
       {isOpenDoctorDetailModal && selectedMember && (
         <ChatDoctorDetailModal setIsOpen={setIsOpenDoctorDetailModal} member={selectedMember} />
       )}
@@ -36,7 +36,7 @@ export const ChatGroupMemberModal = (props: ChatGroupMemberModalProps) => {
         <img src="icons/close_primary.svg" alt="" className="cursor-pointer" onClick={() => setIsOpen(false)} />
       </div>
       <div className="mt-4 w-full border-t" />
-      <div className="my-6 px-16">
+      <div className="my-6 px-2 lg:px-16">
         {members.map((member) => {
           return (
             <div

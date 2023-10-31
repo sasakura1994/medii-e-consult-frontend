@@ -6,7 +6,7 @@ export type Props = React.ComponentProps<typeof TextArea>;
 
 export const ExpandTextArea: React.FC<Props> = (props: Props) => {
   const { style: propsStyle = {}, onChange, ...otherProps } = props;
-  const { onChange: onChangeOfExpandTextArea, ref, style: hooksStyle } = useExpandTextArea(props);
+  const { onChange: onChangeOfExpandTextArea, ref, style: hooksStyle } = useExpandTextArea();
 
   return (
     <TextArea

@@ -20,6 +20,8 @@ export const ColoredImage = (props: Props) => {
         maskImage: `url(${src})`,
         WebkitMaskImage: `url(${src})`,
         background: color,
+        maskSize: 'contain',
+        WebkitMaskSize: 'contain',
       }}
     ></div>
   );

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { useFetchEmail } from '@/hooks/api/account/useFetchEmail';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
@@ -14,6 +14,7 @@ export type UseProfile = {
   profile: ProfileEntity | undefined;
   email: EmailEntityType | undefined;
   hospitalName: string;
+  isNeedToInputProfile: boolean;
   medicalSpeciality: MedicalSpecialityEntity[] | undefined;
   prefecture: PrefectureEntityType[] | undefined;
   hospital: HospitalEntity | undefined;
@@ -40,7 +41,12 @@ export const useProfile = (): UseProfile => {
     return hospital?.hospital_name ?? '';
   }, [profile, hospital]);
 
-  const getPrefectureNameByCode = React.useCallback(
+  const isNeedToInputProfile = useMemo(
+    () => profile !== undefined && profile.status === 'VERIFIED' && profile.birthday_year === 9999,
+    [profile]
+  );
+
+  const getPrefectureNameByCode = useCallback(
     (code: string | undefined): string | undefined => {
       if (!code || !prefecture) return undefined;
 
@@ -54,6 +60,7 @@ export const useProfile = (): UseProfile => {
     profile,
     email,
     hospitalName,
+    isNeedToInputProfile,
     medicalSpeciality: medicalSpecialities,
     prefecture,
     hospital,
