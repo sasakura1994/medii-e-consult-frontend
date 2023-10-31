@@ -141,7 +141,7 @@ export const Chat = () => {
           setSelectedTab={setSelectedTab}
         />
       ) : (
-        <div className="hidden h-screen w-[787px] flex-col border border-[#d5d5d5] bg-bg lg:flex" />
+        <div className="hidden h-screen flex-grow flex-col border border-[#d5d5d5] bg-bg lg:flex" />
       )}
       <div className="hidden h-[calc(100vh-62px)] w-[316px] flex-shrink-0 flex-grow-0 flex-col justify-between lg:flex">
         <div className="block" />

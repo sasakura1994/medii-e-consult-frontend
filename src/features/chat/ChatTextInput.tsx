@@ -91,7 +91,7 @@ export const ChatTextInput = (props: ChatTextInputProps) => {
             resizeHeight();
             updateDraftMessage(e.target.value);
           }}
-          className="ml-2 flex w-[682px] resize-none rounded border border-solid border-block-gray px-2
+          className="ml-2 flex flex-grow resize-none rounded border border-solid border-block-gray px-2
           py-1 placeholder-gray-600 disabled:bg-[#d5d5d5] disabled:text-block-gray"
           placeholder={windowWidth >= 1024 ? 'メッセージを入力 (Shift + Enterキーで送信)' : 'メッセージを入力'}
           onKeyDown={async (e) => {

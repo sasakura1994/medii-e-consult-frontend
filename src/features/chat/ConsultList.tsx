@@ -20,9 +20,8 @@ export const ConsultList = (props: ConsultListProps) => {
 
   return (
     <div
-      className={`h-[100dvh] w-full border border-[#d5d5d5] pb-20 lg:h-[calc(100vh-20px)] lg:w-[336px] lg:pb-0 ${
-        isChatRoomSelected ? 'hidden lg:block' : 'block'
-      }`}
+      className={`h-[100dvh] w-full border border-[#d5d5d5] pb-20 lg:h-[calc(100vh-20px)]
+      lg:w-[336px] lg:min-w-[336px] lg:pb-0 ${isChatRoomSelected ? 'hidden lg:block' : 'block'}`}
     >
       <div className="flex h-14 items-center bg-primary">
         <img src="icons/consult_list.svg" alt="" className="ml-2 h-7 w-8" />
