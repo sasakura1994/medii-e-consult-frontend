@@ -7,8 +7,6 @@ import { PublicLayout } from '@/components/Layouts/PublicLayout';
 import GoogleLoginButton from '@/features/auth/GoogleLoginButton';
 import { AppleSignInButton } from '@/components/Button/AppleSignInButton';
 import PrimaryButton from '@/components/Button/PrimaryButton';
-import { AiFillApple } from 'react-icons/ai';
-import AppleSignin from 'react-apple-signin-auth';
 
 const GuideLink = ({
   children,
@@ -125,41 +123,6 @@ const Login: NextPageWithLayout = () => {
               <div>日経メディカルアカウントでログイン</div>
             </div>
           </a>
-          <AppleSignin
-            authOptions={{
-              clientId: 'jp.medii.e-consult',
-              scope: 'email',
-              redirectURI: `${process.env.ENDPOINT_URL}/apple_auth/callback`,
-              state: '',
-              nonce: 'nonce',
-              usePopup: false,
-            }}
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            onSuccess={(response: any) => console.log(response)}
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            render={(props: any) => (
-              <button
-                className="
-                  mt-4
-                  inline-flex
-                  w-full
-                  items-center
-                  justify-center
-                  rounded-md
-                  border
-                  border-solid
-                  border-black
-                  px-10
-                  py-2
-                  hover:bg-monotone-100
-                "
-                {...props}
-              >
-                <AiFillApple className="inline" size="30" />
-                Appleでログイン
-              </button>
-            )}
-          />
           <div className="mt-4">
             <AppleSignInButton>Appleでログイン</AppleSignInButton>
           </div>
