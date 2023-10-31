@@ -2,23 +2,49 @@ import React from 'react';
 import { render, screen, act } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
 import NewChatRoomPage from '@/pages/newchatroom';
-import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { useRouter } from 'next/router';
+import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
 }));
 jest.mock('@/hooks/api/doctor/useFetchProfile');
+jest.mock('@/hooks/authentication/useAuthenticationOnPage');
 
 describe('/newchatroom', () => {
+  test('プロフィール未入力の場合はモーダル表示', async () => {
+    const useRouterMock = useRouter as jest.Mocked<typeof useRouter>;
+    (useRouterMock as jest.Mock).mockReturnValue({
+      query: {},
+    });
+
+    (useFetchProfile as jest.Mock).mockReturnValue({
+      profile: {
+        registration_source: '',
+        last_name_hira: 'name',
+        birthday_year: 9999,
+        status: 'VERIFIED',
+      },
+    });
+
+    await act(() => {
+      render(
+        <RecoilRoot>
+          <NewChatRoomPage />
+        </RecoilRoot>
+      );
+    });
+
+    expect(await act(() => screen.queryByTestId('need-to-fill-profile-modal'))).toBeInTheDocument();
+  });
+
   test('nmoユーザー且つプロフィール未入力の場合はモーダル表示', async () => {
     const useRouterMock = useRouter as jest.Mocked<typeof useRouter>;
     (useRouterMock as jest.Mock).mockReturnValue({
       query: {},
     });
 
-    const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
-    (useFetchProfileMock as jest.Mock).mockReturnValue({
+    (useFetchProfile as jest.Mock).mockReturnValue({
       profile: {
         registration_source: 'nmo',
         last_name_hira: '',
@@ -67,8 +93,7 @@ describe('/newchatroom', () => {
       query: {},
     });
 
-    const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
-    (useFetchProfileMock as jest.Mock).mockReturnValue({
+    (useFetchProfile as jest.Mock).mockReturnValue({
       profile: {
         status: 'CREATED',
       },
@@ -91,8 +116,7 @@ describe('/newchatroom', () => {
       query: {},
     });
 
-    const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
-    (useFetchProfileMock as jest.Mock).mockReturnValue({
+    (useFetchProfile as jest.Mock).mockReturnValue({
       profile: {
         status: 'PENDING_AUTO',
       },
