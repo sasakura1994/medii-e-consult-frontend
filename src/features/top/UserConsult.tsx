@@ -77,7 +77,7 @@ export const UserConsult = (props: UserConsultProps) => {
         <p className="flex-grow text-xxl font-bold text-text-primary">あなたに関わるE-コンサル</p>
         <div className="hidden whitespace-nowrap lg:block">
           <Link href="/newchatroom">
-            <PrimaryButton size="large">E-コンサルで質問する</PrimaryButton>
+            <PrimaryButton size="large">E-コンサルで相談する</PrimaryButton>
           </Link>
         </div>
         <div
