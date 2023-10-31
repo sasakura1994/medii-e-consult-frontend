@@ -1,11 +1,11 @@
-import { OutlinedButton } from '@/components/Parts/Button/OutlinedButton';
-import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
 import React from 'react';
 import { KeyedMutator } from 'swr';
 import { useRoomReopenModal } from './useRoomReopenModal';
+import SecondaryButton from '@/components/Button/SecondaryButton';
+import PrimaryButton from '@/components/Button/PrimaryButton';
 
 type RoomReopenModalProps = {
   chatRoomID: string;
@@ -24,7 +24,7 @@ export const RoomReopenModal = (props: RoomReopenModalProps) => {
   });
 
   return (
-    <Modal className="w-full lg:w-[644px]" isCenter setShowModal={setIsOpenRoomReopenModal}>
+    <Modal className="w-full px-3 lg:w-[644px]" isCenter setShowModal={setIsOpenRoomReopenModal}>
       <div className="mx-2 lg:mx-[82px] lg:my-[15px]">
         <p className="mt-9 text-2xl font-bold">このコンサルルームを再度オープンします</p>
         {isChatRoomOwner ? (
@@ -70,9 +70,9 @@ export const RoomReopenModal = (props: RoomReopenModalProps) => {
         )}
 
         <div className="mb-10 flex justify-center space-x-4">
-          <OutlinedButton className="w-[191px]" onClick={() => setIsOpenRoomReopenModal(false)}>
+          <SecondaryButton className="w-[191px]" onClick={() => setIsOpenRoomReopenModal(false)}>
             キャンセル
-          </OutlinedButton>
+          </SecondaryButton>
           <PrimaryButton
             className="w-[191px]"
             onClick={async () => {

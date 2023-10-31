@@ -1,10 +1,10 @@
-import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
-import { OutlinedButton } from '@/components/Parts/Button/OutlinedButton';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import React, { useState } from 'react';
 import { KeyedMutator } from 'swr';
 import { usePostResolveChatRoom } from '@/hooks/api/chat/usePostResolveChatRoom';
+import SecondaryButton from '@/components/Button/SecondaryButton';
+import PrimaryButton from '@/components/Button/PrimaryButton';
 
 type ResolveChatRoomModalProps = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -66,8 +66,11 @@ export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
         お礼コメントをしてみてください。
       </p>
       <div className="mt-6 flex justify-center space-x-8">
-        <OutlinedButton onClick={() => setIsOpen(false)}>ルームに戻る</OutlinedButton>
+        <SecondaryButton className="w-[150px]" onClick={() => setIsOpen(false)}>
+          ルームに戻る
+        </SecondaryButton>
         <PrimaryButton
+          className="w-[150px]"
           onClick={async () => {
             await resolveChatRoom({
               chat_room_id: chatRoomData.chat_room.chat_room_id,

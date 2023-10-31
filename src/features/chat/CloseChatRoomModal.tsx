@@ -1,11 +1,11 @@
-import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
-import { OutlinedButton } from '@/components/Parts/Button/OutlinedButton';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import React, { useState } from 'react';
 import { AxiosError } from 'axios';
 import { PostCloseChatRoomResponseData, usePostCloseChatRoom } from '@/hooks/api/chat/usePostCloseChatRoom';
 import { KeyedMutator } from 'swr';
+import SecondaryButton from '@/components/Button/SecondaryButton';
+import PrimaryButton from '@/components/Button/PrimaryButton';
 
 type CloseChatRoomModalProps = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -21,9 +21,9 @@ export const CloseChatRoomModal = (props: CloseChatRoomModalProps) => {
     <Modal className="w-full px-3 py-6 lg:w-[644px]" isCenter setShowModal={setIsOpen}>
       <p className="text-center text-2xl font-bold">回答をパスしてこのルームを閉じます</p>
       <div className="mt-6 flex justify-center space-x-8">
-        <OutlinedButton className="w-[240px]" onClick={() => setIsOpen(false)}>
+        <SecondaryButton className="w-[240px]" onClick={() => setIsOpen(false)}>
           ルームに戻る
-        </OutlinedButton>
+        </SecondaryButton>
         <PrimaryButton
           className="w-[223px]"
           onClick={async () => {

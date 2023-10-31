@@ -1,5 +1,3 @@
-import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
-import { OutlinedButton } from '@/components/Parts/Button/OutlinedButton';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import React, { useState } from 'react';
@@ -8,6 +6,8 @@ import {
   usePostChatRoomSendResponseRequest,
 } from '@/hooks/api/chat/usePostChatRoomSendResponseRequest';
 import { AxiosError } from 'axios';
+import SecondaryButton from '@/components/Button/SecondaryButton';
+import PrimaryButton from '@/components/Button/PrimaryButton';
 
 type ChatReplyRequestModalProps = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,9 +23,9 @@ export const ChatReplyRequestModal = (props: ChatReplyRequestModalProps) => {
       <p className="text-center text-2xl font-bold">返答依頼を送信しますか？</p>
       <p className="mt-4 text-center">返答を依頼するシステムメッセージが質問医師へ通知されます</p>
       <div className="mt-6 flex justify-center space-x-8">
-        <OutlinedButton className="w-[223px]" onClick={() => setIsOpen(false)}>
+        <SecondaryButton className="w-[223px]" onClick={() => setIsOpen(false)}>
           キャンセル
-        </OutlinedButton>
+        </SecondaryButton>
         <PrimaryButton
           className="w-[223px]"
           onClick={async () => {

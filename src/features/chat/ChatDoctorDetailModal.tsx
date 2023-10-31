@@ -1,4 +1,4 @@
-import { GrayButton } from '@/components/Parts/Button/GrayButton';
+import SecondaryButton from '@/components/Button/SecondaryButton';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import { useMedicalSpeciality } from '@/hooks/medicalSpeciality/useMedicalSpeciality';
 import { ChatMemberEntity } from '@/types/entities/chat/ChatMemberEntity';
@@ -57,9 +57,9 @@ export const ChatDoctorDetailModal = (props: ChatDoctorDetailModalProps) => {
       <p>{member.expertise}</p>
       <p className="mt-4 text-[#999999]">専門医資格</p>
       <p>{member.qualification}</p>
-      <GrayButton className="mx-auto mt-6" onClick={() => setIsOpen(false)}>
+      <SecondaryButton className="mx-auto mt-6" onClick={() => setIsOpen(false)}>
         閉じる
-      </GrayButton>
+      </SecondaryButton>
     </Modal>
   );
 };

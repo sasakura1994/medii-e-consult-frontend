@@ -1,5 +1,6 @@
-import { OutlinedButton } from '@/components/Parts/Button/OutlinedButton';
-import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
+import PrimaryButton from '@/components/Button/PrimaryButton';
+import SecondaryButton from '@/components/Button/SecondaryButton';
+
 import { Radio } from '@/components/Parts/Form/Radio';
 import { SelectBox } from '@/components/Parts/Form/SelectBox';
 import { TextField } from '@/components/Parts/Form/TextField';
@@ -90,9 +91,9 @@ export const ChatEditModal = (props: ChatEditModalProps) => {
         </div>
         {isOwner ? (
           <div className="mb-10 mt-8 flex justify-center space-x-4">
-            <OutlinedButton className="w-[223px]" onClick={() => setIsOpenChatEditModal(false)}>
+            <SecondaryButton className="w-[223px]" onClick={() => setIsOpenChatEditModal(false)}>
               キャンセル
-            </OutlinedButton>
+            </SecondaryButton>
             <PrimaryButton
               className="w-[223px]"
               onClick={async () => {
@@ -117,9 +118,9 @@ export const ChatEditModal = (props: ChatEditModalProps) => {
           </div>
         ) : (
           <div className="mb-10 mt-8 flex justify-center space-x-4">
-            <OutlinedButton className="w-[223px]" onClick={() => setIsOpenChatEditModal(false)}>
+            <SecondaryButton className="w-[223px]" onClick={() => setIsOpenChatEditModal(false)}>
               閉じる
-            </OutlinedButton>
+            </SecondaryButton>
           </div>
         )}
         {isOwner && chatRoomData.chat_room.status === 'CREATED' && (
