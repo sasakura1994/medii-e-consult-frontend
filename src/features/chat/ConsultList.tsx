@@ -29,7 +29,7 @@ export const ConsultList = (props: ConsultListProps) => {
         <p className="text-md font-bold text-white">コンサル一覧</p>
         <Link
           href="newchatroom"
-          className="ml-3 rounded-full border border-white px-2 py-1 text-md font-bold text-white"
+          className="ml-3 hidden rounded-full border border-white px-2 py-1 text-md font-bold text-white lg:block"
         >
           ＋匿名でコンサル作成
         </Link>
