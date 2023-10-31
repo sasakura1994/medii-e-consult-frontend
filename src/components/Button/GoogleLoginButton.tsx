@@ -43,7 +43,7 @@ const LoginButton = () => {
     return error;
   };
 
-  return <GoogleLogin onSuccess={onSuccess} onError={onError} type="standard" logo_alignment="left" />;
+  return <GoogleLogin onSuccess={onSuccess} onError={onError} type="standard" logo_alignment="left"  width='270'/>;
 };
 
 const GoogleLoginButton = () => {

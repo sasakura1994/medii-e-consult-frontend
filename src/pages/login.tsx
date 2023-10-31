@@ -126,7 +126,7 @@ const Login: NextPageWithLayout = () => {
           <div className="mt-4">
             <AppleSignInButton>Appleでログイン</AppleSignInButton>
           </div>
-          <div className="mt-4 rounded-md border border-solid border-black px-10 py-2">
+          <div className="mt-4 rounded-md border border-solid border-black pb-0.5">
             <GoogleLoginButton />
           </div>
         </div>
