@@ -6,6 +6,7 @@ import AppleSignin from 'react-apple-signin-auth';
 import Link from 'next/link';
 import { TextField } from '@/components/Parts/Form/TextField';
 import { PublicLayout } from '@/components/Layouts/PublicLayout';
+import GoogleLoginButton from '@/features/auth/GoogleLoginButton';
 
 const GuideLink = ({
   children,
@@ -156,6 +157,9 @@ const Login: NextPageWithLayout = () => {
               </button>
             )}
           />
+          <div className="mt-4 rounded-md border border-solid border-black px-10 py-2">
+            <GoogleLoginButton />
+          </div>
         </div>
       </div>
       {errorMessage != '' && <p className="text-center font-bold text-red-500">{errorMessage}</p>}
