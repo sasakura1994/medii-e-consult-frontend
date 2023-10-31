@@ -34,12 +34,14 @@ export const OtherChat = (props: OtherChatProps) => {
             <img
               src={chatData.file_path}
               alt=""
-              className="aspect-auto h-[250px] cursor-pointer"
+              className="aspect-auto h-[250px] cursor-pointer object-contain"
               onClick={() => {
                 setSelectedImage(chatData.file_path);
               }}
             />
           </div>
+        ) : chatData.content_type.startsWith('video/') ? (
+          <video src={chatData.file_path} className="aspect-auto h-[250px] cursor-pointer object-contain" controls />
         ) : (
           <p
             className="mb-3 mr-3 max-w-[670px] whitespace-pre-wrap break-words rounded-lg rounded-tl-none

@@ -89,7 +89,7 @@ export const MyChat = (props: MyChatProps) => {
                 <img
                   src={chatData.file_path}
                   alt=""
-                  className="aspect-auto h-[250px] cursor-pointer"
+                  className="aspect-auto h-[250px] cursor-pointer object-contain"
                   onClick={() => {
                     setSelectedImage(chatData.file_path);
                   }}
@@ -117,7 +117,11 @@ export const MyChat = (props: MyChatProps) => {
                   setIsMouseOver(false);
                 }}
               >
-                <video src={chatData.file_path} className="aspect-auto h-[250px] cursor-pointer" controls />
+                <video
+                  src={chatData.file_path}
+                  className="aspect-auto h-[250px] cursor-pointer object-contain"
+                  controls
+                />
               </div>
             </div>
           </>
