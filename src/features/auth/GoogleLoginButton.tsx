@@ -14,7 +14,9 @@ const LoginButton = () => {
   const router = useRouter();
   const { redirectUrl } = useLogin();
 
-  const onSuccess:(credentialResponse:CredentialResponse) => void = async (credentialResponse: CredentialResponse) => {
+  const onSuccess: (credentialResponse: CredentialResponse) => void = async (
+    credentialResponse: CredentialResponse
+  ) => {
     const id_token = credentialResponse?.credential;
 
     if (!id_token) {
@@ -26,7 +28,7 @@ const LoginButton = () => {
       console.error(error);
     });
 
-    if(!res) {
+    if (!res) {
       return;
     }
 
@@ -41,7 +43,7 @@ const LoginButton = () => {
     return error;
   };
 
-  return <GoogleLogin onSuccess={onSuccess} onError={onError} type='standard' logo_alignment='left' />;
+  return <GoogleLogin onSuccess={onSuccess} onError={onError} type="standard" logo_alignment="left" />;
 };
 
 const GoogleLoginButton = () => {

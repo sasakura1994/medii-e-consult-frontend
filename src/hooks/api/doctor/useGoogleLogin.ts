@@ -14,10 +14,10 @@ export const useGoogleLogin = () => {
     (id_token: string) => {
       return axios.post<PostGoogleLoginResponseData>('/oauth/google/verify-token', {
         id_token: id_token,
-      }); 
+      });
     },
     [axios]
   );
 
   return { googleLogin };
-}
+};

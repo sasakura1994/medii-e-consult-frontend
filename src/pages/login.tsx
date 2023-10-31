@@ -157,7 +157,7 @@ const Login: NextPageWithLayout = () => {
               </button>
             )}
           />
-          <div className='mt-4 rounded-md border border-solid border-black px-10 py-2'>
+          <div className="mt-4 rounded-md border border-solid border-black px-10 py-2">
             <GoogleLoginButton />
           </div>
         </div>
