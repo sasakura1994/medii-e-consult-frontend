@@ -57,7 +57,6 @@ export const useLogin = (): UseLogin => {
   useEffect(() => {
     if (redirect) {
       setRedirectUrl(redirect);
-      console.log(redirect)
       localStorage.removeItem(loginRedirectUrlKey);
       return;
     }
