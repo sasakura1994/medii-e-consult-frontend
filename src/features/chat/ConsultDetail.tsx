@@ -264,15 +264,15 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
           lg:h-[calc(100vh-62px)] lg:w-[787px]"
           >
             <div className="flex-shrink-0 flex-grow-0 select-none">
-              <div className="mr-2 items-center space-x-1 lg:flex lg:h-14">
+              <div className="mb-2 mr-2 items-center space-x-1 lg:flex lg:h-14">
                 <div className="flex flex-none items-center lg:flex-grow">
                   <img
                     src="icons/arrow_left.svg"
                     alt=""
-                    className="block h-5 w-5 lg:hidden"
+                    className="ml-3 mt-4 block h-5 w-5 lg:hidden"
                     onClick={() => setIsChatRoomSelected(false)}
                   />
-                  <div className="flex flex-wrap lg:flex-none">
+                  <div className="mt-2 flex flex-wrap lg:mt-0 lg:flex-none">
                     {isCloseRoom ? (
                       <div className="ml-4 flex w-[53px] items-center justify-center rounded-full bg-[#64abc4]">
                         <p className="py-0.5 text-xs text-white">解決済</p>
@@ -283,7 +283,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                       </div>
                     )}
                     <div className="block h-0 w-full lg:hidden" />
-                    <p className="ml-2 flex-grow font-bold">{chatRoomData.chat_room.title}</p>
+                    <p className="ml-4 mr-2 line-clamp-1 flex-grow font-bold lg:ml-2">{chatRoomData.chat_room.title}</p>
                   </div>
                 </div>
 
@@ -333,7 +333,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
             </div>
             {isCloseRoom ? (
               <div className="relative flex flex-grow overflow-hidden">
-                <div className="flex-grow overflow-y-scroll" ref={chatListRef}>
+                <div className="flex-grow overflow-y-scroll bg-bg" ref={chatListRef}>
                   <ChatList
                     chatListData={chatListDataWithDisplayName}
                     currentUserAccountId={accountId}

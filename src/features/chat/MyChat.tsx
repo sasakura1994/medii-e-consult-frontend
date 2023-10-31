@@ -97,6 +97,30 @@ export const MyChat = (props: MyChatProps) => {
               </div>
             </div>
           </>
+        ) : chatData.content_type.startsWith('video/') ? (
+          <>
+            {unreadView}
+            <div
+              onMouseOver={() => {
+                setIsMouseOver(true);
+              }}
+              onMouseLeave={() => {
+                setIsMouseOver(false);
+              }}
+            >
+              <div
+                className="mb-3 mr-3 p-2"
+                onMouseOver={() => {
+                  setIsMouseOver(true);
+                }}
+                onMouseLeave={() => {
+                  setIsMouseOver(false);
+                }}
+              >
+                <video src={chatData.file_path} className="aspect-auto h-[250px] cursor-pointer" controls />
+              </div>
+            </div>
+          </>
         ) : chatData.content_type.startsWith('application/') ? (
           <>
             {unreadView}
