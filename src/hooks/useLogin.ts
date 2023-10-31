@@ -29,6 +29,7 @@ export type UseLogin = {
   login: (e: FormEvent<HTMLFormElement>) => void;
   goToRegistration: () => void;
   saveRedirectUrl: () => void;
+  redirectUrl: string;
 };
 
 export const useLogin = (): UseLogin => {
@@ -56,6 +57,7 @@ export const useLogin = (): UseLogin => {
   useEffect(() => {
     if (redirect) {
       setRedirectUrl(redirect);
+      console.log(redirect)
       localStorage.removeItem(loginRedirectUrlKey);
       return;
     }
@@ -132,5 +134,6 @@ export const useLogin = (): UseLogin => {
     mailAddressRef,
     goToRegistration,
     saveRedirectUrl,
+    redirectUrl,
   };
 };

@@ -1,46 +1,47 @@
 import React from 'react';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
-import axios from 'axios';
-
-export type CredentialResponse = {
-  clientId: string;
-  credential: string;
-  select_by: string;
-};
+import { useGoogleLogin } from '@/hooks/api/doctor/useGoogleLogin';
+import { mutateFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
+import { useToken } from '@/hooks/authentication/useToken';
+import { loginRedirectUrlKey } from '@/data/localStorage';
+import { useRouter } from 'next/router';
+import { useLogin } from '@/hooks/useLogin';
+import { CredentialResponse } from '@react-oauth/google';
 
 const LoginButton = () => {
-  const onSuccess = async (credentialResponse: any) => {
-    console.log('Credential response:', credentialResponse);
+  const { googleLogin } = useGoogleLogin();
+  const { setTokenAndMarkInitialized } = useToken();
+  const router = useRouter();
+  const { redirectUrl } = useLogin();
 
-    // ID Tokenの存在確認
-    const idToken = credentialResponse?.credential;
-    if (!idToken) {
+  const onSuccess:(credentialResponse:CredentialResponse) => void = async (credentialResponse: CredentialResponse) => {
+    const id_token = credentialResponse?.credential;
+
+    if (!id_token) {
       console.error('ID Token not found:', credentialResponse);
       return;
     }
 
-    try {
-      const response = await axios.post('http://localhost:8080/verify-token', {
-        id_token: idToken,
-      });
-      console.log('Server response:', response);
+    const res = await googleLogin(id_token).catch((error) => {
+      console.error(error);
+    });
 
-      // Emailの存在確認
-      if (!response.data.email) {
-        console.error('Email not found in response:', response);
-        return;
-      }
-    } catch (error) {
-      console.error('Error verifying ID token:', error);
+    if(!res) {
+      return;
     }
+
+    setTokenAndMarkInitialized(res.data.jwt_token);
+    mutateFetchProfile();
+    localStorage.removeItem(loginRedirectUrlKey);
+    router.push(redirectUrl === '' ? 'top' : redirectUrl);
   };
 
-  const onError = (error: string) => {
+  const onError = (error: void) => {
     console.log('Login Failed:', error);
     return error;
   };
 
-  return <GoogleLogin onSuccess={onSuccess} />;
+  return <GoogleLogin onSuccess={onSuccess} onError={onError} type='standard' logo_alignment='left' />;
 };
 
 const GoogleLoginButton = () => {
