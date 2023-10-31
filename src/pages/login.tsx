@@ -4,7 +4,7 @@ import { useLogin } from '@/hooks/useLogin';
 import Link from 'next/link';
 import { TextField } from '@/components/Parts/Form/TextField';
 import { PublicLayout } from '@/components/Layouts/PublicLayout';
-import GoogleLoginButton from '@/features/auth/GoogleLoginButton';
+import GoogleLoginButton from '@/components/Button/GoogleLoginButton';
 import { AppleSignInButton } from '@/components/Button/AppleSignInButton';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 
