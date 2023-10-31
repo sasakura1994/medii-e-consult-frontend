@@ -75,6 +75,7 @@ export const RoomReopenModal = (props: RoomReopenModalProps) => {
           </SecondaryButton>
           <PrimaryButton
             className="w-[191px]"
+            disabled={!selectedReason}
             onClick={async () => {
               await reOpenChatRoom({ chat_room_id: chatRoomID, reason: selectedReason });
               setIsOpenRoomReopenModal(false);
