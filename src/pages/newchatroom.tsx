@@ -10,13 +10,11 @@ import { ImcompleteProfileModal } from '@/components/Parts/Modal/ImcompleteProfi
 import { DocumentConfirmingMessage } from '@/components/Doctor/DocumentConfirmingMessage';
 import { Header } from '@/components/Layouts/Header/Header';
 import { FooterSpMenu } from '@/components/Layouts/Footer/FooterSpMenu';
-import { useAuthenticationOnPage } from '@/hooks/authentication/useAuthenticationOnPage';
 import { useProfile } from '@/hooks/useProfile';
 import { NeedToInputProfileModal } from '@/components/Parts/Modal/NeedToInputProfileModal';
 import { ConfirmModal } from '@/components/Parts/Modal/ConfirmModal';
 
 const NewChatRoomPage: NextPageWithLayout = () => {
-  useAuthenticationOnPage();
   const newChatRoom = useNewChatRoom();
   useEventLog({ name: '/NewChatRoom' });
   const { mode, isDraftConfirming, applyDraft, dontUseDraft } = newChatRoom;

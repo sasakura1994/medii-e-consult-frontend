@@ -15,6 +15,7 @@ import { useRouter } from 'next/router';
 import { GoogleTagManager } from '@/components/Layouts/GoogleTagManager';
 import Script from 'next/script';
 import { useToken } from '@/hooks/authentication/useToken';
+import { useAuthenticationOnPage } from '@/hooks/authentication/useAuthenticationOnPage';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
@@ -26,9 +27,10 @@ type AppPropsWithLayout = AppProps & {
 };
 
 const AppInner = ({ Component, pageProps }: AppPropsWithLayout) => {
+  const router = useRouter();
   const { fetcher } = useFetcher();
   const { accountId, isTokenInitialized } = useToken();
-
+  useAuthenticationOnPage(router.pathname);
   const getLayout =
     Component.getLayout ||
     ((page) => (
@@ -79,6 +81,7 @@ const App = (props: AppPropsWithLayout) => {
       return;
     }
     if (
+      // 認証が不要なページはsrc/hooks/authentication/useAuthenticationOnPage.tsに記載する
       [
         '/',
         '/affiliate',
