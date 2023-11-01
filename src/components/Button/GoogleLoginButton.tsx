@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { useGoogleLogin } from '@/hooks/api/doctor/useGoogleLogin';
 import { mutateFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
@@ -45,7 +45,7 @@ const LoginButton = () => {
 };
 
 const GoogleLoginButton = () => {
-  const [clientId, setClientId] = useState(process.env.GOOGLE_CLIENT_ID || "");
+  const clientId = process.env.GOOGLE_CLIENT_ID || "";
 
   return (
     <GoogleOAuthProvider clientId={clientId}>
