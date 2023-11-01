@@ -14,9 +14,7 @@ const LoginButton = () => {
   const router = useRouter();
   const { redirectUrl } = useLogin();
 
-  const onSuccess: (credentialResponse: CredentialResponse) => void = async (
-    credentialResponse: CredentialResponse
-  ) => {
+  const onSuccess = async (credentialResponse: CredentialResponse) => {
     const id_token = credentialResponse?.credential;
 
     if (!id_token) {
