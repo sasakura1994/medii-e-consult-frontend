@@ -21,6 +21,7 @@ import { ChatTempResolveRequestModal } from './ChatTempResolveRequestModal';
 import { CloseChatRoomModal } from './CloseChatRoomModal';
 import { ResolveChatRoomModal } from './ResolveChatRoomModal';
 import ChatImageModal from './ChatImageModal';
+import { AllowAddToConsultExampleListModal } from './AllowAddToConsultExampleListModal';
 
 type ConsultDetailProps = {
   publishmentStatusData?: {
@@ -33,6 +34,9 @@ type ConsultDetailProps = {
   mutateChatRoomList?: KeyedMutator<ChatRoomEntity[]>;
   mutateChatList?: KeyedMutator<FetchChatListResponseData>;
   mutateFetchUnreadCounts?: KeyedMutator<FetchUnreadCountsResponseData>;
+  mutatePublishmentStatusData?: KeyedMutator<{
+    publishment_accepted: number;
+  }>;
   setSelectedTab: React.Dispatch<React.SetStateAction<'open' | 'close'>>;
 };
 
@@ -45,6 +49,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     mutateChatRoom,
     mutateChatRoomList,
     mutateChatList,
+    mutatePublishmentStatusData,
     setSelectedTab,
   } = props;
   const {
@@ -221,6 +226,12 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
           }}
         />
       )}
+      {publishmentStatusData && publishmentStatusData.publishment_accepted === null && chatRoomData && (
+        <AllowAddToConsultExampleListModal
+          chatRoomId={chatRoomData.chat_room.chat_room_id}
+          mutatePublishmentStatusData={mutatePublishmentStatusData}
+        />
+      )}
       {chatRoomData && publishmentStatusData && accountId && chatListDataWithDisplayName && (
         <>
           {isOpenReConsultConfirmModal && (
@@ -260,8 +271,8 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
           )}
 
           <div
-            className="flex h-full w-full flex-col overflow-hidden border border-[#d5d5d5]
-          lg:h-[calc(100vh-62px)] lg:w-[787px]"
+            className="flex h-full flex-grow flex-col overflow-hidden border border-[#d5d5d5]
+          lg:h-[calc(100vh-62px)]"
           >
             <div className="flex-shrink-0 flex-grow-0 select-none">
               <div className="mb-2 mr-2 items-center space-x-1 lg:flex lg:h-14">

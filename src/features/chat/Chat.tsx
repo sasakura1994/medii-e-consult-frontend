@@ -35,7 +35,7 @@ export const Chat = () => {
   const { data: chatRoomList, mutate: mutateChatRoomList } = useFetchChatRoomList({
     query: ['FREE', 'BY_NAME', 'GROUP'],
   });
-  const { data: publishmentStatusData } = useGetPublishmentStatus(chatRoomIdStr);
+  const { data: publishmentStatusData, mutate: mutatePublishmentStatusData } = useGetPublishmentStatus(chatRoomIdStr);
   const { data: chatRoomData, mutate: mutateChatRoom } = useFetchChatRoom(chatRoomIdStr);
   const [selectedTab, setSelectedTab] = useState<'open' | 'close'>(
     chatRoomData?.chat_room.status === 'RESOLVED' || chatRoomData?.chat_room.status === 'CLOSED' ? 'close' : 'open'
@@ -137,11 +137,12 @@ export const Chat = () => {
           chatListData={chatListData}
           mutateChatRoom={mutateChatRoom}
           mutateChatRoomList={mutateChatRoomList}
+          mutatePublishmentStatusData={mutatePublishmentStatusData}
           mutateChatList={mutateChatList}
           setSelectedTab={setSelectedTab}
         />
       ) : (
-        <div className="hidden h-screen w-[787px] flex-col border border-[#d5d5d5] bg-bg lg:flex" />
+        <div className="hidden h-screen flex-grow flex-col border border-[#d5d5d5] bg-bg lg:flex" />
       )}
       <div className="hidden h-[calc(100vh-62px)] w-[316px] flex-shrink-0 flex-grow-0 flex-col justify-between lg:flex">
         <div className="block" />
