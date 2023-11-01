@@ -273,9 +273,9 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
             className="flex h-full flex-grow flex-col overflow-hidden border border-[#d5d5d5]
           lg:h-[calc(100vh-62px)]"
           >
-            <div className="flex-shrink-0 flex-grow-0 select-none">
+            <div className="flex-shrink-0 flex-grow-0">
               <div className="mb-2 mr-2 items-center space-x-1 lg:flex lg:h-14">
-                <div className="flex flex-none items-center lg:flex-grow">
+                <div className="line-clamp-1 flex items-center lg:flex-grow">
                   <img
                     src="icons/arrow_left.svg"
                     alt=""
