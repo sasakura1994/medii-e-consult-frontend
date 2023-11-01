@@ -265,7 +265,6 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
             <ConsultDeleteModal
               chatRoomData={chatRoomData}
               setIsOpenDeleteModal={setIsOpenDeleteModal}
-              mutateChatRoom={mutateChatRoom}
               mutateChatRoomList={mutateChatRoomList}
             />
           )}

@@ -4,19 +4,20 @@ import { Modal } from '@/components/Parts/Modal/Modal';
 import { useDeleteChatRoom } from '@/hooks/api/chat/useDeleteChatRoom';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { KeyedMutator } from 'swr';
 
 type ConsultDeleteModalProps = {
   chatRoomData: FetchChatRoomResponseData;
   setIsOpenDeleteModal: (isOpen: boolean) => void;
-  mutateChatRoom?: KeyedMutator<FetchChatRoomResponseData>;
   mutateChatRoomList?: KeyedMutator<ChatRoomEntity[]>;
 };
 
 export const ConsultDeleteModal = (props: ConsultDeleteModalProps) => {
-  const { chatRoomData, setIsOpenDeleteModal, mutateChatRoom, mutateChatRoomList } = props;
+  const { chatRoomData, setIsOpenDeleteModal, mutateChatRoomList } = props;
   const { deleteChatRoom } = useDeleteChatRoom();
+  const router = useRouter();
   return (
     <Modal className="w-full lg:w-[644px]" isCenter setShowModal={setIsOpenDeleteModal}>
       <div className="lg:mx-[82px] lg:my-[15px]">
@@ -31,9 +32,9 @@ export const ConsultDeleteModal = (props: ConsultDeleteModalProps) => {
           <PrimaryButton
             className="w-[223px] bg-strong"
             onClick={async () => {
-              deleteChatRoom({ chat_room_id: chatRoomData.chat_room.chat_room_id });
-              await mutateChatRoom?.();
+              await deleteChatRoom({ chat_room_id: chatRoomData.chat_room.chat_room_id });
               await mutateChatRoomList?.();
+              await router.push('/chat');
               setIsOpenDeleteModal(false);
             }}
           >
