@@ -12,7 +12,7 @@ const nextConfig = {
     EX_API_DIR: process.env.EX_API_DIR || '',
     WEB_SOCKET_URL: process.env.WEB_SOCKET_URL,
     NMO_URL: process.env.NMO_URL,
-    CLIENT_ID: process.env.CLIENT_ID,
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
   },
   async redirects() {
     return [

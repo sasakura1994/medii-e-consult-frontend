@@ -50,7 +50,7 @@ const GoogleLoginButton = () => {
   const [clientId, setClientId] = useState('');
 
   useEffect(() => {
-    if (process.env.CLIENT_ID) setClientId(process.env.CLIENT_ID);
+    if (process.env.GOOGLE_CLIENT_ID) setClientId(process.env.GOOGLE_CLIENT_ID);
   }, []);
 
   return (
