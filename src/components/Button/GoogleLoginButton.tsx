@@ -33,7 +33,8 @@ const LoginButton = () => {
     setTokenAndMarkInitialized(res.data.jwt_token);
     mutateFetchProfile();
     localStorage.removeItem(loginRedirectUrlKey);
-    router.push(redirectUrl === '' ? 'top' : redirectUrl);
+    if (res.data.registered) router.push(redirectUrl === '' ? 'top' : redirectUrl);
+    else router.push('editprofile?registerMode=true');
   };
 
   const onError = (error: void) => {
