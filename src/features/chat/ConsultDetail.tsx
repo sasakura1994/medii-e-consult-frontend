@@ -349,6 +349,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                     currentUserAccountId={accountId}
                     chatRoomData={chatRoomData}
                     setSelectedImage={setSelectedImage}
+                    mutateChatList={mutateChatList}
                   />
                 </div>
                 <div className="pointer-events-none absolute inset-0 overflow-hidden bg-black bg-opacity-20" />
@@ -360,6 +361,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                   currentUserAccountId={accountId}
                   chatRoomData={chatRoomData}
                   setSelectedImage={setSelectedImage}
+                  mutateChatList={mutateChatList}
                 />
               </div>
             )}

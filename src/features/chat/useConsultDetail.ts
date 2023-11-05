@@ -58,7 +58,11 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
             };
           }
           return { ...c, displayName: '' };
-        } else if (chatRoomData.members && chatRoomData.members[0].account_id === c.account_id) {
+        } else if (
+          chatRoomData.members &&
+          chatRoomData.members.length > 0 &&
+          chatRoomData.members[0].account_id === c.account_id
+        ) {
           if (chatRoomData.members[0].first_name) {
             return {
               ...c,

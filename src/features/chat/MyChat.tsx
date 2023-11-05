@@ -1,4 +1,4 @@
-import { ChatData } from '@/hooks/api/chat/useFetchChatList';
+import { ChatData, FetchChatListResponseData } from '@/hooks/api/chat/useFetchChatList';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import React, { useMemo, useState } from 'react';
 import { ChatDeleteModal } from './ChatDeleteModal';
@@ -8,12 +8,12 @@ import { useFetchPresignedFileUrl } from '@/hooks/api/chat/useFetchPresignedFile
 type MyChatProps = {
   chatData: ChatData & { displayName: string };
   chatRoomData: FetchChatRoomResponseData;
-  mutateChatRoom?: KeyedMutator<FetchChatRoomResponseData>;
+  mutateChatList?: KeyedMutator<FetchChatListResponseData>;
   setSelectedImage: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export const MyChat = (props: MyChatProps) => {
-  const { chatData, chatRoomData, setSelectedImage, mutateChatRoom } = props;
+  const { chatData, chatRoomData, setSelectedImage, mutateChatList } = props;
   const [isMouseOver, setIsMouseOver] = useState(false);
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
   const { fecthPresignedFileUrl } = useFetchPresignedFileUrl();
@@ -70,7 +70,7 @@ export const MyChat = (props: MyChatProps) => {
           chatRoomId={chatRoomData.chat_room.chat_room_id}
           chatUid={chatData.uid}
           setIsOpenDeleteModal={setIsOpenDeleteModal}
-          mutateChatRoom={mutateChatRoom}
+          mutateChatList={mutateChatList}
         />
       )}
       <div className="mr-3 flex justify-end">

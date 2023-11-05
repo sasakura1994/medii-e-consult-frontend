@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { OtherChat } from './OtherChat';
 import { MyChat } from './MyChat';
-import { ChatData } from '@/hooks/api/chat/useFetchChatList';
+import { ChatData, FetchChatListResponseData } from '@/hooks/api/chat/useFetchChatList';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import { KeyedMutator } from 'swr';
 
@@ -9,7 +9,7 @@ type ChatListProps = {
   chatListData: (ChatData & { displayName: string })[];
   currentUserAccountId: string;
   chatRoomData: FetchChatRoomResponseData;
-  mutateChatRoom?: KeyedMutator<FetchChatRoomResponseData>;
+  mutateChatList?: KeyedMutator<FetchChatListResponseData>;
   setSelectedImage: React.Dispatch<React.SetStateAction<string>>;
 };
 
@@ -23,7 +23,7 @@ const NewBorder = () => {
 };
 
 export const ChatList = (props: ChatListProps) => {
-  const { chatListData, chatRoomData, currentUserAccountId, mutateChatRoom, setSelectedImage } = props;
+  const { chatListData, chatRoomData, currentUserAccountId, mutateChatList, setSelectedImage } = props;
   const isLastMyChat = useMemo(() => {
     return chatListData[chatListData.length - 1].account_id === currentUserAccountId;
   }, [chatListData, currentUserAccountId]);
@@ -39,7 +39,7 @@ export const ChatList = (props: ChatListProps) => {
               chatData={c}
               key={c.uid}
               chatRoomData={chatRoomData}
-              mutateChatRoom={mutateChatRoom}
+              mutateChatList={mutateChatList}
               setSelectedImage={setSelectedImage}
             />
           ) : (

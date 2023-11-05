@@ -1,7 +1,7 @@
 import { GrayButton } from '@/components/Parts/Button/GrayButton';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import { useDeleteMessage } from '@/hooks/api/chat/useDeleteMessage';
-import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
+import { FetchChatListResponseData } from '@/hooks/api/chat/useFetchChatList';
 import React from 'react';
 import { KeyedMutator } from 'swr';
 
@@ -9,11 +9,11 @@ type ChatDeleteModalProps = {
   chatRoomId: string;
   chatUid: number;
   setIsOpenDeleteModal: (isOpen: boolean) => void;
-  mutateChatRoom?: KeyedMutator<FetchChatRoomResponseData>;
+  mutateChatList?: KeyedMutator<FetchChatListResponseData>;
 };
 
 export const ChatDeleteModal = (props: ChatDeleteModalProps) => {
-  const { chatRoomId, chatUid, setIsOpenDeleteModal, mutateChatRoom } = props;
+  const { chatRoomId, chatUid, setIsOpenDeleteModal, mutateChatList } = props;
   const { deleteChat } = useDeleteMessage();
   return (
     <Modal isCenter setShowModal={setIsOpenDeleteModal} className="min-w-[644px] pt-9">
@@ -27,7 +27,7 @@ export const ChatDeleteModal = (props: ChatDeleteModalProps) => {
           className="h-9 rounded-full bg-strong px-8 lg:w-[223px]"
           onClick={async () => {
             await deleteChat({ chat_room_id: chatRoomId, uid: chatUid });
-            await mutateChatRoom?.();
+            await mutateChatList?.();
             setIsOpenDeleteModal(false);
           }}
         >
