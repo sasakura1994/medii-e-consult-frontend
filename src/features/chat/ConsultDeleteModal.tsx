@@ -1,11 +1,13 @@
 import { OutlinedButton } from '@/components/Parts/Button/OutlinedButton';
 import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 import { Modal } from '@/components/Parts/Modal/Modal';
+import { isChatRoomSelectedState } from '@/globalStates/chat';
 import { useDeleteChatRoom } from '@/hooks/api/chat/useDeleteChatRoom';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useSetRecoilState } from 'recoil';
 import { KeyedMutator } from 'swr';
 
 type ConsultDeleteModalProps = {
@@ -18,6 +20,7 @@ export const ConsultDeleteModal = (props: ConsultDeleteModalProps) => {
   const { chatRoomData, setIsOpenDeleteModal, mutateChatRoomList } = props;
   const { deleteChatRoom } = useDeleteChatRoom();
   const router = useRouter();
+  const setIsChatRoomSelected = useSetRecoilState(isChatRoomSelectedState);
   return (
     <Modal className="w-full lg:w-[644px]" isCenter setShowModal={setIsOpenDeleteModal}>
       <div className="lg:mx-[82px] lg:my-[15px]">
@@ -35,6 +38,7 @@ export const ConsultDeleteModal = (props: ConsultDeleteModalProps) => {
               await deleteChatRoom({ chat_room_id: chatRoomData.chat_room.chat_room_id });
               await mutateChatRoomList?.();
               await router.push('/chat');
+              setIsChatRoomSelected(false);
               setIsOpenDeleteModal(false);
             }}
           >
