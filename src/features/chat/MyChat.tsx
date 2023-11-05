@@ -3,6 +3,7 @@ import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import React, { useMemo, useState } from 'react';
 import { ChatDeleteModal } from './ChatDeleteModal';
 import { KeyedMutator } from 'swr';
+import { useFetchPresignedFileUrl } from '@/hooks/api/chat/useFetchPresignedFileUrl';
 
 type MyChatProps = {
   chatData: ChatData & { displayName: string };
@@ -15,6 +16,8 @@ export const MyChat = (props: MyChatProps) => {
   const { chatData, chatRoomData, setSelectedImage, mutateChatRoom } = props;
   const [isMouseOver, setIsMouseOver] = useState(false);
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
+  const { fecthPresignedFileUrl } = useFetchPresignedFileUrl();
+
   const date = new Date(chatData.created_date);
   const formattedDate = date.toLocaleString(undefined, {
     month: 'numeric',
@@ -22,14 +25,30 @@ export const MyChat = (props: MyChatProps) => {
     hour: 'numeric',
     minute: 'numeric',
   });
+
   const downloadFile = async () => {
-    const a = document.createElement('a');
-    a.href = chatData.file_path;
-    a.download = chatData.file_name;
-    a.target = '_blank';
-    a.rel = 'noreferrer';
-    a.click();
+    try {
+      const res = await fecthPresignedFileUrl({
+        chat_room_id: chatRoomData.chat_room.chat_room_id,
+        file_id: chatData.file_id,
+      });
+
+      if (res.data) {
+        const response = await fetch(res.data.url);
+        const arrayBuffer = await response.arrayBuffer();
+        const blob = new Blob([arrayBuffer], { type: chatData.content_type });
+        const downloadLink = document.createElement('a');
+        downloadLink.href = URL.createObjectURL(blob);
+        downloadLink.download = chatData.file_name;
+        document.body.appendChild(downloadLink); // Append to the body
+        downloadLink.click();
+        document.body.removeChild(downloadLink); // Remove after click
+      }
+    } catch (error) {
+      console.error('Error downloading file:', error);
+    }
   };
+
   const unreadView = useMemo(() => {
     if (chatData.read_count) {
       if (chatRoomData.members.length > 1) {
@@ -66,7 +85,7 @@ export const MyChat = (props: MyChatProps) => {
           >
             削除済みメッセージ
           </p>
-        ) : chatData.content_type.startsWith('image/') ? (
+        ) : chatData.content_type.startsWith('image/') || chatData.content_type.endsWith('application/octet-stream') ? (
           <>
             {unreadView}
             <div
