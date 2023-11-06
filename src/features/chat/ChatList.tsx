@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { OtherChat } from './OtherChat';
 import { MyChat } from './MyChat';
 import { ChatData, FetchChatListResponseData } from '@/hooks/api/chat/useFetchChatList';
@@ -24,28 +24,27 @@ const NewBorder = () => {
 
 export const ChatList = (props: ChatListProps) => {
   const { chatListData, chatRoomData, currentUserAccountId, mutateChatList, setSelectedImage } = props;
-  const isLastMyChat = useMemo(() => {
-    return chatListData[chatListData.length - 1].account_id === currentUserAccountId;
-  }, [chatListData, currentUserAccountId]);
 
   return (
     <div>
       {chatListData &&
         chatRoomData &&
         chatListData.map((c) => {
-          const isView = chatRoomData.me?.read_until === c.uid && chatListData[chatListData.length - 1].uid !== c.uid;
-          return c.account_id === currentUserAccountId ? (
-            <MyChat
-              chatData={c}
-              key={c.uid}
-              chatRoomData={chatRoomData}
-              mutateChatList={mutateChatList}
-              setSelectedImage={setSelectedImage}
-            />
-          ) : (
+          const isMyChat = c.account_id === currentUserAccountId;
+          const isLastRead = chatRoomData.me?.read_until === c.uid;
+          return (
             <div key={c.uid}>
-              <OtherChat chatData={c} chatRoomData={chatRoomData} setSelectedImage={setSelectedImage} />
-              {isView && !isLastMyChat && <NewBorder />}
+              {isMyChat ? (
+                <MyChat
+                  chatData={c}
+                  chatRoomData={chatRoomData}
+                  mutateChatList={mutateChatList}
+                  setSelectedImage={setSelectedImage}
+                />
+              ) : (
+                <OtherChat chatData={c} chatRoomData={chatRoomData} setSelectedImage={setSelectedImage} />
+              )}
+              {isLastRead && <NewBorder />}
             </div>
           );
         })}
