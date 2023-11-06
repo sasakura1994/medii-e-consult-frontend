@@ -24,16 +24,23 @@ const NewBorder = () => {
 
 export const ChatList = (props: ChatListProps) => {
   const { chatListData, chatRoomData, currentUserAccountId, mutateChatList, setSelectedImage } = props;
-
+  // 最後に読んだメッセージのインデックスを特定する
+  const lastReadMessageIndex = chatListData.findIndex((c) => c.uid === chatRoomData.me?.read_until);
   return (
     <div>
       {chatListData &&
         chatRoomData &&
-        chatListData.map((c) => {
+        chatListData.map((c, index) => {
           const isMyChat = c.account_id === currentUserAccountId;
-          const isLastRead = chatRoomData.me?.read_until === c.uid;
+          // 新しいメッセージが未読の場合、その前に NewBorder を表示する
+          const showNewBorder = index === lastReadMessageIndex + 1 && !isMyChat;
+
+          console.log('chatListData[chatListData.length - 1].uid:', chatListData[chatListData.length - 1].uid);
+          console.log('chatRoomData.me?.read_until:', chatRoomData.me?.read_until);
+
           return (
             <div key={c.uid}>
+              {showNewBorder && <NewBorder />}
               {isMyChat ? (
                 <MyChat
                   chatData={c}
@@ -42,12 +49,7 @@ export const ChatList = (props: ChatListProps) => {
                   setSelectedImage={setSelectedImage}
                 />
               ) : (
-                <>
-                  <OtherChat chatData={c} chatRoomData={chatRoomData} setSelectedImage={setSelectedImage} />
-                  {isLastRead && chatListData[chatListData.length - 1].uid !== chatRoomData.me?.read_until && (
-                    <NewBorder />
-                  )}
-                </>
+                <OtherChat chatData={c} chatRoomData={chatRoomData} setSelectedImage={setSelectedImage} />
               )}
             </div>
           );
