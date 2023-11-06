@@ -22,6 +22,7 @@ import { CloseChatRoomModal } from './CloseChatRoomModal';
 import { ResolveChatRoomModal } from './ResolveChatRoomModal';
 import ChatImageModal from './ChatImageModal';
 import { AllowAddToConsultExampleListModal } from './AllowAddToConsultExampleListModal';
+import { ReConsultSuggestionModal } from './ReConsultSuggestionModal';
 
 type ConsultDetailProps = {
   publishmentStatusData?: {
@@ -78,6 +79,8 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     setIsOpenCloseChatRoomModal,
     isOpenResolveChatRoomModal,
     setIsOpenResolveChatRoomModal,
+    isOpenReConsultSuggestionModal,
+    setIsOpenReConsultSuggestionModal,
     selectedImage,
     setSelectedImage,
     setIsChatRoomSelected,
@@ -214,6 +217,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
       {chatRoomData && isOpenResolveChatRoomModal && (
         <ResolveChatRoomModal
           setIsOpen={setIsOpenResolveChatRoomModal}
+          setIsOpenReConsultSuggestionModal={setIsOpenReConsultSuggestionModal}
           chatRoomData={chatRoomData}
           setSelectedTab={setSelectedTab}
         />
@@ -266,6 +270,12 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
               chatRoomData={chatRoomData}
               setIsOpenDeleteModal={setIsOpenDeleteModal}
               mutateChatRoomList={mutateChatRoomList}
+            />
+          )}
+          {isOpenReConsultSuggestionModal && (
+            <ReConsultSuggestionModal
+              chatRoomID={chatRoomData.chat_room.chat_room_id}
+              setIsOpenReConsultSuggestionModal={setIsOpenReConsultSuggestionModal}
             />
           )}
 

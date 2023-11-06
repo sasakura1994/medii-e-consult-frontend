@@ -24,7 +24,7 @@ const NewBorder = () => {
 
 export const ChatList = (props: ChatListProps) => {
   const { chatListData, chatRoomData, currentUserAccountId, mutateChatList, setSelectedImage } = props;
-  const [readUntil, setReadUntil] = useState(-1);
+  const [readUntil, setReadUntil] = useState(chatRoomData.me?.read_until);
   // 最後に読んだメッセージのインデックスを特定する
   const lastReadMessageIndex = chatListData.findIndex((c) => c.uid === readUntil);
 
