@@ -40,7 +40,7 @@ export const ChatList = (props: ChatListProps) => {
 
           return (
             <div key={c.uid}>
-              {showNewBorder && <NewBorder />}
+              {index > 0 && showNewBorder && <NewBorder />}
               {isMyChat ? (
                 <MyChat
                   chatData={c}
