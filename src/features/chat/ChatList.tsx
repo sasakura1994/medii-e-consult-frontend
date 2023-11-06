@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { OtherChat } from './OtherChat';
 import { MyChat } from './MyChat';
 import { ChatData, FetchChatListResponseData } from '@/hooks/api/chat/useFetchChatList';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import { KeyedMutator } from 'swr';
+import { useRouter } from 'next/router';
 
 type ChatListProps = {
   chatListData: (ChatData & { displayName: string })[];
@@ -24,19 +25,37 @@ const NewBorder = () => {
 
 export const ChatList = (props: ChatListProps) => {
   const { chatListData, chatRoomData, currentUserAccountId, mutateChatList, setSelectedImage } = props;
+  const router = useRouter();
+  const readUntilRef = useRef(chatRoomData.me?.read_until);
+  const [firstRender, setFirstRender] = useState(true);
   // 最後に読んだメッセージのインデックスを特定する
-  const lastReadMessageIndex = chatListData.findIndex((c) => c.uid === chatRoomData.me?.read_until);
+  const lastReadMessageIndex = chatListData.findIndex((c) => c.uid === readUntilRef.current);
+
+  useEffect(() => {
+    if (!firstRender && chatListData) {
+      readUntilRef.current = chatListData[chatListData.length - 1].uid;
+    }
+  }, [chatListData, firstRender]);
+
+  useEffect(() => {
+    // routerのクエリを使ってレンダリング状態をリセット
+    setFirstRender(true);
+  }, [router.query]);
+
+  useEffect(() => {
+    if (firstRender) {
+      setFirstRender(false);
+    }
+  }, [firstRender]);
+
   return (
     <div>
       {chatListData &&
         chatRoomData &&
         chatListData.map((c, index) => {
           const isMyChat = c.account_id === currentUserAccountId;
-          // 新しいメッセージが未読の場合、その前に NewBorder を表示する
-          const showNewBorder = index === lastReadMessageIndex + 1 && !isMyChat;
-
-          console.log('chatListData[chatListData.length - 1].uid:', chatListData[chatListData.length - 1].uid);
-          console.log('chatRoomData.me?.read_until:', chatRoomData.me?.read_until);
+          // 新しいメッセージが未読の場合、NewBorder を表示する
+          const showNewBorder = index > 0 && index === lastReadMessageIndex + 1 && !isMyChat;
 
           return (
             <div key={c.uid}>

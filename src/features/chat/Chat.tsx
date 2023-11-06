@@ -108,10 +108,10 @@ export const Chat = () => {
         }, 10000);
       } else if (data.type === 'mes') {
         // TODO: なぜか500ms待機してチャット情報を更新するとチャットの送信が安定する
-        setTimeout(() => {
-          mutateChatList();
-          mutateChatRoom();
-          mutateChatRoomList();
+        setTimeout(async () => {
+          await mutateChatRoom();
+          await mutateChatList();
+          await mutateChatRoomList();
           mutateFetchUnreadCounts();
         }, 500);
       }
