@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { OtherChat } from './OtherChat';
 import { MyChat } from './MyChat';
 import { ChatData, FetchChatListResponseData } from '@/hooks/api/chat/useFetchChatList';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import { KeyedMutator } from 'swr';
-import { useRouter } from 'next/router';
 
 type ChatListProps = {
   chatListData: (ChatData & { displayName: string })[];
@@ -25,28 +24,15 @@ const NewBorder = () => {
 
 export const ChatList = (props: ChatListProps) => {
   const { chatListData, chatRoomData, currentUserAccountId, mutateChatList, setSelectedImage } = props;
-  const router = useRouter();
-  const readUntilRef = useRef(chatRoomData.me?.read_until);
-  const [firstRender, setFirstRender] = useState(true);
+  const [readUntil, setReadUntil] = useState(-1);
   // 最後に読んだメッセージのインデックスを特定する
-  const lastReadMessageIndex = chatListData.findIndex((c) => c.uid === readUntilRef.current);
+  const lastReadMessageIndex = chatListData.findIndex((c) => c.uid === readUntil);
 
   useEffect(() => {
-    if (!firstRender && chatListData) {
-      readUntilRef.current = chatListData[chatListData.length - 1].uid;
+    if (chatRoomData) {
+      setReadUntil(chatRoomData.me?.read_until || -1);
     }
-  }, [chatListData, firstRender]);
-
-  useEffect(() => {
-    // routerのクエリを使ってレンダリング状態をリセット
-    setFirstRender(true);
-  }, [router.query]);
-
-  useEffect(() => {
-    if (firstRender) {
-      setFirstRender(false);
-    }
-  }, [firstRender]);
+  }, [chatRoomData]);
 
   return (
     <div>
