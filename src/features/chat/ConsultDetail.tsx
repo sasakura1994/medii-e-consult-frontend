@@ -124,16 +124,20 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
       return (
         <>
           <p className="text-md font-bold">質問医</p>
-          <p className="text-xs">
-            ({getMedicalSpecialityName(chatRoomData.members[0].speciality_1)}・
-            {getExperienceYear(chatRoomData.members[0].qualified_year)}年目)
-          </p>
+          {chatRoomData.members.length > 0 && (
+            <p className="text-xs">
+              ({getMedicalSpecialityName(chatRoomData.members[0].speciality_1)}・
+              {getExperienceYear(chatRoomData.members[0].qualified_year)}年目)
+            </p>
+          )}
         </>
       );
     }
-
-    if (chatRoomData.members.length === 0) {
+    if (chatRoomData.chat_room.status === 'CREATED') {
       return <p className="text-sm font-normal text-strong">回答してくださる専門医の先生を探しています</p>;
+    }
+    if (chatRoomData.members.length === 0) {
+      return <p className="text-sm font-bold">退会済みアカウント</p>;
     }
 
     // 実名グループの場合
@@ -379,12 +383,21 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
               <div className="pointer-events-auto bg-[#5c6bc0] p-2 text-center text-sm text-white">
                 <p>解決済みのルームです</p>
                 <div className="flex flex-col justify-center lg:flex-row">
-                  <div
-                    className="mx-3 mt-4 min-w-[40%] cursor-pointer rounded-full bg-white px-4 py-1 text-primary"
-                    onClick={() => setIsOpenRoomReopenModal(true)}
-                  >
-                    <p className="text-sm">このコンサルを再開する</p>
-                  </div>
+                  {chatRoomData.members.length > 0 ? (
+                    <div
+                      className="mx-3 mt-4 min-w-[40%] cursor-pointer rounded-full bg-white px-4 py-1 text-primary"
+                      onClick={() => setIsOpenRoomReopenModal(true)}
+                    >
+                      <p className="text-sm">このコンサルを再開する</p>
+                    </div>
+                  ) : (
+                    <div
+                      className="mx-3 mt-4 min-w-[40%] cursor-not-allowed rounded-full bg-btn-hover-gray
+                     px-4 py-1 text-primary"
+                    >
+                      <p className="text-sm">このコンサルを再開する</p>
+                    </div>
+                  )}
                   {isChatRoomOwner &&
                     (chatRoomData.chat_room.room_type === 'GROUP' ? (
                       <Link
@@ -400,7 +413,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                           <p className="text-sm">同じ医師グループに別の症例を相談する</p>
                         </div>
                       </Link>
-                    ) : (
+                    ) : chatRoomData.members.length > 0 ? (
                       <Link
                         href={{
                           pathname: 'newchatroom',
@@ -414,6 +427,13 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                           <p className="text-sm">同じ医師に別の症例を相談する</p>
                         </div>
                       </Link>
+                    ) : (
+                      <div
+                        className="mx-3 mt-4 min-w-[40%] cursor-not-allowed rounded-full
+                       bg-btn-hover-gray px-4 py-1 text-primary"
+                      >
+                        <p className="text-sm">同じ医師に別の症例を相談する</p>
+                      </div>
                     ))}
                 </div>
               </div>
