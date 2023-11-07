@@ -33,7 +33,7 @@ export const SeminarCard: React.FC<Props> = ({ seminar, className }: Props) => {
             </div>
           </div>
           <div className="lg:mx-3">
-            <p className="mt-4 h-12 font-bold">{seminar.subject}</p>
+            <p className="mt-4 h-auto font-bold">{seminar.subject}</p>
             <dl className="grid grid-cols-[3rem_auto] gap-x-2 text-sm lg:mb-4 lg:mt-6 lg:gap-y-4">
               <dt className="pr-4 font-bold text-primary">講師</dt>
               <dd className="whitespace-pre-wrap text-sm">{seminar.doctor_name}先生</dd>
