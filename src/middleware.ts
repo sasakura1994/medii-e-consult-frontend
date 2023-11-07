@@ -1,13 +1,17 @@
-import { NextResponse, NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
-const Middleware = (req: NextRequest) => {
-  if (req.nextUrl.pathname.toLowerCase() !== req.nextUrl.pathname) {
-    const url = req.nextUrl.clone();
-    url.pathname = req.nextUrl.pathname.toLowerCase();
-
+export const middleware = (request: NextRequest) => {
+  const { pathname } = request.nextUrl;
+  const url = request.nextUrl.clone();
+  if (
+    !pathname.startsWith('/_next') &&
+    !pathname.startsWith('/images') &&
+    !pathname.startsWith('/favicon.ico') &&
+    pathname.toLowerCase() !== pathname
+  ) {
+    url.pathname = pathname.toLowerCase();
     return NextResponse.rewrite(url);
   }
   return NextResponse.next();
 };
-
-export default Middleware;

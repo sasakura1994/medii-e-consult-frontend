@@ -1,13 +1,16 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import { OtherChat } from './OtherChat';
 import { MyChat } from './MyChat';
-import { ChatData } from '@/hooks/api/chat/useFetchChatList';
+import { ChatData, FetchChatListResponseData } from '@/hooks/api/chat/useFetchChatList';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
+import { KeyedMutator } from 'swr';
 
 type ChatListProps = {
   chatListData: (ChatData & { displayName: string })[];
   currentUserAccountId: string;
   chatRoomData: FetchChatRoomResponseData;
+  mutateChatList?: KeyedMutator<FetchChatListResponseData>;
+  setSelectedImage: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const NewBorder = () => {
@@ -20,25 +23,40 @@ const NewBorder = () => {
 };
 
 export const ChatList = (props: ChatListProps) => {
-  const { chatListData, chatRoomData, currentUserAccountId } = props;
+  const { chatListData, chatRoomData, currentUserAccountId, mutateChatList, setSelectedImage } = props;
+  const [readUntil, setReadUntil] = useState(chatRoomData.me?.read_until);
+  // 最後に読んだメッセージのインデックスを特定する
+  const lastReadMessageIndex = chatListData.findIndex((c) => c.uid === readUntil);
 
-  const isLastMyChat = useMemo(() => {
-    return chatListData[chatListData.length - 1].account_id === currentUserAccountId;
-  }, [chatListData, currentUserAccountId]);
+  useEffect(() => {
+    if (chatRoomData) {
+      setReadUntil(chatRoomData.me?.read_until || -1);
+    }
+  }, [chatRoomData]);
 
   return (
     <div>
       {chatListData &&
         chatRoomData &&
-        chatListData.map((c) => {
-          const isView = chatRoomData.me?.read_until === c.uid && chatListData[chatListData.length - 1].uid !== c.uid;
-          return c.account_id === currentUserAccountId ? (
-            <MyChat chatData={c} key={c.uid} chatRoomData={chatRoomData} />
-          ) : (
-            <>
-              <OtherChat chatData={c} key={c.uid} />
-              {isView && !isLastMyChat && <NewBorder />}
-            </>
+        chatListData.map((c, index) => {
+          const isMyChat = c.account_id === currentUserAccountId;
+          // 新しいメッセージが未読の場合、NewBorder を表示する
+          const showNewBorder = index > 0 && index === lastReadMessageIndex + 1 && !isMyChat;
+
+          return (
+            <div key={c.uid}>
+              {index > 0 && showNewBorder && <NewBorder />}
+              {isMyChat ? (
+                <MyChat
+                  chatData={c}
+                  chatRoomData={chatRoomData}
+                  mutateChatList={mutateChatList}
+                  setSelectedImage={setSelectedImage}
+                />
+              ) : (
+                <OtherChat chatData={c} chatRoomData={chatRoomData} setSelectedImage={setSelectedImage} />
+              )}
+            </div>
           );
         })}
     </div>

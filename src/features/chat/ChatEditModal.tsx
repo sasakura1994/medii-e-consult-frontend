@@ -1,12 +1,14 @@
-import { OutlinedButton } from '@/components/Parts/Button/OutlinedButton';
-import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
+import PrimaryButton from '@/components/Button/PrimaryButton';
+import SecondaryButton from '@/components/Button/SecondaryButton';
+
 import { Radio } from '@/components/Parts/Form/Radio';
 import { SelectBox } from '@/components/Parts/Form/SelectBox';
 import { TextField } from '@/components/Parts/Form/TextField';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
-import { useUpdateChatRoom } from '@/hooks/api/chat/useUpdateChatRoom';
+import { UpdateChatRoomResponseData, useUpdateChatRoom } from '@/hooks/api/chat/useUpdateChatRoom';
 import { ChatRoomEntity, ChatRoomGender } from '@/types/entities/chat/ChatRoomEntity';
+import { AxiosError } from 'axios';
 import React, { useState } from 'react';
 import { KeyedMutator } from 'swr';
 
@@ -22,35 +24,32 @@ type ChatEditModalProps = {
 export const ChatEditModal = (props: ChatEditModalProps) => {
   const { chatRoomData, setIsOpenChatEditModal, setIsOpenDeleteModal, accountID, mutateChatRoom, mutateChatRoomList } =
     props;
-  const { updateChatRoom, errorMessage } = useUpdateChatRoom();
+  const { updateChatRoom } = useUpdateChatRoom();
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
   const [selectedGender, setSelectedGender] = useState<ChatRoomGender>(chatRoomData.chat_room.gender);
   const [selectedAge, setSelectedAge] = useState(chatRoomData.chat_room.age);
   const [summary, setSummary] = useState(chatRoomData.chat_room.disease_name);
   const isOwner = chatRoomData.chat_room.owner_account_id === accountID;
   return (
-    <Modal className="w-[644px]" isCenter setShowModal={setIsOpenChatEditModal}>
-      <div className="mx-[82px] my-[15px]">
+    <Modal className="w-full lg:w-[644px]" isCenter setShowModal={setIsOpenChatEditModal}>
+      <div className="p-3 lg:mx-[82px] lg:my-[15px]">
         <p className="my-8 text-center text-2xl font-bold">E-コンサル ルーム編集</p>
         <div className="mb-4 text-base font-bold">患者情報</div>
-        <div className="flex">
-          <label className="mr-4">
-            <Radio
-              name="gender"
-              value="man"
-              checked={selectedGender === 'man'}
-              onChange={() => setSelectedGender('man')}
-            />
-            男性
-          </label>
-          <label>
-            <Radio
-              name="gender"
-              value="woman"
-              checked={selectedGender === 'woman'}
-              onChange={() => setSelectedGender('woman')}
-            />
-            女性
-          </label>
+        <div className="flex space-x-2">
+          <Radio
+            name="gender"
+            value="man"
+            checked={selectedGender === 'man'}
+            onChange={() => setSelectedGender('man')}
+            label="男性"
+          />
+          <Radio
+            name="gender"
+            value="woman"
+            checked={selectedGender === 'woman'}
+            onChange={() => setSelectedGender('woman')}
+            label="女性"
+          />
         </div>
         <div className="mt-6 w-[308px] ">
           <SelectBox
@@ -92,9 +91,9 @@ export const ChatEditModal = (props: ChatEditModalProps) => {
         </div>
         {isOwner ? (
           <div className="mb-10 mt-8 flex justify-center space-x-4">
-            <OutlinedButton className="w-[223px]" onClick={() => setIsOpenChatEditModal(false)}>
+            <SecondaryButton className="w-[223px]" onClick={() => setIsOpenChatEditModal(false)}>
               キャンセル
-            </OutlinedButton>
+            </SecondaryButton>
             <PrimaryButton
               className="w-[223px]"
               onClick={async () => {
@@ -103,6 +102,9 @@ export const ChatEditModal = (props: ChatEditModalProps) => {
                   age: selectedAge,
                   disease_name: summary,
                   gender: selectedGender,
+                }).catch((e) => {
+                  const error = e as AxiosError<UpdateChatRoomResponseData>;
+                  setErrorMessage(error.response?.data.message);
                 });
                 if (res?.data.code) {
                   await mutateChatRoom?.();
@@ -116,9 +118,9 @@ export const ChatEditModal = (props: ChatEditModalProps) => {
           </div>
         ) : (
           <div className="mb-10 mt-8 flex justify-center space-x-4">
-            <OutlinedButton className="w-[223px]" onClick={() => setIsOpenChatEditModal(false)}>
+            <SecondaryButton className="w-[223px]" onClick={() => setIsOpenChatEditModal(false)}>
               閉じる
-            </OutlinedButton>
+            </SecondaryButton>
           </div>
         )}
         {isOwner && chatRoomData.chat_room.status === 'CREATED' && (

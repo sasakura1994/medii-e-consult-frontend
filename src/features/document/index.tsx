@@ -21,9 +21,9 @@ export const Document = () => {
 
   const loginRedirectUrlKey = 'Login::RedirectURL';
 
-  const routerPushToWelcomePage = useCallback(async () => {
+  const routerPushToQuestionaryPage = useCallback(async () => {
     await postEventLog({ name: 'document-complete' });
-    router.push('/welcome');
+    router.push('/onboarding/questionary');
   }, [postEventLog, router]);
   const setSelectedWithRedirect = useCallback(
     (value: DocumentSelected) => {
@@ -33,18 +33,18 @@ export const Document = () => {
         if (savedRedirectUrl && savedRedirectUrl !== '' && savedRedirectUrl.toLocaleLowerCase() !== '/top') {
           router.push(savedRedirectUrl);
         } else {
-          routerPushToWelcomePage();
+          routerPushToQuestionaryPage();
         }
         localStorage.removeItem(loginRedirectUrlKey);
       }
     },
-    [router, routerPushToWelcomePage]
+    [router, routerPushToQuestionaryPage]
   );
 
   if (!profile) return <></>;
 
   if (profile.is_invited || profile.is_skip_confirmation_by_utm_source || profile.is_huf_user) {
-    router.push('/welcome');
+    router.push('/onboarding/questionary');
     return <></>;
   }
 

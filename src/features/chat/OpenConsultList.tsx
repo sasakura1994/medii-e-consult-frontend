@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { ConsultTitle } from './ConsultTitle';
 import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
 import { useFetchUnreadCounts } from '@/hooks/api/chat/useFetchUnreadCounts';
+import { useSetRecoilState } from 'recoil';
+import { isChatRoomSelectedState } from '@/globalStates/chat';
 
 type OpenConsultListProps = {
   chatRoomList?: ChatRoomEntity[];
@@ -13,6 +15,7 @@ export const OpenConsultList = (props: OpenConsultListProps) => {
   const [isOpenedConultList, setIsOpenedConsultList] = useState(true);
   const [isOpenedGroupList, setIsOpenedGroupList] = useState(true);
   const unreadCountsResponseData = useFetchUnreadCounts();
+  const setIsChatRoomSelected = useSetRecoilState(isChatRoomSelectedState);
   return (
     <div className="h-full overflow-auto bg-white pb-36">
       <button
@@ -25,7 +28,11 @@ export const OpenConsultList = (props: OpenConsultListProps) => {
           {chatRoomList
             ? chatRoomList.filter(
                 (c) =>
-                  c.room_type !== 'GROUP' && (c.status === 'CREATED' || c.status === 'ACTIVE' || c.status === 'REOPEN')
+                  c.room_type !== 'GROUP' &&
+                  (c.status === 'CREATED' ||
+                    c.status === 'ACTIVE' ||
+                    c.status === 'REOPEN' ||
+                    c.status === 'TEMP_RESOLVED')
               ).length
             : 0}
           ]
@@ -41,7 +48,9 @@ export const OpenConsultList = (props: OpenConsultListProps) => {
         chatRoomList &&
         chatRoomList
           .filter(
-            (c) => c.room_type !== 'GROUP' && (c.status === 'CREATED' || c.status === 'ACTIVE' || c.status === 'REOPEN')
+            (c) =>
+              c.room_type !== 'GROUP' &&
+              (c.status === 'CREATED' || c.status === 'ACTIVE' || c.status === 'REOPEN' || c.status === 'TEMP_RESOLVED')
           )
           .map((chatRoom) => {
             return (
@@ -50,6 +59,9 @@ export const OpenConsultList = (props: OpenConsultListProps) => {
                 href={{
                   pathname: '/chat',
                   query: { chat_room_id: chatRoom.chat_room_id },
+                }}
+                onClick={() => {
+                  setIsChatRoomSelected(true);
                 }}
               >
                 <ConsultTitle
@@ -75,7 +87,11 @@ export const OpenConsultList = (props: OpenConsultListProps) => {
           {chatRoomList
             ? chatRoomList.filter(
                 (c) =>
-                  c.room_type === 'GROUP' && (c.status === 'CREATED' || c.status === 'ACTIVE' || c.status === 'REOPEN')
+                  c.room_type === 'GROUP' &&
+                  (c.status === 'CREATED' ||
+                    c.status === 'ACTIVE' ||
+                    c.status === 'REOPEN' ||
+                    c.status === 'TEMP_RESOLVED')
               ).length
             : 0}
           ]
@@ -91,7 +107,9 @@ export const OpenConsultList = (props: OpenConsultListProps) => {
         chatRoomList &&
         chatRoomList
           .filter(
-            (c) => c.room_type === 'GROUP' && (c.status === 'CREATED' || c.status === 'ACTIVE' || c.status === 'REOPEN')
+            (c) =>
+              c.room_type === 'GROUP' &&
+              (c.status === 'CREATED' || c.status === 'ACTIVE' || c.status === 'REOPEN' || c.status === 'TEMP_RESOLVED')
           )
           .map((chatRoom) => {
             return (
@@ -100,6 +118,9 @@ export const OpenConsultList = (props: OpenConsultListProps) => {
                 href={{
                   pathname: '/chat',
                   query: { chat_room_id: chatRoom.chat_room_id },
+                }}
+                onClick={() => {
+                  setIsChatRoomSelected(true);
                 }}
               >
                 <ConsultTitle

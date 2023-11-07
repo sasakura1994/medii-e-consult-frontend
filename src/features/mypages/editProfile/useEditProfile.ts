@@ -82,7 +82,7 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
     [profile?.questionary_selected_ids_csv]
   );
 
-  const isHospitalDisabled = ['STUDENT', 'SHIKAKOUKUGEKA'].includes(profile?.main_speciality ?? '');
+  const isHospitalDisabled = ['STUDENT'].includes(profile?.main_speciality ?? '');
 
   const isCompleted = useMemo(() => {
     if (!profile) {

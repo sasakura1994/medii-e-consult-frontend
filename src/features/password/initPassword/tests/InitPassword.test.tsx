@@ -40,11 +40,8 @@ describe('InitPassword', () => {
     });
 
     await act(() => {
-      userEvent.type(screen.getByLabelText('first_password'), '11111111');
-      userEvent.type(screen.getByLabelText('second_password'), '11111111');
-      userEvent.click(screen.getByTestId('agree-privacy-policy'));
-      userEvent.click(screen.getByTestId('agree-terms-of-use'));
-      userEvent.click(screen.getByTestId('agree-details'));
+      userEvent.type(screen.getByTestId('first-password'), '11111111');
+      userEvent.type(screen.getByTestId('second-password'), '11111111');
     });
 
     await act(() => {

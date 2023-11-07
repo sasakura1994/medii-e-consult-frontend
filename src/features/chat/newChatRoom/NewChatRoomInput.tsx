@@ -12,7 +12,6 @@ import { CheckBox } from '@/components/Parts/Form/CheckBox';
 import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
 import ImageEditor, { ImageEditorProps } from '@/components/Parts/ImageEditor/ImageEditor';
 import dynamic, { DynamicOptions } from 'next/dynamic';
-import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 import { OutlinedSquareButton } from '@/components/Parts/Button/OutlinedSquareButton';
 import { MedicalSpecialitiesSelectDialog } from '@/components/MedicalSpeciality/MedicalSpecialitiesSelectDialog';
 import { SelectedMedicalSpecialities } from '@/components/MedicalSpeciality/SelectedMedicalSpecialities';
@@ -20,6 +19,7 @@ import { DoctorSearchModal } from './DoctorSearchModal';
 import { SearchGroupModal } from './SearchGroupModal';
 import { NewChatRoomFile } from './NewChatRoomFile';
 import Label from '@/components/Parts/Label/Label';
+import PrimaryButton from '@/components/Button/PrimaryButton';
 // canvasの関係でサーバー時点でimportされているとエラーになるためこうするしかないらしい
 const ImageEditorComponent = dynamic<ImageEditorProps>(
   (() => import('@/components/Parts/ImageEditor/ImageEditor')) as DynamicOptions<ImageEditorProps>,
@@ -65,6 +65,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
     setIsDoctorSearchModalShown,
     setIsMedicalSpecialitiesSelectDialogShown,
     setIsSearchGroupModalShown,
+    updateDraft,
   } = props;
 
   return (
@@ -139,34 +140,25 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                 </>
               )}
             </div>
-            <div>
-              <NewChatRoomRoomType
-                id="room-type-by-name"
-                label="バイネーム(氏名)で指定する"
-                note="相談したい先生が決まっている場合"
-                checked={chatRoom.room_type === 'BY_NAME'}
-                value="BY_NAME"
-                onChange={() => setChatRoomFields({ room_type: 'BY_NAME' })}
-              />
-            </div>
-            {chatRoom.room_type === 'BY_NAME' && (
+            {doctor && (
               <>
-                <div className="my-2 flex items-center gap-2">
-                  <OutlinedSquareButton
-                    dataTestId="by-name-search-button"
-                    type="button"
-                    onClick={() => setIsDoctorSearchModalShown(true)}
-                  >
-                    専門医検索
-                  </OutlinedSquareButton>
-                  {doctor ? (
+                <div>
+                  <NewChatRoomRoomType
+                    id="room-type-by-name"
+                    label="バイネーム(氏名)で指定する"
+                    note="相談したい先生が決まっている場合"
+                    checked={chatRoom.room_type === 'BY_NAME'}
+                    value="BY_NAME"
+                    onChange={() => setChatRoomFields({ room_type: 'BY_NAME' })}
+                  />
+                </div>
+                {chatRoom.room_type === 'BY_NAME' && (
+                  <div className="my-2 flex items-center gap-2">
                     <div>
                       {doctor.last_name} {doctor.first_name} 先生
                     </div>
-                  ) : (
-                    <div>未選択</div>
-                  )}
-                </div>
+                  </div>
+                )}
               </>
             )}
             {!query.reconsult && (
@@ -272,6 +264,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
               name="disease_name"
               value={chatRoom.disease_name}
               onChange={(e) => setChatRoomFields({ disease_name: e.target.value })}
+              onBlur={updateDraft}
               placeholder="例）多関節痛を訴える抗核抗体陽性患者への追加検査"
               required
             />
@@ -303,6 +296,7 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
               className="min-h-[140px] text-[13px]"
               value={chatRoom.first_message}
               onChange={(e) => setChatRoomFields({ first_message: e.target.value })}
+              onBlur={updateDraft}
               required
             />
             <div className="mt-3 flex items-center gap-2">
@@ -366,7 +360,11 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                 プレビュー
               </PrimaryButton>
             </div>
-            {errorMessage !== '' && <ErrorMessage className="text-center">{errorMessage}</ErrorMessage>}
+            {errorMessage !== '' && (
+              <div className="flex justify-center">
+                <ErrorMessage className="text-md">{errorMessage}</ErrorMessage>
+              </div>
+            )}
             <div className="mt-12">
               <CheckBox
                 name="publishment_accepted"

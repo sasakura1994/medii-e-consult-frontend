@@ -3,6 +3,9 @@ import { OpenConsultList } from './OpenConsultList';
 import { CloseConsultList } from './CloseConsultList';
 import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
 import { useFetchUnreadCounts } from '@/hooks/api/chat/useFetchUnreadCounts';
+import Link from 'next/link';
+import { useRecoilValue } from 'recoil';
+import { isChatRoomSelectedState } from '@/globalStates/chat';
 
 type ConsultListProps = {
   chatRoomList?: ChatRoomEntity[];
@@ -12,16 +15,23 @@ type ConsultListProps = {
 
 export const ConsultList = (props: ConsultListProps) => {
   const { chatRoomList, selectedTab, setSelectedTab } = props;
+  const isChatRoomSelected = useRecoilValue(isChatRoomSelectedState);
   const unreadCountListData = useFetchUnreadCounts();
 
   return (
-    <div className="h-[calc(100vh-20px)] w-[336px] border border-[#d5d5d5]">
+    <div
+      className={`h-[100dvh] w-full border border-[#d5d5d5] pb-20 lg:h-[calc(100vh-20px)]
+      lg:w-[336px] lg:min-w-[336px] lg:pb-0 ${isChatRoomSelected ? 'hidden lg:block' : 'block'}`}
+    >
       <div className="flex h-14 items-center bg-primary">
         <img src="icons/consult_list.svg" alt="" className="ml-2 h-7 w-8" />
         <p className="text-md font-bold text-white">コンサル一覧</p>
-        <button className="ml-3 rounded-full border border-white px-2 py-1 text-md font-bold text-white">
+        <Link
+          href="newchatroom"
+          className="ml-3 hidden rounded-full border border-white px-2 py-1 text-md font-bold text-white lg:block"
+        >
           ＋匿名でコンサル作成
-        </button>
+        </Link>
       </div>
       <div className="flex h-10 bg-white">
         <div

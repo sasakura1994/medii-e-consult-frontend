@@ -2,6 +2,7 @@ import React from 'react';
 import { DocumentSelected } from '.';
 import { useDoctorNumberForm } from './useDoctorNumberForm';
 import { YearInput } from '@/components/Parts/Form/YearInput';
+import PrimaryButton from '@/components/Button/PrimaryButton';
 
 type DoctorNumberFormProps = {
   setSelectedWithRedirect: (value: DocumentSelected) => void;
@@ -108,16 +109,14 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelectedWithRedi
       </div>
       {errorMessage && <div className="mt-5 text-center text-base font-bold text-red-500">{errorMessage}</div>}
       <div className="-mb-10 mt-7 flex justify-center lg:mb-0 lg:mt-0">
-        <input
+        <PrimaryButton
           type="submit"
-          data-testid="document-input-number-form-submit"
-          className={
-            isUpdatePrepared
-              ? 'cursor-pointer rounded-full bg-primary px-10 pb-2 pt-1.5 font-bold text-white shadow-lg lg:my-10'
-              : 'cursor-pointer rounded-full bg-btn-gray px-10 pb-2 pt-1.5 font-bold text-white shadow-lg lg:my-10'
-          }
-          value="登録を完了する"
-        />
+          dataTestId="document-input-number-form-submit"
+          className='px-10 pb-2 pt-1.5 shadow-lg lg:my-10'
+          disabled={!isUpdatePrepared}
+        >
+          登録を完了する
+        </PrimaryButton>
       </div>
     </form>
   );

@@ -32,7 +32,7 @@ export const SeminarConferenceCard = (props: SeminarConferenceCardProps) => {
             <p className="text-md">{dateTime}</p>
             <div className="ml-3 w-full whitespace-nowrap lg:ml-5 lg:w-auto">
               <a href={seminar.zoom_url} target="_blank" rel="noreferrer">
-                <PrimaryButton>Zoom E-カンファに事前登録</PrimaryButton>
+                <PrimaryButton>E-カンファに事前登録</PrimaryButton>
               </a>
             </div>
           </div>
@@ -73,7 +73,7 @@ export const SeminarConferenceCard = (props: SeminarConferenceCardProps) => {
           <p className="text-md">{dateTime}</p>
           <div className="ml-3 w-full whitespace-nowrap lg:ml-5 lg:w-auto">
             <a href={seminar.zoom_url} target="_blank" rel="noreferrer">
-              <PrimaryButton>Zoom E-カンファに事前登録</PrimaryButton>
+              <PrimaryButton>E-カンファに事前登録</PrimaryButton>
             </a>
           </div>
         </div>

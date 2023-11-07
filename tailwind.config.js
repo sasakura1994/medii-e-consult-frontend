@@ -6,7 +6,7 @@ module.exports = {
     extend: {
       boxShadow: {
         low: '0px 0px 4px 0px rgba(0, 0, 0, 0.20)',
-        high: '0px 1px 16px 0px rgba(0, 0, 0, 0.05), 0px 1px 8px 0px rgba(0, 0, 0, 0.10);',
+        high: '0px 1px 16px 0px rgba(0, 0, 0, 0.05), 0px 1px 8px 0px rgba(0, 0, 0, 0.10)',
       },
       fontSize: {
         xxs: '10px',
@@ -101,6 +101,7 @@ module.exports = {
       },
       dropShadow: {
         button: '0 4px 10px rgba(92,107,192,0.3)',
+        popup: '0px 1px 1px rgba(0, 0, 0, 0.20)'
       },
       fontFamily: {
         sans: ['system-ui', 'sans-serif'],

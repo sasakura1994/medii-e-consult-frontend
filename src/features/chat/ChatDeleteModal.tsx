@@ -1,45 +1,38 @@
-import { OutlinedButton } from '@/components/Parts/Button/OutlinedButton';
-import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
+import { GrayButton } from '@/components/Parts/Button/GrayButton';
 import { Modal } from '@/components/Parts/Modal/Modal';
-import { useDeleteChatRoom } from '@/hooks/api/chat/useDeleteChatRoom';
-import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
-import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
+import { useDeleteMessage } from '@/hooks/api/chat/useDeleteMessage';
+import { FetchChatListResponseData } from '@/hooks/api/chat/useFetchChatList';
 import React from 'react';
 import { KeyedMutator } from 'swr';
 
 type ChatDeleteModalProps = {
-  chatRoomData: FetchChatRoomResponseData;
+  chatRoomId: string;
+  chatUid: number;
   setIsOpenDeleteModal: (isOpen: boolean) => void;
-  mutateChatRoom?: KeyedMutator<FetchChatRoomResponseData>;
-  mutateChatRoomList?: KeyedMutator<ChatRoomEntity[]>;
+  mutateChatList?: KeyedMutator<FetchChatListResponseData>;
 };
 
 export const ChatDeleteModal = (props: ChatDeleteModalProps) => {
-  const { chatRoomData, setIsOpenDeleteModal, mutateChatRoom, mutateChatRoomList } = props;
-  const { deleteChatRoom } = useDeleteChatRoom();
+  const { chatRoomId, chatUid, setIsOpenDeleteModal, mutateChatList } = props;
+  const { deleteChat } = useDeleteMessage();
   return (
-    <Modal className="w-[644px]" isCenter setShowModal={setIsOpenDeleteModal}>
-      <div className="mx-[82px] my-[15px]">
-        <p className="my-8 text-center text-2xl font-bold">E-コンサル ルーム削除</p>
-        <p className="text-center text-base"> このルームを削除します。</p>
-        <p className="text-center text-base"> よろしいですか？</p>
-
-        <div className="my-10 flex justify-center space-x-4">
-          <OutlinedButton className="w-[223px]" onClick={() => setIsOpenDeleteModal(false)}>
-            キャンセル
-          </OutlinedButton>
-          <PrimaryButton
-            className="w-[223px] bg-strong"
-            onClick={async () => {
-              deleteChatRoom({ chat_room_id: chatRoomData.chat_room.chat_room_id });
-              await mutateChatRoom?.();
-              await mutateChatRoomList?.();
-              setIsOpenDeleteModal(false);
-            }}
-          >
-            削除する
-          </PrimaryButton>
-        </div>
+    <Modal isCenter setShowModal={setIsOpenDeleteModal} className="min-w-[644px] pt-9">
+      <p className="text-center text-2xl font-bold">このメッセージを削除しますか？</p>
+      <p className="text-center text-base text-[#333333]">削除後はもとに戻すことはできません。</p>
+      <div className="my-10 flex justify-center space-x-4">
+        <GrayButton className="lg:w-[223px]" onClick={() => setIsOpenDeleteModal(false)}>
+          キャンセル
+        </GrayButton>
+        <button
+          className="h-9 rounded-full bg-strong px-8 lg:w-[223px]"
+          onClick={async () => {
+            await deleteChat({ chat_room_id: chatRoomId, uid: chatUid });
+            await mutateChatList?.();
+            setIsOpenDeleteModal(false);
+          }}
+        >
+          <p className="font-bold text-white drop-shadow-button">削除する</p>
+        </button>
       </div>
     </Modal>
   );

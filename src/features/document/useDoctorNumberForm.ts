@@ -20,11 +20,11 @@ export const useDoctorNumberForm = ({ setSelectedWithRedirect }: UseDoctorNumber
   const [year, setYear] = useState(0);
   const eraConverter = useEraConverter();
   const isUpdatePrepared = useMemo(() => {
-    if (doctorNumber && doctorLicenseYear && doctorLicenseMonth && doctorLicenseDay) {
+    if (doctorNumber && year && doctorLicenseMonth && doctorLicenseDay) {
       return true;
     }
     return false;
-  }, [doctorNumber, doctorLicenseYear, doctorLicenseMonth, doctorLicenseDay]);
+  }, [doctorNumber, year, doctorLicenseMonth, doctorLicenseDay]);
 
   const submit = async () => {
     if (profile) {
