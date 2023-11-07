@@ -82,28 +82,7 @@ const App = (props: AppPropsWithLayout) => {
     }
     if (
       // 認証が不要なページはsrc/hooks/authentication/useAuthenticationOnPage.tsに記載する
-      [
-        '/',
-        '/affiliate',
-        '/amazongift',
-        '/assign',
-        '/document',
-        '/editprofile',
-        '/examplelist',
-        '/howtouse',
-        '/initpassword',
-        '/login',
-        '/newchatroom',
-        '/notifysettings',
-        '/passwordreset',
-        '/passwordresetrequest',
-        '/pointhistory',
-        '/registration',
-        '/welcome',
-        '/seminar',
-        '/seminar/archives',
-        '/top',
-      ].some((str) => pathname.includes(str))
+      ['/chat', '/group', '/creategroup', '/amazongift'].some((str) => pathname.includes(str))
     ) {
       absoluteUrl.pathname = pathname;
       window.location.href = absoluteUrl.toString();

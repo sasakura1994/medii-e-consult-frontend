@@ -14,7 +14,7 @@ export const ChatDoctorDetailModal = (props: ChatDoctorDetailModalProps) => {
   const { getMedicalSpecialityName } = useMedicalSpeciality();
 
   return (
-    <Modal setShowModal={setIsOpen} isCenter className="w-full overflow-y-auto px-3 py-6 lg:w-[644px]">
+    <Modal setShowModal={setIsOpen} isCenter className="w-full overflow-y-auto px-6 py-6 lg:w-[644px] lg:px-20">
       <p className="text-center text-2xl font-bold">{member.last_name + member.first_name + ' 先生'}</p>
       <div className="mt-9 grid grid-cols-2">
         <div>

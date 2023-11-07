@@ -26,6 +26,7 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
   const [isOpenTempResolveRequestModal, setIsOpenTempResolveRequestModal] = useState(false);
   const [isOpenCloseChatRoomModal, setIsOpenCloseChatRoomModal] = useState(false);
   const [isOpenResolveChatRoomModal, setIsOpenResolveChatRoomModal] = useState(false);
+  const [isOpenReConsultSuggestionModal, setIsOpenReConsultSuggestionModal] = useState(false);
   const setIsChatRoomSelected = useSetRecoilState(isChatRoomSelectedState);
   const [selectedImage, setSelectedImage] = useState<string>('');
   const { accountId } = useToken();
@@ -58,7 +59,11 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
             };
           }
           return { ...c, displayName: '' };
-        } else if (chatRoomData.members && chatRoomData.members[0].account_id === c.account_id) {
+        } else if (
+          chatRoomData.members &&
+          chatRoomData.members.length > 0 &&
+          chatRoomData.members[0].account_id === c.account_id
+        ) {
           if (chatRoomData.members[0].first_name) {
             return {
               ...c,
@@ -131,6 +136,8 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
     setIsOpenCloseChatRoomModal,
     isOpenResolveChatRoomModal,
     setIsOpenResolveChatRoomModal,
+    isOpenReConsultSuggestionModal,
+    setIsOpenReConsultSuggestionModal,
     selectedImage,
     setSelectedImage,
     setIsChatRoomSelected,
