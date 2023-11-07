@@ -52,7 +52,7 @@ export const OnboardingConsultPointModal = () => {
         <TextArea
           disabled
           name=""
-          className="h-20 w-full resize-none disabled:bg-bg-secondary disabled:text-text-primary"
+          className="h-40 w-full resize-none disabled:bg-bg-secondary disabled:text-text-primary"
           value={whatListen}
         />
         <p className="mt-4 text-center text-sm text-medii-blue-base">
