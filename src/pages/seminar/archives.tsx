@@ -20,8 +20,8 @@ const Archives: NextPage = () => {
     <>
       <div
         className="
-          bg-[url('/images/seminar/SP_back.png')]
-          bg-cover bg-no-repeat pb-12 pt-10 lg:bg-[url('/images/seminar/PC_back.png')]
+          bg-[url('/images/seminar/sp_back.png')]
+          bg-cover bg-no-repeat pb-12 pt-10 lg:bg-[url('/images/seminar/pc_back.png')]
         "
       >
         <div
