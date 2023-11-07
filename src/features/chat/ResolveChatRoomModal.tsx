@@ -8,13 +8,14 @@ import PrimaryButton from '@/components/Button/PrimaryButton';
 
 type ResolveChatRoomModalProps = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpenReConsultSuggestionModal: React.Dispatch<React.SetStateAction<boolean>>;
   chatRoomData: FetchChatRoomResponseData;
   mutateChatRoom?: KeyedMutator<FetchChatRoomResponseData>;
   setSelectedTab: React.Dispatch<React.SetStateAction<'open' | 'close'>>;
 };
 
 export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
-  const { setIsOpen, chatRoomData, mutateChatRoom, setSelectedTab } = props;
+  const { setIsOpen, setIsOpenReConsultSuggestionModal, chatRoomData, mutateChatRoom, setSelectedTab } = props;
   const [score, setScore] = useState<number>(5);
   const { resolveChatRoom } = usePostResolveChatRoom();
 
@@ -79,6 +80,7 @@ export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
               system_comment: '',
             });
             await mutateChatRoom?.();
+            setIsOpenReConsultSuggestionModal(true);
             setIsOpen(false);
             setSelectedTab('close');
           }}
