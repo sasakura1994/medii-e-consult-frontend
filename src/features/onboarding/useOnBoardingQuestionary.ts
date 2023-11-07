@@ -6,6 +6,7 @@ import {
 } from '@/hooks/api/questionary/usePostQuestionaryItemsForOnboarding';
 import { useRouter } from 'next/router';
 import { mutateFetchFlag } from '@/hooks/api/account/useFetchFlags';
+import { saveLocalStorage } from '@/libs/LocalStorageManager';
 
 type Answer = {
   questionId: string;
@@ -81,6 +82,11 @@ export const useOnBoardingQuestionary = () => {
         answer: question.id === questionId ? { ...answer, other } : answer,
       }))
     );
+
+    // idが"WhatListen"の場合は、その値をLocalStorageに保持する
+    if (questionId === 'WhatListen') {
+      saveLocalStorage('Questionary::WhatListen', other);
+    }
   }, []);
 
   const submit = useCallback(async () => {
