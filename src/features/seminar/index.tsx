@@ -49,7 +49,9 @@ export const Seminar = () => {
             <SeminarArchiveHeader ticketCount={ticketCount} />
             <div>
               <div className="grid grid-cols-[1fr] gap-4 lg:grid-cols-[1fr_1fr]">
-                {seminars?.slice(0, 2).map((seminar) => <SeminarCard seminar={seminar} key={seminar.seminar_id} />)}
+                {seminars
+                  ?.slice(0, 2)
+                  .map((seminar) => <SeminarCard seminar={seminar} key={seminar.seminar_id} className="h-full" />)}
               </div>
             </div>
             <Link href="/seminar/archives" className="my-6 inline-block lg:my-10">
