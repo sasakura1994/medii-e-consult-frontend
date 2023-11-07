@@ -6,12 +6,13 @@ import PrimaryButton from '@/components/Button/PrimaryButton';
 import { useFetchFlag } from '@/hooks/api/account/useFetchFlags';
 import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 import { TextArea } from '@/components/Parts/Form/TextArea';
-import { loadLocalStorage, removeLocalStorage } from '@/libs/LocalStorageManager';
+import { useRecoilValue } from 'recoil';
+import { whatListenState } from '@/globalStates/onboarding';
 
 export const OnboardingConsultPointModal = () => {
   const [isClosed, setIsClosed] = useState(false);
   const { flag: isFirstConsultCampaignAvailable, isLoading: isLoadingFlag } = useFetchFlag('FirstConsultCampaign');
-
+  const whatListen = useRecoilValue(whatListenState);
   const { postEventLog } = useEventLog();
 
   const showOnboardingConsultPointModal = useCallback(async () => {
@@ -29,7 +30,6 @@ export const OnboardingConsultPointModal = () => {
       className="w-full bg-white lg:w-[600px]"
       isCenter
       setShowModal={() => {
-        removeLocalStorage('Questionary::WhatListen');
         setIsClosed(true);
       }}
       dataTestId="onboarding-questionary-modal"
@@ -53,7 +53,7 @@ export const OnboardingConsultPointModal = () => {
           disabled
           name=""
           className="h-20 w-full resize-none disabled:bg-bg-secondary disabled:text-text-primary"
-          value={loadLocalStorage('Questionary::WhatListen') ?? ''}
+          value={whatListen}
         />
         <p className="mt-4 text-center text-sm text-medii-blue-base">
           意見を仰ぎたい医師や内容は「相談内容の編集に進む」から編集・投稿いただけます
@@ -64,7 +64,6 @@ export const OnboardingConsultPointModal = () => {
         <TertiaryButton
           size="large"
           onClick={() => {
-            removeLocalStorage('Questionary::WhatListen');
             setIsClosed(true);
           }}
         >
