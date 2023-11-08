@@ -16,8 +16,8 @@ export const ConsultExampleListItem: React.FC<Props> = ({ consultExample }: Prop
   return (
     <Link href={`/example/${consultExample.example_id}`}>
       <div className="text-sm hover:opacity-60">
-        <div className="mb-2 flex gap-2">
-          <div className="max-w-[240px] lg:max-w-[350px]">
+        <div className="mb-2 flex gap-4">
+          <div className="flex-grow">
             <ConsultExampleTag>{getCategoryName(consultExample)}</ConsultExampleTag>
           </div>
 
@@ -38,7 +38,7 @@ export const ConsultExampleListItem: React.FC<Props> = ({ consultExample }: Prop
           <div className="ml-1">{consultExample.all_comment_count}</div>
         </div>
         <div className="mt-2 line-clamp-1 font-bold lg:mt-3">{consultExample.title}</div>
-        <div className="mt-4 flex justify-between lg:mt-3">
+        <div className="mt-4 flex justify-between gap-2 lg:mt-3">
           <div>
             {consultExample.age !== null && (
               <>
@@ -48,10 +48,10 @@ export const ConsultExampleListItem: React.FC<Props> = ({ consultExample }: Prop
             <span>{getGenderText(consultExample.gender, consultExample.age)}</span>{' '}
             <span>{consultExample.disease_name}</span>
           </div>
-          <div>
+          <p className="flex items-end justify-end whitespace-nowrap">
             事例公開日：
             {dateFormat(consultExample.published_date, 'YYYY/M/D')}
-          </div>
+          </p>
         </div>
         <div className="mt-4 text-[#999999]">{consultExample.background}</div>
       </div>
