@@ -1,10 +1,22 @@
 import { Modal } from '@/components/Parts/Modal/Modal';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { KeyedMutator } from 'swr';
 import { usePostResolveChatRoom } from '@/hooks/api/chat/usePostResolveChatRoom';
-import SecondaryButton from '@/components/Button/SecondaryButton';
+import { ReviewRating } from './ReviewRating';
+import TextArea from '@/components/TextArea/TextArea';
+import { Optional } from '@/components/Parts/Form/Optional';
 import PrimaryButton from '@/components/Button/PrimaryButton';
+import TertiaryButton from '@/components/Button/TertiaryButton';
+
+export type Review = {
+  key: string;
+  label: string;
+  lowRatingText: string;
+  midiumRatingText: string;
+  highRatingText: string;
+  value: 0 | 1 | 2 | 3 | 4 | 5;
+};
 
 type ResolveChatRoomModalProps = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -16,78 +28,150 @@ type ResolveChatRoomModalProps = {
 
 export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
   const { setIsOpen, setIsOpenReConsultSuggestionModal, chatRoomData, mutateChatRoom, setSelectedTab } = props;
-  const [score, setScore] = useState<number>(5);
+  const [page, setPage] = useState<'aboutConsult' | 'aboutSystem'>('aboutConsult');
+  const [aboutConsultReviews, setAboutConsultReviews] = useState<Review[]>([
+    {
+      key: '1',
+      label: '期待通りの回答が得られましたか？',
+      lowRatingText: '期待以下',
+      midiumRatingText: '期待通り',
+      highRatingText: '期待以上',
+      value: 0,
+    },
+    {
+      key: '2',
+      label: '回答までの早さはいかがでしたか？',
+      lowRatingText: '遅い',
+      midiumRatingText: '期待通り',
+      highRatingText: '早い',
+      value: 0,
+    },
+    {
+      key: '3',
+      label: 'もう一度この先生に相談したいですか？',
+      lowRatingText: 'したくない',
+      midiumRatingText: 'どちらでもない',
+      highRatingText: 'したい',
+      value: 0,
+    },
+  ]);
+  const [aboutSystemReviews, setAboutSystemReviews] = useState<Review[]>([
+    {
+      key: '1',
+      label: 'E-コンサルの使い心地はいかがですか？',
+      lowRatingText: '期待以下',
+      midiumRatingText: '期待通り',
+      highRatingText: '期待以上',
+      value: 0,
+    },
+  ]);
+
   const { resolveChatRoom } = usePostResolveChatRoom();
 
+  const title = useMemo(() => {
+    if (chatRoomData.chat_room.room_type === 'GROUP') {
+      return 'このグループの回答はいかがでしたか。';
+    }
+    if (chatRoomData.members.length > 0) {
+      return chatRoomData.members[0].last_name + chatRoomData.members[0].first_name + '先生の回答はいかがでしたか。';
+    }
+    return 'このコンサルの回答はいかがでしたか。';
+  }, [chatRoomData]);
+
   return (
-    <Modal className="w-full py-4 lg:w-[644px] lg:px-20" isCenter setShowModal={setIsOpen}>
-      <p className="text-center text-sm text-text-secondary">解決済みとしてルームを閉じます</p>
-      <p className="mt-2 text-center text-2xl font-bold">コンサルの評価を行ってください</p>
-      <div className="my-5 border-b-2 border-border-divider" />
-      <p className="text-center text-base font-bold text-[#333333]">
-        このコンサルの評価をお願いします。
-        <br />
-        コンサルの評価は、次回以降の回答医割当の参考にし、
-        <br />
-        さらにサービスの改善に使用致します。
-      </p>
-      <p className="text-center text-base text-[#333333]">※回答医にはコンサルの評価は通知されません。</p>
-      <div className="my-2 flex justify-center">
-        <img src="icons/star-fill.svg" className="cursor-pointer" alt="star1" onClick={() => setScore(1)} />
-        <img
-          src={score >= 2 ? 'icons/star-fill.svg' : 'icons/star-outlined.svg'}
-          className="cursor-pointer"
-          alt="star2"
-          onClick={() => setScore(2)}
-        />
-        <img
-          src={score >= 3 ? 'icons/star-fill.svg' : 'icons/star-outlined.svg'}
-          className="cursor-pointer"
-          alt="star3"
-          onClick={() => setScore(3)}
-        />
-        <img
-          src={score >= 4 ? 'icons/star-fill.svg' : 'icons/star-outlined.svg'}
-          className="cursor-pointer"
-          alt="star4"
-          onClick={() => setScore(4)}
-        />
-        <img
-          src={score >= 5 ? 'icons/star-fill.svg' : 'icons/star-outlined.svg'}
-          className="cursor-pointer"
-          alt="star5"
-          onClick={() => setScore(5)}
-        />
-      </div>
-      <p className="text-center text-base text-[#333333]">
-        回答医に対してお礼のコメントは済みましたか？
-        <br />
-        まだの方は、ルームに戻り
-        <br />
-        お礼コメントをしてみてください。
-      </p>
-      <div className="mt-6 flex justify-center space-x-8">
-        <SecondaryButton className="w-[150px]" onClick={() => setIsOpen(false)}>
-          ルームに戻る
-        </SecondaryButton>
-        <PrimaryButton
-          className="w-[150px]"
-          onClick={async () => {
-            await resolveChatRoom({
-              chat_room_id: chatRoomData.chat_room.chat_room_id,
-              comment: '',
-              score: score,
-              system_comment: '',
-            });
-            await mutateChatRoom?.();
-            setIsOpenReConsultSuggestionModal(true);
-            setIsOpen(false);
-            setSelectedTab('close');
-          }}
-        >
-          確定
-        </PrimaryButton>
-      </div>
+    <Modal
+      pcWidth="600"
+      isCenter
+      setShowModal={setIsOpen}
+      isUseFooter
+      submitButton={
+        page === 'aboutConsult' ? (
+          <PrimaryButton
+            size="large"
+            disabled={aboutConsultReviews.some((review) => review.value === 0)}
+            onClick={() => {
+              setPage('aboutSystem');
+            }}
+          >
+            システム評価に進む
+          </PrimaryButton>
+        ) : (
+          <PrimaryButton
+            size="large"
+            onClick={async () => {
+              await resolveChatRoom({
+                chat_room_id: chatRoomData.chat_room.chat_room_id,
+                comment: '',
+                score: 5,
+                system_comment: '',
+              });
+              await mutateChatRoom?.();
+              setIsOpenReConsultSuggestionModal(true);
+              setIsOpen(false);
+              setSelectedTab('close');
+            }}
+          >
+            システム評価に進む
+          </PrimaryButton>
+        )
+      }
+      closeButton={
+        page === 'aboutConsult' ? (
+          <TertiaryButton
+            size="large"
+            onClick={() => {
+              setIsOpen(false);
+            }}
+          >
+            キャンセル
+          </TertiaryButton>
+        ) : (
+          <TertiaryButton
+            size="large"
+            onClick={() => {
+              setPage('aboutConsult');
+            }}
+          >
+            戻る
+          </TertiaryButton>
+        )
+      }
+    >
+      {page === 'aboutConsult' ? (
+        <div className="mb-3">
+          <p className="m-4 mt-6 text-center text-2xl font-semibold text-text-primary">{title}</p>
+          <div className="mx-10">
+            {aboutConsultReviews.map((review) => {
+              return <ReviewRating key={review.key} review={review} setReviews={setAboutConsultReviews} />;
+            })}
+            <TextArea
+              id="aboutConsult"
+              labelText="回答した医師へのコメント"
+              placeholder="ご意見をお聞かせください。"
+              className="mt-4 h-[72px] resize-none"
+              labelBadge={<Optional>任意</Optional>}
+            />
+          </div>
+        </div>
+      ) : (
+        <div className="mb-3">
+          <p className="m-4 mt-6 text-center text-2xl font-semibold text-text-primary">
+            E-コンサルについてご意見をお聞かせください。
+          </p>
+          <div className="mx-10">
+            {aboutSystemReviews.map((review) => {
+              return <ReviewRating key={review.key} review={review} setReviews={setAboutSystemReviews} />;
+            })}
+            <TextArea
+              id="aboutSystem"
+              labelText="E-コンサルへのご意見・ご要望"
+              placeholder="ご意見をお聞かせください。"
+              className="mt-4 h-[72px] resize-none"
+              labelBadge={<Optional>任意</Optional>}
+            />
+          </div>
+        </div>
+      )}
     </Modal>
   );
 };
