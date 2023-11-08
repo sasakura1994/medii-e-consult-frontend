@@ -3,8 +3,11 @@ import userEvent from '@testing-library/user-event';
 import { render, screen, act, waitFor, cleanup } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
 import { AmazonGift } from '../AmazonGift';
+import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 
 const priceListMock = [1000, 3000, 5000, 10000];
+
+jest.mock('@/hooks/api/doctor/useFetchProfile');
 
 jest.mock('@/features/mypages/pointHistory/useFetchCurrentPoint', () => ({
   useFetchCurrentPoint: jest.fn(() => {
@@ -61,6 +64,12 @@ afterEach(() => cleanup());
 
 describe('AmazonGiftComponent', () => {
   test('Mediiポイントが表示されること', async () => {
+    const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
+    (useFetchProfileMock as jest.Mock).mockReturnValue({
+      profile: {
+        status: 'VERIFIED',
+      },
+    });
     getRender();
     const mediiPointText = screen.getByTestId('txt-current-point');
     expect(mediiPointText.textContent).toBe('3,500');
@@ -74,7 +83,35 @@ describe('AmazonGiftComponent', () => {
     });
   });
 
+  test('ユーザーがVERIFIEDでない時にボタンが無効になっていること', async () => {
+    const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
+    (useFetchProfileMock as jest.Mock).mockReturnValue({
+      profile: {
+        status: 'PENDING_MANUAL',
+      },
+    });
+    getRender();
+
+    const selectBtn1000 = screen.getByTestId('btn-select-1000');
+    expect(selectBtn1000).toBeDisabled();
+
+    const selectBtn3000 = screen.getByTestId('btn-select-3000');
+    expect(selectBtn3000).toBeDisabled();
+
+    const selectBtn5000 = screen.getByTestId('btn-select-5000');
+    expect(selectBtn5000).toBeDisabled();
+
+    const selectBtn10000 = screen.getByTestId('btn-select-10000');
+    expect(selectBtn10000).toBeDisabled();
+  });
+
   test('3000円までのボタンがアクティブでそれ以外は非アクティブになっていること', async () => {
+    const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
+    (useFetchProfileMock as jest.Mock).mockReturnValue({
+      profile: {
+        status: 'VERIFIED',
+      },
+    });
     getRender();
 
     const selectBtn1000 = screen.getByTestId('btn-select-1000');
@@ -91,6 +128,12 @@ describe('AmazonGiftComponent', () => {
   });
 
   test('有効な金額交換ボタンをクリックするとAmazonギフトに交換するボタンがアクティブになること', async () => {
+    const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
+    (useFetchProfileMock as jest.Mock).mockReturnValue({
+      profile: {
+        status: 'VERIFIED',
+      },
+    });
     getRender();
 
     const btnExchange = screen.getByTestId('btn-exchange');
@@ -105,6 +148,12 @@ describe('AmazonGiftComponent', () => {
   });
 
   test('Amazonギフトに交換するボタンクリックするとダイアログが表示されること', async () => {
+    const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
+    (useFetchProfileMock as jest.Mock).mockReturnValue({
+      profile: {
+        status: 'VERIFIED',
+      },
+    });
     getRender();
 
     const selectBtn = screen.getByTestId('btn-select-1000');
@@ -122,6 +171,12 @@ describe('AmazonGiftComponent', () => {
   });
 
   test('ポイント交換が実行できること', async () => {
+    const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
+    (useFetchProfileMock as jest.Mock).mockReturnValue({
+      profile: {
+        status: 'VERIFIED',
+      },
+    });
     await getRender();
 
     const selectBtn = screen.getByTestId('btn-select-1000');

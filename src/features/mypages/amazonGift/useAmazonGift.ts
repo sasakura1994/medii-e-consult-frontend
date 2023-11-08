@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useMemo } from 'react';
 import { useRecoilState } from 'recoil';
 import { amazonGiftPointExchangeState } from './amazonGiftPointExchangeState';
 import { amazonGiftCodeComfirmState } from './amazonGiftCodeComfirmState';
@@ -8,12 +8,14 @@ import { usePostAmazonGiftCode } from '../../../hooks/api/amazonGift/usePostAmaz
 import { usePostAmazonGiftPinCode } from '../../../hooks/api/amazonGift/usePostAmazonGiftPinCode';
 import type { AmazonGiftPointExchangeType } from './amazonGiftPointExchange';
 import type { AmazonGiftCodeComfirmType } from './amazonGiftCodeComfirm';
+import { useProfile } from '@/hooks/useProfile';
 
 export type UseAmazonGiftType = {
   priceList: number[];
   currentPoint: number;
   pointExchangeState: AmazonGiftPointExchangeType;
   codeConfirmState: AmazonGiftCodeComfirmType;
+  isExchangeEnabled: boolean;
   isSelectEnabled: (price: number) => boolean;
   selectPrice: (e: React.MouseEvent<HTMLButtonElement>, price: number) => void;
   exchangeConfirm: () => void;
@@ -35,10 +37,7 @@ export const useAmazonGift = (): UseAmazonGiftType => {
   const { requestExchange } = usePostAmazonGift();
   const { requestGiftCode } = usePostAmazonGiftCode();
   const { requestPinCode } = usePostAmazonGiftPinCode();
-
-  useEffect(() => {
-    console.log('amazonGiftCodeComfirm', amazonGiftCodeComfirm);
-  }, [amazonGiftCodeComfirm]);
+  const { profile } = useProfile();
 
   const isSelectEnabled = (price: number): boolean => {
     if (!currentPoint || currentPoint < price) {
@@ -46,6 +45,13 @@ export const useAmazonGift = (): UseAmazonGiftType => {
     }
     return false;
   };
+
+  /**
+   * ポイント交換可能かどうか
+   */
+  const isExchangeEnabled = useMemo(() => {
+    return profile?.status === 'VERIFIED';
+  }, [profile]);
 
   /**
    * 金額選択
@@ -211,6 +217,7 @@ export const useAmazonGift = (): UseAmazonGiftType => {
     currentPoint: currentPoint || 0,
     pointExchangeState: amazonGiftPointExchange,
     codeConfirmState: amazonGiftCodeComfirm,
+    isExchangeEnabled,
     isSelectEnabled,
     selectPrice,
     exchangeConfirm,

@@ -17,6 +17,7 @@ export const AmazonGift: React.FC = () => {
     exchangeConfirm,
     getExchangeStatusTitle,
     showCodeComfirmDialog,
+    isExchangeEnabled,
   } = useAmazonGift();
   const { amazonGifts } = useFetchAmazonGift();
 
@@ -34,13 +35,13 @@ export const AmazonGift: React.FC = () => {
         </div>
 
         <div className="mb-6">
-          <p className="mb-2">MediiポイントをAmazonギフト券に交換 (1ポイント = 1円分)</p>
+          {isExchangeEnabled && <p className="mb-2">MediiポイントをAmazonギフト券に交換 (1ポイント = 1円分)</p>}
 
           <div className="mb-4 flex">
             {priceList.map((price) => (
               <button
                 type="button"
-                disabled={isSelectEnabled(price)}
+                disabled={isSelectEnabled(price) || !isExchangeEnabled}
                 className="mr-2
                            cursor-pointer
                            rounded
@@ -62,10 +63,14 @@ export const AmazonGift: React.FC = () => {
               </button>
             ))}
           </div>
-
+          {!isExchangeEnabled && (
+            <p className="mb-4 text-base font-semibold text-red-500">
+              プロフィールの登録および、医師資格の確認ができましたら、交換可能となります。
+            </p>
+          )}
           <PrimaryButton
             type="button"
-            disabled={pointExchangeState.price ? false : true}
+            disabled={pointExchangeState.price ? false : true || !isExchangeEnabled}
             className="w-[260px]
                        rounded-full
                        px-6
