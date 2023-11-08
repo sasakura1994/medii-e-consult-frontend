@@ -63,7 +63,7 @@ describe('AmazonGiftComponent', () => {
   test('Mediiポイントが表示されること', async () => {
     getRender();
     const mediiPointText = screen.getByTestId('txt-current-point');
-    expect(mediiPointText.textContent).toBe('3500');
+    expect(mediiPointText.textContent).toBe('3,500');
   });
 
   test('金額交換ボタンが表示されること', async () => {

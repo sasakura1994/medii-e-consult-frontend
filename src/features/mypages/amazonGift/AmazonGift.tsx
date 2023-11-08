@@ -27,7 +27,7 @@ export const AmazonGift: React.FC = () => {
           <p className="border-b border-solid border-b-heading-line pb-1" data-testid="txt-point-balance">
             Mediiポイント残高
             <span className="mx-2 font-semibold" data-testid="txt-current-point">
-              {currentPoint}
+              {currentPoint ? new Intl.NumberFormat('ja-JP').format(currentPoint) : 0}
             </span>
             ポイント
           </p>
@@ -58,7 +58,7 @@ export const AmazonGift: React.FC = () => {
                 data-testid={`btn-select-${price}`}
                 key={price}
               >
-                {price}円分
+                {price ? new Intl.NumberFormat('ja-JP').format(price) : 0}円分
               </button>
             ))}
           </div>
@@ -94,7 +94,7 @@ export const AmazonGift: React.FC = () => {
               {amazonGifts?.map((amazonGift) => (
                 <tr key={amazonGift.uid}>
                   <td>{getExchangeStatusTitle(amazonGift.status)}</td>
-                  <td>{amazonGift.size} 円</td>
+                  <td>{amazonGift.size ? new Intl.NumberFormat('ja-JP').format(amazonGift.size) : 0} 円</td>
                   <td className="text-right">{dateFormat(amazonGift.created_date, 'YYYY/M/D')}</td>
                   <td>
                     {amazonGift.status === 'CONFIRMED' && (
