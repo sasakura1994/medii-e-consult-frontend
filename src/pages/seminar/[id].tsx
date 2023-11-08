@@ -35,8 +35,8 @@ const Seminar: NextPage = () => {
     <>
       <div
         className="
-        bg-[url('/images/seminar/SP_back.png')] bg-cover bg-no-repeat
-        pb-12 lg:bg-[url('/images/seminar/PC_back.png')] lg:pt-10
+        bg-[url('/images/seminar/sp_back.png')] bg-cover bg-no-repeat
+        pb-12 lg:bg-[url('/images/seminar/pc_back.png')] lg:pt-10
       "
       >
         <div
