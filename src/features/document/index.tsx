@@ -60,9 +60,9 @@ export const Document = () => {
   }
 
   return (
-    <Container className="mt-4 lg:pb-4">
-      <div className="mt-5 flex h-full w-full flex-col items-center justify-center">
-        <h1 className="mb-8 text-2xl font-bold lg:mt-5">Medii 会員登録</h1>
+    <Container className="lg:pb-4">
+      <div className="flex h-full w-full flex-col items-center justify-center">
+        <h1 className="mb-8 text-2xl font-semibold">ユーザー情報の登録</h1>
         <div className="lg:w-11/12">
           <RegistrationProgress mode={mode} />
         </div>

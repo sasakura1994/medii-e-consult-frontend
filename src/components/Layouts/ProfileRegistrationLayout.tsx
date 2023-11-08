@@ -9,7 +9,7 @@ export const ProfileRegistrationLayout = (props: PropsType) => {
   const { children } = props;
 
   return (
-    <div className="h-full min-h-screen w-full bg-bg">
+    <div className="h-full min-h-screen w-full">
       <HeaderLogoOnly />
       <main className="mx-auto pb-20 pt-10 lg:w-lg-breakpoint lg:pb-0">{children}</main>
     </div>

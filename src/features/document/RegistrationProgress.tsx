@@ -1,4 +1,7 @@
 import React from 'react';
+import { RegistrationProgressNumber } from './RegistrationProgressNumber';
+import { RegistrationProgressLine } from './RegistrationProgressLine';
+import { RegistrationProgressLabel } from './RegistrationProgressLabel';
 
 export type DocumentMode = 'edit' | 'document' | 'completed';
 
@@ -6,61 +9,26 @@ type RegistrationProgressProps = {
   mode: DocumentMode;
 };
 
-const RegistrationProgress: React.FC<RegistrationProgressProps> = ({
-  mode,
-}) => {
-  const getArrowImage = (currentMode: DocumentMode) => {
-    switch (true) {
-      case mode === currentMode:
-        return 'icons/arrow_right_alt_primary.svg';
-      case mode === 'document' && currentMode === 'edit':
-        return 'icons/arrow_right_alt.svg';
-      default:
-        return 'icons/arrow_right_alt_disabled.svg';
-    }
-  };
-
+const RegistrationProgress: React.FC<RegistrationProgressProps> = ({ mode }) => {
   return (
-    <div className="flex items-center justify-center">
-      <div
-        className={`flex h-14 w-24 items-center justify-center rounded border-2 bg-white
-         text-center text-sm font-bold lg:h-12 lg:w-40 lg:text-base ${
-           mode === 'edit'
-             ? 'border-primary text-primary'
-             : 'border-gray-400 text-gray-400'
-         }`}
-      >
-        プロフィール
-        <br className="lg:hidden" />
-        登録
+    <>
+      <div className="flex items-center justify-center">
+        <RegistrationProgressNumber>1</RegistrationProgressNumber>
+        <RegistrationProgressLine disabled={mode === 'edit'} />
+        <RegistrationProgressNumber disabled={mode === 'edit'}>2</RegistrationProgressNumber>
+        <RegistrationProgressLine disabled={mode !== 'completed'} />
+        <RegistrationProgressNumber disabled={mode !== 'completed'}>3</RegistrationProgressNumber>
       </div>
-      <img src={getArrowImage('edit')} className="mx-1.5 lg:mx-3" alt="" />
-      <div
-        className={`flex h-14 w-24 items-center justify-center rounded border-2 bg-white
-        text-center text-sm font-bold lg:h-12 lg:w-40 lg:text-base ${
-          mode === 'document'
-            ? 'border-primary text-primary'
-            : mode === 'edit'
-            ? 'border-gray-300 text-gray-300'
-            : 'border-gray-400 text-gray-400'
-        }`}
-      >
-        医師資格
-        <br className="lg:hidden" />
-        確認
+      <div className="mt-1 flex items-start justify-center lg:gap-4">
+        <RegistrationProgressLabel>
+          プロフィール
+          <br className="lg:hidden" />
+          登録
+        </RegistrationProgressLabel>
+        <RegistrationProgressLabel disabled={mode === 'edit'}>医師資格確認</RegistrationProgressLabel>
+        <RegistrationProgressLabel disabled={mode !== 'completed'}>完了</RegistrationProgressLabel>
       </div>
-      <img className="mx-1.5 lg:mx-3" src={getArrowImage('document')} alt="" />
-      <div
-        className={`flex h-14 w-24 items-center justify-center rounded border-2 bg-white
-        text-center text-sm font-bold lg:h-12 lg:w-40 lg:text-base ${
-          mode === 'completed'
-            ? 'border-primary text-primary'
-            : 'border-gray-300 text-gray-300'
-        }`}
-      >
-        利用開始
-      </div>
-    </div>
+    </>
   );
 };
 
