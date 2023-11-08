@@ -83,7 +83,6 @@ export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
   return (
     <Modal
       pcWidth="600"
-      isCenter
       setShowModal={setIsOpen}
       isUseFooter
       submitButton={
@@ -100,6 +99,7 @@ export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
         ) : (
           <PrimaryButton
             size="large"
+            disabled={aboutSystemReviews.some((review) => review.value === 0)}
             onClick={async () => {
               await resolveChatRoom({
                 chat_room_id: chatRoomData.chat_room.chat_room_id,
@@ -113,7 +113,7 @@ export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
               setSelectedTab('close');
             }}
           >
-            システム評価に進む
+            評価してコンサルを終了
           </PrimaryButton>
         )
       }
