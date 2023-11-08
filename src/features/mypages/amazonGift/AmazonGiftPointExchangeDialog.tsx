@@ -45,7 +45,7 @@ export const AmazonGiftPointExchangeDialog: React.FC = () => {
             type="button"
             onClick={() => exchangeExec(pointExchangeState.price)}
             className="mx-auto mb-3 px-6 py-[7px]"
-            data-testid="btn-exec-exchange"
+            dataTestId="btn-exec-exchange"
           >
             交換する
           </PrimaryButton>

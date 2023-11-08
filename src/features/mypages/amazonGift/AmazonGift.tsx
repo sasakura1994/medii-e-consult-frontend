@@ -72,7 +72,7 @@ export const AmazonGift: React.FC = () => {
                        py-[7px]
                        lg:w-3/5"
             onClick={exchangeConfirm}
-            data-testid="btn-exchange"
+            dataTestId="btn-exchange"
           >
             Amazonギフトに交換する
           </PrimaryButton>
