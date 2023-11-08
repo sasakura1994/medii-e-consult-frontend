@@ -65,6 +65,8 @@ export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
       value: 0,
     },
   ]);
+  const [aboutConsultComment, setAboutConsultComment] = useState('');
+  const [aboutSystemComment, setAboutSystemComment] = useState('');
 
   const { resolveChatRoom } = usePostResolveChatRoom();
 
@@ -145,7 +147,12 @@ export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
               return <ReviewRating key={review.key} review={review} setReviews={setAboutConsultReviews} />;
             })}
             <TextArea
+              onChange={(e) => {
+                setAboutConsultComment(e.target.value);
+              }}
+              value={aboutConsultComment}
               id="aboutConsult"
+              name="aboutConsult"
               labelText="回答した医師へのコメント"
               placeholder="ご意見をお聞かせください。"
               className="mt-4 h-[72px] resize-none"
@@ -164,6 +171,11 @@ export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
             })}
             <TextArea
               id="aboutSystem"
+              name="aboutSystem"
+              onChange={(e) => {
+                setAboutSystemComment(e.target.value);
+              }}
+              value={aboutSystemComment}
               labelText="E-コンサルへのご意見・ご要望"
               placeholder="ご意見をお聞かせください。"
               className="mt-4 h-[72px] resize-none"
