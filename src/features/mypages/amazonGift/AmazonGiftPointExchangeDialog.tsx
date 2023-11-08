@@ -28,7 +28,9 @@ export const AmazonGiftPointExchangeDialog: React.FC = () => {
         </div>
 
         <p className="mb-4">
-          <span className="mr-1 font-bold">{pointExchangeState.price}</span>
+          <span className="mr-1 font-bold">
+            {pointExchangeState.price && new Intl.NumberFormat('ja-JP').format(pointExchangeState.price)}
+          </span>
           円分のAmazonギフトに交換します。よろしいですか。
         </p>
 
