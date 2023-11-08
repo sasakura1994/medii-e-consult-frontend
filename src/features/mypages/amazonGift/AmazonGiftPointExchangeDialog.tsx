@@ -1,22 +1,19 @@
 import React from 'react';
 import { useAmazonGift } from './useAmazonGift';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
+import PrimaryButton from '@/components/Button/PrimaryButton';
 
 export const AmazonGiftPointExchangeDialog: React.FC = () => {
-  const { pointExchangeState, exchangeExec, closePointExchangeDialog } =
-    useAmazonGift();
+  const { pointExchangeState, exchangeExec, closePointExchangeDialog } = useAmazonGift();
 
   if (!pointExchangeState.showExchangeDialog) {
     return null;
   }
 
   return (
-    <div
-      className="absolute top-0 left-0 bottom-0 right-0 bg-white/[0.4]"
-      data-testid="amazon-gift-exchange-dialog"
-    >
+    <div className="absolute bottom-0 left-0 right-0 top-0 bg-white/[0.4]" data-testid="amazon-gift-exchange-dialog">
       <div
-        className="absolute top-1/2 left-1/2 w-[90%] translate-y-[-50%] translate-x-[-50%]
+        className="absolute left-1/2 top-1/2 w-[90%] translate-x-[-50%] translate-y-[-50%]
                    rounded
                    border border-solid border-block-gray
                    bg-white
@@ -41,28 +38,18 @@ export const AmazonGiftPointExchangeDialog: React.FC = () => {
           </p>
         )}
 
-        {pointExchangeState.isExchange && (
-          <SpinnerBorder style={{ display: 'block', margin: '0 auto' }} />
-        )}
+        {pointExchangeState.isExchange && <SpinnerBorder style={{ display: 'block', margin: '0 auto' }} />}
 
-        {!pointExchangeState.isExchange &&
-          !pointExchangeState.purchaseCompleted && (
-            <button
-              type="button"
-              onClick={() => exchangeExec(pointExchangeState.price)}
-              className="mx-auto
-                         mb-3
-                         block
-                         rounded-full
-                         bg-primary
-                         py-[7px] px-6
-                         font-bold text-white
-                         drop-shadow-button"
-              data-testid="btn-exec-exchange"
-            >
-              交換する
-            </button>
-          )}
+        {!pointExchangeState.isExchange && !pointExchangeState.purchaseCompleted && (
+          <PrimaryButton
+            type="button"
+            onClick={() => exchangeExec(pointExchangeState.price)}
+            className="mx-auto mb-3 px-6 py-[7px]"
+            data-testid="btn-exec-exchange"
+          >
+            交換する
+          </PrimaryButton>
+        )}
       </div>
     </div>
   );

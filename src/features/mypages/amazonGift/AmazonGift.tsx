@@ -5,6 +5,7 @@ import { useAmazonGift } from './useAmazonGift';
 import { useFetchAmazonGift } from '../../../hooks/api/amazonGift/useFetchAmazonGift';
 import { AmazonGiftPointExchangeDialog } from './AmazonGiftPointExchangeDialog';
 import { AmazonGiftCodeConfirmDialog } from './AmazonGiftCodeConfirmDialog';
+import PrimaryButton from '@/components/Button/PrimaryButton';
 
 export const AmazonGift: React.FC = () => {
   const {
@@ -62,25 +63,19 @@ export const AmazonGift: React.FC = () => {
             ))}
           </div>
 
-          <button
+          <PrimaryButton
             type="button"
             disabled={pointExchangeState.price ? false : true}
             className="w-[260px]
                        rounded-full
-                       border-none
-                       bg-primary
                        px-6
                        py-[7px]
-                       font-bold
-                       text-white
-                       drop-shadow-button
-                       disabled:bg-btn-gray
                        lg:w-3/5"
             onClick={exchangeConfirm}
             data-testid="btn-exchange"
           >
             Amazonギフトに交換する
-          </button>
+          </PrimaryButton>
         </div>
 
         <div>

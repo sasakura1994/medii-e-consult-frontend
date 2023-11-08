@@ -1,28 +1,23 @@
 import React from 'react';
 import { useAmazonGift } from './useAmazonGift';
+import PrimaryButton from '@/components/Button/PrimaryButton';
 
 export const AmazonGiftCodeConfirmDialog: React.FC = () => {
-  const {
-    codeConfirmState,
-    inputPinCode,
-    showGiftCode,
-    resendPinCode,
-    closeCodeComfirmDialog,
-  } = useAmazonGift();
+  const { codeConfirmState, inputPinCode, showGiftCode, resendPinCode, closeCodeComfirmDialog } = useAmazonGift();
 
   if (!codeConfirmState.showComfirmDialog) {
     return null;
   }
 
   return (
-    <div className="absolute top-0 left-0 bottom-0 right-0 bg-white/[0.4]">
+    <div className="absolute bottom-0 left-0 right-0 top-0 bg-white/[0.4]">
       <div
         className="absolute
-                   top-1/2
                    left-1/2
+                   top-1/2
                    w-[90%]
-                   translate-y-[-50%]
                    translate-x-[-50%]
+                   translate-y-[-50%]
                    rounded border
                    border-solid
                    border-block-gray
@@ -52,30 +47,18 @@ export const AmazonGiftCodeConfirmDialog: React.FC = () => {
                        border
                        border-solid
                        border-block-gray
-                       py-2
-                       px-3"
+                       px-3
+                       py-2"
             onChange={inputPinCode}
           />
         </div>
 
-        <button
-          type="button"
-          onClick={() =>
-            showGiftCode(codeConfirmState.requestId, codeConfirmState.pinCode)
-          }
-          className="mx-auto
-                     mb-3
-                     block
-                     rounded-full
-                     bg-primary
-                     py-[7px]
-                     px-6
-                     font-bold
-                     text-white
-                     drop-shadow-button"
+        <PrimaryButton
+          onClick={() => showGiftCode(codeConfirmState.requestId, codeConfirmState.pinCode)}
+          className="mx-auto mb-3 px-6 py-[7px]"
         >
           ギフトコードを表示
-        </button>
+        </PrimaryButton>
 
         {!codeConfirmState.message && codeConfirmState.giftCode ? (
           // 正常にコードが取得できた場合
@@ -88,22 +71,12 @@ export const AmazonGiftCodeConfirmDialog: React.FC = () => {
           </div>
         ) : (
           // 初期表示
-          <button
-            type="button"
+          <PrimaryButton
             onClick={() => resendPinCode(codeConfirmState.requestId)}
-            className="mx-auto
-                       mb-3
-                       block
-                       rounded-full
-                       bg-primary
-                       py-[7px]
-                       px-6
-                       font-bold
-                       text-white
-                       drop-shadow-button"
+            className="mx-auto mb-3 px-6 py-[7px]"
           >
             確認コードの再送信
-          </button>
+          </PrimaryButton>
         )}
 
         {/* レスポンスのメッセージ表示 */}
