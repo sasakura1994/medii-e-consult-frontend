@@ -156,7 +156,7 @@ export const useAmazonGift = (): UseAmazonGiftType => {
    * PINコード再送
    */
   const resendPinCode = (requestId: string) => {
-    requestPinCode({ requestId: requestId, pinCodeUpdate: false }).then(() => {
+    requestPinCode({ requestId: requestId, pinCodeUpdate: true }).then(() => {
       setAmazonGiftCodeComfirm((oldValues) => ({
         ...oldValues,
         requestId,
