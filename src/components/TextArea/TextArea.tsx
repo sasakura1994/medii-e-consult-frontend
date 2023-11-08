@@ -46,7 +46,7 @@ const TextArea = (props: TextAreaProps) => {
           hasError
             ? 'border-2 border-alert focus:border-alert focus:outline-alert'
             : 'border border-border-field focus:border-border-selected'
-        } px-3 py-2 text-md
+        } w-full px-3 py-2 text-md
         disabled:border-border-disabled disabled:bg-bg-secondary disabled:text-text-disabled
          ${className}`}
         value={value}

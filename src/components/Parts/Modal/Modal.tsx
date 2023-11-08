@@ -26,7 +26,7 @@ export const Modal: React.FC<ModalPropsType> = (props) => {
       data-testid={dataTestId}
     >
       <div
-        className={`mx-4 my-6 rounded-lg border border-[#d5d5d5] bg-white ${className} z-[210] ${
+        className={`mx-4 my-6 overflow-x-hidden rounded-lg border border-[#d5d5d5] bg-white ${className} z-[210] ${
           isCenter === true ? '' : 'my-10'
         }
          ${pcWidthClass}`}
