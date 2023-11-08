@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { amazonGiftPointExchangeState } from './amazonGiftPointExchangeState';
 import { amazonGiftCodeComfirmState } from './amazonGiftCodeComfirmState';
 import { useFetchCurrentPoint } from '@/features/mypages/pointHistory/useFetchCurrentPoint';
-import { usePostAmazonGift } from './usePostAmazonGift';
-import { usePostAmazonGiftCode } from './usePostAmazonGiftCode';
-import { usePostAmazonGiftPinCode } from './usePostAmazonGiftPinCode';
+import { usePostAmazonGift } from '../../../hooks/api/amazonGift/usePostAmazonGift';
+import { usePostAmazonGiftCode } from '../../../hooks/api/amazonGift/usePostAmazonGiftCode';
+import { usePostAmazonGiftPinCode } from '../../../hooks/api/amazonGift/usePostAmazonGiftPinCode';
 import type { AmazonGiftPointExchangeType } from './amazonGiftPointExchange';
 import type { AmazonGiftCodeComfirmType } from './amazonGiftCodeComfirm';
 
@@ -18,6 +18,7 @@ export type UseAmazonGiftType = {
   selectPrice: (e: React.MouseEvent<HTMLButtonElement>, price: number) => void;
   exchangeConfirm: () => void;
   exchangeExec: (price: number) => void;
+  showCodeComfirmDialog: (requestId: string) => void;
   closePointExchangeDialog: () => void;
   inputPinCode: (e: React.ChangeEvent<HTMLInputElement>) => void;
   showGiftCode: (requestId: string, pinCode: string) => void;
@@ -27,17 +28,17 @@ export type UseAmazonGiftType = {
 };
 
 export const useAmazonGift = (): UseAmazonGiftType => {
-  const [amazonGiftPointExchange, setAmazonGiftPointExchange] = useRecoilState(
-    amazonGiftPointExchangeState
-  );
-  const [amazonGiftCodeComfirm, setAmazonGiftCodeComfirm] = useRecoilState(
-    amazonGiftCodeComfirmState
-  );
+  const [amazonGiftPointExchange, setAmazonGiftPointExchange] = useRecoilState(amazonGiftPointExchangeState);
+  const [amazonGiftCodeComfirm, setAmazonGiftCodeComfirm] = useRecoilState(amazonGiftCodeComfirmState);
 
   const { currentPoint } = useFetchCurrentPoint();
   const { requestExchange } = usePostAmazonGift();
   const { requestGiftCode } = usePostAmazonGiftCode();
   const { requestPinCode } = usePostAmazonGiftPinCode();
+
+  useEffect(() => {
+    console.log('amazonGiftCodeComfirm', amazonGiftCodeComfirm);
+  }, [amazonGiftCodeComfirm]);
 
   const isSelectEnabled = (price: number): boolean => {
     if (!currentPoint || currentPoint < price) {
@@ -49,10 +50,7 @@ export const useAmazonGift = (): UseAmazonGiftType => {
   /**
    * 金額選択
    */
-  const selectPrice = (
-    e: React.MouseEvent<HTMLButtonElement>,
-    price: number
-  ) => {
+  const selectPrice = (e: React.MouseEvent<HTMLButtonElement>, price: number) => {
     const target = e.target as HTMLButtonElement;
     const parent = target.parentNode;
     if (!parent) {
@@ -100,7 +98,14 @@ export const useAmazonGift = (): UseAmazonGiftType => {
     }));
 
     // 交換金額を送信する
-    requestExchange(price);
+    requestExchange({ price: price }).then(() => {
+      setAmazonGiftPointExchange((oldValues) => ({
+        ...oldValues,
+        showExchangeDialog: true, // ダイアログ表示
+        isExchange: false, // 交換未実行
+        purchaseCompleted: true, // 交換完了
+      }));
+    });
   };
 
   /**
@@ -130,19 +135,51 @@ export const useAmazonGift = (): UseAmazonGiftType => {
   /**
    * ギフトコードの表示
    */
-  const showGiftCode = (requestId: string, pinCode: string) => {
-    requestGiftCode(requestId, pinCode);
+  const showGiftCode = async (requestId: string, pinCode: string) => {
+    requestGiftCode({ requestId: requestId, pinCode: pinCode })
+      .then((res) => {
+        setAmazonGiftCodeComfirm((oldValues) => ({
+          ...oldValues,
+          message: '',
+          giftCode: res.data.gift_code ?? '',
+        }));
+      })
+      .catch((err) => {
+        setAmazonGiftCodeComfirm((oldValues) => ({
+          ...oldValues,
+          message: err.response.data.message,
+        }));
+      });
   };
 
   /**
    * PINコード再送
    */
   const resendPinCode = (requestId: string) => {
-    requestPinCode(requestId, false);
+    requestPinCode({ requestId: requestId, pinCodeUpdate: false }).then(() => {
+      setAmazonGiftCodeComfirm((oldValues) => ({
+        ...oldValues,
+        requestId,
+        showComfirmDialog: true,
+      }));
+    });
     setAmazonGiftCodeComfirm((oldValues) => ({
       ...oldValues,
       message: '確認コードを再送信しました。',
     }));
+  };
+
+  /**
+   * ギフトコード確認ダイアログ表示
+   */
+  const showCodeComfirmDialog = (requestId: string) => {
+    requestPinCode({ requestId: requestId, pinCodeUpdate: false }).then(() => {
+      setAmazonGiftCodeComfirm((oldValues) => ({
+        ...oldValues,
+        requestId,
+        showComfirmDialog: true,
+      }));
+    });
   };
 
   /**
@@ -182,6 +219,7 @@ export const useAmazonGift = (): UseAmazonGiftType => {
     inputPinCode,
     showGiftCode,
     resendPinCode,
+    showCodeComfirmDialog,
     closeCodeComfirmDialog,
     getExchangeStatusTitle,
   };

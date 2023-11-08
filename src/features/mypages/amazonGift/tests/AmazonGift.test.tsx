@@ -14,7 +14,7 @@ jest.mock('@/features/mypages/pointHistory/useFetchCurrentPoint', () => ({
   }),
 }));
 
-jest.mock('@/features/mypages/amazonGift/useFetchAmazonGift', () => ({
+jest.mock('@/hooks/api/amazonGift/useFetchAmazonGift', () => ({
   useFetchAmazonGift: jest.fn(() => {
     return {
       amazonGifts: [
@@ -122,7 +122,7 @@ describe('AmazonGiftComponent', () => {
   });
 
   test('ポイント交換が実行できること', async () => {
-    getRender();
+    await getRender();
 
     const selectBtn = screen.getByTestId('btn-select-1000');
     await act(async () => {
@@ -139,7 +139,7 @@ describe('AmazonGiftComponent', () => {
       userEvent.click(execExchangeBtn);
     });
 
-    await waitFor(() => {
+    waitFor(() => {
       const txtExchangeCompleted = screen.getByTestId('txt-exchange-completed');
       expect(txtExchangeCompleted).toBeInTheDocument();
     });

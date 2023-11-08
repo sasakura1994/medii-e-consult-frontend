@@ -2,8 +2,7 @@ import React from 'react';
 import styles from './AmazonGift.module.scss';
 import { dateFormat } from '@/libs/date';
 import { useAmazonGift } from './useAmazonGift';
-import { useFetchAmazonGift } from './useFetchAmazonGift';
-import { usePostAmazonGiftPinCode } from './usePostAmazonGiftPinCode';
+import { useFetchAmazonGift } from '../../../hooks/api/amazonGift/useFetchAmazonGift';
 import { AmazonGiftPointExchangeDialog } from './AmazonGiftPointExchangeDialog';
 import { AmazonGiftCodeConfirmDialog } from './AmazonGiftCodeConfirmDialog';
 
@@ -16,23 +15,17 @@ export const AmazonGift: React.FC = () => {
     selectPrice,
     exchangeConfirm,
     getExchangeStatusTitle,
+    showCodeComfirmDialog,
   } = useAmazonGift();
   const { amazonGifts } = useFetchAmazonGift();
-  const { requestPinCode } = usePostAmazonGiftPinCode();
 
   return (
     <>
-      <div className={styles.amazon_gift}>
+      <div className="relative mb-12 mt-10 w-full rounded border border-gray-300 bg-white px-4 py-4 lg:mb-10">
         <div className="mb-4">
-          <p
-            className="border-b border-solid border-b-heading-line pb-1"
-            data-testid="txt-point-balance"
-          >
+          <p className="border-b border-solid border-b-heading-line pb-1" data-testid="txt-point-balance">
             Mediiポイント残高
-            <span
-              className="mx-2 font-semibold"
-              data-testid="txt-current-point"
-            >
+            <span className="mx-2 font-semibold" data-testid="txt-current-point">
               {currentPoint}
             </span>
             ポイント
@@ -40,9 +33,7 @@ export const AmazonGift: React.FC = () => {
         </div>
 
         <div className="mb-6">
-          <p className="mb-2">
-            MediiポイントをAmazonギフト券に交換 (1ポイント = 1円分)
-          </p>
+          <p className="mb-2">MediiポイントをAmazonギフト券に交換 (1ポイント = 1円分)</p>
 
           <div className="mb-4 flex">
             {priceList.map((price) => (
@@ -55,7 +46,7 @@ export const AmazonGift: React.FC = () => {
                            border
                            border-solid
                            border-btn-gray
-                           bg-white py-1 px-2
+                           bg-white px-2 py-1
                            last-of-type:mr-0
                            hover:bg-btn-hover-gray
                            disabled:cursor-default
@@ -78,8 +69,8 @@ export const AmazonGift: React.FC = () => {
                        rounded-full
                        border-none
                        bg-primary
-                       py-[7px]
                        px-6
+                       py-[7px]
                        font-bold
                        text-white
                        drop-shadow-button
@@ -93,9 +84,7 @@ export const AmazonGift: React.FC = () => {
         </div>
 
         <div>
-          <h2 className="mb-3 border-b border-solid border-b-heading-line pb-1">
-            Amazonギフト一覧
-          </h2>
+          <h2 className="mb-3 border-b border-solid border-b-heading-line pb-1">Amazonギフト一覧</h2>
 
           <table className={styles.amazon_gift_table}>
             <thead>
@@ -111,9 +100,7 @@ export const AmazonGift: React.FC = () => {
                 <tr key={amazonGift.uid}>
                   <td>{getExchangeStatusTitle(amazonGift.status)}</td>
                   <td>{amazonGift.size} 円</td>
-                  <td className="text-right">
-                    {dateFormat(amazonGift.created_date, 'YYYY/M/D')}
-                  </td>
+                  <td className="text-right">{dateFormat(amazonGift.created_date, 'YYYY/M/D')}</td>
                   <td>
                     {amazonGift.status === 'CONFIRMED' && (
                       <button
@@ -121,12 +108,12 @@ export const AmazonGift: React.FC = () => {
                         className="rounded-[3px]
                                    border border-solid border-btn-gray
                                    bg-gray-100
-                                   py-1 px-2
+                                   px-2 py-1
                                    text-sm
                                    leading-[1.2]"
-                        onClick={() =>
-                          requestPinCode(amazonGift.request_id, false)
-                        }
+                        onClick={() => {
+                          showCodeComfirmDialog(amazonGift.request_id);
+                        }}
                       >
                         ギフトコード表示
                       </button>
