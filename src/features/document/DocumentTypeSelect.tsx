@@ -6,20 +6,12 @@ type DocumentTypeSelectProps = {
   setSelected: React.Dispatch<React.SetStateAction<DocumentSelected>>;
 };
 
-const DocumentTypeSelect: React.FC<DocumentTypeSelectProps> = ({
-  setSelected,
-}) => {
+const DocumentTypeSelect: React.FC<DocumentTypeSelectProps> = ({ setSelected }) => {
   return (
-    <div className="px-6 py-4 lg:px-0">
-      <div className="text-center text-2xl font-bold lg:mt-10">
-        医師資格確認
-      </div>
-      <div className="mt-6 text-left lg:px-0">
-        Mediiは医師および医学生のみご利用いただけます
-      </div>
-      <div className="mt-5 ml-5 text-center font-bold lg:mt-10 lg:ml-0 lg:text-left">
-        医師資格の確認方法を選択してください
-      </div>
+    <div className="mt-8 px-6 lg:w-[600px] lg:px-0">
+      <div className="text-xl font-semibold">医師資格確認</div>
+      <div className="mt-2 text-left lg:px-0">Mediiは医師および医学生のみご利用いただけます。</div>
+      <div className="mt-6 text-lg font-semibold">医師資格の確認方法を選択してください</div>
       <div className="mt-4 flex justify-center">
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
           <div className="text-center text-sm lg:text-left">

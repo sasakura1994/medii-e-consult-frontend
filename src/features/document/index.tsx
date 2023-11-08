@@ -66,11 +66,7 @@ export const Document = () => {
         <div className="lg:w-11/12">
           <RegistrationProgress mode={mode} />
         </div>
-        {selected === '' && (
-          <div className="border-1 rounded-xs mt-10 w-full border bg-white lg:px-20 lg:pb-7">
-            <DocumentTypeSelect setSelected={setSelected} />
-          </div>
-        )}
+        {selected === '' && <DocumentTypeSelect setSelected={setSelected} />}
         {selected === 'number' && <DoctorNumberForm setSelectedWithRedirect={setSelectedWithRedirect} />}
         {selected === 'document' && <DocumentInputDocument setSelectedWithRedirect={setSelectedWithRedirect} />}
         {selected === 'auto' && <DocumentInputAuto setSelectedWithRedirect={setSelectedWithRedirect} />}
