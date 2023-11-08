@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 type TextAreaProps = {
-  label?: string;
+  labelText?: string;
+  labelBadge?: ReactNode;
   disabled?: boolean;
   className?: string;
   name?: string;
+  id: string;
   placeholder?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
@@ -16,8 +18,10 @@ type TextAreaProps = {
 
 const TextArea = (props: TextAreaProps) => {
   const {
-    label,
+    labelText,
+    labelBadge,
     name,
+    id,
     disabled,
     className,
     placeholder,
@@ -30,8 +34,12 @@ const TextArea = (props: TextAreaProps) => {
   } = props;
   return (
     <>
-      <label className="text-md text-text-primary">{label}</label>
+      <label htmlFor={id} className="mb-2 flex items-center gap-x-2">
+        <p className="text-base font-semibold text-text-primary">{labelText}</p>
+        {labelBadge}
+      </label>
       <textarea
+        id={id}
         name={name}
         disabled={disabled}
         className={`rounded-lg ${
