@@ -13,7 +13,7 @@ export const ModalFooter = (props: ModalFooterProps) => {
 
   if (!isUseFooter) return <></>;
   return (
-    <div className={'flex justify-center gap-2 self-stretch p-4 lg:justify-end ' + flexDirection}>
+    <div className={'flex items-center justify-center gap-2 self-stretch p-4 lg:justify-end ' + flexDirection}>
       {closeButton && <div ref={closeButtonRef}>{closeButton}</div>}
       {submitButton && <div ref={submitButtonRef}>{submitButton}</div>}
     </div>
