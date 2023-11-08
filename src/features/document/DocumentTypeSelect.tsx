@@ -12,46 +12,32 @@ const DocumentTypeSelect: React.FC<DocumentTypeSelectProps> = ({ setSelected }) 
       <div className="text-xl font-semibold">医師資格確認</div>
       <div className="mt-2 text-left lg:px-0">Mediiは医師および医学生のみご利用いただけます。</div>
       <div className="mt-6 text-lg font-semibold">医師資格の確認方法を選択してください</div>
-      <div className="mt-4 flex justify-center">
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-          <div className="text-center text-sm lg:text-left">
-            <DocumentTypeSelectButton
-              id={'number'}
-              text="医師番号を入力"
-              image="icons/doctor.svg"
-              onClick={() => setSelected('number')}
-            >
-              医師番号・取得年を
-              <br className="hidden lg:block" />
-              直接入力します
-            </DocumentTypeSelectButton>
-          </div>
-          <div className="text-center text-sm lg:text-left">
-            <DocumentTypeSelectButton
-              id={'document'}
-              text="画像アップロード"
-              image="icons/doctor_id1.svg"
-              onClick={() => setSelected('document')}
-            >
-              医師であることを証明できる画像を
-              <br className="hidden lg:block" />
-              アップロードします
-            </DocumentTypeSelectButton>
-          </div>
-          <div className="text-center text-sm lg:text-left">
-            <DocumentTypeSelectButton
-              id={'auto'}
-              text="Mediiにおまかせ"
-              image="icons/medii.svg"
-              onClick={() => setSelected('auto')}
-            >
-              入力された情報を元に
-              <br className="hidden lg:block" />
-              Mediiが医師資格確認を
-              <br className="hidden lg:block" />
-              行います
-            </DocumentTypeSelectButton>
-          </div>
+      <div className="mt-2 flex justify-center">
+        <div className="grid grid-cols-2 gap-4 lg:grid-cols-3">
+          <DocumentTypeSelectButton
+            id={'number'}
+            text="医師番号を入力"
+            image="icons/doctor.svg"
+            onClick={() => setSelected('number')}
+          >
+            医師番号・取得年を直接入力します
+          </DocumentTypeSelectButton>
+          <DocumentTypeSelectButton
+            id={'document'}
+            text="医師免許の登録"
+            image="icons/doctor_id1.svg"
+            onClick={() => setSelected('document')}
+          >
+            医師免許証、所属医療機関のIDカード、医師資格証、専門医証明書などが対象です
+          </DocumentTypeSelectButton>
+          <DocumentTypeSelectButton
+            id={'auto'}
+            text="Mediiにおまかせ"
+            image="icons/medii.svg"
+            onClick={() => setSelected('auto')}
+          >
+            入力していただいた内容からMediiが医師資格確認を行います
+          </DocumentTypeSelectButton>
         </div>
       </div>
     </div>
