@@ -10,7 +10,7 @@ export const ConsultExampleFirstAnswerTime: React.FC<Props> = ({ firstAnswerMinu
   const hours = (firstAnswerMinutes - minutes) / 60;
 
   return (
-    <div className="flex items-center justify-end gap-1 text-right font-bold text-primary">
+    <div className="flex flex-col items-center justify-end gap-1 text-right font-bold text-primary">
       <div className="text-[11px]">初回回答まで</div>
       <div className="flex justify-end text-sm">
         <p className="whitespace-nowrap text-base">{hours}時間</p>

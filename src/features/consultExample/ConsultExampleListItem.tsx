@@ -17,7 +17,7 @@ export const ConsultExampleListItem: React.FC<Props> = ({ consultExample }: Prop
     <Link href={`/example/${consultExample.example_id}`}>
       <div className="text-sm hover:opacity-60">
         <div className="mb-2 flex gap-2">
-          <div className={` ${consultExample.first_answer_minutes > 0 ? 'max-w-[180px] lg:max-w-[300px]' : ''}`}>
+          <div className="max-w-[240px] lg:max-w-[350px]">
             <ConsultExampleTag>{getCategoryName(consultExample)}</ConsultExampleTag>
           </div>
 
