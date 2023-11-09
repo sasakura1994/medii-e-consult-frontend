@@ -17,14 +17,14 @@ const Button = (props: ButtonProps) => {
   const { children, className, onClick, size = 'medium', disabled = false, type, dataTestId } = props;
 
   const bottunSizes: { [key: string]: string } = {
-    small: 'h-6',
-    medium: 'h-8',
-    large: 'h-10',
+    small: 'h-8',
+    medium: 'h-10',
+    large: 'h-14',
   };
   return (
     <button
       type={type}
-      data-testid = {dataTestId}
+      data-testid={dataTestId}
       className={`
         flex
         items-center
@@ -32,8 +32,8 @@ const Button = (props: ButtonProps) => {
         rounded-md
         border
         px-3
-        text-md
-        font-bold
+        text-base
+        font-semibold
         ${bottunSizes[size]}
         ${className ?? ''}
       `}
