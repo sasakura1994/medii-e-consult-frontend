@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from './AmazonGift.module.scss';
 import { dateFormat } from '@/libs/date';
 import { useAmazonGift } from './useAmazonGift';
 import { useFetchAmazonGift } from '../../../hooks/api/amazonGift/useFetchAmazonGift';
@@ -86,22 +85,26 @@ export const AmazonGift: React.FC = () => {
         <div>
           <h2 className="mb-3 border-b border-solid border-b-heading-line pb-1">Amazonギフト一覧</h2>
 
-          <table className={styles.amazon_gift_table}>
-            <thead>
+          <table className="border-separate">
+            <thead className="text-left text-[#999999]">
               <tr>
-                <th>ステータス</th>
-                <th>金額</th>
-                <th>交換日時</th>
-                <th></th>
+                <th className="pr-5">ステータス</th>
+                <th className="pr-5">金額</th>
+                <th className="pr-5">交換日時</th>
+                <th className="pr-5"></th>
               </tr>
             </thead>
             <tbody>
               {amazonGifts?.map((amazonGift) => (
                 <tr key={amazonGift.uid}>
-                  <td>{getExchangeStatusTitle(amazonGift.status)}</td>
-                  <td>{amazonGift.size ? new Intl.NumberFormat('ja-JP').format(amazonGift.size) : 0} 円</td>
-                  <td className="text-right">{dateFormat(amazonGift.created_date, 'YYYY/M/D')}</td>
-                  <td>
+                  <td className="py-1 pl-0 pr-5 text-[15px]">{getExchangeStatusTitle(amazonGift.status)}</td>
+                  <td className="py-1 pl-0 pr-5 text-[15px]">
+                    {amazonGift.size ? new Intl.NumberFormat('ja-JP').format(amazonGift.size) : 0} 円
+                  </td>
+                  <td className="py-1 pl-0 pr-5 text-right text-[15px]">
+                    {dateFormat(amazonGift.created_date, 'YYYY/M/D')}
+                  </td>
+                  <td className="py-1 pl-0 pr-5 text-[15px]">
                     {amazonGift.status === 'CONFIRMED' && (
                       <button
                         type="button"
