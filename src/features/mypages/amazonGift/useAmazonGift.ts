@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useRecoilState } from 'recoil';
 import { amazonGiftPointExchangeState } from './amazonGiftPointExchangeState';
 import { amazonGiftCodeComfirmState } from './amazonGiftCodeComfirmState';
@@ -49,9 +49,7 @@ export const useAmazonGift = (): UseAmazonGiftType => {
   /**
    * ポイント交換可能かどうか
    */
-  const isExchangeEnabled = useMemo(() => {
-    return profile?.status === 'VERIFIED';
-  }, [profile]);
+  const isExchangeEnabled = profile?.status === 'VERIFIED';
 
   /**
    * 金額選択
