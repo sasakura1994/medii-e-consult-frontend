@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAmazonGift } from './useAmazonGift';
 import PrimaryButton from '@/components/Button/PrimaryButton';
+import { Modal } from '@/components/Parts/Modal/Modal';
 
 export const AmazonGiftCodeConfirmDialog: React.FC = () => {
   const { codeConfirmState, inputPinCode, showGiftCode, resendPinCode, closeCodeComfirmDialog } = useAmazonGift();
@@ -10,21 +11,8 @@ export const AmazonGiftCodeConfirmDialog: React.FC = () => {
   }
 
   return (
-    <div className="absolute bottom-0 left-0 right-0 top-0 bg-white/[0.4]">
-      <div
-        className="absolute
-                   left-1/2
-                   top-1/2
-                   w-[90%]
-                   translate-x-[-50%]
-                   translate-y-[-50%]
-                   rounded border
-                   border-solid
-                   border-block-gray
-                   bg-white
-                   p-4
-                   lg:w-[33%]"
-      >
+    <Modal pcWidth="400">
+      <div className="px-4 py-2">
         <div className="mb-3 flex justify-between">
           <h2>ギフトコード確認</h2>
           <button type="button" onClick={closeCodeComfirmDialog}>
@@ -82,6 +70,6 @@ export const AmazonGiftCodeConfirmDialog: React.FC = () => {
         {/* レスポンスのメッセージ表示 */}
         {codeConfirmState.message && <p>{codeConfirmState.message}</p>}
       </div>
-    </div>
+    </Modal>
   );
 };

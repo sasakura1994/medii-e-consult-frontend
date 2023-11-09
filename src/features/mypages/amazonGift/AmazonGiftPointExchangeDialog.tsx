@@ -2,6 +2,7 @@ import React from 'react';
 import { useAmazonGift } from './useAmazonGift';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 import PrimaryButton from '@/components/Button/PrimaryButton';
+import { Modal } from '@/components/Parts/Modal/Modal';
 
 export const AmazonGiftPointExchangeDialog: React.FC = () => {
   const { pointExchangeState, exchangeExec, closePointExchangeDialog } = useAmazonGift();
@@ -11,15 +12,8 @@ export const AmazonGiftPointExchangeDialog: React.FC = () => {
   }
 
   return (
-    <div className="absolute bottom-0 left-0 right-0 top-0 bg-white/[0.4]" data-testid="amazon-gift-exchange-dialog">
-      <div
-        className="absolute left-1/2 top-1/2 w-[90%] translate-x-[-50%] translate-y-[-50%]
-                   rounded
-                   border border-solid border-block-gray
-                   bg-white
-                   p-4
-                   lg:w-[33%]"
-      >
+    <Modal pcWidth="400" dataTestId="amazon-gift-exchange-dialog">
+      <div className="px-4 py-2">
         <div className="mb-3 flex justify-between">
           <h2>ポイント交換確認</h2>
           <button type="button" onClick={closePointExchangeDialog}>
@@ -53,6 +47,6 @@ export const AmazonGiftPointExchangeDialog: React.FC = () => {
           </PrimaryButton>
         )}
       </div>
-    </div>
+    </Modal>
   );
 };
