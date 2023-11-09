@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, act, waitFor } from '@testing-library/react';
-import { RecoilRoot } from 'recoil';
+
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { EditProfile } from '../EditProfile';
 
@@ -22,11 +22,7 @@ describe('EditProfile', () => {
     });
 
     await act(() => {
-      render(
-        <RecoilRoot>
-          <EditProfile isRegisterMode={false} />
-        </RecoilRoot>
-      );
+      render(<EditProfile isRegisterMode={false} />);
     });
 
     const editProfileUsageClassification = await act(

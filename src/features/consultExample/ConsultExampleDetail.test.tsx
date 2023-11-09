@@ -3,7 +3,6 @@ import { act, render, screen, waitFor } from '@testing-library/react';
 import * as useMedicalSpeciality from '@/hooks/medicalSpeciality/useMedicalSpeciality';
 import { ConsultExampleDetail } from './ConsultExampleDetail';
 import { ConsultExampleDetailEntity } from '@/types/entities/ConsultExampleDetailEntity';
-import { RecoilRoot } from 'recoil';
 
 jest.mock('@/hooks/medicalSpeciality/useMedicalSpeciality');
 
@@ -40,11 +39,7 @@ describe('ConsultExampleDetail', () => {
       ...baseConsultExample,
     };
 
-    render(
-      <RecoilRoot>
-        <ConsultExampleDetail consultExample={consultExample} consultExampleMessages={[]} />
-      </RecoilRoot>
-    );
+    render(<ConsultExampleDetail consultExample={consultExample} consultExampleMessages={[]} />);
 
     expect(await act(async () => await waitFor(() => screen.getByText('初回回答まで')))).toBeInTheDocument();
   });
@@ -55,11 +50,7 @@ describe('ConsultExampleDetail', () => {
       first_answer_minutes: 0,
     };
 
-    render(
-      <RecoilRoot>
-        <ConsultExampleDetail consultExample={consultExample} consultExampleMessages={[]} />
-      </RecoilRoot>
-    );
+    render(<ConsultExampleDetail consultExample={consultExample} consultExampleMessages={[]} />);
 
     expect(await act(async () => await waitFor(() => screen.queryByText('初回回答まで')))).not.toBeInTheDocument();
   });
@@ -70,11 +61,7 @@ describe('ConsultExampleDetail', () => {
       speciality_code: 'not empty',
     };
 
-    render(
-      <RecoilRoot>
-        <ConsultExampleDetail consultExample={consultExample} consultExampleMessages={[]} />
-      </RecoilRoot>
-    );
+    render(<ConsultExampleDetail consultExample={consultExample} consultExampleMessages={[]} />);
 
     expect(await act(async () => await waitFor(() => screen.getByText('内科')))).toBeInTheDocument();
   });
@@ -85,11 +72,7 @@ describe('ConsultExampleDetail', () => {
       category_name: 'グループ1',
     };
 
-    render(
-      <RecoilRoot>
-        <ConsultExampleDetail consultExample={consultExample} consultExampleMessages={[]} />
-      </RecoilRoot>
-    );
+    render(<ConsultExampleDetail consultExample={consultExample} consultExampleMessages={[]} />);
 
     expect(await act(async () => await waitFor(() => screen.getByText('グループ1')))).toBeInTheDocument();
     expect(await act(async () => await waitFor(() => screen.queryByText('内科')))).not.toBeInTheDocument();
@@ -102,9 +85,7 @@ describe('ConsultExampleDetail', () => {
     };
 
     const { getByAltText } = await render(
-      <RecoilRoot>
-        <ConsultExampleDetail consultExample={consultExample} consultExampleMessages={[]} />
-      </RecoilRoot>
+      <ConsultExampleDetail consultExample={consultExample} consultExampleMessages={[]} />
     );
 
     expect(await act(async () => await waitFor(() => getByAltText('いいね済み')))).toBeInTheDocument();
@@ -116,28 +97,26 @@ describe('ConsultExampleDetail', () => {
     };
 
     const { getByAltText } = await render(
-      <RecoilRoot>
-        <ConsultExampleDetail
-          consultExample={consultExample}
-          consultExampleMessages={[
-            {
-              uid: 0,
-              account_type: 'doctor',
-              doctor_name: '',
-              message: '',
-              file_id: '',
-              file_name: '',
-              file_path: '',
-              content_type: '',
-              like_count: 0,
-              comment_count: 0,
-              deleted: 0,
-              created_date: '',
-              is_liked: true,
-            },
-          ]}
-        />
-      </RecoilRoot>
+      <ConsultExampleDetail
+        consultExample={consultExample}
+        consultExampleMessages={[
+          {
+            uid: 0,
+            account_type: 'doctor',
+            doctor_name: '',
+            message: '',
+            file_id: '',
+            file_name: '',
+            file_path: '',
+            content_type: '',
+            like_count: 0,
+            comment_count: 0,
+            deleted: 0,
+            created_date: '',
+            is_liked: true,
+          },
+        ]}
+      />
     );
 
     expect(await act(async () => await waitFor(() => getByAltText('いいね済み')))).toBeInTheDocument();

@@ -6,7 +6,7 @@ import 'react-popper-tooltip/dist/styles.css';
 import { SWRConfig } from 'swr';
 import { useFetcher } from '@/hooks/network/useFetcher';
 import { CookiesProvider } from 'react-cookie';
-import { RecoilRoot } from 'recoil';
+import { Provider } from 'jotai';
 import { CustomHead } from '@/components/Layouts/Header/CustomHead';
 import { Layout } from '@/components/Layouts/Layout';
 import type { NextPage } from 'next';
@@ -98,9 +98,9 @@ const App = (props: AppPropsWithLayout) => {
   }, [router]);
 
   return (
-    <RecoilRoot>
+    <Provider>
       <AppInner {...props} />
-    </RecoilRoot>
+    </Provider>
   );
 };
 

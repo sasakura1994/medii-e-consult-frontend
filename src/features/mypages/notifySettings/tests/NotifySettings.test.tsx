@@ -1,7 +1,7 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { render, screen, act } from '@testing-library/react';
-import { RecoilRoot } from 'recoil';
+
 import { NotifySettings } from '../NotifySettings';
 import * as useFetchProfileModule from '@/hooks/api/doctor/useFetchProfile';
 import { ProfileEntity } from '@/types/entities/profileEntity';
@@ -21,11 +21,7 @@ describe('NotifySettings', () => {
     });
 
     await act(() => {
-      render(
-        <RecoilRoot>
-          <NotifySettings />
-        </RecoilRoot>
-      );
+      render(<NotifySettings />);
     });
 
     const radios = screen.getAllByRole('radio') as HTMLInputElement[];

@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, screen, act } from '@testing-library/react';
-import { RecoilRoot } from 'recoil';
 import { useRouter } from 'next/router';
 import { EditingProfile, UseEditProfile } from '../useEditProfile';
 import { EditProfileProps } from '../EditProfile';
@@ -25,11 +24,7 @@ describe('HospitalAffiliation', () => {
           setProfileFields: jest.fn(),
           hospitalInputType: 'select',
         } as unknown as UseEditProfile & EditProfileProps;
-        render(
-          <RecoilRoot>
-            <HospitalAffiliation {...props} />
-          </RecoilRoot>
-        );
+        render(<HospitalAffiliation {...props} />);
       });
 
       expect(screen.queryByTestId('hospital-select')).toBeInTheDocument();
@@ -44,11 +39,7 @@ describe('HospitalAffiliation', () => {
           setProfileFields: jest.fn(),
           hospitalInputType: 'free',
         } as unknown as UseEditProfile & EditProfileProps;
-        render(
-          <RecoilRoot>
-            <HospitalAffiliation {...props} />
-          </RecoilRoot>
-        );
+        render(<HospitalAffiliation {...props} />);
       });
 
       expect(screen.queryByTestId('hospital-select')).not.toBeInTheDocument();

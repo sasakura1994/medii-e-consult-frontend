@@ -1,13 +1,10 @@
-import { atom } from 'recoil';
+import { atom } from 'jotai';
 import type { AmazonGiftCodeComfirmType } from './amazonGiftCodeComfirm';
 
 export const amazonGiftCodeComfirmState = atom<AmazonGiftCodeComfirmType>({
-  key: 'amazonGiftComfirm',
-  default: {
-    pinCode: '',
-    requestId: '',
-    giftCode: '',
-    showComfirmDialog: false,
-    message: '',
-  },
+  pinCode: '',
+  requestId: '',
+  giftCode: '',
+  showComfirmDialog: false,
+  message: '',
 });

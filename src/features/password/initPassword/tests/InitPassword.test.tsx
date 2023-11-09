@@ -1,7 +1,7 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { render, screen, act } from '@testing-library/react';
-import { RecoilRoot } from 'recoil';
+
 import * as apiClient from '@/libs/apiClient';
 import { AxiosInstance } from 'axios';
 import { PostResetPasswordResponseData } from '@/hooks/api/account/usePostPasswordReset';
@@ -32,11 +32,7 @@ describe('InitPassword', () => {
     });
 
     await act(() => {
-      render(
-        <RecoilRoot>
-          <InitPassword />
-        </RecoilRoot>
-      );
+      render(<InitPassword />);
     });
 
     await act(() => {

@@ -1,6 +1,3 @@
-import { atom } from 'recoil';
+import { atom } from 'jotai';
 
-export const isChatRoomSelectedState = atom<boolean>({
-  key: 'isChatRoomSelected',
-  default: false,
-});
+export const isChatRoomSelectedState = atom<boolean>(false);
