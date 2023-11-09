@@ -21,7 +21,7 @@ const DocumentInputAuto: React.FC<DocumentInputAutoProps> = ({ setSelectedWithRe
       }}
       data-testid="document-input-auto"
     >
-      <div className="-mb-10 mt-8 w-full px-4 lg:mb-0 lg:w-[600px] lg:px-0">
+      <div className="mt-8 w-full px-4 lg:mb-0 lg:w-[600px] lg:px-0">
         <div className="text-xl font-semibold">Mediiにおまかせ</div>
         <ul className="mt-2 list-disc pl-6">
           <li>Mediiスタッフが登録情報を元に医師資格確認を行います。医師確認できた場合、ここで完了となります。</li>

@@ -12,6 +12,8 @@ type TextFieldProps = {
   subText?: string;
   required?: boolean;
   dataTestId?: string;
+  minLength?: number;
+  maxLength?: number;
   hasError?: boolean;
 };
 
@@ -28,6 +30,8 @@ const TextField = (props: TextFieldProps) => {
     subText,
     required,
     dataTestId,
+    minLength,
+    maxLength,
     hasError = false,
   } = props;
   return (
@@ -46,6 +50,8 @@ const TextField = (props: TextFieldProps) => {
         onChange={onChange}
         placeholder={placeholder}
         data-testid={dataTestId}
+        minLength={minLength}
+        maxLength={maxLength}
         required={required}
       ></input>
       <p className="text-medii-sm text-text-secondary">{subText}</p>
