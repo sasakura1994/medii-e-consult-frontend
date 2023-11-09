@@ -1,21 +1,31 @@
 import React, { useState } from 'react';
 import { introduceDoctorMock } from '@/hooks/api/doctor/IntroduceDoctor';
+import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
+import Link from 'next/link';
 
 export const IntroduceResponseDoctor = () => {
   const [showMore, setShowMore] = useState<boolean>(false);
+  const { postEventLog } = useEventLog();
+
   return (
     <>
-      <div className='flex'>
+      <div 
+        className='flex' 
+        onClick={() => {
+          postEventLog({ name: 'click-doctor' })
+        }}
+      >
         {introduceDoctorMock.map((introduceDoctor, index) => {
           return (
-            <div
+            <Link
+              href={'/examplelist'}
               className="mr-2 min-w-[504px] rounded-lg border border-[#EDEDED] bg-white shadow-low lg:w-1/3"
               key={index}
             >
               <div className="p-4">
                 <div className='flex'>
                   <div className='mr-4'>
-                    <img src={introduceDoctor.image} alt="1" />
+                    <img src={introduceDoctor.image} alt="introduceDoctorImage" />
                   </div>
                   <div>
                     <div className='flex mb-2 items-center'>
@@ -31,12 +41,12 @@ export const IntroduceResponseDoctor = () => {
                   </div>
                 </div>
                 <div className='mt-1 mb-2'>
-                  <img src="images/top/triangle.png" alt="triangle" />
+                  <img src="images/top/triangle.png" alt="triangle" className='relative z-1 top-[1px]' />
                   <div className='bg-bg-secondary border border-[1px] border-border-divider rounded-lg p-[10px] font-[10px] gap-2.5'>
                     {introduceDoctor.description}
                   </div>
                 </div>
-                <div className='flex text-medii-blue-700 mb-3 cursor-pointer' onClick={() => { setShowMore(!showMore) }}>
+                <div className='flex text-medii-blue-700 mb-3 cursor-pointer text-[14px]' onClick={(e) => { e.preventDefault();setShowMore(!showMore); }}>
                   <p>先生の情報をもっと見る</p>
                   <div className='flex items-center pl-2'>
                     {showMore ?
@@ -85,7 +95,7 @@ export const IntroduceResponseDoctor = () => {
                   </div>
                 }
               </div>
-            </div>
+            </Link>
           )
         })}
       </div>
