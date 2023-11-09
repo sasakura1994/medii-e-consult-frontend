@@ -1,6 +1,9 @@
 import React from 'react';
 import DocumentTypeSelectButton from './DocumentTypeSelectButton';
 import { DocumentSelected } from '.';
+import Link from 'next/link';
+import TertiaryButton from '@/components/Button/TertiaryButton';
+import SecondaryButton from '@/components/Button/SecondaryButton';
 
 type DocumentTypeSelectProps = {
   setSelected: React.Dispatch<React.SetStateAction<DocumentSelected>>;
@@ -39,6 +42,20 @@ const DocumentTypeSelect: React.FC<DocumentTypeSelectProps> = ({ setSelected }) 
             入力していただいた内容からMediiが医師資格確認を行います
           </DocumentTypeSelectButton>
         </div>
+      </div>
+      <div className="mt-4 flex justify-center">
+        <Link href="/top">
+          <TertiaryButton size="large" className="lg:px-10">
+            あとで登録する
+          </TertiaryButton>
+        </Link>
+      </div>
+      <div className="mt-8 flex justify-center">
+        <Link href="/editprofile?registerMode=1">
+          <SecondaryButton size="large" className="w-[64px]">
+            戻る
+          </SecondaryButton>
+        </Link>
       </div>
     </div>
   );

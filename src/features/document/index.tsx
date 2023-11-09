@@ -9,9 +9,6 @@ import { useRouter } from 'next/router';
 import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 import { useProfile } from '@/hooks/useProfile';
 import DocumentInputStudentDocument from './DocumentInputStudentDocument';
-import TertiaryButton from '@/components/Button/TertiaryButton';
-import Link from 'next/link';
-import SecondaryButton from '@/components/Button/SecondaryButton';
 
 export type DocumentSelected = '' | 'number' | 'document' | 'auto' | 'completed' | 'studentCompleted';
 
@@ -73,20 +70,6 @@ export const Document = () => {
         {selected === 'number' && <DoctorNumberForm setSelectedWithRedirect={setSelectedWithRedirect} />}
         {selected === 'document' && <DocumentInputDocument setSelectedWithRedirect={setSelectedWithRedirect} />}
         {selected === 'auto' && <DocumentInputAuto setSelectedWithRedirect={setSelectedWithRedirect} />}
-      </div>
-      <div className="mt-4 flex justify-center">
-        <Link href="/top">
-          <TertiaryButton size="large" className="lg:px-10">
-            あとで登録する
-          </TertiaryButton>
-        </Link>
-      </div>
-      <div className="mt-8 flex justify-center">
-        <Link href="/editprofile?registerMode=1">
-          <SecondaryButton size="large" className="w-[64px]">
-            戻る
-          </SecondaryButton>
-        </Link>
       </div>
     </Container>
   );
