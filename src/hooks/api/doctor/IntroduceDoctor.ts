@@ -8,6 +8,7 @@ export const introduceDoctorMock = [
     description: '同じ専門医の中でも意見がわかれることがあります。様々な意見を出し合い、ディスカッションになり、私にとっても良い勉強になっています。大阪公立大学への紹介だけでなく近隣施設への紹介の相談でも構いません。どんなことでもよいのでお気軽に質問をしていただければと思います。',
     university: '大阪市立大学（1998年）',
     field: '心不全、心筋症、肺高血圧症',
+    consultUrl: 'https://medii.jp/magazine/expert-intaview_ATTR-CM1_izumiya_20230731',
     qualification: [
       {content: '心アミロイドーシス診療ガイドライン班員'},
       {content: 'ビンダケル処方認定医師'},
@@ -34,6 +35,7 @@ export const introduceDoctorMock = [
     guideline: '遺伝性不整脈の診療に関するガイドライン（2017年改訂版）',
     position: '協力員',
     description: '同じ専門医の中でも意見がわかれることがあります。様々な意見を出し合い、ディスカッションになり、私にとっても良い勉強になっています。大阪公立大学への紹介だけでなく近隣施設への紹介の相談でも構いません。どんなことでもよいのでお気軽に質問をしていただければと思います。',
+    consultUrl: 'https://medii.jp/magazine/expert-intaview_ATTR-CM_makiyama_20230930',
     qualification: [
       {content: '日本循環器学会 循環器専門医'},
       {content: '日本循環器学会 ビンダケル処方認定'},
