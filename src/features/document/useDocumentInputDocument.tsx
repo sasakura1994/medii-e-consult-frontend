@@ -9,11 +9,13 @@ type UseDocumentInputDocumentProps = {
 };
 
 type UseDocumentInputDocument = {
+  file?: File;
   imageSource: string;
   onFileSelected: (e: React.ChangeEvent<HTMLInputElement>) => void;
   openFileSelector: () => void;
   fileSelectorRef: React.RefObject<HTMLInputElement>;
   errorMessage: string;
+  reset: () => void;
   submit: (e: React.FormEvent) => void;
 };
 
@@ -22,7 +24,8 @@ export const useDocumentInputDocument = ({
 }: UseDocumentInputDocumentProps): UseDocumentInputDocument => {
   const { profile } = useFetchProfile();
   const { uploadDocument } = useUploadDocument();
-  const { imageSource, onFileSelected, setImageSource, openFileSelector, fileSelectorRef } = useSelectedFile();
+  const { file, imageSource, onFileSelected, setImageSource, openFileSelector, fileSelectorRef, reset } =
+    useSelectedFile();
 
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -58,11 +61,13 @@ export const useDocumentInputDocument = ({
   }, [profile, setImageSource]);
 
   return {
+    file,
     imageSource,
     onFileSelected,
     openFileSelector,
     fileSelectorRef,
     errorMessage,
+    reset,
     submit,
   };
 };
