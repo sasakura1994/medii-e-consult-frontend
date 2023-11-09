@@ -4,6 +4,7 @@ import { DocumentSelected } from '.';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import SecondaryButton from '@/components/Button/SecondaryButton';
 import { ColoredImage } from '@/components/Image/ColoredImage';
+import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
 
 type DocumentInputDocumentProps = {
   setSelectedWithRedirect: (value: DocumentSelected) => void;
@@ -45,9 +46,9 @@ const DocumentInputDocument = ({ setSelectedWithRedirect }: DocumentInputDocumen
           ) : (
             <>
               <div className="text-text-secondary">
-                画像がアップロードされてません
-                <br />
-                （.jpg/.jpeg/.png形式でアップロードしてください）
+                {errorMessage ? <ErrorMessage>{errorMessage}</ErrorMessage> : <p>画像がアップロードされてません</p>}
+
+                <p>（.jpg/.jpeg/.png形式でアップロードしてください）</p>
               </div>
             </>
           )}
@@ -71,7 +72,6 @@ const DocumentInputDocument = ({ setSelectedWithRedirect }: DocumentInputDocumen
           )}
         </div>
       </div>
-      {errorMessage && <div className="mt-5 text-center text-base font-bold text-red-400">{errorMessage}</div>}
       <div className="mt-8 flex justify-center gap-2">
         <SecondaryButton onClick={() => setSelectedWithRedirect('')} size="large">
           選択へ戻る

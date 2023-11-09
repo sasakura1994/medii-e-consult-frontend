@@ -49,9 +49,10 @@ export const useDocumentInputDocument = ({
         }
       } else {
         setErrorMessage('ファイルの種類が不正です');
+        reset();
       }
     },
-    [profile, imageSource, fileSelectorRef, uploadDocument, setSelectedWithRedirect]
+    [profile, fileSelectorRef, imageSource, uploadDocument, setSelectedWithRedirect, reset]
   );
 
   useEffect(() => {
