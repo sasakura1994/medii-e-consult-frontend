@@ -2,7 +2,7 @@ export const introduceDoctorMock = [
   {
     account_id: 'AC10-7048-7012-70',
     name: '泉家 康宏',
-    image: 'images/top/doctor01.png',
+    image: 'images/top/doctor01.svg',
     job: '大阪公立大学大学院 医学研究科 循環器内科学 准教授',
     guideline: '心アミロイドーシス診療ガイドライン班員',
     description: '同じ専門医の中でも意見がわかれることがあります。様々な意見を出し合い、ディスカッションになり、私にとっても良い勉強になっています。大阪公立大学への紹介だけでなく近隣施設への紹介の相談でも構いません。どんなことでもよいのでお気軽に質問をしていただければと思います。',
@@ -29,7 +29,7 @@ export const introduceDoctorMock = [
   {
     account_id: 'AC10-9355-7815-80',
     name: '牧山 武',
-    image: 'images/top/doctor02.png',
+    image: 'images/top/doctor02.svg',
     job: '京都大学医学部附属病院 循環器内科 特定講師',
     guideline: '遺伝性不整脈の診療に関するガイドライン（2017年改訂版）',
     position: '協力員',

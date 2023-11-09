@@ -4,7 +4,7 @@ import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 import Link from 'next/link';
 
 export const IntroduceResponseDoctor = () => {
-  const [showMore, setShowMore] = useState<boolean>(false);
+  const [showMore, setShowMore] = useState<boolean[]>(introduceDoctorMock.map(() => false));
   const { postEventLog } = useEventLog();
 
   return (
@@ -24,15 +24,15 @@ export const IntroduceResponseDoctor = () => {
             >
               <div className="p-4">
                 <div className='flex'>
-                  <div className='mr-4'>
+                  <div className='mr-4 w-[70px]'>
                     <img src={introduceDoctor.image} alt="introduceDoctorImage" />
                   </div>
                   <div>
                     <div className='flex mb-2 items-center'>
-                      <p className='line-clamp-2 text-xxl font-bold'>{introduceDoctor.name}</p>
-                      <p className='line-clamp-1 ml-2'>先生</p>
+                      <p className='text-lg font-semibold'>{introduceDoctor.name}</p>
+                      <p className='ml-2 text-sm font-light'>先生</p>
                     </div>
-                    <p className='font-bold'>
+                    <p className='text-sm font-semibold'>
                       {introduceDoctor.job}
                       <br />
                       {introduceDoctor.guideline}
@@ -42,39 +42,47 @@ export const IntroduceResponseDoctor = () => {
                 </div>
                 <div className='mt-1 mb-2'>
                   <img src="images/top/triangle.png" alt="triangle" className='relative z-1 top-[1px]' />
-                  <div className='bg-bg-secondary border border-[1px] border-border-divider rounded-lg p-[10px] font-[10px] gap-2.5'>
+                  <div className='bg-bg-secondary border border-[1px] border-border-divider rounded-lg p-[10px] font-light text-xs gap-2.5'>
                     {introduceDoctor.description}
                   </div>
                 </div>
-                <div className='flex text-medii-blue-700 mb-3 cursor-pointer text-[14px]' onClick={(e) => { e.preventDefault();setShowMore(!showMore); }}>
+                <div 
+                  className='flex text-medii-blue-700 mb-3 cursor-pointer text-xs' 
+                  onClick={
+                    (e) => { 
+                      e.preventDefault();
+                      setShowMore(showMore.map((val, i) => i == index ? !showMore[i] : showMore[i]));
+                    }
+                  }
+                >
                   <p>先生の情報をもっと見る</p>
                   <div className='flex items-center pl-2'>
-                    {showMore ?
+                    {showMore[index] ?
                       <img src="images/top/doctor-information-more.svg" alt="doctor-information-more" /> :
                       <img src="images/top/doctor-information-less.svg" alt="doctor-information-less" />}
                   </div>
                 </div>
-                {showMore &&
+                {showMore[index] &&
                   <div>
                     {introduceDoctor.university &&
                       <div className='mb-3'>
-                        <p className='font-bold'>出身大学（卒年）</p>
-                        <p>{introduceDoctor.university}</p>
+                        <p className='text-base font-semibold'>出身大学（卒年）</p>
+                        <p className='text-xs font-light'>{introduceDoctor.university}</p>
                       </div>
                     }
                     {introduceDoctor.field &&
                       <div className='mb-3'>
-                        <p className='font-bold'>専門分野</p>
-                        <p>{introduceDoctor.field}</p>
+                        <p className='text-base font-semibold'>専門分野</p>
+                        <p className='text-xs font-light'>{introduceDoctor.field}</p>
                       </div>
                     }
                     {introduceDoctor.qualification &&
                       <div className='mb-3'>
-                        <p className='font-bold'>学会認定・資格</p>
-                        <ul>
+                        <p className='text-base font-semibold'>学会認定・資格</p>
+                        <ul className='text-xs font-light'>
                           {introduceDoctor.qualification.map((qualifications, key) => {
                             return (
-                              <li key={key} className="pl-7 before:mt-[6px] before:absolute before:text-[4pt] before:pt-1 before:ml-[-18pt] before:content-['\25CF']">{qualifications.content}</li>
+                              <li key={key} className="pl-7 before:mt-[-2px] before:absolute before:text-[4pt] before:pt-1 before:ml-[-18pt] before:content-['\25CF']">{qualifications.content}</li>
                             )
                           })}
                         </ul>
@@ -82,8 +90,8 @@ export const IntroduceResponseDoctor = () => {
                     }
                     {introduceDoctor.book &&
                       <div className='mb-3'>
-                        <p className='font-bold'>著書等</p>
-                        <ul>
+                        <p className='text-base font-semibold'>著書等</p>
+                        <ul className='text-xs font-light'>
                           {introduceDoctor.book.map((books, index) => {
                             return (
                               <li key={index} className="pl-7 before:mt-[6px] before:absolute before:text-[4pt] before:pt-1 before:ml-[-18pt] before:content-['\25CF']">{books.content}</li>
