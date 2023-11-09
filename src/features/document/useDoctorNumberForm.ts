@@ -1,7 +1,6 @@
 import { useUploadDocument } from '@/hooks/api/doctor/useUploadDocument';
-import { useEraConverter } from '@/hooks/useEraConverter';
 import { useProfile } from '@/hooks/useProfile';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { DocumentSelected } from '.';
 
 type UseDoctorNumberFormProps = {
@@ -14,25 +13,24 @@ export const useDoctorNumberForm = ({ setSelectedWithRedirect }: UseDoctorNumber
   const { uploadDocument } = useUploadDocument();
   const [errorMessage, setErrorMessage] = useState('');
   const [doctorNumber, setDoctorNumber] = useState('');
-  const [doctorLicenseYear, setDoctorLicenseYear] = useState('');
-  const [doctorLicenseMonth, setDoctorLicenseMonth] = useState('');
-  const [doctorLicenseDay, setDoctorLicenseDay] = useState('');
   const [year, setYear] = useState(0);
-  const eraConverter = useEraConverter();
+  const [doctorLicenseDate, setDoctorLicenseDate] = useState<Date>();
   const isUpdatePrepared = useMemo(() => {
-    if (doctorNumber && year && doctorLicenseMonth && doctorLicenseDay) {
+    if (doctorNumber && doctorLicenseDate) {
       return true;
     }
     return false;
-  }, [doctorNumber, year, doctorLicenseMonth, doctorLicenseDay]);
+  }, [doctorNumber, doctorLicenseDate]);
+
+  const dateInputRef = useRef<HTMLInputElement>(null);
 
   const submit = async () => {
-    if (profile) {
+    if (profile && doctorLicenseDate) {
       const newProfile = { ...profile };
       newProfile.doctor_number = doctorNumber;
-      newProfile.doctor_qualified_year = year;
-      newProfile.doctor_qualified_month = Number(doctorLicenseMonth);
-      newProfile.doctor_qualified_day = Number(doctorLicenseDay);
+      newProfile.doctor_qualified_year = doctorLicenseDate.getFullYear();
+      newProfile.doctor_qualified_month = doctorLicenseDate.getMonth() + 1;
+      newProfile.doctor_qualified_day = doctorLicenseDate.getDate();
       newProfile.confimation_type = 'number';
       try {
         await uploadDocument(newProfile);
@@ -49,26 +47,28 @@ export const useDoctorNumberForm = ({ setSelectedWithRedirect }: UseDoctorNumber
     if (profile) {
       setDoctorNumber(profile.doctor_number);
       if (profile.doctor_qualified_year !== 9999) {
-        setDoctorLicenseYear(profile.doctor_qualified_year.toString());
-        setYear(profile.doctor_qualified_year);
-        setDoctorLicenseMonth(profile.doctor_qualified_month.toString());
-        setDoctorLicenseDay(profile.doctor_qualified_day.toString());
+        setDoctorLicenseDate(
+          new Date(profile.doctor_qualified_year, profile.doctor_qualified_month - 1, profile.doctor_qualified_day)
+        );
       }
     }
   }, [profile]);
 
+  const parseAndSetDoctorLicenseDate = useCallback((date: string) => {
+    const parts = date.split(/-/);
+    setDoctorLicenseDate(new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2])));
+  }, []);
+
   return {
-    eraConverter,
+    dateInputRef,
+    doctorLicenseDate,
     doctorNumber,
     setDoctorNumber,
     errorMessage,
     isUpdatePrepared,
+    parseAndSetDoctorLicenseDate,
     submit,
-    doctorLicenseYear,
-    doctorLicenseMonth,
-    setDoctorLicenseMonth,
-    doctorLicenseDay,
-    setDoctorLicenseDay,
+    setDoctorLicenseDate,
     year,
     setYear,
   };
