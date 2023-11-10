@@ -19,6 +19,7 @@ export const IntroduceResponseDoctor = () => {
           return (
             <Link
               href={`${introduceDoctor.consultUrl}`}
+              target="_blank"
               className="mr-2 min-w-[504px] rounded-lg border border-[#EDEDED] bg-white shadow-low lg:w-1/3"
               key={index}
             >
