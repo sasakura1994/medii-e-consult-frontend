@@ -72,7 +72,7 @@ export const OnboardingConsultPointModal = () => {
         <TextArea
           disabled
           id="answerDetail"
-          className="h-40 w-full resize-none disabled:text-text-primary"
+          className="min-h-[160px] w-full resize-none disabled:text-text-primary"
           value={whatListen}
           labelText="回答いただいたご相談内容"
         />
