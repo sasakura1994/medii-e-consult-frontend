@@ -91,7 +91,7 @@ export const IntroduceResponseDoctor = () => {
                     {introduceDoctor.qualification &&
                       <div className="mb-3">
                         <p className="text-base font-semibold">学会認定・資格</p>
-                        <ul className="text-xs font-light">
+                        <ul className="text-xs font-light relative">
                           {introduceDoctor.qualification.map((qualifications, key) => {
                             return (
                               <li 
@@ -109,12 +109,12 @@ export const IntroduceResponseDoctor = () => {
                     {introduceDoctor.book &&
                       <div className="mb-3">
                         <p className="text-base font-semibold">著書等</p>
-                        <ul className="text-xs font-light">
+                        <ul className="text-xs font-light relative">
                           {introduceDoctor.book.map((books, index) => {
                             return (
                               <li 
                                 key={index} 
-                                className="pl-7 before:mt-[6px] before:absolute before:text-[4pt] before:pt-1 
+                                className="pl-7 before:mt-[-2px] before:absolute before:text-[4pt] before:pt-1 
                                   before:ml-[-18pt] before:content-['\25CF']"
                               >
                                 {books.content}
