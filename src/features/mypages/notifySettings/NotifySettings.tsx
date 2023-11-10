@@ -62,7 +62,7 @@ export const NotifySettings: React.FC = () => {
                   name="seminar_notify"
                   checked={!notifySettings.not_seminar_mail_target ? true : false}
                   id="permit"
-                  label="プッシュ通知（パソコン／アプリ版）"
+                  label="メール通知を受け取る"
                   onChange={changeNotifySeminar}
                 />
               </li>
