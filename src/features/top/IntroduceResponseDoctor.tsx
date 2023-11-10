@@ -47,7 +47,7 @@ export const IntroduceResponseDoctor = () => {
                     className="relative z-1 top-[1px]" 
                   />
                   <div 
-                    className="bg-bg-secondary border border-[1px] border-border-divider rounded-lg 
+                    className="bg-bg-secondary border border-border-divider rounded-lg 
                       p-[10px] font-light text-xs gap-2.5"
                   >
                     {introduceDoctor.description}
