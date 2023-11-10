@@ -36,14 +36,12 @@ const TextArea = (props: TextAreaProps) => {
 
   // textareaの高さを自動調整する
   useEffect(() => {
-    textArea.current?.addEventListener('input', () => {
-      if (textArea.current) {
-        //textareaの高さを再設定
-        textArea.current.style.height = 'auto';
-        //textareaの高さに入力内容の高さを設定
-        textArea.current.style.height = textArea.current.scrollHeight + 'px';
-      }
-    });
+    if (textArea.current) {
+      //textareaの高さを再設定
+      textArea.current.style.height = 'auto';
+      //textareaの高さに入力内容の高さを設定
+      textArea.current.style.height = textArea.current.scrollHeight + 'px';
+    }
   }, [value]);
 
   return (
