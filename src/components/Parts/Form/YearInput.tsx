@@ -40,7 +40,7 @@ export const YearInput = (props: Props) => {
             onChange(Number(year));
           }
         }}
-        data-testid="year-input-year"
+        dataTestId="year-input-year"
       />
       <div className="ml-1 mt-5">年</div>
     </div>

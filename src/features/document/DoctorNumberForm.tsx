@@ -43,7 +43,7 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelectedWithRedi
           type="text"
           placeholder="000000"
           className="mt-2 w-32 px-2"
-          data-testid="document-input-number-form"
+          dataTestId="document-input-number-form"
           value={doctorNumber}
           required
           minLength={6}
@@ -64,7 +64,9 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelectedWithRedi
             type="text"
             placeholder="yyyy/mm/dd"
             onClick={() => dateInputRef.current?.showPicker()}
-            value={doctorLicenseDate ? dateFormat(doctorLicenseDate, 'YYYY/M/D') : undefined}
+            // これを入れておかないとテスト時に文句を言われる
+            onChange={() => {}}
+            value={doctorLicenseDate ? dateFormat(doctorLicenseDate, 'YYYY/M/D') : ''}
             // 画像が表示されなくても支障なし
             // eslint-disable-next-line rulesdir/dont-use-url-properties
             className="bg-[url('/icons/arrow_down.svg')] bg-[center_right_20px] bg-no-repeat"
@@ -73,7 +75,8 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelectedWithRedi
             ref={dateInputRef}
             type="date"
             id="date-input"
-            value={doctorLicenseDate ? dateFormat(doctorLicenseDate, 'YYYY-MM-DD') : undefined}
+            data-testid="date-input"
+            value={doctorLicenseDate ? dateFormat(doctorLicenseDate, 'YYYY-MM-DD') : ''}
             onChange={(e) => parseAndSetDoctorLicenseDate(e.target.value)}
             className="invisible h-0 w-0"
           />

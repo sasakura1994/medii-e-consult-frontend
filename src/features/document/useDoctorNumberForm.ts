@@ -13,7 +13,6 @@ export const useDoctorNumberForm = ({ setSelectedWithRedirect }: UseDoctorNumber
   const { uploadDocument } = useUploadDocument();
   const [errorMessage, setErrorMessage] = useState('');
   const [doctorNumber, setDoctorNumber] = useState('');
-  const [year, setYear] = useState(0);
   const [doctorLicenseDate, setDoctorLicenseDate] = useState<Date>();
   const isUpdatePrepared = useMemo(() => {
     if (doctorNumber && doctorLicenseDate) {
@@ -69,7 +68,5 @@ export const useDoctorNumberForm = ({ setSelectedWithRedirect }: UseDoctorNumber
     parseAndSetDoctorLicenseDate,
     submit,
     setDoctorLicenseDate,
-    year,
-    setYear,
   };
 };

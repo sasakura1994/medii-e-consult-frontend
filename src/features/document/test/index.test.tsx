@@ -106,7 +106,7 @@ describe('Document', () => {
   test('Documentがレンダリングされること', async () => {
     await getRender();
     act(() => {
-      const document = screen.getByText('Medii 会員登録');
+      const document = screen.getByText('ユーザー情報の登録');
       expect(document).toBeInTheDocument();
     });
   });
@@ -204,17 +204,9 @@ describe('Document', () => {
       userEvent.clear(doctorNumber);
       userEvent.type(doctorNumber, '111111');
 
-      const year = screen.getByTestId('year-input-year');
-      userEvent.clear(year);
-      userEvent.type(year, '2015');
-
-      const month = screen.getByTestId('document-input-number-form-month');
-      userEvent.clear(month);
-      userEvent.type(month, '6');
-
-      const day = screen.getByTestId('document-input-number-form-day');
-      userEvent.clear(day);
-      userEvent.type(day, '20');
+      const date = screen.getByTestId('date-input');
+      userEvent.clear(date);
+      userEvent.type(date, '2015-06-20');
 
       const submit = screen.getByTestId('document-input-number-form-submit');
       userEvent.click(submit);

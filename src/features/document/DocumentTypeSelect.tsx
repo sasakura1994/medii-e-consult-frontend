@@ -18,7 +18,7 @@ const DocumentTypeSelect: React.FC<DocumentTypeSelectProps> = ({ setSelected }) 
       <div className="mt-2 flex justify-center">
         <div className="grid grid-cols-2 gap-4 lg:grid-cols-3">
           <DocumentTypeSelectButton
-            id={'number'}
+            id="number"
             text="医師番号を入力"
             image="icons/doctor.svg"
             onClick={() => setSelected('number')}
@@ -26,7 +26,7 @@ const DocumentTypeSelect: React.FC<DocumentTypeSelectProps> = ({ setSelected }) 
             医師番号・取得年を直接入力します
           </DocumentTypeSelectButton>
           <DocumentTypeSelectButton
-            id={'document'}
+            id="document"
             text="医師免許の登録"
             image="icons/doctor_id1.svg"
             onClick={() => setSelected('document')}
@@ -34,7 +34,7 @@ const DocumentTypeSelect: React.FC<DocumentTypeSelectProps> = ({ setSelected }) 
             医師免許証、所属医療機関のIDカード、医師資格証、専門医証明書などが対象です
           </DocumentTypeSelectButton>
           <DocumentTypeSelectButton
-            id={'auto'}
+            id="auto"
             text="Mediiにおまかせ"
             image="icons/medii.svg"
             onClick={() => setSelected('auto')}
