@@ -1,35 +1,31 @@
-import React from 'react';
-import { disableBodyScroll, clearAllBodyScrollLocks, enableBodyScroll } from 'body-scroll-lock';
+import { useEffect, useRef } from 'react';
 import { ModalPropsType } from './Modal';
+import { useSetRecoilState } from 'recoil';
+import { openModalCountState } from '@/globalStates/modal';
 
 let modalCount = 0;
 
 export const useModal = (props: ModalPropsType) => {
   const { setShowModal } = props;
-  const modalRef = React.useRef(null);
+  const setOpenModalCount = useSetRecoilState(openModalCountState);
+  const modalRef = useRef(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!modalRef.current) {
       return;
     }
 
-    const ref = modalRef.current;
-
-    disableBodyScroll(modalRef.current);
+    setOpenModalCount((prev) => prev + 1);
 
     modalCount += 1;
 
     return () => {
       modalCount -= 1;
-      if (modalCount === 0) {
-        clearAllBodyScrollLocks();
-      } else {
-        if (ref) {
-          enableBodyScroll(ref);
-        }
+      if (modalCount <= 0) {
+        setOpenModalCount(0);
       }
     };
-  }, [modalRef]);
+  }, [modalRef, setOpenModalCount]);
 
   const hideModal = () => {
     if (setShowModal) {
