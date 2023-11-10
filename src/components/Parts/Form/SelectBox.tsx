@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './SelectBox.module.scss';
 
 type PropsType = {
-  name: string;
+  name?: string;
   value?: string;
   placeholder?: string;
   disabled?: boolean;
@@ -15,17 +15,7 @@ type PropsType = {
 };
 
 export const SelectBox: React.FC<PropsType> = (props) => {
-  const {
-    name,
-    value,
-    disabled,
-    id,
-    className,
-    style,
-    required,
-    children,
-    onChange,
-  } = props;
+  const { name, value, disabled, id, className, style, required, children, onChange } = props;
 
   return (
     <div className={styles.select_box}>
@@ -45,8 +35,8 @@ export const SelectBox: React.FC<PropsType> = (props) => {
           border-block-gray
           bg-white
           py-2
-          pr-8
           pl-3
+          pr-8
           disabled:bg-[#d5d5d5]
           disabled:text-block-gray
           ${className}

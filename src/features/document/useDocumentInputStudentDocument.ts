@@ -15,7 +15,8 @@ export const useDocumentInputStudentDocument = ({ selected, setSelected }: UseDo
   const { profile } = useFetchProfile();
   const { uploadDocument } = useUploadDocument();
   const [year, setYear] = useState(0);
-  const { imageSource, onFileSelected, setImageSource, openFileSelector, fileSelectorRef } = useSelectedFile();
+  const { file, imageSource, setImageSource, onFileSelected, openFileSelector, fileSelectorRef, reset } =
+    useSelectedFile();
   const eraConverter = useEraConverter();
 
   const [errorMessage, setErrorMessage] = useState('');
@@ -63,11 +64,13 @@ export const useDocumentInputStudentDocument = ({ selected, setSelected }: UseDo
 
   return {
     eraConverter,
+    file,
     imageSource,
     onFileSelected,
     openFileSelector,
     fileSelectorRef,
     errorMessage,
+    reset,
     submit,
     year,
     setYear,

@@ -7,9 +7,10 @@ export type DocumentMode = 'edit' | 'document' | 'completed';
 
 type RegistrationProgressProps = {
   mode: DocumentMode;
+  forStudent?: boolean;
 };
 
-const RegistrationProgress: React.FC<RegistrationProgressProps> = ({ mode }) => {
+const RegistrationProgress: React.FC<RegistrationProgressProps> = ({ mode, forStudent }) => {
   return (
     <>
       <div className="flex items-center justify-center">
@@ -25,7 +26,9 @@ const RegistrationProgress: React.FC<RegistrationProgressProps> = ({ mode }) => 
           <br className="lg:hidden" />
           登録
         </RegistrationProgressLabel>
-        <RegistrationProgressLabel disabled={mode === 'edit'}>医師資格確認</RegistrationProgressLabel>
+        <RegistrationProgressLabel disabled={mode === 'edit'}>
+          {forStudent ? '学生証の確認' : '医師資格確認'}
+        </RegistrationProgressLabel>
         <RegistrationProgressLabel disabled={mode !== 'completed'}>完了</RegistrationProgressLabel>
       </div>
     </>

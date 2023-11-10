@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 import { useProfile } from '@/hooks/useProfile';
 import DocumentInputStudentDocument from './DocumentInputStudentDocument';
+import { Heading } from '@/components/Parts/Text/Heading';
 
 export type DocumentSelected = '' | 'number' | 'document' | 'auto' | 'completed' | 'studentCompleted';
 
@@ -48,28 +49,23 @@ export const Document = () => {
     return <></>;
   }
 
-  if (profile.main_speciality === 'STUDENT') {
-    return (
-      <Container className="mt-4 lg:pb-4">
-        <div className="mt-5 flex h-full w-full flex-col items-center justify-center">
-          <h1 className="text-2xl font-bold lg:mt-5">Medii 会員登録</h1>
-          <DocumentInputStudentDocument selected={selected} setSelected={setSelected} />
-        </div>
-      </Container>
-    );
-  }
-
   return (
     <Container className="lg:pb-4">
       <div className="flex h-full w-full flex-col items-center justify-center">
-        <h1 className="mb-8 text-2xl font-semibold">ユーザー情報の登録</h1>
+        <Heading className="mb-8">ユーザー情報の登録</Heading>
         <div className="lg:w-11/12">
-          <RegistrationProgress mode={mode} />
+          <RegistrationProgress mode={mode} forStudent={profile.main_speciality === 'STUDENT'} />
         </div>
-        {selected === '' && <DocumentTypeSelect setSelected={setSelected} />}
-        {selected === 'number' && <DoctorNumberForm setSelectedWithRedirect={setSelectedWithRedirect} />}
-        {selected === 'document' && <DocumentInputDocument setSelectedWithRedirect={setSelectedWithRedirect} />}
-        {selected === 'auto' && <DocumentInputAuto setSelectedWithRedirect={setSelectedWithRedirect} />}
+        {profile.main_speciality === 'STUDENT' ? (
+          <DocumentInputStudentDocument selected={selected} setSelected={setSelected} />
+        ) : (
+          <>
+            {selected === '' && <DocumentTypeSelect setSelected={setSelected} />}
+            {selected === 'number' && <DoctorNumberForm setSelectedWithRedirect={setSelectedWithRedirect} />}
+            {selected === 'document' && <DocumentInputDocument setSelectedWithRedirect={setSelectedWithRedirect} />}
+            {selected === 'auto' && <DocumentInputAuto setSelectedWithRedirect={setSelectedWithRedirect} />}
+          </>
+        )}
       </div>
     </Container>
   );

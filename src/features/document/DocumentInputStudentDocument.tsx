@@ -3,6 +3,12 @@ import { DocumentSelected } from '.';
 import { useDocumentInputStudentDocument } from './useDocumentInputStudentDocument';
 import Link from 'next/link';
 import { YearInput } from '@/components/Parts/Form/YearInput';
+import { Heading } from '@/components/Parts/Text/Heading';
+import SecondaryButton from '@/components/Button/SecondaryButton';
+import PrimaryButton from '@/components/Button/PrimaryButton';
+import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
+import { ColoredImage } from '@/components/Image/ColoredImage';
+import { Required } from '@/components/Parts/Form/Required';
 
 type DocumentInputStudentDocumentProps = {
   selected: DocumentSelected;
@@ -12,11 +18,13 @@ type DocumentInputStudentDocumentProps = {
 const DocumentInputStudentDocument = ({ selected, setSelected }: DocumentInputStudentDocumentProps) => {
   const {
     eraConverter,
+    file,
+    fileSelectorRef,
     imageSource,
     onFileSelected,
     openFileSelector,
-    fileSelectorRef,
     errorMessage,
+    reset,
     submit,
     year,
     setYear,
@@ -24,23 +32,36 @@ const DocumentInputStudentDocument = ({ selected, setSelected }: DocumentInputSt
   if (selected !== 'studentCompleted') {
     return (
       <form onSubmit={submit} data-testid="document-input-student-document">
-        <div
-          className="border-1 rounded-xs -mb-10 mt-10 w-full border bg-white px-2
-         lg:mb-0 lg:w-[644px] lg:px-16 lg:pb-6"
-        >
+        <div className="mt-8 px-4 lg:w-[600px] lg:px-0">
           <div className="mx-2 mb-6 mt-6">
-            <div className="relative flex text-left text-2xl font-bold lg:mt-10 lg:text-center">
-              <div className="mx-auto">学生証確認</div>
-            </div>
-            <div
-              onClick={openFileSelector}
-              className="mt-10 cursor-pointer rounded-md border border-dashed px-6 py-6
-                     text-center font-bold text-gray-700"
-            >
-              {imageSource === '' ? (
-                'クリックして画像ファイル選択'
+            <Heading as="h2">学生証の確認</Heading>
+            <p className="mt-2">所属する大学名と氏名を確認できる学生証をアップロードしてください。</p>
+            <div className={`mt-8 flex flex-col gap-2 lg:flex-row lg:gap-6 ${file ? 'items-center' : ''}`}>
+              <SecondaryButton type="button" onClick={openFileSelector} className="w-fit">
+                画像を選択
+              </SecondaryButton>
+              {file ? (
+                <div className="flex items-center gap-1">
+                  <div>{file.name}</div>
+                  <a
+                    className="block p-[6px]"
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      reset();
+                    }}
+                  >
+                    <ColoredImage src="icons/close.svg" color="#16191D" width="11px" height="11px" />
+                  </a>
+                </div>
               ) : (
-                <img src={imageSource} id="accountDocumentImage" className="w-full" alt="" />
+                <>
+                  <div className="text-text-secondary">
+                    {errorMessage ? <ErrorMessage>{errorMessage}</ErrorMessage> : <p>画像がアップロードされてません</p>}
+
+                    <p>（.jpg/.jpeg/.png形式でアップロードしてください）</p>
+                  </div>
+                </>
               )}
             </div>
             <input
@@ -51,20 +72,31 @@ const DocumentInputStudentDocument = ({ selected, setSelected }: DocumentInputSt
               name="file"
               className="hidden"
             />
-            <img src="images/document/student.png" className="mx-auto mt-6" alt="" />
-            <div className="mt-1 text-center">大学名と名前のある面をアップしてください</div>
-            <div className="mt-1 font-bold">卒業予定年</div>
-            <div className="mt-1">
+
+            {imageSource && (
+              <div className="mt-8">
+                <img src={imageSource} id="accountDocumentImage" className="w-full" alt="" />
+              </div>
+            )}
+            <div className="mt-8 flex items-center gap-2">
+              <Heading as="h4">卒業予定年</Heading>
+              <Required>必須</Required>
+            </div>
+            <div className="mt-2">
               <YearInput {...eraConverter} value={year} onChange={setYear} />
             </div>
-            {errorMessage && <div className="mt-5 text-center text-base font-bold text-red-400">{errorMessage}</div>}
-            <div className="mt-4 flex justify-center lg:mb-0 lg:mt-0">
-              <input
+            <div className="mt-8 flex justify-center gap-2">
+              <Link href="/editprofile?registerMode=1">
+                <SecondaryButton size="large">戻る</SecondaryButton>
+              </Link>
+              <PrimaryButton
                 type="submit"
-                className="mt-10 w-4/5 cursor-pointer rounded-full bg-primary px-10 pb-2 pt-1.5 font-bold
-                      text-white shadow-lg"
-                value="送信"
-              />
+                dataTestId="document-input-number-form-submit"
+                size="large"
+                disabled={imageSource ? false : true}
+              >
+                登録を完了する
+              </PrimaryButton>
             </div>
           </div>
         </div>
