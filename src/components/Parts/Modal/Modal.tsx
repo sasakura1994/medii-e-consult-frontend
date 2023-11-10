@@ -32,7 +32,7 @@ export const Modal: React.FC<ModalPropsType> = (props) => {
         role="dialog"
         onMouseDown={(e) => e.stopPropagation()}
       >
-        <div className="max-h-[80dvh] overflow-y-auto">{children}</div>
+        <div className="max-h-[80dvh] overflow-y-scroll">{children}</div>
         <div className="mt-auto">
           <ModalFooter {...ModalFooterProps} />
         </div>
