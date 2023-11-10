@@ -4,7 +4,7 @@ import { openModalCountState } from '@/globalStates/modal';
 import { ModalPropsType } from './Modal';
 
 let modalCount = 0;
-let activeModalRef: RefObject<HTMLDivElement> | null = null; // アクティブなモーダルの参照を保持
+let modalStack: RefObject<HTMLDivElement>[] = []; // アクティブなモーダルの参照を保持
 
 export const useModal = (props: ModalPropsType) => {
   const { setShowModal } = props;
@@ -16,29 +16,31 @@ export const useModal = (props: ModalPropsType) => {
       return;
     }
 
-    // モーダルのカウントを増やし、必要に応じてbodyのスタイルを変更
+    // 前のモーダルのスクロールを無効化
+    const lastModalRef = modalStack[modalStack.length - 1];
+    if (lastModalRef && lastModalRef.current) {
+      lastModalRef.current.style.overflow = 'hidden';
+    }
+    // モーダルのスタックに現在のモーダルを追加
+    modalStack.push(modalRef);
+
     setOpenModalCount((prev) => prev + 1);
     modalCount += 1;
 
-    if (activeModalRef && activeModalRef.current) {
-      // 前のモーダルのスクロールを無効化
-      activeModalRef.current.style.overflow = 'hidden';
-    }
-    activeModalRef = modalRef; // 新しいモーダルをアクティブに設定
-
     return () => {
-      // モーダルのカウントを減らし、必要に応じてbodyのスタイルを元に戻す
       modalCount -= 1;
+      setOpenModalCount(modalCount);
       if (modalCount <= 0) {
         setOpenModalCount(0);
       }
 
-      if (activeModalRef === modalRef) {
-        if (activeModalRef.current) {
-          // モーダルを閉じるときにスクロールを再有効化
-          activeModalRef.current.style.overflow = 'auto';
-          activeModalRef = null;
-        }
+      // モーダルのスタックから現在のモーダルを削除
+      modalStack = modalStack.filter((ref) => ref !== modalRef);
+
+      // 残っている一番手前のモーダルのスクロールを再有効化
+      const lastModalRef = modalStack[modalStack.length - 1];
+      if (lastModalRef && lastModalRef.current) {
+        lastModalRef.current.style.overflow = 'auto';
       }
     };
   }, [modalRef, setOpenModalCount]);
