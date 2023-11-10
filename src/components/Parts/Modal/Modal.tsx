@@ -30,10 +30,14 @@ export const Modal: React.FC<ModalPropsType> = (props) => {
          lg:mx-auto ${className} z-[210] ${isCenter === true ? '' : 'my-10'}
          ${pcWidthClass}`}
         role="dialog"
-        onMouseDown={(e) => e.stopPropagation()}
-        style={{ WebkitOverflowScrolling: 'touch' }}
       >
-        <div className="max-h-[80dvh] overflow-y-scroll">{children}</div>
+        <div
+          className="max-h-[80dvh] overflow-y-scroll"
+          onMouseDown={(e) => e.stopPropagation()}
+          style={{ WebkitOverflowScrolling: 'touch' }}
+        >
+          {children}
+        </div>
         <div className="mt-auto">
           <ModalFooter {...ModalFooterProps} />
         </div>
