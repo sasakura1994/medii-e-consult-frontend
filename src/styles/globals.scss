@@ -57,3 +57,19 @@ th,
 td {
   vertical-align: baseline;
 }
+
+@font-face {
+  font-family: SDSYuGothic;
+  font-weight: 400;
+  src: local("Yu Gothic Medium");
+}
+
+@font-face {
+  font-family: SDSYuGothic;
+  font-weight: 700;
+  src: local("Yu Gothic Bold");
+}
+
+html {
+  font-family: SDSYuGothic, Yu Gothic, YuGothic, 遊ゴシック体, sans-serif;
+}

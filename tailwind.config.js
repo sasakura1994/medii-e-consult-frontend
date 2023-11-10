@@ -106,6 +106,9 @@ module.exports = {
       fontFamily: {
         sans: ['system-ui', 'sans-serif'],
       },
+      fontWeight: {
+        normal: 500
+      },
       blur: {
         xs: '2px',
       },
