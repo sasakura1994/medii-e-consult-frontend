@@ -10,7 +10,7 @@ export const IntroduceResponseDoctor = () => {
   return (
     <>
       <div 
-        className="sm:flex" 
+        className="flex" 
         onClick={() => {
           postEventLog({ name: 'click-doctor' })
         }}
@@ -22,8 +22,8 @@ export const IntroduceResponseDoctor = () => {
               target="_blank"
               key={index}
             >
-              <div className="p-4 mb-2 sm:min-w-[504px] rounded-lg border border-[#EDEDED] bg-white
-                shadow-low sm:mr-2 sm:mb-0 lg:w-1/3">
+              <div className="p-4 min-w-[375px] sm:min-w-[504px] rounded-lg border border-[#EDEDED] bg-white
+                shadow-low mr-2 sm:mb-0 lg:w-1/3">
                 <div className="flex">
                   <div className="flex sm:block mr-4 w-[70px]">
                     <img src={introduceDoctor.image} alt="introduceDoctorImage" />
