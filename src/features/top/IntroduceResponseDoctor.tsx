@@ -10,7 +10,7 @@ export const IntroduceResponseDoctor = () => {
   return (
     <>
       <div 
-        className="flex" 
+        className="sm:flex" 
         onClick={() => {
           postEventLog({ name: 'click-doctor' })
         }}
@@ -20,25 +20,29 @@ export const IntroduceResponseDoctor = () => {
             <Link
               href={`${introduceDoctor.consultUrl}`}
               target="_blank"
-              className="mr-2 min-w-[504px] rounded-lg border border-[#EDEDED] bg-white shadow-low lg:w-1/3"
               key={index}
             >
-              <div className="p-4">
+              <div className="p-4 mb-2 sm:min-w-[504px] rounded-lg border border-[#EDEDED] bg-white
+                shadow-low sm:mr-2 sm:mb-0 lg:w-1/3">
                 <div className="flex">
-                  <div className="mr-4 w-[70px]">
+                  <div className="flex sm:block mr-4 w-[70px]">
                     <img src={introduceDoctor.image} alt="introduceDoctorImage" />
                   </div>
                   <div>
-                    <div className="flex mb-2 items-center">
+                    <div className="hidden sm:flex sm:mb-2 sm:items-center">
                       <p className="text-lg font-semibold">{introduceDoctor.name}</p>
                       <p className="ml-2 text-sm font-light">先生</p>
                     </div>
-                    <p className="text-sm font-semibold">
+                    <p className="mb-2 font-light text-sm text-secondary sm:mb-0 sm:text-text-primary sm:font-semibold">
                       {introduceDoctor.job}
                       <br />
                       {introduceDoctor.guideline}
                       {introduceDoctor.position}
                     </p>
+                    <div className="flex items-center sm:hidden">
+                      <p className="text-lg font-semibold">{introduceDoctor.name}</p>
+                      <p className="ml-2 text-sm font-light">先生</p>
+                    </div>
                   </div>
                 </div>
                 <div className="mt-1 mb-2">
