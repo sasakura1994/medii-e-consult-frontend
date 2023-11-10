@@ -18,7 +18,7 @@ export const Modal: React.FC<ModalPropsType> = (props) => {
   return (
     <div
       ref={modalRef}
-      className={`fixed left-0 top-0 z-[200] flex w-screen overflow-y-hidden bg-bg-overlay ${
+      className={`fixed left-0 top-0 z-[200] flex w-screen bg-bg-overlay ${
         isCenter === true ? 'flex items-center justify-center' : ''
       }`}
       style={{ height: '100dvh' }}
@@ -26,16 +26,12 @@ export const Modal: React.FC<ModalPropsType> = (props) => {
       data-testid={dataTestId}
     >
       <div
-        className={`mx-4 my-auto overflow-x-hidden rounded-lg border border-[#d5d5d5] bg-white
+        className={`mx-4 my-auto max-h-[80dvh] overflow-x-hidden  rounded-lg border border-[#d5d5d5] bg-white
          lg:mx-auto ${className} z-[210] ${isCenter === true ? '' : 'my-10'}
          ${pcWidthClass}`}
         role="dialog"
       >
-        <div
-          className="max-h-[80dvh] overflow-y-scroll"
-          onMouseDown={(e) => e.stopPropagation()}
-          style={{ WebkitOverflowScrolling: 'touch' }}
-        >
+        <div className="overflow-y-auto" onMouseDown={(e) => e.stopPropagation()}>
           {children}
         </div>
         <div className="mt-auto">
