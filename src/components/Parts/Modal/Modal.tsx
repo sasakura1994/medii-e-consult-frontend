@@ -31,6 +31,7 @@ export const Modal: React.FC<ModalPropsType> = (props) => {
          ${pcWidthClass}`}
         role="dialog"
         onMouseDown={(e) => e.stopPropagation()}
+        style={{ WebkitOverflowScrolling: 'touch' }}
       >
         <div className="max-h-[80dvh] overflow-y-scroll">{children}</div>
         <div className="mt-auto">
