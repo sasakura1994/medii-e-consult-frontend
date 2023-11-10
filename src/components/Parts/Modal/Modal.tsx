@@ -13,11 +13,11 @@ export type ModalPropsType = {
 
 export const Modal: React.FC<ModalPropsType> = (props) => {
   const { isCenter, children, pcWidth = '600', className, dataTestId, ...ModalFooterProps } = props;
-  const { hideModal, modalRef } = useModal(props);
+  const { hideModal } = useModal(props);
   const pcWidthClass = `w-full lg:w-[${pcWidth}px]`;
   return (
     <div
-      ref={modalRef}
+      // ref={modalRef}
       className={`fixed left-0 top-0 z-[200] flex w-screen bg-bg-overlay ${
         isCenter === true ? 'flex items-center justify-center' : ''
       }`}
@@ -26,12 +26,12 @@ export const Modal: React.FC<ModalPropsType> = (props) => {
       data-testid={dataTestId}
     >
       <div
-        className={`mx-4 my-auto max-h-[80dvh] overflow-x-hidden  rounded-lg border border-[#d5d5d5] bg-white
+        className={`mx-4 my-auto max-h-[80dvh] overflow-x-hidden rounded-lg border border-[#d5d5d5] bg-white
          lg:mx-auto ${className} z-[210] ${isCenter === true ? '' : 'my-10'}
          ${pcWidthClass}`}
         role="dialog"
       >
-        <div className="overflow-y-auto" onMouseDown={(e) => e.stopPropagation()}>
+        <div className="overflow-y-auto overscroll-y-contain" onMouseDown={(e) => e.stopPropagation()}>
           {children}
         </div>
         <div className="mt-auto">
