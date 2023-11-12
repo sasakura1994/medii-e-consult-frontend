@@ -56,7 +56,7 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelectedWithRedi
           <input
             type="tel"
             placeholder="000000"
-            className="mt-2 h-12 w-32 rounded-md border border-gray-400 px-2"
+            className="mt-2 h-12 w-20 rounded-md border border-gray-400 px-2"
             data-testid="document-input-number-form"
             value={doctorNumber}
             required
@@ -80,7 +80,7 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelectedWithRedi
               data-testid="document-input-number-form-month"
               value={doctorLicenseMonth}
               placeholder="-"
-              className="ml-10 h-12 w-20 rounded-md border border-gray-400 px-2"
+              className="ml-1 h-12 w-[60px] rounded-md border border-gray-400 px-2"
               required
               min={1}
               max={12}
@@ -97,7 +97,7 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelectedWithRedi
               data-testid="document-input-number-form-day"
               value={doctorLicenseDay}
               placeholder="-"
-              className="ml-2 h-12 w-20 rounded-md border border-gray-400 px-2"
+              className="ml-1 h-12 w-[60px] rounded-md border border-gray-400 px-2"
               required
               min={1}
               max={31}

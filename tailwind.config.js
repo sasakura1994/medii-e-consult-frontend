@@ -103,9 +103,6 @@ module.exports = {
         button: '0 4px 10px rgba(92,107,192,0.3)',
         popup: '0px 1px 1px rgba(0, 0, 0, 0.20)'
       },
-      fontFamily: {
-        sans: ['Noto Sans JP', 'Avenir', 'Helvetica', 'Arial', 'sans-serif'],
-      },
       blur: {
         xs: '2px',
       },

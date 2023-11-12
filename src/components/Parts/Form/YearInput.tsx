@@ -25,7 +25,7 @@ export const YearInput = (props: Props) => {
         type="number"
         placeholder="-"
         value={convertYear(value.toString(), 'year', era)}
-        className="ml-2 h-12 w-20 rounded-md border border-gray-400 px-2 lg:w-40"
+        className="ml-2 h-12 w-[70px] rounded-md border border-gray-400 px-2 lg:w-40"
         required
         min={validation.min}
         max={validation.max}

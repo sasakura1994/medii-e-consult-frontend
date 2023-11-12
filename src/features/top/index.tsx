@@ -11,6 +11,7 @@ import { TopUpcomingSeminars } from './TopUpcomingSeminars';
 import { useFetchFlag } from '@/hooks/api/account/useFetchFlags';
 import Link from 'next/link';
 import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
+import { IntroduceResponseDoctors } from './IntroduceResponseDoctors';
 
 export const Top = () => {
   const { showTutorialExplanationModal, setShowTutorialExplanationModal } = useTop();
@@ -23,6 +24,7 @@ export const Top = () => {
         <div className="max-w-[1024px] pb-8 lg:w-0 lg:flex-grow">
           <TopNotifications />
           <UserConsult setShowTutorialExplanationModal={setShowTutorialExplanationModal} />
+          <IntroduceResponseDoctors />
           <TopExamples />
           <div className="mt-10">
             <TopUpcomingSeminars />
