@@ -51,9 +51,7 @@ export const useConsultExampleActionsApi = () => {
 
   const unlikeMessage = useCallback(
     (id: string, consultExampleMessageId: number) => {
-      return axios.delete(
-        `/ConsultExampleLike/unlike?example_id=${id}&example_message_id=${consultExampleMessageId}`
-      );
+      return axios.delete(`/ConsultExampleLike/unlike?example_id=${id}&example_message_id=${consultExampleMessageId}`);
     },
     [axios]
   );

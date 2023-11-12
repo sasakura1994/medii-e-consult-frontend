@@ -21,9 +21,9 @@ const OnBoardingQuestionaryPage = () => {
   const { checkIsCheckboxRequired, isSending, questionAndAnswers, setAnswer, setOther, submit, toggleAnswers } =
     useOnBoardingQuestionary();
   const { postEventLog } = useEventLog();
-  
+
   useEventLog({ name: 'view-onboarding-questionary' });
-  
+
   return (
     <div className="mx-6 mb-10 mt-5 max-w-[1024px] lg:mx-auto lg:mt-4">
       <Breadcrumb>
@@ -140,14 +140,14 @@ const OnBoardingQuestionaryPage = () => {
           {isSending ? (
             <SpinnerBorder />
           ) : (
-            <div className='flex'>
+            <div className="flex">
               <div
                 onClick={async () => {
-                  await postEventLog({ name: 'click-answer-later' })
+                  await postEventLog({ name: 'click-answer-later' });
                 }}
               >
-                <Link href={"/top"}>
-                  <SecondaryButton size='large' className="px-4 mr-10">
+                <Link href={'/top'}>
+                  <SecondaryButton size="large" className="mr-10 px-4">
                     あとでアンケートに回答する
                   </SecondaryButton>
                 </Link>

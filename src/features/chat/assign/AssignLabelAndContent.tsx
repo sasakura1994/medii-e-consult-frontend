@@ -6,11 +6,7 @@ type Props = {
   className?: string;
 };
 
-export const AssignLabelAndContent: React.FC<Props> = ({
-  label,
-  children,
-  className,
-}: Props) => {
+export const AssignLabelAndContent: React.FC<Props> = ({ label, children, className }: Props) => {
   return (
     <div className={className}>
       <div className="font-bold">{label}</div>

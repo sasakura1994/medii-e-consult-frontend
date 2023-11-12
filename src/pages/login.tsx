@@ -88,10 +88,10 @@ const Login: NextPageWithLayout = () => {
               type="submit"
               className="
                 my-4
+                w-[190px]
                 rounded-full
                 px-14
                 py-2
-                w-[190px]
                 drop-shadow-[0_4px_10px_rgba(92,107,192,.3)]
               "
             >
@@ -122,7 +122,7 @@ const Login: NextPageWithLayout = () => {
               <div>日経メディカルアカウントでログイン</div>
             </div>
           </a>
-          <div className="mt-4">
+          <div className="mt-4" onMouseDown={saveRedirectUrl}>
             <AppleSignInButton>Appleでログイン</AppleSignInButton>
           </div>
         </div>

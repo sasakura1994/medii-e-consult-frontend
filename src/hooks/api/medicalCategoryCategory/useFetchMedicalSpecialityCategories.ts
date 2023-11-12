@@ -14,14 +14,12 @@ export type UseFetchMedicalSpecialityCategoriesType = {
 
 const endpoint = '/medical_category/medical_speciality_categories';
 
-export const useFetchMedicalSpecialityCategories =
-  (): UseFetchMedicalSpecialityCategoriesType => {
-    const { isLoading, error, data } =
-      useAuthenticatedSWR<GetMedicalSpecialityCategoriesResponseData>(endpoint);
+export const useFetchMedicalSpecialityCategories = (): UseFetchMedicalSpecialityCategoriesType => {
+  const { isLoading, error, data } = useAuthenticatedSWR<GetMedicalSpecialityCategoriesResponseData>(endpoint);
 
-    return {
-      isLoading,
-      error,
-      medicalSpecialityCategories: data?.medical_speciality_categories,
-    };
+  return {
+    isLoading,
+    error,
+    medicalSpecialityCategories: data?.medical_speciality_categories,
   };
+};

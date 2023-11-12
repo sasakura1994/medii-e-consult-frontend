@@ -1,13 +1,7 @@
 import { rest } from 'msw';
 import { getProfileMock, updateProfileMock } from './profileMock';
-import {
-  getCurrentPointMock,
-  getPointHistoriesMock,
-} from '@/features/mypages/pointHistory/pointMock';
-import {
-  getAmazonGiftsMock,
-  postAmazonGiftsMock,
-} from '@/features/mypages/amazonGift/amazonGiftMock';
+import { getCurrentPointMock, getPointHistoriesMock } from '@/features/mypages/pointHistory/pointMock';
+import { getAmazonGiftsMock, postAmazonGiftsMock } from '@/features/mypages/amazonGift/amazonGiftMock';
 import { registerMock } from '@/features/register/registerMock';
 
 export const handlers = [

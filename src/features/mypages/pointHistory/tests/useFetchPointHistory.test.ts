@@ -9,9 +9,7 @@
 // const dummyUrl = 'https://jsonplaceholder.typicode.com/users/3'; // TODO: 正規のURLに変更する
 
 describe('useFetchPointHistory', () => {
-  test.todo(
-    'Need to implement: should return pointHistories data when fetch succeeds.'
-  );
+  test.todo('Need to implement: should return pointHistories data when fetch succeeds.');
   // test('should return pointHistories data when fetch succeeds.', async () => {
   // const { result } = renderHook(() => useFetchPointHistory());
 

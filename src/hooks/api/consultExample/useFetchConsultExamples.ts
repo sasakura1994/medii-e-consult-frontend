@@ -9,7 +9,5 @@ export type FetchConsultExamplesResponseData = {
 };
 
 export const useFetchConsultExamples = (page?: number) => {
-  return useAuthenticatedSWR<FetchConsultExamplesResponseData>(
-    `ConsultExample/consult_examples?page=${page || 1}`
-  );
+  return useAuthenticatedSWR<FetchConsultExamplesResponseData>(`ConsultExample/consult_examples?page=${page || 1}`);
 };

@@ -32,16 +32,10 @@ export const ConsultExampleCommentsModal: React.FC<Props> = ({
     isCommentSending,
     setBody,
     setIsAnonymous,
-  } = useConsultExampleCommentsModal(
-    consultExample.example_id,
-    consultExampleMessageId
-  );
+  } = useConsultExampleCommentsModal(consultExample.example_id, consultExampleMessageId);
 
   return (
-    <Modal
-      className="lg:w-[644px]"
-      setShowModal={(isShow) => (isShow ? null : onClose())}
-    >
+    <Modal className="lg:w-[644px]" setShowModal={(isShow) => (isShow ? null : onClose())}>
       <div className="border-b border-b-[#d5d5d5] p-6 lg:px-20 lg:pb-6 lg:pt-10">
         <ModalTitleWithCloseButton title="コメント一覧" onClose={onClose} />
       </div>
@@ -63,7 +57,7 @@ export const ConsultExampleCommentsModal: React.FC<Props> = ({
           }}
         >
           <div className="mt-2 flex gap-4">
-            <div className='flex'>
+            <div className="flex">
               <Radio
                 id="is-anonymous-false"
                 name="is_anonymous"
@@ -73,7 +67,7 @@ export const ConsultExampleCommentsModal: React.FC<Props> = ({
               />
               <label htmlFor="is-anonymous-false">実名で投稿</label>
             </div>
-            <div className='flex'>
+            <div className="flex">
               <Radio
                 id="is-anonymous-true"
                 name="is_anonymous"
@@ -98,10 +92,7 @@ export const ConsultExampleCommentsModal: React.FC<Props> = ({
             {isCommentSending ? (
               <SpinnerBorder />
             ) : (
-              <PrimaryButton
-                type="submit"
-                className="flex items-center rounded px-5"
-              >
+              <PrimaryButton type="submit" className="flex items-center rounded px-5">
                 <img src="icons/send.svg" alt="" />
                 <div className="font-normal">投稿</div>
               </PrimaryButton>

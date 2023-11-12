@@ -22,10 +22,7 @@ export const usePostRequestResetPassword = () => {
         mail_address: mailAddress,
       };
 
-      return axios.post<PostRequestResetPasswordResponseData>(
-        '/doctor/request_reset_password',
-        data
-      );
+      return axios.post<PostRequestResetPasswordResponseData>('/doctor/request_reset_password', data);
     },
     [axios]
   );

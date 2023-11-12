@@ -11,6 +11,7 @@ import { TopUpcomingSeminars } from './TopUpcomingSeminars';
 import { useFetchFlag } from '@/hooks/api/account/useFetchFlags';
 import Link from 'next/link';
 import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
+import { IntroduceResponseDoctors } from './IntroduceResponseDoctors';
 
 export const Top = () => {
   const { showTutorialExplanationModal, setShowTutorialExplanationModal } = useTop();
@@ -23,6 +24,7 @@ export const Top = () => {
         <div className="max-w-[1024px] pb-8 lg:w-0 lg:flex-grow">
           <TopNotifications />
           <UserConsult setShowTutorialExplanationModal={setShowTutorialExplanationModal} />
+          <IntroduceResponseDoctors />
           <TopExamples />
           <div className="mt-10">
             <TopUpcomingSeminars />
@@ -31,11 +33,11 @@ export const Top = () => {
         <div className="mt-2 lg:mx-4 lg:ml-10 lg:mt-0 lg:w-[296px]">
           <TopNewerConsults />
           {isOnboardingQuestionaryAnswered === false && (
-            <div 
-              className="my-6" 
+            <div
+              className="my-6"
               data-testid="onboarding-questionary-banner"
               onClick={async () => {
-                await postEventLog({ name: 'click-onboarding-questionary' })
+                await postEventLog({ name: 'click-onboarding-questionary' });
               }}
             >
               <Link href="/onboarding/questionary">
