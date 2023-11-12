@@ -11,6 +11,7 @@ const unauthenticatedPages = [
   '/passwordreset',
   '/passwordresetrequest',
   '/registration',
+  '/auth',
   '/auth/callback',
   '/privacypolicy',
   '/guest',
