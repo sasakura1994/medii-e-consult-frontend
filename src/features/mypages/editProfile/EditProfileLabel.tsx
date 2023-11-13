@@ -1,3 +1,4 @@
+import { Required } from '@/components/Parts/Form/Required';
 import React from 'react';
 
 type Props = {
@@ -14,18 +15,9 @@ export const EditProfileLabel = (props: Props) => {
   }
 
   return (
-    <label htmlFor={id} className="mb-1 flex items-center font-bold">
-      {required === true && (
-        <span className="mr-1 rounded border border-solid border-rose-400 px-1 py-1 text-xs leading-none text-rose-400">
-          必須
-        </span>
-      )}
-      {required === false && (
-        <span className="mr-1 rounded border border-solid border-primary px-1 py-1 text-xs leading-none text-primary">
-          任意
-        </span>
-      )}
-      {children}
+    <label htmlFor={id} className="mb-2 flex items-center gap-2 font-bold">
+      <div>{children}</div>
+      {required === true && <Required>必須</Required>}
     </label>
   );
 };

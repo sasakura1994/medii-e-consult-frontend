@@ -16,8 +16,8 @@ export const UserInfoNames = (props: Props) => {
 
   return (
     <>
-      <div className="mb-4 lg:flex lg:gap-6">
-        <div>
+      <div className="lg:flex lg:gap-4">
+        <div className="grow">
           <EditProfileLabel required={isEnabled ? true : undefined}>姓</EditProfileLabel>
           <TextField
             name="last_name"
@@ -30,7 +30,7 @@ export const UserInfoNames = (props: Props) => {
           />
         </div>
 
-        <div>
+        <div className="grow">
           <EditProfileLabel required={isEnabled ? true : undefined}>名</EditProfileLabel>
           <TextField
             name="first_name"
@@ -43,9 +43,9 @@ export const UserInfoNames = (props: Props) => {
         </div>
       </div>
 
-      <div className="lg:flex lg:gap-6">
-        <div>
-          <EditProfileLabel required={isEnabled ? true : undefined}>姓（かな）</EditProfileLabel>
+      <div className="mt-4 lg:flex lg:gap-4">
+        <div className="grow">
+          <EditProfileLabel required={isEnabled ? true : undefined}>姓（ふりがな）</EditProfileLabel>
           <TextField
             name="last_name_hira"
             value={profile.last_name_hira}
@@ -53,19 +53,19 @@ export const UserInfoNames = (props: Props) => {
             disabled={!isEnabled}
             id="last_name_hira"
             className="mb-4 lg:mb-0"
-            placeholder="姓（かな）"
+            placeholder="姓（ふりがな）"
           />
         </div>
 
-        <div>
-          <EditProfileLabel required={isEnabled ? true : undefined}>名（かな）</EditProfileLabel>
+        <div className="grow">
+          <EditProfileLabel required={isEnabled ? true : undefined}>名（ふりがな）</EditProfileLabel>
           <TextField
             name="first_name_hira"
             value={profile.first_name_hira}
             onChange={(e) => setProfileFields({ first_name_hira: e.target.value })}
             disabled={!isEnabled}
             id="first_name_hira"
-            placeholder="名（かな）"
+            placeholder="名（ふりがな）"
           />
         </div>
       </div>

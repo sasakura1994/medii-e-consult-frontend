@@ -3,7 +3,6 @@ import { UserInfo } from './UserInfo';
 import { MedicalCareer } from './MedicalCareer';
 import { HospitalAffiliation } from './HospitalAffiliation';
 import { UsageClassification } from './UsageClassification';
-import { Card } from '@/components/Parts/Card/Card';
 import { useEditProfile } from './useEditProfile';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
@@ -39,24 +38,30 @@ export const EditProfile = (props: EditProfileProps) => {
           submit();
         }}
       >
-        <Card className="px-4 pb-8 pt-10 lg:px-[84px] lg:py-10">
-          <h2 className="mb-6 text-center text-2xl leading-8" data-testid="h-edit-profile-edit">
-            {isRegisterMode ? 'プロフィール登録' : 'プロフィール'}
-          </h2>
+        <div className="px-4 pt-8 lg:w-[600px] lg:px-0">
+          {!isRegisterMode && (
+            <h2 className="mb-6 text-center text-2xl leading-8" data-testid="h-edit-profile-edit">
+              プロフィール
+            </h2>
+          )}
 
           <UserInfo {...editProfile} {...props} />
           <div className="mt-4">
             <MedicalCareer {...editProfile} {...props} />
           </div>
           {!isHospitalDisabled && <HospitalAffiliation {...editProfile} />}
-          {fetchedProfile?.registration_source !== 'nmo' && <UsageClassification {...editProfile} />}
+          {fetchedProfile?.registration_source !== 'nmo' && (
+            <div className="mt-8">
+              <UsageClassification {...editProfile} />
+            </div>
+          )}
           {isRegisterMode && (
             <>
               <EditProfileNotification {...editProfile} />
               <EditProfileQuestionary {...editProfile} />
             </>
           )}
-        </Card>
+        </div>
 
         {errorMessage !== '' && <ErrorMessage className="mt-2 text-center">{errorMessage}</ErrorMessage>}
 

@@ -16,7 +16,7 @@ export const YearInput = (props: Props) => {
       <div className="w-[104px]">
         <SelectBox
           required
-          className="h-12 w-20 rounded-md border border-gray-400 px-2"
+          className="w-20 rounded-md border border-gray-400 px-2"
           onChange={(e) => setEra(e.target.value as Era)}
         >
           <option value="year">西暦</option>
@@ -29,7 +29,7 @@ export const YearInput = (props: Props) => {
         type="number"
         placeholder="yyyy"
         value={convertYear(value.toString(), 'year', era)}
-        className="ml-2 h-12 w-20 rounded-md border border-gray-400 px-2 lg:w-40"
+        className="ml-2 h-10 w-20 rounded-md border border-gray-400 px-2 lg:w-40"
         required
         min={validation.min}
         max={validation.max}
@@ -42,7 +42,7 @@ export const YearInput = (props: Props) => {
         }}
         dataTestId="year-input-year"
       />
-      <div className="ml-1 mt-5">年</div>
+      <div className="ml-1 mt-4">年</div>
     </div>
   );
 };

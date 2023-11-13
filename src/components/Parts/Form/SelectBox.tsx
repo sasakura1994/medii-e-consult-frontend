@@ -26,7 +26,7 @@ export const SelectBox: React.FC<PropsType> = (props) => {
         disabled={disabled}
         id={id}
         className={`
-          h-12
+          h-10
           w-full
           appearance-none
           rounded

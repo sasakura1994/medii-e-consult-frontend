@@ -186,12 +186,9 @@ export const NewChatRoomInput: React.FC<Props> = (props: Props) => {
                       <div className="flex flex-col items-start gap-2 lg:flex-row lg:items-center">
                         {group ? <div>{group.group_name}</div> : <div>未選択</div>}
                         {group?.is_real_name && (
-                          <Label
-                            text="実名で投稿されるグループ"
-                            color="gray"
-                            className="whitespace-nowrap"
-                            dataTestId="real-name-note"
-                          />
+                          <Label color="gray" className="whitespace-nowrap" dataTestId="real-name-note">
+                            実名で投稿されるグループ
+                          </Label>
                         )}
                       </div>
                     </div>

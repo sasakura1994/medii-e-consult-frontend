@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 type LabelProps = {
-  text: string;
+  children: ReactNode;
   color?: 'primaryBlue' | 'gray';
   size?: 'sm' | 'md';
   className?: string;
@@ -9,7 +9,7 @@ type LabelProps = {
 };
 
 const Label = (props: LabelProps) => {
-  const { text, color = 'primaryBlue', className, size = 'md', dataTestId } = props;
+  const { children, color = 'primaryBlue', className, size = 'md', dataTestId } = props;
 
   return (
     <p
@@ -20,7 +20,7 @@ const Label = (props: LabelProps) => {
       }`}
       data-testid={dataTestId}
     >
-      {text}
+      {children}
     </p>
   );
 };

@@ -21,5 +21,5 @@ export const Heading = (props: Props) => {
   const CustomTag = asProps as ElementType;
   const fontSize = fontSizes[asProps];
 
-  return <CustomTag className={`${fontSize} font-semibold leading-6 ${className ?? ''}`}>{children}</CustomTag>;
+  return <CustomTag className={`${fontSize} font-bold leading-6 ${className ?? ''}`}>{children}</CustomTag>;
 };

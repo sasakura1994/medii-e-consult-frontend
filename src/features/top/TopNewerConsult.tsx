@@ -28,16 +28,13 @@ export const TopNewerConsult = (props: Props) => {
           </TopClockHistory>
         </div>
         <div className="mt-2 h-[107px]">
-          <p className="text-l font-bold line-clamp-4">{consult.consult_name}</p>
+          <p className="line-clamp-4 text-l font-bold">{consult.consult_name}</p>
         </div>
 
         <div className="w-28">
-          <Label
-            text={getMedicalSpecialityName(consult.speciality_code) ?? ''}
-            color="gray"
-            size="sm"
-            className="font-bold"
-          />
+          <Label color="gray" size="sm" className="font-bold">
+            {getMedicalSpecialityName(consult.speciality_code) ?? ''}
+          </Label>
         </div>
       </div>
     </div>

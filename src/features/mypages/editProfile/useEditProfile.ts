@@ -29,7 +29,7 @@ type Option = {
   label: string;
 };
 
-type HospitalInputType = 'free' | 'select';
+export type HospitalInputType = 'free' | 'select';
 
 export type UseEditProfile = {
   errorMessage: string;
