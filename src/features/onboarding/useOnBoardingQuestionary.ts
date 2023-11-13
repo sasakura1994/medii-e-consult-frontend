@@ -6,6 +6,8 @@ import {
 } from '@/hooks/api/questionary/usePostQuestionaryItemsForOnboarding';
 import { useRouter } from 'next/router';
 import { mutateFetchFlag } from '@/hooks/api/account/useFetchFlags';
+import { useSetRecoilState } from 'recoil';
+import { whatListenState } from '@/globalStates/onboarding';
 
 type Answer = {
   questionId: string;
@@ -23,6 +25,7 @@ export const useOnBoardingQuestionary = () => {
   const router = useRouter();
   const [questionAndAnswers, setQuestionAndAnswers] = useState<QuestionAndAnswer[]>([]);
   const [isSending, setIsSending] = useState(false);
+  const setWhatListen = useSetRecoilState(whatListenState);
   const { questions } = useFetchQuestionaryItemsById('onboarding2');
   const { postQuestionaryItemsForOnboarding } = usePostQuestionaryItemsForOnboarding();
 
@@ -74,14 +77,22 @@ export const useOnBoardingQuestionary = () => {
     [toggleValues]
   );
 
-  const setOther = useCallback((questionId: string, other: string) => {
-    setQuestionAndAnswers((questionAndAnswers) =>
-      questionAndAnswers.map(({ question, answer }) => ({
-        question,
-        answer: question.id === questionId ? { ...answer, other } : answer,
-      }))
-    );
-  }, []);
+  const setOther = useCallback(
+    (questionId: string, other: string) => {
+      setQuestionAndAnswers((questionAndAnswers) =>
+        questionAndAnswers.map(({ question, answer }) => ({
+          question,
+          answer: question.id === questionId ? { ...answer, other } : answer,
+        }))
+      );
+
+      // idが"WhatListen"の場合は、その値をRecoilに保持する
+      if (questionId === 'WhatListen') {
+        setWhatListen(other);
+      }
+    },
+    [setWhatListen]
+  );
 
   const submit = useCallback(async () => {
     setIsSending(true);
