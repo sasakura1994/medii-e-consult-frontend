@@ -6,7 +6,7 @@ import 'react-popper-tooltip/dist/styles.css';
 import { SWRConfig } from 'swr';
 import { useFetcher } from '@/hooks/network/useFetcher';
 import { CookiesProvider } from 'react-cookie';
-import { Provider } from 'jotai';
+import { Provider, useAtomValue } from 'jotai';
 import { CustomHead } from '@/components/Layouts/Header/CustomHead';
 import { Layout } from '@/components/Layouts/Layout';
 import type { NextPage } from 'next';
@@ -16,6 +16,8 @@ import { GoogleTagManager } from '@/components/Layouts/GoogleTagManager';
 import Script from 'next/script';
 import { useToken } from '@/hooks/authentication/useToken';
 import { useAuthenticationOnPage } from '@/hooks/authentication/useAuthenticationOnPage';
+import { GlobalStyle } from '@/styles/GlobalStyle';
+import { openModalCountState } from '@/globalStates/modal';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
@@ -28,6 +30,7 @@ type AppPropsWithLayout = AppProps & {
 
 const AppInner = ({ Component, pageProps }: AppPropsWithLayout) => {
   const router = useRouter();
+  const openModalCount = useAtomValue(openModalCountState);
   const { fetcher } = useFetcher();
   const { accountId, isTokenInitialized } = useToken();
   useAuthenticationOnPage(router.pathname);
@@ -41,6 +44,7 @@ const AppInner = ({ Component, pageProps }: AppPropsWithLayout) => {
     ));
   return (
     <CookiesProvider>
+      <GlobalStyle openModalCount={openModalCount} />
       {/* GTMタグだけ先に描画されるのを避けるため必ず両方同時にチェック */}
       {(isTokenInitialized || accountId) && (
         <>
