@@ -1,7 +1,5 @@
 import { useAuthenticatedSWR } from '@/hooks/network/useAuthenticatedSWR';
-import type { AmazonGiftEntityType } from './amazonGiftEntity';
-
-const endpoint = '/api/amazon_gift/amazon_gift_list';
+import type { AmazonGiftEntityType } from '../../../features/mypages/amazonGift/amazonGiftEntity';
 
 export type UseFetchAmazonGiftType = {
   isLoading: boolean;
@@ -14,7 +12,7 @@ export const useFetchAmazonGift = (): UseFetchAmazonGiftType => {
     isLoading,
     error,
     data: amazonGifts,
-  } = useAuthenticatedSWR<AmazonGiftEntityType[]>(endpoint);
+  } = useAuthenticatedSWR<AmazonGiftEntityType[]>('/amazon_gift/amazon_gift_list');
 
   return {
     isLoading,

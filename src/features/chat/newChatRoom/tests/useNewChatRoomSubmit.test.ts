@@ -5,7 +5,7 @@ import {
 import 'cross-fetch/polyfill';
 import { act, renderHook } from '@testing-library/react';
 import { useNewChatRoom } from '../useNewChatRoom';
-import { RecoilRoot } from 'recoil';
+
 import { useRouter } from 'next/router';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
@@ -155,9 +155,7 @@ describe('useNewChatRoom', () => {
 
       const mutateFetchFlagMock = jest.spyOn(useFetchFlagModule, 'mutateFetchFlag');
 
-      const { result } = await renderHook(() => useNewChatRoom(), {
-        wrapper: RecoilRoot,
-      });
+      const { result } = await renderHook(() => useNewChatRoom(), {});
 
       await act(() => result.current.submit());
 
@@ -209,12 +207,7 @@ describe('useNewChatRoom', () => {
         postChatMessageFile: postChatMessageFileMock,
       });
 
-      const { result } = await act(
-        async () =>
-          await renderHook(() => useNewChatRoom(), {
-            wrapper: RecoilRoot,
-          })
-      );
+      const { result } = await act(async () => await renderHook(() => useNewChatRoom(), {}));
 
       act(() => result.current.setFilesForReConsult([{ id: 1, file: new File([], ''), image: '' }]));
       await act(async () => await result.current.submit());

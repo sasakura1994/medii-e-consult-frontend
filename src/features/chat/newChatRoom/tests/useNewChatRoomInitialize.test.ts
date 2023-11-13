@@ -5,7 +5,6 @@ import {
 import 'cross-fetch/polyfill';
 import { act, renderHook, waitFor } from '@testing-library/react';
 import { useNewChatRoom } from '../useNewChatRoom';
-import { RecoilRoot } from 'recoil';
 import { useRouter } from 'next/router';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
@@ -107,12 +106,7 @@ describe('useNewChatRoom', () => {
       });
 
       test('下書きがある場合', async () => {
-        const { result } = await act(
-          async () =>
-            await renderHook(() => useNewChatRoom(), {
-              wrapper: RecoilRoot,
-            })
-        );
+        const { result } = await act(async () => await renderHook(() => useNewChatRoom(), {}));
 
         await act(async () => await result.current.applyDraft());
 
@@ -120,12 +114,7 @@ describe('useNewChatRoom', () => {
       });
 
       test('下書きがあるが復元しない場合', async () => {
-        const { result } = await act(
-          async () =>
-            await renderHook(() => useNewChatRoom(), {
-              wrapper: RecoilRoot,
-            })
-        );
+        const { result } = await act(async () => await renderHook(() => useNewChatRoom(), {}));
 
         await act(async () => await result.current.dontUseDraft());
 
@@ -149,12 +138,7 @@ describe('useNewChatRoom', () => {
         isReady: true,
       });
 
-      const { result } = await act(
-        async () =>
-          await renderHook(() => useNewChatRoom(), {
-            wrapper: RecoilRoot,
-          })
-      );
+      const { result } = await act(async () => await renderHook(() => useNewChatRoom(), {}));
 
       await waitFor(() => {
         expect(result.current.ageRange).toBe('20');

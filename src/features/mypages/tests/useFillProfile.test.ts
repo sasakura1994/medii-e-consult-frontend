@@ -1,4 +1,3 @@
-import { RecoilRoot } from 'recoil';
 import 'cross-fetch/polyfill';
 import { act, renderHook } from '@testing-library/react';
 import { useRouter } from 'next/router';
@@ -48,9 +47,7 @@ describe('useFillProfile', () => {
         push: pushMock,
       });
 
-      await renderHook(() => useFillProfile(), {
-        wrapper: RecoilRoot,
-      }).result;
+      await renderHook(() => useFillProfile(), {}).result;
 
       expect(pushMock).not.toBeCalled();
     });
@@ -81,9 +78,7 @@ describe('useFillProfile', () => {
         push: pushMock,
       });
 
-      await renderHook(() => useFillProfile(), {
-        wrapper: RecoilRoot,
-      }).result;
+      await renderHook(() => useFillProfile(), {}).result;
 
       expect(pushMock).toBeCalledWith('/top');
     });
@@ -116,9 +111,7 @@ describe('useFillProfile', () => {
         push: pushMock,
       });
 
-      const hooks = await renderHook(() => useFillProfile(), {
-        wrapper: RecoilRoot,
-      }).result;
+      const hooks = await renderHook(() => useFillProfile(), {}).result;
 
       await act(async () => await hooks.current.submitFillProfile());
 
@@ -133,9 +126,7 @@ describe('useFillProfile', () => {
         push: pushMock,
       });
 
-      const hooks = await renderHook(() => useFillProfile(), {
-        wrapper: RecoilRoot,
-      }).result;
+      const hooks = await renderHook(() => useFillProfile(), {}).result;
 
       await act(async () => await hooks.current.submitFillProfile());
 

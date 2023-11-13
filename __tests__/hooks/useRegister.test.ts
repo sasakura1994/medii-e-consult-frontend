@@ -3,7 +3,6 @@ import { useAxios } from '@/hooks/network/useAxios';
 import { useRegister } from '@/hooks/useRegister';
 import { act, renderHook } from '@testing-library/react';
 import { useRouter } from 'next/router';
-import { RecoilRoot } from 'recoil';
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
@@ -30,9 +29,7 @@ describe('useRegister', () => {
         push: pushMock,
       });
 
-      const hooks = renderHook(() => useRegister(), {
-        wrapper: RecoilRoot,
-      }).result;
+      const hooks = renderHook(() => useRegister(), {}).result;
 
       expect(hooks.current.loginUrl).toBe('/login?redirect=/seminar');
     });
@@ -55,9 +52,7 @@ describe('useRegister', () => {
       },
     });
 
-    const hooks = renderHook(() => useRegister(), {
-      wrapper: RecoilRoot,
-    }).result;
+    const hooks = renderHook(() => useRegister(), {}).result;
 
     act(() => {
       hooks.current.setEmail('test@example.com');

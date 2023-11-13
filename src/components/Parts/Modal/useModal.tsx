@@ -1,35 +1,49 @@
-import React from 'react';
-import { disableBodyScroll, clearAllBodyScrollLocks, enableBodyScroll } from 'body-scroll-lock';
+import { RefObject, useEffect, useRef } from 'react';
+import { openModalCountState } from '@/globalStates/modal';
 import { ModalPropsType } from './Modal';
+import { useSetAtom } from 'jotai';
 
 let modalCount = 0;
+let modalStack: RefObject<HTMLDivElement>[] = []; // アクティブなモーダルの参照を保持
 
 export const useModal = (props: ModalPropsType) => {
   const { setShowModal } = props;
-  const modalRef = React.useRef(null);
+  const setOpenModalCount = useSetAtom(openModalCountState);
+  const modalRef = useRef<HTMLDivElement>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!modalRef.current) {
       return;
     }
 
-    const ref = modalRef.current;
+    // 前のモーダルのスクロールを無効化
+    const lastModalRef = modalStack[modalStack.length - 1];
+    if (lastModalRef && lastModalRef.current) {
+      lastModalRef.current.style.overflow = 'hidden';
+    }
+    // モーダルのスタックに現在のモーダルを追加
+    modalStack.push(modalRef);
 
-    disableBodyScroll(modalRef.current);
-
+    setOpenModalCount((prev) => prev + 1);
     modalCount += 1;
 
     return () => {
       modalCount -= 1;
-      if (modalCount === 0) {
-        clearAllBodyScrollLocks();
-      } else {
-        if (ref) {
-          enableBodyScroll(ref);
-        }
+      setOpenModalCount(modalCount);
+      if (modalCount <= 0) {
+        setOpenModalCount(0);
+      }
+
+      // モーダルのスタックから現在のモーダルを削除
+      modalStack = modalStack.filter((ref) => ref !== modalRef);
+
+      // 残っている一番手前のモーダルのスクロールを再有効化
+      const lastModalRef = modalStack[modalStack.length - 1];
+      if (lastModalRef && lastModalRef.current) {
+        lastModalRef.current.style.overflow = 'auto';
       }
     };
-  }, [modalRef]);
+  }, [modalRef, setOpenModalCount]);
 
   const hideModal = () => {
     if (setShowModal) {

@@ -26,7 +26,7 @@ export const PointHistory: React.FC = () => {
       <div className="mb-3">
         <h2>Medii ポイント残高</h2>
         <p className="text-[28px]">
-          {currentPoint}
+          {currentPoint ? new Intl.NumberFormat('ja-JP').format(currentPoint) : 0}
           <span className="ml-2 text-base">ポイント</span>
         </p>
       </div>
@@ -49,7 +49,9 @@ export const PointHistory: React.FC = () => {
                 <tr className="pb-3" key={pointHistory.uid}>
                   <td className="pr-5 text-md">{getActionNameFromRefId(pointHistory.ref_id)}</td>
                   <td className="pr-5 text-md">{dateFormat(pointHistory.created_date, 'YYYY/M/D HH:mm')}</td>
-                  <td className="pr-5 text-right text-md">{pointHistory.delta}</td>
+                  <td className="pr-5 text-right text-md">
+                    {pointHistory.delta ? new Intl.NumberFormat('ja-JP').format(pointHistory.delta) : 0}
+                  </td>
                   <td className="pr-5 text-md">
                     {pointHistory.ref_id.startsWith('con') && (
                       <Link href={getChatRoomLink(pointHistory.ref_id)} className="text-[#0000ee] underline">

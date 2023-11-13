@@ -1,6 +1,3 @@
-import { atom } from 'recoil';
+import { atom } from 'jotai';
 
-export const accountIdState = atom<string>({
-  key: 'accountId',
-  default: undefined,
-});
+export const accountIdState = atom<string | null>(null);

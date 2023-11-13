@@ -5,8 +5,8 @@ import { usePostActivateChatRoom } from '@/hooks/api/chat/usePostActivateChatRoo
 import { useToken } from '@/hooks/authentication/useToken';
 import { useMedicalSpeciality } from '@/hooks/medicalSpeciality/useMedicalSpeciality';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
+import { useSetAtom } from 'jotai';
 import { useState, useRef, useCallback, useMemo, useEffect } from 'react';
-import { useSetRecoilState } from 'recoil';
 
 type useConsultDetailProps = {
   medicalSpecialities?: MedicalSpecialityEntity[];
@@ -27,7 +27,7 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
   const [isOpenCloseChatRoomModal, setIsOpenCloseChatRoomModal] = useState(false);
   const [isOpenResolveChatRoomModal, setIsOpenResolveChatRoomModal] = useState(false);
   const [isOpenReConsultSuggestionModal, setIsOpenReConsultSuggestionModal] = useState(false);
-  const setIsChatRoomSelected = useSetRecoilState(isChatRoomSelectedState);
+  const setIsChatRoomSelected = useSetAtom(isChatRoomSelectedState);
   const [selectedImage, setSelectedImage] = useState<string>('');
   const { accountId } = useToken();
   const chatListRef = useRef<HTMLDivElement | null>(null);

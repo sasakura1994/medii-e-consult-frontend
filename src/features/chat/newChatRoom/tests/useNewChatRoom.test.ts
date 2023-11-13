@@ -5,7 +5,6 @@ import {
 import 'cross-fetch/polyfill';
 import { act, renderHook, waitFor } from '@testing-library/react';
 import { useNewChatRoom } from '../useNewChatRoom';
-import { RecoilRoot } from 'recoil';
 import { useRouter } from 'next/router';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
@@ -138,12 +137,7 @@ describe('useNewChatRoom', () => {
         isReady: true,
       });
 
-      const { result } = await act(
-        async () =>
-          await renderHook(() => useNewChatRoom(), {
-            wrapper: RecoilRoot,
-          })
-      );
+      const { result } = await act(async () => await renderHook(() => useNewChatRoom(), {}));
 
       expect(result.current.chatRoom.room_type).toBe('BY_NAME');
     });
@@ -155,12 +149,7 @@ describe('useNewChatRoom', () => {
         isReady: true,
       });
 
-      const { result } = await act(
-        async () =>
-          await renderHook(() => useNewChatRoom(), {
-            wrapper: RecoilRoot,
-          })
-      );
+      const { result } = await act(async () => await renderHook(() => useNewChatRoom(), {}));
 
       expect(result.current.chatRoom.target_doctor).toBe('accountid');
       expect(result.current.chatRoom.room_type).toBe('BY_NAME');
@@ -173,12 +162,7 @@ describe('useNewChatRoom', () => {
         isReady: true,
       });
 
-      const { result } = await act(
-        async () =>
-          await renderHook(() => useNewChatRoom(), {
-            wrapper: RecoilRoot,
-          })
-      );
+      const { result } = await act(async () => await renderHook(() => useNewChatRoom(), {}));
 
       expect(result.current.chatRoom.group_id).toBe('group1');
       expect(result.current.chatRoom.room_type).toBe('GROUP');
@@ -186,9 +170,7 @@ describe('useNewChatRoom', () => {
   });
 
   test('selectedMedicalSpecialities', async () => {
-    const { result } = await renderHook(() => useNewChatRoom(), {
-      wrapper: RecoilRoot,
-    });
+    const { result } = await renderHook(() => useNewChatRoom(), {});
 
     await act(
       async () =>
@@ -202,9 +184,7 @@ describe('useNewChatRoom', () => {
 
   describe('setAgeRangeWrapper', () => {
     test('child', async () => {
-      const { result } = await renderHook(() => useNewChatRoom(), {
-        wrapper: RecoilRoot,
-      });
+      const { result } = await renderHook(() => useNewChatRoom(), {});
 
       await act(async () => await result.current.setAgeRangeWrapper('child'));
 
@@ -216,9 +196,7 @@ describe('useNewChatRoom', () => {
     });
 
     test('年代', async () => {
-      const { result } = await renderHook(() => useNewChatRoom(), {
-        wrapper: RecoilRoot,
-      });
+      const { result } = await renderHook(() => useNewChatRoom(), {});
 
       await act(async () => await result.current.setAgeRangeWrapper('20'));
 
@@ -230,9 +208,7 @@ describe('useNewChatRoom', () => {
   });
 
   test('setChildAgeWrapper', async () => {
-    const { result } = await renderHook(() => useNewChatRoom(), {
-      wrapper: RecoilRoot,
-    });
+    const { result } = await renderHook(() => useNewChatRoom(), {});
 
     await act(async () => await result.current.setChildAgeWrapper('5'));
 
@@ -251,9 +227,7 @@ describe('useNewChatRoom', () => {
       const confirmMock = jest.fn();
       global.confirm = confirmMock;
 
-      const { result } = await renderHook(() => useNewChatRoom(), {
-        wrapper: RecoilRoot,
-      });
+      const { result } = await renderHook(() => useNewChatRoom(), {});
 
       await act(async () => await result.current.selectConsultMessageTemplate('test'));
 
@@ -268,9 +242,7 @@ describe('useNewChatRoom', () => {
       confirmMock.mockReturnValueOnce(true);
       global.confirm = confirmMock;
 
-      const { result } = await renderHook(() => useNewChatRoom(), {
-        wrapper: RecoilRoot,
-      });
+      const { result } = await renderHook(() => useNewChatRoom(), {});
 
       await act(async () => await result.current.setChatRoomFields({ first_message: 'first_message' }));
       await act(async () => await result.current.selectConsultMessageTemplate('test'));
@@ -286,9 +258,7 @@ describe('useNewChatRoom', () => {
       confirmMock.mockReturnValueOnce(false);
       global.confirm = confirmMock;
 
-      const { result } = await renderHook(() => useNewChatRoom(), {
-        wrapper: RecoilRoot,
-      });
+      const { result } = await renderHook(() => useNewChatRoom(), {});
 
       await act(async () => await result.current.setChatRoomFields({ first_message: 'first_message' }));
       await act(async () => await result.current.selectConsultMessageTemplate('test'));
@@ -304,9 +274,7 @@ describe('useNewChatRoom', () => {
     const scrollToMock = jest.fn();
     global.scrollTo = scrollToMock;
 
-    const { result } = await renderHook(() => useNewChatRoom(), {
-      wrapper: RecoilRoot,
-    });
+    const { result } = await renderHook(() => useNewChatRoom(), {});
 
     act(() =>
       result.current.confirmInput({
@@ -323,9 +291,7 @@ describe('useNewChatRoom', () => {
   });
 
   test('backToInput', async () => {
-    const { result } = await renderHook(() => useNewChatRoom(), {
-      wrapper: RecoilRoot,
-    });
+    const { result } = await renderHook(() => useNewChatRoom(), {});
 
     act(() => result.current.backToInput());
 
@@ -336,9 +302,7 @@ describe('useNewChatRoom', () => {
 
   describe('onSelectImage', () => {
     test('画像の場合', async () => {
-      const { result } = await renderHook(() => useNewChatRoom(), {
-        wrapper: RecoilRoot,
-      });
+      const { result } = await renderHook(() => useNewChatRoom(), {});
 
       const file = new File([], 'filename', { type: 'image/png' });
 
@@ -357,9 +321,7 @@ describe('useNewChatRoom', () => {
     });
 
     test('画像以外の場合', async () => {
-      const { result } = await renderHook(() => useNewChatRoom(), {
-        wrapper: RecoilRoot,
-      });
+      const { result } = await renderHook(() => useNewChatRoom(), {});
 
       const file = new File([], 'filename', { type: 'text/plain' });
 
@@ -397,9 +359,7 @@ describe('useNewChatRoom', () => {
 
   describe('onImageEdited', () => {
     test('画像以外の場合', async () => {
-      const { result } = await renderHook(() => useNewChatRoom(), {
-        wrapper: RecoilRoot,
-      });
+      const { result } = await renderHook(() => useNewChatRoom(), {});
 
       const file = new File([], 'filename', { type: 'text/plain' });
 
@@ -431,9 +391,7 @@ describe('useNewChatRoom', () => {
   });
 
   test('deleteChatDraftImageById', async () => {
-    const { result } = await renderHook(() => useNewChatRoom(), {
-      wrapper: RecoilRoot,
-    });
+    const { result } = await renderHook(() => useNewChatRoom(), {});
 
     deleteChatDraftImageMock.mockClear();
 
@@ -455,9 +413,7 @@ describe('useNewChatRoom', () => {
   });
 
   test('changeMedicalSpecialities', async () => {
-    const { result } = await renderHook(() => useNewChatRoom(), {
-      wrapper: RecoilRoot,
-    });
+    const { result } = await renderHook(() => useNewChatRoom(), {});
 
     act(() => result.current.setIsMedicalSpecialitiesSelectDialogShown(true));
 
@@ -477,9 +433,7 @@ describe('useNewChatRoom', () => {
   });
 
   test('moveSelectedMedicalSpeciality', async () => {
-    const { result } = await renderHook(() => useNewChatRoom(), {
-      wrapper: RecoilRoot,
-    });
+    const { result } = await renderHook(() => useNewChatRoom(), {});
 
     await act(async () => await result.current.setChatRoomFields({ target_specialities: ['A', 'B', 'C'] }));
 
@@ -491,9 +445,7 @@ describe('useNewChatRoom', () => {
   });
 
   test('コンサル分がテンプレートと同じ場合はエラー', async () => {
-    const { result } = await renderHook(() => useNewChatRoom(), {
-      wrapper: RecoilRoot,
-    });
+    const { result } = await renderHook(() => useNewChatRoom(), {});
 
     await act(
       async () =>
@@ -522,9 +474,7 @@ describe('useNewChatRoom', () => {
       isReady: true,
     });
 
-    const { result } = await renderHook(() => useNewChatRoom(), {
-      wrapper: RecoilRoot,
-    });
+    const { result } = await renderHook(() => useNewChatRoom(), {});
 
     act(() => result.current.deleteReConsultFileMessage(1));
 
@@ -534,9 +484,7 @@ describe('useNewChatRoom', () => {
   });
 
   test('deleteFileForReConsult', async () => {
-    const hooks = await renderHook(() => useNewChatRoom(), {
-      wrapper: RecoilRoot,
-    });
+    const hooks = await renderHook(() => useNewChatRoom(), {});
 
     await act(() =>
       hooks.result.current.setFilesForReConsult([

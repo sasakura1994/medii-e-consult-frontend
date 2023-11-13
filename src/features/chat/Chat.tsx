@@ -10,9 +10,9 @@ import { useGetPublishmentStatus } from '@/hooks/api/chat/useGetPublishmentStatu
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { useFetchChatRoomList } from '@/hooks/api/chat/useFetchChatRoomList';
 import { mutateFetchUnreadCounts } from '@/hooks/api/chat/useFetchUnreadCounts';
-import { useRecoilValue } from 'recoil';
 import { isChatRoomSelectedState } from '@/globalStates/chat';
 import Link from 'next/link';
+import { useAtomValue } from 'jotai';
 
 type WebsocketResponseMessage = {
   type: 'subscribe_response' | 'pong' | 'mes';
@@ -31,7 +31,7 @@ export const Chat = () => {
   const { chat_room_id } = router.query as Query;
   const chatRoomIdStr = chat_room_id;
 
-  const isChatRoomSelected = useRecoilValue(isChatRoomSelectedState);
+  const isChatRoomSelected = useAtomValue(isChatRoomSelectedState);
   const { data: chatRoomList, mutate: mutateChatRoomList } = useFetchChatRoomList({
     query: ['FREE', 'BY_NAME', 'GROUP'],
   });
