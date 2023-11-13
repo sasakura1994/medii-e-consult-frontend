@@ -1,4 +1,3 @@
-import { RecoilRoot } from 'recoil';
 import 'cross-fetch/polyfill';
 import { renderHook, act } from '@testing-library/react';
 import { useEditProfile } from '@/features/mypages/editProfile/useEditProfile';
@@ -60,9 +59,7 @@ describe('useEditProfile', () => {
         } as ProfileEntity,
       });
 
-      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {
-        wrapper: RecoilRoot,
-      }).result;
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {}).result;
 
       expect(hooks.current.profile?.is_mail_notify).toBeTruthy();
       expect(hooks.current.profile?.is_push_notify).toBeTruthy();
@@ -83,9 +80,7 @@ describe('useEditProfile', () => {
         } as ProfileEntity,
       });
 
-      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {
-        wrapper: RecoilRoot,
-      }).result;
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {}).result;
 
       expect(hooks.current.profile?.is_mail_notify).toBeFalsy();
       expect(hooks.current.profile?.is_push_notify).toBeTruthy();
@@ -104,9 +99,7 @@ describe('useEditProfile', () => {
         } as ProfileEntity,
       });
 
-      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {
-        wrapper: RecoilRoot,
-      }).result;
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {}).result;
 
       expect(hooks.current.hospitalInputType).toEqual('select');
     });
@@ -124,9 +117,7 @@ describe('useEditProfile', () => {
         } as ProfileEntity,
       });
 
-      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {
-        wrapper: RecoilRoot,
-      }).result;
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {}).result;
 
       expect(hooks.current.hospitalInputType).toEqual('free');
     });
@@ -146,9 +137,7 @@ describe('useEditProfile', () => {
         } as ProfileEntity)
       );
 
-      const hooks = renderHook(() => useEditProfile({ isRegisterMode: true }), {
-        wrapper: RecoilRoot,
-      }).result;
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: true }), {}).result;
 
       expect(hooks.current.hospitalInputType).toEqual('free');
       expect(hooks.current.profile?.last_name).toEqual('draft_last_name');
@@ -177,9 +166,7 @@ describe('useEditProfile', () => {
         } as ProfileEntity)
       );
 
-      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {
-        wrapper: RecoilRoot,
-      }).result;
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {}).result;
 
       expect(hooks.current.profile?.last_name).toEqual('not draft');
     });
@@ -207,9 +194,7 @@ describe('useEditProfile', () => {
         } as ProfileEntity,
       });
 
-      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {
-        wrapper: RecoilRoot,
-      }).result;
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {}).result;
 
       act(() => {
         hooks.current.setProfileFields({ last_name: 'after' });
@@ -233,9 +218,7 @@ describe('useEditProfile', () => {
         } as ProfileEntity,
       });
 
-      const hooks = renderHook(() => useEditProfile({ isRegisterMode: true }), {
-        wrapper: RecoilRoot,
-      }).result;
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: true }), {}).result;
 
       act(() => {
         hooks.current.setProfileFields({ last_name: 'after' });
@@ -267,9 +250,7 @@ describe('useEditProfile', () => {
         } as ProfileEntity,
       });
 
-      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {
-        wrapper: RecoilRoot,
-      }).result;
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {}).result;
 
       act(() => {
         hooks.current.setHospitalName('hospital name');
@@ -315,9 +296,7 @@ describe('useEditProfile', () => {
         hospitals: [],
       });
 
-      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {
-        wrapper: RecoilRoot,
-      }).result;
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {}).result;
 
       expect(hooks.current.selectedHospital).toEqual({ label: hospital.hospital_name, value: hospital.hospital_id });
     });
@@ -358,9 +337,7 @@ describe('useEditProfile', () => {
         hospitals: [hospital],
       });
 
-      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {
-        wrapper: RecoilRoot,
-      }).result;
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {}).result;
 
       expect(hooks.current.selectedHospital?.label).toBe(hospital.hospital_name);
       expect(hooks.current.selectedHospital?.value).toBe(hospital.hospital_id);
@@ -400,9 +377,7 @@ describe('useEditProfile', () => {
         hospital: hospitals[0],
       });
 
-      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {
-        wrapper: RecoilRoot,
-      }).result;
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {}).result;
 
       act(() => {
         hooks.current.selectHospital({ value: hospitals[1].hospital_id, label: hospitals[1].hospital_name });
@@ -436,9 +411,7 @@ describe('useEditProfile', () => {
         } as ProfileEntity,
       });
 
-      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {
-        wrapper: RecoilRoot,
-      }).result;
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {}).result;
 
       act(() => {
         hooks.current.selectMedicalSpecialities([
@@ -480,9 +453,7 @@ describe('useEditProfile', () => {
         updateProfile: updateProfileMock,
       });
 
-      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {
-        wrapper: RecoilRoot,
-      }).result;
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {}).result;
 
       await act(() => {
         hooks.current.submit();
@@ -515,9 +486,7 @@ describe('useEditProfile', () => {
         push: pushMock,
       });
 
-      const hooks = renderHook(() => useEditProfile({ isRegisterMode: true }), {
-        wrapper: RecoilRoot,
-      }).result;
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: true }), {}).result;
 
       await act(() => {
         hooks.current.submit();
@@ -547,9 +516,7 @@ describe('useEditProfile', () => {
         } as ProfileEntity,
       });
 
-      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {
-        wrapper: RecoilRoot,
-      }).result;
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {}).result;
 
       act(() => {
         hooks.current.toggleQuestionaryItem(3);
@@ -570,9 +537,7 @@ describe('useEditProfile', () => {
         } as ProfileEntity,
       });
 
-      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {
-        wrapper: RecoilRoot,
-      }).result;
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {}).result;
 
       act(() => {
         hooks.current.toggleQuestionaryItem(2);
@@ -608,9 +573,7 @@ describe('useEditProfile', () => {
         updateProfile,
       });
 
-      const hooks = renderHook(() => useEditProfile({ isRegisterMode: true }), {
-        wrapper: RecoilRoot,
-      }).result;
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: true }), {}).result;
 
       await act(async () => await hooks.current.saveProfile());
 

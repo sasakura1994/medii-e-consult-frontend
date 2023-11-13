@@ -1,4 +1,3 @@
-import { RecoilRoot } from 'recoil';
 import 'cross-fetch/polyfill';
 import { renderHook } from '@testing-library/react';
 import { useEditProfilePage } from '../useEditProfilePage';
@@ -20,9 +19,7 @@ describe('useEditProfilePage', () => {
         query: {},
       });
 
-      const hooks = await renderHook(() => useEditProfilePage(), {
-        wrapper: RecoilRoot,
-      }).result;
+      const hooks = await renderHook(() => useEditProfilePage(), {}).result;
 
       expect(hooks.current.editProfileMode).toEqual('profile');
     });
@@ -37,9 +34,7 @@ describe('useEditProfilePage', () => {
         },
       });
 
-      const hooks = await renderHook(() => useEditProfilePage(), {
-        wrapper: RecoilRoot,
-      }).result;
+      const hooks = await renderHook(() => useEditProfilePage(), {}).result;
 
       expect(hooks.current.editProfileMode).toEqual('edit');
     });
@@ -52,9 +47,7 @@ describe('useEditProfilePage', () => {
         query: {},
       });
 
-      const hooks = await renderHook(() => useEditProfilePage(), {
-        wrapper: RecoilRoot,
-      }).result;
+      const hooks = await renderHook(() => useEditProfilePage(), {}).result;
 
       expect(hooks.current.editProfileMode).toEqual('edit');
     });
@@ -67,9 +60,7 @@ describe('useEditProfilePage', () => {
         query: {},
       });
 
-      const hooks = await renderHook(() => useEditProfilePage(), {
-        wrapper: RecoilRoot,
-      }).result;
+      const hooks = await renderHook(() => useEditProfilePage(), {}).result;
 
       expect(hooks.current.editProfileMode).toEqual('edit');
     });

@@ -6,8 +6,8 @@ import {
 } from '@/hooks/api/questionary/usePostQuestionaryItemsForOnboarding';
 import { useRouter } from 'next/router';
 import { mutateFetchFlag } from '@/hooks/api/account/useFetchFlags';
-import { useSetRecoilState } from 'recoil';
 import { whatListenState } from '@/globalStates/onboarding';
+import { useSetAtom } from 'jotai';
 
 type Answer = {
   questionId: string;
@@ -25,7 +25,7 @@ export const useOnBoardingQuestionary = () => {
   const router = useRouter();
   const [questionAndAnswers, setQuestionAndAnswers] = useState<QuestionAndAnswer[]>([]);
   const [isSending, setIsSending] = useState(false);
-  const setWhatListen = useSetRecoilState(whatListenState);
+  const setWhatListen = useSetAtom(whatListenState);
   const { questions } = useFetchQuestionaryItemsById('onboarding2');
   const { postQuestionaryItemsForOnboarding } = usePostQuestionaryItemsForOnboarding();
 
@@ -86,7 +86,7 @@ export const useOnBoardingQuestionary = () => {
         }))
       );
 
-      // idが"WhatListen"の場合は、その値をRecoilに保持する
+      // idが"WhatListen"の場合は、その値をJotaiに保持する
       if (questionId === 'WhatListen') {
         setWhatListen(other);
       }

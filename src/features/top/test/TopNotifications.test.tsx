@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
-import { RecoilRoot } from 'recoil';
+
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { TopNotifications } from '../TopNotifications';
 
@@ -20,11 +20,7 @@ describe('TopNotifications', () => {
       });
 
       await act(async () => {
-        await render(
-          <RecoilRoot>
-            <TopNotifications />
-          </RecoilRoot>
-        );
+        await render(<TopNotifications />);
       });
 
       expect(screen.queryByTestId('top-notification-is-imperfect-profile')).toBeInTheDocument();
@@ -38,11 +34,7 @@ describe('TopNotifications', () => {
       });
 
       await act(async () => {
-        await render(
-          <RecoilRoot>
-            <TopNotifications />
-          </RecoilRoot>
-        );
+        await render(<TopNotifications />);
       });
 
       expect(screen.queryByTestId('top-notification-need-to-send-confirmation')).toBeInTheDocument();
@@ -56,11 +48,7 @@ describe('TopNotifications', () => {
       });
 
       await act(async () => {
-        await render(
-          <RecoilRoot>
-            <TopNotifications />
-          </RecoilRoot>
-        );
+        await render(<TopNotifications />);
       });
 
       expect(screen.queryByTestId('top-notification-pending')).toBeInTheDocument();
@@ -78,11 +66,7 @@ describe('TopNotifications', () => {
     });
 
     await act(async () => {
-      await render(
-        <RecoilRoot>
-          <TopNotifications />
-        </RecoilRoot>
-      );
+      await render(<TopNotifications />);
     });
 
     expect(screen.queryByTestId('top-notification-input-profile')).toBeInTheDocument();
@@ -98,11 +82,7 @@ describe('TopNotifications', () => {
     });
 
     await act(async () => {
-      await render(
-        <RecoilRoot>
-          <TopNotifications />
-        </RecoilRoot>
-      );
+      await render(<TopNotifications />);
     });
 
     expect(screen.queryByTestId('top-notification-nmo-input-profile')).toBeInTheDocument();

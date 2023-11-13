@@ -1,16 +1,8 @@
 import { useCallback, useEffect } from 'react';
-import {
-  getAccountIdFromToken,
-  getAuthToken,
-  setAuthToken,
-} from '@/libs/cookie';
-import { useRecoilState } from 'recoil';
-import {
-  isTokenInitializedState,
-  isTokenRefreshedState,
-  tokenState,
-} from '@/globalStates/auth';
+import { getAccountIdFromToken, getAuthToken, setAuthToken } from '@/libs/cookie';
+import { isTokenInitializedState, isTokenRefreshedState, tokenState } from '@/globalStates/auth';
 import { accountIdState } from '@/globalStates/profileState';
+import { useAtom } from 'jotai';
 
 type UseToken = {
   token: string;
@@ -22,14 +14,10 @@ type UseToken = {
 };
 
 export const useToken = (): UseToken => {
-  const [accountId, setAccountId] = useRecoilState(accountIdState);
-  const [token, setToken] = useRecoilState(tokenState);
-  const [isTokenInitialized, setIsTokenInitialized] = useRecoilState(
-    isTokenInitializedState
-  );
-  const [isTokenRefreshed, setIsTokenRefreshed] = useRecoilState(
-    isTokenRefreshedState
-  );
+  const [accountId, setAccountId] = useAtom(accountIdState);
+  const [token, setToken] = useAtom(tokenState);
+  const [isTokenInitialized, setIsTokenInitialized] = useAtom(isTokenInitializedState);
+  const [isTokenRefreshed, setIsTokenRefreshed] = useAtom(isTokenRefreshedState);
 
   useEffect(() => {
     const storageToken = getAuthToken();

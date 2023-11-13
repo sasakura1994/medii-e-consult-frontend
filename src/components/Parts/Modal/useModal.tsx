@@ -1,14 +1,14 @@
 import { RefObject, useEffect, useRef } from 'react';
-import { useSetRecoilState } from 'recoil';
 import { openModalCountState } from '@/globalStates/modal';
 import { ModalPropsType } from './Modal';
+import { useSetAtom } from 'jotai';
 
 let modalCount = 0;
 let modalStack: RefObject<HTMLDivElement>[] = []; // アクティブなモーダルの参照を保持
 
 export const useModal = (props: ModalPropsType) => {
   const { setShowModal } = props;
-  const setOpenModalCount = useSetRecoilState(openModalCountState);
+  const setOpenModalCount = useSetAtom(openModalCountState);
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

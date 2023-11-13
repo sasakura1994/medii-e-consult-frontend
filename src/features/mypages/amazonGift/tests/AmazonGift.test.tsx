@@ -1,7 +1,7 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { render, screen, act, waitFor, cleanup } from '@testing-library/react';
-import { RecoilRoot } from 'recoil';
+
 import { AmazonGift } from '../AmazonGift';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 
@@ -52,11 +52,7 @@ jest.mock('@/hooks/api/amazonGift/useFetchAmazonGift', () => ({
 
 const getRender = async () => {
   await act(() => {
-    render(
-      <RecoilRoot>
-        <AmazonGift />
-      </RecoilRoot>
-    );
+    render(<AmazonGift />);
   });
 };
 

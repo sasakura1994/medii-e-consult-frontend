@@ -1,4 +1,3 @@
-import { RecoilRoot } from 'recoil';
 import 'cross-fetch/polyfill';
 import { act, renderHook } from '@testing-library/react';
 import { useRouter } from 'next/router';
@@ -47,9 +46,7 @@ describe('useNmoInputProfile', () => {
         push: pushMock,
       });
 
-      await renderHook(() => useNmoInputProfile(), {
-        wrapper: RecoilRoot,
-      }).result;
+      await renderHook(() => useNmoInputProfile(), {}).result;
 
       expect(pushMock).not.toBeCalled();
     });
@@ -82,9 +79,7 @@ describe('useNmoInputProfile', () => {
         push: pushMock,
       });
 
-      await renderHook(() => useNmoInputProfile(), {
-        wrapper: RecoilRoot,
-      }).result;
+      await renderHook(() => useNmoInputProfile(), {}).result;
 
       expect(pushMock).toBeCalledWith('/top');
     });
@@ -114,9 +109,7 @@ describe('useNmoInputProfile', () => {
         push: pushMock,
       });
 
-      await renderHook(() => useNmoInputProfile(), {
-        wrapper: RecoilRoot,
-      }).result;
+      await renderHook(() => useNmoInputProfile(), {}).result;
 
       expect(pushMock).toBeCalledWith('/top');
     });
@@ -148,9 +141,7 @@ describe('useNmoInputProfile', () => {
         push: pushMock,
       });
 
-      const hooks = await renderHook(() => useNmoInputProfile(), {
-        wrapper: RecoilRoot,
-      }).result;
+      const hooks = await renderHook(() => useNmoInputProfile(), {}).result;
 
       await act(async () => await hooks.current.submitNmoInputProfile());
 
@@ -165,9 +156,7 @@ describe('useNmoInputProfile', () => {
         push: pushMock,
       });
 
-      const hooks = await renderHook(() => useNmoInputProfile(), {
-        wrapper: RecoilRoot,
-      }).result;
+      const hooks = await renderHook(() => useNmoInputProfile(), {}).result;
 
       await act(async () => await hooks.current.submitNmoInputProfile());
 

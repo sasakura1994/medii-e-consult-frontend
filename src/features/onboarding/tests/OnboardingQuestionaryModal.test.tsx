@@ -2,7 +2,6 @@ import React from 'react';
 import { render, screen, act } from '@testing-library/react';
 import { OnboardingQuestionaryModal } from '../OnboardingQuestionaryModal';
 import { useRouter } from 'next/router';
-import { RecoilRoot } from 'recoil';
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
@@ -17,11 +16,7 @@ describe('OnboardingQuestionaryModal', () => {
       });
 
       act(() => {
-        render(
-          <RecoilRoot>
-            <OnboardingQuestionaryModal />
-          </RecoilRoot>
-        );
+        render(<OnboardingQuestionaryModal />);
       });
 
       expect(screen.queryByTestId('onboarding-questionary-modal')).toBeInTheDocument();
@@ -33,11 +28,7 @@ describe('OnboardingQuestionaryModal', () => {
       });
 
       act(() => {
-        render(
-          <RecoilRoot>
-            <OnboardingQuestionaryModal />
-          </RecoilRoot>
-        );
+        render(<OnboardingQuestionaryModal />);
       });
 
       expect(screen.queryByTestId('onboarding-questionary-modal')).not.toBeInTheDocument();
