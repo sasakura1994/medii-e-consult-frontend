@@ -28,7 +28,7 @@ export const IntroduceResponseDoctor = () => {
                   <div className="flex lg:block mr-4 w-[70px]">
                     <img src={introduceDoctor.image} alt="introduceDoctorImage" />
                   </div>
-                  <div>
+                  <div className='mt-5'>
                     <div className="hidden lg:flex lg:mb-2 lg:items-center">
                       <p className="text-lg font-semibold">{introduceDoctor.name}</p>
                       <p className="ml-2 text-sm font-light">先生</p>
