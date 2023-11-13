@@ -25,26 +25,13 @@ export const Modal: React.FC<ModalPropsType> = (props) => {
       data-testid={dataTestId}
     >
       <div
-        className={`my-auto overflow-x-hidden mx-4 
+        className={`mx-4 my-auto overflow-x-hidden 
           rounded-lg border border-[#d5d5d5] bg-white
          lg:mx-auto ${className} z-[210] ${isCenter === true ? '' : 'my-10'}
          ${pcWidthClass}`}
         role="dialog"
         onMouseDown={(e) => e.stopPropagation()}
       >
-
-
-
-
-
-
-
-
-
-
-
-
-        
         <div ref={modalRef} className="max-h-[80dvh] overflow-y-auto overscroll-y-contain">
           {children}
         </div>
