@@ -3,7 +3,7 @@ import { useToken } from '@/hooks/authentication/useToken';
 import { useAxios } from '@/hooks/network/useAxios';
 import { useLogin } from '@/hooks/useLogin';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 type Query = {
   token: string;
@@ -17,7 +17,7 @@ const Auth = () => {
   const router = useRouter();
   const { redirectUrl } = useLogin();
   const { axios } = useAxios();
-  const [token, setToken] = useState(router.query as Query);
+  const token = router.query as Query;
   const { setTokenAndMarkInitialized } = useToken();
 
   const Login = async () => {
