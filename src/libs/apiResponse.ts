@@ -1,20 +1,11 @@
 type ComvertedDataType = {
-  [key: string]:
-    | string
-    | string[]
-    | number
-    | number[]
-    | boolean
-    | null
-    | undefined;
+  [key: string]: string | string[] | number | number[] | boolean | null | undefined;
 };
 
 /**
  * Responseデータの null を undefined に変換
  */
-export const fromNullToUndefined = <T extends ComvertedDataType>(
-  data: T
-): T => {
+export const fromNullToUndefined = <T extends ComvertedDataType>(data: T): T => {
   if (!data) {
     return {} as T;
   }

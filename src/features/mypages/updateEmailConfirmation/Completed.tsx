@@ -4,7 +4,7 @@ import { removeAuthToken } from '@/libs/cookie';
 
 const Completed = () => {
   removeAuthToken();
-  
+
   return (
     <div className="text-5 text-center">
       <p>更新が完了しました。再度ログインしてください。</p>

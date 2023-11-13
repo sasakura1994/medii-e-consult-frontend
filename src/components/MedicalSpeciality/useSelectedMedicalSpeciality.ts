@@ -10,18 +10,12 @@ type DragItem = {
   specialityCode: string;
 };
 
-export const useSelectedMedicalSpeciality = (
-  props: SelectedMedicalSpecialityProps
-) => {
+export const useSelectedMedicalSpeciality = (props: SelectedMedicalSpecialityProps) => {
   const { index, medicalSpeciality, moveItem } = props;
   const dragRef = React.useRef<HTMLDivElement>(null);
   const previewRef = React.useRef<HTMLDivElement>(null);
 
-  const [{ handlerId }, drop] = useDrop<
-    DragItem,
-    void,
-    { handlerId: Identifier | null }
-  >({
+  const [{ handlerId }, drop] = useDrop<DragItem, void, { handlerId: Identifier | null }>({
     accept: itemType,
     collect: (monitor) => {
       return {
@@ -45,8 +39,7 @@ export const useSelectedMedicalSpeciality = (
       const hoverBoundingRect = previewRef.current?.getBoundingClientRect();
 
       // Get vertical middle
-      const hoverMiddleY =
-        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
 
       // Determine mouse position
       const clientOffset = monitor.getClientOffset();

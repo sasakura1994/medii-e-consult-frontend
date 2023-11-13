@@ -7,7 +7,6 @@ const HubSpotQuestionaryPage = () => {
   const { accountId } = useToken();
 
   useEffect(() => {
-
     const redirectMatch = router.asPath.match(/redirect=([^&]+(&[^&]+)*)/);
     const redirect = redirectMatch ? decodeURIComponent(redirectMatch[1]) : null;
 

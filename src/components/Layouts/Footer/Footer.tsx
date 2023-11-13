@@ -28,9 +28,7 @@ export const Footer = (props: Props) => {
             </a>
           </div>
           <div className="flex justify-center gap-4">
-            <Link href="/privacypolicy">
-              プライバシーポリシー
-            </Link>
+            <Link href="/privacypolicy">プライバシーポリシー</Link>
             <a href="https://medii.jp" target="_blank" rel="noreferrer">
               運営会社
             </a>

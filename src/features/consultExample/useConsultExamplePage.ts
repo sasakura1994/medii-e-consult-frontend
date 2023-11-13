@@ -5,13 +5,8 @@ import { ConsultExampleMessageEntity } from '@/types/entities/ConsultExampleMess
 
 export const useConsultExamplePage = (id: string) => {
   const [commentFormMessage, setCommentFormMessage] = useState('');
-  const [
-    consultExampleMessageIdForComment,
-    setConsultExampleMessageIdForComment,
-  ] = useState(0);
-  const [messageIdForCommentsModal, setMessageIdForCommentsModal] = useState<
-    number | undefined
-  >();
+  const [consultExampleMessageIdForComment, setConsultExampleMessageIdForComment] = useState(0);
+  const [messageIdForCommentsModal, setMessageIdForCommentsModal] = useState<number | undefined>();
   const [isCommentsModalShown, setIsCommentsModalShown] = useState(false);
   const [isAllCommentsModalShown, setIsAllCommentsModalShown] = useState(false);
   const [messageForCommentsModal, setMessageForCommentsModal] = useState('');
@@ -19,23 +14,17 @@ export const useConsultExamplePage = (id: string) => {
   const { data: consultExample } = useFetchConsultExample(id);
   const { data: consultExampleMessages } = useFetchConsultExampleMessages(id);
 
-  const showCommentForm = useCallback(
-    () => setCommentFormMessage(consultExample?.background ?? ''),
-    [consultExample]
-  );
+  const showCommentForm = useCallback(() => setCommentFormMessage(consultExample?.background ?? ''), [consultExample]);
 
   const closeCommentForm = useCallback(() => {
     setCommentFormMessage('');
     setConsultExampleMessageIdForComment(0);
   }, []);
 
-  const showCommentFormForMessage = useCallback(
-    (consultExampleMessage: ConsultExampleMessageEntity) => {
-      setCommentFormMessage(consultExampleMessage.message);
-      setConsultExampleMessageIdForComment(consultExampleMessage.uid);
-    },
-    []
-  );
+  const showCommentFormForMessage = useCallback((consultExampleMessage: ConsultExampleMessageEntity) => {
+    setCommentFormMessage(consultExampleMessage.message);
+    setConsultExampleMessageIdForComment(consultExampleMessage.uid);
+  }, []);
 
   const openCommentsModal = useCallback(() => {
     setIsCommentsModalShown(true);
@@ -43,14 +32,11 @@ export const useConsultExamplePage = (id: string) => {
     setMessageForCommentsModal(consultExample?.background ?? '');
   }, [consultExample?.background]);
 
-  const openCommentsModalForMessage = useCallback(
-    (consultExampleMessage: ConsultExampleMessageEntity) => {
-      setIsCommentsModalShown(true);
-      setMessageIdForCommentsModal(consultExampleMessage.uid);
-      setMessageForCommentsModal(consultExampleMessage.message);
-    },
-    []
-  );
+  const openCommentsModalForMessage = useCallback((consultExampleMessage: ConsultExampleMessageEntity) => {
+    setIsCommentsModalShown(true);
+    setMessageIdForCommentsModal(consultExampleMessage.uid);
+    setMessageForCommentsModal(consultExampleMessage.message);
+  }, []);
 
   const closeCommentsModal = useCallback(() => {
     setIsCommentsModalShown(false);

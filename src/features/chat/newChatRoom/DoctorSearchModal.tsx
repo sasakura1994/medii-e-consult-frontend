@@ -16,9 +16,7 @@ export type DoctorSearchModalProps = {
   setShowModal: (isShow: boolean) => void;
 };
 
-export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = (
-  props: DoctorSearchModalProps
-) => {
+export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = (props: DoctorSearchModalProps) => {
   const { reConsultChatRoomId, onChange, setShowModal } = props;
   const {
     applySearchConditions,
@@ -37,18 +35,12 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = (
     <>
       <Modal setShowModal={setShowModal} className="lg:w-[644px]">
         <div className="mx-6 my-10 lg:mx-20">
-          <ModalTitleWithCloseButton
-            title="E-コンサルする専門医を選択"
-            onClose={() => setShowModal(false)}
-          />
+          <ModalTitleWithCloseButton title="E-コンサルする専門医を選択" onClose={() => setShowModal(false)} />
           <div className="mt-10 flex gap-4">
             <div className="flex-1">
               <div>担当科</div>
               <div className="mt-1">
-                <MedicalSpecialitySelectButton
-                  specialityCode={specialityCode}
-                  onChange={setSpecialityCode}
-                />
+                <MedicalSpecialitySelectButton specialityCode={specialityCode} onChange={setSpecialityCode} />
               </div>
             </div>
             <div className="flex-1">
@@ -109,9 +101,7 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = (
                     <div className="flex-1">
                       {doctor.last_name} {doctor.first_name}
                     </div>
-                    <div className="flex-1">
-                      {getMedicalSpecialityName(doctor.speciality_1)}
-                    </div>
+                    <div className="flex-1">{getMedicalSpecialityName(doctor.speciality_1)}</div>
                     <div className="shrink grow-[0.3] basis-0">
                       {calculateExperienceYear(doctor.qualified_year)} 年目
                     </div>
@@ -126,16 +116,10 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = (
       {doctor && (
         <DoctorProfileModal doctor={doctor}>
           <div className="mt-10 flex flex-col-reverse gap-8 lg:flex-row lg:gap-4">
-            <GrayButton
-              className="w-full flex-1"
-              onClick={() => setDoctor(undefined)}
-            >
+            <GrayButton className="w-full flex-1" onClick={() => setDoctor(undefined)}>
               キャンセル
             </GrayButton>
-            <PrimaryButton
-              className="w-full flex-1 px-6"
-              onClick={() => onChange(doctor)}
-            >
+            <PrimaryButton className="w-full flex-1 px-6" onClick={() => onChange(doctor)}>
               この先生を指定
             </PrimaryButton>
           </div>

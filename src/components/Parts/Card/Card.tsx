@@ -6,11 +6,7 @@ type Props = {
   spNoBorder?: boolean;
 };
 
-export const Card: React.FC<Props> = ({
-  children,
-  className,
-  spNoBorder = false,
-}: Props) => {
+export const Card: React.FC<Props> = ({ children, className, spNoBorder = false }: Props) => {
   return (
     <div
       className={`

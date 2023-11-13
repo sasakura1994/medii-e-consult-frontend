@@ -11,11 +11,7 @@ export type UseFetchEmailType = {
 const endpoint = '/account/email';
 
 export const useFetchEmail = () => {
-  const {
-    isLoading,
-    error,
-    data: email,
-  } = useAuthenticatedSWR<EmailEntityType>(endpoint);
+  const { isLoading, error, data: email } = useAuthenticatedSWR<EmailEntityType>(endpoint);
 
   return {
     isLoading,
