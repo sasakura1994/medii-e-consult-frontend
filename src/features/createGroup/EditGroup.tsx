@@ -79,8 +79,8 @@ export const EditGroup = () => {
             value="true"
             checked={assignable === true}
             label="あり"
-            onChange={(e) => {
-              setAssignable(e.target.value === 'true');
+            onChange={() => {
+              setAssignable(true);
             }}
           />
           <div className="text-[13px]">※ 他の医師からコンサルが来る場合があります。</div>
@@ -91,8 +91,8 @@ export const EditGroup = () => {
             value="false"
             checked={assignable === false}
             label="なし"
-            onChange={(e) => {
-              setAssignable(e.target.value === 'false');
+            onChange={() => {
+              setAssignable(false);
             }}
           />
           <div className="text-[13px]">※ グループチャットのみ利用できます。検索結果にも表示されません。</div>
@@ -107,8 +107,8 @@ export const EditGroup = () => {
               value="true"
               checked={isPublic === true}
               label="公開"
-              onChange={(e) => {
-                setIsPublic(e.target.value === 'true');
+              onChange={() => {
+                setIsPublic(true);
               }}
             />
             <div className="text-[13px]">※ 検索結果に表示されます。</div>
@@ -119,8 +119,8 @@ export const EditGroup = () => {
               value="false"
               checked={isPublic === false}
               label="非公開"
-              onChange={(e) => {
-                setIsPublic(e.target.value === 'false');
+              onChange={() => {
+                setIsPublic(false);
               }}
             />
             <div className="text-[13px]">
