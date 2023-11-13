@@ -87,9 +87,9 @@ export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
         score: 5,
         system_comment: '',
       });
+      setIsOpenReConsultSuggestionModal(true);
     }
     await mutateChatRoom?.();
-    setIsOpenReConsultSuggestionModal(true);
     setIsOpen(false);
     setSelectedTab('close');
   }, [
