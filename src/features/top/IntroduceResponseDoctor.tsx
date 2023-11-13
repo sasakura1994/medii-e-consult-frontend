@@ -13,7 +13,7 @@ export const IntroduceResponseDoctor = () => {
         return (
           <div 
             onClick={() => {
-              postEventLog({ name: 'click-doctor', accountID: introduceDoctor.account_id })
+              postEventLog({ name: 'click-doctor', parameter: introduceDoctor.account_id })
             }}
             key={index}
           >
