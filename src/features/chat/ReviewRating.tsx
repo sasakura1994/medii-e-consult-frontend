@@ -63,7 +63,7 @@ export const ReviewRating = (props: ReviewRatingProps) => {
               })
             }
           />
-          <p className="mt-2 text-center text-xs font-light text-text-secondary">{review.midiumRatingText}</p>
+          <p className="mt-2 text-center text-xs font-light text-text-secondary">{review.mediumRatingText}</p>
         </div>
         <div className="flex w-24 flex-col items-center">
           <img

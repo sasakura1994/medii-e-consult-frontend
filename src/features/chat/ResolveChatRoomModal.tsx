@@ -1,6 +1,6 @@
 import { Modal } from '@/components/Parts/Modal/Modal';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { KeyedMutator } from 'swr';
 import { usePostResolveChatRoom } from '@/hooks/api/chat/usePostResolveChatRoom';
 import { ReviewRating } from './ReviewRating';
@@ -8,12 +8,13 @@ import TextArea from '@/components/TextArea/TextArea';
 import { Optional } from '@/components/Parts/Form/Optional';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import TertiaryButton from '@/components/Button/TertiaryButton';
+import { usePostResolveGroupChatRoom } from '@/hooks/api/chat/usePostResolveGroupChatRoom';
 
 export type Review = {
   key: string;
   label: string;
   lowRatingText: string;
-  midiumRatingText: string;
+  mediumRatingText: string;
   highRatingText: string;
   value: 0 | 1 | 2 | 3 | 4 | 5;
 };
@@ -34,7 +35,7 @@ export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
       key: '1',
       label: '期待通りの回答が得られましたか？',
       lowRatingText: '期待以下',
-      midiumRatingText: '期待通り',
+      mediumRatingText: '期待通り',
       highRatingText: '期待以上',
       value: 0,
     },
@@ -42,7 +43,7 @@ export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
       key: '2',
       label: '回答までの早さはいかがでしたか？',
       lowRatingText: '遅い',
-      midiumRatingText: '期待通り',
+      mediumRatingText: '期待通り',
       highRatingText: '早い',
       value: 0,
     },
@@ -50,7 +51,7 @@ export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
       key: '3',
       label: 'もう一度この先生に相談したいですか？',
       lowRatingText: 'したくない',
-      midiumRatingText: 'どちらでもない',
+      mediumRatingText: 'どちらでもない',
       highRatingText: 'したい',
       value: 0,
     },
@@ -60,7 +61,7 @@ export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
       key: '1',
       label: 'E-コンサルの使い心地はいかがですか？',
       lowRatingText: '期待以下',
-      midiumRatingText: '期待通り',
+      mediumRatingText: '期待通り',
       highRatingText: '期待以上',
       value: 0,
     },
@@ -69,6 +70,37 @@ export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
   const [aboutSystemComment, setAboutSystemComment] = useState('');
 
   const { resolveChatRoom } = usePostResolveChatRoom();
+  const { resolveGroupChatRoom } = usePostResolveGroupChatRoom();
+
+  const resolve = useCallback(async () => {
+    if (chatRoomData.chat_room.room_type === 'GROUP') {
+      await resolveGroupChatRoom({
+        chat_room_id: chatRoomData.chat_room.chat_room_id,
+        comment: '',
+        score: 5,
+        system_comment: '',
+      });
+    } else {
+      await resolveChatRoom({
+        chat_room_id: chatRoomData.chat_room.chat_room_id,
+        comment: '',
+        score: 5,
+        system_comment: '',
+      });
+    }
+    await mutateChatRoom?.();
+    setIsOpenReConsultSuggestionModal(true);
+    setIsOpen(false);
+    setSelectedTab('close');
+  }, [
+    chatRoomData,
+    mutateChatRoom,
+    resolveChatRoom,
+    resolveGroupChatRoom,
+    setIsOpen,
+    setIsOpenReConsultSuggestionModal,
+    setSelectedTab,
+  ]);
 
   const title = useMemo(() => {
     if (chatRoomData.chat_room.room_type === 'GROUP') {
@@ -101,16 +133,7 @@ export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
             size="large"
             disabled={aboutSystemReviews.some((review) => review.value === 0)}
             onClick={async () => {
-              await resolveChatRoom({
-                chat_room_id: chatRoomData.chat_room.chat_room_id,
-                comment: '',
-                score: 5,
-                system_comment: '',
-              });
-              await mutateChatRoom?.();
-              setIsOpenReConsultSuggestionModal(true);
-              setIsOpen(false);
-              setSelectedTab('close');
+              resolve();
             }}
           >
             評価してコンサルを終了
