@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "prepare": "husky install",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -10,6 +11,12 @@
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
     "lint:fix": "eslint --fix 'src/**/*.{js,jsx,ts,tsx}",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "@tailwindcss/line-clamp": "^0.4.4",
@@ -53,9 +60,11 @@
     "eslint-plugin-prefer-arrow": "^1.2.3",
     "eslint-plugin-react": "^7.32.1",
     "eslint-plugin-rulesdir": "^0.2.2",
+    "husky": "^8.0.3",
     "identity-obj-proxy": "^3.0.0",
     "jest-environment-jsdom": "^29.3.1",
     "jest-mock-axios": "^4.7.0-beta4",
+    "lint-staged": "^15.1.0",
     "msw": "^1.0.1",
     "postcss": "^8.4.21",
     "prettier": "^3.0.3",
