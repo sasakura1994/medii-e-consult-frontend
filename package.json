@@ -73,9 +73,9 @@
     "typescript": "^5.2.2"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx}": [
-      "eslint --fix 'src/**/*.{js,jsx,ts,tsx}'",
-      "prettier --write 'src/**/*.{js,jsx,ts,tsx}'"
+    "*.{ts,tsx}": [
+      "npm run lint:fix",
+      "npm run format"
     ]
   }
 }
