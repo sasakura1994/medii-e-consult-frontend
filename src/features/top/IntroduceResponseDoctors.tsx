@@ -11,7 +11,7 @@ export const IntroduceResponseDoctors = () => {
       <p className="font-light text-sm mb-3">
         E-コンサルでは1,000人以上のエキスパート専門医に診断・治療方針を相談できます。
       </p>
-      <StyledHiddenScrollBar className="flex max-w-[1024px] space-x-2 overflow-x-auto px-1 py-4">
+      <StyledHiddenScrollBar className="overflow-x-auto">
         <IntroduceResponseDoctor />
       </StyledHiddenScrollBar>
     </>

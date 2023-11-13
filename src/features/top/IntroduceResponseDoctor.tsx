@@ -22,24 +22,25 @@ export const IntroduceResponseDoctor = () => {
               target="_blank"
               key={index}
             >
-              <div className="p-4 min-w-[375px] sm:min-w-[504px] rounded-lg border border-[#EDEDED] bg-white
-                shadow-low mr-2 sm:mb-0 lg:w-1/3">
+              <div 
+                className="mr-2 w-[327px] rounded-lg border border-[#EDEDED] bg-white
+                p-4 shadow-low lg:w-[492px]">
                 <div className="flex">
-                  <div className="flex sm:block mr-4 w-[70px]">
+                  <div className="flex lg:block mr-4 w-[70px]">
                     <img src={introduceDoctor.image} alt="introduceDoctorImage" />
                   </div>
                   <div>
-                    <div className="hidden sm:flex sm:mb-2 sm:items-center">
+                    <div className="hidden lg:flex lg:mb-2 lg:items-center">
                       <p className="text-lg font-semibold">{introduceDoctor.name}</p>
                       <p className="ml-2 text-sm font-light">先生</p>
                     </div>
-                    <p className="mb-2 font-light text-sm text-secondary sm:mb-0 sm:text-text-primary sm:font-semibold">
+                    <p className="mb-2 font-light text-sm text-secondary lg:mb-0 lg:text-text-primary lg:font-semibold">
                       {introduceDoctor.job}
                       <br />
                       {introduceDoctor.guideline}
                       {introduceDoctor.position}
                     </p>
-                    <div className="flex items-center sm:hidden">
+                    <div className="flex items-center lg:hidden">
                       <p className="text-lg font-semibold">{introduceDoctor.name}</p>
                       <p className="ml-2 text-sm font-light">先生</p>
                     </div>
