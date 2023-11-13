@@ -46,10 +46,14 @@ export const EditProfile = (props: EditProfileProps) => {
           )}
 
           <UserInfo {...editProfile} {...props} />
-          <div className="mt-4">
+          <div className="mt-8">
             <MedicalCareer {...editProfile} {...props} />
           </div>
-          {!isHospitalDisabled && <HospitalAffiliation {...editProfile} />}
+          {!isHospitalDisabled && (
+            <div className="mt-8">
+              <HospitalAffiliation {...editProfile} />
+            </div>
+          )}
           {fetchedProfile?.registration_source !== 'nmo' && (
             <div className="mt-8">
               <UsageClassification {...editProfile} />

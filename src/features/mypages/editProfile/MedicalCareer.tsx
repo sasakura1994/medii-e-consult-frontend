@@ -1,16 +1,21 @@
 import React from 'react';
-import { EditProfileLabel } from '@/features/mypages/editProfile/EditProfileLabel';
-import { TextArea } from '@/components/Parts/Form/TextArea';
 import { UseEditProfile } from './useEditProfile';
 import { EditProfileProps } from './EditProfile';
-import { EditProfileHeading } from './EditProfileHeading';
 import { MedicalCareerQualifiedYear } from './MedicalCareerQualifiedYear';
-import { MedicalCareerSpecialities } from './MedicalCareerSpecialities';
+import { Heading } from '@/components/Parts/Text/Heading';
+import { useMedicalSpecialitySelectButton } from '@/components/MedicalSpeciality/useMedicalSpecialitySelectButton';
+import SecondaryButton from '@/components/Button/SecondaryButton';
+import { EditProfileLabel } from './EditProfileLabel';
+import { MedicalSpecialitySelectDialog } from '@/components/MedicalSpeciality/MedicalSpecialitySelectDialog';
 
 export type MedicalCareerProps = UseEditProfile & EditProfileProps;
 
 export const MedicalCareer = (props: MedicalCareerProps) => {
-  const { isHospitalDisabled, isRegisterMode, profile, selectMedicalSpecialities, setProfileFields } = props;
+  const { isHospitalDisabled, isRegisterMode, profile, setProfileFields } = props;
+
+  const { isOpen, medicalSpecialityName, setIsOpen } = useMedicalSpecialitySelectButton({
+    specialityCode: profile?.main_speciality ?? '',
+  });
 
   if (!profile) {
     return <></>;
@@ -18,15 +23,11 @@ export const MedicalCareer = (props: MedicalCareerProps) => {
 
   return (
     <>
-      <div className="mb-10">
-        <EditProfileHeading className="mb-4">医療従事経歴</EditProfileHeading>
-
-        <div className="mb-4">
-          <MedicalCareerSpecialities profile={profile} selectMedicalSpecialities={selectMedicalSpecialities} />
-        </div>
+      <div>
+        <Heading as="h2">医療従事経歴</Heading>
 
         {!isHospitalDisabled && (
-          <div className="mb-4">
+          <div className="mt-6">
             <MedicalCareerQualifiedYear
               isEnabled={isRegisterMode}
               profile={profile}
@@ -35,30 +36,30 @@ export const MedicalCareer = (props: MedicalCareerProps) => {
           </div>
         )}
 
-        <div className="mt-4">
-          <EditProfileLabel required={false}>特によく診てきた疾患・領域</EditProfileLabel>
-          <TextArea
-            name="expertise"
-            id="expertise"
-            className="!h-28"
-            value={profile.expertise}
-            placeholder="よく診てきた疾患・領域情報を入力してください"
-            onChange={(e) => setProfileFields({ expertise: e.target.value })}
-          />
-        </div>
-
-        <div className="mt-4">
-          <EditProfileLabel required={false}>専門医資格</EditProfileLabel>
-          <TextArea
-            name="qualification"
-            id="qualification"
-            className="!h-28"
-            value={profile.qualification}
-            placeholder="保有している専門医資格を入力してください"
-            onChange={(e) => setProfileFields({ qualification: e.target.value })}
-          />
+        <div className="mt-6">
+          <EditProfileLabel required id="main-speciality">
+            所属科
+          </EditProfileLabel>
+          {medicalSpecialityName !== '' ? (
+            <div className="mt-2">{medicalSpecialityName}</div>
+          ) : (
+            <div className="mt-2 text-caption">所属科が選択されてません</div>
+          )}
+          <SecondaryButton type="button" className="mt-2" onClick={() => setIsOpen(true)}>
+            所属科を選択
+          </SecondaryButton>
         </div>
       </div>
+      {isOpen && (
+        <MedicalSpecialitySelectDialog
+          onChange={(specialityCode) => {
+            setIsOpen(false);
+            setProfileFields({ main_speciality: specialityCode });
+          }}
+          setShowModal={setIsOpen}
+          defaultSpecialityCode={profile.main_speciality}
+        />
+      )}
     </>
   );
 };
