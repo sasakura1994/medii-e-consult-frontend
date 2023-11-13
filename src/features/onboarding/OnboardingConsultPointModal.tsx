@@ -5,14 +5,14 @@ import TertiaryButton from '@/components/Button/TertiaryButton';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import { useFetchFlag } from '@/hooks/api/account/useFetchFlags';
 import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
-import { useRecoilValue } from 'recoil';
 import { whatListenState } from '@/globalStates/onboarding';
 import TextArea from '@/components/TextArea/TextArea';
+import { useAtomValue } from 'jotai';
 
 export const OnboardingConsultPointModal = () => {
   const [isClosed, setIsClosed] = useState(false);
   const { flag: isFirstConsultCampaignAvailable, isLoading: isLoadingFlag } = useFetchFlag('FirstConsultCampaign');
-  const whatListen = useRecoilValue(whatListenState);
+  const whatListen = useAtomValue(whatListenState);
   const { postEventLog } = useEventLog();
 
   const showOnboardingConsultPointModal = useCallback(async () => {

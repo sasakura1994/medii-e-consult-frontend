@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, screen, act, waitFor } from '@testing-library/react';
-import { RecoilRoot } from 'recoil';
 import AssignPage from '@/pages/assign/[id]';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import * as useFetchChatRoom from '@/hooks/api/chat/useFetchChatRoom';
@@ -35,11 +34,7 @@ describe('Assign', () => {
     const useRouterMock = useRouter as jest.Mocked<typeof useRouter>;
     (useRouterMock as jest.Mock).mockReturnValue({ query: { id: 'test' } });
 
-    render(
-      <RecoilRoot>
-        <AssignPage />
-      </RecoilRoot>
-    );
+    render(<AssignPage />);
 
     expect(screen.queryByTestId('loading')).toBeInTheDocument();
   });
@@ -61,11 +56,7 @@ describe('Assign', () => {
     const useRouterMock = useRouter as jest.Mocked<typeof useRouter>;
     (useRouterMock as jest.Mock).mockReturnValue({ query: { id: 'test' } });
 
-    render(
-      <RecoilRoot>
-        <AssignPage />
-      </RecoilRoot>
-    );
+    render(<AssignPage />);
 
     expect(screen.queryByTestId('cannot-assign')).toBeInTheDocument();
   });
@@ -91,11 +82,7 @@ describe('Assign', () => {
       },
     });
 
-    render(
-      <RecoilRoot>
-        <AssignPage />
-      </RecoilRoot>
-    );
+    render(<AssignPage />);
 
     const assignScreen = await act(async () => await waitFor(() => screen.getByTestId('assign-assign')));
     expect(assignScreen).toBeInTheDocument();
@@ -122,11 +109,7 @@ describe('Assign', () => {
       },
     });
 
-    render(
-      <RecoilRoot>
-        <AssignPage />
-      </RecoilRoot>
-    );
+    render(<AssignPage />);
 
     const alreadyAssignedScreen = await act(
       async () => await waitFor(() => screen.getByTestId('assign-already-assigned'))
@@ -158,11 +141,7 @@ describe('Assign', () => {
       push: pushMock,
     });
 
-    render(
-      <RecoilRoot>
-        <AssignPage />
-      </RecoilRoot>
-    );
+    render(<AssignPage />);
     expect(pushMock.mock.calls).toHaveLength(1);
   });
 });

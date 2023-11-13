@@ -5,9 +5,9 @@ import { isChatRoomSelectedState } from '@/globalStates/chat';
 import { useDeleteChatRoom } from '@/hooks/api/chat/useDeleteChatRoom';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
+import { useSetAtom } from 'jotai';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { useSetRecoilState } from 'recoil';
 import { KeyedMutator } from 'swr';
 
 type ConsultDeleteModalProps = {
@@ -20,7 +20,7 @@ export const ConsultDeleteModal = (props: ConsultDeleteModalProps) => {
   const { chatRoomData, setIsOpenDeleteModal, mutateChatRoomList } = props;
   const { deleteChatRoom } = useDeleteChatRoom();
   const router = useRouter();
-  const setIsChatRoomSelected = useSetRecoilState(isChatRoomSelectedState);
+  const setIsChatRoomSelected = useSetAtom(isChatRoomSelectedState);
   return (
     <Modal className="w-full lg:w-[644px]" isCenter setShowModal={setIsOpenDeleteModal}>
       <div className="lg:mx-[82px] lg:my-[15px]">

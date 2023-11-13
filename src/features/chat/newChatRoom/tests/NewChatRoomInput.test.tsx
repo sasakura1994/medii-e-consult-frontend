@@ -1,6 +1,5 @@
 import React from 'react';
 import { act, render, screen } from '@testing-library/react';
-import { RecoilRoot } from 'recoil';
 import { NewChatRoomInput } from '../NewChatRoomInput';
 import { UseNewChatRoom } from '../useNewChatRoom';
 import { GroupEntity } from '@/types/entities/GroupEntity';
@@ -20,13 +19,11 @@ describe('NewChatRoomInput', () => {
   describe('再コンサル用の表示', () => {
     test('再コンサルでない場合は表示しない', () => {
       render(
-        <RecoilRoot>
-          <NewChatRoomInput
-            {...{
-              ...baseUseNewChatRoom,
-            }}
-          />
-        </RecoilRoot>
+        <NewChatRoomInput
+          {...{
+            ...baseUseNewChatRoom,
+          }}
+        />
       );
 
       expect(screen.queryByTestId('reconsult-free-note')).not.toBeInTheDocument();
@@ -36,14 +33,12 @@ describe('NewChatRoomInput', () => {
 
     test('再コンサルの場合は表示する', () => {
       render(
-        <RecoilRoot>
-          <NewChatRoomInput
-            {...{
-              ...baseUseNewChatRoom,
-              query: { reconsult: 'chatroomid' },
-            }}
-          />
-        </RecoilRoot>
+        <NewChatRoomInput
+          {...{
+            ...baseUseNewChatRoom,
+            query: { reconsult: 'chatroomid' },
+          }}
+        />
       );
 
       expect(screen.queryByTestId('reconsult-free-note')).toBeInTheDocument();
@@ -58,16 +53,14 @@ describe('NewChatRoomInput', () => {
       useSearchDoctorModuleMock.useSearchDoctor = useSearchDoctorMock;
 
       render(
-        <RecoilRoot>
-          <NewChatRoomInput
-            {...({
-              ...baseUseNewChatRoom,
-              chatRoom: { room_type: 'BY_NAME' },
-              isDoctorSearchModalShown: true,
-              query: { reconsult: 'chatroomid' },
-            } as unknown as UseNewChatRoom)}
-          />
-        </RecoilRoot>
+        <NewChatRoomInput
+          {...({
+            ...baseUseNewChatRoom,
+            chatRoom: { room_type: 'BY_NAME' },
+            isDoctorSearchModalShown: true,
+            query: { reconsult: 'chatroomid' },
+          } as unknown as UseNewChatRoom)}
+        />
       );
 
       act(() => userEvent.click(screen.getByTestId('doctor-search-modal-search-button')));
@@ -82,27 +75,25 @@ describe('NewChatRoomInput', () => {
 
   test('実名グループの場合は補足を表示', () => {
     render(
-      <RecoilRoot>
-        <NewChatRoomInput
-          {...{
-            ...baseUseNewChatRoom,
-            chatRoom: {
-              room_type: 'GROUP',
-            } as NewChatRoomEntity,
-            group: {
-              is_real_name: true,
-              templates: [
-                {
-                  group_id: '',
-                  priority: 0,
-                  text: '',
-                  title: '',
-                },
-              ],
-            } as GroupEntity,
-          }}
-        />
-      </RecoilRoot>
+      <NewChatRoomInput
+        {...{
+          ...baseUseNewChatRoom,
+          chatRoom: {
+            room_type: 'GROUP',
+          } as NewChatRoomEntity,
+          group: {
+            is_real_name: true,
+            templates: [
+              {
+                group_id: '',
+                priority: 0,
+                text: '',
+                title: '',
+              },
+            ],
+          } as GroupEntity,
+        }}
+      />
     );
 
     expect(screen.queryByTestId('real-name-note')).toBeInTheDocument();

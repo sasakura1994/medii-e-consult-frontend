@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { Top } from '../index';
 import { act } from 'react-dom/test-utils';
-import { RecoilRoot } from 'recoil';
+
 import { useFetchFlag } from '@/hooks/api/account/useFetchFlags';
 import { useRouter } from 'next/router';
 import { useNews } from '@/hooks/api/medii/useNews';
@@ -30,11 +30,7 @@ describe('Top', () => {
       });
 
       await act(async () => {
-        await render(
-          <RecoilRoot>
-            <Top />
-          </RecoilRoot>
-        );
+        await render(<Top />);
       });
 
       expect(screen.queryByTestId('onboarding-questionary-banner')).toBeInTheDocument();
@@ -47,11 +43,7 @@ describe('Top', () => {
       });
 
       await act(async () => {
-        await render(
-          <RecoilRoot>
-            <Top />
-          </RecoilRoot>
-        );
+        await render(<Top />);
       });
 
       expect(screen.queryByTestId('onboarding-questionary-banner')).not.toBeInTheDocument();

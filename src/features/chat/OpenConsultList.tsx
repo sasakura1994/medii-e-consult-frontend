@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import { ConsultTitle } from './ConsultTitle';
 import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
 import { useFetchUnreadCounts } from '@/hooks/api/chat/useFetchUnreadCounts';
-import { useSetRecoilState } from 'recoil';
 import { isChatRoomSelectedState } from '@/globalStates/chat';
+import { useSetAtom } from 'jotai';
 
 type OpenConsultListProps = {
   chatRoomList?: ChatRoomEntity[];
@@ -15,7 +15,7 @@ export const OpenConsultList = (props: OpenConsultListProps) => {
   const [isOpenedConultList, setIsOpenedConsultList] = useState(true);
   const [isOpenedGroupList, setIsOpenedGroupList] = useState(true);
   const unreadCountsResponseData = useFetchUnreadCounts();
-  const setIsChatRoomSelected = useSetRecoilState(isChatRoomSelectedState);
+  const setIsChatRoomSelected = useSetAtom(isChatRoomSelectedState);
   return (
     <div className="h-full overflow-auto bg-white pb-36">
       <button

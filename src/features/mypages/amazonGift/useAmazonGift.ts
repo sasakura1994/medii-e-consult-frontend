@@ -1,5 +1,4 @@
 import React from 'react';
-import { useRecoilState } from 'recoil';
 import { amazonGiftPointExchangeState } from './amazonGiftPointExchangeState';
 import { amazonGiftCodeComfirmState } from './amazonGiftCodeComfirmState';
 import { useFetchCurrentPoint } from '@/features/mypages/pointHistory/useFetchCurrentPoint';
@@ -9,6 +8,7 @@ import { usePostAmazonGiftPinCode } from '../../../hooks/api/amazonGift/usePostA
 import type { AmazonGiftPointExchangeType } from './amazonGiftPointExchange';
 import type { AmazonGiftCodeComfirmType } from './amazonGiftCodeComfirm';
 import { useProfile } from '@/hooks/useProfile';
+import { useAtom } from 'jotai';
 
 export type UseAmazonGiftType = {
   priceList: number[];
@@ -30,8 +30,8 @@ export type UseAmazonGiftType = {
 };
 
 export const useAmazonGift = (): UseAmazonGiftType => {
-  const [amazonGiftPointExchange, setAmazonGiftPointExchange] = useRecoilState(amazonGiftPointExchangeState);
-  const [amazonGiftCodeComfirm, setAmazonGiftCodeComfirm] = useRecoilState(amazonGiftCodeComfirmState);
+  const [amazonGiftPointExchange, setAmazonGiftPointExchange] = useAtom(amazonGiftPointExchangeState);
+  const [amazonGiftCodeComfirm, setAmazonGiftCodeComfirm] = useAtom(amazonGiftCodeComfirmState);
 
   const { currentPoint } = useFetchCurrentPoint();
   const { requestExchange } = usePostAmazonGift();

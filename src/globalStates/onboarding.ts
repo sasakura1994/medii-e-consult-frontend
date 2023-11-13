@@ -1,6 +1,3 @@
-import { atom } from 'recoil';
+import { atom } from 'jotai';
 
-export const whatListenState = atom<string>({
-  key: 'whatListen',
-  default: '',
-});
+export const whatListenState = atom('');

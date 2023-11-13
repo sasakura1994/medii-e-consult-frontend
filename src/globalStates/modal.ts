@@ -1,6 +1,3 @@
-import { atom } from 'recoil';
+import { atom } from 'jotai';
 
-export const openModalCountState = atom<number>({
-  key: 'openModalCount',
-  default: 0,
-});
+export const openModalCountState = atom(0);

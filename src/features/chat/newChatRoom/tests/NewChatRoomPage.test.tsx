@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, screen, act } from '@testing-library/react';
-import { RecoilRoot } from 'recoil';
 import NewChatRoomPage from '@/pages/newchatroom';
 import { useRouter } from 'next/router';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
@@ -28,11 +27,7 @@ describe('/newchatroom', () => {
     });
 
     await act(() => {
-      render(
-        <RecoilRoot>
-          <NewChatRoomPage />
-        </RecoilRoot>
-      );
+      render(<NewChatRoomPage />);
     });
 
     expect(await act(() => screen.queryByTestId('need-to-fill-profile-modal'))).toBeInTheDocument();
@@ -53,11 +48,7 @@ describe('/newchatroom', () => {
     });
 
     await act(() => {
-      render(
-        <RecoilRoot>
-          <NewChatRoomPage />
-        </RecoilRoot>
-      );
+      render(<NewChatRoomPage />);
     });
 
     expect(await act(() => screen.queryByTestId('nmo-modal'))).toBeInTheDocument();
@@ -77,11 +68,7 @@ describe('/newchatroom', () => {
     });
 
     await act(async () => {
-      render(
-        <RecoilRoot>
-          <NewChatRoomPage />
-        </RecoilRoot>
-      );
+      render(<NewChatRoomPage />);
     });
 
     expect(await act(() => screen.queryByTestId('for-student'))).toBeInTheDocument();
@@ -100,11 +87,7 @@ describe('/newchatroom', () => {
     });
 
     await act(() => {
-      render(
-        <RecoilRoot>
-          <NewChatRoomPage />
-        </RecoilRoot>
-      );
+      render(<NewChatRoomPage />);
     });
 
     expect(await act(() => screen.queryByTestId('imcomplete-profile-modal'))).toBeInTheDocument();
@@ -123,11 +106,7 @@ describe('/newchatroom', () => {
     });
 
     await act(() => {
-      render(
-        <RecoilRoot>
-          <NewChatRoomPage />
-        </RecoilRoot>
-      );
+      render(<NewChatRoomPage />);
     });
 
     expect(await act(() => screen.queryByTestId('document-confirming-message'))).toBeInTheDocument();

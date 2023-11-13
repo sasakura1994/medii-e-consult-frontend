@@ -6,7 +6,7 @@ import 'react-popper-tooltip/dist/styles.css';
 import { SWRConfig } from 'swr';
 import { useFetcher } from '@/hooks/network/useFetcher';
 import { CookiesProvider } from 'react-cookie';
-import { RecoilRoot, useRecoilValue } from 'recoil';
+import { Provider, useAtomValue } from 'jotai';
 import { CustomHead } from '@/components/Layouts/Header/CustomHead';
 import { Layout } from '@/components/Layouts/Layout';
 import type { NextPage } from 'next';
@@ -30,7 +30,7 @@ type AppPropsWithLayout = AppProps & {
 
 const AppInner = ({ Component, pageProps }: AppPropsWithLayout) => {
   const router = useRouter();
-  const openModalCount = useRecoilValue(openModalCountState);
+  const openModalCount = useAtomValue(openModalCountState);
   const { fetcher } = useFetcher();
   const { accountId, isTokenInitialized } = useToken();
   useAuthenticationOnPage(router.pathname);
@@ -102,9 +102,9 @@ const App = (props: AppPropsWithLayout) => {
   }, [router]);
 
   return (
-    <RecoilRoot>
+    <Provider>
       <AppInner {...props} />
-    </RecoilRoot>
+    </Provider>
   );
 };
 
