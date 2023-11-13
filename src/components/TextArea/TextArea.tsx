@@ -64,6 +64,15 @@ const TextArea = (props: TextAreaProps) => {
          ${className}`}
         value={value}
         onChange={onChange}
+
+
+
+
+
+
+
+
+        
         placeholder={placeholder}
         data-testid={dataTestId}
         required={required}
