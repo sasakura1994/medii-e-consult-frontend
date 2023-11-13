@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 type Args = {
   name: string;
+  accountID: string;
 };
 
 type UseEventLog = {

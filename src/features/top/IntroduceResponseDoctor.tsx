@@ -8,15 +8,14 @@ export const IntroduceResponseDoctor = () => {
   const { postEventLog } = useEventLog();
 
   return (
-    <>
-      <div 
-        className="flex" 
-        onClick={() => {
-          postEventLog({ name: 'click-doctor' })
-        }}
-      >
-        {introduceDoctorMock.map((introduceDoctor, index) => {
-          return (
+    <div className='flex'>
+      {introduceDoctorMock.map((introduceDoctor, index) => {
+        return (
+          <div 
+            onClick={() => {
+              postEventLog({ name: 'click-doctor', accountID: introduceDoctor.account_id })
+            }}
+          >
             <Link
               href={`${introduceDoctor.consultUrl}`}
               target="_blank"
@@ -129,9 +128,9 @@ export const IntroduceResponseDoctor = () => {
                 }
               </div>
             </Link>
-          )
-        })}
-      </div>
-    </>
+          </div>
+        )
+      })}
+    </div>
   )
 }
