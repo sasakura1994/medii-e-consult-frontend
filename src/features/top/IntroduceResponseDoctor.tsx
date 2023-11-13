@@ -8,7 +8,7 @@ export const IntroduceResponseDoctor = () => {
   const { postEventLog } = useEventLog();
 
   return (
-    <div className='flex'>
+    <div className='flex gap-2'>
       {introduceDoctorMock.map((introduceDoctor, index) => {
         return (
           <div 
@@ -22,8 +22,8 @@ export const IntroduceResponseDoctor = () => {
               target="_blank"
             >
               <div 
-                className="mr-2 w-[327px] rounded-lg border border-[#EDEDED] bg-white
-                px-4 pt-4 pb-3 shadow-low lg:w-[492px]">
+                className="w-[327px] rounded-lg border border-[#EDEDED] bg-white
+                px-4 pt-4 pb-3 shadow-low lg:w-[508px]">
                 <div className="flex">
                   <div className="flex lg:block mr-4 w-[70px]">
                     <img src={introduceDoctor.image} alt="introduceDoctorImage" />
