@@ -15,11 +15,11 @@ export const IntroduceResponseDoctor = () => {
             onClick={() => {
               postEventLog({ name: 'click-doctor', accountID: introduceDoctor.account_id })
             }}
+            key={index}
           >
             <Link
               href={`${introduceDoctor.consultUrl}`}
               target="_blank"
-              key={index}
             >
               <div 
                 className="mr-2 w-[327px] rounded-lg border border-[#EDEDED] bg-white
