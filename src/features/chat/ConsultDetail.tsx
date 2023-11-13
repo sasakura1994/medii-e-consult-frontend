@@ -285,7 +285,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
 
           <div
             className="flex h-full flex-grow flex-col overflow-hidden border border-[#d5d5d5]
-          lg:h-[calc(100vh-62px)]"
+          lg:h-[calc(100dvh-62px)]"
           >
             <div className="flex-shrink-0 flex-grow-0">
               <div className="mb-2 mr-2 items-center space-x-1 lg:flex lg:h-14">

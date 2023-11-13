@@ -144,7 +144,10 @@ export const Chat = () => {
       ) : (
         <div className="hidden h-screen flex-grow flex-col border border-[#d5d5d5] bg-bg lg:flex" />
       )}
-      <div className="hidden h-[calc(100vh-62px)] w-[316px] flex-shrink-0 flex-grow-0 flex-col justify-between lg:flex">
+      <div
+        className="hidden h-[calc(100dvh-62px)] w-[316px] flex-shrink-0 flex-grow-0 flex-col justify-between
+      lg:flex"
+      >
         <div className="block" />
         <div className="mb-2 ml-2 flex flex-col">
           <Link href="privacyPolicy" className="text-sm text-[#999999] underline">
