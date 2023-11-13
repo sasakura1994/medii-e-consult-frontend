@@ -23,7 +23,7 @@ export const IntroduceResponseDoctor = () => {
             >
               <div 
                 className="w-[327px] rounded-lg border border-[#EDEDED] bg-white
-                px-4 pt-4 pb-3 shadow-low lg:w-[508px]">
+                px-4 pt-4 shadow-low lg:w-[508px]">
                 <div className="flex">
                   <div className="flex lg:block mr-4 w-[70px]">
                     <img src={introduceDoctor.image} alt="introduceDoctorImage" />
@@ -59,7 +59,7 @@ export const IntroduceResponseDoctor = () => {
                   </div>
                 </div>
                 <div 
-                  className="flex text-medii-blue-700 cursor-pointer text-xs" 
+                  className="flex mb-3 text-medii-blue-700 cursor-pointer text-xs" 
                   onClick={
                     (e) => { 
                       e.preventDefault();
