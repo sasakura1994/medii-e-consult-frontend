@@ -31,7 +31,7 @@ export const EditGroupDetail = () => {
   const router = useRouter();
   const [isOpenInviteMemberModal, setIsOpenInviteMemberModal] = useState(false);
   const [isDraftConfirming, setIsDraftConfirming] = useState(false);
-  const [confirmingDraft, setConfirmingDraft] = useState<EditGroupState>();
+  const [draft, setDraft] = useState<EditGroupState>();
   // const { medicalSpecialities } = useFetchMedicalSpecialitiesWithContract();
   const { accountId } = useToken();
   const { fetchGroupMemberData } = useFetchGroupMemberData();
@@ -54,11 +54,26 @@ export const EditGroupDetail = () => {
   const { postCreateGroup } = usePostCreateGroup();
 
   const applyDraft = useCallback(() => {
-    if (confirmingDraft) {
-      setEditState(confirmingDraft);
+    if (draft) {
+      draft.member_ids.forEach(async (memberId) => {
+        await fetchGroupMemberData({ account_id: memberId }).then((res) => {
+          setSelectedMembers((prev) => {
+            if (
+              ![...prev].some((member) => {
+                return member.account_id === res.data.account_id;
+              })
+            ) {
+              return [...prev, res.data];
+            }
+            return prev;
+          });
+        });
+      });
+
+      setEditState(draft);
     }
     setIsDraftConfirming(false);
-  }, [confirmingDraft]);
+  }, [draft, fetchGroupMemberData]);
 
   const dontUseDraft = () => {
     setIsDraftConfirming(false);
@@ -96,7 +111,7 @@ export const EditGroupDetail = () => {
 
   useEffect(() => {
     if (loadLocalStorage('EditGroupDetail::groupData')) {
-      setConfirmingDraft(JSON.parse(loadLocalStorage('EditGroupDetail::groupData') || '{}'));
+      setDraft(JSON.parse(loadLocalStorage('EditGroupDetail::groupData') || '{}'));
       setIsDraftConfirming(true);
     }
   }, []);
