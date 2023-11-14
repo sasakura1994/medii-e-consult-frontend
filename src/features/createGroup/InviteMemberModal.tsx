@@ -160,17 +160,21 @@ export const InviteMemberModal = (props: Props) => {
                                         <td className="table-cell py-3">{member.full_name}</td>
                                         <td className="table-cell py-3">{member.hospital_name}</td>
                                         <td className="sticky right-0 table-cell cursor-pointer bg-white px-2 py-3">
-                                          <input
-                                            type="checkbox"
-                                            className="bg-medii-blue-base"
-                                            name={'invite' + member.account_id}
-                                            id={'invite' + member.account_id}
-                                            onChange={(e) => {
-                                              if (e.target.checked) {
-                                                checkedMemberRef.current.push(member);
-                                              }
-                                            }}
-                                          />
+                                          {selectedMembers.some((m) => m.account_id === member.account_id) ? (
+                                            <p className="text-sm text-[#808080]">招待済み</p>
+                                          ) : (
+                                            <input
+                                              type="checkbox"
+                                              className="bg-medii-blue-base"
+                                              name={'invite' + member.account_id}
+                                              id={'invite' + member.account_id}
+                                              onChange={(e) => {
+                                                if (e.target.checked) {
+                                                  checkedMemberRef.current.push(member);
+                                                }
+                                              }}
+                                            />
+                                          )}
                                         </td>
                                       </label>
                                     );
