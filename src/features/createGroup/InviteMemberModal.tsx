@@ -38,6 +38,7 @@ export const InviteMemberModal = (props: Props) => {
         <>
           {searchedMember && (
             <TertiaryButton
+              type="button"
               onClick={() => {
                 setIsOpenModal(false);
               }}
@@ -51,6 +52,7 @@ export const InviteMemberModal = (props: Props) => {
         <>
           {searchedMember && (
             <PrimaryButton
+              type="button"
               onClick={() => {
                 setSelectedMembers([...selectedMembers, ...checkedMemberRef.current]);
                 setIsOpenModal(false);
@@ -62,8 +64,8 @@ export const InviteMemberModal = (props: Props) => {
         </>
       }
     >
-      <div className="mx-6 my-10 lg:mx-20">
-        <ModalTitleWithCloseButton title="E-コンサルするグループを選択" onClose={() => setIsOpenModal(false)} />
+      <div className="mx-4 my-10 lg:mx-20">
+        <ModalTitleWithCloseButton title="グループメンバー招待" onClose={() => setIsOpenModal(false)} />
         <div className="mt-3 flex items-center gap-2">
           <div className="w-full">
             <p className="mb-1 font-bold">都道府県</p>
@@ -104,6 +106,7 @@ export const InviteMemberModal = (props: Props) => {
           />
         </div>
         <PrimaryButton
+          type="button"
           className="mx-auto mt-6 h-12 px-12"
           onClick={() =>
             setSearchedMemberState({

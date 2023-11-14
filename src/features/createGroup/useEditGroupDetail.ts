@@ -136,9 +136,10 @@ export const useEditGroupDetail = () => {
   }, []);
 
   const submit = useCallback(
-    async (e: FormEvent<HTMLFormElement>) => {
+    (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      await postCreateGroup({
+
+      postCreateGroup({
         group_name: editState.group_name,
         area: editState.area,
         speciality: editState.speciality,
