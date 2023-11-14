@@ -7,25 +7,52 @@ import { SelectBox } from '@/components/Parts/Form/SelectBox';
 import { MedicalSpecialitySelectButton } from '@/components/MedicalSpeciality/MedicalSpecialitySelectButton';
 import TextField from '@/components/TextField/TextField';
 import PrimaryButton from '@/components/Button/PrimaryButton';
-import { SearchQuery, useFetchSearchMember } from '@/hooks/api/group/useFetchSearchMember';
+import { SearchGroupMember, SearchQuery, useFetchSearchMember } from '@/hooks/api/group/useFetchSearchMember';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
+import TertiaryButton from '@/components/Button/TertiaryButton';
 
 type Props = {
   setIsOpenModal: (isOpenModal: boolean) => void;
+  selectedMembers: SearchGroupMember[];
+  setSelectedMembers: React.Dispatch<React.SetStateAction<SearchGroupMember[]>>;
 };
 
 export const InviteMemberModal = (props: Props) => {
-  const { setIsOpenModal } = props;
+  const { setIsOpenModal, selectedMembers, setSelectedMembers } = props;
   const { prefectures } = usePrefecture();
   const selectedPrefectureRef = useRef('');
   const specialityCodeRef = useRef('');
   const nameRef = useRef('');
+  const checkedMemberRef = useRef<SearchGroupMember[]>([]);
   const [searchedMemberState, setSearchedMemberState] = useState<SearchQuery | undefined>(undefined);
   const { members: searchedMember } = useFetchSearchMember(searchedMemberState);
   const { medicalSpecialities } = useFetchMedicalSpecialities();
 
   return (
-    <Modal setShowModal={setIsOpenModal} pcWidth="600">
+    <Modal
+      setShowModal={setIsOpenModal}
+      pcWidth="600"
+      isUseFooter
+      closeButton={
+        <TertiaryButton
+          onClick={() => {
+            setIsOpenModal(false);
+          }}
+        >
+          キャンセル
+        </TertiaryButton>
+      }
+      submitButton={
+        <PrimaryButton
+          onClick={() => {
+            setSelectedMembers([...selectedMembers, ...checkedMemberRef.current]);
+            setIsOpenModal(false);
+          }}
+        >
+          選択メンバーを招待
+        </PrimaryButton>
+      }
+    >
       <div className="mx-6 my-10 lg:mx-20">
         <ModalTitleWithCloseButton title="E-コンサルするグループを選択" onClose={() => setIsOpenModal(false)} />
         <div className="mt-3 flex items-center gap-2">
@@ -115,7 +142,8 @@ export const InviteMemberModal = (props: Props) => {
                                   })
                                   .map((member) => {
                                     return (
-                                      <tr
+                                      <label
+                                        htmlFor={'invite' + member.account_id}
                                         key={member.account_id}
                                         className="table-row cursor-pointer overflow-scroll hover:bg-primary-light"
                                         onClick={() => {}}
@@ -123,13 +151,20 @@ export const InviteMemberModal = (props: Props) => {
                                         <td className="table-cell py-3">{member.area_txt}</td>
                                         <td className="table-cell py-3">{member.full_name}</td>
                                         <td className="table-cell py-3">{member.hospital_name}</td>
-                                        <td
-                                          className="sticky right-0 table-cell break-words
-                                  bg-white py-3 text-center text-[15px]"
-                                        >
-                                          ―
+                                        <td className="sticky right-0 table-cell cursor-pointer bg-white px-2 py-3">
+                                          <input
+                                            type="checkbox"
+                                            className="bg-medii-blue-base"
+                                            name={'invite' + member.account_id}
+                                            id={'invite' + member.account_id}
+                                            onChange={(e) => {
+                                              if (e.target.checked) {
+                                                checkedMemberRef.current.push(member);
+                                              }
+                                            }}
+                                          />
                                         </td>
-                                      </tr>
+                                      </label>
                                     );
                                   })}
                               </tbody>

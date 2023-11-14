@@ -4,6 +4,8 @@ import TextArea from '@/components/TextArea/TextArea';
 import TextField from '@/components/TextField/TextField';
 import React, { useState } from 'react';
 import { InviteMemberModal } from './InviteMemberModal';
+import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
+import { SearchGroupMember } from '@/hooks/api/group/useFetchSearchMember';
 export const EditGroupDetail = () => {
   const [groupDescription, setGroupDescription] = useState('');
   const [assignable, setAssignable] = useState<boolean>(true);
@@ -13,30 +15,18 @@ export const EditGroupDetail = () => {
   >('notification-frequency-all');
   const [isOpenInviteMemberModal, setIsOpenInviteMemberModal] = useState(false);
   // const { medicalSpecialities } = useFetchMedicalSpecialitiesWithContract();
-  const groups = [
-    {
-      group_id: '1',
-      area: '東京都',
-      name: '医療法人社団　翔央会　川越内科クリニック',
-      hospital_name: '医療法人社団　翔央会　川越内科クリニック',
-    },
-    {
-      group_id: '2',
-      area: '東京都',
-      name: '医療法人社団○○会',
-      hospital_name: '○○病院',
-    },
-    {
-      group_id: '3',
-      area: '東京都',
-      name: '医療法人社団○○会',
-      hospital_name: '○○病院',
-    },
-  ];
+  const { medicalSpecialities } = useFetchMedicalSpecialities();
+  const [selectedMembers, setSelectedMembers] = useState<SearchGroupMember[]>([]);
 
   return (
     <div>
-      {isOpenInviteMemberModal && <InviteMemberModal setIsOpenModal={setIsOpenInviteMemberModal} />}
+      {isOpenInviteMemberModal && (
+        <InviteMemberModal
+          setIsOpenModal={setIsOpenInviteMemberModal}
+          selectedMembers={selectedMembers}
+          setSelectedMembers={setSelectedMembers}
+        />
+      )}
       <div className="mb-2 mt-6 flex text-left">
         <div className="mr-1 rounded-md border border-red-500 px-1 py-0.5 text-xs font-bold text-red-500">必須</div>
         <label htmlFor="specialty" className="text-left font-bold">
@@ -180,30 +170,60 @@ export const EditGroupDetail = () => {
         </PrimaryButton>
         <label className="text-left font-bold">メンバー数:1名</label>
       </div>
-      <div className=" h-full w-full overflow-auto">
-        <table className="box-border table w-auto min-w-full table-fixed overflow-visible whitespace-nowrap text-sm">
-          <thead className="table-header-group border-y border-y-heading-line text-left text-block-gray">
-            <tr className="table-row">
-              <th className="table-cell whitespace-nowrap py-3 font-normal">エリア・施設名</th>
-              <th className="table-cell whitespace-nowrap py-3 font-normal">氏名</th>
-              <th className="table-cell whitespace-nowrap py-3 font-normal">勤務先病院</th>
-              <th className="sticky right-0 table-cell whitespace-nowrap bg-white py-3 font-normal">編集</th>
-            </tr>
-          </thead>
-          <tbody className="table-row-group">
-            {groups.map((group) => (
-              <tr
-                key={group.group_id}
-                className="table-row cursor-pointer overflow-scroll hover:bg-primary-light"
-                onClick={() => {}}
-              >
-                <td className="table-cell py-3">{group.area}</td>
-                <td className="table-cell py-3">{group.name}</td>
-                <td className="table-cell py-3">{group.hospital_name}</td>
-                <td className="sticky right-0 table-cell break-words bg-white py-3 text-center text-[15px]">―</td>
-              </tr>
-            ))}
-          </tbody>
+      <div className="h-full w-full overflow-auto">
+        <table
+          className="box-border table w-auto min-w-full table-fixed overflow-visible
+                        whitespace-nowrap text-sm"
+        >
+          {medicalSpecialities &&
+            medicalSpecialities.map((medicalSpeciality) => {
+              return (
+                <>
+                  {selectedMembers.some((member) => {
+                    return member.speciality_code === medicalSpeciality.speciality_code;
+                  }) && (
+                    <>
+                      <thead className="table-header-group text-left">
+                        <tr className="my-2 text-lg font-bold">{medicalSpeciality.name}</tr>
+                        <tr className="table-row border-y border-y-heading-line text-block-gray">
+                          <th className="table-cell whitespace-nowrap py-3 font-normal">エリア・施設名</th>
+                          <th className="table-cell whitespace-nowrap py-3 font-normal">氏名</th>
+                          <th className="table-cell whitespace-nowrap py-3 font-normal">勤務先病院</th>
+                          <th className="sticky right-0 table-cell whitespace-nowrap bg-white py-3 font-normal">
+                            招待
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody className="table-row-group">
+                        {selectedMembers
+                          .filter((member) => {
+                            return member.speciality_code === medicalSpeciality.speciality_code;
+                          })
+                          .map((member) => {
+                            return (
+                              <tr
+                                key={member.account_id}
+                                className="table-row cursor-pointer overflow-scroll hover:bg-primary-light"
+                                onClick={() => {}}
+                              >
+                                <td className="table-cell py-3">{member.area_txt}</td>
+                                <td className="table-cell py-3">{member.full_name}</td>
+                                <td className="table-cell py-3">{member.hospital_name}</td>
+                                <td
+                                  className="sticky right-0 table-cell break-words bg-white py-3
+                                        text-center text-[15px]"
+                                >
+                                  ―
+                                </td>
+                              </tr>
+                            );
+                          })}
+                      </tbody>
+                    </>
+                  )}
+                </>
+              );
+            })}
         </table>
       </div>
 
