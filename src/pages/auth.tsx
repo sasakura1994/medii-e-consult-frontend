@@ -18,7 +18,7 @@ const Auth = () => {
   const { redirectUrl } = useLogin();
   const { axios } = useAxios();
   const { token } = router.query as Query;
-  console.log("router", router);
+  console.log(token, router, router.query, 'test token');
   const { setTokenAndMarkInitialized } = useToken();
 
   const Login = async () => {
