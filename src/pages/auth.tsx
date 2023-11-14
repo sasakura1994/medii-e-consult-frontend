@@ -12,11 +12,11 @@ const Auth = () => {
   }, []);
 
   const router = useRouter();
-  const searchParams = useSearchParams();
   const { redirectUrl } = useLogin();
   const { axios } = useAxios();
-  const token = searchParams.get('token')
   const { setTokenAndMarkInitialized } = useToken();
+  const searchParams = useSearchParams();
+  const token = searchParams.get('token')
 
   const Login = async () => {
     const response = await axios
@@ -29,11 +29,7 @@ const Auth = () => {
       setTokenAndMarkInitialized(response.data.jwt_token);
 
       const profileResponse = await axios
-        .get('/doctor/profile', {
-          headers: {
-            Authorization: 'Bearer ' + response.data.jwt_token,
-          }
-        })
+        .get('/doctor/profile')
         .catch((error) => {
           console.error(error);
         });
