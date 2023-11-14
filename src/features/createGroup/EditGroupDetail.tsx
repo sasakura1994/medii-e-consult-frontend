@@ -1,7 +1,9 @@
+import PrimaryButton from '@/components/Button/PrimaryButton';
 import { Radio } from '@/components/Parts/Form/Radio';
 import TextArea from '@/components/TextArea/TextArea';
 import TextField from '@/components/TextField/TextField';
 import React, { useState } from 'react';
+import { InviteMemberModal } from './InviteMemberModal';
 export const EditGroupDetail = () => {
   const [groupDescription, setGroupDescription] = useState('');
   const [assignable, setAssignable] = useState<boolean>(true);
@@ -9,6 +11,7 @@ export const EditGroupDetail = () => {
   const [notificationFrequency, setNotificationFrequency] = useState<
     'notification-frequency-all' | 'notification-frequency-hourly' | 'notification-frequency-daily'
   >('notification-frequency-all');
+  const [isOpenInviteMemberModal, setIsOpenInviteMemberModal] = useState(false);
   // const { medicalSpecialities } = useFetchMedicalSpecialitiesWithContract();
   const groups = [
     {
@@ -33,6 +36,7 @@ export const EditGroupDetail = () => {
 
   return (
     <div>
+      {isOpenInviteMemberModal && <InviteMemberModal setIsOpenModal={setIsOpenInviteMemberModal} />}
       <div className="mb-2 mt-6 flex text-left">
         <div className="mr-1 rounded-md border border-red-500 px-1 py-0.5 text-xs font-bold text-red-500">必須</div>
         <label htmlFor="specialty" className="text-left font-bold">
@@ -166,7 +170,16 @@ export const EditGroupDetail = () => {
           までお問い合わせください
         </div>
       </div>
-
+      <div className="mb-2 mt-4 flex items-center gap-4">
+        <PrimaryButton
+          onClick={() => {
+            setIsOpenInviteMemberModal(true);
+          }}
+        >
+          +メンバー招待
+        </PrimaryButton>
+        <label className="text-left font-bold">メンバー数:1名</label>
+      </div>
       <div>
         <table className="w-full overflow-auto text-sm">
           <thead className="border-y border-y-heading-line text-left text-block-gray">
