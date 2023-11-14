@@ -2,10 +2,12 @@ import PrimaryButton from '@/components/Button/PrimaryButton';
 import { Radio } from '@/components/Parts/Form/Radio';
 import TextArea from '@/components/TextArea/TextArea';
 import TextField from '@/components/TextField/TextField';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { InviteMemberModal } from './InviteMemberModal';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { SearchGroupMember } from '@/hooks/api/group/useFetchSearchMember';
+import { useFetchGroupMemberData } from '@/hooks/api/group/useFetchGroupMemberData';
+import { useToken } from '@/hooks/authentication/useToken';
 export const EditGroupDetail = () => {
   const [groupDescription, setGroupDescription] = useState('');
   const [assignable, setAssignable] = useState<boolean>(true);
@@ -15,8 +17,28 @@ export const EditGroupDetail = () => {
   >('notification-frequency-all');
   const [isOpenInviteMemberModal, setIsOpenInviteMemberModal] = useState(false);
   // const { medicalSpecialities } = useFetchMedicalSpecialitiesWithContract();
+  const { accountId } = useToken();
+  const { fetchGroupMemberData } = useFetchGroupMemberData();
   const { medicalSpecialities } = useFetchMedicalSpecialities();
+
   const [selectedMembers, setSelectedMembers] = useState<SearchGroupMember[]>([]);
+
+  useEffect(() => {
+    if (accountId) {
+      fetchGroupMemberData({ account_id: accountId }).then((res) => {
+        setSelectedMembers((prev) => {
+          if (
+            ![...prev].some((member) => {
+              return member.account_id === res.data.account_id;
+            })
+          ) {
+            return [...prev, res.data];
+          }
+          return prev;
+        });
+      });
+    }
+  }, [accountId, fetchGroupMemberData]);
 
   return (
     <div>
@@ -168,7 +190,7 @@ export const EditGroupDetail = () => {
         >
           +メンバー招待
         </PrimaryButton>
-        <label className="text-left font-bold">メンバー数:1名</label>
+        <label className="text-left font-bold">メンバー数:{selectedMembers.length}名</label>
       </div>
       <div className="h-full w-full overflow-auto">
         <table
@@ -190,7 +212,7 @@ export const EditGroupDetail = () => {
                           <th className="table-cell whitespace-nowrap py-3 font-normal">氏名</th>
                           <th className="table-cell whitespace-nowrap py-3 font-normal">勤務先病院</th>
                           <th className="sticky right-0 table-cell whitespace-nowrap bg-white py-3 font-normal">
-                            招待
+                            編集
                           </th>
                         </tr>
                       </thead>

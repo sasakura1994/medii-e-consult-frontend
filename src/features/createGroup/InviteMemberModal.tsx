@@ -34,23 +34,31 @@ export const InviteMemberModal = (props: Props) => {
       pcWidth="600"
       isUseFooter
       closeButton={
-        <TertiaryButton
-          onClick={() => {
-            setIsOpenModal(false);
-          }}
-        >
-          キャンセル
-        </TertiaryButton>
+        <>
+          {searchedMember && (
+            <TertiaryButton
+              onClick={() => {
+                setIsOpenModal(false);
+              }}
+            >
+              キャンセル
+            </TertiaryButton>
+          )}
+        </>
       }
       submitButton={
-        <PrimaryButton
-          onClick={() => {
-            setSelectedMembers([...selectedMembers, ...checkedMemberRef.current]);
-            setIsOpenModal(false);
-          }}
-        >
-          選択メンバーを招待
-        </PrimaryButton>
+        <>
+          {searchedMember && (
+            <PrimaryButton
+              onClick={() => {
+                setSelectedMembers([...selectedMembers, ...checkedMemberRef.current]);
+                setIsOpenModal(false);
+              }}
+            >
+              選択メンバーを招待
+            </PrimaryButton>
+          )}
+        </>
       }
     >
       <div className="mx-6 my-10 lg:mx-20">
