@@ -2,7 +2,7 @@ import PrimaryButton from '@/components/Button/PrimaryButton';
 import { Radio } from '@/components/Parts/Form/Radio';
 import TextArea from '@/components/TextArea/TextArea';
 import TextField from '@/components/TextField/TextField';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { InviteMemberModal } from './InviteMemberModal';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { SearchGroupMember } from '@/hooks/api/group/useFetchSearchMember';
@@ -11,6 +11,8 @@ import { useToken } from '@/hooks/authentication/useToken';
 import { MedicalSpecialitySelectButton } from '@/components/MedicalSpeciality/MedicalSpecialitySelectButton';
 import { usePostCreateGroup } from '@/hooks/api/group/usePostCreateGroup';
 import { useRouter } from 'next/router';
+import { loadLocalStorage, saveLocalStorage } from '@/libs/LocalStorageManager';
+import { ConfirmModal } from '@/components/Parts/Modal/ConfirmModal';
 
 type EditGroupState = {
   group_id?: string;
@@ -28,6 +30,8 @@ type EditGroupState = {
 export const EditGroupDetail = () => {
   const router = useRouter();
   const [isOpenInviteMemberModal, setIsOpenInviteMemberModal] = useState(false);
+  const [isDraftConfirming, setIsDraftConfirming] = useState(false);
+  const [confirmingDraft, setConfirmingDraft] = useState<EditGroupState>();
   // const { medicalSpecialities } = useFetchMedicalSpecialitiesWithContract();
   const { accountId } = useToken();
   const { fetchGroupMemberData } = useFetchGroupMemberData();
@@ -44,10 +48,21 @@ export const EditGroupDetail = () => {
     disease: '',
     explanation: '',
     member_ids: [],
-    notification_frequency: 'ALL',
+    notification_frequency: 'ALL' as 'ALL' | 'HOURLY' | 'DAILY',
     assignable: true,
   });
   const { postCreateGroup } = usePostCreateGroup();
+
+  const applyDraft = useCallback(() => {
+    if (confirmingDraft) {
+      setEditState(confirmingDraft);
+    }
+    setIsDraftConfirming(false);
+  }, [confirmingDraft]);
+
+  const dontUseDraft = () => {
+    setIsDraftConfirming(false);
+  };
 
   useEffect(() => {
     if (accountId) {
@@ -68,15 +83,31 @@ export const EditGroupDetail = () => {
 
   useEffect(() => {
     if (selectedMembers.length > 0) {
-      setEditState((prevState) => ({
-        ...prevState,
-        member_ids: selectedMembers.map((member) => member.account_id),
-      }));
+      setEditState((prevState) => {
+        const newState = {
+          ...prevState,
+          member_ids: selectedMembers.map((member) => member.account_id),
+        };
+        saveLocalStorage('EditGroupDetail::groupData', JSON.stringify(newState));
+        return newState;
+      });
     }
   }, [selectedMembers]);
 
+  useEffect(() => {
+    if (loadLocalStorage('EditGroupDetail::groupData')) {
+      setConfirmingDraft(JSON.parse(loadLocalStorage('EditGroupDetail::groupData') || '{}'));
+      setIsDraftConfirming(true);
+    }
+  }, []);
+
   return (
     <div>
+      {isDraftConfirming && (
+        <ConfirmModal onOk={applyDraft} onCancel={dontUseDraft}>
+          下書きに作成途中のグループがあります。作成途中のグループを続けて編集しますか？
+        </ConfirmModal>
+      )}
       {isOpenInviteMemberModal && (
         <InviteMemberModal
           setIsOpenModal={setIsOpenInviteMemberModal}
@@ -96,8 +127,16 @@ export const EditGroupDetail = () => {
         className="h-12 w-full"
         id="specialty"
         placeholder="例) 〇〇県、△△大学 などを入力"
+        value={editState.area}
         onChange={(e) => {
-          setEditState({ ...editState, area: e.target.value });
+          setEditState((prevState) => {
+            const newState = {
+              ...prevState,
+              area: e.target.value,
+            };
+            saveLocalStorage('EditGroupDetail::groupData', JSON.stringify(newState));
+            return newState;
+          });
         }}
       />
       <div className="mb-2 mt-4 flex text-left">
@@ -109,7 +148,16 @@ export const EditGroupDetail = () => {
       <MedicalSpecialitySelectButton
         isGroup
         specialityCode={editState.speciality}
-        onChange={(specialityCode) => setEditState({ ...editState, speciality: specialityCode })}
+        onChange={(speciality) => {
+          setEditState((prevState) => {
+            const newState = {
+              ...prevState,
+              speciality: speciality,
+            };
+            saveLocalStorage('EditGroupDetail::groupData', JSON.stringify(newState));
+            return newState;
+          });
+        }}
       />
       <label htmlFor="targetDisease" className="text-left font-bold">
         対象疾患
@@ -120,8 +168,16 @@ export const EditGroupDetail = () => {
         className="h-12 w-full"
         id="targetDisease"
         placeholder="例) 間質性肺炎"
+        value={editState.disease}
         onChange={(e) => {
-          setEditState({ ...editState, disease: e.target.value });
+          setEditState((prevState) => {
+            const newState = {
+              ...prevState,
+              disease: e.target.value,
+            };
+            saveLocalStorage('EditGroupDetail::groupData', JSON.stringify(newState));
+            return newState;
+          });
         }}
       />
       <div className="mb-2 mt-4 flex text-left">
@@ -136,8 +192,16 @@ export const EditGroupDetail = () => {
         className="h-12 w-full"
         id="groupName"
         placeholder="グループ名を入力"
+        value={editState.group_name}
         onChange={(e) => {
-          setEditState({ ...editState, group_name: e.target.value });
+          setEditState((prevState) => {
+            const newState = {
+              ...prevState,
+              group_name: e.target.value,
+            };
+            saveLocalStorage('EditGroupDetail::groupData', JSON.stringify(newState));
+            return newState;
+          });
         }}
       />
       <div className="mt-4 flex text-left">
@@ -151,8 +215,16 @@ export const EditGroupDetail = () => {
         className="min-h-[100px] w-full resize-none"
         id="groupDescription"
         placeholder="グループの説明や特料などを入力"
+        value={editState.explanation}
         onChange={(e) => {
-          setEditState({ ...editState, explanation: e.target.value });
+          setEditState((prevState) => {
+            const newState = {
+              ...prevState,
+              explanation: e.target.value,
+            };
+            saveLocalStorage('EditGroupDetail::groupData', JSON.stringify(newState));
+            return newState;
+          });
         }}
       />
       <div className="mt-2">
@@ -164,7 +236,14 @@ export const EditGroupDetail = () => {
             label="あり"
             checked={editState.assignable}
             onChange={() => {
-              setEditState({ ...editState, assignable: true });
+              setEditState((prevState) => {
+                const newState = {
+                  ...prevState,
+                  assignable: true,
+                };
+                saveLocalStorage('EditGroupDetail::groupData', JSON.stringify(newState));
+                return newState;
+              });
             }}
           />
           <div className="text-[13px]">※ 他の医師からコンサルが来る場合があります。</div>
@@ -176,7 +255,14 @@ export const EditGroupDetail = () => {
             label="なし"
             checked={!editState.assignable}
             onChange={() => {
-              setEditState({ ...editState, assignable: false });
+              setEditState((prevState) => {
+                const newState = {
+                  ...prevState,
+                  assignable: false,
+                };
+                saveLocalStorage('EditGroupDetail::groupData', JSON.stringify(newState));
+                return newState;
+              });
             }}
           />
           <div className="text-[13px]">※ グループチャットのみ利用できます。検索結果にも表示されません。</div>
@@ -192,7 +278,14 @@ export const EditGroupDetail = () => {
               label="公開"
               checked={editState.is_public}
               onChange={() => {
-                setEditState({ ...editState, is_public: true });
+                setEditState((prevState) => {
+                  const newState = {
+                    ...prevState,
+                    is_public: true,
+                  };
+                  saveLocalStorage('EditGroupDetail::groupData', JSON.stringify(newState));
+                  return newState;
+                });
               }}
             />
             <div className="text-[13px]">※ 検索結果に表示されます。</div>
@@ -204,7 +297,14 @@ export const EditGroupDetail = () => {
               label="非公開"
               checked={!editState.is_public}
               onChange={() => {
-                setEditState({ ...editState, is_public: false });
+                setEditState((prevState) => {
+                  const newState = {
+                    ...prevState,
+                    is_public: false,
+                  };
+                  saveLocalStorage('EditGroupDetail::groupData', JSON.stringify(newState));
+                  return newState;
+                });
               }}
             />
             <div className="text-[13px]">
@@ -324,7 +424,14 @@ export const EditGroupDetail = () => {
           label="毎回通知"
           checked={editState.notification_frequency === 'ALL'}
           onChange={() => {
-            setEditState({ ...editState, notification_frequency: 'ALL' });
+            setEditState((prevState) => {
+              const newState = {
+                ...prevState,
+                notification_frequency: 'ALL' as 'ALL' | 'HOURLY' | 'DAILY',
+              };
+              saveLocalStorage('EditGroupDetail::groupData', JSON.stringify(newState));
+              return newState;
+            });
           }}
         />
         <Radio
@@ -334,7 +441,14 @@ export const EditGroupDetail = () => {
           label="1時間に1回通知"
           checked={editState.notification_frequency === 'HOURLY'}
           onChange={() => {
-            setEditState({ ...editState, notification_frequency: 'HOURLY' });
+            setEditState((prevState) => {
+              const newState = {
+                ...prevState,
+                notification_frequency: 'HOURLY' as 'ALL' | 'HOURLY' | 'DAILY',
+              };
+              saveLocalStorage('EditGroupDetail::groupData', JSON.stringify(newState));
+              return newState;
+            });
           }}
         />
         <Radio
@@ -344,7 +458,14 @@ export const EditGroupDetail = () => {
           label="24時間に1回通知"
           checked={editState.notification_frequency === 'DAILY'}
           onChange={() => {
-            setEditState({ ...editState, notification_frequency: 'DAILY' });
+            setEditState((prevState) => {
+              const newState = {
+                ...prevState,
+                notification_frequency: 'DAILY' as 'ALL' | 'HOURLY' | 'DAILY',
+              };
+              saveLocalStorage('EditGroupDetail::groupData', JSON.stringify(newState));
+              return newState;
+            });
           }}
         />
       </div>
