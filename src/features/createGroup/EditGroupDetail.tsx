@@ -8,13 +8,25 @@ import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetc
 import { SearchGroupMember } from '@/hooks/api/group/useFetchSearchMember';
 import { useFetchGroupMemberData } from '@/hooks/api/group/useFetchGroupMemberData';
 import { useToken } from '@/hooks/authentication/useToken';
+import { MedicalSpecialitySelectButton } from '@/components/MedicalSpeciality/MedicalSpecialitySelectButton';
+import { usePostCreateGroup } from '@/hooks/api/group/usePostCreateGroup';
+import { useRouter } from 'next/router';
+
+type EditGroupState = {
+  group_id?: string;
+  is_public: boolean;
+  group_name: string;
+  area: string;
+  speciality: string;
+  disease: string;
+  explanation: string;
+  member_ids: string[];
+  notification_frequency: 'ALL' | 'HOURLY' | 'DAILY';
+  assignable: boolean;
+};
+
 export const EditGroupDetail = () => {
-  const [groupDescription, setGroupDescription] = useState('');
-  const [assignable, setAssignable] = useState<boolean>(true);
-  const [isPublic, setIsPublic] = useState<boolean>(true);
-  const [notificationFrequency, setNotificationFrequency] = useState<
-    'notification-frequency-all' | 'notification-frequency-hourly' | 'notification-frequency-daily'
-  >('notification-frequency-all');
+  const router = useRouter();
   const [isOpenInviteMemberModal, setIsOpenInviteMemberModal] = useState(false);
   // const { medicalSpecialities } = useFetchMedicalSpecialitiesWithContract();
   const { accountId } = useToken();
@@ -22,6 +34,20 @@ export const EditGroupDetail = () => {
   const { medicalSpecialities } = useFetchMedicalSpecialities();
 
   const [selectedMembers, setSelectedMembers] = useState<SearchGroupMember[]>([]);
+
+  const [editState, setEditState] = useState<EditGroupState>({
+    group_id: '',
+    is_public: true,
+    group_name: '',
+    area: '',
+    speciality: 'MDD',
+    disease: '',
+    explanation: '',
+    member_ids: [],
+    notification_frequency: 'ALL',
+    assignable: true,
+  });
+  const { postCreateGroup } = usePostCreateGroup();
 
   useEffect(() => {
     if (accountId) {
@@ -39,6 +65,12 @@ export const EditGroupDetail = () => {
       });
     }
   }, [accountId, fetchGroupMemberData]);
+
+  useEffect(() => {
+    if (selectedMembers.length > 0) {
+      setEditState({ ...editState, member_ids: selectedMembers.map((member) => member.account_id) });
+    }
+  }, [editState, selectedMembers]);
 
   return (
     <div>
@@ -61,6 +93,9 @@ export const EditGroupDetail = () => {
         className="h-12 w-full"
         id="specialty"
         placeholder="例) 〇〇県、△△大学 などを入力"
+        onChange={(e) => {
+          setEditState({ ...editState, area: e.target.value });
+        }}
       />
       <div className="mb-2 mt-4 flex text-left">
         <div className="mr-1 rounded-md border border-red-500 px-1 py-0.5 text-xs font-bold text-red-500">必須</div>
@@ -68,16 +103,11 @@ export const EditGroupDetail = () => {
       </div>
       <p>※対処疾患または診療科目どちらかの入力は必須となります</p>
       <div className="text-left font-bold">診療科目</div>
-      <div
-        className="mt-2 rounded-md border border-text-field-frame px-4 py-3"
-        style={{
-          backgroundImage: "url('/icons/pull.svg')",
-          backgroundPosition: 'right 1rem center',
-          backgroundRepeat: 'no-repeat',
-        }}
-      >
-        <p>複数専門領域合同(MDD)</p>
-      </div>
+      <MedicalSpecialitySelectButton
+        isGroup
+        specialityCode={editState.speciality}
+        onChange={(specialityCode) => setEditState({ ...editState, speciality: specialityCode })}
+      />
       <label htmlFor="targetDisease" className="text-left font-bold">
         対象疾患
       </label>
@@ -87,6 +117,9 @@ export const EditGroupDetail = () => {
         className="h-12 w-full"
         id="targetDisease"
         placeholder="例) 間質性肺炎"
+        onChange={(e) => {
+          setEditState({ ...editState, disease: e.target.value });
+        }}
       />
       <div className="mb-2 mt-4 flex text-left">
         <div className="mr-1 rounded-md border border-red-500 px-1 py-0.5 text-xs font-bold text-red-500">必須</div>
@@ -94,7 +127,16 @@ export const EditGroupDetail = () => {
           グループ名
         </label>
       </div>
-      <TextField required name="groupName" className="h-12 w-full" id="groupName" placeholder="グループ名を入力" />
+      <TextField
+        required
+        name="groupName"
+        className="h-12 w-full"
+        id="groupName"
+        placeholder="グループ名を入力"
+        onChange={(e) => {
+          setEditState({ ...editState, group_name: e.target.value });
+        }}
+      />
       <div className="mt-4 flex text-left">
         <div className="mr-1 rounded-md border border-primary px-1 py-0.5 text-xs font-bold text-primary">任意</div>
         <label htmlFor="groupDescription" className="text-left font-bold">
@@ -106,8 +148,9 @@ export const EditGroupDetail = () => {
         className="min-h-[100px] w-full resize-none"
         id="groupDescription"
         placeholder="グループの説明や特料などを入力"
-        value={groupDescription}
-        onChange={(e) => setGroupDescription(e.target.value)}
+        onChange={(e) => {
+          setEditState({ ...editState, explanation: e.target.value });
+        }}
       />
       <div className="mt-2">
         <label className="text-left font-bold">コンサル受付</label>
@@ -115,10 +158,10 @@ export const EditGroupDetail = () => {
           <Radio
             name="assignable"
             value="true"
-            checked={assignable === true}
             label="あり"
+            checked={editState.assignable}
             onChange={() => {
-              setAssignable(true);
+              setEditState({ ...editState, assignable: true });
             }}
           />
           <div className="text-[13px]">※ 他の医師からコンサルが来る場合があります。</div>
@@ -127,26 +170,26 @@ export const EditGroupDetail = () => {
           <Radio
             name="assignable"
             value="false"
-            checked={assignable === false}
             label="なし"
+            checked={!editState.assignable}
             onChange={() => {
-              setAssignable(false);
+              setEditState({ ...editState, assignable: false });
             }}
           />
           <div className="text-[13px]">※ グループチャットのみ利用できます。検索結果にも表示されません。</div>
         </label>
       </div>
-      {assignable && (
+      {editState.assignable && (
         <div className="mt-2">
           <label className="text-left font-bold">検索</label>
           <label>
             <Radio
               name="isPublic"
               value="true"
-              checked={isPublic === true}
               label="公開"
+              checked={editState.is_public}
               onChange={() => {
-                setIsPublic(true);
+                setEditState({ ...editState, is_public: true });
               }}
             />
             <div className="text-[13px]">※ 検索結果に表示されます。</div>
@@ -155,10 +198,10 @@ export const EditGroupDetail = () => {
             <Radio
               name="isPublic"
               value="false"
-              checked={isPublic === false}
               label="非公開"
+              checked={!editState.is_public}
               onChange={() => {
-                setIsPublic(false);
+                setEditState({ ...editState, is_public: false });
               }}
             />
             <div className="text-[13px]">
@@ -275,33 +318,58 @@ export const EditGroupDetail = () => {
           id="notification-frequency-all"
           name="notification-frequency"
           value="notification-frequency-all"
-          checked={notificationFrequency === 'notification-frequency-all'}
           label="毎回通知"
+          checked={editState.notification_frequency === 'ALL'}
           onChange={() => {
-            setNotificationFrequency('notification-frequency-all');
+            setEditState({ ...editState, notification_frequency: 'ALL' });
           }}
         />
         <Radio
           id="notification-frequency-hourly"
           name="notification-frequency"
           value="notification-frequency"
-          checked={notificationFrequency === 'notification-frequency-hourly'}
           label="1時間に1回通知"
+          checked={editState.notification_frequency === 'HOURLY'}
           onChange={() => {
-            setNotificationFrequency('notification-frequency-hourly');
+            setEditState({ ...editState, notification_frequency: 'HOURLY' });
           }}
         />
         <Radio
           id="notification-frequency-daily"
           name="notification-frequency"
           value="notification-frequency"
-          checked={notificationFrequency === 'notification-frequency-daily'}
           label="24時間に1回通知"
+          checked={editState.notification_frequency === 'DAILY'}
           onChange={() => {
-            setNotificationFrequency('notification-frequency-daily');
+            setEditState({ ...editState, notification_frequency: 'DAILY' });
           }}
         />
       </div>
+
+      <PrimaryButton
+        className="mx-auto mt-12 h-12 px-12"
+        type="submit"
+        onClick={async () => {
+          await postCreateGroup({
+            group_name: editState.group_name,
+            area: editState.area,
+            speciality: editState.speciality,
+            disease: editState.disease,
+            explanation: editState.explanation,
+            member_ids: editState.member_ids,
+            notification_frequency: editState.notification_frequency,
+            assignable: editState.assignable,
+            is_public: editState.assignable ? editState.is_public : false,
+          }).then((res) => {
+            const { group_room_id } = res.data;
+            if (group_room_id) {
+              router.push({ pathname: '/group', query: { group_room_id: group_room_id } });
+            }
+          });
+        }}
+      >
+        グループを作成
+      </PrimaryButton>
     </div>
   );
 };
