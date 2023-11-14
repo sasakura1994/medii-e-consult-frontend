@@ -17,16 +17,13 @@ const Auth = () => {
   const router = useRouter();
   const { redirectUrl } = useLogin();
   const { axios } = useAxios();
-  const token = router.query as Query;
+  const { token } = router.query as Query;
+  console.log("router", router);
   const { setTokenAndMarkInitialized } = useToken();
 
   const Login = async () => {
     const response = await axios
-      .get(`/apple_auth/get_token?token_id=${token}`, {
-        headers: {
-          Authorization: 'Bearer ' + token,
-        },
-      })
+      .get(`/apple_auth/get_token?token_id=${token}`)
       .catch((error) => {
         console.error(error);
       });
@@ -35,11 +32,7 @@ const Auth = () => {
       setTokenAndMarkInitialized(response.data.jwt_token);
 
       const profileResponse = await axios
-        .get('/doctor/profile', {
-          headers: {
-            Authorization: 'Bearer ' + token,
-          },
-        })
+        .get('/doctor/profile', response.data.jwt_token)
         .catch((error) => {
           console.error(error);
         });
@@ -47,7 +40,7 @@ const Auth = () => {
       if (profileResponse) {
         mutateFetchProfile();
 
-        if (response.data.registered) router.push(redirectUrl === '' ? 'top' : redirectUrl);
+        if (response.data.login_type==="register") router.push(redirectUrl === '' ? 'top' : redirectUrl);
         else router.push('editprofile?registerMode=true');
       }
     }
