@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Modal } from '../Parts/Modal/Modal';
 import { useMedicalSpecialitySelectDialog } from './useMedicalSpecialitySelectDialog';
 import { MedicalSpecialityCategorySelect } from './MedicalSpecialityCategorySelect';
@@ -10,6 +10,7 @@ import PrimaryButton from '../Button/PrimaryButton';
 export type MedicalSpecialitySelectDialogProps = {
   defaultSpecialityCode: string;
   required?: boolean;
+  description?: ReactNode;
   onChange: (specialityCode: string) => void;
   setShowModal: (isShow: boolean) => void;
 };
@@ -17,7 +18,7 @@ export type MedicalSpecialitySelectDialogProps = {
 export const MedicalSpecialitySelectDialog: React.FC<MedicalSpecialitySelectDialogProps> = (
   props: MedicalSpecialitySelectDialogProps
 ) => {
-  const { required = false, setShowModal } = props;
+  const { required = false, description, setShowModal } = props;
   const {
     getMedicalSpecialitiesForCategory,
     isCategoryOpened,
@@ -32,7 +33,7 @@ export const MedicalSpecialitySelectDialog: React.FC<MedicalSpecialitySelectDial
     <Modal setShowModal={setShowModal} className="relative pb-[88px] lg:w-[600px]">
       <div className="mx-4 my-6">
         <Heading>所属科を選択</Heading>
-        <div className="mt-8">所属科は、あとから編集可能です。</div>
+        {description && <div className="mt-8">{description}</div>}
         <div className="mt-6 flex flex-col gap-6">
           {medicalSpecialityCategories?.map((medicalSpecialityCategory) => (
             <div key={medicalSpecialityCategory.id}>

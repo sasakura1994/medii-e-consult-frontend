@@ -57,6 +57,7 @@ export const MedicalCareer = (props: MedicalCareerProps) => {
             setProfileFields({ main_speciality: specialityCode });
           }}
           setShowModal={setIsOpen}
+          description={<>所属科は、あとから編集可能です。</>}
           defaultSpecialityCode={profile.main_speciality}
         />
       )}
