@@ -43,7 +43,7 @@ export const MedicalSpecialitySelectDialog: React.FC<MedicalSpecialitySelectDial
                 onClick={() => toggleCategory(medicalSpecialityCategory.id)}
               />
               {isCategoryOpened(medicalSpecialityCategory.id) && (
-                <div className="mt-2 grid grid-cols-2 gap-y-2 text-sm lg:grid-cols-3">
+                <div className="mt-2 grid grid-cols-2 gap-y-2 lg:grid-cols-3">
                   {getMedicalSpecialitiesForCategory(medicalSpecialityCategory.id).map((medicalSpeciality) => (
                     <Radio
                       key={medicalSpeciality.speciality_code}
