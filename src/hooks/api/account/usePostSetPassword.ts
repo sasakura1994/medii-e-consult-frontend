@@ -18,10 +18,7 @@ export const usePostSetPassword = () => {
 
   const setPassword = React.useCallback(
     (data: SetPasswordArgs) => {
-      return axios.post<PostSetPasswordResponseData>(
-        '/doctor/set_password',
-        data
-      );
+      return axios.post<PostSetPasswordResponseData>('/doctor/set_password', data);
     },
     [axios]
   );

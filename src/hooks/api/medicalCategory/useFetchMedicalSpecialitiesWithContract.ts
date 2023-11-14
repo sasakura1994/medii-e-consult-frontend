@@ -10,17 +10,12 @@ export type UseFetchMedicalSpecialityType = {
 
 const endpoint = '/medical_category/medical_specialities_with_contract';
 
-export const useFetchMedicalSpecialitiesWithContract =
-  (): UseFetchMedicalSpecialityType => {
-    const {
-      isLoading,
-      error,
-      data: medicalSpecialities,
-    } = useAuthenticatedSWR<MedicalSpecialityEntity[]>(endpoint);
+export const useFetchMedicalSpecialitiesWithContract = (): UseFetchMedicalSpecialityType => {
+  const { isLoading, error, data: medicalSpecialities } = useAuthenticatedSWR<MedicalSpecialityEntity[]>(endpoint);
 
-    return {
-      isLoading,
-      error,
-      medicalSpecialities,
-    };
+  return {
+    isLoading,
+    error,
+    medicalSpecialities,
   };
+};

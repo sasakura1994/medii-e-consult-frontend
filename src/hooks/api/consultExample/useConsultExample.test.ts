@@ -7,10 +7,9 @@ import { ConsultExampleEntity } from '@/types/entities/ConsultExampleEntity';
 jest.mock('@/hooks/api/medicalCategory/useFetchMedicalSpecialities');
 
 describe('useConsultExample', () => {
-  const useFetchMedicalSpecialitiesMock =
-    useFetchMedicalSpecialities as jest.Mocked<
-      typeof useFetchMedicalSpecialities
-    >;
+  const useFetchMedicalSpecialitiesMock = useFetchMedicalSpecialities as jest.Mocked<
+    typeof useFetchMedicalSpecialities
+  >;
   (useFetchMedicalSpecialitiesMock as jest.Mock).mockReturnValue({
     medicalSpecialities: [
       {

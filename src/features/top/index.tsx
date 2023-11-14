@@ -31,11 +31,11 @@ export const Top = () => {
         <div className="mt-2 lg:mx-4 lg:ml-10 lg:mt-0 lg:w-[296px]">
           <TopNewerConsults />
           {isOnboardingQuestionaryAnswered === false && (
-            <div 
-              className="my-6" 
+            <div
+              className="my-6"
               data-testid="onboarding-questionary-banner"
               onClick={async () => {
-                await postEventLog({ name: 'click-onboarding-questionary' })
+                await postEventLog({ name: 'click-onboarding-questionary' });
               }}
             >
               <Link href="/onboarding/questionary">

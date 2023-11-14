@@ -88,10 +88,10 @@ const Login: NextPageWithLayout = () => {
               type="submit"
               className="
                 my-4
+                w-[190px]
                 rounded-full
                 px-14
                 py-2
-                w-[190px]
                 drop-shadow-[0_4px_10px_rgba(92,107,192,.3)]
               "
             >

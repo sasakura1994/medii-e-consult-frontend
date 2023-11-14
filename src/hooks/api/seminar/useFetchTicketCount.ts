@@ -11,11 +11,7 @@ export type UseFetchTicketCountType = {
 const endpoint = '/seminar/ticket_count';
 
 export const useFetchTicketCount = (): UseFetchTicketCountType => {
-  const {
-    isLoading,
-    error,
-    data: ticketCount,
-  } = useAuthenticatedSWR<ticketCountEntity>(endpoint);
+  const { isLoading, error, data: ticketCount } = useAuthenticatedSWR<ticketCountEntity>(endpoint);
 
   return {
     isLoading,

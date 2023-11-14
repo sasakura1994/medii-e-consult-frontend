@@ -6,11 +6,7 @@ type Props = {
   onClick: () => void;
 };
 
-export const ImageEditorPenSize: React.FC<Props> = ({
-  children,
-  selected = false,
-  onClick,
-}: Props) => {
+export const ImageEditorPenSize: React.FC<Props> = ({ children, selected = false, onClick }: Props) => {
   return (
     <a
       href="#"

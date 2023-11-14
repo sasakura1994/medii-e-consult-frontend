@@ -8,8 +8,7 @@ export type UseFetchPrefectureType = {
 const endpoint = '/prefecture/prefectures';
 
 export const useFetchPrefecture = (): UseFetchPrefectureType => {
-  const { data: prefecture } =
-    useAuthenticatedSWR<PrefectureEntityType[]>(endpoint);
+  const { data: prefecture } = useAuthenticatedSWR<PrefectureEntityType[]>(endpoint);
 
   return {
     prefecture,

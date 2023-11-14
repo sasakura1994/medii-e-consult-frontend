@@ -31,9 +31,7 @@ export const HeaderMenu: React.FC = () => {
         >
           グループ
         </HeaderMenuListItem>
-        <HeaderMenuListItem href="/examplelist">
-          E-コンサル事例集
-        </HeaderMenuListItem>
+        <HeaderMenuListItem href="/examplelist">E-コンサル事例集</HeaderMenuListItem>
         <HeaderMenuListItem href="/seminar">E-カンファ</HeaderMenuListItem>
       </HeaderMenuList>
     </HeaderMenuContainer>

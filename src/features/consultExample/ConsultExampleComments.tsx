@@ -58,10 +58,7 @@ export const ConsultExampleComments: React.FC<Props> = ({
         {consultExampleComments &&
           consultExampleComments.map((consultExampleComment) => (
             <>
-              <div
-                key={consultExampleComment.consult_example_comment_id}
-                className="mt-4"
-              >
+              <div key={consultExampleComment.consult_example_comment_id} className="mt-4">
                 {consultExampleComment.body}
               </div>
               <div className="mt-2 flex justify-between text-sm text-[#6c6c6c]">
@@ -69,15 +66,10 @@ export const ConsultExampleComments: React.FC<Props> = ({
                   {consultExampleComment.is_anonymous
                     ? '匿名'
                     : `${consultExampleComment.doctor_last_name} ${consultExampleComment.doctor_first_name}`}
-                  （
-                  {calculateExperienceYear(
-                    consultExampleComment.qualified_year
-                  )}
+                  （{calculateExperienceYear(consultExampleComment.qualified_year)}
                   年目 {consultExampleComment.speciality}）
                 </div>
-                <div>
-                  {dateFormat(consultExampleComment.created_date, 'YYYY/M/D')}
-                </div>
+                <div>{dateFormat(consultExampleComment.created_date, 'YYYY/M/D')}</div>
               </div>
               <div className="mt-3">
                 <ConsultExampleActions
@@ -89,15 +81,13 @@ export const ConsultExampleComments: React.FC<Props> = ({
                   onLike={() =>
                     likeCommentAndMutate({
                       consultExampleMessageId: consultExampleMessage?.uid,
-                      consultExampleCommentId:
-                        consultExampleComment.consult_example_comment_id,
+                      consultExampleCommentId: consultExampleComment.consult_example_comment_id,
                     })
                   }
                   onUnlike={() =>
                     unlikeCommentAndMutate({
                       consultExampleMessageId: consultExampleMessage?.uid,
-                      consultExampleCommentId:
-                        consultExampleComment.consult_example_comment_id,
+                      consultExampleCommentId: consultExampleComment.consult_example_comment_id,
                     })
                   }
                 />

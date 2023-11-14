@@ -8,11 +8,7 @@ type Data = {
   example_id: string;
 };
 
-export const useFetchInduceConsultExampleId = ({
-  isFetch,
-}: Args): string | undefined => {
-  const { data } = useAuthenticatedSWR<Data>(
-    isFetch ? `/ConsultExample/induce` : null
-  );
+export const useFetchInduceConsultExampleId = ({ isFetch }: Args): string | undefined => {
+  const { data } = useAuthenticatedSWR<Data>(isFetch ? `/ConsultExample/induce` : null);
   return data?.example_id;
 };

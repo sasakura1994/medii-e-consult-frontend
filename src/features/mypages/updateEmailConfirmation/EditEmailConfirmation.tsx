@@ -46,7 +46,9 @@ const EditEmailConfirmation = ({
                 required
               />
             </div>
-            {errorMessage && <div className="mt-2 text-center text-red-400 w-[300px] font-bold overflow-auto">{errorMessage}</div>}
+            {errorMessage && (
+              <div className="mt-2 w-[300px] overflow-auto text-center font-bold text-red-400">{errorMessage}</div>
+            )}
             <div className="mt-12 flex">
               <PrimaryButton size="large" type="submit" className="mx-7 flex-1">
                 送信

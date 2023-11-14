@@ -7,11 +7,10 @@ export type MedicalSpecialitySelectButtonProps = {
   onChange: (specialityCode: string) => void;
 };
 
-export const MedicalSpecialitySelectButton: React.FC<
-  MedicalSpecialitySelectButtonProps
-> = (props: MedicalSpecialitySelectButtonProps) => {
-  const { isOpen, medicalSpecialityName, setIsOpen } =
-    useMedicalSpecialitySelectButton(props);
+export const MedicalSpecialitySelectButton: React.FC<MedicalSpecialitySelectButtonProps> = (
+  props: MedicalSpecialitySelectButtonProps
+) => {
+  const { isOpen, medicalSpecialityName, setIsOpen } = useMedicalSpecialitySelectButton(props);
   const { onChange, specialityCode } = props;
 
   return (

@@ -12,10 +12,8 @@ export type UsePointHistoryType = {
 };
 
 export const usePointHistory = (): UsePointHistoryType => {
-  const { isLoading: fetchCurrentPointLoading, currentPoint } =
-    useFetchCurrentPoint();
-  const { isLoading: fetchPointHistoryLoading, pointHistories } =
-    useFetchPointHistory();
+  const { isLoading: fetchCurrentPointLoading, currentPoint } = useFetchCurrentPoint();
+  const { isLoading: fetchPointHistoryLoading, pointHistories } = useFetchPointHistory();
 
   const getActionNameFromRefId = (refId: string): string => {
     if (refId.startsWith('con:')) {

@@ -8,8 +8,7 @@ import TextField from '@/components/TextField/TextField';
 import { HowToInvitation } from './HowToInvitation';
 
 export const Affiliate: React.FC = () => {
-  const { isError, qrCodeUrl, downloadQrCode, clipboard, invitationUrl } =
-    useAffiliate();
+  const { isError, qrCodeUrl, downloadQrCode, clipboard, invitationUrl } = useAffiliate();
 
   return (
     <>
@@ -25,9 +24,7 @@ export const Affiliate: React.FC = () => {
             </div>
           </div>
           <div className="mt-4 h-[76px] w-[327px] shadow-low lg:w-[290px] ">
-            <p className="my-2 text-center text-md font-bold">
-              ご入会いただいた方
-            </p>
+            <p className="my-2 text-center text-md font-bold">ご入会いただいた方</p>
             <div className="flex items-center justify-center space-x-2">
               <img src="icons/point_invitation.svg" alt="" />
               <p className="text-md">Mediiのポイント(1000pt)</p>
@@ -41,25 +38,16 @@ export const Affiliate: React.FC = () => {
               <img src={qrCodeUrl} alt="" />
             </div>
             <div className="my-auto w-[140px] lg:mx-auto">
-              <SecondaryButton
-                onClick={downloadQrCode}
-                className="whitespace-nowrap"
-              >
+              <SecondaryButton onClick={downloadQrCode} className="whitespace-nowrap">
                 QRコードを保存
               </SecondaryButton>
             </div>
           </div>
           <div className="my-auto lg:ml-3">
-            <p className="ml-2 mb-1 text-md lg:mb-0">またはURLを共有</p>
+            <p className="mb-1 ml-2 text-md lg:mb-0">またはURLを共有</p>
             <div className="flex items-center space-x-1">
-              <TextField
-                className="min-w-0 flex-shrink lg:w-[260px]"
-                value={invitationUrl}
-              />
-              <SecondaryButton
-                onClick={clipboard}
-                className="whitespace-nowrap"
-              >
+              <TextField className="min-w-0 flex-shrink lg:w-[260px]" value={invitationUrl} />
+              <SecondaryButton onClick={clipboard} className="whitespace-nowrap">
                 リンクをコピー
               </SecondaryButton>
             </div>
@@ -68,21 +56,15 @@ export const Affiliate: React.FC = () => {
         <p className="mt-8 text-l font-bold">ご紹介の手順</p>
         <HowToInvitation
           number={1}
-          text={
-            '紹介ページURLより”あなた専用の紹介ページ”を取得し、お知り合いの医師・医学生に送る'
-          }
+          text={'紹介ページURLより”あなた専用の紹介ページ”を取得し、お知り合いの医師・医学生に送る'}
         />
         <HowToInvitation
           number={2}
-          text={
-            'お知り合いの医師・医学生は、紹介ページにアクセスし、紹介特典とE-コンサルについての情報を受け取る'
-          }
+          text={'お知り合いの医師・医学生は、紹介ページにアクセスし、紹介特典とE-コンサルについての情報を受け取る'}
         />
         <HowToInvitation
           number={3}
-          text={
-            'あなた専用の紹介ページから会員登録いただくと、あなたと新規会員へ紹介特典をプレゼント'
-          }
+          text={'あなた専用の紹介ページから会員登録いただくと、あなたと新規会員へ紹介特典をプレゼント'}
         />
       </Card>
 
