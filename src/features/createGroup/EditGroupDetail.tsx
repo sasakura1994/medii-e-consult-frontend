@@ -68,9 +68,12 @@ export const EditGroupDetail = () => {
 
   useEffect(() => {
     if (selectedMembers.length > 0) {
-      setEditState({ ...editState, member_ids: selectedMembers.map((member) => member.account_id) });
+      setEditState((prevState) => ({
+        ...prevState,
+        member_ids: selectedMembers.map((member) => member.account_id),
+      }));
     }
-  }, [editState, selectedMembers]);
+  }, [selectedMembers]);
 
   return (
     <div>
