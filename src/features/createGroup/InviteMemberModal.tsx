@@ -35,7 +35,7 @@ export const InviteMemberModal = (props: Props) => {
               <SelectBox
                 name="prefecture_code"
                 id="prefecture_code"
-                onChange={(e) => (specialityCodeRef.current = e.target.value)}
+                onChange={(e) => (selectedPrefectureRef.current = e.target.value)}
               >
                 <option value="">指定なし</option>
                 {prefectures.map((prefecture) => (
