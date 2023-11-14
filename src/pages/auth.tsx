@@ -15,7 +15,7 @@ const Auth = () => {
   const router = useRouter();
   const { redirectUrl } = useLogin();
   const { axios } = useAxios();
-  const token = searchParams.get('search')
+  const token = searchParams.get('token')
   console.log('token', token, 'test token');
   const { setTokenAndMarkInitialized } = useToken();
 
