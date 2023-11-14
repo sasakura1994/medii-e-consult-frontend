@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, screen, act } from '@testing-library/react';
-import { RecoilRoot } from 'recoil';
 import { useRouter } from 'next/router';
 import { EditingProfile, UseEditProfile } from '../useEditProfile';
 import { EditProfileProps } from '../EditProfile';
@@ -26,11 +25,7 @@ describe('MedicalCareer', () => {
           } as EditingProfile,
           setProfileFields: jest.fn(),
         } as unknown as UseEditProfile & EditProfileProps;
-        render(
-          <RecoilRoot>
-            <MedicalCareer {...props} />
-          </RecoilRoot>
-        );
+        render(<MedicalCareer {...props} />);
       });
 
       expect(screen.queryByTestId('doctor_qualified_year')).not.toBeInTheDocument();
@@ -47,11 +42,7 @@ describe('MedicalCareer', () => {
           } as EditingProfile,
           setProfileFields: jest.fn(),
         } as unknown as UseEditProfile & EditProfileProps;
-        render(
-          <RecoilRoot>
-            <MedicalCareer {...props} />
-          </RecoilRoot>
-        );
+        render(<MedicalCareer {...props} />);
       });
 
       expect(screen.queryByTestId('year-input-year')).toBeInTheDocument();
@@ -67,11 +58,7 @@ describe('MedicalCareer', () => {
           } as EditingProfile,
           setProfileFields: jest.fn(),
         } as unknown as UseEditProfile & EditProfileProps;
-        render(
-          <RecoilRoot>
-            <MedicalCareer {...props} />
-          </RecoilRoot>
-        );
+        render(<MedicalCareer {...props} />);
       });
 
       expect(screen.queryByTestId('year-input-year')).toBeInTheDocument();
@@ -87,11 +74,7 @@ describe('MedicalCareer', () => {
           } as EditingProfile,
           setProfileFields: jest.fn(),
         } as unknown as UseEditProfile & EditProfileProps;
-        render(
-          <RecoilRoot>
-            <MedicalCareer {...props} />
-          </RecoilRoot>
-        );
+        render(<MedicalCareer {...props} />);
       });
 
       expect(screen.queryByTestId('year-input-year')).toBeInTheDocument();
@@ -107,11 +90,7 @@ describe('MedicalCareer', () => {
           } as EditingProfile,
           setProfileFields: jest.fn(),
         } as unknown as UseEditProfile & EditProfileProps;
-        render(
-          <RecoilRoot>
-            <MedicalCareer {...props} />
-          </RecoilRoot>
-        );
+        render(<MedicalCareer {...props} />);
       });
 
       expect(screen.queryByTestId('year-input-year')).toBeInTheDocument();
@@ -126,11 +105,7 @@ describe('MedicalCareer', () => {
           } as EditingProfile,
           setProfileFields: jest.fn(),
         } as unknown as UseEditProfile & EditProfileProps;
-        render(
-          <RecoilRoot>
-            <MedicalCareer {...props} />
-          </RecoilRoot>
-        );
+        render(<MedicalCareer {...props} />);
       });
 
       expect(screen.getByTestId('doctor_qualified_year')).toBeDisabled();
@@ -145,11 +120,7 @@ describe('MedicalCareer', () => {
           } as EditingProfile,
           setProfileFields: jest.fn(),
         } as unknown as UseEditProfile & EditProfileProps;
-        render(
-          <RecoilRoot>
-            <MedicalCareer {...props} />
-          </RecoilRoot>
-        );
+        render(<MedicalCareer {...props} />);
       });
 
       expect(screen.queryByTestId('year-input-year')).toBeInTheDocument();

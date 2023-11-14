@@ -1,4 +1,3 @@
-import { RecoilRoot } from 'recoil';
 import 'cross-fetch/polyfill';
 import { act, renderHook } from '@testing-library/react';
 import { useMedicalCareerSpecialities } from '../useMedicalCareerSpecialities';
@@ -32,9 +31,8 @@ describe('useMedicalCareerSpecialities', () => {
       } as ProfileEntity,
     };
 
-    const hooks = await renderHook(() => useMedicalCareerSpecialities(props as unknown as MedicalCareerProps), {
-      wrapper: RecoilRoot,
-    }).result;
+    const hooks = await renderHook(() => useMedicalCareerSpecialities(props as unknown as MedicalCareerProps), {})
+      .result;
 
     expect(hooks.current.selectedMedicalSpecialities).toEqual(medicalSpecialities);
   });
@@ -57,9 +55,8 @@ describe('useMedicalCareerSpecialities', () => {
       selectMedicalSpecialities,
     };
 
-    const hooks = await renderHook(() => useMedicalCareerSpecialities(props as unknown as MedicalCareerProps), {
-      wrapper: RecoilRoot,
-    }).result;
+    const hooks = await renderHook(() => useMedicalCareerSpecialities(props as unknown as MedicalCareerProps), {})
+      .result;
 
     await act(() => hooks.current.moveSelectedMedicalSpeciality(1, 2));
 
@@ -89,9 +86,8 @@ describe('useMedicalCareerSpecialities', () => {
       selectMedicalSpecialities,
     };
 
-    const hooks = await renderHook(() => useMedicalCareerSpecialities(props as unknown as MedicalCareerProps), {
-      wrapper: RecoilRoot,
-    }).result;
+    const hooks = await renderHook(() => useMedicalCareerSpecialities(props as unknown as MedicalCareerProps), {})
+      .result;
 
     await act(() => hooks.current.toggleMedicalSpeciality(medicalSpecialities[1]));
 

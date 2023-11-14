@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react';
-import { RecoilRoot } from 'recoil';
+
 import { useInitPassword } from '../useInitPassword';
 import { useRouter } from 'next/router';
 import { usePostSetPassword } from '@/hooks/api/account/usePostSetPassword';
@@ -28,9 +28,7 @@ describe('useInitPassword', () => {
         },
       });
 
-      const hooks = renderHook(() => useInitPassword(), {
-        wrapper: RecoilRoot,
-      }).result;
+      const hooks = renderHook(() => useInitPassword(), {}).result;
 
       expect(hooks.current.isTokenExists).toBeTruthy();
     });
@@ -42,9 +40,7 @@ describe('useInitPassword', () => {
         },
       });
 
-      const hooks = renderHook(() => useInitPassword(), {
-        wrapper: RecoilRoot,
-      }).result;
+      const hooks = renderHook(() => useInitPassword(), {}).result;
 
       expect(hooks.current.isTokenExists).toBeTruthy();
     });
@@ -54,9 +50,7 @@ describe('useInitPassword', () => {
         query: {},
       });
 
-      const hooks = renderHook(() => useInitPassword(), {
-        wrapper: RecoilRoot,
-      }).result;
+      const hooks = renderHook(() => useInitPassword(), {}).result;
 
       expect(hooks.current.isTokenExists).toBeFalsy();
     });
@@ -85,9 +79,7 @@ describe('useInitPassword', () => {
       createHufUser: jest.fn(),
     });
 
-    const hooks = renderHook(() => useInitPassword(), {
-      wrapper: RecoilRoot,
-    }).result;
+    const hooks = renderHook(() => useInitPassword(), {}).result;
 
     await act(async () => {
       await hooks.current.onSubmit({
@@ -124,9 +116,7 @@ describe('useInitPassword', () => {
       createHufUser,
     });
 
-    const hooks = renderHook(() => useInitPassword(), {
-      wrapper: RecoilRoot,
-    }).result;
+    const hooks = renderHook(() => useInitPassword(), {}).result;
 
     await act(async () => {
       await hooks.current.onSubmit({

@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react';
-import { RecoilRoot } from 'recoil';
+
 import { useOnBoardingQuestionary } from '../useOnBoardingQuestionary';
 import * as useFetchFlagModule from '@/hooks/api/account/useFetchFlags';
 import { usePostQuestionaryItemsForOnboarding } from '@/hooks/api/questionary/usePostQuestionaryItemsForOnboarding';
@@ -23,9 +23,7 @@ describe('useOnBoardingQuestionary', () => {
   });
 
   test('メール・プッシュ通知両方受け取るを選択した場合に状態が変わること', async () => {
-    const hooks = renderHook(() => useOnBoardingQuestionary(), {
-      wrapper: RecoilRoot,
-    }).result;
+    const hooks = renderHook(() => useOnBoardingQuestionary(), {}).result;
 
     const mutateMock = jest.spyOn(useFetchFlagModule, 'mutateFetchFlag');
 

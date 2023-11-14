@@ -2,7 +2,7 @@ import React from 'react';
 
 import userEvent from '@testing-library/user-event';
 import { render, screen, act, waitFor } from '@testing-library/react';
-import { RecoilRoot } from 'recoil';
+
 import * as apiClient from '@/libs/apiClient';
 import { AxiosInstance } from 'axios';
 import { PostResetPasswordResponseData } from '@/hooks/api/account/usePostPasswordReset';
@@ -24,11 +24,7 @@ describe('PasswordReset', () => {
     const data: PostResetPasswordResponseData = { code: 1, message: '' };
 
     await act(() => {
-      render(
-        <RecoilRoot>
-          <PasswordResetPage />
-        </RecoilRoot>
-      );
+      render(<PasswordResetPage />);
     });
 
     await act(() => {

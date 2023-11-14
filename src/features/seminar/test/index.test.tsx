@@ -7,7 +7,7 @@ import { SeminarEntityType } from '@/types/entities/seminarEntity';
 import { ticketCountEntity } from '@/types/entities/ticketCountEntity';
 import { act } from 'react-dom/test-utils';
 import userEvent from '@testing-library/user-event';
-import { RecoilRoot } from 'recoil';
+
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 
 jest.mock('../useSeminar');
@@ -94,9 +94,7 @@ beforeEach(() => {
 });
 // const getRender = async () => {
 //   render(
-//     <RecoilRoot>
 //       <Seminar />
-//     </RecoilRoot>
 //   );
 // };
 
@@ -107,11 +105,7 @@ afterEach(() => {
 describe('Seminar component', () => {
   test('初期表示テスト', async () => {
     await act(() => {
-      render(
-        <RecoilRoot>
-          <Seminar />
-        </RecoilRoot>
-      );
+      render(<Seminar />);
     });
 
     const text = await act(async () => {
@@ -129,11 +123,7 @@ describe('Seminar component', () => {
     });
 
     await act(() => {
-      render(
-        <RecoilRoot>
-          <Seminar />
-        </RecoilRoot>
-      );
+      render(<Seminar />);
     });
 
     const text = await act(async () => {
@@ -151,11 +141,7 @@ describe('Seminar component', () => {
     });
 
     await act(() => {
-      render(
-        <RecoilRoot>
-          <Seminar />
-        </RecoilRoot>
-      );
+      render(<Seminar />);
     });
 
     const text = await act(async () => {
@@ -173,11 +159,7 @@ describe('Seminar component', () => {
     });
 
     await act(() => {
-      render(
-        <RecoilRoot>
-          <Seminar />
-        </RecoilRoot>
-      );
+      render(<Seminar />);
     });
 
     expect(
@@ -213,11 +195,7 @@ describe('Seminar component', () => {
     });
 
     await act(() => {
-      render(
-        <RecoilRoot>
-          <Seminar />
-        </RecoilRoot>
-      );
+      render(<Seminar />);
     });
 
     await act(() => {

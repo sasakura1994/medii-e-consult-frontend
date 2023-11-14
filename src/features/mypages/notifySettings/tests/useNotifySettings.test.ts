@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react';
-import { RecoilRoot } from 'recoil';
+
 import { useNotifySettings } from '../useNotifySettings';
 import * as useFetchProfileModule from '@/hooks/api/doctor/useFetchProfile';
 import { ProfileEntity } from '@/types/entities/profileEntity';
@@ -30,9 +30,7 @@ describe('NotifySettings', () => {
     let hoooResult: { current: UseNotifySettingsType } | undefined;
     await act(() => {
       // useNotifySettings が呼ばれると 非同期（useFetchProfile）が走るので act で処理の完了を待つ
-      hoooResult = renderHook(() => useNotifySettings(), {
-        wrapper: RecoilRoot,
-      }).result;
+      hoooResult = renderHook(() => useNotifySettings(), {}).result;
     });
 
     expect(hoooResult?.current.notifySettings?.is_mail_notify).toBe(true);
@@ -52,9 +50,7 @@ describe('NotifySettings', () => {
     let hoooResult: { current: UseNotifySettingsType } | undefined;
     await act(() => {
       // useNotifySettings が呼ばれると 非同期（useFetchProfile）が走るので act で処理の完了を待つ
-      hoooResult = renderHook(() => useNotifySettings(), {
-        wrapper: RecoilRoot,
-      }).result;
+      hoooResult = renderHook(() => useNotifySettings(), {}).result;
     });
 
     act(() => {
@@ -80,9 +76,7 @@ describe('NotifySettings', () => {
 
     let hoooResult: { current: UseNotifySettingsType } | undefined;
     await act(() => {
-      hoooResult = renderHook(() => useNotifySettings(), {
-        wrapper: RecoilRoot,
-      }).result;
+      hoooResult = renderHook(() => useNotifySettings(), {}).result;
     });
 
     act(() => {
@@ -108,9 +102,7 @@ describe('NotifySettings', () => {
 
     let hoooResult: { current: UseNotifySettingsType } | undefined;
     await act(() => {
-      hoooResult = renderHook(() => useNotifySettings(), {
-        wrapper: RecoilRoot,
-      }).result;
+      hoooResult = renderHook(() => useNotifySettings(), {}).result;
     });
 
     act(() => {
@@ -135,9 +127,7 @@ describe('NotifySettings', () => {
 
     let hoooResult: { current: UseNotifySettingsType } | undefined;
     await act(() => {
-      hoooResult = renderHook(() => useNotifySettings(), {
-        wrapper: RecoilRoot,
-      }).result;
+      hoooResult = renderHook(() => useNotifySettings(), {}).result;
     });
 
     act(() => {
@@ -161,9 +151,7 @@ describe('NotifySettings', () => {
 
     let hoooResult: { current: UseNotifySettingsType } | undefined;
     await act(() => {
-      hoooResult = renderHook(() => useNotifySettings(), {
-        wrapper: RecoilRoot,
-      }).result;
+      hoooResult = renderHook(() => useNotifySettings(), {}).result;
     });
 
     act(() => {
@@ -179,9 +167,7 @@ describe('NotifySettings', () => {
   test('通知設定の更新が正常に完了した場合 isError は false であること', async () => {
     let hoooResult: { current: UseNotifySettingsType } | undefined;
     await act(() => {
-      hoooResult = renderHook(() => useNotifySettings(), {
-        wrapper: RecoilRoot,
-      }).result;
+      hoooResult = renderHook(() => useNotifySettings(), {}).result;
     });
 
     await act(() => {

@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { useProfile } from '@/hooks/useProfile';
 import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 import { useUploadDocument } from '@/hooks/api/doctor/useUploadDocument';
-import { RecoilRoot } from 'recoil';
+
 import userEvent from '@testing-library/user-event';
 
 jest.mock('next/router', () => ({
@@ -91,11 +91,7 @@ beforeEach(() => {
 });
 const getRender = async () => {
   act(() => {
-    render(
-      <RecoilRoot>
-        <Document />
-      </RecoilRoot>
-    );
+    render(<Document />);
   });
 };
 afterEach(() => {

@@ -4,8 +4,8 @@ import { CloseConsultList } from './CloseConsultList';
 import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
 import { useFetchUnreadCounts } from '@/hooks/api/chat/useFetchUnreadCounts';
 import Link from 'next/link';
-import { useRecoilValue } from 'recoil';
 import { isChatRoomSelectedState } from '@/globalStates/chat';
+import { useAtomValue } from 'jotai';
 
 type ConsultListProps = {
   chatRoomList?: ChatRoomEntity[];
@@ -15,7 +15,7 @@ type ConsultListProps = {
 
 export const ConsultList = (props: ConsultListProps) => {
   const { chatRoomList, selectedTab, setSelectedTab } = props;
-  const isChatRoomSelected = useRecoilValue(isChatRoomSelectedState);
+  const isChatRoomSelected = useAtomValue(isChatRoomSelectedState);
   const unreadCountListData = useFetchUnreadCounts();
 
   return (

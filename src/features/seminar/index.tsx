@@ -18,11 +18,11 @@ export const Seminar = () => {
        bg-no-repeat lg:bg-[url('/images/seminar/pc_back.png')]"
       >
         <div className="flex w-full flex-col items-center justify-center py-4 pt-10">
-          <div className="mb-8 h-auto rounded-lg bg-white pl-6 pt-6 shadow-low lg:max-w-[976px]">
-            <p className="text-xxxl font-bold text-medii-blue-base">最新のE-カンファ</p>
-            <div className="flex flex-col flex-wrap justify-start lg:flex-row">
-              {upcomingSeminars &&
-                upcomingSeminars.map((seminar, index) => {
+          {upcomingSeminars && upcomingSeminars.length > 0 && (
+            <div className="mb-8 h-auto rounded-lg bg-white pl-6 pt-6 shadow-low lg:max-w-[976px]">
+              <p className="text-xxxl font-bold text-medii-blue-base">最新のE-カンファ</p>
+              <div className="flex flex-col flex-wrap justify-start lg:flex-row">
+                {upcomingSeminars.map((seminar, index) => {
                   if (index < 3) {
                     return (
                       <div key={seminar.seminar_id}>
@@ -31,16 +31,17 @@ export const Seminar = () => {
                     );
                   }
                 })}
-            </div>
+              </div>
 
-            <div className="my-6 flex w-auto justify-center">
-              <Link href="/seminar/archives">
-                <SecondaryButton size="large">
-                  <p>過去のE-カンファ動画へ</p>
-                </SecondaryButton>
-              </Link>
+              <div className="my-6 flex w-auto justify-center">
+                <Link href="/seminar/archives">
+                  <SecondaryButton size="large">
+                    <p>過去のE-カンファ動画へ</p>
+                  </SecondaryButton>
+                </Link>
+              </div>
             </div>
-          </div>
+          )}
 
           <div
             className="flex w-full flex-col items-center rounded-lg px-7 pb-20
@@ -49,7 +50,9 @@ export const Seminar = () => {
             <SeminarArchiveHeader ticketCount={ticketCount} />
             <div>
               <div className="grid grid-cols-[1fr] gap-4 lg:grid-cols-[1fr_1fr]">
-                {seminars?.slice(0, 2).map((seminar) => <SeminarCard seminar={seminar} key={seminar.seminar_id} />)}
+                {seminars
+                  ?.slice(0, 2)
+                  .map((seminar) => <SeminarCard seminar={seminar} key={seminar.seminar_id} className="h-full" />)}
               </div>
             </div>
             <Link href="/seminar/archives" className="my-6 inline-block lg:my-10">

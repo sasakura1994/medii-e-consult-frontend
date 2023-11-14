@@ -1,6 +1,5 @@
 import React from 'react';
 import { act, render, screen, waitFor } from '@testing-library/react';
-import { RecoilRoot } from 'recoil';
 import { ImcompleteProfileModal } from './ImcompleteProfileModal';
 import * as useFetchProfileModule from '@/hooks/api/doctor/useFetchProfile';
 import { ProfileEntity } from '@/types/entities/profileEntity';
@@ -21,11 +20,7 @@ describe('is_imperfect_profile', () => {
         });
 
         act(() => {
-          render(
-            <RecoilRoot>
-              <ImcompleteProfileModal />
-            </RecoilRoot>
-          );
+          render(<ImcompleteProfileModal />);
         });
 
         const text = await act(async () => {
@@ -46,11 +41,7 @@ describe('is_imperfect_profile', () => {
         });
 
         await act(() => {
-          render(
-            <RecoilRoot>
-              <ImcompleteProfileModal />
-            </RecoilRoot>
-          );
+          render(<ImcompleteProfileModal />);
         });
 
         const text = await act(async () => {
@@ -71,11 +62,7 @@ describe('is_imperfect_profile', () => {
       });
 
       await act(() => {
-        render(
-          <RecoilRoot>
-            <ImcompleteProfileModal />
-          </RecoilRoot>
-        );
+        render(<ImcompleteProfileModal />);
       });
 
       const text = await act(async () => {
@@ -96,11 +83,7 @@ describe('is_imperfect_profile', () => {
     });
 
     await act(() => {
-      render(
-        <RecoilRoot>
-          <ImcompleteProfileModal />
-        </RecoilRoot>
-      );
+      render(<ImcompleteProfileModal />);
     });
 
     const text = await act(async () => {
