@@ -225,7 +225,7 @@ export const EditGroupDetail = () => {
                             return (
                               <tr
                                 key={member.account_id}
-                                className="table-row cursor-pointer overflow-scroll hover:bg-primary-light"
+                                className="table-row overflow-scroll hover:bg-primary-light"
                                 onClick={() => {}}
                               >
                                 <td className="table-cell py-3">{member.area_txt}</td>
@@ -233,9 +233,25 @@ export const EditGroupDetail = () => {
                                 <td className="table-cell py-3">{member.hospital_name}</td>
                                 <td
                                   className="sticky right-0 table-cell break-words bg-white py-3
-                                        text-center text-[15px]"
+                                  text-[15px]"
                                 >
-                                  ―
+                                  {member.account_id === accountId ? (
+                                    <p>―</p>
+                                  ) : (
+                                    <button
+                                      className="cursor-pointer rounded-full bg-strong
+                                      px-1.5 py-0.5 text-xs font-bold text-white"
+                                      onClick={() => {
+                                        setSelectedMembers((prev) => {
+                                          return prev.filter((prevMember) => {
+                                            return prevMember.account_id !== member.account_id;
+                                          });
+                                        });
+                                      }}
+                                    >
+                                      削除
+                                    </button>
+                                  )}
                                 </td>
                               </tr>
                             );
