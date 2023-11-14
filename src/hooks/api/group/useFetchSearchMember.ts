@@ -15,18 +15,20 @@ export type UseFetchSearchMemberType = {
   error?: Error;
   members?: SearchGroupMember[];
 };
-type SearchQuery = {
-  specialityCode?: string;
-  name?: string;
-  area?: string;
-};
+export type SearchQuery =
+  | {
+      specialityCode?: string;
+      name?: string;
+      area?: string;
+    }
+  | undefined;
 
 export const useFetchSearchMember = (searchQuery: SearchQuery): UseFetchSearchMemberType => {
   const endpoint = searchQuery
     ? `/group/search_member?speciality_code=${searchQuery.specialityCode ?? ''}&full_name=${encodeURIComponent(
         searchQuery.name ?? ''
       )}&area_code=${encodeURIComponent(searchQuery.area ?? '')}`
-    : '/group/search_member?area_code=&speciality_code=&full_name=';
+    : '';
 
   const { isLoading, error, data: members } = useAuthenticatedSWR<SearchGroupMember[]>(endpoint);
 

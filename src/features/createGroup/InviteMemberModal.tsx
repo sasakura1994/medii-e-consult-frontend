@@ -1,13 +1,13 @@
 import { Modal } from '@/components/Parts/Modal/Modal';
 import { ModalTitleWithCloseButton } from '@/components/Parts/Modal/ModalTitleWithCloseButton';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { SearchGroupModalLabelAndInput } from '../chat/newChatRoom/SearchGroupModalLabelAndInput';
 import { usePrefecture } from '@/hooks/prefecture/usePrefecture';
 import { SelectBox } from '@/components/Parts/Form/SelectBox';
 import { MedicalSpecialitySelectButton } from '@/components/MedicalSpeciality/MedicalSpecialitySelectButton';
 import TextField from '@/components/TextField/TextField';
 import PrimaryButton from '@/components/Button/PrimaryButton';
-import { useFetchSearchMember } from '@/hooks/api/group/useFetchSearchMember';
+import { SearchQuery, useFetchSearchMember } from '@/hooks/api/group/useFetchSearchMember';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 
 type Props = {
@@ -17,14 +17,11 @@ type Props = {
 export const InviteMemberModal = (props: Props) => {
   const { setIsOpenModal } = props;
   const { prefectures } = usePrefecture();
-  const [selectedPrefecture, setSelectedPrefecture] = useState('');
-  const [specialityCode, setSpecialityCode] = useState('');
-  const [name, setName] = useState('');
-  const { members: searchedMember } = useFetchSearchMember({
-    specialityCode: specialityCode,
-    area: selectedPrefecture,
-    name: name,
-  });
+  const selectedPrefectureRef = useRef('');
+  const specialityCodeRef = useRef('');
+  const nameRef = useRef('');
+  const [searchedMemberState, setSearchedMemberState] = useState<SearchQuery | undefined>(undefined);
+  const { members: searchedMember } = useFetchSearchMember(searchedMemberState);
   const { medicalSpecialities } = useFetchMedicalSpecialities();
 
   return (
@@ -38,8 +35,7 @@ export const InviteMemberModal = (props: Props) => {
               <SelectBox
                 name="prefecture_code"
                 id="prefecture_code"
-                value={selectedPrefecture}
-                onChange={(e) => setSelectedPrefecture(e.target.value)}
+                onChange={(e) => (specialityCodeRef.current = e.target.value)}
               >
                 <option value="">指定なし</option>
                 {prefectures.map((prefecture) => (
@@ -51,14 +47,10 @@ export const InviteMemberModal = (props: Props) => {
             )}
           </div>
           <div className="w-full">
-            <SearchGroupModalLabelAndInput
-              label="専門科
-"
-              className="flex-1"
-            >
+            <SearchGroupModalLabelAndInput label="専門科" className="flex-1">
               <MedicalSpecialitySelectButton
-                specialityCode={specialityCode}
-                onChange={(specialityCode) => setSpecialityCode(specialityCode)}
+                specialityCode={specialityCodeRef.current}
+                onChange={(specialityCode) => (specialityCodeRef.current = specialityCode)}
               />
             </SearchGroupModalLabelAndInput>
           </div>
@@ -68,15 +60,25 @@ export const InviteMemberModal = (props: Props) => {
           <TextField
             name="name"
             id="name"
-            value={name}
             onChange={(e) => {
-              setName(e.target.value);
+              nameRef.current = e.target.value;
             }}
             className="h-12 w-full"
             placeholder="氏名から検索"
           />
         </div>
-        <PrimaryButton className="mx-auto mt-6 h-12 px-12">検索</PrimaryButton>
+        <PrimaryButton
+          className="mx-auto mt-6 h-12 px-12"
+          onClick={() =>
+            setSearchedMemberState({
+              specialityCode: specialityCodeRef.current,
+              area: selectedPrefectureRef.current,
+              name: nameRef.current,
+            })
+          }
+        >
+          検索
+        </PrimaryButton>
 
         <p className="mt-3 text-center">招待済みメンバー数： 0名</p>
         <div className="mt-3 max-h-[300px] overflow-auto">
