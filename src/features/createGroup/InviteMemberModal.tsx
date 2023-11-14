@@ -1,15 +1,14 @@
 import { Modal } from '@/components/Parts/Modal/Modal';
 import { ModalTitleWithCloseButton } from '@/components/Parts/Modal/ModalTitleWithCloseButton';
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import { SearchGroupModalLabelAndInput } from '../chat/newChatRoom/SearchGroupModalLabelAndInput';
-import { usePrefecture } from '@/hooks/prefecture/usePrefecture';
 import { SelectBox } from '@/components/Parts/Form/SelectBox';
 import { MedicalSpecialitySelectButton } from '@/components/MedicalSpeciality/MedicalSpecialitySelectButton';
 import TextField from '@/components/TextField/TextField';
 import PrimaryButton from '@/components/Button/PrimaryButton';
-import { SearchGroupMember, SearchQuery, useFetchSearchMember } from '@/hooks/api/group/useFetchSearchMember';
-import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
+import { SearchGroupMember } from '@/hooks/api/group/useFetchSearchMember';
 import TertiaryButton from '@/components/Button/TertiaryButton';
+import { useInviteMemberModal } from './useInviteMemberModal';
 
 type Props = {
   setIsOpenModal: (isOpenModal: boolean) => void;
@@ -19,14 +18,16 @@ type Props = {
 
 export const InviteMemberModal = (props: Props) => {
   const { setIsOpenModal, selectedMembers, setSelectedMembers } = props;
-  const { prefectures } = usePrefecture();
-  const selectedPrefectureRef = useRef('');
-  const specialityCodeRef = useRef('');
-  const nameRef = useRef('');
-  const checkedMemberRef = useRef<SearchGroupMember[]>([]);
-  const [searchedMemberState, setSearchedMemberState] = useState<SearchQuery | undefined>(undefined);
-  const { members: searchedMember } = useFetchSearchMember(searchedMemberState);
-  const { medicalSpecialities } = useFetchMedicalSpecialities();
+  const {
+    prefectures,
+    selectedPrefectureRef,
+    specialityCodeRef,
+    nameRef,
+    checkedMemberRef,
+    setSearchedMemberState,
+    searchedMember,
+    medicalSpecialities,
+  } = useInviteMemberModal();
 
   return (
     <Modal

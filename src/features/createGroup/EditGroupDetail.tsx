@@ -2,119 +2,29 @@ import PrimaryButton from '@/components/Button/PrimaryButton';
 import { Radio } from '@/components/Parts/Form/Radio';
 import TextArea from '@/components/TextArea/TextArea';
 import TextField from '@/components/TextField/TextField';
-import React, { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 import { InviteMemberModal } from './InviteMemberModal';
-import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
-import { SearchGroupMember } from '@/hooks/api/group/useFetchSearchMember';
-import { useFetchGroupMemberData } from '@/hooks/api/group/useFetchGroupMemberData';
-import { useToken } from '@/hooks/authentication/useToken';
 import { MedicalSpecialitySelectButton } from '@/components/MedicalSpeciality/MedicalSpecialitySelectButton';
-import { usePostCreateGroup } from '@/hooks/api/group/usePostCreateGroup';
-import { useRouter } from 'next/router';
-import { loadLocalStorage, saveLocalStorage } from '@/libs/LocalStorageManager';
+import { saveLocalStorage } from '@/libs/LocalStorageManager';
 import { ConfirmModal } from '@/components/Parts/Modal/ConfirmModal';
-
-type EditGroupState = {
-  group_id?: string;
-  is_public: boolean;
-  group_name: string;
-  area: string;
-  speciality: string;
-  disease: string;
-  explanation: string;
-  member_ids: string[];
-  notification_frequency: 'ALL' | 'HOURLY' | 'DAILY';
-  assignable: boolean;
-};
+import { useEditGroupDetail } from './useEditGroupDetail';
 
 export const EditGroupDetail = () => {
-  const router = useRouter();
-  const [isOpenInviteMemberModal, setIsOpenInviteMemberModal] = useState(false);
-  const [isDraftConfirming, setIsDraftConfirming] = useState(false);
-  const [draft, setDraft] = useState<EditGroupState>();
-  // const { medicalSpecialities } = useFetchMedicalSpecialitiesWithContract();
-  const { accountId } = useToken();
-  const { fetchGroupMemberData } = useFetchGroupMemberData();
-  const { medicalSpecialities } = useFetchMedicalSpecialities();
-
-  const [selectedMembers, setSelectedMembers] = useState<SearchGroupMember[]>([]);
-
-  const [editState, setEditState] = useState<EditGroupState>({
-    group_id: '',
-    is_public: true,
-    group_name: '',
-    area: '',
-    speciality: 'MDD',
-    disease: '',
-    explanation: '',
-    member_ids: [],
-    notification_frequency: 'ALL' as 'ALL' | 'HOURLY' | 'DAILY',
-    assignable: true,
-  });
-  const { postCreateGroup } = usePostCreateGroup();
-
-  const applyDraft = useCallback(() => {
-    if (draft) {
-      draft.member_ids.forEach(async (memberId) => {
-        await fetchGroupMemberData({ account_id: memberId }).then((res) => {
-          setSelectedMembers((prev) => {
-            if (
-              ![...prev].some((member) => {
-                return member.account_id === res.data.account_id;
-              })
-            ) {
-              return [...prev, res.data];
-            }
-            return prev;
-          });
-        });
-      });
-
-      setEditState(draft);
-    }
-    setIsDraftConfirming(false);
-  }, [draft, fetchGroupMemberData]);
-
-  const dontUseDraft = () => {
-    setIsDraftConfirming(false);
-  };
-
-  useEffect(() => {
-    if (accountId) {
-      fetchGroupMemberData({ account_id: accountId }).then((res) => {
-        setSelectedMembers((prev) => {
-          if (
-            ![...prev].some((member) => {
-              return member.account_id === res.data.account_id;
-            })
-          ) {
-            return [...prev, res.data];
-          }
-          return prev;
-        });
-      });
-    }
-  }, [accountId, fetchGroupMemberData]);
-
-  useEffect(() => {
-    if (selectedMembers.length > 0) {
-      setEditState((prevState) => {
-        const newState = {
-          ...prevState,
-          member_ids: selectedMembers.map((member) => member.account_id),
-        };
-        saveLocalStorage('EditGroupDetail::groupData', JSON.stringify(newState));
-        return newState;
-      });
-    }
-  }, [selectedMembers]);
-
-  useEffect(() => {
-    if (loadLocalStorage('EditGroupDetail::groupData')) {
-      setDraft(JSON.parse(loadLocalStorage('EditGroupDetail::groupData') || '{}'));
-      setIsDraftConfirming(true);
-    }
-  }, []);
+  const {
+    accountId,
+    admin,
+    medicalSpecialities,
+    selectedMembers,
+    setSelectedMembers,
+    editState,
+    setEditState,
+    isDraftConfirming,
+    isOpenInviteMemberModal,
+    setIsOpenInviteMemberModal,
+    applyDraft,
+    dontUseDraft,
+    inquiryFormUrl,
+  } = useEditGroupDetail();
 
   return (
     <div>
@@ -332,27 +242,26 @@ export const EditGroupDetail = () => {
         <label className="text-left font-bold">グループメンバー</label>
         <div className="text-[13px]">
           メンバーを追加したい場合は
-          <a
-            target="_blank"
-            className=" text-text-link underline"
-            href="https://tayori.com/form/62897c986d36f5b573fec1a04508f24b70b11fe6/?_gl=1*1ub7pnq*_ga*MTMwODkzMzc5Ni4xNjg0ODE5NDIy*_ga_C9VCVTY692*MTY5OTkxMzI1MS4zNjMuMS4xNjk5OTE2MDg4LjYwLjAuMA.."
-            rel="noreferrer"
-          >
+          <a target="_blank" className=" text-text-link underline" href={inquiryFormUrl} rel="noreferrer">
             Mediiコンシェルジュ
           </a>
           までお問い合わせください
         </div>
       </div>
+
       <div className="mb-2 mt-4 flex items-center gap-4">
-        <PrimaryButton
-          onClick={() => {
-            setIsOpenInviteMemberModal(true);
-          }}
-        >
-          +メンバー招待
-        </PrimaryButton>
+        {admin && (
+          <PrimaryButton
+            onClick={() => {
+              setIsOpenInviteMemberModal(true);
+            }}
+          >
+            +メンバー招待
+          </PrimaryButton>
+        )}
         <label className="text-left font-bold">メンバー数:{selectedMembers.length}名</label>
       </div>
+
       <div className="h-full w-full overflow-auto">
         <table
           className="box-border table w-auto min-w-full table-fixed overflow-visible
@@ -485,28 +394,7 @@ export const EditGroupDetail = () => {
         />
       </div>
 
-      <PrimaryButton
-        className="mx-auto mt-12 h-12 px-12"
-        type="submit"
-        onClick={async () => {
-          await postCreateGroup({
-            group_name: editState.group_name,
-            area: editState.area,
-            speciality: editState.speciality,
-            disease: editState.disease,
-            explanation: editState.explanation,
-            member_ids: editState.member_ids,
-            notification_frequency: editState.notification_frequency,
-            assignable: editState.assignable,
-            is_public: editState.assignable ? editState.is_public : false,
-          }).then((res) => {
-            const { group_room_id } = res.data;
-            if (group_room_id) {
-              router.push({ pathname: '/group', query: { group_room_id: group_room_id } });
-            }
-          });
-        }}
-      >
+      <PrimaryButton className="mx-auto mt-12 h-12 px-12" type="submit" onClick={async () => {}}>
         グループを作成
       </PrimaryButton>
     </div>
