@@ -5,12 +5,13 @@ import { Heading } from '@/components/Parts/Text/Heading';
 import Label from '@/components/Parts/Label/Label';
 import { EditProfileLabel } from './EditProfileLabel';
 import { TextArea } from '@/components/Parts/Form/TextArea';
+import { MedicalCareerSpecialities } from './MedicalCareerSpecialities';
 
 const now = new Date();
 const doctorApprovalYear = now.getFullYear() - (now.getMonth() <= 3 ? 7 : 6);
 
 export const UsageClassification = (props: UseEditProfile) => {
-  const { profile, setProfileFields } = props;
+  const { profile, setProfileFields, selectInChargeMedicalSpecialities } = props;
 
   if (!profile) {
     return <></>;
@@ -50,6 +51,12 @@ export const UsageClassification = (props: UseEditProfile) => {
       {profile.want_to_be_consultant && (
         <div className="mt-2 rounded-lg border border-border-divider p-4">
           <Heading as="h3">回答医情報</Heading>
+          <div className="mt-6">
+            <MedicalCareerSpecialities
+              profile={profile}
+              selectMedicalSpecialities={selectInChargeMedicalSpecialities}
+            />
+          </div>
           <div className="mt-6">
             <EditProfileLabel required={false}>特によく診てきた疾患・領域</EditProfileLabel>
             <TextArea

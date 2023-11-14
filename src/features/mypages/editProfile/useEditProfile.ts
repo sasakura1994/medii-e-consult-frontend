@@ -44,7 +44,7 @@ export type UseEditProfile = {
   saveProfile: () => Promise<boolean>;
   selectedHospital?: Option;
   selectHospital: (selected: Option | null) => void;
-  selectMedicalSpecialities: (medicalSpecialities: MedicalSpecialityEntity[]) => void;
+  selectInChargeMedicalSpecialities: (medicalSpecialities: MedicalSpecialityEntity[]) => void;
   selectedQuestionaryItemIds: string[];
   setHospitalInputType: Dispatch<SetStateAction<HospitalInputType>>;
   setHospitalName: (hospitalName: string) => void;
@@ -211,16 +211,15 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
     [profile, setProfileFields]
   );
 
-  const selectMedicalSpecialities = useCallback(
+  const selectInChargeMedicalSpecialities = useCallback(
     (medicalSpecialities: MedicalSpecialityEntity[]) => {
       if (!profile) {
         return;
       }
       setProfileFields({
-        main_speciality: medicalSpecialities.length > 0 ? medicalSpecialities[0].speciality_code : '',
-        speciality_2: medicalSpecialities.length > 1 ? medicalSpecialities[1].speciality_code : '',
-        speciality_3: medicalSpecialities.length > 2 ? medicalSpecialities[2].speciality_code : '',
-        speciality_4: medicalSpecialities.length > 3 ? medicalSpecialities[3].speciality_code : '',
+        speciality_2: medicalSpecialities.length > 0 ? medicalSpecialities[0].speciality_code : '',
+        speciality_3: medicalSpecialities.length > 1 ? medicalSpecialities[1].speciality_code : '',
+        speciality_4: medicalSpecialities.length > 2 ? medicalSpecialities[2].speciality_code : '',
       });
     },
     [profile, setProfileFields]
@@ -325,7 +324,7 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
     saveProfile,
     selectedHospital,
     selectHospital,
-    selectMedicalSpecialities,
+    selectInChargeMedicalSpecialities,
     selectedQuestionaryItemIds,
     setHospitalInputType,
     setHospitalName,

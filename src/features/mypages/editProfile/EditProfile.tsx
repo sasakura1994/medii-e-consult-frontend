@@ -62,7 +62,7 @@ export const EditProfile = (props: EditProfileProps) => {
         {errorMessage !== '' && <ErrorMessage className="mt-2 text-center">{errorMessage}</ErrorMessage>}
 
         <div className="my-6">
-          <PrimaryButton type="submit" className="mx-auto" disabled={!editProfile.isCompleted} size="large">
+          <PrimaryButton type="submit" className="mx-auto" disabled={!editProfile.isCompleted}>
             {isRegisterMode ? '医師資格確認へ進む' : 'プロフィール登録'}
           </PrimaryButton>
         </div>

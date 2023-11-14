@@ -1,9 +1,9 @@
 import { Required } from '@/components/Parts/Form/Required';
 import Label from '@/components/Parts/Label/Label';
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 type Props = {
-  children?: string | JSX.Element;
+  children?: ReactNode;
   required?: boolean;
   id?: string;
 };
@@ -21,7 +21,7 @@ export const EditProfileLabel = (props: Props) => {
       {required === true ? (
         <Required>必須</Required>
       ) : (
-        <Label color="gray" size="sm">
+        <Label color="gray" size="sm" className="whitespace-nowrap">
           任意
         </Label>
       )}

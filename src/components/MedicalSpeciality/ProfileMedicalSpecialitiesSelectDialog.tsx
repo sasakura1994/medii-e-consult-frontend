@@ -6,7 +6,6 @@ import { useMedicalSpecialitiesSelectDialog } from './useMedicalSpecialitiesSele
 import { MedicalSpecialityCategorySelect } from './MedicalSpecialityCategorySelect';
 import { CheckBox } from '../Parts/Form/CheckBox';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
-import { ProfileMedicalSpecialities } from './ProfileMedicalSpecialities';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 
 export type ProfileMedicalSpecialitiesSelectDialogProps = {
@@ -24,8 +23,6 @@ export const ProfileMedicalSpecialitiesSelectDialog = (props: ProfileMedicalSpec
     isCategoryOpened,
     isMedicalSpecialitySelected,
     medicalSpecialityCategories,
-    moveSelectedMedicalSpeciality,
-    selectedMedicalSpecialities,
     submit,
     toggleCategory,
     toggleMedicalSpeciality,
@@ -63,11 +60,6 @@ export const ProfileMedicalSpecialitiesSelectDialog = (props: ProfileMedicalSpec
             </>
           ))}
         </div>
-        <ProfileMedicalSpecialities
-          moveSelectedMedicalSpeciality={moveSelectedMedicalSpeciality}
-          selectedMedicalSpecialities={selectedMedicalSpecialities}
-          toggleMedicalSpeciality={toggleMedicalSpeciality}
-        />
         <div className="mt-10">
           <PrimaryButton type="button" onClick={submit} className="mx-auto">
             決定

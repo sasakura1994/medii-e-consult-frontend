@@ -32,7 +32,7 @@ export const useMedicalSpecialitiesSelectDialog = (
         return;
       }
 
-      if (selectedMedicalSpecialities.length >= 4) {
+      if (selectedMedicalSpecialities.length >= 3) {
         return;
       }
 
