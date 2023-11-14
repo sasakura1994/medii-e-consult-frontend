@@ -22,27 +22,26 @@ export const IntroduceResponseDoctor = () => {
               target="_blank"
             >
               <div 
-                className="w-[327px] rounded-lg border border-[#EDEDED] bg-white
-                px-4 pt-4 shadow-low lg:w-[508px]">
-                <div className="flex">
-                  <div className="flex lg:block mr-4 w-[70px]">
-                    <img src={introduceDoctor.image} alt="introduceDoctorImage" />
+                className="w-[330px] rounded-lg border border-[#EDEDED] bg-white
+                px-4 pt-4 shadow-low lg:w-[508px]"
+              >
+                <div 
+                  className="grid grid-cols-1/7 grid-flow-col items-center gap-x-4 lg:items-start lg:flex"
+                >
+                  <div>
+                    <img src={introduceDoctor.image} alt="introduceDoctorImage" className='w-full'/>
                   </div>
-                  <div className='mt-5'>
-                    <div className="hidden lg:flex lg:mb-2 lg:items-center">
+                  <div className='lg:mt-5'>
+                    <div className="flex mb-2 items-center">
                       <p className="text-lg font-semibold">{introduceDoctor.name}</p>
                       <p className="ml-2 text-sm font-light">先生</p>
                     </div>
-                    <p className="mb-2 font-light text-sm text-secondary lg:mb-0 lg:text-text-primary lg:font-semibold">
+                    <p className="text-sm text-text-primary font-semibold">
                       {introduceDoctor.job}
                       <br />
                       {introduceDoctor.guideline}
                       {introduceDoctor.position}
                     </p>
-                    <div className="flex items-center lg:hidden">
-                      <p className="text-lg font-semibold">{introduceDoctor.name}</p>
-                      <p className="ml-2 text-sm font-light">先生</p>
-                    </div>
                   </div>
                 </div>
                 <div className="mt-1 mb-2">
