@@ -180,27 +180,27 @@ export const EditGroupDetail = () => {
         </PrimaryButton>
         <label className="text-left font-bold">メンバー数:1名</label>
       </div>
-      <div>
-        <table className="w-full overflow-auto text-sm">
-          <thead className="border-y border-y-heading-line text-left text-block-gray">
-            <tr>
-              <th className="whitespace-nowrap py-3 font-normal">エリア・施設名</th>
-              <th className="whitespace-nowrap py-3 text-center font-normal">氏名</th>
-              <th className="whitespace-nowrap py-3 text-center font-normal">勤務先病院</th>
-              <th className="whitespace-nowrap py-3 text-center font-normal">編集</th>
+      <div className=" h-full w-full overflow-auto">
+        <table className="box-border table w-auto min-w-full table-fixed overflow-visible whitespace-nowrap text-sm">
+          <thead className="table-header-group border-y border-y-heading-line text-left text-block-gray">
+            <tr className="table-row">
+              <th className="table-cell whitespace-nowrap py-3 font-normal">エリア・施設名</th>
+              <th className="table-cell whitespace-nowrap py-3 font-normal">氏名</th>
+              <th className="table-cell whitespace-nowrap py-3 font-normal">勤務先病院</th>
+              <th className="sticky right-0 table-cell whitespace-nowrap bg-white py-3 font-normal">編集</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="table-row-group">
             {groups.map((group) => (
               <tr
                 key={group.group_id}
-                className="cursor-pointer overflow-scroll hover:bg-primary-light"
+                className="table-row cursor-pointer overflow-scroll hover:bg-primary-light"
                 onClick={() => {}}
               >
-                <td className="py-3 text-center">{group.area}</td>
-                <td className="py-3 text-center">{group.name}</td>
-                <td className="py-3 text-center">{group.hospital_name}</td>
-                <td className="break-words bg-white py-3 text-center text-[15px]">―</td>
+                <td className="table-cell py-3">{group.area}</td>
+                <td className="table-cell py-3">{group.name}</td>
+                <td className="table-cell py-3">{group.hospital_name}</td>
+                <td className="sticky right-0 table-cell break-words bg-white py-3 text-center text-[15px]">―</td>
               </tr>
             ))}
           </tbody>
