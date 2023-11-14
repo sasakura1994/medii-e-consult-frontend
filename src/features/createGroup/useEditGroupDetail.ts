@@ -113,8 +113,6 @@ export const useEditGroupDetail = () => {
           ...defaultEditGroupState,
           member_ids: [myAccountId],
         };
-        console.log('defaultEditGroupStateWithMyAccount:', defaultEditGroupStateWithMyAccount);
-        console.log('newState:', newState);
 
         // デフォルト値から変更があった場合のみローカルストレージに保存する
         if (!(JSON.stringify(defaultEditGroupStateWithMyAccount) === JSON.stringify(newState))) {
