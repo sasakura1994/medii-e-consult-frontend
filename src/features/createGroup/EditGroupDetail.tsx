@@ -2,13 +2,35 @@ import { Radio } from '@/components/Parts/Form/Radio';
 import TextArea from '@/components/TextArea/TextArea';
 import TextField from '@/components/TextField/TextField';
 import React, { useState } from 'react';
-export const EditGroup = () => {
+export const EditGroupDetail = () => {
   const [groupDescription, setGroupDescription] = useState('');
   const [assignable, setAssignable] = useState<boolean>(true);
   const [isPublic, setIsPublic] = useState<boolean>(true);
   const [notificationFrequency, setNotificationFrequency] = useState<
     'notification-frequency-all' | 'notification-frequency-hourly' | 'notification-frequency-daily'
   >('notification-frequency-all');
+  // const { medicalSpecialities } = useFetchMedicalSpecialitiesWithContract();
+  const groups = [
+    {
+      group_id: '1',
+      area: '東京都',
+      name: '医療法人社団　翔央会　川越内科クリニック',
+      hospital_name: '医療法人社団　翔央会　川越内科クリニック',
+    },
+    {
+      group_id: '2',
+      area: '東京都',
+      name: '医療法人社団○○会',
+      hospital_name: '○○病院',
+    },
+    {
+      group_id: '3',
+      area: '東京都',
+      name: '医療法人社団○○会',
+      hospital_name: '○○病院',
+    },
+  ];
+
   return (
     <div>
       <div className="mb-2 mt-6 flex text-left">
@@ -143,6 +165,33 @@ export const EditGroup = () => {
           </a>
           までお問い合わせください
         </div>
+      </div>
+
+      <div>
+        <table className="w-full overflow-auto text-sm">
+          <thead className="border-y border-y-heading-line text-left text-block-gray">
+            <tr>
+              <th className="whitespace-nowrap py-3 font-normal">エリア・施設名</th>
+              <th className="whitespace-nowrap py-3 text-center font-normal">氏名</th>
+              <th className="whitespace-nowrap py-3 text-center font-normal">勤務先病院</th>
+              <th className="whitespace-nowrap py-3 text-center font-normal">編集</th>
+            </tr>
+          </thead>
+          <tbody>
+            {groups.map((group) => (
+              <tr
+                key={group.group_id}
+                className="cursor-pointer overflow-scroll hover:bg-primary-light"
+                onClick={() => {}}
+              >
+                <td className="py-3 text-center">{group.area}</td>
+                <td className="py-3 text-center">{group.name}</td>
+                <td className="py-3 text-center">{group.hospital_name}</td>
+                <td className="break-words bg-white py-3 text-center text-[15px]">―</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       <div className="mt-2 space-y-1">
