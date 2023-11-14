@@ -11,13 +11,14 @@ import { useEditGroupDetail } from './useEditGroupDetail';
 
 export const EditGroupDetail = () => {
   const {
-    accountId,
+    myAccountId,
     admin,
     medicalSpecialities,
     selectedMembers,
     setSelectedMembers,
     editState,
     setEditState,
+    submit,
     isDraftConfirming,
     isOpenInviteMemberModal,
     setIsOpenInviteMemberModal,
@@ -27,7 +28,7 @@ export const EditGroupDetail = () => {
   } = useEditGroupDetail();
 
   return (
-    <div>
+    <form onSubmit={submit}>
       {isDraftConfirming && (
         <ConfirmModal onOk={applyDraft} onCancel={dontUseDraft}>
           下書きに作成途中のグループがあります。作成途中のグループを続けて編集しますか？
@@ -88,7 +89,6 @@ export const EditGroupDetail = () => {
         対象疾患
       </label>
       <TextField
-        required
         name="targetDisease"
         className="h-12 w-full"
         id="targetDisease"
@@ -252,6 +252,7 @@ export const EditGroupDetail = () => {
       <div className="mb-2 mt-4 flex items-center gap-4">
         {admin && (
           <PrimaryButton
+            type="button"
             onClick={() => {
               setIsOpenInviteMemberModal(true);
             }}
@@ -305,7 +306,7 @@ export const EditGroupDetail = () => {
                                   className="sticky right-0 table-cell break-words bg-white py-3
                                   text-[15px]"
                                 >
-                                  {member.account_id === accountId ? (
+                                  {member.account_id === myAccountId ? (
                                     <p>―</p>
                                   ) : (
                                     <button
@@ -394,9 +395,9 @@ export const EditGroupDetail = () => {
         />
       </div>
 
-      <PrimaryButton className="mx-auto mt-12 h-12 px-12" type="submit" onClick={async () => {}}>
+      <PrimaryButton className="mx-auto mt-12 h-12 px-12" type="submit">
         グループを作成
       </PrimaryButton>
-    </div>
+    </form>
   );
 };

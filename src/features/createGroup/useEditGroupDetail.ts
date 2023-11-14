@@ -5,7 +5,7 @@ import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetc
 import { useToken } from '@/hooks/authentication/useToken';
 import { saveLocalStorage, loadLocalStorage, removeLocalStorage } from '@/libs/LocalStorageManager';
 import { useRouter } from 'next/router';
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, FormEvent } from 'react';
 
 type EditGroupState = {
   group_id?: string;
@@ -31,36 +31,38 @@ const queryParamsPart2 = '*_ga_C9VCVTY692*MTY5OTkxMzI1MS4zNjMuMS4xNjk5OTE2MDg4Lj
 const queryParams = queryParamsPart1 + queryParamsPart2;
 const inquiryFormUrl = baseUrl + formId + queryParams;
 
+const defaultEditGroupState = {
+  group_id: '',
+  is_public: true,
+  group_name: '',
+  area: '',
+  speciality: 'MDD',
+  disease: '',
+  explanation: '',
+  member_ids: [],
+  notification_frequency: 'ALL' as 'ALL' | 'HOURLY' | 'DAILY',
+  assignable: true,
+};
+
 export const useEditGroupDetail = () => {
   const router = useRouter();
   const { admin } = router.query as QueryParams;
   const [isOpenInviteMemberModal, setIsOpenInviteMemberModal] = useState(false);
   const [isDraftConfirming, setIsDraftConfirming] = useState(false);
   const [draft, setDraft] = useState<EditGroupState>();
-  const { accountId } = useToken();
+  const { accountId: myAccountId } = useToken();
   const { fetchGroupMemberData } = useFetchGroupMemberData();
   const { medicalSpecialities } = useFetchMedicalSpecialities();
-
   const [selectedMembers, setSelectedMembers] = useState<SearchGroupMember[]>([]);
-
-  const [editState, setEditState] = useState<EditGroupState>({
-    group_id: '',
-    is_public: true,
-    group_name: '',
-    area: '',
-    speciality: 'MDD',
-    disease: '',
-    explanation: '',
-    member_ids: [],
-    notification_frequency: 'ALL' as 'ALL' | 'HOURLY' | 'DAILY',
-    assignable: true,
-  });
+  const [editState, setEditState] = useState<EditGroupState>(defaultEditGroupState);
   const { postCreateGroup } = usePostCreateGroup();
 
   const applyDraft = useCallback(() => {
     if (draft) {
+      // 下書きのメンバーのaccount_idの配列をfetchGroupMemberDataに渡しメンバーの情報を取得する
       draft.member_ids.forEach(async (memberId) => {
         await fetchGroupMemberData({ account_id: memberId }).then((res) => {
+          // 既に情報取得されているメンバーを除いて追加する
           setSelectedMembers((prev) => {
             if (
               ![...prev].some((member) => {
@@ -73,7 +75,7 @@ export const useEditGroupDetail = () => {
           });
         });
       });
-
+      // 下書きの情報をセットする
       setEditState(draft);
     }
     setIsDraftConfirming(false);
@@ -84,8 +86,8 @@ export const useEditGroupDetail = () => {
   };
 
   useEffect(() => {
-    if (accountId) {
-      fetchGroupMemberData({ account_id: accountId }).then((res) => {
+    if (myAccountId) {
+      fetchGroupMemberData({ account_id: myAccountId }).then((res) => {
         setSelectedMembers((prev) => {
           if (
             ![...prev].some((member) => {
@@ -98,7 +100,7 @@ export const useEditGroupDetail = () => {
         });
       });
     }
-  }, [accountId, fetchGroupMemberData]);
+  }, [myAccountId, fetchGroupMemberData]);
 
   useEffect(() => {
     if (selectedMembers.length > 0) {
@@ -107,12 +109,25 @@ export const useEditGroupDetail = () => {
           ...prevState,
           member_ids: selectedMembers.map((member) => member.account_id),
         };
-        saveLocalStorage('EditGroupDetail::groupData', JSON.stringify(newState));
+        const defaultEditGroupStateWithMyAccount = {
+          ...defaultEditGroupState,
+          member_ids: [myAccountId],
+        };
+        console.log('defaultEditGroupStateWithMyAccount:', defaultEditGroupStateWithMyAccount);
+        console.log('newState:', newState);
+
+        // デフォルト値から変更があった場合のみローカルストレージに保存する
+        if (!(JSON.stringify(defaultEditGroupStateWithMyAccount) === JSON.stringify(newState))) {
+          saveLocalStorage('EditGroupDetail::groupData', JSON.stringify(newState));
+        } else {
+          removeLocalStorage('EditGroupDetail::groupData');
+        }
         return newState;
       });
     }
-  }, [selectedMembers]);
+  }, [myAccountId, selectedMembers]);
 
+  // ローカルストレージから下書きを取得する
   useEffect(() => {
     if (loadLocalStorage('EditGroupDetail::groupData')) {
       setDraft(JSON.parse(loadLocalStorage('EditGroupDetail::groupData') || '{}'));
@@ -120,28 +135,32 @@ export const useEditGroupDetail = () => {
     }
   }, []);
 
-  const submit = useCallback(async () => {
-    await postCreateGroup({
-      group_name: editState.group_name,
-      area: editState.area,
-      speciality: editState.speciality,
-      disease: editState.disease,
-      explanation: editState.explanation,
-      member_ids: editState.member_ids,
-      notification_frequency: editState.notification_frequency,
-      assignable: editState.assignable,
-      is_public: editState.assignable ? editState.is_public : false,
-    }).then((res) => {
-      const { group_room_id } = res.data;
-      if (group_room_id) {
-        router.push({ pathname: '/group', query: { group_room_id: group_room_id } });
-      }
-    });
-    removeLocalStorage('EditGroupDetail::groupData');
-  }, [editState, postCreateGroup, router]);
+  const submit = useCallback(
+    async (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      await postCreateGroup({
+        group_name: editState.group_name,
+        area: editState.area,
+        speciality: editState.speciality,
+        disease: editState.disease,
+        explanation: editState.explanation,
+        member_ids: editState.member_ids,
+        notification_frequency: editState.notification_frequency,
+        assignable: editState.assignable,
+        is_public: editState.assignable ? editState.is_public : false,
+      }).then((res) => {
+        const { group_room_id } = res.data;
+        if (res.status === 201 && group_room_id) {
+          router.push({ pathname: '/group', query: { group_room_id: group_room_id } });
+        }
+      });
+      removeLocalStorage('EditGroupDetail::groupData');
+    },
+    [editState, postCreateGroup, router]
+  );
 
   return {
-    accountId,
+    myAccountId,
     admin,
     editState,
     setEditState,
