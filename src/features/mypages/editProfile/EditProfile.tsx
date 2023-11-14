@@ -6,8 +6,6 @@ import { UsageClassification } from './UsageClassification';
 import { useEditProfile } from './useEditProfile';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
-import { EditProfileNotification } from './EditProfileNotification';
-import { EditProfileQuestionary } from './EditProfileQuestionary';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import Link from 'next/link';
@@ -58,12 +56,6 @@ export const EditProfile = (props: EditProfileProps) => {
             <div className="mt-8">
               <UsageClassification {...editProfile} />
             </div>
-          )}
-          {isRegisterMode && (
-            <>
-              <EditProfileNotification {...editProfile} />
-              <EditProfileQuestionary {...editProfile} />
-            </>
           )}
         </div>
 

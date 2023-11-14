@@ -14,11 +14,7 @@ export const YearInput = (props: Props) => {
   return (
     <div className="flex">
       <div className="w-[104px]">
-        <SelectBox
-          required
-          className="w-20 rounded-md border border-gray-400 px-2"
-          onChange={(e) => setEra(e.target.value as Era)}
-        >
+        <SelectBox required className="w-20 px-2" onChange={(e) => setEra(e.target.value as Era)}>
           <option value="year">西暦</option>
           <option value="showa">昭和</option>
           <option value="heisei">平成</option>
@@ -29,7 +25,7 @@ export const YearInput = (props: Props) => {
         type="number"
         placeholder="yyyy"
         value={convertYear(value.toString(), 'year', era)}
-        className="ml-2 h-10 w-20 rounded-md border border-gray-400 px-2 lg:w-40"
+        className="ml-2 h-10 w-20 px-2 lg:w-40"
         required
         min={validation.min}
         max={validation.max}

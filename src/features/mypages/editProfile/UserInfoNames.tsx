@@ -1,7 +1,7 @@
 import React from 'react';
-import { TextField } from '@/components/Parts/Form/TextField';
 import { useEditProfile } from './useEditProfile';
 import { EditProfileLabel } from '@/features/mypages/editProfile/EditProfileLabel';
+import TextField from '@/components/TextField/TextField';
 
 type Props = Pick<ReturnType<typeof useEditProfile>, 'profile' | 'setProfileFields'> & {
   isEnabled: boolean;
@@ -25,7 +25,7 @@ export const UserInfoNames = (props: Props) => {
             onChange={(e) => setProfileFields({ last_name: e.target.value })}
             disabled={!isEnabled}
             id="last_name"
-            className="mb-4 lg:mb-0"
+            className="mb-4 w-full lg:mb-0"
             placeholder="姓"
           />
         </div>
@@ -38,6 +38,7 @@ export const UserInfoNames = (props: Props) => {
             onChange={(e) => setProfileFields({ first_name: e.target.value })}
             disabled={!isEnabled}
             id="first_name"
+            className="w-full"
             placeholder="名"
           />
         </div>
@@ -52,7 +53,7 @@ export const UserInfoNames = (props: Props) => {
             onChange={(e) => setProfileFields({ last_name_hira: e.target.value })}
             disabled={!isEnabled}
             id="last_name_hira"
-            className="mb-4 lg:mb-0"
+            className="mb-4 w-full lg:mb-0"
             placeholder="姓（ふりがな）"
           />
         </div>
@@ -65,6 +66,7 @@ export const UserInfoNames = (props: Props) => {
             onChange={(e) => setProfileFields({ first_name_hira: e.target.value })}
             disabled={!isEnabled}
             id="first_name_hira"
+            className="w-full"
             placeholder="名（ふりがな）"
           />
         </div>

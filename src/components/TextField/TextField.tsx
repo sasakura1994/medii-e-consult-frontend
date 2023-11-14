@@ -6,6 +6,7 @@ type TextFieldProps = {
   disabled?: boolean;
   className?: string;
   name?: string;
+  id?: string;
   placeholder?: string;
   value?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -25,6 +26,7 @@ const TextField = (props: TextFieldProps) => {
     type,
     label,
     name,
+    id,
     disabled,
     className,
     placeholder,
@@ -46,6 +48,7 @@ const TextField = (props: TextFieldProps) => {
       <input
         type={type}
         name={name}
+        id={id}
         disabled={disabled}
         className={`rounded-lg ${
           hasError

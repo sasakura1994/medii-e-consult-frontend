@@ -32,7 +32,7 @@ export const SelectBox: React.FC<PropsType> = (props) => {
           rounded
           border
           border-solid
-          border-block-gray
+          border-border-field
           bg-white
           py-2
           pl-3

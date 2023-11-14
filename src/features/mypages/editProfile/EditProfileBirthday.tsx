@@ -1,9 +1,9 @@
 import React from 'react';
 import { EditProfileLabel } from './EditProfileLabel';
 import { YearInput } from '@/components/Parts/Form/YearInput';
-import { TextField } from '@/components/Parts/Form/TextField';
 import { useEditProfile } from './useEditProfile';
 import { useEraConverter } from '@/hooks/useEraConverter';
+import TextField from '@/components/TextField/TextField';
 
 type Props = Pick<ReturnType<typeof useEditProfile>, 'profile' | 'setProfileFields'> & {
   isEnabled: boolean;
@@ -28,34 +28,42 @@ export const EditProfileBirthday = (props: Props) => {
             onChange={(value) => setProfileFields({ birthday_year: value.toString() })}
           />
         ) : (
-          <TextField
-            name="birthday_year"
-            value={profile.birthday_year}
-            onChange={(e) => setProfileFields({ birthday_year: e.target.value })}
-            disabled={!isEnabled}
-            id="birthday_year"
-            className="!w-32 lg:!w-40"
-            subscript="年"
-          />
+          <div className="flex items-end">
+            <TextField
+              name="birthday_year"
+              value={profile.birthday_year}
+              onChange={(e) => setProfileFields({ birthday_year: e.target.value })}
+              disabled={!isEnabled}
+              id="birthday_year"
+              className="!w-32 lg:!w-40"
+            />
+            <p className="ml-2">年</p>
+          </div>
         )}
 
-        <TextField
-          name="birthday_month"
-          value={profile.birthday_month}
-          onChange={(e) => setProfileFields({ birthday_month: e.target.value })}
-          disabled={!isEnabled}
-          id="birthday_month"
-          subscript="月"
-        />
+        <div className="flex items-end">
+          <TextField
+            name="birthday_month"
+            value={profile.birthday_month}
+            onChange={(e) => setProfileFields({ birthday_month: e.target.value })}
+            disabled={!isEnabled}
+            className="w-full"
+            id="birthday_month"
+          />
+          <p className="ml-2">月</p>
+        </div>
 
-        <TextField
-          name="birthday_day"
-          value={profile.birthday_day}
-          onChange={(e) => setProfileFields({ birthday_day: e.target.value })}
-          disabled={!isEnabled}
-          id="birthday_day"
-          subscript="日"
-        />
+        <div className="flex items-end">
+          <TextField
+            name="birthday_day"
+            value={profile.birthday_day}
+            onChange={(e) => setProfileFields({ birthday_day: e.target.value })}
+            disabled={!isEnabled}
+            className="w-full"
+            id="birthday_day"
+          />
+          <p className="ml-2">日</p>
+        </div>
       </div>
     </>
   );
