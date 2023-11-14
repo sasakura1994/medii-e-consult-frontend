@@ -115,7 +115,7 @@ export const InviteMemberModal = (props: Props) => {
           検索
         </PrimaryButton>
 
-        <p className="mt-3 text-center">招待済みメンバー数： 0名</p>
+        <p className="mt-3 text-center">招待済みメンバー数： {selectedMembers.length}名</p>
         <div className="mt-3 max-h-[300px] overflow-auto">
           {searchedMember && (
             <div className="mt-3">
