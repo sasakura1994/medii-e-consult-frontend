@@ -11,9 +11,7 @@ export type FetchNewerConsultsResponseData = {
 };
 
 export const useFetchNewerConsults = (): NewerConsult[] | undefined => {
-  const { data } = useAuthenticatedSWR<FetchNewerConsultsResponseData>(
-    `/chat_room/newer_consult?count=5`
-  );
+  const { data } = useAuthenticatedSWR<FetchNewerConsultsResponseData>(`/chat_room/newer_consult?count=5`);
 
   return data?.consults;
 };

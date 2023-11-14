@@ -112,7 +112,7 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelectedWithRedi
         <PrimaryButton
           type="submit"
           dataTestId="document-input-number-form-submit"
-          className='px-10 pb-2 pt-1.5 shadow-lg lg:my-10'
+          className="px-10 pb-2 pt-1.5 shadow-lg lg:my-10"
           disabled={!isUpdatePrepared}
         >
           登録を完了する

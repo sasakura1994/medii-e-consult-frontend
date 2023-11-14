@@ -13,7 +13,7 @@ export const TopMediiMagazineItem = (props: Props) => {
     <a href={post.link} target="_blank" rel="noreferrer">
       <div className="flex cursor-pointer gap-2 border-b py-4">
         <div className="w-[200px]">
-          <p className="text-md text-text-primary line-clamp-3">{post.title}</p>
+          <p className="line-clamp-3 text-md text-text-primary">{post.title}</p>
           <p className="mt-1 text-medii-sm font-light text-text-secondary">{dateFormat(post.date, 'YYYY/MM/DD')}</p>
         </div>
         <div className="mr-2">

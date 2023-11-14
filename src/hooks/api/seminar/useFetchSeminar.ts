@@ -19,11 +19,8 @@ export type UseFetchSeminarType = {
 const endpoint = '/seminar/';
 
 export const useFetchSeminar = (id: string): UseFetchSeminarType => {
-  const { isLoading, error, data, mutate } =
-    useAuthenticatedSWR<SeminarResponse>(endpoint + id);
-  const seminar = data
-    ? { ...data.seminar, image_url: data.image_url }
-    : undefined;
+  const { isLoading, error, data, mutate } = useAuthenticatedSWR<SeminarResponse>(endpoint + id);
+  const seminar = data ? { ...data.seminar, image_url: data.image_url } : undefined;
   return {
     isLoading,
     error,

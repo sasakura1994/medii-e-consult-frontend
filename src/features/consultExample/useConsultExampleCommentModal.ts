@@ -6,21 +6,16 @@ export const useConsultExampleCommentModal = (consultExampleId: string) => {
   const [body, setBody] = useState('');
   const [isCompleted, setIsCompleted] = useState(false);
 
-  const {
-    createCommentAndMutate,
-    createCommentForMessageAndMutate,
-    isCommentSending,
-  } = useConsultExampleActions(consultExampleId);
+  const { createCommentAndMutate, createCommentForMessageAndMutate, isCommentSending } =
+    useConsultExampleActions(consultExampleId);
 
   const createComment = useCallback(async (): Promise<boolean> => {
     setIsCompleted(false);
 
-    const result = await createCommentAndMutate({ isAnonymous, body }).catch(
-      (error) => {
-        console.error(error);
-        return null;
-      }
-    );
+    const result = await createCommentAndMutate({ isAnonymous, body }).catch((error) => {
+      console.error(error);
+      return null;
+    });
 
     if (!result) {
       return false;
@@ -35,13 +30,12 @@ export const useConsultExampleCommentModal = (consultExampleId: string) => {
     async (consultExampleMessageId: number): Promise<boolean> => {
       setIsCompleted(false);
 
-      const result = await createCommentForMessageAndMutate(
-        consultExampleMessageId,
-        { isAnonymous, body }
-      ).catch((error) => {
-        console.error(error);
-        return null;
-      });
+      const result = await createCommentForMessageAndMutate(consultExampleMessageId, { isAnonymous, body }).catch(
+        (error) => {
+          console.error(error);
+          return null;
+        }
+      );
 
       if (!result) {
         return false;

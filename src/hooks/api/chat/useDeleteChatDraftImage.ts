@@ -10,9 +10,7 @@ export const useDeleteChatDraftImage = () => {
 
   const deleteChatDraftImage = React.useCallback(
     (chatDraftImageId: string) => {
-      return axios.delete<DeleteChatDraftImageResponseData>(
-        `/chat_draft_image/${chatDraftImageId}`
-      );
+      return axios.delete<DeleteChatDraftImageResponseData>(`/chat_draft_image/${chatDraftImageId}`);
     },
     [axios]
   );

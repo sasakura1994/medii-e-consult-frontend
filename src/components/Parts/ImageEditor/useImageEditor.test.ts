@@ -13,11 +13,7 @@ const props: ImageEditorProps = {
   },
 };
 
-const createMouseEvent = (
-  type: 'mousedown' | 'mousemove' | 'mouseup',
-  offsetX: number,
-  offsetY: number
-) =>
+const createMouseEvent = (type: 'mousedown' | 'mousemove' | 'mouseup', offsetX: number, offsetY: number) =>
   ({
     target: {
       getPosition: () => ({ x: 0, y: 0 }),
@@ -27,16 +23,14 @@ const createMouseEvent = (
       offsetX,
       offsetY,
     },
-  } as KonvaEventObject<MouseEvent>);
+  }) as KonvaEventObject<MouseEvent>;
 
 describe('useImageEditor', () => {
   test('lineWidths are right', () => {
     const { result } = renderHook(() => useImageEditor(props));
 
     act(() => result.current.onMouseDown(createMouseEvent('mousedown', 0, 0)));
-    act(() =>
-      result.current.onMouseMove(createMouseEvent('mousemove', 10, 20))
-    );
+    act(() => result.current.onMouseMove(createMouseEvent('mousemove', 10, 20)));
     act(() => result.current.setLineWidthType('thin'));
     expect(result.current.allScaledLines[0].lineWidth).toBe(25);
 
@@ -51,9 +45,7 @@ describe('useImageEditor', () => {
     const { result } = renderHook(() => useImageEditor(props));
 
     act(() => result.current.onMouseDown(createMouseEvent('mousedown', 0, 0)));
-    act(() =>
-      result.current.onMouseMove(createMouseEvent('mousemove', 10, 20))
-    );
+    act(() => result.current.onMouseMove(createMouseEvent('mousemove', 10, 20)));
     act(() => result.current.onMouseUp(createMouseEvent('mouseup', 20, 40)));
     expect(result.current.lines.length).toBe(1);
   });
@@ -62,9 +54,7 @@ describe('useImageEditor', () => {
     const { result } = renderHook(() => useImageEditor(props));
 
     act(() => result.current.onMouseDown(createMouseEvent('mousedown', 0, 0)));
-    act(() =>
-      result.current.onMouseMove(createMouseEvent('mousemove', 10, 20))
-    );
+    act(() => result.current.onMouseMove(createMouseEvent('mousemove', 10, 20)));
     act(() => result.current.onMouseUp(createMouseEvent('mouseup', 20, 40)));
     act(() => result.current.undo());
     expect(result.current.lines.length).toBe(0);

@@ -8,10 +8,7 @@ import { MedicalSpecialityCategoryEntity } from '@/types/entities/medicalSpecial
 type Props = {
   medicalSpecialities: MedicalSpecialityEntity[];
   medicalSpecialityCategories: MedicalSpecialityCategoryEntity[];
-  moveSelectedMedicalSpeciality: (
-    dragIndex: number,
-    hoverIndex: number
-  ) => void;
+  moveSelectedMedicalSpeciality: (dragIndex: number, hoverIndex: number) => void;
   onDelete: (medicalSpeciality: MedicalSpecialityEntity) => void;
 };
 
@@ -31,8 +28,7 @@ export const SelectedMedicalSpecialities: React.FC<Props> = ({
             medicalSpeciality={medicalSpeciality}
             medicalSpecialityCategory={medicalSpecialityCategories.find(
               (medicalSpecialityCategory) =>
-                medicalSpecialityCategory.id ===
-                medicalSpeciality.medical_speciality_category_id
+                medicalSpecialityCategory.id === medicalSpeciality.medical_speciality_category_id
             )}
             onDelete={() => onDelete(medicalSpeciality)}
             moveItem={moveSelectedMedicalSpeciality}

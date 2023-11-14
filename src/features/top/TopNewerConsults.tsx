@@ -12,11 +12,11 @@ export const TopNewerConsults = () => {
     <>
       <div>
         <div className="bg-popup flex  items-center justify-center gap-[10px] rounded p-2  shadow-low ">
-          <img src="icons/top-popup-back.svg"  alt="" />
+          <img src="icons/top-popup-back.svg" alt="" />
           <p className="text-sm font-light">毎日多くのコンサルがエキスパート医師により解決されています！</p>
         </div>
         <div className="flex px-4">
-          <img src="icons/top-popup-arrow.svg" className="drop-shadow-popup"  alt="" />
+          <img src="icons/top-popup-arrow.svg" className="drop-shadow-popup" alt="" />
         </div>
       </div>
       <div className="mt-2 rounded-lg bg-bg-secondary p-4">

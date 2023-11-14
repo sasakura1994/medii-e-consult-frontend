@@ -10,11 +10,7 @@ export type UseFetchPointHistoryType = {
 };
 
 export const useFetchPointHistory = (): UseFetchPointHistoryType => {
-  const {
-    isLoading,
-    error,
-    data: pointHistories,
-  } = useAuthenticatedSWR<PointHistoryEntityType[]>(endpoint);
+  const { isLoading, error, data: pointHistories } = useAuthenticatedSWR<PointHistoryEntityType[]>(endpoint);
 
   return {
     isLoading,

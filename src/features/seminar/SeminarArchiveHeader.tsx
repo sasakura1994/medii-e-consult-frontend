@@ -6,9 +6,7 @@ type Props = {
   ticketCount: ticketCountEntity | undefined;
 };
 
-export const SeminarArchiveHeader: React.FC<Props> = ({
-  ticketCount,
-}: Props) => {
+export const SeminarArchiveHeader: React.FC<Props> = ({ ticketCount }: Props) => {
   const [showModal, setShowModal] = React.useState(false);
   return (
     <div
@@ -27,8 +25,8 @@ export const SeminarArchiveHeader: React.FC<Props> = ({
       md:h-32
       md:bg-[url('/images/seminar/list_fukidashi.svg')]
       md:px-12
-      md:pt-6
       md:pb-0
+      md:pt-6
       md:text-3xl"
       >
         E-カンファアーカイブ動画
@@ -37,7 +35,7 @@ export const SeminarArchiveHeader: React.FC<Props> = ({
         <div>
           <div className="relative">
             <div
-              className="absolute right-0 bottom-0 top-0 left-0 rounded-lg
+              className="absolute bottom-0 left-0 right-0 top-0 rounded-lg
             border border-[#c4c4c4] bg-white blur-xs md:rounded-3xl"
             ></div>
             <div className="relative flex items-center p-5 md:p-6">
@@ -65,7 +63,7 @@ export const SeminarArchiveHeader: React.FC<Props> = ({
         </div>
         <button
           onClick={() => setShowModal(true)}
-          className="text-xm mt-4 w-full rounded-md bg-primary py-4 px-4 text-white md:ml-10 md:mt-0 md:w-auto"
+          className="text-xm mt-4 w-full rounded-md bg-primary px-4 py-4 text-white md:ml-10 md:mt-0 md:w-auto"
         >
           チケットを獲得するには?
         </button>

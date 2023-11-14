@@ -1,10 +1,4 @@
-import type {
-  ResponseResolver,
-  DefaultBodyType,
-  RestContext,
-  RestRequest,
-  PathParams,
-} from 'msw';
+import type { ResponseResolver, DefaultBodyType, RestContext, RestRequest, PathParams } from 'msw';
 
 /**
  * プロフィールモック
@@ -53,11 +47,11 @@ export const profileMock = {
   questionary_selected_ids_csv: null,
   questionary_other: null,
 };
-export const getProfileMock: ResponseResolver<
-  RestRequest<never, PathParams<string>>,
-  RestContext,
-  DefaultBodyType
-> = (req, res, ctx) => {
+export const getProfileMock: ResponseResolver<RestRequest<never, PathParams<string>>, RestContext, DefaultBodyType> = (
+  req,
+  res,
+  ctx
+) => {
   return res(ctx.status(200), ctx.json(profileMock));
 };
 export const updateProfileMock: ResponseResolver<
