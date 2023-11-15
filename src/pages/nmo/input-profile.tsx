@@ -10,10 +10,11 @@ import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 import { useNmoInputProfile } from '@/features/nmo/useNmoInputProfile';
 import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
 import { EditProfileBirthday } from '@/features/mypages/editProfile/EditProfileBirthday';
+import { MainSpecialitySelect } from '@/features/mypages/editProfile/MainSpecialitySelect';
 
 const NmoInputProfilePage: NextPageWithLayout = () => {
   const inputProfile = useNmoInputProfile();
-  const { errorMessage, isSending, submitNmoInputProfile } = inputProfile;
+  const { errorMessage, isSending, selectInChargeMedicalSpecialities, submitNmoInputProfile } = inputProfile;
 
   return (
     <div className="lg:py-10">
@@ -33,8 +34,14 @@ const NmoInputProfilePage: NextPageWithLayout = () => {
           </div>
           <EditProfileHeading className="my-8">医療従事経歴</EditProfileHeading>
           <MedicalCareerQualifiedYear isEnabled={true} {...inputProfile} />
-          <div className="mt-4">
-            <MedicalCareerSpecialities {...inputProfile} />
+          <div className="mt-6">
+            <MainSpecialitySelect {...inputProfile} />
+          </div>
+          <div className="mt-6">
+            <MedicalCareerSpecialities
+              {...inputProfile}
+              selectMedicalSpecialities={selectInChargeMedicalSpecialities}
+            />
           </div>
           {errorMessage !== '' && <ErrorMessage className="mt-8 text-center">{errorMessage}</ErrorMessage>}
           <div className="mt-10 flex justify-center">

@@ -10,11 +10,12 @@ import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
 import { EditProfileBirthday } from '@/features/mypages/editProfile/EditProfileBirthday';
 import { useFillProfile } from '@/features/mypages/useFillProfile';
+import { MainSpecialitySelect } from '@/features/mypages/editProfile/MainSpecialitySelect';
 
 // 代理登録時の不足しているプロフィールを埋めるページ
 const FillProfilePage: NextPageWithLayout = () => {
   const fillProfile = useFillProfile();
-  const { errorMessage, isSending, submitFillProfile } = fillProfile;
+  const { errorMessage, isSending, selectInChargeMedicalSpecialities, submitFillProfile } = fillProfile;
 
   return (
     <div className="lg:py-10">
@@ -34,8 +35,11 @@ const FillProfilePage: NextPageWithLayout = () => {
           </div>
           <EditProfileHeading className="my-8">医療従事経歴</EditProfileHeading>
           <MedicalCareerQualifiedYear isEnabled={true} {...fillProfile} />
-          <div className="mt-4">
-            <MedicalCareerSpecialities {...fillProfile} />
+          <div className="mt-6">
+            <MainSpecialitySelect {...fillProfile} />
+          </div>
+          <div className="mt-6">
+            <MedicalCareerSpecialities {...fillProfile} selectMedicalSpecialities={selectInChargeMedicalSpecialities} />
           </div>
           {errorMessage !== '' && <ErrorMessage className="mt-8 text-center">{errorMessage}</ErrorMessage>}
           <div className="mt-10 flex justify-center">
