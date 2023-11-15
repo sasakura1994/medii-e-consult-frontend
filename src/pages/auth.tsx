@@ -16,7 +16,8 @@ const Auth = () => {
   const { axios } = useAxios();
   const { setTokenAndMarkInitialized } = useToken();
   const searchParams = useSearchParams();
-  const token = searchParams.get('token')
+  const { profile } = useFetchProfile();
+  const token = searchParams.get('token');
 
   const Login = async () => {
     const response = await axios
@@ -27,21 +28,15 @@ const Auth = () => {
 
     console.log("response", response);
 
-    if (!response) {
-      return;
-    }
-    
-    setTokenAndMarkInitialized(response.data.jwt_token);
+    if(response) {
+      setTokenAndMarkInitialized(response.data.jwt_token);
 
-    const { profile } = useFetchProfile();
-    
-    if (!profile) {
-      return;
+      if(profile) {
+        mutateFetchProfile();
+        if (response.data.login_type==="register") router.push(redirectUrl === '' ? 'top' : redirectUrl);
+        else router.push('editprofile?registerMode=true');
+      }
     }
-
-    mutateFetchProfile();
-    if (response.data.login_type==="register") router.push(redirectUrl === '' ? 'top' : redirectUrl);
-    else router.push('editprofile?registerMode=true');
   };
 
   return (
