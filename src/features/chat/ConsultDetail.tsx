@@ -104,30 +104,26 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     if (!chatRoomData) {
       return <></>;
     }
-
+    const owner = chatRoomData.members.find((member) => member.account_id === chatRoomData.chat_room.owner_account_id);
     if (!isMyRoom) {
       if (chatRoomData.chat_room.is_real_name) {
-        const owner = chatRoomData.members.find(
-          (member) => member.account_id === chatRoomData.chat_room.owner_account_id
+        return (
+          <>
+            <p className="text-md font-bold">{owner?.last_name + ' ' + owner?.first_name + '先生'}</p>
+            <p className="text-xs">
+              ({getMedicalSpecialityName(owner?.speciality_1 ?? '')}・{getExperienceYear(owner?.qualified_year ?? 0)}
+              年目)
+            </p>
+          </>
         );
-        if (owner) {
-          return (
-            <>
-              <p className="text-md font-bold">{owner.last_name + ' ' + owner.first_name + '先生'}</p>
-              <p className="text-xs">
-                ({getMedicalSpecialityName(owner.speciality_1)}・{getExperienceYear(owner.qualified_year)}年目)
-              </p>
-            </>
-          );
-        }
       }
       return (
         <>
           <p className="text-md font-bold">質問医</p>
           {chatRoomData.members.length > 0 && (
             <p className="text-xs">
-              ({getMedicalSpecialityName(chatRoomData.members[0].speciality_1)}・
-              {getExperienceYear(chatRoomData.members[0].qualified_year)}年目)
+              ({getMedicalSpecialityName(owner?.speciality_1 ?? '')}・{getExperienceYear(owner?.qualified_year ?? 0)}
+              年目)
             </p>
           )}
         </>
