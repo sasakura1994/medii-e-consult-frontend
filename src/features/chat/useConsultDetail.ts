@@ -45,6 +45,7 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
   const chatListDataWithDisplayName = useMemo(() => {
     if (chatListData && chatRoomData) {
       return chatListData.map((c) => {
+        // 自分の場合
         if (chatRoomData.me?.account_id === c.account_id) {
           if (chatRoomData.me.first_name) {
             return { ...c, displayName: chatRoomData.me.last_name + ' ' + chatRoomData.me.first_name + '先生' };
@@ -59,23 +60,25 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
             };
           }
           return { ...c, displayName: '' };
+          // 自分以外の場合
         } else if (
           chatRoomData.members &&
           chatRoomData.members.length > 0 &&
-          chatRoomData.members[0].account_id === c.account_id
+          chatRoomData.members.some((member) => member.account_id === c.account_id)
         ) {
-          if (chatRoomData.members[0].first_name) {
+          const targetMember = chatRoomData.members.find((member) => c.account_id === member.account_id);
+          if (targetMember?.first_name) {
             return {
               ...c,
-              displayName: chatRoomData.members[0].last_name + ' ' + chatRoomData.members[0].first_name + '先生',
+              displayName: targetMember.last_name + ' ' + targetMember.first_name + '先生',
             };
-          } else if (chatRoomData.members[0].speciality_1) {
+          } else if (targetMember?.speciality_1) {
             return {
               ...c,
               displayName:
-                getMedicalSpecialityName(chatRoomData.members[0].speciality_1) +
+                getMedicalSpecialityName(targetMember.speciality_1) +
                 ' ' +
-                getExperienceYear(chatRoomData.members[0].qualified_year) +
+                getExperienceYear(targetMember.qualified_year) +
                 '年目',
             };
           }
