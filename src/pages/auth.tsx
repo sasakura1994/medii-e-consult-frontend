@@ -2,12 +2,9 @@ import { mutateFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { useToken } from '@/hooks/authentication/useToken';
 import { useAxios } from '@/hooks/network/useAxios';
 import { useLogin } from '@/hooks/useLogin';
+import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
-
-type Query = {
-  token: string;
-};
 
 const Auth = () => {
   useEffect(() => {
@@ -17,9 +14,9 @@ const Auth = () => {
   const router = useRouter();
   const { redirectUrl } = useLogin();
   const { axios } = useAxios();
-  const { token } = router.query as Query;
-  console.log("router", router);
   const { setTokenAndMarkInitialized } = useToken();
+  const searchParams = useSearchParams();
+  const token = searchParams.get('token')
 
   const Login = async () => {
     const response = await axios
@@ -32,7 +29,7 @@ const Auth = () => {
       setTokenAndMarkInitialized(response.data.jwt_token);
 
       const profileResponse = await axios
-        .get('/doctor/profile', response.data.jwt_token)
+        .get('/doctor/profile')
         .catch((error) => {
           console.error(error);
         });
