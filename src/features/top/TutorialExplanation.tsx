@@ -11,11 +11,7 @@ const TutorialExplanation = (props: TutorialExplanationProps) => {
   const { page, next, back } = useTutorialExplanation();
 
   return (
-    <Modal
-      className="relative flex w-full flex-col lg:max-h-[90%] lg:w-1/2"
-      setShowModal={setShowModal}
-      isCenter
-    >
+    <Modal className="relative flex w-full flex-col lg:max-h-[90%] lg:w-1/2" setShowModal={setShowModal} isCenter>
       <div
         className="mr-9 mt-5 flex cursor-pointer flex-row-reverse"
         onClick={() => {
@@ -33,7 +29,7 @@ const TutorialExplanation = (props: TutorialExplanationProps) => {
           <img src="images/top/tutorial3.png" alt="tutorial3" />
         )}
 
-        <div className="mx-auto mt-2 mb-4 flex items-center justify-center space-x-4 text-2xl text-gray-400">
+        <div className="mx-auto mb-4 mt-2 flex items-center justify-center space-x-4 text-2xl text-gray-400">
           {page !== 1 ? (
             <img
               onClick={back}
@@ -42,11 +38,7 @@ const TutorialExplanation = (props: TutorialExplanationProps) => {
               alt="arrow_left_enable"
             />
           ) : (
-            <img
-              className="h-[39px]"
-              src="icons/arrow_left_disable.svg"
-              alt="arrow_left_disable"
-            />
+            <img className="h-[39px]" src="icons/arrow_left_disable.svg" alt="arrow_left_disable" />
           )}
           <span>{page}/3</span>
           {page !== 3 ? (
@@ -57,11 +49,7 @@ const TutorialExplanation = (props: TutorialExplanationProps) => {
               alt="arrow_right_enable"
             />
           ) : (
-            <img
-              className="h-[39px]"
-              src="icons/arrow_right_disable.svg"
-              alt="arrow_right_disable"
-            />
+            <img className="h-[39px]" src="icons/arrow_right_disable.svg" alt="arrow_right_disable" />
           )}
         </div>
       </div>

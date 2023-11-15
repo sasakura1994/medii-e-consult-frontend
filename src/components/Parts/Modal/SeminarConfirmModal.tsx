@@ -12,21 +12,16 @@ export type ModalPropsType = {
 };
 
 export const SeminarConfirmModal: React.FC<ModalPropsType> = (props) => {
-  const { children, className, setShowModal, onSubmit, title, labelText } =
-    props;
+  const { children, className, setShowModal, onSubmit, title, labelText } = props;
 
   return (
     <Modal setShowModal={setShowModal} className={`lg:w-[644px] ${className}`} isCenter>
       <div>
-        <h1 className="text-2xl font-medium text-center pt-12 border">{title}</h1>
+        <h1 className="border pt-12 text-center text-2xl font-medium">{title}</h1>
         {children}
-        <div className="flex m-auto justify-center gap-4 mb-8">
-          <PrimaryButton onClick={() => setShowModal(false)}>
-            キャンセル
-          </PrimaryButton>
-          <PrimaryButton onClick={() => onSubmit && onSubmit()}>
-            {labelText}
-          </PrimaryButton>
+        <div className="m-auto mb-8 flex justify-center gap-4">
+          <PrimaryButton onClick={() => setShowModal(false)}>キャンセル</PrimaryButton>
+          <PrimaryButton onClick={() => onSubmit && onSubmit()}>{labelText}</PrimaryButton>
         </div>
       </div>
     </Modal>

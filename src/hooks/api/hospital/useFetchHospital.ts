@@ -7,9 +7,7 @@ export type UseFetchHospitalType = {
 
 const endpoint = '/hospital/hospital_by_id';
 
-export const useFetchHospital = (
-  hospitalId: string | undefined
-): UseFetchHospitalType => {
+export const useFetchHospital = (hospitalId: string | undefined): UseFetchHospitalType => {
   const { data: hospital } = useAuthenticatedSWR<HospitalEntity>(
     hospitalId ? `${endpoint}?hospital_id=${hospitalId}` : null
   );

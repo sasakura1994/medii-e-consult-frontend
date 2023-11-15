@@ -15,13 +15,9 @@ export const useFetchBaseChatRoomForReConsult = () => {
   const { axios } = useAxios();
 
   const fetchBaseChatRoomForReConsult = useCallback(
-    async (
-      reConsultChatRoomId: string
-    ): Promise<FetchBaseChatRoomForReConsultResponseData | undefined> => {
+    async (reConsultChatRoomId: string): Promise<FetchBaseChatRoomForReConsultResponseData | undefined> => {
       const response = await axios
-        .get<FetchBaseChatRoomForReConsultResponseData>(
-          `/chat_room/${reConsultChatRoomId}/for_re_consult`
-        )
+        .get<FetchBaseChatRoomForReConsultResponseData>(`/chat_room/${reConsultChatRoomId}/for_re_consult`)
         .catch((error) => {
           console.error(error);
           return null;

@@ -122,15 +122,7 @@ const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
               style={{ zIndex: 2, position: 'absolute' }}
             >
               <Layer className="absolute inset-0 z-10 cursor-crosshair">
-                {image && (
-                  <Image
-                    image={image}
-                    x={0}
-                    y={0}
-                    width={canvasWidth}
-                    height={canvasHeight}
-                  />
-                )}
+                {image && <Image image={image} x={0} y={0} width={canvasWidth} height={canvasHeight} />}
                 {allScaledLines.map((line, index) => (
                   <Line
                     points={line.points}
@@ -187,45 +179,22 @@ const ImageEditor: React.FC<ImageEditorProps> = (props: ImageEditorProps) => {
               gap-8
             "
           >
-            <ImageEditorToolButton
-              src="icons/circle_back.svg"
-              isDisabled={lines.length === 0}
-              onClick={undo}
-            />
+            <ImageEditorToolButton src="icons/circle_back.svg" isDisabled={lines.length === 0} onClick={undo} />
             <ImageEditorToolButton
               src="icons/circle_pen.svg"
-              onClick={() =>
-                setIsLineWidthSettingShown(
-                  (isLineWidthSettingShown) => !isLineWidthSettingShown
-                )
-              }
+              onClick={() => setIsLineWidthSettingShown((isLineWidthSettingShown) => !isLineWidthSettingShown)}
             />
-            <ImageEditorToolButton
-              src="icons/circle_plus.svg"
-              onClick={() => changeScale(scale * 1.2)}
-            />
-            <ImageEditorToolButton
-              src="icons/circle_minus.svg"
-              onClick={() => changeScale(scale / 1.2)}
-            />
+            <ImageEditorToolButton src="icons/circle_plus.svg" onClick={() => changeScale(scale * 1.2)} />
+            <ImageEditorToolButton src="icons/circle_minus.svg" onClick={() => changeScale(scale / 1.2)} />
             {isLineWidthSettingShown && (
               <div className={styles['pen-select']}>
-                <ImageEditorPenSize
-                  onClick={() => setLineWidthType('thin')}
-                  selected={lineWidthType === 'thin'}
-                >
+                <ImageEditorPenSize onClick={() => setLineWidthType('thin')} selected={lineWidthType === 'thin'}>
                   小
                 </ImageEditorPenSize>
-                <ImageEditorPenSize
-                  onClick={() => setLineWidthType('normal')}
-                  selected={lineWidthType === 'normal'}
-                >
+                <ImageEditorPenSize onClick={() => setLineWidthType('normal')} selected={lineWidthType === 'normal'}>
                   中
                 </ImageEditorPenSize>
-                <ImageEditorPenSize
-                  onClick={() => setLineWidthType('thick')}
-                  selected={lineWidthType === 'thick'}
-                >
+                <ImageEditorPenSize onClick={() => setLineWidthType('thick')} selected={lineWidthType === 'thick'}>
                   大
                 </ImageEditorPenSize>
               </div>

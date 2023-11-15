@@ -26,13 +26,7 @@ const GuestPage: NextPageWithLayout = () => {
             </p>
             <div className="mt-10 text-center text-text-link underline">
               <div>
-                <Link
-                  href={`/registration${
-                    redirect
-                      ? `?redirect=${encodeURIComponent(redirect ?? '')}`
-                      : ''
-                  }`}
-                >
+                <Link href={`/registration${redirect ? `?redirect=${encodeURIComponent(redirect ?? '')}` : ''}`}>
                   会員登録
                 </Link>
               </div>
