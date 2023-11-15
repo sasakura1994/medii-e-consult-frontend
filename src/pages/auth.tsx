@@ -1,8 +1,8 @@
+import { searchParam } from '@/features/auth/useSearchParams';
 import { mutateFetchProfile, useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { useToken } from '@/hooks/authentication/useToken';
 import { useAxios } from '@/hooks/network/useAxios';
 import { useLogin } from '@/hooks/useLogin';
-import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 
@@ -15,9 +15,8 @@ const Auth = () => {
   const { redirectUrl } = useLogin();
   const { axios } = useAxios();
   const { setTokenAndMarkInitialized } = useToken();
-  const searchParams = useSearchParams();
   const { profile } = useFetchProfile();
-  const token = searchParams.get('token');
+  const token = searchParam;
 
   const Login = async () => {
     const response = await axios
