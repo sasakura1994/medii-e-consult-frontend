@@ -5,7 +5,7 @@ import PrimaryButton from '@/components/Button/PrimaryButton';
 import { Required } from '@/components/Parts/Form/Required';
 import TextField from '@/components/TextField/TextField';
 import SecondaryButton from '@/components/Button/SecondaryButton';
-import { dateFormat } from '@/libs/date';
+import { DateField } from '@/components/Form/DateField';
 
 type DoctorNumberFormProps = {
   setSelectedWithRedirect: (value: DocumentSelected) => void;
@@ -13,7 +13,6 @@ type DoctorNumberFormProps = {
 
 const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelectedWithRedirect }) => {
   const {
-    dateInputRef,
     doctorNumber,
     setDoctorNumber,
     errorMessage,
@@ -60,25 +59,11 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelectedWithRedi
           <Required>必須</Required>
         </div>
         <div className="mt-2">
-          <TextField
-            type="text"
-            placeholder="yyyy/mm/dd"
-            onClick={() => dateInputRef.current?.showPicker()}
-            // これを入れておかないとテスト時に文句を言われる
-            onChange={() => {}}
-            value={doctorLicenseDate ? dateFormat(doctorLicenseDate, 'YYYY/M/D') : ''}
-            // 画像が表示されなくても支障なし
-            // eslint-disable-next-line rulesdir/dont-use-url-properties
-            className="bg-[url('/icons/arrow_down.svg')] bg-[center_right_20px] bg-no-repeat"
-          />
-          <input
-            ref={dateInputRef}
-            type="date"
+          <DateField
             id="date-input"
-            data-testid="date-input"
-            value={doctorLicenseDate ? dateFormat(doctorLicenseDate, 'YYYY-MM-DD') : ''}
+            dataTestId="date-input"
+            value={doctorLicenseDate}
             onChange={(e) => parseAndSetDoctorLicenseDate(e.target.value)}
-            className="invisible h-0 w-0"
           />
         </div>
       </div>
