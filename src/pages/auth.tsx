@@ -1,4 +1,4 @@
-import { mutateFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
+import { mutateFetchProfile, useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { useToken } from '@/hooks/authentication/useToken';
 import { useAxios } from '@/hooks/network/useAxios';
 import { useLogin } from '@/hooks/useLogin';
@@ -25,18 +25,15 @@ const Auth = () => {
         console.error(error);
       });
 
+    console.log("response", response);
+
     if (response) {
       setTokenAndMarkInitialized(response.data.jwt_token);
 
-      const profileResponse = await axios
-        .get('/doctor/profile')
-        .catch((error) => {
-          console.error(error);
-        });
-
-      if (profileResponse) {
+      const { profile } = useFetchProfile();
+      
+      if (profile) {
         mutateFetchProfile();
-
         if (response.data.login_type==="register") router.push(redirectUrl === '' ? 'top' : redirectUrl);
         else router.push('editprofile?registerMode=true');
       }
