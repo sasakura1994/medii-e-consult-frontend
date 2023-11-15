@@ -16,7 +16,7 @@ const Auth = () => {
   const { axios } = useAxios();
   const { setTokenAndMarkInitialized } = useToken();
   const { profile } = useFetchProfile();
-  const token = searchParam;
+  const token = searchParam();
 
   const Login = async () => {
     const response = await axios
