@@ -20,10 +20,12 @@ export const EditProfileLabel = (props: Props) => {
       <div>{children}</div>
       {required === true ? (
         <Required>必須</Required>
-      ) : (
+      ) : required === false ? (
         <Label color="gray" size="sm" className="whitespace-nowrap">
           任意
         </Label>
+      ) : (
+        <></>
       )}
     </label>
   );

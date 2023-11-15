@@ -1,7 +1,6 @@
 import React from 'react';
 import { CaptionWithBody } from '@/components/Parts/CaptionWithBody';
 import { OutlinedSquareButton } from '@/components/Parts/Button/OutlinedSquareButton';
-import { Card } from '@/components/Parts/Card/Card';
 import { removeAuthToken } from '@/libs/cookie';
 import { useRouter } from 'next/router';
 import { useMedicalSpeciality } from '@/hooks/medicalSpeciality/useMedicalSpeciality';
@@ -22,7 +21,7 @@ export const ProfileDetail: React.FC<Props> = ({ onEdit }: Props) => {
 
   return (
     <>
-      <Card className="px-4 pb-8 pt-10 lg:px-[84px] lg:py-10">
+      <div className="mx-auto px-4 pb-8 pt-8 lg:w-[600px] lg:px-0">
         <div className="item mb-10 flex items-center justify-between">
           <h2 className="text-2xl leading-8" data-testid="h-edit-profile-detail">
             プロフィール
@@ -148,7 +147,7 @@ export const ProfileDetail: React.FC<Props> = ({ onEdit }: Props) => {
             </div>
           </>
         )}
-      </Card>
+      </div>
 
       <div className="mt-12 text-center lg:pb-20">
         <button

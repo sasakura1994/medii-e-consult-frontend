@@ -1,5 +1,5 @@
 import React from 'react';
-import { MyPageLayout } from '@/components/Layouts/MyPageLayout';
+import { LegacyMyPageLayout } from '@/components/Layouts/LegacyMyPageLayout';
 import { MyPageMenu } from '@/components/Parts/Menu/MyPageMenu';
 import { PointHistory } from '@/features/mypages/pointHistory/PointHistory';
 import type { NextPageWithLayout } from '@/pages/_app';
@@ -17,5 +17,5 @@ const PointHistoryPage: NextPageWithLayout = () => {
 export default PointHistoryPage;
 
 PointHistoryPage.getLayout = (page: React.ReactElement) => {
-  return <MyPageLayout>{page}</MyPageLayout>;
+  return <LegacyMyPageLayout>{page}</LegacyMyPageLayout>;
 };

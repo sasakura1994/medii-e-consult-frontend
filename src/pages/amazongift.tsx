@@ -1,5 +1,5 @@
 import React from 'react';
-import { MyPageLayout } from '@/components/Layouts/MyPageLayout';
+import { LegacyMyPageLayout } from '@/components/Layouts/LegacyMyPageLayout';
 import { MyPageMenu } from '@/components/Parts/Menu/MyPageMenu';
 import { AmazonGift } from '@/features/mypages/amazonGift/AmazonGift';
 import type { NextPageWithLayout } from '@/pages/_app';
@@ -17,5 +17,5 @@ const AmazonGiftPage: NextPageWithLayout = () => {
 export default AmazonGiftPage;
 
 AmazonGiftPage.getLayout = (page: React.ReactElement) => {
-  return <MyPageLayout>{page}</MyPageLayout>;
+  return <LegacyMyPageLayout>{page}</LegacyMyPageLayout>;
 };

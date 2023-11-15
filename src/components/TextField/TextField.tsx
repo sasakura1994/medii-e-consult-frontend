@@ -44,7 +44,7 @@ const TextField = (props: TextFieldProps) => {
   } = props;
   return (
     <>
-      <label className="text-md text-text-primary">{label}</label>
+      {label && <label className="text-md text-text-primary">{label}</label>}
       <input
         type={type}
         name={name}

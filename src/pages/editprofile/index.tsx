@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import { MyPageLayout } from '@/components/Layouts/MyPageLayout';
 import { MyPageMenu } from '@/components/Parts/Menu/MyPageMenu';
 import type { NextPageWithLayout } from '@/pages/_app';
 import { UrlPublish } from '@/features/mypages/editProfile/UrlPublish';
@@ -9,6 +8,7 @@ import { EditProfile } from '@/features/mypages/editProfile/EditProfile';
 import RegistrationProgress from '@/features/document/RegistrationProgress';
 import { Heading } from '@/components/Parts/Text/Heading';
 import { ProfileRegistrationLayout } from '@/components/Layouts/ProfileRegistrationLayout';
+import { MyPageLayout } from '@/components/Layouts/MyPageLayout';
 
 const Layout = ({ isRegisterMode, children }: { isRegisterMode: boolean; children: ReactNode }) => {
   if (isRegisterMode) {

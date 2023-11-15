@@ -1,6 +1,6 @@
 import React from 'react';
 import EditEmail from '../features/mypages/editEmail/EditEmail';
-import { MyPageLayout } from '@/components/Layouts/MyPageLayout';
+import { LegacyMyPageLayout } from '@/components/Layouts/LegacyMyPageLayout';
 import { useUpdateEmail } from '@/features/mypages/editEmail/useUpdateEmail';
 import Completed from '@/features/mypages/editEmail/completed';
 
@@ -18,7 +18,7 @@ const EditEmailPage = () => {
 };
 
 EditEmailPage.getLayout = (page: React.ReactElement) => {
-  return <MyPageLayout>{page}</MyPageLayout>;
+  return <LegacyMyPageLayout>{page}</LegacyMyPageLayout>;
 };
 
 export default EditEmailPage;

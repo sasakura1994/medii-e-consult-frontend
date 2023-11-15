@@ -1,5 +1,5 @@
 import React from 'react';
-import { MyPageLayout } from '@/components/Layouts/MyPageLayout';
+import { LegacyMyPageLayout } from '@/components/Layouts/LegacyMyPageLayout';
 import EditEmailConfirmation from '@/features/mypages/updateEmailConfirmation/EditEmailConfirmation';
 import { useUpdateEmailConfirmation } from '@/features/mypages/updateEmailConfirmation/useUpdateEmailConfirmation';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
@@ -14,7 +14,7 @@ const UpdateEmailConfirmation = () => {
           <SpinnerBorder />
         ) : (
           <div>
-            {isTokenExist === true && <EditEmailConfirmation {...props} /> }
+            {isTokenExist === true && <EditEmailConfirmation {...props} />}
             {isTokenExist === false && <div className="font-bold text-red-400">データが存在しません。</div>}
           </div>
         )}
@@ -24,7 +24,7 @@ const UpdateEmailConfirmation = () => {
 };
 
 UpdateEmailConfirmation.getLayout = (page: React.ReactElement) => {
-  return <MyPageLayout>{page}</MyPageLayout>;
+  return <LegacyMyPageLayout>{page}</LegacyMyPageLayout>;
 };
 
 export default UpdateEmailConfirmation;

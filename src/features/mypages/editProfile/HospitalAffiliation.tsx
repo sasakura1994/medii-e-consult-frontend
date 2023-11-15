@@ -1,12 +1,12 @@
 import React from 'react';
 import Select from 'react-select';
 import { EditProfileLabel } from '@/features/mypages/editProfile/EditProfileLabel';
-import { TextField } from '@/components/Parts/Form/TextField';
 import { SelectBox } from '@/components/Parts/Form/SelectBox';
 import { UseEditProfile } from './useEditProfile';
 import { usePrefecture } from '@/hooks/prefecture/usePrefecture';
 import { Heading } from '@/components/Parts/Text/Heading';
 import { HospitalInputTypeContainer } from './HospitalInputTypeContainer';
+import TextField from '@/components/TextField/TextField';
 
 export const HospitalAffiliation = (props: UseEditProfile) => {
   const {

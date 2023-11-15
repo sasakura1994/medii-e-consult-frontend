@@ -39,7 +39,7 @@ export const EditProfile = (props: EditProfileProps) => {
           submit();
         }}
       >
-        <div className="px-4 pt-8 lg:w-[600px] lg:px-0">
+        <div className="mx-auto px-4 pt-8 lg:w-[600px] lg:px-0">
           {!isRegisterMode && (
             <h2 className="mb-6 text-center text-2xl leading-8" data-testid="h-edit-profile-edit">
               プロフィール
