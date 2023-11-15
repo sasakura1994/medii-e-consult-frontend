@@ -27,16 +27,16 @@ const Auth = () => {
 
     console.log("response", response);
 
-    if (response) {
-      setTokenAndMarkInitialized(response.data.jwt_token);
+    if (!response) return;
+    
+    setTokenAndMarkInitialized(response.data.jwt_token);
 
-      const { profile } = useFetchProfile();
-      
-      if (profile) {
-        mutateFetchProfile();
-        if (response.data.login_type==="register") router.push(redirectUrl === '' ? 'top' : redirectUrl);
-        else router.push('editprofile?registerMode=true');
-      }
+    const { profile } = useFetchProfile();
+    
+    if (profile) {
+      mutateFetchProfile();
+      if (response.data.login_type==="register") router.push(redirectUrl === '' ? 'top' : redirectUrl);
+      else router.push('editprofile?registerMode=true');
     }
   };
 
