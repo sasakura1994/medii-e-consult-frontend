@@ -1,7 +1,6 @@
-import { SearchParam } from '@/features/auth/useSearchParams';
 import { mutateFetchProfile, useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
+import { useFetchToken } from '@/hooks/api/doctor/useFetchToken';
 import { useToken } from '@/hooks/authentication/useToken';
-import { useAxios } from '@/hooks/network/useAxios';
 import { useLogin } from '@/hooks/useLogin';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
@@ -13,19 +12,11 @@ const Auth = () => {
 
   const router = useRouter();
   const { redirectUrl } = useLogin();
-  const { axios } = useAxios();
   const { setTokenAndMarkInitialized } = useToken();
   const { profile } = useFetchProfile();
-  const token = SearchParam();
 
   const Login = async () => {
-    const response = await axios
-      .get(`/apple_auth/get_token?token_id=${token}`)
-      .catch((error) => {
-        console.error(error);
-      });
-
-    console.log("response", response);
+    const response = await useFetchToken();
 
     if(response) {
       setTokenAndMarkInitialized(response.data.jwt_token);
