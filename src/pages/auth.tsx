@@ -1,4 +1,4 @@
-import { searchParam } from '@/features/auth/useSearchParams';
+import { SearchParam } from '@/features/auth/useSearchParams';
 import { mutateFetchProfile, useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { useToken } from '@/hooks/authentication/useToken';
 import { useAxios } from '@/hooks/network/useAxios';
@@ -16,7 +16,7 @@ const Auth = () => {
   const { axios } = useAxios();
   const { setTokenAndMarkInitialized } = useToken();
   const { profile } = useFetchProfile();
-  const token = searchParam();
+  const token = SearchParam();
 
   const Login = async () => {
     const response = await axios
