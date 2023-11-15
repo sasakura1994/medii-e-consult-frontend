@@ -45,7 +45,6 @@ describe('UserInfo', () => {
     expect(screen.getByTestId('birthday_year')).toBeDisabled();
     expect(screen.getByTestId('birthday_month')).toBeDisabled();
     expect(screen.getByTestId('birthday_day')).toBeDisabled();
-    expect(screen.getByTestId('graduated_university')).toBeDisabled();
   });
 
   test('新規登録時は入力欄が有効', async () => {
@@ -65,6 +64,5 @@ describe('UserInfo', () => {
     expect(screen.getByTestId('year-input-year')).toBeEnabled();
     expect(screen.getByTestId('birthday_month')).toBeEnabled();
     expect(screen.getByTestId('birthday_day')).toBeEnabled();
-    expect(screen.getByTestId('graduated_university')).toBeEnabled();
   });
 });

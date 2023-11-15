@@ -388,7 +388,7 @@ describe('useEditProfile', () => {
     });
   });
 
-  describe('selectMedicalSpecialities', () => {
+  describe('selectInChargeMedicalSpecialities', () => {
     beforeEach(() => {
       const useUpdateProfileMock = useUpdateProfile as unknown as jest.Mock<typeof useUpdateProfile>;
       (useUpdateProfileMock as jest.Mock).mockReturnValue({
@@ -404,7 +404,7 @@ describe('useEditProfile', () => {
           birthday_month: 4,
           birthday_day: 1,
           qualified_year: 2020,
-          main_speciality: '',
+          main_speciality: 'A',
           speciality_2: '',
           speciality_3: '',
           speciality_4: '',
@@ -414,15 +414,13 @@ describe('useEditProfile', () => {
       const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {}).result;
 
       act(() => {
-        hooks.current.selectMedicalSpecialities([
-          { speciality_code: 'A' } as MedicalSpecialityEntity,
+        hooks.current.selectInChargeMedicalSpecialities([
           { speciality_code: 'B' } as MedicalSpecialityEntity,
           { speciality_code: 'C' } as MedicalSpecialityEntity,
           { speciality_code: 'D' } as MedicalSpecialityEntity,
         ]);
       });
 
-      expect(hooks.current.profile?.main_speciality).toEqual('A');
       expect(hooks.current.profile?.speciality_2).toEqual('B');
       expect(hooks.current.profile?.speciality_3).toEqual('C');
       expect(hooks.current.profile?.speciality_4).toEqual('D');

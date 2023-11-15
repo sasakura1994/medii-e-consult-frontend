@@ -23,7 +23,6 @@ export const MedicalSpecialitiesSelectDialog: React.FC<MedicalSpecialitiesSelect
   const { medicalSpecialities } = useFetchMedicalSpecialitiesWithContract();
   const {
     getMedicalSpecialitiesForCategory,
-    getSelectedCountForCategory,
     isCategoryOpened,
     isMedicalSpecialitySelected,
     medicalSpecialityCategories,
@@ -48,7 +47,6 @@ export const MedicalSpecialitiesSelectDialog: React.FC<MedicalSpecialitiesSelect
                 medicalSpecialityCategory={medicalSpecialityCategory}
                 isSelected={isCategoryOpened(medicalSpecialityCategory.id)}
                 onClick={() => toggleCategory(medicalSpecialityCategory.id)}
-                selectedCount={getSelectedCountForCategory(medicalSpecialityCategory.id)}
               />
               {isCategoryOpened(medicalSpecialityCategory.id) && (
                 <div className="my-4 grid grid-cols-2 gap-y-4 text-sm lg:mx-4 lg:grid-cols-3">

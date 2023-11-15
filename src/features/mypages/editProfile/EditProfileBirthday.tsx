@@ -35,6 +35,7 @@ export const EditProfileBirthday = (props: Props) => {
               onChange={(e) => setProfileFields({ birthday_year: e.target.value })}
               disabled={!isEnabled}
               id="birthday_year"
+              dataTestId="birthday_year"
               className="!w-32 lg:!w-40"
             />
             <p className="ml-2">年</p>
@@ -49,6 +50,7 @@ export const EditProfileBirthday = (props: Props) => {
             disabled={!isEnabled}
             className="w-full"
             id="birthday_month"
+            dataTestId="birthday_month"
           />
           <p className="ml-2">月</p>
         </div>
@@ -61,6 +63,7 @@ export const EditProfileBirthday = (props: Props) => {
             disabled={!isEnabled}
             className="w-full"
             id="birthday_day"
+            dataTestId="birthday_day"
           />
           <p className="ml-2">日</p>
         </div>

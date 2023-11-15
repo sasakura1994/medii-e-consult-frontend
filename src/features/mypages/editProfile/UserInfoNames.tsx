@@ -25,6 +25,7 @@ export const UserInfoNames = (props: Props) => {
             onChange={(e) => setProfileFields({ last_name: e.target.value })}
             disabled={!isEnabled}
             id="last_name"
+            dataTestId="last_name"
             className="mb-4 w-full lg:mb-0"
             placeholder="姓"
           />
@@ -38,6 +39,7 @@ export const UserInfoNames = (props: Props) => {
             onChange={(e) => setProfileFields({ first_name: e.target.value })}
             disabled={!isEnabled}
             id="first_name"
+            dataTestId="first_name"
             className="w-full"
             placeholder="名"
           />
@@ -53,6 +55,7 @@ export const UserInfoNames = (props: Props) => {
             onChange={(e) => setProfileFields({ last_name_hira: e.target.value })}
             disabled={!isEnabled}
             id="last_name_hira"
+            dataTestId="last_name_hira"
             className="mb-4 w-full lg:mb-0"
             placeholder="姓（ふりがな）"
           />
@@ -66,6 +69,7 @@ export const UserInfoNames = (props: Props) => {
             onChange={(e) => setProfileFields({ first_name_hira: e.target.value })}
             disabled={!isEnabled}
             id="first_name_hira"
+            dataTestId="first_name_hira"
             className="w-full"
             placeholder="名（ふりがな）"
           />
