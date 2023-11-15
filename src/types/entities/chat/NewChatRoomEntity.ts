@@ -12,4 +12,5 @@ export type NewChatRoomEntity = {
   first_message: string;
   publishment_accepted: boolean;
   from: string;
+  utm_source: string;
 };
