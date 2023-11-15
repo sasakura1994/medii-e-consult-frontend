@@ -163,6 +163,7 @@ export const useEditGroupDetail = () => {
     admin,
     editState,
     setEditState,
+    setDraft,
     submit,
     selectedMembers,
     setSelectedMembers,
