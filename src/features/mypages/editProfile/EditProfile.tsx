@@ -9,6 +9,9 @@ import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import Link from 'next/link';
+import { Heading } from '@/components/Parts/Text/Heading';
+import { Radio } from '@/components/Parts/Form/Radio';
+import { EditProfileStudent } from './EditProfileStudent';
 
 export type EditProfileProps = {
   isRegisterMode: boolean;
@@ -17,7 +20,7 @@ export type EditProfileProps = {
 export const EditProfile = (props: EditProfileProps) => {
   const { isRegisterMode } = props;
   const editProfile = useEditProfile(props);
-  const { errorMessage, isHospitalDisabled, profile, submit } = editProfile;
+  const { accountType, errorMessage, isHospitalDisabled, profile, setAccountType, submit } = editProfile;
   const { profile: fetchedProfile } = useFetchProfile();
 
   if (!profile) {
@@ -44,17 +47,48 @@ export const EditProfile = (props: EditProfileProps) => {
           )}
 
           <UserInfo {...editProfile} {...props} />
+
           <div className="mt-8">
-            <MedicalCareer {...editProfile} {...props} />
+            <Heading as="h2">医療従事経歴</Heading>
           </div>
-          {!isHospitalDisabled && (
-            <div className="mt-8">
-              <HospitalAffiliation {...editProfile} />
-            </div>
-          )}
-          {fetchedProfile?.registration_source !== 'nmo' && (
-            <div className="mt-8">
-              <UsageClassification {...editProfile} />
+
+          <div className="mt-6 flex gap-4">
+            <Radio
+              name="account_type"
+              label="医師"
+              value="doctor"
+              checked={accountType === 'doctor'}
+              onChange={() => setAccountType('doctor')}
+            />
+            <Radio
+              name="account_type"
+              label="医学生"
+              value="student"
+              checked={accountType === 'student'}
+              onChange={() => setAccountType('student')}
+            />
+          </div>
+
+          {accountType === 'doctor' ? (
+            <>
+              <div className="mt-6">
+                <MedicalCareer {...editProfile} {...props} />
+              </div>
+
+              {!isHospitalDisabled && (
+                <div className="mt-8">
+                  <HospitalAffiliation {...editProfile} />
+                </div>
+              )}
+              {fetchedProfile?.registration_source !== 'nmo' && (
+                <div className="mt-8">
+                  <UsageClassification {...editProfile} />
+                </div>
+              )}
+            </>
+          ) : (
+            <div className="mt-6">
+              <EditProfileStudent {...editProfile} />
             </div>
           )}
         </div>

@@ -31,7 +31,10 @@ type Option = {
 
 export type HospitalInputType = 'free' | 'select';
 
+type AccountType = 'doctor' | 'student';
+
 export type UseEditProfile = {
+  accountType: AccountType;
   errorMessage: string;
   hospitalInputType: HospitalInputType;
   hospitalOptions: Option[];
@@ -46,6 +49,7 @@ export type UseEditProfile = {
   selectHospital: (selected: Option | null) => void;
   selectInChargeMedicalSpecialities: (medicalSpecialities: MedicalSpecialityEntity[]) => void;
   selectedQuestionaryItemIds: string[];
+  setAccountType: Dispatch<SetStateAction<AccountType>>;
   setHospitalInputType: Dispatch<SetStateAction<HospitalInputType>>;
   setHospitalName: (hospitalName: string) => void;
   setHospitalSearchText: Dispatch<SetStateAction<string>>;
@@ -62,6 +66,7 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
   const [profile, setProfile] = useState<EditingProfile>();
   const [isInitialized, setIsInitialized] = useState(false);
   const [hospitalInputType, setHospitalInputType] = useState<HospitalInputType>('select');
+  const [accountType, setAccountType] = useState<AccountType>('doctor');
   const [hospitalSearchText, setHospitalSearchText] = useState('');
   const [selectedHospital, setSelectedHospital] = useState<Option>();
   const [isSending, setIsSending] = useState(false);
@@ -103,6 +108,10 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
       }
     }
 
+    if (accountType === 'student') {
+      return true;
+    }
+
     if (!isHospitalDisabled) {
       if (
         profile.qualified_year === '' ||
@@ -115,7 +124,7 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
     }
 
     return profile.main_speciality !== '';
-  }, [profile, isHospitalDisabled, isRegisterMode, hospitalInputType]);
+  }, [profile, isRegisterMode, accountType, isHospitalDisabled, hospitalInputType]);
 
   useEffect(() => {
     if (!defaultHospital) {
@@ -169,6 +178,7 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
     }
 
     setHospitalInputType(currentProfile.hospital_id === '' && currentProfile.hospital_name !== '' ? 'free' : 'select');
+    setAccountType(currentProfile.main_speciality === 'STUDENT' ? 'student' : 'doctor');
     setIsInitialized(true);
   }, [fetchedProfile, getDraftProfile, isInitialized]);
 
@@ -231,6 +241,13 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
 
     const data = { ...profile };
 
+    if (accountType === 'student') {
+      data.main_speciality = 'STUDENT';
+      data.speciality_2 = '';
+      data.speciality_3 = '';
+      data.speciality_4 = '';
+    }
+
     if (!data.is_mail_notify && !data.is_push_notify) {
       data.is_mail_notify = true;
       data.is_push_notify = true;
@@ -269,7 +286,7 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
 
     mutateFetchProfile();
     return true;
-  }, [hospitalInputType, isHospitalDisabled, profile, updateProfile]);
+  }, [accountType, hospitalInputType, isHospitalDisabled, profile, updateProfile]);
 
   const submit = useCallback(async () => {
     if (!profile) {
@@ -312,6 +329,7 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
   );
 
   return {
+    accountType,
     errorMessage,
     hospitalInputType,
     hospitalOptions,
@@ -326,6 +344,7 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
     selectHospital,
     selectInChargeMedicalSpecialities,
     selectedQuestionaryItemIds,
+    setAccountType,
     setHospitalInputType,
     setHospitalName,
     setHospitalSearchText,

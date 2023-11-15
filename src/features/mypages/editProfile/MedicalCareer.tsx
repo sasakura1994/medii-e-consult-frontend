@@ -2,7 +2,6 @@ import React from 'react';
 import { UseEditProfile } from './useEditProfile';
 import { EditProfileProps } from './EditProfile';
 import { MedicalCareerQualifiedYear } from './MedicalCareerQualifiedYear';
-import { Heading } from '@/components/Parts/Text/Heading';
 import { useMedicalSpecialitySelectButton } from '@/components/MedicalSpeciality/useMedicalSpecialitySelectButton';
 import SecondaryButton from '@/components/Button/SecondaryButton';
 import { EditProfileLabel } from './EditProfileLabel';
@@ -24,8 +23,6 @@ export const MedicalCareer = (props: MedicalCareerProps) => {
   return (
     <>
       <div>
-        <Heading as="h2">医療従事経歴</Heading>
-
         {!isHospitalDisabled && (
           <div className="mt-6">
             <MedicalCareerQualifiedYear

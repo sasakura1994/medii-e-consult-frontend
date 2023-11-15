@@ -15,7 +15,7 @@ export type DocumentSelected = '' | 'number' | 'document' | 'auto' | 'completed'
 
 export const Document = () => {
   const [selected, setSelected] = useState<DocumentSelected>('');
-  const [mode] = useState<DocumentMode>('document');
+  const [mode, setMode] = useState<DocumentMode>('document');
   const router = useRouter();
   const { postEventLog } = useEventLog();
   const { profile } = useProfile();
@@ -57,7 +57,15 @@ export const Document = () => {
           <RegistrationProgress mode={mode} forStudent={profile.main_speciality === 'STUDENT'} />
         </div>
         {profile.main_speciality === 'STUDENT' ? (
-          <DocumentInputStudentDocument selected={selected} setSelected={setSelected} />
+          <DocumentInputStudentDocument
+            selected={selected}
+            setSelected={(newSelected) => {
+              setSelected(newSelected);
+              if (newSelected === 'studentCompleted') {
+                setMode('completed');
+              }
+            }}
+          />
         ) : (
           <>
             {selected === '' && <DocumentTypeSelect setSelected={setSelected} />}
