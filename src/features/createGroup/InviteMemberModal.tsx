@@ -173,9 +173,18 @@ export const InviteMemberModal = (props: Props) => {
                                               name={'invite' + member.account_id}
                                               id={'invite' + member.account_id}
                                               onChange={(e) => {
-                                                if (e.target.checked) {
+                                                if (
+                                                  e.target.checked &&
+                                                  !checkedMemberRef.current.some(
+                                                    (m) => m.account_id === member.account_id
+                                                  )
+                                                ) {
                                                   checkedMemberRef.current.push(member);
+                                                  return;
                                                 }
+                                                checkedMemberRef.current = checkedMemberRef.current.filter(
+                                                  (m) => m.account_id !== member.account_id
+                                                );
                                               }}
                                             />
                                           )}
