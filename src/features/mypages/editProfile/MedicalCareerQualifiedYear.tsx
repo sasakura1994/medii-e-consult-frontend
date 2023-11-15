@@ -33,6 +33,7 @@ export const MedicalCareerQualifiedYear = (props: MedicalCareerProps) => {
             value={profile.qualified_year}
             disabled={true}
             id="doctor_qualified_year"
+            dataTestId="doctor_qualified_year"
             className="!w-64"
             subText="年"
           />
