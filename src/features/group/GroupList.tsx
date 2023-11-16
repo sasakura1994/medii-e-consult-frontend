@@ -21,7 +21,7 @@ export const GroupList = (props: GroupListProps) => {
       lg:w-[336px] lg:min-w-[336px] lg:pb-0 ${isGroupSelected ? 'hidden lg:block' : 'block'}`}
     >
       <div className="flex h-14 items-center justify-between bg-[#5caec0] pr-4">
-        <img src="icons/consult_list.svg" alt="" className="ml-2 h-7 w-8" />
+        <img src="icons/group_list.svg" alt="" className="ml-2 h-7 w-8" />
         <p className="text-md font-bold text-white">所属グループ</p>
         <Link
           href="creategroup"
