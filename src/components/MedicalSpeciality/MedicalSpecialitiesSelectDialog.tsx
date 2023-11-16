@@ -38,8 +38,8 @@ export const MedicalSpecialitiesSelectDialog: React.FC<MedicalSpecialitiesSelect
     <Modal setShowModal={setShowModal} className={`lg:w-[740px]`}>
       <div className="mx-6 my-10 lg:mx-20">
         <ModalTitleWithCloseButton title="診療科で指定する" onClose={() => setShowModal(false)} />
-        <div className="mt-4 text-block-gray">選択した順番でコンサル依頼先の優先度を指定できます</div>
-        <div className="mt-10 flex flex-col gap-2">
+        <div className="mt-4">選択した順番でコンサル依頼先の優先度を指定できます</div>
+        <div className="mt-10 flex flex-col gap-6">
           {medicalSpecialityCategories?.map((medicalSpecialityCategory) => (
             <>
               <MedicalSpecialityCategorySelect
@@ -49,7 +49,7 @@ export const MedicalSpecialitiesSelectDialog: React.FC<MedicalSpecialitiesSelect
                 onClick={() => toggleCategory(medicalSpecialityCategory.id)}
               />
               {isCategoryOpened(medicalSpecialityCategory.id) && (
-                <div className="my-4 grid grid-cols-2 gap-y-4 text-sm lg:mx-4 lg:grid-cols-3">
+                <div className="grid grid-cols-2 gap-y-2 lg:grid-cols-3">
                   {getMedicalSpecialitiesForCategory(medicalSpecialityCategory.id).map((medicalSpeciality) => (
                     <CheckBox
                       key={medicalSpeciality.speciality_code}

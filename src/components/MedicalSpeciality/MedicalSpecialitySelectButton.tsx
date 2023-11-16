@@ -17,7 +17,7 @@ export const MedicalSpecialitySelectButton: React.FC<MedicalSpecialitySelectButt
     <>
       <a
         href="#"
-        className="flex items-center rounded-md border border-block-gray px-4 py-3"
+        className="flex items-center rounded-md border border-block-gray px-4 py-2"
         onClick={(e) => {
           e.preventDefault();
           setIsOpen(true);
