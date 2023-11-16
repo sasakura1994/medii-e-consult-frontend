@@ -15,6 +15,7 @@ import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 export const Top = () => {
   const { showTutorialExplanationModal, setShowTutorialExplanationModal } = useTop();
   const { flag: isOnboardingQuestionaryAnswered } = useFetchFlag('OnboardingAnswered');
+  const { flag: hasConsulted } = useFetchFlag('HasConsulted');
   const { postEventLog } = useEventLog();
 
   return (
@@ -30,7 +31,7 @@ export const Top = () => {
         </div>
         <div className="mt-2 lg:mx-4 lg:ml-10 lg:mt-0 lg:w-[296px]">
           <TopNewerConsults />
-          {isOnboardingQuestionaryAnswered === false && (
+          {isOnboardingQuestionaryAnswered === false && hasConsulted === false && (
             <div
               className="my-6"
               data-testid="onboarding-questionary-banner"
