@@ -1,24 +1,50 @@
+import { useToken } from '@/hooks/authentication/useToken';
+import { useLogin } from '@/hooks/useLogin';
 import axios from 'axios';
-import { useCallback } from 'react';
+import { useRouter } from 'next/router';
+import { useCallback, useEffect, useState } from 'react';
 
-type fetchAppleAuthGetTokenRequestData = {
+type Query = {
+  token: string;
+}
+
+type UseFetchAppleAuthGetTokenRequestData = {
   token_id: string;
 };
 
-type fetchAppleAuthGetTokenResponseData = {
+type UseFetchAppleAuthGetTokenResponseData = {
   jwt_token: string;
   login_type: 'login' | 'register';
 };
 
-export const useFetchAppleAuthGetToken = () => {
-  const fetchAppleAuthGetToken = useCallback(async (data: fetchAppleAuthGetTokenRequestData) => {
+export const login = () => {
+  const router = useRouter();
+  const { token } = router.query as Query;
+  const { setTokenAndMarkInitialized } = useToken();
+  const { redirectUrl } = useLogin();
+  const [errormessage, setErrorMessage] = useState('');
+
+  const useFetchAppleAuthGetToken = useCallback(async (data: UseFetchAppleAuthGetTokenRequestData) => {
     const { token_id } = data;
-    return axios.get<fetchAppleAuthGetTokenResponseData>('/apple_auth/get_token', {
+    const response = axios.get<UseFetchAppleAuthGetTokenResponseData>('/apple_auth/get_token', {
       baseURL: process.env.ENDPOINT_URL,
       headers: { 'Content-Type': 'application/json' },
       params: { token_id: token_id },
     });
+    return response;
   }, []);
 
-  return { fetchAppleAuthGetToken };
+  useEffect(() => {
+    useFetchAppleAuthGetToken({ token_id: token })
+    .then((res) => {
+      const { jwt_token, login_type } = res.data;
+      setTokenAndMarkInitialized(jwt_token);
+      if (login_type==="register") router.push(redirectUrl === '' ? 'top' : redirectUrl);
+      else router.push('editprofile?registerMode=1');
+    })
+    .catch((err) => {
+      console.log(err);
+      setErrorMessage('Login failed');
+    });
+  }, [token, useFetchAppleAuthGetToken, setTokenAndMarkInitialized, redirectUrl, router]);
 };

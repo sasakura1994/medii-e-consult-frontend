@@ -1,38 +1,16 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import { useFetchAppleAuthGetToken } from '@/hooks/api/auth/useFetchAppleAuthGetToken';
-import { useLogin } from '@/hooks/useLogin';
-import { useToken } from '@/hooks/authentication/useToken';
+import React, { useEffect } from 'react';
+import { login } from '@/hooks/api/auth/useFetchAppleAuthGetToken';
 
-type Query = {
-  token: string;
-};
+type Props = {
+  errorMessage: string;
+}
 
-const AuthPage = () => {
-  const [errorMessage, setErrorMessage] = useState('');
-  const router = useRouter();
-  const { redirectUrl } = useLogin();
-  const { setTokenAndMarkInitialized } = useToken();
-  const { token } = router.query as Query;
-  const { fetchAppleAuthGetToken } = useFetchAppleAuthGetToken();
-
-  const login = useCallback(async () => {
-    fetchAppleAuthGetToken({ token_id: token })
-      .then((res) => {
-        const { jwt_token, login_type } = res.data;
-        setTokenAndMarkInitialized(jwt_token);
-        if (login_type==="register") router.push(redirectUrl === '' ? 'top' : redirectUrl);
-        else router.push('editprofile?registerMode=1');
-      })
-      .catch((err) => {
-        console.log(err);
-        setErrorMessage('Login failed');
-      });
-  }, [fetchAppleAuthGetToken, router, token]);
+const AuthPage = (props: Props) => {
+  const { errorMessage } = props;
 
   useEffect(() => {
     login();
-  }, [login]);
+  }, []);
 
   return (
     <div className="flex h-screen justify-center bg-bg">
