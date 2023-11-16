@@ -20,14 +20,14 @@ export type Review = {
 
 type ResolveChatRoomModalProps = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsOpenReConsultSuggestionModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpenQuestionaryModal: React.Dispatch<React.SetStateAction<boolean>>;
   chatRoomData: FetchChatRoomResponseData;
   mutateChatRoom?: KeyedMutator<FetchChatRoomResponseData>;
   setSelectedTab: React.Dispatch<React.SetStateAction<'open' | 'close'>>;
 };
 
 export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
-  const { setIsOpen, setIsOpenReConsultSuggestionModal, chatRoomData, mutateChatRoom, setSelectedTab } = props;
+  const { setIsOpen, setIsOpenQuestionaryModal, chatRoomData, mutateChatRoom, setSelectedTab } = props;
   const [page, setPage] = useState<'aboutConsult' | 'aboutSystem'>('aboutConsult');
   const [aboutConsultReviews, setAboutConsultReviews] = useState<Review[]>([
     {
@@ -80,9 +80,8 @@ export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
       system_score: aboutSystemReviews[0].value,
       system_comment: aboutSystemComment,
     });
-    if (chatRoomData.chat_room.room_type !== 'GROUP') {
-      setIsOpenReConsultSuggestionModal(true);
-    }
+
+    setIsOpenQuestionaryModal(true);
 
     await mutateChatRoom?.();
     setIsOpen(false);
@@ -93,11 +92,10 @@ export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
     aboutSystemComment,
     aboutSystemReviews,
     chatRoomData.chat_room.chat_room_id,
-    chatRoomData.chat_room.room_type,
     mutateChatRoom,
     resolveChatRoom,
     setIsOpen,
-    setIsOpenReConsultSuggestionModal,
+    setIsOpenQuestionaryModal,
     setSelectedTab,
   ]);
 

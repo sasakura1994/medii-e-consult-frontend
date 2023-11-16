@@ -27,6 +27,7 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
   const [isOpenCloseChatRoomModal, setIsOpenCloseChatRoomModal] = useState(false);
   const [isOpenResolveChatRoomModal, setIsOpenResolveChatRoomModal] = useState(false);
   const [isOpenReConsultSuggestionModal, setIsOpenReConsultSuggestionModal] = useState(false);
+  const [isOpenQuestionaryModal, setIsOpenQuestionaryModal] = useState(false);
   const setIsChatRoomSelected = useSetAtom(isChatRoomSelectedState);
   const [selectedImage, setSelectedImage] = useState<string>('');
   const { accountId } = useToken();
@@ -141,6 +142,8 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
     setIsOpenResolveChatRoomModal,
     isOpenReConsultSuggestionModal,
     setIsOpenReConsultSuggestionModal,
+    isOpenQuestionaryModal,
+    setIsOpenQuestionaryModal,
     selectedImage,
     setSelectedImage,
     setIsChatRoomSelected,
