@@ -2,9 +2,9 @@ import React from 'react';
 import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
 import { useFetchUnreadCounts } from '@/hooks/api/chat/useFetchUnreadCounts';
 import Link from 'next/link';
-import { isChatRoomSelectedState } from '@/globalStates/chat';
 import { useAtom } from 'jotai';
 import { GroupRoomTitle } from './GroupRoomTitle';
+import { isGroupSelectedState } from '@/globalStates/group';
 
 type GroupListProps = {
   groupRoomList?: ChatRoomEntity[];
@@ -12,13 +12,13 @@ type GroupListProps = {
 
 export const GroupList = (props: GroupListProps) => {
   const { groupRoomList } = props;
-  const [isChatRoomSelected, setIsChatRoomSelected] = useAtom(isChatRoomSelectedState);
+  const [isGroupSelected, setIsGroupSelected] = useAtom(isGroupSelectedState);
   const unreadCountListData = useFetchUnreadCounts();
 
   return (
     <div
       className={`h-[100dvh] w-full border border-[#d5d5d5] pb-20 lg:h-[calc(100vh-20px)]
-      lg:w-[336px] lg:min-w-[336px] lg:pb-0 ${isChatRoomSelected ? 'hidden lg:block' : 'block'}`}
+      lg:w-[336px] lg:min-w-[336px] lg:pb-0 ${isGroupSelected ? 'hidden lg:block' : 'block'}`}
     >
       <div className="flex h-14 items-center justify-between bg-[#5caec0] pr-4">
         <img src="icons/consult_list.svg" alt="" className="ml-2 h-7 w-8" />
@@ -43,7 +43,7 @@ export const GroupList = (props: GroupListProps) => {
                   query: { group_room_id: groupRoom.chat_room_id },
                 }}
                 onClick={() => {
-                  setIsChatRoomSelected(true);
+                  setIsGroupSelected(true);
                 }}
               >
                 <GroupRoomTitle
