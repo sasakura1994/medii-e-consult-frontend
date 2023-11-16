@@ -5,7 +5,7 @@ import {
   usePostQuestionaryItemsForOnboarding,
 } from '@/hooks/api/questionary/usePostQuestionaryItemsForOnboarding';
 import { useRouter } from 'next/router';
-import { mutateFetchFlag } from '@/hooks/api/account/useFetchFlags';
+import { mutateFetchFlag, useFetchFlag } from '@/hooks/api/account/useFetchFlags';
 import { whatListenState } from '@/globalStates/onboarding';
 import { useSetAtom } from 'jotai';
 
@@ -28,6 +28,7 @@ export const useOnBoardingQuestionary = () => {
   const setWhatListen = useSetAtom(whatListenState);
   const { questions } = useFetchQuestionaryItemsById('onboarding2');
   const { postQuestionaryItemsForOnboarding } = usePostQuestionaryItemsForOnboarding();
+  const { flag: hasConsulted } = useFetchFlag('HasConsulted');
 
   // questionAndAnswersを初期化
   useEffect(() => {
@@ -47,6 +48,13 @@ export const useOnBoardingQuestionary = () => {
       }))
     );
   }, [questions, questionAndAnswers]);
+
+  // コンサル済みの場合はトップページに遷移
+  useEffect(() => {
+    if (hasConsulted) {
+      router.push('/top');
+    }
+  }, [hasConsulted, router]);
 
   const setAnswer = useCallback((questionId: string, value: number) => {
     setQuestionAndAnswers((questionAndAnswers) =>

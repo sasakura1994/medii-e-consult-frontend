@@ -4,6 +4,7 @@ import { useOnBoardingQuestionary } from '../useOnBoardingQuestionary';
 import * as useFetchFlagModule from '@/hooks/api/account/useFetchFlags';
 import { usePostQuestionaryItemsForOnboarding } from '@/hooks/api/questionary/usePostQuestionaryItemsForOnboarding';
 import { useRouter } from 'next/router';
+import { useFetchFlag } from '@/hooks/api/account/useFetchFlags';
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
@@ -19,6 +20,10 @@ describe('useOnBoardingQuestionary', () => {
     });
     (usePostQuestionaryItemsForOnboarding as jest.Mock).mockReturnValue({
       postQuestionaryItemsForOnboarding: jest.fn().mockResolvedValue(true),
+    });
+    (useFetchFlag as jest.Mock).mockReturnValue({
+      flag: false,
+      isLoading: false,
     });
   });
 
