@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useFetchAppleAuthGetToken } from '@/hooks/api/auth/useFetchAppleAuthGetToken';
 import { setAuthToken } from '@/libs/cookie';
+import { useLogin } from '@/hooks/useLogin';
 
 type Query = {
   token: string;
@@ -10,6 +11,7 @@ type Query = {
 const AuthPage = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const router = useRouter();
+  const { redirectUrl } = useLogin();
   const { token } = router.query as Query;
   const { fetchAppleAuthGetToken } = useFetchAppleAuthGetToken();
 
@@ -20,11 +22,8 @@ const AuthPage = () => {
           const { jwt_token, login_type } = res.data;
           // ここでcookieにjwt_tokenをセットする
           setAuthToken(jwt_token);
-          if (login_type === 'register') {
-            router.push('/editprofile?registerMode=1');
-          } else {
-            router.push('/top');
-          }
+          if (login_type==="register") router.push(redirectUrl === '' ? 'top' : redirectUrl);
+          else router.push('editprofile?registerMode=1');
         }
       })
       .catch((err) => {
