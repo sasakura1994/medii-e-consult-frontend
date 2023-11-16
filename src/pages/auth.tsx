@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 import { Login } from '@/hooks/api/auth/useFetchAppleAuthGetToken';
+import { NextPageWithLayout } from './_app';
+import { PublicLayout } from '@/components/Layouts/PublicLayout';
 
-const AuthPage = () => {
+const AuthPage: NextPageWithLayout = () => {
 
   useEffect(() => {
     Login();
@@ -14,6 +16,10 @@ const AuthPage = () => {
       </div>
     </div>
   );
+};
+
+AuthPage.getLayout = (page: React.ReactElement) => {
+  return <PublicLayout>{page}</PublicLayout>;
 };
 
 export default AuthPage;
