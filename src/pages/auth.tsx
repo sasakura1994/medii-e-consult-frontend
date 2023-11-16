@@ -1,12 +1,7 @@
 import React, { useEffect } from 'react';
 import { Login } from '@/hooks/api/auth/useFetchAppleAuthGetToken';
 
-type Props = {
-  errorMessage: string;
-}
-
-const AuthPage = (props: Props) => {
-  const { errorMessage } = props;
+const AuthPage = () => {
 
   useEffect(() => {
     Login();
@@ -16,7 +11,6 @@ const AuthPage = (props: Props) => {
     <div className="flex h-screen justify-center bg-bg">
       <div className="mb-12 mt-6">
         <div>loading...</div>
-        <p>{errorMessage}</p>
       </div>
     </div>
   );
