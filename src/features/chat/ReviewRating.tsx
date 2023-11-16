@@ -10,7 +10,7 @@ export const ReviewRating = (props: ReviewRatingProps) => {
   const { review, setReviews } = props;
   return (
     <div className="mb-6">
-      <p className="mb-2 text-base font-semibold text-text-primary">{review.label}</p>
+      <p className="mb-2 text-base font-bold text-text-primary">{review.label}</p>
       <div className="my-2 flex justify-between">
         <div className="flex w-24 flex-col items-center">
           <img
@@ -28,7 +28,7 @@ export const ReviewRating = (props: ReviewRatingProps) => {
               })
             }
           />
-          <p className="mt-2 text-center text-xs font-light text-text-secondary">{review.lowRatingText}</p>
+          <p className="mt-2 text-center text-xs font-normal text-text-secondary">{review.lowRatingText}</p>
         </div>
         <div className="flex w-24 flex-col items-center">
           <img
