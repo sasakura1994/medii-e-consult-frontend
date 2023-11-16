@@ -1,46 +1,18 @@
-import { useToken } from '@/hooks/authentication/useToken';
-import { useLogin } from '@/hooks/useLogin';
+import { SearchParam } from '@/features/auth/useSearchParams';
 import axios from 'axios';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 
-type Query = {
-  token: string;
-}
-
-type UseFetchAppleAuthGetTokenRequestData = {
-  token_id: string;
-};
-
-type UseFetchAppleAuthGetTokenResponseData = {
+type LoginResponseData = {
   jwt_token: string;
-  login_type: 'login' | 'register';
+  login_type: string;
 };
 
-export const Login = () => {
-  const router = useRouter();
-  const { token } = router.query as Query;
-  const { setTokenAndMarkInitialized } = useToken();
-  const { redirectUrl } = useLogin();
+export const useFetchToken = async () => {
+  const token = SearchParam();
+  const endpoint = token ? `/apple_auth/get_token?token_id=${token}` : '';
 
-  const fetchAppleAuthGetToken = async (data: UseFetchAppleAuthGetTokenRequestData) => {
-    const { token_id } = data;
-    return await  axios.get<UseFetchAppleAuthGetTokenResponseData>('/apple_auth/get_token', {
-      baseURL: process.env.ENDPOINT_URL,
-      headers: { 'Content-Type': 'application/json' },
-      params: { token_id: token_id },
-    });
-  };
-
-  useEffect(() => {
-    fetchAppleAuthGetToken({ token_id: token }).then((res) => {
-      const { jwt_token, login_type } = res.data;
-      setTokenAndMarkInitialized(jwt_token);
-      if (login_type==="register") router.push(redirectUrl === '' ? 'top' : redirectUrl);
-      else router.push('editprofile?registerMode=1');
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  }, [token, fetchAppleAuthGetToken, setTokenAndMarkInitialized, redirectUrl, router]);
+  const response = await axios.get<LoginResponseData>(endpoint).catch((error) => {
+    console.error(error);
+  });
+  
+  return response;
 };
