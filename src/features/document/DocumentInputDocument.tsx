@@ -5,6 +5,7 @@ import PrimaryButton from '@/components/Button/PrimaryButton';
 import SecondaryButton from '@/components/Button/SecondaryButton';
 import { ColoredImage } from '@/components/Image/ColoredImage';
 import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
+import { Heading } from '@/components/Parts/Text/Heading';
 
 type DocumentInputDocumentProps = {
   setSelectedWithRedirect: (value: DocumentSelected) => void;
@@ -17,8 +18,8 @@ const DocumentInputDocument = ({ setSelectedWithRedirect }: DocumentInputDocumen
   return (
     <form onSubmit={submit} data-testid="document-input-document">
       <div className="mt-8 px-4 lg:w-[600px] lg:px-0">
-        <div className="text-xl font-semibold">医師免許証を登録</div>
-        <div className="mt-2 ">
+        <Heading as="h2">医師免許証を登録</Heading>
+        <div className="mt-2">
           医師であることを証明できる画像をアップロードしてください
           <br />
           医師免許証、所属医療機関のIDカード、医師資格証、専門医証明書などが対象です

@@ -6,6 +6,7 @@ import { Required } from '@/components/Parts/Form/Required';
 import TextField from '@/components/TextField/TextField';
 import SecondaryButton from '@/components/Button/SecondaryButton';
 import { DateField } from '@/components/Form/DateField';
+import { Heading } from '@/components/Parts/Text/Heading';
 
 type DoctorNumberFormProps = {
   setSelectedWithRedirect: (value: DocumentSelected) => void;
@@ -32,10 +33,10 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelectedWithRedi
       data-testid="document-input-number"
     >
       <div className="mt-8 px-4 lg:w-[600px] lg:px-0">
-        <div className="text-xl font-semibold">医師番号を入力</div>
+        <Heading as="h2">医師番号を入力</Heading>
         <div className="mt-2">医師番号と医師免許の取得年月日を入力してください。</div>
         <div className="mt-8 flex items-center gap-2">
-          <div className="font-semibold">医籍番号（6桁の数字）</div>
+          <div className="font-bold">医籍番号（6桁の数字）</div>
           <Required>必須</Required>
         </div>
         <TextField
@@ -55,7 +56,7 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelectedWithRedi
           }}
         />
         <div className="mt-8 flex items-center gap-2">
-          <div className="font-semibold">医師免許取得日</div>
+          <div className="font-bold">医師免許取得日</div>
           <Required>必須</Required>
         </div>
         <div className="mt-2">
