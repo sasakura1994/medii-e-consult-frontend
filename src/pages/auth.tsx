@@ -1,15 +1,13 @@
-import React, { useEffect } from 'react';
-import { Login } from '@/hooks/api/auth/useFetchAppleAuthGetToken';
+import React from 'react';
 import { NextPageWithLayout } from './_app';
 import { PublicLayout } from '@/components/Layouts/PublicLayout';
+import { useAppleLogin } from '@/hooks/useAppleLogin';
 
 
 const AuthPage: NextPageWithLayout = () => {
-  const { errorMessage } = Login();
+  const { errorMessage } = useAppleLogin();
 
-  useEffect(() => {
-    Login();
-  }, []);
+  useAppleLogin();
 
   return (
     <div className="flex h-screen justify-center bg-bg">
