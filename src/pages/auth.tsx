@@ -17,6 +17,7 @@ const Auth = () => {
 
   const Login = async () => {
     const response = await useFetchToken();
+    console.log("responses", response);
 
     if(response) {
       setTokenAndMarkInitialized(response.data.jwt_token);
