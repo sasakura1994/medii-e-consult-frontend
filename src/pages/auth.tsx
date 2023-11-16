@@ -1,42 +1,50 @@
-import { mutateFetchProfile, useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
-import { useFetchToken } from '@/hooks/api/auth/useFetchAppleAuthGetToken';
-import { useToken } from '@/hooks/authentication/useToken';
-import { useLogin } from '@/hooks/useLogin';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import { useFetchAppleAuthGetToken } from '@/hooks/api/auth/useFetchAppleAuthGetToken';
+import { useToken } from '@/hooks/authentication/useToken';
 
-const Auth = () => {
-  useEffect(() => {
-    Login();
-  }, []);
+type Query = {
+  token: string;
+};
 
+const AuthPage = () => {
+  const [errorMessage, setErrorMessage] = useState('');
   const router = useRouter();
-  const { redirectUrl } = useLogin();
+  const { token } = router.query as Query;
   const { setTokenAndMarkInitialized } = useToken();
-  const { profile } = useFetchProfile();
+  const { fetchAppleAuthGetToken } = useFetchAppleAuthGetToken();
 
-  const Login = async () => {
-    const response = await useFetchToken();
-    console.log("responses", response);
+  const login = useCallback(async () => {
+    fetchAppleAuthGetToken({ token_id: token })
+      .then((res) => {
+        const { jwt_token, login_type } = res.data;
+        setTokenAndMarkInitialized(jwt_token);
+        if (login_type === 'register') {
+          router.push('/editprofile?registerMode=1');
+        } else {
+          router.push('/top');
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setErrorMessage('Login failed');
+      });
+  }, [fetchAppleAuthGetToken, router, token]);
 
-    if(response) {
-      setTokenAndMarkInitialized(response.data.jwt_token);
-
-      if(profile) {
-        mutateFetchProfile();
-        if (response.data.login_type==="register") router.push(redirectUrl === '' ? 'top' : redirectUrl);
-        else router.push('editprofile?registerMode=true');
-      }
-    }
-  };
+  useEffect(() => {
+    login();
+  }, [login]);
 
   return (
-    <div className="flex h-screen justify-center bg-bg">
-      <div className="mb-12 mt-6">
-        <div>loading...</div>
+    <div>
+      <div>
+        <div style={{ marginBottom: '48px', textAlign: 'center' }}>
+          <div>loading...</div>
+          <p>{errorMessage}</p>
+        </div>
       </div>
     </div>
   );
 };
 
-export default Auth;
+export default AuthPage;

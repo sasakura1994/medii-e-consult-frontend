@@ -1,18 +1,23 @@
-import { SearchParam } from '@/features/auth/useSearchParams';
 import axios from 'axios';
+import { useCallback } from 'react';
 
-type LoginResponseData = {
-  jwt_token: string;
-  login_type: string;
+type fetchAppleAuthGetTokenRequestData = {
+  token_id: string;
 };
 
-export const useFetchToken = async () => {
-  const token = SearchParam();
-  const endpoint = token ? `/apple_auth/get_token?token_id=${token}` : '';
+type fetchAppleAuthGetTokenResponseData = {
+  jwt_token: string;
+  login_type: 'login' | 'register';
+};
+export const useFetchAppleAuthGetToken = () => {
+  const fetchAppleAuthGetToken = useCallback(async (data: fetchAppleAuthGetTokenRequestData) => {
+    const { token_id } = data;
+    return axios.get<fetchAppleAuthGetTokenResponseData>('/apple_auth/get_token', {
+      baseURL: process.env.ENDPOINT_URL,
+      headers: { 'Content-Type': 'application/json' },
+      params: { token_id: token_id },
+    });
+  }, []);
 
-  const response = await axios.get<LoginResponseData>(endpoint).catch((error) => {
-    console.error(error);
-  });
-  
-  return response;
+  return { fetchAppleAuthGetToken };
 };
