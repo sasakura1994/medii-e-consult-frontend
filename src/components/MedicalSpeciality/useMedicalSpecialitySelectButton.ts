@@ -8,13 +8,16 @@ export const useMedicalSpecialitySelectButton = ({ specialityCode, isGroup }: Me
   const { medicalSpecialities: medicalSpecialityList } = useFetchMedicalSpecialities();
 
   const medicalSpecialities = useMemo(() => {
-    if (isGroup) {
-      medicalSpecialityList?.unshift({
-        medical_speciality_category_id: 'MDD',
-        name: '複数専門領域合同(MDD)',
-        speciality_code: 'MDD',
-        display_order: 0,
-      });
+    if (isGroup && medicalSpecialityList) {
+      return [
+        {
+          medical_speciality_category_id: 'MDD',
+          name: '複数専門領域合同(MDD)',
+          speciality_code: 'MDD',
+          display_order: 0,
+        },
+        ...medicalSpecialityList,
+      ];
     }
 
     return medicalSpecialityList;
