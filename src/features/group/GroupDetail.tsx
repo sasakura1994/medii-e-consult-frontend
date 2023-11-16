@@ -12,6 +12,7 @@ import { ChatTextInput } from '../chat/ChatTextInput';
 import { FetchUnreadCountsResponseData } from '@/hooks/api/chat/useFetchUnreadCounts';
 import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
 import { KeyedMutator } from 'swr';
+import { GroupMemberModal } from './GroupMemberModal';
 
 type ConsultDetailProps = {
   chatRoomData?: FetchChatRoomResponseData;
@@ -26,7 +27,7 @@ type ConsultDetailProps = {
 export const GroupDetail = (props: ConsultDetailProps) => {
   //   const { chatRoomData, medicalSpecialities, chatListData, mutateChatRoom, mutateChatRoomList, mutateChatList } = props;
   const { chatRoomData, chatListData, mutateChatRoom, mutateChatList } = props;
-  const [, setIsOpenGroupMemberModal] = useState(false);
+  const [isOpenGroupMemberModal, setIsOpenGroupMemberModal] = useState(false);
   const [, setIsOpenChatEditModal] = useState(false);
   const chatListRef = useRef<HTMLDivElement | null>(null);
   const setIsGroupSelected = useSetAtom(isGroupSelectedState);
@@ -41,6 +42,19 @@ export const GroupDetail = (props: ConsultDetailProps) => {
 
     return passedYear + 1;
   }, []);
+
+  const groupMember = useMemo(() => {
+    if (chatRoomData && chatRoomData.members && chatRoomData.me) {
+      const members = chatRoomData.members;
+      // 一致するメンバーがいない場合だけpushする
+      if (!members.some((member) => member.account_id === chatRoomData.me?.account_id)) {
+        members.push(chatRoomData.me);
+      }
+      return members;
+    }
+    return [];
+  }, [chatRoomData]);
+
   const chatListDataWithDisplayName = useMemo(() => {
     if (chatListData && chatRoomData) {
       return chatListData.map((c) => {
@@ -107,6 +121,9 @@ export const GroupDetail = (props: ConsultDetailProps) => {
 
   return (
     <>
+      {isOpenGroupMemberModal && chatRoomData && (
+        <GroupMemberModal setIsOpen={setIsOpenGroupMemberModal} members={groupMember} />
+      )}
       {chatRoomData && (
         <div
           className="flex h-full flex-grow flex-col overflow-hidden border border-[#d5d5d5]
@@ -146,8 +163,9 @@ export const GroupDetail = (props: ConsultDetailProps) => {
             </div>
           </div>
           {chatListDataWithDisplayName && accountId && (
-            <div className="flex-shrink flex-grow overflow-auto bg-bg pb-2" ref={chatListRef}>
+            <div className="flex-shrink flex-grow overflow-auto bg-[#eff6f2] pb-2" ref={chatListRef}>
               <ChatList
+                isGroup
                 chatListData={chatListDataWithDisplayName}
                 currentUserAccountId={accountId}
                 chatRoomData={chatRoomData}

@@ -6,6 +6,7 @@ import { KeyedMutator } from 'swr';
 import { useFetchPresignedFileUrl } from '@/hooks/api/chat/useFetchPresignedFileUrl';
 
 type MyChatProps = {
+  isGroup?: boolean;
   chatData: ChatData & { displayName: string };
   chatRoomData: FetchChatRoomResponseData;
   mutateChatList?: KeyedMutator<FetchChatListResponseData>;
@@ -13,7 +14,7 @@ type MyChatProps = {
 };
 
 export const MyChat = (props: MyChatProps) => {
-  const { chatData, chatRoomData, setSelectedImage, mutateChatList } = props;
+  const { isGroup, chatData, chatRoomData, setSelectedImage, mutateChatList } = props;
   const [isMouseOver, setIsMouseOver] = useState(false);
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
   const { fecthPresignedFileUrl } = useFetchPresignedFileUrl();
@@ -182,8 +183,8 @@ export const MyChat = (props: MyChatProps) => {
               }}
             >
               <p
-                className="mb-3 mr-3 min-w-[200px] max-w-[670px] whitespace-pre-wrap break-words rounded-lg
-              rounded-tr-none bg-primary-light p-2"
+                className={`mb-3 mr-3 min-w-[200px] max-w-[670px] whitespace-pre-wrap break-words rounded-lg
+              rounded-tr-none p-2 ${isGroup ? 'bg-[#d0f0ea]' : 'bg-primary-light'}`}
               >
                 {chatData.message}
               </p>
