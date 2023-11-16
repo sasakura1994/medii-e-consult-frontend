@@ -25,7 +25,7 @@ export const DateField = (props: Props) => {
         value={value ? dateFormat(value, 'YYYY/M/D') : ''}
         // 画像が表示されなくても支障なし
         // eslint-disable-next-line rulesdir/dont-use-url-properties
-        className="bg-[url('/icons/arrow_down.svg')] bg-[center_right_20px] bg-no-repeat"
+        className="bg-[url('/icons/caret-down-fill.svg')] bg-[center_right_12px] bg-no-repeat"
         disabled={disabled}
       />
       {!disabled && (
