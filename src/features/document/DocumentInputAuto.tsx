@@ -85,8 +85,8 @@ const DocumentInputAuto: React.FC<DocumentInputAutoProps> = ({ setSelectedWithRe
       <div className="-mb-20 mt-7 flex justify-center lg:mb-0 lg:mt-0">
         <PrimaryButton
           type="submit"
-          size='large'
-          className='my-10 pb-2 pt-1.5 shadow-lg'
+          size="large"
+          className="my-10 pb-2 pt-1.5 shadow-lg"
           disabled={profile?.doctor_qualified_year === 9999 && year === 0}
         >
           登録を完了する

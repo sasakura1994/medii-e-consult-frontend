@@ -3,9 +3,9 @@ import { Layout } from '@/components/Layouts/Layout';
 import { CustomHead } from '@/components/Layouts/Header/CustomHead';
 import { Chat } from '@/features/chat/Chat';
 import { NextPageWithLayout } from './_app';
-import { useRecoilState } from 'recoil';
 import { isChatRoomSelectedState } from '@/globalStates/chat';
 import { useRouter } from 'next/router';
+import { useAtom } from 'jotai';
 
 type Query = {
   chat_room_id?: string;
@@ -14,7 +14,7 @@ type Query = {
 const ChatPage: NextPageWithLayout = () => {
   const router = useRouter();
   const { chat_room_id } = router.query as Query;
-  const [isChatRoomSelected, setIsChatRoomSelected] = useRecoilState(isChatRoomSelectedState);
+  const [isChatRoomSelected, setIsChatRoomSelected] = useAtom(isChatRoomSelectedState);
   const [windowWidth, setWindowWidth] = useState<number | undefined>(undefined);
 
   useEffect(() => {

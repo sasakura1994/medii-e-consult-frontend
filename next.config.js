@@ -24,6 +24,9 @@ const nextConfig = {
   },
   basePath: process.env.EX_WEB_DIR || '',
   assetPrefix: process.env.EX_WEB_DIR || '',
+  experimental: {
+    swcPlugins: [['@swc-jotai/react-refresh', {}]],
+  },
 };
 
 module.exports = nextConfig;

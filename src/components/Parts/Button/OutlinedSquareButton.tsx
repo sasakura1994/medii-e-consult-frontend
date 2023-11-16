@@ -8,13 +8,7 @@ type Props = {
   type?: 'button' | 'submit' | 'reset';
 };
 
-export const OutlinedSquareButton: React.FC<Props> = ({
-  children,
-  className,
-  onClick,
-  dataTestId,
-  type,
-}: Props) => {
+export const OutlinedSquareButton: React.FC<Props> = ({ children, className, onClick, dataTestId, type }: Props) => {
   return (
     <button
       type={type}

@@ -12,10 +12,9 @@ type Args = {
 };
 
 export const useGetChatDraftImages = (args: Args) => {
-  const { isLoading, error, data, mutate } =
-    useAuthenticatedSWR<GetChatDraftImagesResponseData>(
-      args.isNeed ? endpoint : null
-    );
+  const { isLoading, error, data, mutate } = useAuthenticatedSWR<GetChatDraftImagesResponseData>(
+    args.isNeed ? endpoint : null
+  );
 
   return {
     isLoading,

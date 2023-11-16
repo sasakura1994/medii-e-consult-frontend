@@ -11,10 +11,9 @@ export type FetchChatRoomResponseData = {
 };
 
 export const useFetchChatRoom = (chatRoomId?: string) => {
-  const { isLoading, error, data, mutate } =
-    useAuthenticatedSWR<FetchChatRoomResponseData>(
-      chatRoomId ? `/chat_room/chat_room?chat_room_id=${chatRoomId}` : null
-    );
+  const { isLoading, error, data, mutate } = useAuthenticatedSWR<FetchChatRoomResponseData>(
+    chatRoomId ? `/chat_room/chat_room?chat_room_id=${chatRoomId}` : null
+  );
 
   return {
     isLoading,

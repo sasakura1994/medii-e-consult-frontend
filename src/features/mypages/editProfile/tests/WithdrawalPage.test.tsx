@@ -1,6 +1,5 @@
 import React from 'react';
 import { act, render, screen, waitFor } from '@testing-library/react';
-import { RecoilRoot } from 'recoil';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import WithdrawalPage from '@/pages/withdrawal';
 import { useWithdrawalPage } from '@/features/mypages/editProfile/useWithdrawalPage';
@@ -24,11 +23,7 @@ describe('/withdrawal', () => {
     });
 
     await act(() => {
-      render(
-        <RecoilRoot>
-          <WithdrawalPage />
-        </RecoilRoot>
-      );
+      render(<WithdrawalPage />);
     });
 
     expect(await act(async () => await waitFor(() => screen.queryByTestId('nmo-notice')))).toBeInTheDocument();

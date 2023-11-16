@@ -41,59 +41,47 @@ export const ConsultExampleDetail: React.FC<Props> = ({
   return (
     <>
       <Card className="px-5 py-10 lg:px-10">
-        <div className="flex gap-2">
+        <div className="mb-2 flex gap-2">
           <div className="flex-grow">
             <ConsultExampleTag>{getCategoryName(consultExample)}</ConsultExampleTag>
           </div>
           <div
-            className="flex flex-none flex-col items-end gap-4
-          lg:flex-row lg:items-center lg:justify-between lg:gap-0"
+            className="flex flex-none flex-col items-end justify-end gap-4
+          lg:flex-row lg:justify-between lg:gap-0"
           >
             {consultExample.first_answer_minutes > 0 ? (
               <ConsultExampleFirstAnswerTime firstAnswerMinutes={consultExample.first_answer_minutes} />
             ) : (
               <div></div>
             )}
-            <div className="flex items-center text-sm lg:text-primary">
-              <img className="lg:hidden" src="icons/good_out.svg" width="24" height="24" alt="いいねの数" />
-              <img
-                className="hidden lg:block"
-                src="icons/good_out_primary.svg"
-                width="24"
-                height="24"
-                alt="いいねの数"
-              />
-              <div className="ml-1">{consultExample.all_like_count}</div>
-              <a
-                href={onShowAllComments ? '#' : undefined}
-                className="flex items-center"
-                onClick={
-                  onShowAllComments
-                    ? (e) => {
-                        e.preventDefault();
-                        onShowAllComments();
-                      }
-                    : undefined
-                }
-              >
-                <img
-                  src="icons/comment.svg"
-                  width="24"
-                  height="24"
-                  className="ml-4 block lg:hidden"
-                  alt="コメントの数"
-                />
-                <img
-                  src="icons/comment_primary.svg"
-                  width="24"
-                  height="24"
-                  className="ml-4 hidden lg:block"
-                  alt="コメントの数"
-                />
-                <div className="ml-1">{consultExample.all_comment_count}</div>
-              </a>
-            </div>
           </div>
+        </div>
+        <div className="flex items-end justify-end text-sm lg:text-primary">
+          <img className="lg:hidden" src="icons/good_out.svg" width="24" height="24" alt="いいねの数" />
+          <img className="hidden lg:block" src="icons/good_out_primary.svg" width="24" height="24" alt="いいねの数" />
+          <div className="ml-1">{consultExample.all_like_count}</div>
+          <a
+            href={onShowAllComments ? '#' : undefined}
+            className="flex items-center"
+            onClick={
+              onShowAllComments
+                ? (e) => {
+                    e.preventDefault();
+                    onShowAllComments();
+                  }
+                : undefined
+            }
+          >
+            <img src="icons/comment.svg" width="24" height="24" className="ml-4 block lg:hidden" alt="コメントの数" />
+            <img
+              src="icons/comment_primary.svg"
+              width="24"
+              height="24"
+              className="ml-4 hidden lg:block"
+              alt="コメントの数"
+            />
+            <div className="ml-1">{consultExample.all_comment_count}</div>
+          </a>
         </div>
         <div className="mt-4 text-2xl font-bold">{consultExample.title}</div>
         <div className="mt-5 flex flex-col justify-between text-sm lg:mt-10 lg:flex-row">

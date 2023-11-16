@@ -16,14 +16,10 @@ export const usePatchEditPassword = () => {
 
   const editPassword = useCallback(
     (data: EditPasswordArgs) => {
-      return axios.patch<PatchEditPasswordResponseData>(
-        '/account/confirm_email',
-        data
-      );
+      return axios.patch<PatchEditPasswordResponseData>('/account/confirm_email', data);
     },
     [axios]
   );
 
   return { editPassword };
-
 };

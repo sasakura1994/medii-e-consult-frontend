@@ -4,7 +4,7 @@ const PrivacyPolicy = () => {
   return (
     <div className="flex bg-bg">
       <div className="m-auto mt-6 w-[644px] rounded border border-[#ddd] bg-white py-4">
-        <div className="mx-4 px-8 font-normal text-[10.5pt]  leading-[1.15] text-[#000]">
+        <div className="mx-4 px-8 text-[10.5pt] font-normal  leading-[1.15] text-[#000]">
           <h1 className="break-after-avoid-page pb-[6pt] pt-5 text-center">
             <span className="text-[20pt] font-normal text-[#000]">プライバシーポリシー</span>
           </h1>
@@ -37,7 +37,7 @@ const PrivacyPolicy = () => {
             <span className="font-bold">第3条(本サービスで収集するお客様情報)</span>
           </p>
           <ul>
-            <li className="ml-12 pt-[6pt] before:absolute before:text-[7pt] before:pt-1 before:ml-[-18pt] before:content-['\25CF']">
+            <li className="ml-12 pt-[6pt] before:absolute before:ml-[-18pt] before:pt-1 before:text-[7pt] before:content-['\25CF']">
               <span>
                 本サービスにおいて、当社は、お客様等から、次の情報を提供していただきます。
                 当社は、これらのお客様情報の取得に際しては、その取得目的を正当な事業の範囲内で明確に定め、その目的達成に必要な限度において、適法かつ公正な方法で取得するものとします。
@@ -61,7 +61,7 @@ const PrivacyPolicy = () => {
             <li>その他当社が定める情報</li>
           </ul>
           <ul>
-            <li className="ml-12 before:absolute before:text-[7pt] before:pt-1 before:ml-[-18pt] before:content-['\25CF']">
+            <li className="ml-12 before:absolute before:ml-[-18pt] before:pt-1 before:text-[7pt] before:content-['\25CF']">
               <span>
                 本サービスにおいて、当社は、お客様等のアクセス状況や本サービスの利用方法に関する情報を収集します。この情報には、以下の情報が含まれます。
               </span>
@@ -77,7 +77,7 @@ const PrivacyPolicy = () => {
             <span className="font-bold">第4条(利用目的)</span>
           </p>
           <ul>
-            <li className="ml-12 pt-[6pt] before:absolute before:text-[7pt] before:pt-1 before:ml-[-18pt] before:content-['\25CF']">
+            <li className="ml-12 pt-[6pt] before:absolute before:ml-[-18pt] before:pt-1 before:text-[7pt] before:content-['\25CF']">
               <span>
                 当社は、本サービスの利用を通じて取得したお客様情報を、下記の目的の範囲内で適正に取り扱います。お客様情報について、お客様等ご本人の同意なく利用目的の範囲を超えて利用することはありません。
               </span>
@@ -103,7 +103,7 @@ const PrivacyPolicy = () => {
             <li>前各号に付随する本サービスの提供・維持・改善のため</li>
           </ul>
           <ul>
-            <li className="ml-12 before:absolute before:text-[7pt] before:pt-1 before:ml-[-18pt] before:content-['\25CF']">
+            <li className="ml-12 before:absolute before:ml-[-18pt] before:pt-1 before:text-[7pt] before:content-['\25CF']">
               <span>
                 当社は、前項の利用目的を、変更前の利用目的と相当の関連性を有すると合理的に認められる範囲内において変更することがあり、変更した場合には、当社が別途定める方法により、お客様等に通知又は公表します。
               </span>
@@ -113,13 +113,13 @@ const PrivacyPolicy = () => {
             <span className="font-bold">第5条(第三者提供)</span>
           </p>
           <ul>
-            <li className="ml-12 pt-[6pt] before:absolute before:text-[7pt] before:pt-1 before:ml-[-18pt] before:content-['\25CF']">
+            <li className="ml-12 pt-[6pt] before:absolute before:ml-[-18pt] before:pt-1 before:text-[7pt] before:content-['\25CF']">
               <span>
                 当社は、前条第１項に定める目的の範囲内で、お客様情報を医師、医療従事者、医療機関、医療研究機関、
                 人材紹介会社その他当社のビジネスパートナー及び業務提携会社その他当社が適切と判断する第三者に提供することがあり、お客様等はかかる第三者提供につき予め同意するものとします。
               </span>
             </li>
-            <li className="ml-12 before:absolute before:text-[7pt] before:pt-1 before:ml-[-18pt] before:content-['\25CF']">
+            <li className="ml-12 before:absolute before:ml-[-18pt] before:pt-1 before:text-[7pt] before:content-['\25CF']">
               <span>
                 当社は、前項に定めるほか、原則として、お客様等ご本人の同意を得ずにお客様情報を第三者に提供しません。ただし、以下の場合は、関係法令に反しない範囲で、お客様等の同意なくお客様情報を提供することがあります。
               </span>
@@ -137,7 +137,7 @@ const PrivacyPolicy = () => {
             <li>合併、会社分割、事業譲渡その他の事由によりお客様情報を含む事業の承継がなされる場合</li>
           </ul>
           <ul>
-            <li className="ml-12 before:absolute before:text-[7pt] before:pt-1 before:ml-[-18pt] before:content-['\25CF']">
+            <li className="ml-12 before:absolute before:ml-[-18pt] before:pt-1 before:text-[7pt] before:content-['\25CF']">
               <span>
                 当社は、お客様等の同意に基づきお客様情報を第三者に提供した場合、以下の事項に関する記録を作成し、保管します。
               </span>
@@ -150,27 +150,27 @@ const PrivacyPolicy = () => {
             <li>当該お客様情報の項目</li>
           </ul>
           <ul>
-            <li className="ml-12 before:absolute before:text-[7pt] before:pt-1 before:ml-[-18pt] before:content-['\25CF']">
+            <li className="ml-12 before:absolute before:ml-[-18pt] before:pt-1 before:text-[7pt] before:content-['\25CF']">
               <span>
                 当社は、お客様等の個人を特定できないよう不可逆的な適切な加工を行った情報（以下「匿名加工情報」といいます。）を第三者に提供することがあり、
                 お客様等はかかる第三者提供につき予め同意するものとします。当社は、匿名加工情報を作成したとき及びかかる情報を第三者に提供するときは、
                 当社の運営するウェブサイト又はその他の適切な方法により、当該匿名加工情報に含まれるお客様情報の項目及びその提供の方法等について事前に公表するものとします。
               </span>
             </li>
-            <li className="ml-12 before:absolute before:text-[7pt] before:pt-1 before:ml-[-18pt] before:content-['\25CF']">
+            <li className="ml-12 before:absolute before:ml-[-18pt] before:pt-1 before:text-[7pt] before:content-['\25CF']">
               <span>
                 当社は、他の情報と照合しない限り特定の個人を識別できないように加工した個人に関する情報（以下「仮名加工情報」といいます。）を作成又は取得した場合には、
                 データの統計的な分析のために利用し、個人情報保護法、各省庁ガイドラインその他関連する法令等に従い、安全管理のための措置を講じます。当社は、個人情報保護法に基づく場合を除き、
                 仮名加工情報の第三者への提供は行いません。
               </span>
             </li>
-            <li className="ml-12 before:absolute before:text-[7pt] before:pt-1 before:ml-[-18pt] before:content-['\25CF']">
+            <li className="ml-12 before:absolute before:ml-[-18pt] before:pt-1 before:text-[7pt] before:content-['\25CF']">
               <span>
                 当社は、お客様情報から作成した個人を特定できない統計情報（個人情報及び匿名加工情報に該当しないものをいいます。以下同じ。）を利用し、
                 又は第三者に提供することがあり、お客様等はかかる利用又は第三者提供につき予め同意するものとします。
               </span>
             </li>
-            <li className="ml-12 before:absolute before:text-[7pt] before:pt-1 before:ml-[-18pt] before:content-['\25CF']">
+            <li className="ml-12 before:absolute before:ml-[-18pt] before:pt-1 before:text-[7pt] before:content-['\25CF']">
               <span>
                 当社がお客様情報を第三者に提供する場合には、当該第三者に対して、本ポリシーと矛盾しない内容の守秘義務を課すものとします。
               </span>
@@ -180,10 +180,10 @@ const PrivacyPolicy = () => {
             <span className="font-bold">第6条(お客様情報の取得)</span>
           </p>
           <ul>
-            <li className="ml-12 pt-[6pt] before:absolute before:text-[7pt] before:pt-1 before:ml-[-18pt] before:content-['\25CF']">
+            <li className="ml-12 pt-[6pt] before:absolute before:ml-[-18pt] before:pt-1 before:text-[7pt] before:content-['\25CF']">
               <span>当社は、偽りその他不正の手段によらず、適正にお客様情報を取得します。</span>
             </li>
-            <li className="ml-12 before:absolute before:text-[7pt] before:pt-1 before:ml-[-18pt] before:content-['\25CF']">
+            <li className="ml-12 before:absolute before:ml-[-18pt] before:pt-1 before:text-[7pt] before:content-['\25CF']">
               <span>
                 当社は、お客様等が本サービスを利用することによる取得以外の方法でお客様情報を取得する場合には、その利用目的を事前に通知又は公表します。
               </span>
@@ -193,12 +193,12 @@ const PrivacyPolicy = () => {
             <span className="font-bold">第7条(安全管理)</span>
           </p>
           <ul>
-            <li className="ml-12 pt-[6pt] before:absolute before:text-[7pt] before:pt-1 before:ml-[-18pt] before:content-['\25CF']">
+            <li className="ml-12 pt-[6pt] before:absolute before:ml-[-18pt] before:pt-1 before:text-[7pt] before:content-['\25CF']">
               <span>
                 当社は、お客様情報（上記の匿名加工情報及び統計情報を含みます。以下同じ。）の漏洩、滅失又は毀損の防止その他のお客様情報の安全管理のために必要かつ適切な措置を講じます。
               </span>
             </li>
-            <li className="ml-12 before:absolute before:text-[7pt] before:pt-1 before:ml-[-18pt] before:content-['\25CF']">
+            <li className="ml-12 before:absolute before:ml-[-18pt] before:pt-1 before:text-[7pt] before:content-['\25CF']">
               <span>
                 当社は、お客様情報の取扱いの全部又は一部を第三者に委託する場合は、当該第三者との間で本ポリシーに準じる内容の秘密保持契約等を予め締結するとともに、
                 当該第三者においてお客様情報の安全管理が図られるよう、必要かつ適切な監督を行います。
@@ -209,12 +209,12 @@ const PrivacyPolicy = () => {
             <span className="font-bold">第8条(Cookieその他の技術の利用)</span>
           </p>
           <ul>
-            <li className="ml-12 pt-[6pt] before:absolute before:text-[7pt] before:pt-1 before:ml-[-18pt] before:content-['\25CF']">
+            <li className="ml-12 pt-[6pt] before:absolute before:ml-[-18pt] before:pt-1 before:text-[7pt] before:content-['\25CF']">
               <span>
                 本サービスのウェブサイトには、「Cookie（クッキー）」と呼ばれる技術及びこれに類する技術を使用しているページがあります。
               </span>
             </li>
-            <li className="ml-12 before:absolute before:text-[7pt] before:pt-1 before:ml-[-18pt] before:content-['\25CF']">
+            <li className="ml-12 before:absolute before:ml-[-18pt] before:pt-1 before:text-[7pt] before:content-['\25CF']">
               <span>
                 Cookieとは、ウェブサーバがお客様等のコンピュータを識別する業界標準の技術です。
                 Cookieは、お客様等のコンピュータを識別することはできますが、お客様等個人を識別することはできません。
@@ -267,12 +267,12 @@ const PrivacyPolicy = () => {
             <span className="font-bold">第11条(お客様情報の開示・訂正等)</span>
           </p>
           <ul>
-            <li className="ml-12 pt-[6pt] before:absolute before:text-[7pt] before:pt-1 before:ml-[-18pt] before:content-['\25CF']">
+            <li className="ml-12 pt-[6pt] before:absolute before:ml-[-18pt] before:pt-1 before:text-[7pt] before:content-['\25CF']">
               <span>
                 お客様等から提供された個人情報について、お客様等が書面による開示、訂正、追加、削除等を要望する場合は、「個人情報に関する開示等申請について」（PDF）をご参照ください。
               </span>
             </li>
-            <li className="ml-12 before:absolute before:text-[7pt] before:pt-1 before:ml-[-18pt] before:content-['\25CF']">
+            <li className="ml-12 before:absolute before:ml-[-18pt] before:pt-1 before:text-[7pt] before:content-['\25CF']">
               <span>
                 前項に基づく申出があった場合において、本人確認がなされたときは、当社は、合理的な範囲で個人情報の開示等をします。
                 ただし、個人情報保護法その他の法令により、当社が開示等の義務を負わない場合、正当な理由なく同内容の請求が何度も繰り返される場合、又は過度な技術的作業を要する場合はこの限りではありません。
@@ -321,10 +321,10 @@ const PrivacyPolicy = () => {
             <span>当社は、以下の場合には、何らの責任を負いません。</span>
           </p>
           <ul>
-            <li className="ml-12 pt-[6pt] before:absolute before:text-[7pt] before:pt-1 before:ml-[-18pt] before:content-['\25CF']">
+            <li className="ml-12 pt-[6pt] before:absolute before:ml-[-18pt] before:pt-1 before:text-[7pt] before:content-['\25CF']">
               <span>お客様等ご本人が本サービスの機能又は別の手段を用いて第三者にお客様情報を明らかにした場合</span>
             </li>
-            <li className="ml-12 before:absolute before:text-[7pt] before:pt-1 before:ml-[-18pt] before:content-['\25CF']">
+            <li className="ml-12 before:absolute before:ml-[-18pt] before:pt-1 before:text-[7pt] before:content-['\25CF']">
               <span>お客様等が自ら本サービス上に入力した情報等により、個人を識別し得る状態に至った場合</span>
             </li>
           </ul>
