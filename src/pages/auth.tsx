@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { login } from '@/hooks/api/auth/useFetchAppleAuthGetToken';
+import { Login } from '@/hooks/api/auth/useFetchAppleAuthGetToken';
 
 type Props = {
   errorMessage: string;
@@ -9,7 +9,7 @@ const AuthPage = (props: Props) => {
   const { errorMessage } = props;
 
   useEffect(() => {
-    login();
+    Login();
   }, []);
 
   return (

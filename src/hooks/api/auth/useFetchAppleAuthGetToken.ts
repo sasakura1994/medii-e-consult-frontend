@@ -17,7 +17,7 @@ type UseFetchAppleAuthGetTokenResponseData = {
   login_type: 'login' | 'register';
 };
 
-export const login = () => {
+export const Login = () => {
   const router = useRouter();
   const { token } = router.query as Query;
   const { setTokenAndMarkInitialized } = useToken();
