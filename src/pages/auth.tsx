@@ -7,8 +7,6 @@ import { useAppleLogin } from '@/hooks/useAppleLogin';
 const AuthPage: NextPageWithLayout = () => {
   const { errorMessage } = useAppleLogin();
 
-  useAppleLogin();
-
   return (
     <div className="flex h-screen justify-center bg-bg">
       <div className="mb-12 mt-6">
