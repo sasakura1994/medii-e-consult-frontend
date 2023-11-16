@@ -1,8 +1,8 @@
 import { useToken } from '@/hooks/authentication/useToken';
 import { useLogin } from '@/hooks/useLogin';
-import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 type Query = {
   token: string;
