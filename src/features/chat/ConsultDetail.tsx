@@ -411,13 +411,9 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                           pathname: 'newchatroom',
                           query: `target_group_id=${chatRoomData.chat_room.group_id}`,
                         }}
+                        className="mx-3 mt-4 min-w-[40%] cursor-pointer rounded-full bg-white px-4 py-1 text-primary"
                       >
-                        <div
-                          className="mx-3 mt-4 min-w-[40%] cursor-pointer
-                       rounded-full bg-white px-4 py-1 text-primary"
-                        >
-                          <p className="text-sm">同じ医師グループに別の症例を相談する</p>
-                        </div>
+                        <p className="text-sm">同じ医師グループに別の症例を相談する</p>
                       </Link>
                     ) : chatRoomData.members.length > 0 ? (
                       <Link
@@ -425,13 +421,9 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                           pathname: 'newchatroom',
                           query: `target_account_id=${chatRoomData.members[0].account_id}`,
                         }}
+                        className="mx-3 mt-4 min-w-[40%] cursor-pointer rounded-full bg-white px-4 py-1 text-primary"
                       >
-                        <div
-                          className="mx-3 mt-4 min-w-[40%] cursor-pointer
-                      rounded-full bg-white px-4 py-1 text-primary"
-                        >
-                          <p className="text-sm">同じ医師に別の症例を相談する</p>
-                        </div>
+                        <p className="text-sm">同じ医師に別の症例を相談する</p>
                       </Link>
                     ) : (
                       <div
