@@ -113,8 +113,11 @@ export const GroupDetail = (props: ConsultDetailProps) => {
       return <></>;
     }
     return (
-      <p className="cursor-pointer text-md font-bold underline" onClick={() => setIsOpenGroupMemberModal(true)}>
-        {group.member_ids.length}人の専門医メンバー
+      <p
+        className="ml-2 cursor-pointer text-sm font-bold text-text-link underline"
+        onClick={() => setIsOpenGroupMemberModal(true)}
+      >
+        {group.member_ids.length}人のグループメンバー
       </p>
     );
   }, [group]);

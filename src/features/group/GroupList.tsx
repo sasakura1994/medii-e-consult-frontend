@@ -24,7 +24,7 @@ export const GroupList = (props: GroupListProps) => {
         <img src="icons/consult_list.svg" alt="" className="ml-2 h-7 w-8" />
         <p className="text-md font-bold text-white">所属グループ</p>
         <Link
-          href="newchatroom"
+          href="creategroup"
           className="ml-3 hidden rounded-full border border-white px-2 py-1 text-md font-bold text-white lg:block"
         >
           ＋新規グループ作成
