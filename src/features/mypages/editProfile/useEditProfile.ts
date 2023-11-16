@@ -165,9 +165,9 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
     } else {
       setProfile({
         ...fetchedProfile,
-        birthday_year: fetchedProfile.birthday_year === 9999 ? '' : numberToString(fetchedProfile.birthday_year),
-        birthday_month: fetchedProfile.birthday_year === 9999 ? '' : numberToString(fetchedProfile.birthday_month),
-        birthday_day: fetchedProfile.birthday_year === 9999 ? '' : numberToString(fetchedProfile.birthday_day),
+        birthday_year: fetchedProfile.birthday_year === 9999 ? '1990' : numberToString(fetchedProfile.birthday_year),
+        birthday_month: fetchedProfile.birthday_year === 9999 ? '1' : numberToString(fetchedProfile.birthday_month),
+        birthday_day: fetchedProfile.birthday_year === 9999 ? '1' : numberToString(fetchedProfile.birthday_day),
         qualified_year: numberToString(fetchedProfile.qualified_year),
         graduated_university: fetchedProfile.graduated_university === 'null' ? '' : fetchedProfile.graduated_university,
         is_mail_notify:
