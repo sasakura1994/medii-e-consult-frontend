@@ -1,50 +1,28 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import { useFetchAppleAuthGetToken } from '@/hooks/api/auth/useFetchAppleAuthGetToken';
-import { useToken } from '@/hooks/authentication/useToken';
+import React, { useEffect } from 'react';
+import { Login } from '@/hooks/api/auth/useFetchAppleAuthGetToken';
+import { NextPageWithLayout } from './_app';
+import { PublicLayout } from '@/components/Layouts/PublicLayout';
 
-type Query = {
-  token: string;
-};
 
-const AuthPage = () => {
-  const [errorMessage, setErrorMessage] = useState('');
-  const router = useRouter();
-  const { token } = router.query as Query;
-  const { setTokenAndMarkInitialized } = useToken();
-  const { fetchAppleAuthGetToken } = useFetchAppleAuthGetToken();
-
-  const login = useCallback(async () => {
-    fetchAppleAuthGetToken({ token_id: token })
-      .then((res) => {
-        const { jwt_token, login_type } = res.data;
-        setTokenAndMarkInitialized(jwt_token);
-        if (login_type === 'register') {
-          router.push('/editprofile?registerMode=1');
-        } else {
-          router.push('/top');
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        setErrorMessage('Login failed');
-      });
-  }, [fetchAppleAuthGetToken, router, token]);
+const AuthPage: NextPageWithLayout = () => {
+  const { errorMessage } = Login();
 
   useEffect(() => {
-    login();
-  }, [login]);
+    Login();
+  }, []);
 
   return (
-    <div>
-      <div>
-        <div style={{ marginBottom: '48px', textAlign: 'center' }}>
-          <div>loading...</div>
-          <p>{errorMessage}</p>
-        </div>
+    <div className="flex h-screen justify-center bg-bg">
+      <div className="mb-12 mt-6">
+        <div>loading...</div>
+        <p>{errorMessage}</p>
       </div>
     </div>
   );
+};
+
+AuthPage.getLayout = (page: React.ReactElement) => {
+  return <PublicLayout>{page}</PublicLayout>;
 };
 
 export default AuthPage;
