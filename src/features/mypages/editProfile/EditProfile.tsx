@@ -55,6 +55,7 @@ export const EditProfile = (props: EditProfileProps) => {
           <div className="mt-6 flex gap-4">
             <Radio
               name="account_type"
+              id="account-type-doctor"
               label="医師"
               value="doctor"
               checked={accountType === 'doctor'}
@@ -62,6 +63,7 @@ export const EditProfile = (props: EditProfileProps) => {
             />
             <Radio
               name="account_type"
+              id="account-type-student"
               label="医学生"
               value="student"
               checked={accountType === 'student'}
@@ -70,7 +72,7 @@ export const EditProfile = (props: EditProfileProps) => {
           </div>
 
           {accountType === 'doctor' ? (
-            <>
+            <div data-testid="edit-profile-doctor">
               <div className="mt-6">
                 <MedicalCareer {...editProfile} {...props} />
               </div>
@@ -85,9 +87,9 @@ export const EditProfile = (props: EditProfileProps) => {
                   <UsageClassification {...editProfile} />
                 </div>
               )}
-            </>
+            </div>
           ) : (
-            <div className="mt-6">
+            <div className="mt-6" data-testid="edit-profile-student">
               <EditProfileStudent {...editProfile} />
             </div>
           )}
