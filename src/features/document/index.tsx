@@ -9,7 +9,6 @@ import { useRouter } from 'next/router';
 import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 import { useProfile } from '@/hooks/useProfile';
 import DocumentInputStudentDocument from './DocumentInputStudentDocument';
-import { useFetchFlag } from '@/hooks/api/account/useFetchFlags';
 
 export type DocumentSelected = '' | 'number' | 'document' | 'auto' | 'completed' | 'studentCompleted';
 
@@ -18,20 +17,14 @@ export const Document = () => {
   const [mode] = useState<DocumentMode>('document');
   const router = useRouter();
   const { postEventLog } = useEventLog();
-  const { flag: hasConsulted } = useFetchFlag('HasConsulted');
   const { profile } = useProfile();
 
   const loginRedirectUrlKey = 'Login::RedirectURL';
 
   const routerPushToQuestionaryPage = useCallback(async () => {
     await postEventLog({ name: 'document-complete' });
-    if (hasConsulted) {
-      // コンサル済みの場合はTOPへ
-      router.push('/top');
-    } else {
-      router.push('/onboarding/questionary');
-    }
-  }, [hasConsulted, postEventLog, router]);
+    router.push('/onboarding/questionary');
+  }, [postEventLog, router]);
   const setSelectedWithRedirect = useCallback(
     (value: DocumentSelected) => {
       setSelected(value);
@@ -51,12 +44,7 @@ export const Document = () => {
   if (!profile) return <></>;
 
   if (profile.is_invited || profile.is_skip_confirmation_by_utm_source || profile.is_huf_user) {
-    if (hasConsulted) {
-      // コンサル済みの場合はTOPへ
-      router.push('/top');
-    } else {
-      router.push('/onboarding/questionary');
-    }
+    router.push('/onboarding/questionary');
     return <></>;
   }
 
