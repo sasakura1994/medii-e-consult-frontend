@@ -7,7 +7,7 @@ const AuthPage: NextPageWithLayout = () => {
 
   useEffect(() => {
     Login();
-  }, []);
+  }, [Login]);
 
   return (
     <div className="flex h-screen justify-center bg-bg">
