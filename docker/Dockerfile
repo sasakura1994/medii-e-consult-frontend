@@ -17,9 +17,9 @@ ENV EX_WEB_DIR=$ex_web_dir
 ENV EX_API_DIR=$ex_api_dir
 ENV INVITATION_URL=$invitation_url
 
-RUN npm ci
-RUN npm run build
-RUN npm ci --production
+RUN npm ci --ignore-scripts
+RUN npm run build --ignore-scripts
+RUN npm ci --production --ignore-scripts
 
 EXPOSE 3000
 

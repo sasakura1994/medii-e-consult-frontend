@@ -148,6 +148,7 @@ describe('useNewChatRoom', () => {
       useRouterMock.mockReturnValue({
         query: {
           from: 'mail',
+          utm_source: 'utm',
         },
         push: pushMock,
         isReady: true,
@@ -166,7 +167,7 @@ describe('useNewChatRoom', () => {
         chat_room_id: expect.anything(),
         disease_name: '',
         first_message: '',
-        create_source: { from: 'mail' },
+        create_source: { from: 'mail', utm_source: 'utm' },
         gender: 'man',
         group_id: undefined,
         publishment_accepted: true,
@@ -174,6 +175,7 @@ describe('useNewChatRoom', () => {
         target_doctor: undefined,
         target_specialities: [],
         from: 'mail',
+        utm_source: 'utm',
       });
       expect(createNewChatRoomMock).toBeCalled();
       expect(mutateFetchFlagMock).toHaveBeenCalledWith('FirstConsultCampaign');
