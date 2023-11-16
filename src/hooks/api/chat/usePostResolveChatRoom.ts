@@ -3,8 +3,11 @@ import { useCallback } from 'react';
 
 export type PostResolveChatRoomRequestData = {
   chat_room_id: string;
-  comment: string;
-  score: number;
+  quality_score: 0 | 1 | 2 | 3 | 4 | 5;
+  speed_score: 0 | 1 | 2 | 3 | 4 | 5;
+  repeat_score: 0 | 1 | 2 | 3 | 4 | 5;
+  responder_comment: string;
+  system_score: 0 | 1 | 2 | 3 | 4 | 5;
   system_comment: string;
 };
 export type PostResolveChatRoomResponseData = {

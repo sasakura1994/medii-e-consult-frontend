@@ -8,7 +8,6 @@ import TextArea from '@/components/TextArea/TextArea';
 import { Optional } from '@/components/Parts/Form/Optional';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import TertiaryButton from '@/components/Button/TertiaryButton';
-import { usePostResolveGroupChatRoom } from '@/hooks/api/chat/usePostResolveGroupChatRoom';
 
 export type Review = {
   key: string;
@@ -32,7 +31,7 @@ export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
   const [page, setPage] = useState<'aboutConsult' | 'aboutSystem'>('aboutConsult');
   const [aboutConsultReviews, setAboutConsultReviews] = useState<Review[]>([
     {
-      key: '1',
+      key: 'quality_score',
       label: '期待通りの回答が得られましたか？',
       lowRatingText: '期待以下',
       mediumRatingText: '期待通り',
@@ -40,7 +39,7 @@ export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
       value: 0,
     },
     {
-      key: '2',
+      key: 'speed_score',
       label: '回答までの早さはいかがでしたか？',
       lowRatingText: '遅い',
       mediumRatingText: '期待通り',
@@ -48,7 +47,7 @@ export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
       value: 0,
     },
     {
-      key: '3',
+      key: 'repeat_score',
       label: 'もう一度この先生に相談したいですか？',
       lowRatingText: 'したくない',
       mediumRatingText: 'どちらでもない',
@@ -58,7 +57,7 @@ export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
   ]);
   const [aboutSystemReviews, setAboutSystemReviews] = useState<Review[]>([
     {
-      key: '1',
+      key: 'system_score',
       label: 'E-コンサルの使い心地はいかがですか？',
       lowRatingText: '期待以下',
       mediumRatingText: '期待通り',
@@ -70,33 +69,33 @@ export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
   const [aboutSystemComment, setAboutSystemComment] = useState('');
 
   const { resolveChatRoom } = usePostResolveChatRoom();
-  const { resolveGroupChatRoom } = usePostResolveGroupChatRoom();
 
   const resolve = useCallback(async () => {
-    if (chatRoomData.chat_room.room_type === 'GROUP') {
-      await resolveGroupChatRoom({
-        chat_room_id: chatRoomData.chat_room.chat_room_id,
-        comment: '',
-        score: 5,
-        system_comment: '',
-      });
-    } else {
-      await resolveChatRoom({
-        chat_room_id: chatRoomData.chat_room.chat_room_id,
-        comment: '',
-        score: 5,
-        system_comment: '',
-      });
+    await resolveChatRoom({
+      chat_room_id: chatRoomData.chat_room.chat_room_id,
+      quality_score: aboutConsultReviews[0].value,
+      speed_score: aboutConsultReviews[1].value,
+      repeat_score: aboutConsultReviews[2].value,
+      responder_comment: aboutConsultComment,
+      system_score: aboutSystemReviews[0].value,
+      system_comment: aboutSystemComment,
+    });
+    if (chatRoomData.chat_room.room_type !== 'GROUP') {
       setIsOpenReConsultSuggestionModal(true);
     }
+
     await mutateChatRoom?.();
     setIsOpen(false);
     setSelectedTab('close');
   }, [
-    chatRoomData,
+    aboutConsultComment,
+    aboutConsultReviews,
+    aboutSystemComment,
+    aboutSystemReviews,
+    chatRoomData.chat_room.chat_room_id,
+    chatRoomData.chat_room.room_type,
     mutateChatRoom,
     resolveChatRoom,
-    resolveGroupChatRoom,
     setIsOpen,
     setIsOpenReConsultSuggestionModal,
     setSelectedTab,
