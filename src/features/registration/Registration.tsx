@@ -12,9 +12,11 @@ import { HeaderMenuList } from '@/components/Layouts/Header/HeaderMenuList';
 import TertiaryButton from '@/components/Button/TertiaryButton';
 import { AppleSignInButton } from '@/components/Button/AppleSignInButton';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
+import { useLogin } from '@/hooks/useLogin';
 
 export const Registration = (props: UseRegisterType) => {
   const { email, setEmail, register, loginUrl, isEmailDuplicated, isSending, errorMessage } = props;
+  const { saveRedirectUrl } = useLogin();
 
   return (
     <div className="flex h-full min-h-screen w-full flex-col bg-[#eff3f6]">
@@ -110,7 +112,7 @@ export const Registration = (props: UseRegisterType) => {
               <div className="mt-6 font-light text-text-secondary">または</div>
 
               <div className="mt-6">
-                <AppleSignInButton borderColorClassName="border-[#DADFE5]">Appleアカウントで登録する</AppleSignInButton>
+                <AppleSignInButton onClick={saveRedirectUrl} borderColorClassName="border-[#DADFE5]">Appleアカウントで登録する</AppleSignInButton>
               </div>
               <hr className="mt-6 w-full border-[1px] border-border-divider" />
               <div className="mt-6 flex items-center justify-center gap-4 text-md text-text-secondary">
