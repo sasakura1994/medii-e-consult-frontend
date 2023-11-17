@@ -3,7 +3,6 @@ import { useLogin } from '@/hooks/useLogin';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import { useFetchAppleAuthGetToken } from './api/auth/useFetchAppleAuthGetToken';
-import { redirect } from 'next/dist/server/api-utils';
 
 type Query = {
   token: string;
