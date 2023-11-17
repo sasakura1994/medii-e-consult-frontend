@@ -8,7 +8,7 @@ export const HeaderSimple: React.FC = () => {
   return (
     <HeaderContainer>
       <div className="flex items-center">
-        <HeaderLogo />
+        <HeaderLogo href="/login" />
         <HeaderMenuList>
           <HeaderMenuListItem href="/login">ログイン</HeaderMenuListItem>
         </HeaderMenuList>
