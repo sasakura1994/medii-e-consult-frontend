@@ -1,16 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
-import { useToken } from '@/hooks/authentication/useToken';
 type Props = {
   href?: string;
 };
 
 export const HeaderLogo = (props: Props) => {
   const { href } = props;
-  const { token } = useToken();
   return (
     <div className="-mt-1 h-[27px] w-[100.28px]">
-      <Link href={token ? href ?? '/top' : '/login'} className="inline-block no-underline">
+      <Link href={href ?? '/top'} className="inline-block no-underline">
         <img src="images/side_logo.svg" alt="Medii E-コンサル" className="h-full w-full" />
       </Link>
     </div>

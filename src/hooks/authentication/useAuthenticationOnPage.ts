@@ -4,6 +4,20 @@ import { redirectToLoginPage } from '@/libs/apiClient';
 import { useRefreshToken } from '../api/doctor/useRefreshToken';
 import { useGuest } from './useGuest';
 
+// 認証が不要なページはここに追加する
+const unauthenticatedPages = [
+  '/initpassword',
+  '/login',
+  '/passwordreset',
+  '/passwordresetrequest',
+  '/registration',
+  '/auth/callback',
+  '/privacypolicy',
+  '/guest',
+  '/howtouse',
+  '/withdrawal/completed',
+];
+
 /**
  * 認証が必要なページに配置する
  */
@@ -13,20 +27,6 @@ export const useAuthenticationOnPage = (currentPath: string) => {
   useGuest();
 
   const tokenIsEmpty = token === '';
-
-  // 認証が不要なページはここに追加する
-  const unauthenticatedPages = [
-    '/initpassword',
-    '/login',
-    '/passwordreset',
-    '/passwordresetrequest',
-    '/registration',
-    '/auth/callback',
-    '/privacypolicy',
-    '/guest',
-    '/howtouse',
-    '/withdrawal/completed',
-  ];
 
   const refreshToken = useCallback(async () => {
     const response = await getRefreshToken().catch((error) => {
@@ -62,7 +62,5 @@ export const useAuthenticationOnPage = (currentPath: string) => {
     }
 
     refreshToken();
-    // トークン関連の状態が変わったときだけ再実行
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tokenIsEmpty, isTokenInitialized, isTokenRefreshed]);
+  }, [tokenIsEmpty, isTokenInitialized, isTokenRefreshed, currentPath, refreshToken]);
 };
