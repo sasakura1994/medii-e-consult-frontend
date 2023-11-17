@@ -123,7 +123,7 @@ const Login: NextPageWithLayout = () => {
             </div>
           </a>
           <div className="mt-4">
-            <AppleSignInButton onClick={saveRedirectUrl}>Appleでログイン</AppleSignInButton>
+            <AppleSignInButton>Appleでログイン</AppleSignInButton>
           </div>
         </div>
       </div>

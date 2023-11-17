@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useLogin } from '@/hooks/useLogin';
 import React, { ReactNode } from 'react';
 import AppleSignin from 'react-apple-signin-auth';
 import { AiFillApple } from 'react-icons/ai';
@@ -6,11 +7,11 @@ import { AiFillApple } from 'react-icons/ai';
 type Props = {
   children: ReactNode;
   borderColorClassName?: string;
-  onClick: React.MouseEventHandler<HTMLAnchorElement>;
 };
 
 export const AppleSignInButton = (props: Props) => {
   const { children, borderColorClassName } = props;
+  const { saveRedirectUrl } = useLogin();
 
   return (
     <AppleSignin
@@ -42,6 +43,7 @@ export const AppleSignInButton = (props: Props) => {
             hover:bg-monotone-100
           `}
           {...props}
+          onClick={saveRedirectUrl}
         >
           <AiFillApple className="inline" size="30" />
           {children}
