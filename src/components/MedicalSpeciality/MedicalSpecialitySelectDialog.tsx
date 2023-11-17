@@ -41,15 +41,18 @@ export const MedicalSpecialitySelectDialog: React.FC<MedicalSpecialitySelectDial
 
   const getMedicalSpecialitiesForCategory = useCallback(
     (id: string) => {
-      const specialities = getSpecialities(id);
+      let specialities = getSpecialities(id);
+
       if (isGroup && id === 'MDD' && !specialities.some((speciality) => speciality.speciality_code === 'MDD')) {
-        // グループの場合はMDDを追加
-        specialities.unshift({
-          medical_speciality_category_id: 'MDD',
-          name: '複数専門領域合同(MDD)',
-          speciality_code: 'MDD',
-          display_order: 0,
-        });
+        specialities = [
+          {
+            medical_speciality_category_id: 'MDD',
+            name: '複数専門領域合同(MDD)',
+            speciality_code: 'MDD',
+            display_order: 0,
+          },
+          ...specialities,
+        ];
       }
       return specialities;
     },

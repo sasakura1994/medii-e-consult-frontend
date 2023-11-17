@@ -16,7 +16,7 @@ export const EditGroupDetailMemberListTable = (props: Props) => {
       <thead className="table-header-group text-left">
         <tr className="my-2 text-lg font-bold">{medicalSpeciality?.name ?? '専門家未指定'}</tr>
         <tr className="table-row border-y border-y-heading-line text-block-gray">
-          <th className="table-cell whitespace-nowrap py-3 font-normal">エリア・施設名</th>
+          <th className="table-cell whitespace-nowrap py-3 font-normal">都道府県</th>
           <th className="table-cell whitespace-nowrap py-3 font-normal">氏名</th>
           <th className="table-cell whitespace-nowrap py-3 font-normal">勤務先病院</th>
           <th className="sticky right-0 table-cell whitespace-nowrap bg-white py-3 font-normal">編集</th>

@@ -46,7 +46,7 @@ export const EditGroupDetail = () => {
         <div className="mb-2 mt-6 flex text-left">
           <div className="mr-1 rounded-md border border-red-500 px-1 py-0.5 text-xs font-bold text-red-500">必須</div>
           <label htmlFor="specialty" className="text-left font-bold">
-            エリア・施設名
+            都道府県
           </label>
         </div>
         <TextField

@@ -124,7 +124,7 @@ export const InviteMemberModal = (props: Props) => {
         <div className="mt-3 max-h-[300px] overflow-auto">
           {searchedMember && (
             <div className="mt-3">
-              <div className="h-full w-full overflow-auto">
+              <div className="h-full w-full overflow-visible">
                 <table
                   className="box-border table w-auto min-w-full table-fixed overflow-visible
                         whitespace-nowrap text-sm"
