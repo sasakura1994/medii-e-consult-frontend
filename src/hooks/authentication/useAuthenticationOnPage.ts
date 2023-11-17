@@ -44,7 +44,7 @@ export const useAuthenticationOnPage = (currentPath: string) => {
   }, [getRefreshToken, setIsTokenRefreshed, setTokenAndMarkInitialized]);
 
   useEffect(() => {
-    // 現在のページが認証が不要なページのリストに含まれている場合は処理をスキップする
+    // 現在のページが認証が不要なページのリストに含まれている場合は処理をスキップ
     if (unauthenticatedPages.includes(currentPath)) {
       return;
     }
