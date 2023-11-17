@@ -52,24 +52,26 @@ export const EditProfile = (props: EditProfileProps) => {
             <Heading as="h2">医療従事経歴</Heading>
           </div>
 
-          <div className="mt-6 flex gap-4">
-            <Radio
-              name="account_type"
-              id="account-type-doctor"
-              label="医師"
-              value="doctor"
-              checked={accountType === 'doctor'}
-              onChange={() => setAccountType('doctor')}
-            />
-            <Radio
-              name="account_type"
-              id="account-type-student"
-              label="医学生"
-              value="student"
-              checked={accountType === 'student'}
-              onChange={() => setAccountType('student')}
-            />
-          </div>
+          {isRegisterMode && (
+            <div className="mt-6 flex gap-4">
+              <Radio
+                name="account_type"
+                id="account-type-doctor"
+                label="医師"
+                value="doctor"
+                checked={accountType === 'doctor'}
+                onChange={() => setAccountType('doctor')}
+              />
+              <Radio
+                name="account_type"
+                id="account-type-student"
+                label="医学生"
+                value="student"
+                checked={accountType === 'student'}
+                onChange={() => setAccountType('student')}
+              />
+            </div>
+          )}
 
           {accountType === 'doctor' ? (
             <div data-testid="edit-profile-doctor">
