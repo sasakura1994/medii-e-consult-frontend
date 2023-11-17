@@ -6,7 +6,6 @@ import { AiFillApple } from 'react-icons/ai';
 type Props = {
   children: ReactNode;
   borderColorClassName?: string;
-  onClick?: () => void;
 };
 
 export const AppleSignInButton = (props: Props) => {
@@ -42,7 +41,6 @@ export const AppleSignInButton = (props: Props) => {
             hover:bg-monotone-100
           `}
           {...props}
-          onClick={() => props.onClick?.()}
         >
           <AiFillApple className="inline" size="30" />
           {children}
