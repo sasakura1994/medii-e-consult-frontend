@@ -15,6 +15,11 @@ export const useAppleLogin = () => {
   const { setTokenAndMarkInitialized } = useToken();
   const { redirectUrl } = useLogin();
   const { fetchAppleAuthGetToken } = useFetchAppleAuthGetToken();
+  console.log('fetchAppleAuthGetToken', fetchAppleAuthGetToken);
+  console.log('redirectUrl', redirectUrl);
+  console.log('router', router);
+  console.log('token', token);
+  console.log('setTokenAndMarkInitialized', setTokenAndMarkInitialized);
 
   const login = useCallback(async () => {
     const response = await fetchAppleAuthGetToken({ token_id: token });
@@ -25,12 +30,16 @@ export const useAppleLogin = () => {
         router.push('editprofile?registerMode=1');
       } else {
         router.push(redirectUrl === '' ? 'top' : redirectUrl);
-        console.log('redirectUrl', redirectUrl);
       }
+      console.log('fetchAppleAuthGetToken', fetchAppleAuthGetToken);
+      console.log('redirectUrl', redirectUrl);
+      console.log('router', router);
+      console.log('token', token);
+      console.log('setTokenAndMarkInitialized', setTokenAndMarkInitialized);
     } else {
       setErrorMessage('LoginFailed');
     }
-  }, [redirectUrl, router, setTokenAndMarkInitialized, token]);
+  }, [fetchAppleAuthGetToken, redirectUrl, router, setTokenAndMarkInitialized, token]);
 
   useEffect(() => {
     login();
