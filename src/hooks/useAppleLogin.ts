@@ -3,6 +3,7 @@ import { useLogin } from '@/hooks/useLogin';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import { useFetchAppleAuthGetToken } from './api/auth/useFetchAppleAuthGetToken';
+import { loginRedirectUrlKey } from '@/data/localStorage';
 
 type Query = {
   token: string;
@@ -22,6 +23,7 @@ export const useAppleLogin = () => {
     if (response) {
       const { jwt_token, login_type } = response.data;
       setTokenAndMarkInitialized(jwt_token);
+      localStorage.removeItem(loginRedirectUrlKey);
       if (login_type === 'register') {
         router.push('editprofile?registerMode=1');
       } else {
