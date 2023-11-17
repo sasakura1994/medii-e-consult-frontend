@@ -1,6 +1,7 @@
 import React from 'react';
 
 type TextFieldProps = {
+  id?: string;
   type?: string;
   label?: string;
   disabled?: boolean;
@@ -17,6 +18,7 @@ type TextFieldProps = {
 
 const TextField = (props: TextFieldProps) => {
   const {
+    id,
     type,
     label,
     name,
@@ -34,6 +36,7 @@ const TextField = (props: TextFieldProps) => {
     <>
       <label className="text-md text-text-primary">{label}</label>
       <input
+        id={id}
         type={type}
         name={name}
         disabled={disabled}
