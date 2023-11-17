@@ -103,6 +103,7 @@ export const HospitalAffiliation = (props: UseEditProfile) => {
             value={profile.hospital_name}
             onChange={(e) => setHospitalName(e.target.value)}
             disabled={hospitalInputType !== 'free'}
+            className="w-full"
           />
         </HospitalInputTypeContainer>
       </div>

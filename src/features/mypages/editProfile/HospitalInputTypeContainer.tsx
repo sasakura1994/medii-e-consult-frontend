@@ -21,7 +21,7 @@ export const HospitalInputTypeContainer = (props: Props) => {
       } p-4`}
     >
       <Radio name="hospital_input_type" id={id} value={type} onChange={() => onChange(type)} checked={type === value} />
-      <div>
+      <div className="flex-1">
         <div>{label}</div>
         <div className="mt-1">{children}</div>
       </div>
