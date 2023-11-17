@@ -20,7 +20,7 @@ export const QuestionaryModal = (props: Props) => {
     <Modal
       pcWidth="600"
       isUseFooter
-      className="px-4 pb-3 pt-3 lg:px-16 lg:pt-8"
+      className="px-4 pb-3 pt-3 lg:px-8 lg:pt-8"
       submitButton={
         <PrimaryButton
           disabled={questionaryAnswers.length === 0}
