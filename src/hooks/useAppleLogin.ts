@@ -14,6 +14,7 @@ export const useAppleLogin = () => {
   const { token } = router.query as Query;
   const { setTokenAndMarkInitialized } = useToken();
   const { redirectUrl } = useLogin();
+  console.log('aaaaaa');
   const { fetchAppleAuthGetToken } = useFetchAppleAuthGetToken();
 
   const login = useCallback(async () => {

@@ -122,7 +122,7 @@ const Login: NextPageWithLayout = () => {
               <div>日経メディカルアカウントでログイン</div>
             </div>
           </a>
-          <div className="mt-4">
+          <div className="mt-4" onClick={saveRedirectUrl}>
             <AppleSignInButton>Appleでログイン</AppleSignInButton>
           </div>
         </div>
