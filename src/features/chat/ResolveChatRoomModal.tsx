@@ -9,13 +9,15 @@ import { Optional } from '@/components/Parts/Form/Optional';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import TertiaryButton from '@/components/Button/TertiaryButton';
 
+export type ReviewScoreNumber = 0 | 1 | 2 | 3 | 4 | 5;
+
 export type Review = {
   key: string;
   label: string;
   lowRatingText: string;
   mediumRatingText: string;
   highRatingText: string;
-  value: 0 | 1 | 2 | 3 | 4 | 5;
+  value: ReviewScoreNumber;
 };
 
 type ResolveChatRoomModalProps = {
@@ -112,6 +114,7 @@ export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
   return (
     <Modal
       pcWidth="600"
+      disableCloseOnOverlayClick
       setShowModal={setIsOpen}
       isUseFooter
       submitButton={
@@ -162,7 +165,7 @@ export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
       {page === 'aboutConsult' ? (
         <div className="mb-3">
           <p className="m-4 mt-6 text-center text-2xl font-bold text-text-primary">{title}</p>
-          <div className="mx-10">
+          <div className="mx-4 lg:mx-10">
             {aboutConsultReviews.map((review) => {
               return <ReviewRating key={review.key} review={review} setReviews={setAboutConsultReviews} />;
             })}
