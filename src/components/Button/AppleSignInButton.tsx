@@ -6,6 +6,7 @@ import { AiFillApple } from 'react-icons/ai';
 type Props = {
   children: ReactNode;
   borderColorClassName?: string;
+  onClick: React.MouseEventHandler<HTMLAnchorElement>;
 };
 
 export const AppleSignInButton = (props: Props) => {
