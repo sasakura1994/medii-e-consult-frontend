@@ -4,7 +4,6 @@ import { Card } from '@/components/Parts/Card/Card';
 import { UserInfoNames } from '@/features/mypages/editProfile/UserInfoNames';
 import { EditProfileHeading } from '@/features/mypages/editProfile/EditProfileHeading';
 import { MedicalCareerQualifiedYear } from '@/features/mypages/editProfile/MedicalCareerQualifiedYear';
-import { MedicalCareerSpecialities } from '@/features/mypages/editProfile/MedicalCareerSpecialities';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 import { useNmoInputProfile } from '@/features/nmo/useNmoInputProfile';
@@ -14,7 +13,7 @@ import { MainSpecialitySelect } from '@/features/mypages/editProfile/MainSpecial
 
 const NmoInputProfilePage: NextPageWithLayout = () => {
   const inputProfile = useNmoInputProfile();
-  const { errorMessage, isSending, selectInChargeMedicalSpecialities, submitNmoInputProfile } = inputProfile;
+  const { errorMessage, isSending, submitNmoInputProfile } = inputProfile;
 
   return (
     <div className="lg:py-10">
@@ -36,12 +35,6 @@ const NmoInputProfilePage: NextPageWithLayout = () => {
           <MedicalCareerQualifiedYear isEnabled={true} {...inputProfile} />
           <div className="mt-6">
             <MainSpecialitySelect {...inputProfile} />
-          </div>
-          <div className="mt-6">
-            <MedicalCareerSpecialities
-              {...inputProfile}
-              selectMedicalSpecialities={selectInChargeMedicalSpecialities}
-            />
           </div>
           {errorMessage !== '' && <ErrorMessage className="mt-8 text-center">{errorMessage}</ErrorMessage>}
           <div className="mt-10 flex justify-center">

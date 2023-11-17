@@ -4,7 +4,6 @@ import { Card } from '@/components/Parts/Card/Card';
 import { UserInfoNames } from '@/features/mypages/editProfile/UserInfoNames';
 import { EditProfileHeading } from '@/features/mypages/editProfile/EditProfileHeading';
 import { MedicalCareerQualifiedYear } from '@/features/mypages/editProfile/MedicalCareerQualifiedYear';
-import { MedicalCareerSpecialities } from '@/features/mypages/editProfile/MedicalCareerSpecialities';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
@@ -15,7 +14,7 @@ import { MainSpecialitySelect } from '@/features/mypages/editProfile/MainSpecial
 // 代理登録時の不足しているプロフィールを埋めるページ
 const FillProfilePage: NextPageWithLayout = () => {
   const fillProfile = useFillProfile();
-  const { errorMessage, isSending, selectInChargeMedicalSpecialities, submitFillProfile } = fillProfile;
+  const { errorMessage, isSending, submitFillProfile } = fillProfile;
 
   return (
     <div className="lg:py-10">
@@ -37,9 +36,6 @@ const FillProfilePage: NextPageWithLayout = () => {
           <MedicalCareerQualifiedYear isEnabled={true} {...fillProfile} />
           <div className="mt-6">
             <MainSpecialitySelect {...fillProfile} />
-          </div>
-          <div className="mt-6">
-            <MedicalCareerSpecialities {...fillProfile} selectMedicalSpecialities={selectInChargeMedicalSpecialities} />
           </div>
           {errorMessage !== '' && <ErrorMessage className="mt-8 text-center">{errorMessage}</ErrorMessage>}
           <div className="mt-10 flex justify-center">
