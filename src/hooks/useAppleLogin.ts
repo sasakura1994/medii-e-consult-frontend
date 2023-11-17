@@ -15,11 +15,7 @@ export const useAppleLogin = () => {
   const { setTokenAndMarkInitialized } = useToken();
   const { redirectUrl } = useLogin();
   const { fetchAppleAuthGetToken } = useFetchAppleAuthGetToken();
-  console.log('fetchAppleAuthGetToken', fetchAppleAuthGetToken);
-  console.log('redirectUrl', redirectUrl);
-  console.log('router', router);
-  console.log('token', token);
-  console.log('setTokenAndMarkInitialized', setTokenAndMarkInitialized);
+  const [initialRender, setInitialRender] = useState(true);
 
   const login = useCallback(async () => {
     const response = await fetchAppleAuthGetToken({ token_id: token });
@@ -31,19 +27,18 @@ export const useAppleLogin = () => {
       } else {
         router.push(redirectUrl === '' ? 'top' : redirectUrl);
       }
-      console.log('fetchAppleAuthGetToken', fetchAppleAuthGetToken);
-      console.log('redirectUrl', redirectUrl);
-      console.log('router', router);
-      console.log('token', token);
-      console.log('setTokenAndMarkInitialized', setTokenAndMarkInitialized);
     } else {
       setErrorMessage('LoginFailed');
     }
   }, [fetchAppleAuthGetToken, redirectUrl, router, setTokenAndMarkInitialized, token]);
 
   useEffect(() => {
-    login();
-  }, [login]);
+    if(initialRender){
+      setInitialRender(false);
+    } else {
+      login();
+    }
+  }, [login, initialRender]);
 
   return {
     errorMessage,
