@@ -57,7 +57,7 @@ describe('useEditGroupDetail', () => {
     let result: { current: ReturnType<typeof useEditGroupDetail> } | undefined;
 
     await act(async () => {
-      result = renderHook(() => useEditGroupDetail()).result;
+      result = renderHook(() => useEditGroupDetail({})).result;
     });
     expect(result?.current.editState).toEqual({
       group_id: '',
@@ -79,7 +79,7 @@ describe('useEditGroupDetail', () => {
     let result: { current: ReturnType<typeof useEditGroupDetail> } | undefined;
 
     await act(async () => {
-      result = renderHook(() => useEditGroupDetail()).result;
+      result = renderHook(() => useEditGroupDetail({})).result;
     });
 
     await act(async () => {
@@ -119,7 +119,7 @@ describe('useEditGroupDetail', () => {
     let result: { current: ReturnType<typeof useEditGroupDetail> } | undefined;
 
     await act(async () => {
-      result = renderHook(() => useEditGroupDetail()).result;
+      result = renderHook(() => useEditGroupDetail({})).result;
     });
     await act(async () => {
       result?.current.setDraft({
