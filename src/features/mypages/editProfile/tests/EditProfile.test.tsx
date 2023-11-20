@@ -94,4 +94,27 @@ describe('EditProfile', () => {
     );
     expect(editProfileUsageClassification).not.toBeInTheDocument();
   });
+
+  describe('アカウント作成時', () => {
+    test('アカウント削除リンクを表示しない', async () => {
+      (useFetchProfile as jest.Mock).mockReturnValue({
+        profile: {
+          birthday_year: 2000,
+          birthday_month: 4,
+          birthday_day: 1,
+          qualified_year: 2020,
+          registration_source: '',
+        },
+      });
+
+      await act(() => {
+        render(<EditProfile isRegisterMode={true} />);
+      });
+
+      await waitFor(() => {
+        expect(screen.queryByTestId('submit-button')).toBeInTheDocument();
+        expect(screen.queryByTestId('withdrawal-button')).not.toBeInTheDocument();
+      });
+    });
+  });
 });

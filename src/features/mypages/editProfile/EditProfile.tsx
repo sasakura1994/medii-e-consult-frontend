@@ -99,16 +99,18 @@ export const EditProfile = (props: EditProfileProps) => {
 
         {errorMessage !== '' && <ErrorMessage className="mt-2 text-center">{errorMessage}</ErrorMessage>}
 
-        <div className="my-6">
+        <div className="my-6" data-testid="submit-button">
           <PrimaryButton type="submit" className="mx-auto" disabled={!editProfile.isCompleted}>
             {isRegisterMode ? '医師資格確認へ進む' : 'プロフィール登録'}
           </PrimaryButton>
         </div>
-        <div className="mt-10 text-center">
-          <Link href="/withdrawal/confirm" className="text-md text-distructive underline">
-            アカウントを削除
-          </Link>
-        </div>
+        {!isRegisterMode && (
+          <div className="mt-10 text-center" data-testid="withdrawal-button">
+            <Link href="/withdrawal/confirm" className="text-md text-distructive underline">
+              アカウントを削除
+            </Link>
+          </div>
+        )}
       </form>
     </div>
   );
