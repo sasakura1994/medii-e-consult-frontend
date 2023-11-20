@@ -18,7 +18,7 @@ import { DefaultRadio } from '@/components/Parts/Form/DefaultRadio';
 type EditGroupDetailProps = {
   isEdit?: boolean;
   setIsOpenEditModal?: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsLeaveGroupConfirmModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsLeaveGroupConfirmModal?: React.Dispatch<React.SetStateAction<boolean>>;
   originalGroupData?: GroupEntity;
   mutateChatRoom?: KeyedMutator<FetchChatRoomResponseData>;
   mutateChatRoomList?: KeyedMutator<ChatRoomEntity[]>;
