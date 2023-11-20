@@ -21,6 +21,7 @@ export const useAuthenticationOnPage = (currentPath: string) => {
     '/passwordreset',
     '/passwordresetrequest',
     '/registration',
+    '/auth',
     '/auth/callback',
     '/privacypolicy',
     '/guest',

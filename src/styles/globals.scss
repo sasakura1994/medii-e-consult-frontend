@@ -30,18 +30,11 @@
   background: #999999;
 }
 
-@layer base {
-  html {
-    font-family: $font-family;
-  }
-}
-
 html {
   position: relative;
 }
 
 body {
-  font-family: $font-family;
   color: $font-color-base;
   -webkit-font-smoothing: antialiased;
 }
@@ -63,4 +56,22 @@ a {
 th,
 td {
   vertical-align: baseline;
+}
+
+@font-face {
+  font-family: SDSYuGothic;
+  font-weight: 400;
+  src: local("Yu Gothic Medium");
+}
+
+@font-face {
+  font-family: SDSYuGothic;
+  font-weight: 700;
+  src: local("Yu Gothic Bold");
+}
+
+@layer base{
+  html {
+    font-family: SDSYuGothic, system-ui, sans-serif;
+  }
 }
