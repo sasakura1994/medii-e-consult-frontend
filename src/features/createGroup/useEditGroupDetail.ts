@@ -1,6 +1,7 @@
+import { NotificationFrequency } from '@/hooks/api/group/useFetchGetGroup';
 import { useFetchGroupMemberData } from '@/hooks/api/group/useFetchGroupMemberData';
 import { SearchGroupMember } from '@/hooks/api/group/useFetchSearchMember';
-import { NotificationFrequency, usePostCreateGroup } from '@/hooks/api/group/usePostCreateGroup';
+import { usePostCreateGroup } from '@/hooks/api/group/usePostCreateGroup';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { useToken } from '@/hooks/authentication/useToken';
 import { saveLocalStorage, loadLocalStorage, removeLocalStorage } from '@/libs/LocalStorageManager';
