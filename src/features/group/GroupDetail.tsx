@@ -14,6 +14,7 @@ import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
 import { KeyedMutator } from 'swr';
 import { GroupMemberModal } from './GroupMemberModal';
 import { NotificationFrequencySettingModal } from './NotificationFrequencySettingModal';
+import { GroupEditModal } from './GroupEditModal';
 
 type ConsultDetailProps = {
   chatRoomData?: FetchChatRoomResponseData;
@@ -26,11 +27,10 @@ type ConsultDetailProps = {
 };
 
 export const GroupDetail = (props: ConsultDetailProps) => {
-  //   const { chatRoomData, medicalSpecialities, chatListData, mutateChatRoom, mutateChatRoomList, mutateChatList } = props;
-  const { chatRoomData, chatListData, mutateChatRoom, mutateChatList } = props;
+  const { chatRoomData, chatListData, mutateChatRoom, mutateChatRoomList, mutateChatList } = props;
   const [isOpenGroupMemberModal, setIsOpenGroupMemberModal] = useState(false);
   const [isShowNotificationFrequencySettingModal, setIsShowNotificationFrequencySettingModal] = useState(true);
-  const [, setIsOpenChatEditModal] = useState(false);
+  const [isOpenGroupEditModal, setIsOpenGroupEditModal] = useState(false);
   const chatListRef = useRef<HTMLDivElement | null>(null);
   const setIsGroupSelected = useSetAtom(isGroupSelectedState);
   const { accountId } = useToken();
@@ -133,6 +133,14 @@ export const GroupDetail = (props: ConsultDetailProps) => {
 
   return (
     <>
+      {isOpenGroupEditModal && group && mutateChatRoom && mutateChatRoomList && (
+        <GroupEditModal
+          group={group}
+          setIsOpen={setIsOpenGroupEditModal}
+          mutateChatRoom={mutateChatRoom}
+          mutateChatRoomList={mutateChatRoomList}
+        />
+      )}
       {isShowNotificationFrequencySetting && isShowNotificationFrequencySettingModal && group && (
         <NotificationFrequencySettingModal setShowModal={setIsShowNotificationFrequencySettingModal} group={group} />
       )}
@@ -162,7 +170,7 @@ export const GroupDetail = (props: ConsultDetailProps) => {
                 src="icons/btn_menu.svg"
                 alt=""
                 className="hidden h-9 w-9 cursor-pointer lg:block"
-                onClick={() => setIsOpenChatEditModal(true)}
+                onClick={() => setIsOpenGroupEditModal(true)}
               />
             </div>
             <div className="flex flex-wrap items-center space-x-1 border-t lg:h-7 lg:border-b">
@@ -173,7 +181,7 @@ export const GroupDetail = (props: ConsultDetailProps) => {
                 src="icons/btn_menu.svg"
                 alt=""
                 className="block h-9 w-9 lg:hidden"
-                onClick={() => setIsOpenChatEditModal(true)}
+                onClick={() => setIsOpenGroupEditModal(true)}
               />
             </div>
           </div>

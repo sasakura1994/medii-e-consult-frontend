@@ -1,17 +1,31 @@
 import PrimaryButton from '@/components/Button/PrimaryButton';
-import { Radio } from '@/components/Parts/Form/Radio';
 import TextArea from '@/components/TextArea/TextArea';
 import TextField from '@/components/TextField/TextField';
 import React from 'react';
 import { InviteMemberModal } from './InviteMemberModal';
 import { MedicalSpecialitySelectButton } from '@/components/MedicalSpeciality/MedicalSpecialitySelectButton';
-import { saveLocalStorage } from '@/libs/LocalStorageManager';
 import { ConfirmModal } from '@/components/Parts/Modal/ConfirmModal';
 import { useEditGroupDetail } from './useEditGroupDetail';
 import { EditGroupDetailMemberListTable } from './EditGroupDetailMemberListTable';
-import { NotificationFrequency } from '@/hooks/api/group/useFetchGetGroup';
+import { GroupEntity, NotificationFrequency } from '@/hooks/api/group/useFetchGetGroup';
+import TertiaryButton from '@/components/Button/TertiaryButton';
+import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
+import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
+import { KeyedMutator } from 'swr';
+import { FetchedGroupEntity } from '@/hooks/api/group/useFetchGroup';
+import { DefaultRadio } from '@/components/Parts/Form/DefaultRadio';
 
-export const EditGroupDetail = () => {
+type EditGroupDetailProps = {
+  isEdit?: boolean;
+  setIsOpenEditModal?: React.Dispatch<React.SetStateAction<boolean>>;
+  originalGroupData?: GroupEntity;
+  mutateChatRoom?: KeyedMutator<FetchChatRoomResponseData>;
+  mutateChatRoomList?: KeyedMutator<ChatRoomEntity[]>;
+  mutateGroup?: KeyedMutator<FetchedGroupEntity>;
+};
+
+export const EditGroupDetail = (props: EditGroupDetailProps) => {
+  const { isEdit, setIsOpenEditModal, originalGroupData, mutateChatRoom, mutateChatRoomList, mutateGroup } = props;
   const {
     myAccountId,
     admin,
@@ -27,7 +41,16 @@ export const EditGroupDetail = () => {
     applyDraft,
     dontUseDraft,
     inquiryFormUrl,
-  } = useEditGroupDetail();
+    update,
+    saveLocalStorageDraft,
+  } = useEditGroupDetail({
+    isEdit: isEdit,
+    setIsOpenEditModal: setIsOpenEditModal,
+    originalGroupData: originalGroupData,
+    mutateChatRoom: mutateChatRoom,
+    mutateChatRoomList: mutateChatRoomList,
+    mutateGroup: mutateGroup,
+  });
 
   return (
     <div>
@@ -43,7 +66,15 @@ export const EditGroupDetail = () => {
           setSelectedMembers={setSelectedMembers}
         />
       )}
-      <form onSubmit={submit}>
+      <form
+        onSubmit={(e) => {
+          if (isEdit) {
+            update(e);
+          } else {
+            submit(e);
+          }
+        }}
+      >
         <div className="mb-2 mt-6 flex text-left">
           <div className="mr-1 rounded-md border border-red-500 px-1 py-0.5 text-xs font-bold text-red-500">必須</div>
           <label htmlFor="specialty" className="text-left font-bold">
@@ -63,7 +94,7 @@ export const EditGroupDetail = () => {
                 ...prevState,
                 area: e.target.value,
               };
-              saveLocalStorage('EditGroupDetail::groupData', JSON.stringify(newState));
+              saveLocalStorageDraft(newState);
               return newState;
             });
           }}
@@ -83,7 +114,7 @@ export const EditGroupDetail = () => {
                 ...prevState,
                 speciality: speciality,
               };
-              saveLocalStorage('EditGroupDetail::groupData', JSON.stringify(newState));
+              saveLocalStorageDraft(newState);
               return newState;
             });
           }}
@@ -103,7 +134,7 @@ export const EditGroupDetail = () => {
                 ...prevState,
                 disease: e.target.value,
               };
-              saveLocalStorage('EditGroupDetail::groupData', JSON.stringify(newState));
+              saveLocalStorageDraft(newState);
               return newState;
             });
           }}
@@ -127,7 +158,7 @@ export const EditGroupDetail = () => {
                 ...prevState,
                 group_name: e.target.value,
               };
-              saveLocalStorage('EditGroupDetail::groupData', JSON.stringify(newState));
+              saveLocalStorageDraft(newState);
               return newState;
             });
           }}
@@ -150,15 +181,16 @@ export const EditGroupDetail = () => {
                 ...prevState,
                 explanation: e.target.value,
               };
-              saveLocalStorage('EditGroupDetail::groupData', JSON.stringify(newState));
+              saveLocalStorageDraft(newState);
               return newState;
             });
           }}
         />
         <div className="mt-2">
-          <label className="text-left font-bold">コンサル受付</label>
+          <div className="text-left font-bold">コンサル受付</div>
           <label>
-            <Radio
+            <DefaultRadio
+              id="assignable-true"
               name="assignable"
               value="true"
               label="あり"
@@ -169,7 +201,7 @@ export const EditGroupDetail = () => {
                     ...prevState,
                     assignable: true,
                   };
-                  saveLocalStorage('EditGroupDetail::groupData', JSON.stringify(newState));
+                  saveLocalStorageDraft(newState);
                   return newState;
                 });
               }}
@@ -177,7 +209,8 @@ export const EditGroupDetail = () => {
             <div className="text-[13px]">※ 他の医師からコンサルが来る場合があります。</div>
           </label>
           <label>
-            <Radio
+            <DefaultRadio
+              id="assignable-false"
               name="assignable"
               value="false"
               label="なし"
@@ -188,7 +221,7 @@ export const EditGroupDetail = () => {
                     ...prevState,
                     assignable: false,
                   };
-                  saveLocalStorage('EditGroupDetail::groupData', JSON.stringify(newState));
+                  saveLocalStorageDraft(newState);
                   return newState;
                 });
               }}
@@ -198,9 +231,10 @@ export const EditGroupDetail = () => {
         </div>
         {editState.assignable && (
           <div className="mt-2">
-            <label className="text-left font-bold">検索</label>
+            <div className="text-left font-bold">検索</div>
             <label>
-              <Radio
+              <DefaultRadio
+                id="isPublic-true"
                 name="isPublic"
                 value="true"
                 label="公開"
@@ -211,7 +245,7 @@ export const EditGroupDetail = () => {
                       ...prevState,
                       is_public: true,
                     };
-                    saveLocalStorage('EditGroupDetail::groupData', JSON.stringify(newState));
+                    saveLocalStorageDraft(newState);
                     return newState;
                   });
                 }}
@@ -219,7 +253,8 @@ export const EditGroupDetail = () => {
               <div className="text-[13px]">※ 検索結果に表示されます。</div>
             </label>
             <label>
-              <Radio
+              <DefaultRadio
+                id="isPublic-false"
                 name="isPublic"
                 value="false"
                 label="非公開"
@@ -230,7 +265,7 @@ export const EditGroupDetail = () => {
                       ...prevState,
                       is_public: false,
                     };
-                    saveLocalStorage('EditGroupDetail::groupData', JSON.stringify(newState));
+                    saveLocalStorageDraft(newState);
                     return newState;
                   });
                 }}
@@ -307,7 +342,7 @@ export const EditGroupDetail = () => {
             ※このグループカンファレンス内の通知頻度の設定することで、通知回数を抑えることができます。
           </div>
 
-          <Radio
+          <DefaultRadio
             id="notification-frequency-all"
             name="notification-frequency"
             value="notification-frequency-all"
@@ -319,12 +354,12 @@ export const EditGroupDetail = () => {
                   ...prevState,
                   notification_frequency: 'ALL' as NotificationFrequency,
                 };
-                saveLocalStorage('EditGroupDetail::groupData', JSON.stringify(newState));
+                saveLocalStorageDraft(newState);
                 return newState;
               });
             }}
           />
-          <Radio
+          <DefaultRadio
             id="notification-frequency-hourly"
             name="notification-frequency"
             value="notification-frequency"
@@ -336,12 +371,12 @@ export const EditGroupDetail = () => {
                   ...prevState,
                   notification_frequency: 'HOURLY' as NotificationFrequency,
                 };
-                saveLocalStorage('EditGroupDetail::groupData', JSON.stringify(newState));
+                saveLocalStorageDraft(newState);
                 return newState;
               });
             }}
           />
-          <Radio
+          <DefaultRadio
             id="notification-frequency-daily"
             name="notification-frequency"
             value="notification-frequency"
@@ -353,16 +388,38 @@ export const EditGroupDetail = () => {
                   ...prevState,
                   notification_frequency: 'DAILY' as NotificationFrequency,
                 };
-                saveLocalStorage('EditGroupDetail::groupData', JSON.stringify(newState));
+                saveLocalStorageDraft(newState);
                 return newState;
               });
             }}
           />
         </div>
 
-        <PrimaryButton className="mx-auto mt-12 h-12 px-12" type="submit">
-          グループを作成
-        </PrimaryButton>
+        {!isEdit && (
+          <PrimaryButton className="mx-auto mt-12 h-12 px-12" type="submit">
+            グループを作成
+          </PrimaryButton>
+        )}
+        {isEdit && setIsOpenEditModal && (
+          <div className="mb-4 mt-8">
+            <div className="mt-4 flex flex-col-reverse items-center justify-center gap-4 lg:flex-row">
+              <TertiaryButton
+                className="w-56 px-6"
+                onClick={() => {
+                  setIsOpenEditModal(false);
+                }}
+              >
+                キャンセル
+              </TertiaryButton>
+              <PrimaryButton className="w-56 px-6" type="submit">
+                グループ情報を更新
+              </PrimaryButton>
+            </div>
+            <p className="text-[#999999} mt-4 cursor-pointer text-center text-base underline">
+              このグループから退出する
+            </p>
+          </div>
+        )}
       </form>
     </div>
   );
