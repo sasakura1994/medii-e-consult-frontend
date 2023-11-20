@@ -3,9 +3,14 @@ import { useClipboard } from '@/hooks/useClipboard';
 import React from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 
-export const UrlPublish: React.FC = () => {
+type UrlPublishProps = {
+  url?: string;
+};
+
+export const UrlPublish = (props: UrlPublishProps) => {
+  const { url } = props;
   const { accountId } = useToken();
-  const clipboardUrl = `${process.env.WEB_SERVER_URL}/NewChatRoom?target_account_id=${accountId}`;
+  const clipboardUrl = url ?? `${process.env.WEB_SERVER_URL}/NewChatRoom?target_account_id=${accountId}`;
   const { isError, clipboard } = useClipboard(clipboardUrl);
 
   return (

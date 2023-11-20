@@ -4,14 +4,17 @@ import { ChatMemberEntity } from '@/types/entities/chat/ChatMemberEntity';
 import { Dispatch, SetStateAction } from 'react';
 import { useMedicalSpeciality } from '@/hooks/medicalSpeciality/useMedicalSpeciality';
 import { GroupMemberDetailModal } from './GroupMemberDetailModal';
+import { UrlPublish } from '../mypages/editProfile/UrlPublish';
+import { GroupEntity } from '@/hooks/api/group/useFetchGetGroup';
 
 type GroupMemberModalProps = {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   members: ChatMemberEntity[];
+  group: GroupEntity;
 };
 
 export const GroupMemberModal = (props: GroupMemberModalProps) => {
-  const { setIsOpen, members } = props;
+  const { setIsOpen, members, group } = props;
   const [isOpenDoctorDetailModal, setIsOpenDoctorDetailModal] = useState(false);
   const [selectedMember, setSelectedMember] = useState<ChatMemberEntity | null>(null);
   const { getMedicalSpecialityName } = useMedicalSpeciality();
@@ -32,11 +35,14 @@ export const GroupMemberModal = (props: GroupMemberModalProps) => {
         <GroupMemberDetailModal setIsOpen={setIsOpenDoctorDetailModal} member={selectedMember} />
       )}
       <div className="flex items-center px-4">
-        <p className="flex-grow text-center text-2xl">専門医メンバー</p>
+        <p className="flex-grow text-center text-2xl font-bold">グループメンバー</p>
         <img src="icons/close_primary.svg" alt="" className="cursor-pointer" onClick={() => setIsOpen(false)} />
       </div>
-      <div className="mt-4 w-full border-t" />
+
       <div className="my-6 px-2 lg:px-16">
+        {group.is_public && (
+          <UrlPublish url={`${process.env.WEB_SERVER_URL}/NewChatRoom?target_group_id=${group.group_id}`} />
+        )}
         {members.map((member) => {
           return (
             <div

@@ -136,8 +136,8 @@ export const GroupDetail = (props: ConsultDetailProps) => {
       {isShowNotificationFrequencySetting && isShowNotificationFrequencySettingModal && group && (
         <NotificationFrequencySettingModal setShowModal={setIsShowNotificationFrequencySettingModal} group={group} />
       )}
-      {isOpenGroupMemberModal && chatRoomData && (
-        <GroupMemberModal setIsOpen={setIsOpenGroupMemberModal} members={groupMember} />
+      {isOpenGroupMemberModal && group && chatRoomData && (
+        <GroupMemberModal setIsOpen={setIsOpenGroupMemberModal} members={groupMember} group={group} />
       )}
       {chatRoomData && (
         <div
