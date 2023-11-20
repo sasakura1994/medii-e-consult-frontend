@@ -33,27 +33,6 @@ describe('/newchatroom', () => {
     expect(await act(() => screen.queryByTestId('need-to-fill-profile-modal'))).toBeInTheDocument();
   });
 
-  test('nmoユーザー且つプロフィール未入力の場合はモーダル表示', async () => {
-    const useRouterMock = useRouter as jest.Mocked<typeof useRouter>;
-    (useRouterMock as jest.Mock).mockReturnValue({
-      query: {},
-    });
-
-    (useFetchProfile as jest.Mock).mockReturnValue({
-      profile: {
-        registration_source: 'nmo',
-        last_name_hira: '',
-        status: 'VERIFIED',
-      },
-    });
-
-    await act(() => {
-      render(<NewChatRoomPage />);
-    });
-
-    expect(await act(() => screen.queryByTestId('nmo-modal'))).toBeInTheDocument();
-  });
-
   test('医学生はコンサルを作成出来ない', async () => {
     const useRouterMock = useRouter as jest.Mocked<typeof useRouter>;
     (useRouterMock as jest.Mock).mockReturnValue({

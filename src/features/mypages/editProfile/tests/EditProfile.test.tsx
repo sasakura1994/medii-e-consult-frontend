@@ -54,6 +54,24 @@ describe('EditProfile', () => {
         expect(screen.queryByTestId('edit-profile-student')).toBeInTheDocument();
       });
     });
+
+    test('編集画面では表示しない', async () => {
+      (useFetchProfile as jest.Mock).mockReturnValue({
+        profile: {
+          birthday_year: 2000,
+          birthday_month: 4,
+          birthday_day: 1,
+          qualified_year: 2020,
+          registration_source: '',
+        },
+      });
+
+      await act(() => {
+        render(<EditProfile isRegisterMode={false} />);
+      });
+
+      expect(screen.queryByTestId('account-type-student')).not.toBeInTheDocument();
+    });
   });
 
   test('nmoの場合は利用区分を表示しない', async () => {
