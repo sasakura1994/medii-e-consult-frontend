@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useCallback, useMemo } from 'react';
 import { Modal } from '../Parts/Modal/Modal';
 import { useMedicalSpecialitySelectDialog } from './useMedicalSpecialitySelectDialog';
 import { MedicalSpecialityCategorySelect } from './MedicalSpecialityCategorySelect';
@@ -15,19 +15,52 @@ export type MedicalSpecialitySelectDialogProps = {
   description?: ReactNode;
   onChange: (specialityCode: string) => void;
   setShowModal: (isShow: boolean) => void;
+  isGroup?: boolean;
 };
 
 export const MedicalSpecialitySelectDialog = (props: MedicalSpecialitySelectDialogProps) => {
-  const { required = false, description, setShowModal } = props;
+  const { required = false, description, isGroup, setShowModal } = props;
   const {
-    getMedicalSpecialitiesForCategory,
+    getMedicalSpecialitiesForCategory: getSpecialities,
     isCategoryOpened,
-    medicalSpecialityCategories,
+    medicalSpecialityCategories: medicalSpecialityCategorieList,
     selectedSpecialityCode,
     setSelectedSpecialityCode,
     submit,
     toggleCategory,
   } = useMedicalSpecialitySelectDialog(props);
+
+  const medicalSpecialityCategories = useMemo(() => {
+    if (
+      isGroup &&
+      medicalSpecialityCategorieList &&
+      !medicalSpecialityCategorieList.some((category) => category.id === 'MDD')
+    ) {
+      // グループの場合、まだMDDがなければ追加
+      return [{ id: 'MDD', name: '複数専門領域合同(MDD)' }, ...medicalSpecialityCategorieList];
+    }
+    return medicalSpecialityCategorieList;
+  }, [isGroup, medicalSpecialityCategorieList]);
+
+  const getMedicalSpecialitiesForCategory = useCallback(
+    (id: string) => {
+      let specialities = getSpecialities(id);
+
+      if (isGroup && id === 'MDD' && !specialities.some((speciality) => speciality.speciality_code === 'MDD')) {
+        specialities = [
+          {
+            medical_speciality_category_id: 'MDD',
+            name: '複数専門領域合同(MDD)',
+            speciality_code: 'MDD',
+            display_order: 0,
+          },
+          ...specialities,
+        ];
+      }
+      return specialities;
+    },
+    [getSpecialities, isGroup]
+  );
 
   return (
     <Modal setShowModal={setShowModal} className="relative pb-[88px] lg:w-[600px]">

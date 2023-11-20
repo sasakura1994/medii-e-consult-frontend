@@ -6,6 +6,7 @@ import { useFetchMedicalSpecialitiesWithContract } from '@/hooks/api/medicalCate
 export type MedicalSpecialitySelectButtonProps = {
   specialityCode: string;
   onChange: (specialityCode: string) => void;
+  isGroup?: boolean;
 };
 
 export const MedicalSpecialitySelectButton: React.FC<MedicalSpecialitySelectButtonProps> = (
@@ -13,7 +14,7 @@ export const MedicalSpecialitySelectButton: React.FC<MedicalSpecialitySelectButt
 ) => {
   const { isOpen, medicalSpecialityName, setIsOpen } = useMedicalSpecialitySelectButton(props);
   const { medicalSpecialities } = useFetchMedicalSpecialitiesWithContract();
-  const { onChange, specialityCode } = props;
+  const { onChange, specialityCode, isGroup } = props;
 
   return (
     <>
@@ -37,6 +38,7 @@ export const MedicalSpecialitySelectButton: React.FC<MedicalSpecialitySelectButt
           setShowModal={setIsOpen}
           medicalSpecialities={medicalSpecialities}
           defaultSpecialityCode={specialityCode}
+          isGroup={isGroup}
         />
       )}
     </>

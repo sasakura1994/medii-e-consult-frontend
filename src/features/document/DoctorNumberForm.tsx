@@ -12,6 +12,8 @@ type DoctorNumberFormProps = {
   setSelectedWithRedirect: (value: DocumentSelected) => void;
 };
 
+const REGEX_NUMBER = /^[0-9]*$/g;
+
 const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelectedWithRedirect }) => {
   const {
     doctorNumber,
@@ -40,7 +42,7 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelectedWithRedi
           <Required>必須</Required>
         </div>
         <TextField
-          type="text"
+          type="tel"
           placeholder="000000"
           className="mt-2 w-32 px-2"
           dataTestId="document-input-number-form"
@@ -50,8 +52,11 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelectedWithRedi
           maxLength={6}
           onChange={(e) => {
             const value = e.target.value;
-            if (value.length <= 6) {
+            if (value.match(REGEX_NUMBER) && value.length <= 6) {
               setDoctorNumber(value);
+              return true;
+            } else {
+              return false;
             }
           }}
         />

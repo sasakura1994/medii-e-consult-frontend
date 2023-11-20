@@ -4,10 +4,27 @@ import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetc
 
 export const useMedicalSpecialitySelectButton = ({
   specialityCode,
-}: Pick<MedicalSpecialitySelectButtonProps, 'specialityCode'>) => {
+  isGroup,
+}: Pick<MedicalSpecialitySelectButtonProps, 'specialityCode' | 'isGroup'>) => {
   const [selectedSpecialityCode, setSelectedSpecialityCode] = useState('');
   const [isOpen, setIsOpen] = useState(false);
-  const { medicalSpecialities } = useFetchMedicalSpecialities();
+  const { medicalSpecialities: medicalSpecialityList } = useFetchMedicalSpecialities();
+
+  const medicalSpecialities = useMemo(() => {
+    if (isGroup && medicalSpecialityList) {
+      return [
+        {
+          medical_speciality_category_id: 'MDD',
+          name: '複数専門領域合同(MDD)',
+          speciality_code: 'MDD',
+          display_order: 0,
+        },
+        ...medicalSpecialityList,
+      ];
+    }
+
+    return medicalSpecialityList;
+  }, [isGroup, medicalSpecialityList]);
 
   const medicalSpecialityName = useMemo(
     () => medicalSpecialities?.find((medicalSpeciality) => medicalSpeciality.speciality_code === specialityCode)?.name,

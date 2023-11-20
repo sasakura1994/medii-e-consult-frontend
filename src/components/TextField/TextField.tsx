@@ -1,12 +1,12 @@
 import React, { ChangeEvent, MouseEventHandler } from 'react';
 
 type TextFieldProps = {
+  id?: string;
   type?: string;
   label?: string;
   disabled?: boolean;
   className?: string;
   name?: string;
-  id?: string;
   placeholder?: string;
   value?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -23,10 +23,10 @@ type TextFieldProps = {
 
 const TextField = (props: TextFieldProps) => {
   const {
+    id,
     type,
     label,
     name,
-    id,
     disabled,
     className,
     placeholder,
@@ -46,9 +46,9 @@ const TextField = (props: TextFieldProps) => {
     <>
       {label && <label className="text-md text-text-primary">{label}</label>}
       <input
+        id={id}
         type={type}
         name={name}
-        id={id}
         disabled={disabled}
         className={`rounded-lg ${
           hasError
