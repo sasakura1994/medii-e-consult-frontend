@@ -1,10 +1,5 @@
-import { loadLocalStorage } from '@/libs/LocalStorageManager';
-import { useRouter } from 'next/router';
-import React, { useMemo } from 'react';
-
-type Query = {
-  group_room_id: string;
-};
+import React from 'react';
+import { useGroupRoomTitle } from './useGroupRoomTitle';
 
 type ConsultTitleProps = {
   groupRoomId: string;
@@ -16,25 +11,12 @@ type ConsultTitleProps = {
 };
 
 export const GroupRoomTitle = (props: ConsultTitleProps) => {
-  const { title, latestMessage, lastUpdatedDate, isUnreadConsult, groupRoomId } = props;
-  const router = useRouter();
-  const { group_room_id } = router.query as Query;
-
-  const isSelected = useMemo(() => {
-    return group_room_id === groupRoomId;
-  }, [group_room_id, groupRoomId]);
-
-  const date = new Date(lastUpdatedDate);
-
-  const formattedDate = date.toLocaleString(undefined, {
-    month: 'numeric',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
+  const { groupRoomId, isUnreadConsult, title, latestMessage, lastUpdatedDate, ownerAccountId } = props;
+  const { isSelected, formattedDate, isExistDraft } = useGroupRoomTitle({
+    groupRoomId,
+    lastUpdatedDate,
+    ownerAccountId,
   });
-
-  const currentDrafts = JSON.parse(loadLocalStorage('ChatDraft::List') || '{}');
-  const isExistDraft = currentDrafts[groupRoomId] !== undefined;
 
   return (
     <div

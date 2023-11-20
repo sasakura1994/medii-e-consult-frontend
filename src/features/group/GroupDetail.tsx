@@ -1,13 +1,8 @@
-import { isGroupSelectedState } from '@/globalStates/group';
 import { FetchChatListResponseData } from '@/hooks/api/chat/useFetchChatList';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
-import { useFetchGetGroup } from '@/hooks/api/group/useFetchGetGroup';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
-import { useSetAtom } from 'jotai';
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useMemo } from 'react';
 import { ChatList } from '../chat/ChatList';
-import { useMedicalSpeciality } from '@/hooks/medicalSpeciality/useMedicalSpeciality';
-import { useToken } from '@/hooks/authentication/useToken';
 import { ChatTextInput } from '../chat/ChatTextInput';
 import { FetchUnreadCountsResponseData } from '@/hooks/api/chat/useFetchUnreadCounts';
 import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
@@ -16,6 +11,7 @@ import { GroupMemberModal } from './GroupMemberModal';
 import { NotificationFrequencySettingModal } from './NotificationFrequencySettingModal';
 import { GroupEditModal } from './GroupEditModal';
 import { LeaveGroupConfirmModal } from './LeaveGroupConfirmModal';
+import { useGroupDetail } from './useGroupDetail';
 
 type ConsultDetailProps = {
   chatRoomData?: FetchChatRoomResponseData;
@@ -29,43 +25,27 @@ type ConsultDetailProps = {
 
 export const GroupDetail = (props: ConsultDetailProps) => {
   const { chatRoomData, chatListData, mutateChatRoom, mutateChatRoomList, mutateChatList } = props;
-  const [isOpenGroupMemberModal, setIsOpenGroupMemberModal] = useState(false);
-  const [isShowNotificationFrequencySettingModal, setIsShowNotificationFrequencySettingModal] = useState(true);
-  const [isOpenGroupEditModal, setIsOpenGroupEditModal] = useState(false);
-  const [isLeaveGroupConfirmModal, setIsLeaveGroupConfirmModal] = useState(false);
-  const chatListRef = useRef<HTMLDivElement | null>(null);
-  const setIsGroupSelected = useSetAtom(isGroupSelectedState);
-  const { accountId } = useToken();
-  const [, setSelectedImage] = useState<string>('');
-  const { getMedicalSpecialityName } = useMedicalSpeciality();
-  const { group } = useFetchGetGroup(chatRoomData?.chat_room.group_id ?? undefined);
-  const getExperienceYear = useCallback((year: number) => {
-    const date = new Date();
-    const currentYear = date.getFullYear();
-    const passedYear = currentYear - year;
-
-    return passedYear + 1;
-  }, []);
-
-  const isShowNotificationFrequencySetting = useMemo(() => {
-    if (group && !group.is_notification_frequency_initialized) {
-      return true;
-    }
-    return false;
-  }, [group]);
-
-  const groupMember = useMemo(() => {
-    if (chatRoomData && chatRoomData.members && chatRoomData.me) {
-      const members = chatRoomData.members;
-      // 一致するメンバーがいない場合だけpushする
-      if (!members.some((member) => member.account_id === chatRoomData.me?.account_id)) {
-        members.push(chatRoomData.me);
-      }
-      return members;
-    }
-    return [];
-  }, [chatRoomData]);
-
+  const {
+    getMedicalSpecialityName,
+    getExperienceYear,
+    group,
+    setIsOpenGroupMemberModal,
+    isLeaveGroupConfirmModal,
+    setIsLeaveGroupConfirmModal,
+    accountId,
+    isOpenGroupEditModal,
+    setIsOpenGroupEditModal,
+    isShowNotificationFrequencySettingModal,
+    isShowNotificationFrequencySetting,
+    setIsShowNotificationFrequencySettingModal,
+    isOpenGroupMemberModal,
+    groupMember,
+    setIsGroupSelected,
+    setSelectedImage,
+    chatListRef,
+  } = useGroupDetail({
+    chatRoomData,
+  });
   const chatListDataWithDisplayName = useMemo(() => {
     if (chatListData && chatRoomData) {
       return chatListData.map((c) => {
@@ -131,7 +111,7 @@ export const GroupDetail = (props: ConsultDetailProps) => {
         {group.member_ids.length}人のグループメンバー
       </p>
     );
-  }, [group]);
+  }, [group, setIsOpenGroupMemberModal]);
 
   return (
     <>
