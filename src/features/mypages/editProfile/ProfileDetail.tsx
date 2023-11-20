@@ -91,12 +91,12 @@ export const ProfileDetail: React.FC<Props> = ({ onEdit }: Props) => {
                 className="mb-6"
               >{`${profile.qualified_year} 年`}</CaptionWithBody>
 
-              <CaptionWithBody caption="専門科" className="mb-6">
+              <CaptionWithBody caption="所属科" className="mb-6">
                 {getMedicalSpecialityName(profile.main_speciality)}
               </CaptionWithBody>
 
               <div className="mb-6">
-                <p className="mb-2 text-[#999999]">その他（対応可能な科目）</p>
+                <p className="mb-2 text-[#999999]">担当科</p>
                 {getMedicalSpecialityName(profile.speciality_2) && (
                   <p className="mb-1">{getMedicalSpecialityName(profile.speciality_2)}</p>
                 )}
