@@ -13,6 +13,7 @@ import { FetchUnreadCountsResponseData } from '@/hooks/api/chat/useFetchUnreadCo
 import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
 import { KeyedMutator } from 'swr';
 import { GroupMemberModal } from './GroupMemberModal';
+import { NotificationFrequencySettingModal } from './NotificationFrequencySettingModal';
 
 type ConsultDetailProps = {
   chatRoomData?: FetchChatRoomResponseData;
@@ -28,6 +29,7 @@ export const GroupDetail = (props: ConsultDetailProps) => {
   //   const { chatRoomData, medicalSpecialities, chatListData, mutateChatRoom, mutateChatRoomList, mutateChatList } = props;
   const { chatRoomData, chatListData, mutateChatRoom, mutateChatList } = props;
   const [isOpenGroupMemberModal, setIsOpenGroupMemberModal] = useState(false);
+  const [isShowNotificationFrequencySettingModal, setIsShowNotificationFrequencySettingModal] = useState(true);
   const [, setIsOpenChatEditModal] = useState(false);
   const chatListRef = useRef<HTMLDivElement | null>(null);
   const setIsGroupSelected = useSetAtom(isGroupSelectedState);
@@ -42,6 +44,13 @@ export const GroupDetail = (props: ConsultDetailProps) => {
 
     return passedYear + 1;
   }, []);
+
+  const isShowNotificationFrequencySetting = useMemo(() => {
+    if (group && !group.is_notification_frequency_initialized) {
+      return true;
+    }
+    return false;
+  }, [group]);
 
   const groupMember = useMemo(() => {
     if (chatRoomData && chatRoomData.members && chatRoomData.me) {
@@ -124,6 +133,9 @@ export const GroupDetail = (props: ConsultDetailProps) => {
 
   return (
     <>
+      {isShowNotificationFrequencySetting && isShowNotificationFrequencySettingModal && group && (
+        <NotificationFrequencySettingModal setShowModal={setIsShowNotificationFrequencySettingModal} group={group} />
+      )}
       {isOpenGroupMemberModal && chatRoomData && (
         <GroupMemberModal setIsOpen={setIsOpenGroupMemberModal} members={groupMember} />
       )}

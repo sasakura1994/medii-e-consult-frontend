@@ -1,5 +1,7 @@
 import { useAuthenticatedSWR } from '@/hooks/network/useAuthenticatedSWR';
 
+export type NotificationFrequency = 'ALL' | 'HOURLY' | 'DAILY';
+
 export type GroupEntity = {
   group_id: string;
   is_public: boolean;
@@ -10,7 +12,7 @@ export type GroupEntity = {
   disease: string;
   explanation: string;
   member_ids: string[];
-  notification_frequency: string;
+  notification_frequency: NotificationFrequency;
   is_notification_frequency_initialized: boolean;
   is_real_name: boolean;
   assignable: boolean;

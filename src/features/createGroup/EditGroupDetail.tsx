@@ -9,6 +9,7 @@ import { saveLocalStorage } from '@/libs/LocalStorageManager';
 import { ConfirmModal } from '@/components/Parts/Modal/ConfirmModal';
 import { useEditGroupDetail } from './useEditGroupDetail';
 import { EditGroupDetailMemberListTable } from './EditGroupDetailMemberListTable';
+import { NotificationFrequency } from '@/hooks/api/group/useFetchGetGroup';
 
 export const EditGroupDetail = () => {
   const {
@@ -316,7 +317,7 @@ export const EditGroupDetail = () => {
               setEditState((prevState) => {
                 const newState = {
                   ...prevState,
-                  notification_frequency: 'ALL' as 'ALL' | 'HOURLY' | 'DAILY',
+                  notification_frequency: 'ALL' as NotificationFrequency,
                 };
                 saveLocalStorage('EditGroupDetail::groupData', JSON.stringify(newState));
                 return newState;
@@ -333,7 +334,7 @@ export const EditGroupDetail = () => {
               setEditState((prevState) => {
                 const newState = {
                   ...prevState,
-                  notification_frequency: 'HOURLY' as 'ALL' | 'HOURLY' | 'DAILY',
+                  notification_frequency: 'HOURLY' as NotificationFrequency,
                 };
                 saveLocalStorage('EditGroupDetail::groupData', JSON.stringify(newState));
                 return newState;
@@ -350,7 +351,7 @@ export const EditGroupDetail = () => {
               setEditState((prevState) => {
                 const newState = {
                   ...prevState,
-                  notification_frequency: 'DAILY' as 'ALL' | 'HOURLY' | 'DAILY',
+                  notification_frequency: 'DAILY' as NotificationFrequency,
                 };
                 saveLocalStorage('EditGroupDetail::groupData', JSON.stringify(newState));
                 return newState;

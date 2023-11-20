@@ -1,6 +1,6 @@
 import { useFetchGroupMemberData } from '@/hooks/api/group/useFetchGroupMemberData';
 import { SearchGroupMember } from '@/hooks/api/group/useFetchSearchMember';
-import { usePostCreateGroup } from '@/hooks/api/group/usePostCreateGroup';
+import { NotificationFrequency, usePostCreateGroup } from '@/hooks/api/group/usePostCreateGroup';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { useToken } from '@/hooks/authentication/useToken';
 import { saveLocalStorage, loadLocalStorage, removeLocalStorage } from '@/libs/LocalStorageManager';
@@ -16,7 +16,7 @@ type EditGroupState = {
   disease: string;
   explanation: string;
   member_ids: string[];
-  notification_frequency: 'ALL' | 'HOURLY' | 'DAILY';
+  notification_frequency: NotificationFrequency;
   assignable: boolean;
 };
 
@@ -40,7 +40,7 @@ const defaultEditGroupState = {
   disease: '',
   explanation: '',
   member_ids: [],
-  notification_frequency: 'ALL' as 'ALL' | 'HOURLY' | 'DAILY',
+  notification_frequency: 'ALL' as NotificationFrequency,
   assignable: true,
 };
 
