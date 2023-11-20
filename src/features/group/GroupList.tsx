@@ -20,12 +20,12 @@ export const GroupList = (props: GroupListProps) => {
       className={`h-[100dvh] w-full border border-[#d5d5d5] pb-20 lg:h-[calc(100vh-20px)]
       lg:w-[336px] lg:min-w-[336px] lg:pb-0 ${isGroupSelected ? 'hidden lg:block' : 'block'}`}
     >
-      <div className="flex h-14 items-center justify-between bg-[#5caec0] pr-4">
+      <div className="flex h-14 items-center bg-[#5caec0] pr-4">
         <img src="icons/group_list.svg" alt="" className="ml-2 h-7 w-8" />
-        <p className="text-md font-bold text-white">所属グループ</p>
+        <p className="flex-grow text-md font-bold text-white">所属グループ</p>
         <Link
           href="creategroup"
-          className="ml-3 hidden rounded-full border border-white px-2 py-1 text-md font-bold text-white lg:block"
+          className="ml-3 rounded-full border border-white px-2 py-1 text-md font-bold text-white"
         >
           ＋新規グループ作成
         </Link>

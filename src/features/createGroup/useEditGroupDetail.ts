@@ -130,7 +130,7 @@ export const useEditGroupDetail = (props: Props) => {
           ...defaultEditGroupState,
           member_ids: [myAccountId],
         };
-        if (isEdit) {
+        if (!isEdit) {
           // デフォルト値から変更があった場合のみローカルストレージに保存する
           if (!(JSON.stringify(defaultEditGroupStateWithMyAccount) === JSON.stringify(newState))) {
             saveLocalStorage('EditGroupDetail::groupData', JSON.stringify(newState));
@@ -236,10 +236,10 @@ export const useEditGroupDetail = (props: Props) => {
 
   const saveLocalStorageDraft = useCallback(
     (newState: EditGroupState) => {
-      if (isEdit) {
+      if (!isEdit) {
+        saveLocalStorage('EditGroupDetail::groupData', JSON.stringify(newState));
         return newState;
       }
-      saveLocalStorage('EditGroupDetail::groupData', JSON.stringify(newState));
       return newState;
     },
     [isEdit]

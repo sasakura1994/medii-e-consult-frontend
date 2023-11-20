@@ -170,7 +170,7 @@ export const GroupDetail = (props: ConsultDetailProps) => {
           lg:h-[calc(100vh-62px)]"
         >
           <div className="flex-shrink-0 flex-grow-0">
-            <div className="mb-2 mr-2 items-center space-x-1 lg:flex lg:h-14">
+            <div className="mr-2 items-center space-x-1 lg:flex">
               <div className="line-clamp-1 flex items-center lg:flex-grow">
                 <img
                   src="icons/arrow_left.svg"
@@ -178,9 +178,10 @@ export const GroupDetail = (props: ConsultDetailProps) => {
                   className="ml-3 mt-4 block h-5 w-5 lg:hidden"
                   onClick={() => setIsGroupSelected(false)}
                 />
-                <div className="mt-2 flex flex-wrap lg:mt-0 lg:flex-none">
+                <div className="mt-2 flex flex-col flex-wrap lg:mt-0">
                   <div className="block h-0 w-full lg:hidden" />
-                  <p className="ml-4 mr-2 line-clamp-1 flex-grow font-bold lg:ml-2">{group?.group_name}</p>
+                  <p className="ml-4 mr-2 line-clamp-1 flex-grow font-bold lg:ml-2">【{group?.group_name}】</p>
+                  <p className="mb-2 ml-6 text-sm text-[#333333]">{group && group.area + '_' + group.explanation}</p>
                 </div>
               </div>
               <img
@@ -190,6 +191,7 @@ export const GroupDetail = (props: ConsultDetailProps) => {
                 onClick={() => setIsOpenGroupEditModal(true)}
               />
             </div>
+
             <div className="flex flex-wrap items-center space-x-1 border-t lg:h-7 lg:border-b">
               <div className="block h-0 w-full lg:hidden" />
               <div className="flex flex-grow items-center lg:flex-grow-0">{chatRoomDisplayName}</div>
