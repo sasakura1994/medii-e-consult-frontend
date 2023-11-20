@@ -6,15 +6,17 @@ import { useMedicalSpeciality } from '@/hooks/medicalSpeciality/useMedicalSpecia
 import { GroupMemberDetailModal } from './GroupMemberDetailModal';
 import { UrlPublish } from '../mypages/editProfile/UrlPublish';
 import { GroupEntity } from '@/hooks/api/group/useFetchGetGroup';
+import PrimaryButton from '@/components/Button/PrimaryButton';
 
 type GroupMemberModalProps = {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
+  setIsOpenGroupEditModal: React.Dispatch<React.SetStateAction<boolean>>;
   members: ChatMemberEntity[];
   group: GroupEntity;
 };
 
 export const GroupMemberModal = (props: GroupMemberModalProps) => {
-  const { setIsOpen, members, group } = props;
+  const { setIsOpen, setIsOpenGroupEditModal, members, group } = props;
   const [isOpenDoctorDetailModal, setIsOpenDoctorDetailModal] = useState(false);
   const [selectedMember, setSelectedMember] = useState<ChatMemberEntity | null>(null);
   const { getMedicalSpecialityName } = useMedicalSpeciality();
@@ -66,6 +68,15 @@ export const GroupMemberModal = (props: GroupMemberModalProps) => {
             </div>
           );
         })}
+        <PrimaryButton
+          className="mt-6 w-full"
+          onClick={() => {
+            setIsOpenGroupEditModal(true);
+            setIsOpen(false);
+          }}
+        >
+          グループ情報の編集
+        </PrimaryButton>
       </div>
     </Modal>
   );
