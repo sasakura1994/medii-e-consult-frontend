@@ -23,7 +23,7 @@ describe('EditProfile', () => {
       });
 
       await act(() => {
-        render(<EditProfile isRegisterMode={false} />);
+        render(<EditProfile isRegisterMode={true} />);
       });
 
       act(() => userEvent.click(screen.getByTestId('account-type-doctor')));
@@ -45,7 +45,7 @@ describe('EditProfile', () => {
       });
 
       await act(() => {
-        render(<EditProfile isRegisterMode={false} />);
+        render(<EditProfile isRegisterMode={true} />);
       });
 
       act(() => userEvent.click(screen.getByTestId('account-type-student')));

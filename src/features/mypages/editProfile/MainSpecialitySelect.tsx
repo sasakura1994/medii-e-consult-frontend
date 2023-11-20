@@ -4,11 +4,13 @@ import { EditProfileLabel } from './EditProfileLabel';
 import { MedicalSpecialitySelectDialog } from '@/components/MedicalSpeciality/MedicalSpecialitySelectDialog';
 import { UseEditProfile } from './useEditProfile';
 import { useMedicalSpecialitySelectButton } from '@/components/MedicalSpeciality/useMedicalSpecialitySelectButton';
+import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 
 type Props = UseEditProfile;
 
 export const MainSpecialitySelect = (props: Props) => {
   const { profile, setProfileFields } = props;
+  const { medicalSpecialities } = useFetchMedicalSpecialities();
   const { isOpen, medicalSpecialityName, setIsOpen } = useMedicalSpecialitySelectButton({
     specialityCode: profile?.main_speciality ?? '',
   });
@@ -39,6 +41,7 @@ export const MainSpecialitySelect = (props: Props) => {
           }}
           setShowModal={setIsOpen}
           description={<>所属科は、あとから編集可能です。</>}
+          medicalSpecialities={medicalSpecialities}
           defaultSpecialityCode={profile.main_speciality}
         />
       )}

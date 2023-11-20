@@ -1,6 +1,7 @@
 import React from 'react';
 import { useMedicalSpecialitySelectButton } from './useMedicalSpecialitySelectButton';
 import { MedicalSpecialitySelectDialog } from './MedicalSpecialitySelectDialog';
+import { useFetchMedicalSpecialitiesWithContract } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialitiesWithContract';
 
 export type MedicalSpecialitySelectButtonProps = {
   specialityCode: string;
@@ -11,6 +12,7 @@ export const MedicalSpecialitySelectButton: React.FC<MedicalSpecialitySelectButt
   props: MedicalSpecialitySelectButtonProps
 ) => {
   const { isOpen, medicalSpecialityName, setIsOpen } = useMedicalSpecialitySelectButton(props);
+  const { medicalSpecialities } = useFetchMedicalSpecialitiesWithContract();
   const { onChange, specialityCode } = props;
 
   return (
@@ -33,6 +35,7 @@ export const MedicalSpecialitySelectButton: React.FC<MedicalSpecialitySelectButt
             onChange(specialityCode);
           }}
           setShowModal={setIsOpen}
+          medicalSpecialities={medicalSpecialities}
           defaultSpecialityCode={specialityCode}
         />
       )}

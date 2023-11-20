@@ -6,18 +6,18 @@ import { Radio } from '../Parts/Form/Radio';
 import { Heading } from '../Parts/Text/Heading';
 import TertiaryButton from '../Button/TertiaryButton';
 import PrimaryButton from '../Button/PrimaryButton';
+import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 
 export type MedicalSpecialitySelectDialogProps = {
   defaultSpecialityCode: string;
   required?: boolean;
+  medicalSpecialities?: MedicalSpecialityEntity[];
   description?: ReactNode;
   onChange: (specialityCode: string) => void;
   setShowModal: (isShow: boolean) => void;
 };
 
-export const MedicalSpecialitySelectDialog: React.FC<MedicalSpecialitySelectDialogProps> = (
-  props: MedicalSpecialitySelectDialogProps
-) => {
+export const MedicalSpecialitySelectDialog = (props: MedicalSpecialitySelectDialogProps) => {
   const { required = false, description, setShowModal } = props;
   const {
     getMedicalSpecialitiesForCategory,
