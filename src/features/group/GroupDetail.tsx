@@ -15,6 +15,7 @@ import { KeyedMutator } from 'swr';
 import { GroupMemberModal } from './GroupMemberModal';
 import { NotificationFrequencySettingModal } from './NotificationFrequencySettingModal';
 import { GroupEditModal } from './GroupEditModal';
+import { LeaveGroupConfirmModal } from './LeaveGroupConfirmModal';
 
 type ConsultDetailProps = {
   chatRoomData?: FetchChatRoomResponseData;
@@ -31,6 +32,7 @@ export const GroupDetail = (props: ConsultDetailProps) => {
   const [isOpenGroupMemberModal, setIsOpenGroupMemberModal] = useState(false);
   const [isShowNotificationFrequencySettingModal, setIsShowNotificationFrequencySettingModal] = useState(true);
   const [isOpenGroupEditModal, setIsOpenGroupEditModal] = useState(false);
+  const [isLeaveGroupConfirmModal, setIsLeaveGroupConfirmModal] = useState(false);
   const chatListRef = useRef<HTMLDivElement | null>(null);
   const setIsGroupSelected = useSetAtom(isGroupSelectedState);
   const { accountId } = useToken();
@@ -133,12 +135,22 @@ export const GroupDetail = (props: ConsultDetailProps) => {
 
   return (
     <>
+      {isLeaveGroupConfirmModal && accountId && group && (
+        <LeaveGroupConfirmModal
+          setIsOpen={setIsLeaveGroupConfirmModal}
+          group={group}
+          accountId={accountId}
+          mutateChatRoom={mutateChatRoom}
+          mutateChatRoomList={mutateChatRoomList}
+        />
+      )}
       {isOpenGroupEditModal && group && mutateChatRoom && mutateChatRoomList && (
         <GroupEditModal
           group={group}
           setIsOpen={setIsOpenGroupEditModal}
           mutateChatRoom={mutateChatRoom}
           mutateChatRoomList={mutateChatRoomList}
+          setIsLeaveGroupConfirmModal={setIsLeaveGroupConfirmModal}
         />
       )}
       {isShowNotificationFrequencySetting && isShowNotificationFrequencySettingModal && group && (

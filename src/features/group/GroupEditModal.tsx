@@ -9,13 +9,14 @@ import { useFetchGroup } from '@/hooks/api/group/useFetchGroup';
 
 type GroupEditProps = {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
+  setIsLeaveGroupConfirmModal: React.Dispatch<React.SetStateAction<boolean>>;
   group: GroupEntity;
   mutateChatRoom: KeyedMutator<FetchChatRoomResponseData>;
   mutateChatRoomList: KeyedMutator<ChatRoomEntity[]>;
 };
 
 export const GroupEditModal = (props: GroupEditProps) => {
-  const { setIsOpen, group, mutateChatRoom, mutateChatRoomList } = props;
+  const { setIsOpen, setIsLeaveGroupConfirmModal, group, mutateChatRoom, mutateChatRoomList } = props;
   const { mutate: mutateGroup } = useFetchGroup(group.group_id);
   return (
     <Modal setShowModal={setIsOpen}>
@@ -24,6 +25,7 @@ export const GroupEditModal = (props: GroupEditProps) => {
         <EditGroupDetail
           originalGroupData={group}
           isEdit
+          setIsLeaveGroupConfirmModal={setIsLeaveGroupConfirmModal}
           mutateGroup={mutateGroup}
           setIsOpenEditModal={setIsOpen}
           mutateChatRoom={mutateChatRoom}

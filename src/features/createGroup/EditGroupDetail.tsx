@@ -18,6 +18,7 @@ import { DefaultRadio } from '@/components/Parts/Form/DefaultRadio';
 type EditGroupDetailProps = {
   isEdit?: boolean;
   setIsOpenEditModal?: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsLeaveGroupConfirmModal: React.Dispatch<React.SetStateAction<boolean>>;
   originalGroupData?: GroupEntity;
   mutateChatRoom?: KeyedMutator<FetchChatRoomResponseData>;
   mutateChatRoomList?: KeyedMutator<ChatRoomEntity[]>;
@@ -25,7 +26,15 @@ type EditGroupDetailProps = {
 };
 
 export const EditGroupDetail = (props: EditGroupDetailProps) => {
-  const { isEdit, setIsOpenEditModal, originalGroupData, mutateChatRoom, mutateChatRoomList, mutateGroup } = props;
+  const {
+    isEdit,
+    setIsOpenEditModal,
+    setIsLeaveGroupConfirmModal,
+    originalGroupData,
+    mutateChatRoom,
+    mutateChatRoomList,
+    mutateGroup,
+  } = props;
   const {
     myAccountId,
     admin,
@@ -400,7 +409,7 @@ export const EditGroupDetail = (props: EditGroupDetailProps) => {
             グループを作成
           </PrimaryButton>
         )}
-        {isEdit && setIsOpenEditModal && (
+        {isEdit && setIsOpenEditModal && setIsLeaveGroupConfirmModal && (
           <div className="mb-4 mt-8">
             <div className="mt-4 flex flex-col-reverse items-center justify-center gap-4 lg:flex-row">
               <TertiaryButton
@@ -415,7 +424,13 @@ export const EditGroupDetail = (props: EditGroupDetailProps) => {
                 グループ情報を更新
               </PrimaryButton>
             </div>
-            <p className="text-[#999999} mt-4 cursor-pointer text-center text-base underline">
+            <p
+              className="text-[#999999} mt-4 cursor-pointer text-center text-base underline"
+              onClick={() => {
+                setIsOpenEditModal(false);
+                setIsLeaveGroupConfirmModal(true);
+              }}
+            >
               このグループから退出する
             </p>
           </div>
