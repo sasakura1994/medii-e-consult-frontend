@@ -19,7 +19,7 @@ export const useGroupDetail = (props: UseGroupDetailProps) => {
   const chatListRef = useRef<HTMLDivElement | null>(null);
   const setIsGroupSelected = useSetAtom(isGroupSelectedState);
   const { accountId } = useToken();
-  const [, setSelectedImage] = useState<string>('');
+  const [selectedImage, setSelectedImage] = useState<string>('');
   const { getMedicalSpecialityName } = useMedicalSpeciality();
   const { group } = useFetchGetGroup(chatRoomData?.chat_room.group_id ?? undefined);
   const getExperienceYear = useCallback((year: number) => {
@@ -64,6 +64,7 @@ export const useGroupDetail = (props: UseGroupDetailProps) => {
     setIsShowNotificationFrequencySettingModal,
     setIsOpenGroupEditModal,
     setIsLeaveGroupConfirmModal,
+    selectedImage,
     setSelectedImage,
     isOpenGroupMemberModal,
   };

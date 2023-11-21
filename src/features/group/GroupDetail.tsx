@@ -12,6 +12,7 @@ import { NotificationFrequencySettingModal } from './NotificationFrequencySettin
 import { GroupEditModal } from './GroupEditModal';
 import { LeaveGroupConfirmModal } from './LeaveGroupConfirmModal';
 import { useGroupDetail } from './useGroupDetail';
+import ChatImageModal from '../chat/ChatImageModal';
 
 type ConsultDetailProps = {
   chatRoomData?: FetchChatRoomResponseData;
@@ -41,6 +42,7 @@ export const GroupDetail = (props: ConsultDetailProps) => {
     isOpenGroupMemberModal,
     groupMember,
     setIsGroupSelected,
+    selectedImage,
     setSelectedImage,
     chatListRef,
   } = useGroupDetail({
@@ -142,6 +144,14 @@ export const GroupDetail = (props: ConsultDetailProps) => {
           members={groupMember}
           group={group}
           setIsOpenGroupEditModal={setIsOpenGroupEditModal}
+        />
+      )}
+      {selectedImage && (
+        <ChatImageModal
+          url={selectedImage}
+          onClose={() => {
+            setSelectedImage('');
+          }}
         />
       )}
       {chatRoomData && (

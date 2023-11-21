@@ -1,6 +1,5 @@
 import { loadLocalStorage } from '@/libs/LocalStorageManager';
 import { useRouter } from 'next/router';
-import { useMemo } from 'react';
 
 type Query = {
   group_room_id: string;
@@ -17,9 +16,7 @@ export const useGroupRoomTitle = (props: UseConsultTitleProps) => {
   const router = useRouter();
   const { group_room_id } = router.query as Query;
 
-  const isSelected = useMemo(() => {
-    return group_room_id === groupRoomId;
-  }, [group_room_id, groupRoomId]);
+  const isSelected = group_room_id === groupRoomId;
 
   const date = new Date(lastUpdatedDate);
 
