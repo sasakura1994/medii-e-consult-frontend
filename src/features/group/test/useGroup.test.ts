@@ -7,7 +7,7 @@ import { useWebSocket } from '@/hooks/useWebSocket';
 import { renderHook, act, waitFor } from '@testing-library/react';
 import { useAtomValue } from 'jotai';
 import { useRouter } from 'next/router';
-import { useGroup } from './useGroup';
+import { useGroup } from '../useGroup';
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
@@ -86,7 +86,7 @@ describe('useGroup', () => {
     });
 
     test('初期値', async () => {
-      const { result } = await act(async () => await renderHook(() => useGroup(), {}));
+      const { result } = await act(async () => renderHook(() => useGroup(), {}));
 
       await waitFor(() => {
         expect(result.current.group_room_id).toBe('1');
@@ -103,7 +103,7 @@ describe('useGroup', () => {
         query: { group_room_id: '2' },
       });
 
-      const { result, rerender } = await act(async () => await renderHook(() => useGroup(), {}));
+      const { result, rerender } = await act(async () => renderHook(() => useGroup(), {}));
 
       rerender();
 
@@ -130,7 +130,7 @@ describe('useGroup', () => {
         },
       });
 
-      await act(async () => await renderHook(() => useGroup(), {}));
+      await act(async () => renderHook(() => useGroup(), {}));
 
       expect(mockWebSocket.send).toHaveBeenCalledTimes(3);
       expect(mockWebSocket.send).toHaveBeenCalledWith(
@@ -176,7 +176,7 @@ describe('useGroup', () => {
 
     jest.useFakeTimers();
 
-    await act(async () => await renderHook(() => useGroup(), {}));
+    await act(async () => renderHook(() => useGroup(), {}));
 
     jest.advanceTimersByTime(10000);
 

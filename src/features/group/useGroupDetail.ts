@@ -6,7 +6,7 @@ import { useMedicalSpeciality } from '@/hooks/medicalSpeciality/useMedicalSpecia
 import { useSetAtom } from 'jotai';
 import { useCallback, useMemo, useRef, useState } from 'react';
 
-type UseGroupDetailProps = {
+export type UseGroupDetailProps = {
   chatRoomData?: FetchChatRoomResponseData;
 };
 
