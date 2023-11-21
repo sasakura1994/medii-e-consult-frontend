@@ -154,19 +154,6 @@ describe('useGroupDetail', () => {
     expect(result.current.isOpenGroupMemberModal).toBe(false);
   });
 
-  test('経験年数を計算する', () => {
-    const props: UseGroupDetailProps = {
-      chatRoomData: commonChatRoomData,
-    };
-
-    const { result } = renderHook(() => useGroupDetail(props));
-    const currentYear = new Date().getFullYear();
-    // 医師が2000年に資格を取得したと仮定
-    const experienceYear = currentYear - 2000;
-
-    expect(result.current.getExperienceYear(2000)).toBe(experienceYear + 1);
-  });
-
   test('一致するメンバーがいない場合のみgroupMemberが更新される', () => {
     const props: UseGroupDetailProps = {
       chatRoomData: {

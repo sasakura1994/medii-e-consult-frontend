@@ -2,9 +2,8 @@ import { isGroupSelectedState } from '@/globalStates/group';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import { useFetchGetGroup } from '@/hooks/api/group/useFetchGetGroup';
 import { useToken } from '@/hooks/authentication/useToken';
-import { useMedicalSpeciality } from '@/hooks/medicalSpeciality/useMedicalSpeciality';
 import { useSetAtom } from 'jotai';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 
 export type UseGroupDetailProps = {
   chatRoomData?: FetchChatRoomResponseData;
@@ -20,15 +19,7 @@ export const useGroupDetail = (props: UseGroupDetailProps) => {
   const setIsGroupSelected = useSetAtom(isGroupSelectedState);
   const { accountId } = useToken();
   const [selectedImage, setSelectedImage] = useState<string>('');
-  const { getMedicalSpecialityName } = useMedicalSpeciality();
   const { group } = useFetchGetGroup(chatRoomData?.chat_room.group_id ?? undefined);
-  const getExperienceYear = useCallback((year: number) => {
-    const date = new Date();
-    const currentYear = date.getFullYear();
-    const passedYear = currentYear - year;
-
-    return passedYear + 1;
-  }, []);
 
   const isShowNotificationFrequencySetting = useMemo(() => {
     if (group && !group.is_notification_frequency_initialized) {
@@ -50,14 +41,12 @@ export const useGroupDetail = (props: UseGroupDetailProps) => {
   }, [chatRoomData]);
   return {
     group,
-    getMedicalSpecialityName,
     isLeaveGroupConfirmModal,
     accountId,
     isOpenGroupEditModal,
     groupMember,
     isShowNotificationFrequencySetting,
     isShowNotificationFrequencySettingModal,
-    getExperienceYear,
     setIsGroupSelected,
     chatListRef,
     setIsOpenGroupMemberModal,

@@ -27,8 +27,6 @@ type ConsultDetailProps = {
 export const GroupDetail = (props: ConsultDetailProps) => {
   const { chatRoomData, chatListData, mutateChatRoom, mutateChatRoomList, mutateChatList } = props;
   const {
-    getMedicalSpecialityName,
-    getExperienceYear,
     group,
     setIsOpenGroupMemberModal,
     isLeaveGroupConfirmModal,
@@ -53,20 +51,8 @@ export const GroupDetail = (props: ConsultDetailProps) => {
       return chatListData.map((c) => {
         // 自分の場合
         if (chatRoomData.me?.account_id === c.account_id) {
-          if (chatRoomData.me.first_name) {
-            return { ...c, displayName: chatRoomData.me.last_name + ' ' + chatRoomData.me.first_name + '先生' };
-            // TODO: 以下の部分が不要かもしれない
-          } else if (chatRoomData.me.speciality_1) {
-            return {
-              ...c,
-              displayName:
-                getMedicalSpecialityName(chatRoomData.me.speciality_1) +
-                ' ' +
-                getExperienceYear(chatRoomData.me.qualified_year) +
-                '年目',
-            };
-          }
-          return { ...c, displayName: '' };
+          return { ...c, displayName: chatRoomData.me.last_name + ' ' + chatRoomData.me.first_name + '先生' };
+
           // 自分以外の場合
         } else if (
           chatRoomData.members &&
@@ -74,23 +60,10 @@ export const GroupDetail = (props: ConsultDetailProps) => {
           chatRoomData.members.some((member) => member.account_id === c.account_id)
         ) {
           const targetMember = chatRoomData.members.find((member) => c.account_id === member.account_id);
-          if (targetMember?.first_name) {
-            return {
-              ...c,
-              displayName: targetMember.last_name + ' ' + targetMember.first_name + '先生',
-            };
-            // TODO: 以下の部分が不要かもしれない
-          } else if (targetMember?.speciality_1) {
-            return {
-              ...c,
-              displayName:
-                getMedicalSpecialityName(targetMember.speciality_1) +
-                ' ' +
-                getExperienceYear(targetMember.qualified_year) +
-                '年目',
-            };
-          }
-          return { ...c, displayName: '' };
+          return {
+            ...c,
+            displayName: targetMember?.last_name + ' ' + targetMember?.first_name + '先生',
+          };
         } else if (c.account_id === 'CHATBOT') {
           return {
             ...c,
@@ -100,7 +73,7 @@ export const GroupDetail = (props: ConsultDetailProps) => {
         return { ...c, displayName: '' };
       });
     }
-  }, [chatListData, chatRoomData, getExperienceYear, getMedicalSpecialityName]);
+  }, [chatListData, chatRoomData]);
   const chatRoomDisplayName = useMemo(() => {
     if (!group) {
       return <></>;
