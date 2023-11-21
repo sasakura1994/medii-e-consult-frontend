@@ -17,7 +17,6 @@ type WebsocketResponseMessage = {
 
 type Query = {
   group_room_id?: string;
-  admin?: 'true';
 };
 
 export const useGroup = () => {

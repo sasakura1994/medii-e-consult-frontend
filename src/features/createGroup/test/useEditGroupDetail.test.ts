@@ -5,9 +5,7 @@ import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetc
 import { usePostCreateGroup } from '@/hooks/api/group/usePostCreateGroup';
 import { useToken } from '@/hooks/authentication/useToken';
 jest.mock('next/router', () => ({
-  useRouter: () => ({
-    query: { admin: 'true' },
-  }),
+  useRouter: () => ({}),
 }));
 
 jest.mock('@/hooks/api/group/useFetchGroupMemberData');

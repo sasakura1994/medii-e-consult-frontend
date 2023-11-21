@@ -39,7 +39,7 @@ export const OtherChat = (props: OtherChatProps) => {
       <div className="ml-3 flex justify-start">
         {chatData.deleted ? (
           <p
-            className="mb-3 mr-3 max-w-[670px] whitespace-pre-wrap rounded-lg rounded-tl-none
+            className="mb-3 mr-3 max-w-[670px] whitespace-pre-wrap rounded-2xl rounded-tl-none
            bg-block-gray p-2 text-white"
           >
             削除済みメッセージ
@@ -56,7 +56,7 @@ export const OtherChat = (props: OtherChatProps) => {
             />
           </div>
         ) : chatData.content_type.startsWith('application/') ? (
-          <div className="mb-3 mr-3 flex cursor-pointer items-center rounded-lg bg-white p-2" onClick={downloadFile}>
+          <div className="mb-3 mr-3 flex cursor-pointer items-center rounded-2xl bg-white p-2" onClick={downloadFile}>
             <img src="icons/insert_drive_file.svg" alt="" className="h-10 w-10" />
             <p className="max-w-[670px] whitespace-pre-wrap break-words">{chatData.file_name}</p>
           </div>
@@ -64,7 +64,7 @@ export const OtherChat = (props: OtherChatProps) => {
           <video src={chatData.file_path} className="aspect-auto h-[250px] cursor-pointer object-contain" controls />
         ) : (
           <p
-            className="mb-3 mr-3 max-w-[670px] whitespace-pre-wrap break-words rounded-lg rounded-tl-none
+            className="mb-3 mr-3 max-w-[670px] whitespace-pre-wrap break-words rounded-2xl rounded-tl-none
            bg-white p-2"
           >
             {chatData.message}

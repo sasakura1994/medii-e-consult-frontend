@@ -68,7 +68,7 @@ export const MyChat = (props: MyChatProps) => {
       <div className="flex justify-end">
         {chatData.deleted ? (
           <p
-            className="mb-3 mr-3 max-w-[670px] whitespace-pre-wrap rounded-lg rounded-tr-none
+            className="mb-3 mr-3 max-w-[670px] whitespace-pre-wrap rounded-2xl rounded-tr-none
            bg-block-gray p-2 text-white"
           >
             削除済みメッセージ
@@ -144,7 +144,7 @@ export const MyChat = (props: MyChatProps) => {
               }}
             >
               <div
-                className="mb-3 mr-3 flex cursor-pointer items-center rounded-lg bg-white p-2"
+                className="mb-3 mr-3 flex cursor-pointer items-center rounded-2xl bg-white p-2"
                 onClick={downloadFile}
                 onMouseOver={() => {
                   setIsMouseOver(true);
@@ -170,7 +170,7 @@ export const MyChat = (props: MyChatProps) => {
               }}
             >
               <p
-                className={`mb-3 mr-3 min-w-[200px] max-w-[670px] whitespace-pre-wrap break-words rounded-lg
+                className={`mb-3 mr-3 min-w-[200px] max-w-[670px] whitespace-pre-wrap break-words rounded-2xl
               rounded-tr-none p-2 ${isGroup ? 'bg-[#d0f0ea]' : 'bg-primary-light'}`}
               >
                 {chatData.message}

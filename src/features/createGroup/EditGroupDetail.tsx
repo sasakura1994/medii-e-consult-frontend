@@ -37,7 +37,6 @@ export const EditGroupDetail = (props: EditGroupDetailProps) => {
   } = props;
   const {
     myAccountId,
-    admin,
     medicalSpecialities,
     selectedMembers,
     setSelectedMembers,
@@ -49,7 +48,6 @@ export const EditGroupDetail = (props: EditGroupDetailProps) => {
     setIsOpenInviteMemberModal,
     applyDraft,
     dontUseDraft,
-    inquiryFormUrl,
     update,
     saveLocalStorageDraft,
   } = useEditGroupDetail({
@@ -287,26 +285,24 @@ export const EditGroupDetail = (props: EditGroupDetailProps) => {
         )}
         <div className="mt-2">
           <label className="text-left font-bold">グループメンバー</label>
-          <div className="text-[13px]">
+          {/* <div className="text-[13px]">
             メンバーを追加したい場合は
             <a target="_blank" className=" text-text-link underline" href={inquiryFormUrl} rel="noreferrer">
               Mediiコンシェルジュ
             </a>
             までお問い合わせください
-          </div>
+          </div> */}
         </div>
 
         <div className="mb-2 mt-4 flex items-center gap-4">
-          {admin && (
-            <PrimaryButton
-              type="button"
-              onClick={() => {
-                setIsOpenInviteMemberModal(true);
-              }}
-            >
-              +メンバー招待
-            </PrimaryButton>
-          )}
+          <PrimaryButton
+            type="button"
+            onClick={() => {
+              setIsOpenInviteMemberModal(true);
+            }}
+          >
+            +メンバー招待
+          </PrimaryButton>
           <label className="text-left font-bold">メンバー数:{selectedMembers.length}名</label>
         </div>
 

@@ -26,10 +26,6 @@ type EditGroupState = {
   assignable: boolean;
 };
 
-type QueryParams = {
-  admin?: 'true';
-};
-
 const baseUrl = 'https://tayori.com/form/';
 const formId = '62897c986d36f5b573fec1a04508f24b70b11fe6/';
 const queryParamsPart1 = '?_gl=1*1ub7pnq*_ga*MTMwODkzMzc5Ni4xNjg0ODE5NDIy';
@@ -62,7 +58,6 @@ type Props = {
 export const useEditGroupDetail = (props: Props) => {
   const { isEdit, setIsOpenEditModal, originalGroupData, mutateChatRoom, mutateChatRoomList, mutateGroup } = props;
   const router = useRouter();
-  const { admin } = router.query as QueryParams;
   const [isOpenInviteMemberModal, setIsOpenInviteMemberModal] = useState(false);
   const [isDraftConfirming, setIsDraftConfirming] = useState(false);
   const [draft, setDraft] = useState<EditGroupState>();
@@ -247,7 +242,6 @@ export const useEditGroupDetail = (props: Props) => {
 
   return {
     myAccountId,
-    admin,
     editState,
     setEditState,
     setDraft,

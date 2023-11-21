@@ -46,12 +46,26 @@ export const GroupDetail = (props: ConsultDetailProps) => {
   } = useGroupDetail({
     chatRoomData,
   });
+  const groupDisplayTitle = useMemo(() => {
+    if (!group) {
+      return <></>;
+    }
+    if (group.explanation) {
+      return (
+        <p className="mb-2 ml-6 text-sm text-[#635e5e]">
+          {group.area + '_' + group.explanation + '(' + group.speciality_name + ')'}
+        </p>
+      );
+    }
+    return <p className="mb-2 ml-6 text-sm text-[#635e5e]">{group.area + '(' + group.speciality_name + ')'}</p>;
+  }, [group]);
+
   const chatListDataWithDisplayName = useMemo(() => {
     if (chatListData && chatRoomData) {
       return chatListData.map((c) => {
         // 自分の場合
         if (chatRoomData.me?.account_id === c.account_id) {
-          return { ...c, displayName: chatRoomData.me.last_name + ' ' + chatRoomData.me.first_name + '先生' };
+          return { ...c, displayName: chatRoomData.me.last_name + ' ' + chatRoomData.me.first_name };
 
           // 自分以外の場合
         } else if (
@@ -62,7 +76,7 @@ export const GroupDetail = (props: ConsultDetailProps) => {
           const targetMember = chatRoomData.members.find((member) => c.account_id === member.account_id);
           return {
             ...c,
-            displayName: targetMember?.last_name + ' ' + targetMember?.first_name + '先生',
+            displayName: targetMember?.last_name + ' ' + targetMember?.first_name,
           };
         } else if (c.account_id === 'CHATBOT') {
           return {
@@ -132,7 +146,7 @@ export const GroupDetail = (props: ConsultDetailProps) => {
           className="flex h-full flex-grow flex-col overflow-hidden border border-[#d5d5d5]
           lg:h-[calc(100vh-62px)]"
         >
-          <div className="flex-shrink-0 flex-grow-0">
+          <div className="mt-2 flex-shrink-0 flex-grow-0">
             <div className="mr-2 items-center space-x-1 lg:flex">
               <div className="line-clamp-1 flex items-center lg:flex-grow">
                 <img
@@ -144,7 +158,7 @@ export const GroupDetail = (props: ConsultDetailProps) => {
                 <div className="mt-2 flex flex-col flex-wrap lg:mt-0">
                   <div className="block h-0 w-full lg:hidden" />
                   <p className="ml-4 mr-2 line-clamp-1 flex-grow font-bold lg:ml-2">【{group?.group_name}】</p>
-                  <p className="mb-2 ml-6 text-sm text-[#333333]">{group && group.area + '_' + group.explanation}</p>
+                  {groupDisplayTitle}
                 </div>
               </div>
               <img
