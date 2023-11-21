@@ -3,7 +3,6 @@ import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import React, { useMemo, useState } from 'react';
 import { ChatDeleteModal } from './ChatDeleteModal';
 import { KeyedMutator } from 'swr';
-import { useFetchPresignedFileUrl } from '@/hooks/api/chat/useFetchPresignedFileUrl';
 
 type MyChatProps = {
   isGroup?: boolean;
@@ -17,7 +16,6 @@ export const MyChat = (props: MyChatProps) => {
   const { isGroup, chatData, chatRoomData, setSelectedImage, mutateChatList } = props;
   const [isMouseOver, setIsMouseOver] = useState(false);
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
-  const { fecthPresignedFileUrl } = useFetchPresignedFileUrl();
 
   const date = new Date(chatData.created_date);
   const formattedDate = date.toLocaleString(undefined, {
@@ -28,26 +26,15 @@ export const MyChat = (props: MyChatProps) => {
   });
 
   const downloadFile = async () => {
-    try {
-      const res = await fecthPresignedFileUrl({
-        chat_room_id: chatRoomData.chat_room.chat_room_id,
-        file_id: chatData.file_id,
-      });
-
-      if (res.data) {
-        const response = await fetch(res.data.url);
-        const arrayBuffer = await response.arrayBuffer();
-        const blob = new Blob([arrayBuffer], { type: chatData.content_type });
-        const downloadLink = document.createElement('a');
-        downloadLink.href = URL.createObjectURL(blob);
-        downloadLink.download = chatData.file_name;
-        document.body.appendChild(downloadLink); // Append to the body
-        downloadLink.click();
-        document.body.removeChild(downloadLink); // Remove after click
-      }
-    } catch (error) {
-      console.error('Error downloading file:', error);
-    }
+    const response = await fetch(chatData.file_path);
+    const arrayBuffer = await response.arrayBuffer();
+    const blob = new Blob([arrayBuffer], { type: chatData.content_type });
+    const downloadLink = document.createElement('a');
+    downloadLink.href = URL.createObjectURL(blob);
+    downloadLink.download = chatData.file_name;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
   };
 
   const unreadView = useMemo(() => {

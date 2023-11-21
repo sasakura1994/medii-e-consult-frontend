@@ -1,6 +1,5 @@
 import { ChatData } from '@/hooks/api/chat/useFetchChatList';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
-import { useFetchPresignedFileUrl } from '@/hooks/api/chat/useFetchPresignedFileUrl';
 import React from 'react';
 
 type OtherChatProps = {
@@ -10,9 +9,8 @@ type OtherChatProps = {
 };
 
 export const OtherChat = (props: OtherChatProps) => {
-  const { chatData, chatRoomData, setSelectedImage } = props;
+  const { chatData, setSelectedImage } = props;
   const date = new Date(chatData.created_date);
-  const { fecthPresignedFileUrl } = useFetchPresignedFileUrl();
 
   const formattedDate = date.toLocaleString(undefined, {
     month: 'numeric',
@@ -21,26 +19,15 @@ export const OtherChat = (props: OtherChatProps) => {
     minute: 'numeric',
   });
   const downloadFile = async () => {
-    try {
-      const res = await fecthPresignedFileUrl({
-        chat_room_id: chatRoomData.chat_room.chat_room_id,
-        file_id: chatData.file_id,
-      });
-
-      if (res.data) {
-        const response = await fetch(res.data.url);
-        const arrayBuffer = await response.arrayBuffer();
-        const blob = new Blob([arrayBuffer], { type: chatData.content_type });
-        const downloadLink = document.createElement('a');
-        downloadLink.href = URL.createObjectURL(blob);
-        downloadLink.download = chatData.file_name;
-        document.body.appendChild(downloadLink); // Append to the body
-        downloadLink.click();
-        document.body.removeChild(downloadLink); // Remove after click
-      }
-    } catch (error) {
-      console.error('Error downloading file:', error);
-    }
+    const response = await fetch(chatData.file_path);
+    const arrayBuffer = await response.arrayBuffer();
+    const blob = new Blob([arrayBuffer], { type: chatData.content_type });
+    const downloadLink = document.createElement('a');
+    downloadLink.href = URL.createObjectURL(blob);
+    downloadLink.download = chatData.file_name;
+    document.body.appendChild(downloadLink); // Append to the body
+    downloadLink.click();
+    document.body.removeChild(downloadLink); // Remove after click
   };
 
   return (
