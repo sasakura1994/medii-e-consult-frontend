@@ -164,22 +164,21 @@ export const useEditGroupDetail = (props: Props) => {
         notification_frequency: originalGroupData.notification_frequency,
         assignable: originalGroupData.assignable,
       });
-      Promise.all(originalGroupData.member_ids.map((memberId) => fetchGroupMemberData({ account_id: memberId }))).then(
-        (responses) => {
-          responses.forEach((res) => {
-            setSelectedMembers((prev) => {
-              if (
-                ![...prev].some((member) => {
-                  return member.account_id === res.data.account_id;
-                })
-              ) {
-                return [...prev, res.data];
-              }
-              return prev;
-            });
+      originalGroupData.member_ids.forEach(async (memberId) => {
+        await fetchGroupMemberData({ account_id: memberId }).then((res) => {
+          // 既に情報取得されているメンバーを除いて追加する
+          setSelectedMembers((prev) => {
+            if (
+              ![...prev].some((member) => {
+                return member.account_id === res.data.account_id;
+              })
+            ) {
+              return [...prev, res.data];
+            }
+            return prev;
           });
-        }
-      );
+        });
+      });
     }
   }, [isEdit, originalGroupData, fetchGroupMemberData]);
 
