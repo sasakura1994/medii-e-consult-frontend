@@ -72,21 +72,23 @@ export const useEditGroupDetail = (props: Props) => {
   const applyDraft = useCallback(() => {
     if (!isEdit && draft) {
       // 下書きのメンバーのaccount_idの配列をfetchGroupMemberDataに渡しメンバーの情報を取得する
-      draft.member_ids.forEach(async (memberId) => {
-        await fetchGroupMemberData({ account_id: memberId }).then((res) => {
-          // 既に情報取得されているメンバーを除いて追加する
-          setSelectedMembers((prev) => {
-            if (
-              ![...prev].some((member) => {
-                return member.account_id === res.data.account_id;
-              })
-            ) {
-              return [...prev, res.data];
-            }
-            return prev;
+      Promise.all(draft.member_ids.map((memberId) => fetchGroupMemberData({ account_id: memberId }))).then(
+        (responses) => {
+          responses.forEach((res) => {
+            // 既に情報取得されているメンバーを除いて追加する
+            setSelectedMembers((prev) => {
+              if (
+                ![...prev].some((member) => {
+                  return member.account_id === res.data.account_id;
+                })
+              ) {
+                return [...prev, res.data];
+              }
+              return prev;
+            });
           });
-        });
-      });
+        }
+      );
       // 下書きの情報をセットする
       setEditState(draft);
     }
@@ -162,21 +164,22 @@ export const useEditGroupDetail = (props: Props) => {
         notification_frequency: originalGroupData.notification_frequency,
         assignable: originalGroupData.assignable,
       });
-      originalGroupData.member_ids.forEach(async (memberId) => {
-        await fetchGroupMemberData({ account_id: memberId }).then((res) => {
-          // 既に情報取得されているメンバーを除いて追加する
-          setSelectedMembers((prev) => {
-            if (
-              ![...prev].some((member) => {
-                return member.account_id === res.data.account_id;
-              })
-            ) {
-              return [...prev, res.data];
-            }
-            return prev;
+      Promise.all(originalGroupData.member_ids.map((memberId) => fetchGroupMemberData({ account_id: memberId }))).then(
+        (responses) => {
+          responses.forEach((res) => {
+            setSelectedMembers((prev) => {
+              if (
+                ![...prev].some((member) => {
+                  return member.account_id === res.data.account_id;
+                })
+              ) {
+                return [...prev, res.data];
+              }
+              return prev;
+            });
           });
-        });
-      });
+        }
+      );
     }
   }, [isEdit, originalGroupData, fetchGroupMemberData]);
 

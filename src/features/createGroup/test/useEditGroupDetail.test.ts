@@ -51,7 +51,7 @@ const useTokenMock = useToken as jest.Mocked<typeof useToken>;
   accountId: '1',
 });
 describe('useEditGroupDetail', () => {
-  test('初期状態', async () => {
+  test('useEditGroupDetailフックが初期化されたときにデフォルトの編集状態を持つ', async () => {
     let result: { current: ReturnType<typeof useEditGroupDetail> } | undefined;
 
     await act(async () => {
@@ -73,7 +73,7 @@ describe('useEditGroupDetail', () => {
     expect(result?.current.myAccountId).toBe('1');
   });
 
-  test('下書きの適用', async () => {
+  test('下書きが適用されたときにuseEditGroupDetailフックが新しい編集状態を持つ', async () => {
     let result: { current: ReturnType<typeof useEditGroupDetail> } | undefined;
 
     await act(async () => {
@@ -113,7 +113,7 @@ describe('useEditGroupDetail', () => {
       });
     });
   });
-  test('下書きの破棄', async () => {
+  test('下書きが破棄されたときにuseEditGroupDetailフックがデフォルトの編集状態に戻る', async () => {
     let result: { current: ReturnType<typeof useEditGroupDetail> } | undefined;
 
     await act(async () => {
