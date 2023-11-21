@@ -51,11 +51,11 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = (props: Docto
                   value={experienceYears}
                   onChange={(e) => setExperienceYears(e.target.value)}
                   className="bg-no-repeat"
-                  style={{
-                    backgroundImage: 'url(/icons/pull_down.svg)',
-                    backgroundSize: '16px 16px',
-                    backgroundPosition: 'right 16px center',
-                  }}
+                  // style={{
+                  //   backgroundImage: 'url(/icons/pull_down.svg)',
+                  //   backgroundSize: '16px 16px',
+                  //   backgroundPosition: 'right 16px center',
+                  // }}
                 >
                   <option value="">専門医経験年数を選択</option>
                   {[...Array(99)]
