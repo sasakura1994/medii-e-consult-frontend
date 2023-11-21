@@ -15,7 +15,7 @@ export const DefaultRadio = (props: PropsType) => {
   const { name, value, checked, id, label, onChange, required = false, className } = props;
 
   return (
-    <div className={`flex ${className ?? ''}`}>
+    <div className={`flex items-center ${className ?? ''}`}>
       <input
         type="radio"
         value={value}
