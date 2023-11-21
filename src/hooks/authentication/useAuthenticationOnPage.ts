@@ -3,6 +3,7 @@ import { useToken } from './useToken';
 import { redirectToLoginPage } from '@/libs/apiClient';
 import { useRefreshToken } from '../api/doctor/useRefreshToken';
 import { useGuest } from './useGuest';
+import { useRouter } from 'next/router';
 
 // 認証が不要なページはここに追加する
 const unauthenticatedPages = [
@@ -22,7 +23,8 @@ const unauthenticatedPages = [
 /**
  * 認証が必要なページに配置する
  */
-export const useAuthenticationOnPage = (currentPath: string) => {
+export const useAuthenticationOnPage = () => {
+  const router = useRouter();
   const { token, isTokenInitialized, isTokenRefreshed, setIsTokenRefreshed, setTokenAndMarkInitialized } = useToken();
   const { refreshToken: getRefreshToken } = useRefreshToken();
   useGuest();
@@ -46,7 +48,7 @@ export const useAuthenticationOnPage = (currentPath: string) => {
 
   useEffect(() => {
     // 現在のページが認証が不要なページのリストに含まれている場合は処理をスキップ
-    if (unauthenticatedPages.includes(currentPath)) {
+    if (unauthenticatedPages.includes(router.pathname)) {
       return;
     }
     if (!isTokenInitialized) {
@@ -63,5 +65,5 @@ export const useAuthenticationOnPage = (currentPath: string) => {
     }
 
     refreshToken();
-  }, [tokenIsEmpty, isTokenInitialized, isTokenRefreshed, currentPath, refreshToken]);
+  }, [tokenIsEmpty, isTokenInitialized, isTokenRefreshed, refreshToken, router.pathname]);
 };
