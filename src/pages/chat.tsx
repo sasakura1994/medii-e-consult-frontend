@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { CustomHead } from '@/components/Layouts/Header/CustomHead';
 import { Chat } from '@/features/chat/Chat';
-import { isChatRoomSelectedState } from '@/globalStates/chat';
+import { chatState } from '@/globalStates/chat';
 import { useRouter } from 'next/router';
 import { useAtom } from 'jotai';
 import { FooterSpMenu } from '@/components/Layouts/Footer/FooterSpMenu';
@@ -14,7 +14,7 @@ type Query = {
 const ChatPage = () => {
   const router = useRouter();
   const { chat_room_id } = router.query as Query;
-  const [isChatRoomSelected, setIsChatRoomSelected] = useAtom(isChatRoomSelectedState);
+  const [chatGlobalState, setChatGlobalState] = useAtom(chatState);
   const [windowWidth, setWindowWidth] = useState<number | undefined>(undefined);
 
   useEffect(() => {
@@ -31,9 +31,9 @@ const ChatPage = () => {
 
   useEffect(() => {
     if (chat_room_id) {
-      setIsChatRoomSelected(true);
+      setChatGlobalState((prev) => ({ ...prev, isSelected: true }));
     }
-  }, [chat_room_id, setIsChatRoomSelected]);
+  }, [chat_room_id, setChatGlobalState]);
 
   return (
     <>
@@ -43,7 +43,7 @@ const ChatPage = () => {
           <Header />
           <Chat />
         </div>
-      ) : isChatRoomSelected ? (
+      ) : chatGlobalState.isSelected ? (
         <div className="h-[100dvh] overflow-hidden">
           <Chat />
         </div>

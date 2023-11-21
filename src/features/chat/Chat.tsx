@@ -10,7 +10,7 @@ import { useGetPublishmentStatus } from '@/hooks/api/chat/useGetPublishmentStatu
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { useFetchChatRoomList } from '@/hooks/api/chat/useFetchChatRoomList';
 import { mutateFetchUnreadCounts } from '@/hooks/api/chat/useFetchUnreadCounts';
-import { isChatRoomSelectedState } from '@/globalStates/chat';
+import { chatState } from '@/globalStates/chat';
 import Link from 'next/link';
 import { useAtomValue } from 'jotai';
 
@@ -31,7 +31,7 @@ export const Chat = () => {
   const { chat_room_id } = router.query as Query;
   const chatRoomIdStr = chat_room_id;
 
-  const isChatRoomSelected = useAtomValue(isChatRoomSelectedState);
+  const chatGlobalState = useAtomValue(chatState);
   const { data: chatRoomList, mutate: mutateChatRoomList } = useFetchChatRoomList({
     query: ['FREE', 'BY_NAME', 'GROUP'],
   });
@@ -129,7 +129,7 @@ export const Chat = () => {
   return (
     <div className="flex h-full bg-white">
       <ConsultList chatRoomList={chatRoomList} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-      {chat_room_id && isChatRoomSelected ? (
+      {chat_room_id && chatGlobalState.isSelected ? (
         <ConsultDetail
           publishmentStatusData={publishmentStatusData}
           chatRoomData={chatRoomData}

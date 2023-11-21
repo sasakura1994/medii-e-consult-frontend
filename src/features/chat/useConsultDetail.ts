@@ -1,4 +1,4 @@
-import { isChatRoomSelectedState } from '@/globalStates/chat';
+import { chatState } from '@/globalStates/chat';
 import { FetchChatListResponseData } from '@/hooks/api/chat/useFetchChatList';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import { usePostActivateChatRoom } from '@/hooks/api/chat/usePostActivateChatRoom';
@@ -28,7 +28,7 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
   const [isOpenResolveChatRoomModal, setIsOpenResolveChatRoomModal] = useState(false);
   const [isOpenReConsultSuggestionModal, setIsOpenReConsultSuggestionModal] = useState(false);
   const [isOpenQuestionaryModal, setIsOpenQuestionaryModal] = useState(false);
-  const setIsChatRoomSelected = useSetAtom(isChatRoomSelectedState);
+  const setChatGlobalState = useSetAtom(chatState);
   const [selectedImage, setSelectedImage] = useState<string>('');
   const { accountId } = useToken();
   const chatListRef = useRef<HTMLDivElement | null>(null);
@@ -146,7 +146,7 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
     setIsOpenQuestionaryModal,
     selectedImage,
     setSelectedImage,
-    setIsChatRoomSelected,
+    setChatGlobalState,
     getMedicalSpecialityName,
     getExperienceYear,
     activateChatRoom,

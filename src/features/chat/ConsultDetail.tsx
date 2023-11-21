@@ -86,7 +86,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     setIsOpenQuestionaryModal,
     selectedImage,
     setSelectedImage,
-    setIsChatRoomSelected,
+    setChatGlobalState,
     getMedicalSpecialityName,
     getExperienceYear,
     activateChatRoom,
@@ -300,7 +300,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                     src="icons/arrow_left.svg"
                     alt=""
                     className="ml-3 mt-4 block h-5 w-5 lg:hidden"
-                    onClick={() => setIsChatRoomSelected(false)}
+                    onClick={() => setChatGlobalState((prev) => ({ ...prev, isSelected: false }))}
                   />
                   <div className="mt-2 flex flex-wrap lg:mt-0 lg:flex-none">
                     {isCloseRoom ? (
