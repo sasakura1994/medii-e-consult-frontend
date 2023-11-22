@@ -18,6 +18,7 @@ export const ProfileDetail: React.FC<Props> = ({ onEdit }: Props) => {
   const { getMedicalSpecialityName } = useMedicalSpeciality();
   const { getPrefectureNameByCode } = usePrefecture();
   const { profile, email, hospitalName } = useProfile();
+  const isStudent = profile?.main_speciality === 'STUDENT';
 
   return (
     <>
@@ -86,57 +87,76 @@ export const ProfileDetail: React.FC<Props> = ({ onEdit }: Props) => {
             <div className="mb-10">
               <EditProfileHeading className="mb-4">医療従事経歴</EditProfileHeading>
 
-              <CaptionWithBody
-                caption="医師資格取得年"
-                className="mb-6"
-              >{`${profile.qualified_year} 年`}</CaptionWithBody>
-
-              <CaptionWithBody caption="所属科" className="mb-6">
-                {getMedicalSpecialityName(profile.main_speciality)}
-              </CaptionWithBody>
-
-              <div className="mb-6">
-                <p className="mb-2 text-[#999999]">担当科</p>
-                {getMedicalSpecialityName(profile.speciality_2) && (
-                  <p className="mb-1">{getMedicalSpecialityName(profile.speciality_2)}</p>
-                )}
-                {getMedicalSpecialityName(profile.speciality_3) && (
-                  <p className="mb-1">{getMedicalSpecialityName(profile.speciality_3)}</p>
-                )}
-                {getMedicalSpecialityName(profile.speciality_4) && (
-                  <p className="mb-1">{getMedicalSpecialityName(profile.speciality_4)}</p>
-                )}
-              </div>
-
-              <CaptionWithBody caption="特によく診てきた疾患・領域" className="mb-6">
-                {profile.expertise}
-              </CaptionWithBody>
-
-              <CaptionWithBody caption="専門医資格" className="mb-6">
-                {profile.qualification}
-              </CaptionWithBody>
-            </div>
-
-            <div className="mb-10">
-              <EditProfileHeading className="mb-4">所属病院</EditProfileHeading>
-
-              {(profile.hospital_id || profile.hospital_name) && (
+              {!isStudent ? (
                 <>
-                  <CaptionWithBody caption="勤務病院の所在地" className="mb-6">
-                    {getPrefectureNameByCode(profile.prefecture_code)}
+                  <CaptionWithBody
+                    caption="医師資格取得年"
+                    className="mb-6"
+                  >{`${profile.qualified_year} 年`}</CaptionWithBody>
+
+                  <CaptionWithBody caption="所属科" className="mb-6">
+                    {getMedicalSpecialityName(profile.main_speciality)}
                   </CaptionWithBody>
 
-                  <CaptionWithBody caption="勤務先病院名" className="mb-6">
-                    {hospitalName}
+                  <div className="mb-6">
+                    <p className="mb-2 text-[#999999]">担当科</p>
+                    {getMedicalSpecialityName(profile.speciality_2) && (
+                      <p className="mb-1">{getMedicalSpecialityName(profile.speciality_2)}</p>
+                    )}
+                    {getMedicalSpecialityName(profile.speciality_3) && (
+                      <p className="mb-1">{getMedicalSpecialityName(profile.speciality_3)}</p>
+                    )}
+                    {getMedicalSpecialityName(profile.speciality_4) && (
+                      <p className="mb-1">{getMedicalSpecialityName(profile.speciality_4)}</p>
+                    )}
+                  </div>
+
+                  <CaptionWithBody caption="特によく診てきた疾患・領域" className="mb-6">
+                    {profile.expertise}
+                  </CaptionWithBody>
+
+                  <CaptionWithBody caption="専門医資格" className="mb-6">
+                    {profile.qualification}
                   </CaptionWithBody>
                 </>
+              ) : (
+                <>医学生</>
               )}
             </div>
 
-            {profile.registration_source !== 'nmo' && (
-              <div className="mb-10" data-testid="profile-detail-usage-classification">
-                <EditProfileHeading className="mb-4">E-コンサル利用区分</EditProfileHeading>
-                <p>{profile.want_to_be_consultant ? '回答医&相談（E−コンサルへの回答も行います）' : '相談医'}</p>
+            {!isStudent && (
+              <>
+                <div className="mb-10">
+                  <EditProfileHeading className="mb-4">所属病院</EditProfileHeading>
+
+                  {(profile.hospital_id || profile.hospital_name) && (
+                    <>
+                      <CaptionWithBody caption="勤務病院の所在地" className="mb-6">
+                        {getPrefectureNameByCode(profile.prefecture_code)}
+                      </CaptionWithBody>
+
+                      <CaptionWithBody caption="勤務先病院名" className="mb-6">
+                        {hospitalName}
+                      </CaptionWithBody>
+                    </>
+                  )}
+                </div>
+
+                {profile.registration_source !== 'nmo' && (
+                  <div className="mb-10" data-testid="profile-detail-usage-classification">
+                    <EditProfileHeading className="mb-4">E-コンサル利用区分</EditProfileHeading>
+                    <p>{profile.want_to_be_consultant ? '回答医&相談（E−コンサルへの回答も行います）' : '相談医'}</p>
+                  </div>
+                )}
+              </>
+            )}
+
+            {isStudent && (
+              <div className="mb-10">
+                <EditProfileHeading className="mb-4">所属大学</EditProfileHeading>
+                <CaptionWithBody caption="勤務先病院名" className="mb-6">
+                  {profile.graduated_university}
+                </CaptionWithBody>
               </div>
             )}
 
