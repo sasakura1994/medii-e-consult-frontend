@@ -53,7 +53,6 @@ export const QuestionaryModal = (props: Props) => {
       }
     >
       <div className="border-b border-[#d5d5d5] p-4">
-        <p className="text-center text-sm text-block-gray">解決済みとしてルームを閉じます</p>
         <p className="text-center text-2xl font-semibold">アンケートのご協力をお願い致します</p>
       </div>
       <p className="my-4 text-center font-semibold">
