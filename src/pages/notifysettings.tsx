@@ -1,8 +1,8 @@
 import React from 'react';
-import { LegacyMyPageLayout } from '@/components/Layouts/LegacyMyPageLayout';
 import { MyPageMenu } from '@/components/Parts/Menu/MyPageMenu';
 import { NotifySettings } from '@/features/mypages/notifySettings/NotifySettings';
 import type { NextPageWithLayout } from '@/pages/_app';
+import { MyPageLayout } from '@/components/Layouts/MyPageLayout';
 
 const NotifySettingsPage: NextPageWithLayout = () => {
   return (
@@ -17,5 +17,5 @@ const NotifySettingsPage: NextPageWithLayout = () => {
 export default NotifySettingsPage;
 
 NotifySettingsPage.getLayout = (page: React.ReactElement) => {
-  return <LegacyMyPageLayout>{page}</LegacyMyPageLayout>;
+  return <MyPageLayout>{page}</MyPageLayout>;
 };

@@ -1,16 +1,16 @@
 import React from 'react';
 import EditEmail from '../features/mypages/editEmail/EditEmail';
-import { LegacyMyPageLayout } from '@/components/Layouts/LegacyMyPageLayout';
 import { useUpdateEmail } from '@/features/mypages/editEmail/useUpdateEmail';
 import Completed from '@/features/mypages/editEmail/completed';
+import { MyPageLayout } from '@/components/Layouts/MyPageLayout';
 
 const EditEmailPage = () => {
   const updateEmail = useUpdateEmail();
   const { editEmailStatus, ...props } = updateEmail;
 
   return (
-    <div className="flex h-screen bg-bg">
-      <div className="m-auto mt-9 w-[662px] rounded border border-[#ddd] bg-white py-[60px] text-left">
+    <div className="flex h-screen">
+      <div className="m-auto mt-9 w-[600px] py-[60px] text-left">
         {!editEmailStatus ? <EditEmail {...props} /> : <Completed />}
       </div>
     </div>
@@ -18,7 +18,7 @@ const EditEmailPage = () => {
 };
 
 EditEmailPage.getLayout = (page: React.ReactElement) => {
-  return <LegacyMyPageLayout>{page}</LegacyMyPageLayout>;
+  return <MyPageLayout>{page}</MyPageLayout>;
 };
 
 export default EditEmailPage;
