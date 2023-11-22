@@ -4,8 +4,8 @@ import { UseEditProfile } from './useEditProfile';
 import { Heading } from '@/components/Parts/Text/Heading';
 import Label from '@/components/Parts/Label/Label';
 import { EditProfileLabel } from './EditProfileLabel';
-import { TextArea } from '@/components/Parts/Form/TextArea';
 import { MedicalCareerSpecialities } from './MedicalCareerSpecialities';
+import { ExpandTextArea } from '@/components/Parts/Form/ExpandTextArea';
 
 const now = new Date();
 const doctorApprovalYear = now.getFullYear() - (now.getMonth() <= 3 ? 7 : 6);
@@ -63,10 +63,10 @@ export const UsageClassification = (props: Props) => {
           </div>
           <div className="mt-6">
             <EditProfileLabel required={false}>特によく診てきた疾患・領域</EditProfileLabel>
-            <TextArea
+            <ExpandTextArea
               name="expertise"
               id="expertise"
-              className="!h-[64px]"
+              className="min-h-[64px]"
               value={profile.expertise}
               placeholder="特によく診てきた疾患・領域を入力"
               onChange={(e) => setProfileFields({ expertise: e.target.value })}
@@ -74,10 +74,10 @@ export const UsageClassification = (props: Props) => {
           </div>
           <div className="mt-6">
             <EditProfileLabel required={false}>専門医資格</EditProfileLabel>
-            <TextArea
+            <ExpandTextArea
               name="qualification"
               id="qualification"
-              className="!h-[64px]"
+              className="min-h-[64px]"
               value={profile.qualification}
               placeholder="専門医資格を入力"
               onChange={(e) => setProfileFields({ qualification: e.target.value })}
