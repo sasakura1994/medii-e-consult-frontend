@@ -50,10 +50,10 @@ export const GroupDetail = (props: ConsultDetailProps) => {
     if (!group) {
       return <></>;
     }
-    if (group.explanation) {
+    if (group.disease) {
       return (
         <p className="mb-2 ml-6 text-sm text-[#635e5e]">
-          {group.area + '_' + group.explanation + '(' + group.speciality_name + ')'}
+          {group.area + '_' + group.disease + '(' + group.speciality_name + ')'}
         </p>
       );
     }
@@ -65,7 +65,7 @@ export const GroupDetail = (props: ConsultDetailProps) => {
       return chatListData.map((c) => {
         // 自分の場合
         if (chatRoomData.me?.account_id === c.account_id) {
-          return { ...c, displayName: chatRoomData.me.last_name + ' ' + chatRoomData.me.first_name };
+          return { ...c, displayName: chatRoomData.me.last_name + ' ' + chatRoomData.me.first_name + '先生' };
 
           // 自分以外の場合
         } else if (
@@ -76,7 +76,7 @@ export const GroupDetail = (props: ConsultDetailProps) => {
           const targetMember = chatRoomData.members.find((member) => c.account_id === member.account_id);
           return {
             ...c,
-            displayName: targetMember?.last_name + ' ' + targetMember?.first_name,
+            displayName: targetMember?.last_name + ' ' + targetMember?.first_name + '先生',
           };
         } else if (c.account_id === 'CHATBOT') {
           return {

@@ -170,7 +170,7 @@ export const MyChat = (props: MyChatProps) => {
               }}
             >
               <p
-                className={`mb-3 mr-3 min-w-[200px] max-w-[670px] whitespace-pre-wrap break-words rounded-2xl
+                className={`mb-3 mr-3 max-w-[670px] whitespace-pre-wrap break-words rounded-2xl
               rounded-tr-none p-2 ${isGroup ? 'bg-[#d0f0ea]' : 'bg-primary-light'}`}
               >
                 {chatData.message}
