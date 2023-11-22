@@ -24,6 +24,7 @@ const DocumentInputStudentDocument = ({ selected, setSelected }: DocumentInputSt
     onFileSelected,
     openFileSelector,
     errorMessage,
+    isValid,
     reset,
     submit,
     year,
@@ -93,7 +94,7 @@ const DocumentInputStudentDocument = ({ selected, setSelected }: DocumentInputSt
                 type="submit"
                 dataTestId="document-input-number-form-submit"
                 size="large"
-                disabled={imageSource ? false : true}
+                disabled={!isValid}
               >
                 登録を完了する
               </PrimaryButton>

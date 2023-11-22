@@ -21,6 +21,8 @@ export const useDocumentInputStudentDocument = ({ selected, setSelected }: UseDo
 
   const [errorMessage, setErrorMessage] = useState('');
 
+  const isValid = imageSource && year.toString().length === 4;
+
   const submit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
@@ -70,6 +72,7 @@ export const useDocumentInputStudentDocument = ({ selected, setSelected }: UseDo
     openFileSelector,
     fileSelectorRef,
     errorMessage,
+    isValid,
     reset,
     submit,
     year,
