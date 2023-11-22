@@ -42,6 +42,7 @@ export const MainSpecialitySelect = (props: Props) => {
           setShowModal={setIsOpen}
           description={<>所属科は、あとから編集可能です。</>}
           medicalSpecialities={medicalSpecialities}
+          disabledSpecialityCodes={[profile.speciality_2, profile.speciality_3, profile.speciality_4]}
           defaultSpecialityCode={profile.main_speciality}
         />
       )}

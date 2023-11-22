@@ -16,10 +16,11 @@ export type MedicalSpecialitySelectDialogProps = {
   onChange: (specialityCode: string) => void;
   setShowModal: (isShow: boolean) => void;
   isGroup?: boolean;
+  disabledSpecialityCodes?: string[];
 };
 
 export const MedicalSpecialitySelectDialog = (props: MedicalSpecialitySelectDialogProps) => {
-  const { required = false, description, isGroup, setShowModal } = props;
+  const { required = false, description, isGroup, setShowModal, disabledSpecialityCodes = [] } = props;
   const {
     getMedicalSpecialitiesForCategory: getSpecialities,
     isCategoryOpened,
@@ -85,6 +86,7 @@ export const MedicalSpecialitySelectDialog = (props: MedicalSpecialitySelectDial
                       value={medicalSpeciality.speciality_code}
                       checked={selectedSpecialityCode === medicalSpeciality.speciality_code}
                       onChange={() => setSelectedSpecialityCode(medicalSpeciality.speciality_code)}
+                      disabled={disabledSpecialityCodes.includes(medicalSpeciality.speciality_code)}
                     />
                   ))}
                 </div>
