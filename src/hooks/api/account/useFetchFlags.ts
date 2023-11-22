@@ -1,7 +1,7 @@
 import { useAuthenticatedSWR } from '@/hooks/network/useAuthenticatedSWR';
 import { mutate } from 'swr';
 
-type FlagKey = 'FirstConsultCampaign' | 'OnboardingAnswered';
+type FlagKey = 'FirstConsultCampaign' | 'OnboardingAnswered' | 'HasConsulted';
 
 type ResponseData = {
   flags: {

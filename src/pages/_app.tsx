@@ -29,11 +29,10 @@ type AppPropsWithLayout = AppProps & {
 };
 
 const AppInner = ({ Component, pageProps }: AppPropsWithLayout) => {
-  const router = useRouter();
   const openModalCount = useAtomValue(openModalCountState);
   const { fetcher } = useFetcher();
   const { accountId, isTokenInitialized } = useToken();
-  useAuthenticationOnPage(router.pathname);
+  useAuthenticationOnPage();
   const getLayout =
     Component.getLayout ||
     ((page) => (
