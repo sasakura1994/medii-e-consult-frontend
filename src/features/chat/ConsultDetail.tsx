@@ -242,7 +242,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
           mutatePublishmentStatusData={mutatePublishmentStatusData}
         />
       )}
-      {chatRoomData && publishmentStatusData && accountId && chatListDataWithDisplayName && (
+      {chatRoomData && accountId && chatListDataWithDisplayName && (
         <>
           {isOpenReConsultConfirmModal && (
             <ReConsultConfirmModal

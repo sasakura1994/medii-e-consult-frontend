@@ -32,10 +32,10 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
   const setChatGlobalState = useSetAtom(chatState);
   const [selectedImage, setSelectedImage] = useState<string>('');
   const { accountId } = useToken();
-  const chatListRef = useRef<HTMLDivElement | null>(null);
+  const chatListRef = useRef<HTMLDivElement>(null);
   const { getMedicalSpecialityName } = useMedicalSpeciality();
   const { activateChatRoom } = usePostActivateChatRoom();
-  const [oldScrollHeight, setOldScrollHeight] = useState(0);
+  const oldScrollHeightRef = useRef(0);
 
   const getExperienceYear = useCallback((year: number) => {
     const date = new Date();
@@ -113,46 +113,40 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
     if (!chatListData) {
       return;
     }
+
     const handleScroll = (e: Event) => {
       const target = e.target as HTMLDivElement;
-
       if (target.scrollTop === 0) {
         // スクロールが一番上に来たら、一番上のメッセージのUIDを取得
         const topMessageUid = chatListData[0].uid;
         // スクロール位置を保存
-        setOldScrollHeight(target.scrollHeight);
+        oldScrollHeightRef.current = target.scrollHeight;
         // fetchNewChatListを呼び出して新しいfromUidを設定する
+
         fetchNewChatList(topMessageUid);
       }
     };
-    const chatListRefCurrent = chatListRef.current;
-    if (chatListRefCurrent) {
-      chatListRefCurrent.addEventListener('scroll', handleScroll);
-    }
+
+    chatListRef.current?.addEventListener('scroll', handleScroll);
 
     return () => {
-      if (chatListRefCurrent) {
-        chatListRefCurrent.removeEventListener('scroll', handleScroll);
-      }
+      chatListRef.current?.removeEventListener('scroll', handleScroll);
     };
-  }, [chatListData, fetchNewChatList]);
-
+  }, [chatListData, chatRoomData, fetchNewChatList]);
   useEffect(() => {
-    if (chatListRef.current && chatListData) {
-      const target = chatListRef.current;
-      const newScrollHeight = target.scrollHeight;
-      const addedHeight = newScrollHeight - oldScrollHeight;
+    if (chatListRef.current) {
+      const newScrollHeight = chatListRef.current.scrollHeight;
+      const addedHeight = newScrollHeight - oldScrollHeightRef.current;
       // スクロール位置を差分だけ下に移動
-      target.scrollTop += addedHeight;
-      // スクロール高さを更新
-      setOldScrollHeight(newScrollHeight);
+      chatListRef.current.scrollTop += addedHeight;
+      oldScrollHeightRef.current = newScrollHeight;
     }
-  }, [chatListData, oldScrollHeight]);
+  }, [chatListData, chatRoomData]);
 
   useEffect(() => {
     // チャットルームIDが変わったときに高さをリセット
     if (chatListRef.current) {
-      setOldScrollHeight(0);
+      oldScrollHeightRef.current = 0;
     }
   }, [chatRoomData?.chat_room.chat_room_id]);
 
