@@ -27,7 +27,7 @@
     transform: translateY(-50%);
     width: 17px;
     height: 17px;
-    border: 2px solid #ccc;
+    border: 2px solid #D7DAE0;
     border-radius: 2px;
   }
 
@@ -47,5 +47,10 @@
     transform: rotate(40deg);
     border-bottom: 2px solid #fff;
     border-right: 2px solid #fff;
+  }
+
+  &__input:disabled + &__label::before {
+    background-color: #F6F7F8;
+    border-color: #D7DAE0;
   }
 }

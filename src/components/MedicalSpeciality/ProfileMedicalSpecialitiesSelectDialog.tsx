@@ -11,12 +11,13 @@ import PrimaryButton from '../Button/PrimaryButton';
 
 export type ProfileMedicalSpecialitiesSelectDialogProps = {
   defaultSelectedMedicalSpecialities: MedicalSpecialityEntity[];
+  mainSpeciality: string;
   onChange: (medicalSpecialities: MedicalSpecialityEntity[]) => void;
   setShowModal: (isShow: boolean) => void;
 };
 
 export const ProfileMedicalSpecialitiesSelectDialog = (props: ProfileMedicalSpecialitiesSelectDialogProps) => {
-  const { setShowModal } = props;
+  const { mainSpeciality, setShowModal } = props;
   const { medicalSpecialities } = useFetchMedicalSpecialities();
   const {
     getMedicalSpecialitiesForCategory,
@@ -51,6 +52,7 @@ export const ProfileMedicalSpecialitiesSelectDialog = (props: ProfileMedicalSpec
                       name="medical_specialityies[]"
                       value={medicalSpeciality.speciality_code}
                       checked={isMedicalSpecialitySelected(medicalSpeciality.speciality_code)}
+                      disabled={medicalSpeciality.speciality_code === mainSpeciality}
                       onChange={() => toggleMedicalSpeciality(medicalSpeciality)}
                     />
                   ))}

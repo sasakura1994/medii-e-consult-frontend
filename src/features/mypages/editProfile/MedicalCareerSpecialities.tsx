@@ -51,6 +51,7 @@ export const MedicalCareerSpecialities = (props: MedicalCareerSpecialitiesProps)
       {isMedicalSpecialitiesSelectDialogShown && (
         <ProfileMedicalSpecialitiesSelectDialog
           defaultSelectedMedicalSpecialities={selectedMedicalSpecialities}
+          mainSpeciality={profile.main_speciality}
           onChange={(medicalSpecialities) => {
             selectMedicalSpecialities(medicalSpecialities);
             setIsMedicalSpecialitiesSelectDialogShown(false);
