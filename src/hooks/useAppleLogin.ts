@@ -33,7 +33,7 @@ export const useAppleLogin = () => {
   }, [fetchAppleAuthGetToken, redirectUrl, router, setTokenAndMarkInitialized, token]);
 
   useEffect(() => {
-    if(initialRender){
+    if (initialRender) {
       setInitialRender(false);
     } else {
       login();

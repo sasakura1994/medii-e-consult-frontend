@@ -8,35 +8,30 @@ export const IntroduceResponseDoctor = () => {
   const { postEventLog } = useEventLog();
 
   return (
-    <div className='flex gap-2'>
+    <div className="flex gap-2">
       {introduceDoctorMock.map((introduceDoctor, index) => {
         return (
-          <div 
+          <div
             onClick={() => {
-              postEventLog({ name: 'click-doctor', parameter: introduceDoctor.account_id })
+              postEventLog({ name: 'click-doctor', parameter: introduceDoctor.account_id });
             }}
             key={index}
           >
-            <Link
-              href={`${introduceDoctor.consultUrl}`}
-              target="_blank"
-            >
-              <div 
+            <Link href={`${introduceDoctor.consultUrl}`} target="_blank">
+              <div
                 className="w-[330px] rounded-lg border border-[#EDEDED] bg-white
                 px-4 pt-4 shadow-low lg:w-[508px]"
               >
-                <div 
-                  className="grid grid-cols-1/7 grid-flow-col items-center gap-x-4 lg:items-start lg:flex"
-                >
+                <div className="grid-cols-1/7 grid grid-flow-col items-center gap-x-4 lg:flex lg:items-start">
                   <div>
-                    <img src={introduceDoctor.image} alt="introduceDoctorImage" className='w-full'/>
+                    <img src={introduceDoctor.image} alt="introduceDoctorImage" className="w-full" />
                   </div>
-                  <div className='lg:mt-5'>
-                    <div className="flex mb-2 items-center">
+                  <div className="lg:mt-5">
+                    <div className="mb-2 flex items-center">
                       <p className="text-lg font-semibold">{introduceDoctor.name}</p>
                       <p className="ml-2 text-sm font-light">先生</p>
                     </div>
-                    <p className="text-sm text-text-primary font-semibold">
+                    <p className="text-sm font-semibold text-text-primary">
                       {introduceDoctor.job}
                       <br />
                       {introduceDoctor.guideline}
@@ -44,92 +39,88 @@ export const IntroduceResponseDoctor = () => {
                     </p>
                   </div>
                 </div>
-                <div className="mt-1 mb-2">
-                  <img 
-                    src="images/top/triangle.png" 
-                    alt="triangle" 
-                    className="relative z-1 top-[1px]" 
-                  />
-                  <div 
-                    className="bg-bg-secondary border border-border-divider rounded-lg 
-                      p-[10px] font-light text-xs gap-2.5"
+                <div className="mb-2 mt-1">
+                  <img src="images/top/triangle.png" alt="triangle" className="z-1 relative top-[1px]" />
+                  <div
+                    className="gap-2.5 rounded-lg border border-border-divider 
+                      bg-bg-secondary p-[10px] text-xs font-light"
                   >
                     {introduceDoctor.description}
                   </div>
                 </div>
-                <div 
-                  className="flex mb-3 text-medii-blue-700 cursor-pointer text-xs" 
-                  onClick={
-                    (e) => { 
-                      e.preventDefault();
-                      setShowMore(showMore.map((val, i) => i == index ? !showMore[i] : showMore[i]));
-                    }
-                  }
+                <div
+                  className="mb-3 flex cursor-pointer text-xs text-medii-blue-700"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setShowMore(showMore.map((val, i) => (i == index ? !showMore[i] : showMore[i])));
+                  }}
                 >
                   <p>先生の情報をもっと見る</p>
                   <div className="flex items-center pl-2">
-                    {showMore[index] ?
-                      <img src="images/top/doctor-information-more.svg" alt="doctor-information-more" /> :
-                      <img src="images/top/doctor-information-less.svg" alt="doctor-information-less" />}
+                    {showMore[index] ? (
+                      <img src="images/top/doctor-information-more.svg" alt="doctor-information-more" />
+                    ) : (
+                      <img src="images/top/doctor-information-less.svg" alt="doctor-information-less" />
+                    )}
                   </div>
                 </div>
-                {showMore[index] &&
+                {showMore[index] && (
                   <div>
-                    {introduceDoctor.university &&
+                    {introduceDoctor.university && (
                       <div className="mb-3">
                         <p className="text-base font-semibold">出身大学（卒年）</p>
                         <p className="text-xs font-light">{introduceDoctor.university}</p>
                       </div>
-                    }
-                    {introduceDoctor.field &&
+                    )}
+                    {introduceDoctor.field && (
                       <div className="mb-3">
                         <p className="text-base font-semibold">専門分野</p>
                         <p className="text-xs font-light">{introduceDoctor.field}</p>
                       </div>
-                    }
-                    {introduceDoctor.qualification &&
+                    )}
+                    {introduceDoctor.qualification && (
                       <div className="mb-3">
                         <p className="text-base font-semibold">学会認定・資格</p>
-                        <ul className="text-xs font-light relative">
+                        <ul className="relative text-xs font-light">
                           {introduceDoctor.qualification.map((qualifications, key) => {
                             return (
-                              <li 
-                                key={key} 
-                                className="pl-7 before:mt-[-2px] before:absolute before:text-[4pt] before:pt-1 
-                                  before:ml-[-18pt] before:content-['\25CF']"
+                              <li
+                                key={key}
+                                className="pl-7 before:absolute before:ml-[-18pt] before:mt-[-2px] before:pt-1 
+                                  before:text-[4pt] before:content-['\25CF']"
                               >
                                 {qualifications.content}
                               </li>
-                            )
+                            );
                           })}
                         </ul>
                       </div>
-                    }
-                    {introduceDoctor.book &&
+                    )}
+                    {introduceDoctor.book && (
                       <div className="mb-3">
                         <p className="text-base font-semibold">著書等</p>
-                        <ul className="text-xs font-light relative">
+                        <ul className="relative text-xs font-light">
                           {introduceDoctor.book.map((books, index) => {
                             return (
-                              <li 
-                                key={index} 
-                                className="pl-7 before:mt-[-2px] before:absolute before:text-[4pt] before:pt-1 
-                                  before:ml-[-18pt] before:content-['\25CF']"
+                              <li
+                                key={index}
+                                className="pl-7 before:absolute before:ml-[-18pt] before:mt-[-2px] before:pt-1 
+                                  before:text-[4pt] before:content-['\25CF']"
                               >
                                 {books.content}
                               </li>
-                            )
+                            );
                           })}
                         </ul>
                       </div>
-                    }
+                    )}
                   </div>
-                }
+                )}
               </div>
             </Link>
           </div>
-        )
+        );
       })}
     </div>
-  )
-}
+  );
+};

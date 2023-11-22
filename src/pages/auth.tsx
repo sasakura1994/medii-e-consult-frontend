@@ -3,7 +3,6 @@ import { NextPageWithLayout } from './_app';
 import { PublicLayout } from '@/components/Layouts/PublicLayout';
 import { useAppleLogin } from '@/hooks/useAppleLogin';
 
-
 const AuthPage: NextPageWithLayout = () => {
   const { errorMessage } = useAppleLogin();
 
