@@ -30,7 +30,7 @@ export const MedicalCareerSpecialities = (props: MedicalCareerSpecialitiesProps)
         <span className="font-normal">（所属科以外に対応可能な科、最大３件まで）</span>
       </EditProfileLabel>
       {selectedMedicalSpecialities.length === 0 ? (
-        <div className="text-text-secondary">所属科が選択されてません</div>
+        <div className="text-text-secondary">担当科が選択されてません</div>
       ) : (
         <ul>
           {selectedMedicalSpecialities.map((medicalSpeciality) => (
