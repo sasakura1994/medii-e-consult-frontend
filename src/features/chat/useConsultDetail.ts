@@ -12,10 +12,11 @@ type useConsultDetailProps = {
   medicalSpecialities?: MedicalSpecialityEntity[];
   chatListData?: FetchChatListResponseData;
   chatRoomData?: FetchChatRoomResponseData;
+  fetchNewChatList: (uid: number) => void;
 };
 
 export const useConsultDetail = (props: useConsultDetailProps) => {
-  const { chatListData, chatRoomData } = props;
+  const { chatListData, chatRoomData, fetchNewChatList } = props;
   const [isOpenReConsultConfirmModal, setIsOpenReConsultConfirmModal] = useState(false);
   const [isOpenRoomReopenModal, setIsOpenRoomReopenModal] = useState(false);
   const [isOpenChatEditModal, setIsOpenChatEditModal] = useState(false);
@@ -113,6 +114,32 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
       chatListRef.current.scrollTop = chatListRef.current.scrollHeight;
     }
   }, [chatListData, chatRoomData]);
+
+  useEffect(() => {
+    if (!chatListData) {
+      return;
+    }
+    const handleScroll = (e: Event) => {
+      const target = e.target as HTMLDivElement;
+
+      if (target.scrollTop === 0) {
+        // スクロールが一番上に来たら、一番上のメッセージのUIDを取得
+        const topMessageUid = chatListData[0].uid;
+        // fetchNewChatListを呼び出して新しいfromUidを設定する
+        fetchNewChatList(topMessageUid);
+      }
+    };
+    const chatListRefCurrent = chatListRef.current;
+    if (chatListRefCurrent) {
+      chatListRefCurrent.addEventListener('scroll', handleScroll);
+    }
+
+    return () => {
+      if (chatListRefCurrent) {
+        chatListRefCurrent.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, [chatListData, fetchNewChatList]);
 
   return {
     accountId,

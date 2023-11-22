@@ -41,7 +41,7 @@ export const Chat = () => {
     chatRoomData?.chat_room.status === 'RESOLVED' || chatRoomData?.chat_room.status === 'CLOSED' ? 'close' : 'open'
   );
   const { medicalSpecialities } = useFetchMedicalSpecialities();
-  const { data: chatListData, mutate: mutateChatList } = useFetchChatList(chatRoomIdStr);
+  const { data: chatListData, mutate: mutateChatList, fetchNewChatList } = useFetchChatList(chatRoomIdStr);
 
   useEffect(() => {
     if (chatRoomIdStr) {
@@ -140,6 +140,7 @@ export const Chat = () => {
           mutatePublishmentStatusData={mutatePublishmentStatusData}
           mutateChatList={mutateChatList}
           setSelectedTab={setSelectedTab}
+          fetchNewChatList={fetchNewChatList}
         />
       ) : (
         <div className="hidden h-screen flex-grow flex-col border border-[#d5d5d5] bg-bg lg:flex" />

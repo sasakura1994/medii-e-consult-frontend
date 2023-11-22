@@ -40,6 +40,7 @@ type ConsultDetailProps = {
     publishment_accepted: number;
   }>;
   setSelectedTab: React.Dispatch<React.SetStateAction<'open' | 'close'>>;
+  fetchNewChatList: (uid: number) => void;
 };
 
 export const ConsultDetail = (props: ConsultDetailProps) => {
@@ -53,6 +54,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     mutateChatList,
     mutatePublishmentStatusData,
     setSelectedTab,
+    fetchNewChatList,
   } = props;
   const {
     accountId,
@@ -94,6 +96,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     medicalSpecialities: medicalSpecialities,
     chatRoomData: chatRoomData,
     chatListData: chatListData,
+    fetchNewChatList: fetchNewChatList,
   });
 
   const isMyRoom = useMemo(() => {
