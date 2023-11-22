@@ -31,6 +31,19 @@ export const GroupMemberModal = (props: GroupMemberModalProps) => {
 
     return experienceYear;
   }, []);
+  const displayName = (member: ChatMemberEntity) => {
+    if (member.speciality_1 === 'STUDENT') {
+      return '(医学生)';
+    }
+    return (
+      '(' +
+      getMedicalSpecialityName(member.speciality_1) +
+      ' ' +
+      calculateExperienceYear(member.qualified_year) +
+      '年目)'
+    );
+  };
+
   return (
     <Modal setShowModal={setIsOpen} isCenter className="overflow-y-auto py-4 lg:min-w-[500px]">
       {isOpenDoctorDetailModal && selectedMember && (
@@ -57,13 +70,7 @@ export const GroupMemberModal = (props: GroupMemberModalProps) => {
             >
               <img src="icons/mypage.svg" alt="" />
               <p className="ml-2 text-sm">{member.last_name + member.first_name + ' 先生'}</p>
-              <p className="flex-grow text-sm text-[#999999]">
-                {'(' +
-                  getMedicalSpecialityName(member.speciality_1) +
-                  ' ' +
-                  calculateExperienceYear(member.qualified_year) +
-                  '年目)'}
-              </p>
+              <p className="flex-grow text-sm text-[#999999]">{displayName(member)}</p>
               <img src="icons/arrow_right.svg" alt="" />
             </div>
           );
