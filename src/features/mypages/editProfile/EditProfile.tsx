@@ -86,7 +86,7 @@ export const EditProfile = (props: EditProfileProps) => {
               )}
               {fetchedProfile?.registration_source !== 'nmo' && (
                 <div className="mt-8">
-                  <UsageClassification {...editProfile} />
+                  <UsageClassification {...editProfile} isRegisterMode={isRegisterMode} />
                 </div>
               )}
             </div>

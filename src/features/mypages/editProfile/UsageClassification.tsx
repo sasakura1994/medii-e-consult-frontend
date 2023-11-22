@@ -10,8 +10,12 @@ import { MedicalCareerSpecialities } from './MedicalCareerSpecialities';
 const now = new Date();
 const doctorApprovalYear = now.getFullYear() - (now.getMonth() <= 3 ? 7 : 6);
 
-export const UsageClassification = (props: UseEditProfile) => {
-  const { profile, setProfileFields, selectInChargeMedicalSpecialities } = props;
+type Props = UseEditProfile & {
+  isRegisterMode: boolean;
+};
+
+export const UsageClassification = (props: Props) => {
+  const { profile, isRegisterMode, setProfileFields, selectInChargeMedicalSpecialities } = props;
 
   if (!profile) {
     return <></>;
@@ -28,7 +32,7 @@ export const UsageClassification = (props: UseEditProfile) => {
           label={
             <div className="flex items-center gap-2">
               <div>相談医（E-コンサルでの相談依頼者です）</div>
-              <Label size="sm">まずはこちら</Label>
+              {isRegisterMode && <Label size="sm">まずはこちら</Label>}
             </div>
           }
           value="0"
