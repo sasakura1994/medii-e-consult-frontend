@@ -56,7 +56,7 @@ export const useFetchChatList = (chatRoomId?: string) => {
         const uniqueData = newData.filter(
           (newItem) => !prevData.some((existingItem) => existingItem.uid === newItem.uid)
         );
-        return [...uniqueData, ...prevData];
+        return [...uniqueData, ...prevData].sort((a, b) => a.uid - b.uid);
       });
     }
   }, [newData]);

@@ -51,10 +51,10 @@ export const useChatTextInput = (props: UseChatTextInputProps) => {
   };
 
   const postTextMessage = async () => {
-    if (textInputRef.current) {
+    if (textInputRef.current && textInputRef.current.value) {
       await postNewMessage({
         chat_room_id: chatRoomId,
-        message: textInputRef.current?.value ?? '',
+        message: textInputRef.current.value,
       });
 
       textInputRef.current.value = '';
