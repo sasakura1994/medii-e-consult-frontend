@@ -297,7 +297,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
           lg:h-[calc(100dvh-62px)]"
           >
             <div className="flex-shrink-0 flex-grow-0">
-              <div className="mb-2 mr-2 items-center space-x-1 lg:flex lg:h-14">
+              <div className="mr-2 items-center space-x-1 lg:flex lg:h-14">
                 <div className="line-clamp-1 flex items-center lg:flex-grow">
                   <img
                     src="icons/arrow_left.svg"
