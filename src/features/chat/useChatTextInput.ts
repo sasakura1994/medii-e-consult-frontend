@@ -18,6 +18,7 @@ export const useChatTextInput = (props: UseChatTextInputProps) => {
   const [editingImage, setEditingImage] = useState<File>();
   const [isUploading, setIsUploading] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
+  const isSendingRef = useRef(false);
 
   const onSelectFile = useCallback(async (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -52,7 +53,8 @@ export const useChatTextInput = (props: UseChatTextInputProps) => {
   };
 
   const postTextMessage = async () => {
-    if (textInputRef.current && textInputRef.current.value) {
+    if (!isSendingRef.current && textInputRef.current && textInputRef.current.value) {
+      isSendingRef.current = true;
       resetChatListFromUid();
       await postNewMessage({
         chat_room_id: chatRoomId,
@@ -60,6 +62,7 @@ export const useChatTextInput = (props: UseChatTextInputProps) => {
       });
       textInputRef.current.value = '';
       resizeHeight();
+      isSendingRef.current = false;
     }
   };
 
