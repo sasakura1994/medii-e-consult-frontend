@@ -65,6 +65,7 @@ export const useChatTextInput = (props: UseChatTextInputProps) => {
 
   const postFile = async () => {
     if (fileInputRef.current?.files) {
+      resetChatListFromUid();
       setIsUploading(true);
       await postNewFile({
         chat_room_id: chatRoomId,
