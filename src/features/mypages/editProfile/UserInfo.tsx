@@ -8,7 +8,7 @@ import { Heading } from '@/components/Parts/Text/Heading';
 type Props = UseEditProfile & EditProfileProps;
 
 export const UserInfo = (props: Props) => {
-  const { isRegisterMode, profile, setProfileFields } = props;
+  const { addBlurFields, blurFields, isRegisterMode, profile, setProfileFields } = props;
 
   if (!profile) {
     return <></>;
@@ -20,7 +20,13 @@ export const UserInfo = (props: Props) => {
         利用者情報
       </Heading>
 
-      <UserInfoNames isEnabled={isRegisterMode} profile={profile} setProfileFields={setProfileFields} />
+      <UserInfoNames
+        addBlurFields={addBlurFields}
+        blurFields={blurFields}
+        isEnabled={isRegisterMode}
+        profile={profile}
+        setProfileFields={setProfileFields}
+      />
 
       <div className="mt-4">
         <EditProfileBirthday isEnabled={isRegisterMode} profile={profile} setProfileFields={setProfileFields} />

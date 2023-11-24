@@ -5,11 +5,12 @@ import { MedicalSpecialitySelectDialog } from '@/components/MedicalSpeciality/Me
 import { UseEditProfile } from './useEditProfile';
 import { useMedicalSpecialitySelectButton } from '@/components/MedicalSpeciality/useMedicalSpecialitySelectButton';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
+import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
 
 type Props = UseEditProfile;
 
 export const MainSpecialitySelect = (props: Props) => {
-  const { profile, setProfileFields } = props;
+  const { addBlurFields, blurFields, profile, setProfileFields } = props;
   const { medicalSpecialities } = useFetchMedicalSpecialities();
   const { isOpen, medicalSpecialityName, setIsOpen } = useMedicalSpecialitySelectButton({
     specialityCode: profile?.main_speciality ?? '',
@@ -18,6 +19,8 @@ export const MainSpecialitySelect = (props: Props) => {
   if (!profile) {
     return <></>;
   }
+
+  const hasError = blurFields.includes('main_speciality') && profile.main_speciality === '';
 
   return (
     <>
@@ -32,6 +35,7 @@ export const MainSpecialitySelect = (props: Props) => {
       <SecondaryButton type="button" className="mt-2" onClick={() => setIsOpen(true)}>
         所属科を選択
       </SecondaryButton>
+      {hasError && <ErrorMessage className="mt-2 text-xs">選択してください</ErrorMessage>}
 
       {isOpen && (
         <MedicalSpecialitySelectDialog
@@ -39,7 +43,12 @@ export const MainSpecialitySelect = (props: Props) => {
             setIsOpen(false);
             setProfileFields({ main_speciality: specialityCode });
           }}
-          setShowModal={setIsOpen}
+          setShowModal={(isShow) => {
+            setIsOpen(isShow);
+            if (!isShow) {
+              addBlurFields('main_speciality');
+            }
+          }}
           description={<>所属科は、あとから編集可能です。</>}
           medicalSpecialities={medicalSpecialities}
           disabledSpecialityCodes={[profile.speciality_2, profile.speciality_3, profile.speciality_4]}

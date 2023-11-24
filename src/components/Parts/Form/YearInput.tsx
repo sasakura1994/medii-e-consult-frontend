@@ -1,15 +1,17 @@
 import { Era, UseEraConverter } from '@/hooks/useEraConverter';
-import React from 'react';
+import React, { FocusEventHandler } from 'react';
 import { SelectBox } from './SelectBox';
 import TextField from '@/components/TextField/TextField';
 
 type Props = UseEraConverter & {
   value: number;
   onChange: (value: number) => void;
+  onBlur?: FocusEventHandler<HTMLInputElement>;
+  hasError?: boolean;
 };
 
 export const YearInput = (props: Props) => {
-  const { convertYear, era, setEra, onChange, validation, value } = props;
+  const { convertYear, era, hasError, setEra, onBlur, onChange, validation, value } = props;
 
   return (
     <div className="flex">
@@ -36,6 +38,8 @@ export const YearInput = (props: Props) => {
             onChange(Number(year));
           }
         }}
+        onBlur={onBlur}
+        hasError={hasError}
         dataTestId="year-input-year"
       />
       <div className="ml-1 mt-4">年</div>

@@ -35,6 +35,8 @@ type AccountType = 'doctor' | 'student';
 
 export type UseEditProfile = {
   accountType: AccountType;
+  addBlurFields: (fieldName: string) => void;
+  blurFields: string[];
   errorMessage: string;
   hospitalInputType: HospitalInputType;
   hospitalOptions: Option[];
@@ -71,6 +73,7 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
   const [selectedHospital, setSelectedHospital] = useState<Option>();
   const [isSending, setIsSending] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [blurFields, setBlurFields] = useState<string[]>([]);
 
   const { profile: fetchedProfile } = useFetchProfile();
   const { hospital: defaultHospital } = useFetchHospital(isInitialized ? fetchedProfile?.hospital_id : undefined);
@@ -338,8 +341,20 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
     [profile, selectedQuestionaryItemIds, setProfileFields]
   );
 
+  const addBlurFields = useCallback(
+    (fieldName: string) => {
+      if (blurFields.includes(fieldName)) {
+        return;
+      }
+      setBlurFields([...blurFields, fieldName]);
+    },
+    [blurFields]
+  );
+
   return {
     accountType,
+    addBlurFields,
+    blurFields,
     errorMessage,
     hospitalInputType,
     hospitalOptions,

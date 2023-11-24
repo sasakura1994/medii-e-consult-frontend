@@ -1,4 +1,4 @@
-import React, { ChangeEvent, MouseEventHandler } from 'react';
+import React, { ChangeEvent, FocusEventHandler, MouseEventHandler } from 'react';
 
 type TextFieldProps = {
   id?: string;
@@ -11,6 +11,7 @@ type TextFieldProps = {
   value?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   onClick?: MouseEventHandler<HTMLInputElement>;
+  onBlur?: FocusEventHandler<HTMLInputElement>;
   subText?: string;
   required?: boolean;
   dataTestId?: string;
@@ -33,6 +34,7 @@ const TextField = (props: TextFieldProps) => {
     value,
     onChange,
     onClick,
+    onBlur,
     subText,
     required,
     dataTestId,
@@ -58,6 +60,7 @@ const TextField = (props: TextFieldProps) => {
         value={value}
         onChange={onChange}
         onClick={onClick}
+        onBlur={onBlur}
         placeholder={placeholder}
         data-testid={dataTestId}
         minLength={minLength}
