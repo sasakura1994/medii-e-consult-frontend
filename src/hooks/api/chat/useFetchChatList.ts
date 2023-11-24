@@ -36,10 +36,13 @@ export const useFetchChatList = (chatRoomId?: string) => {
         setFromUid(uid);
         return;
       }
-      setFromUid(undefined);
     },
     [newData]
   );
+
+  const resetFromUid = useCallback(() => {
+    setFromUid(undefined);
+  }, []);
 
   useEffect(() => {
     // chatRoomIdが変わるたびにリセット
@@ -67,5 +70,6 @@ export const useFetchChatList = (chatRoomId?: string) => {
     mutate,
     data,
     fetchNewChatList,
+    resetFromUid,
   };
 };

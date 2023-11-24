@@ -5,11 +5,11 @@ import { useRef, useState, useCallback, ChangeEvent, useEffect } from 'react';
 
 type UseChatTextInputProps = {
   chatRoomId: string;
-  fetchNewChatList: (uid: number) => void;
+  resetChatListFromUid: () => void;
 };
 
 export const useChatTextInput = (props: UseChatTextInputProps) => {
-  const { chatRoomId, fetchNewChatList } = props;
+  const { chatRoomId, resetChatListFromUid } = props;
   const { postNewMessage } = usePostChatMessageNewText();
   const { postNewFile } = usePostChatMessageNewFiles();
   const textInputRef = useRef<HTMLTextAreaElement>(null);
@@ -53,11 +53,11 @@ export const useChatTextInput = (props: UseChatTextInputProps) => {
 
   const postTextMessage = async () => {
     if (textInputRef.current && textInputRef.current.value) {
+      resetChatListFromUid();
       await postNewMessage({
         chat_room_id: chatRoomId,
         message: textInputRef.current.value,
       });
-      fetchNewChatList(0);
       textInputRef.current.value = '';
       resizeHeight();
     }

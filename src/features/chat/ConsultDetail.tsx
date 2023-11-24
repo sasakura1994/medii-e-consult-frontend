@@ -41,6 +41,7 @@ type ConsultDetailProps = {
   }>;
   setSelectedTab: React.Dispatch<React.SetStateAction<'open' | 'close'>>;
   fetchNewChatList: (uid: number) => void;
+  resetChatListFromUid: () => void;
 };
 
 export const ConsultDetail = (props: ConsultDetailProps) => {
@@ -55,6 +56,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     mutatePublishmentStatusData,
     setSelectedTab,
     fetchNewChatList,
+    resetChatListFromUid,
   } = props;
   const {
     accountId,
@@ -468,7 +470,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                 chatRoomId={chatRoomData.chat_room.chat_room_id}
                 mutateChatList={mutateChatList}
                 mutateChatRoom={mutateChatRoom}
-                fetchNewChatList={fetchNewChatList}
+                resetChatListFromUid={resetChatListFromUid}
               />
             </div>
           </div>
