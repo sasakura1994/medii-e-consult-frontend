@@ -31,6 +31,8 @@ describe('UserInfo', () => {
   test('編集時は入力欄がdisabled', async () => {
     act(() => {
       const props = {
+        addBlurFields: jest.fn(),
+        blurFields: [],
         isRegisterMode: false,
         profile: {} as EditingProfile,
         setProfileFields: jest.fn(),
@@ -48,6 +50,8 @@ describe('UserInfo', () => {
   test('新規登録時は入力欄が有効', async () => {
     act(() => {
       const props = {
+        addBlurFields: jest.fn(),
+        blurFields: [],
         isRegisterMode: true,
         profile: {} as EditingProfile,
         setProfileFields: jest.fn(),
