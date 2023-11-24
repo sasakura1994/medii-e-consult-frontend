@@ -1,10 +1,8 @@
 import Link from 'next/link';
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { ConsultTitle } from './ConsultTitle';
 import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
-import { useFetchUnreadCounts } from '@/hooks/api/chat/useFetchUnreadCounts';
-import { chatState } from '@/globalStates/chat';
-import { useAtom } from 'jotai';
+import { useOpenConsultList } from './useOpenConsultList';
 
 type OpenConsultListProps = {
   chatRoomList?: ChatRoomEntity[];
@@ -12,42 +10,7 @@ type OpenConsultListProps = {
 
 export const OpenConsultList = (props: OpenConsultListProps) => {
   const { chatRoomList } = props;
-  const unreadCountsResponseData = useFetchUnreadCounts();
-  const [chatGlobalState, setChatGlobalState] = useAtom(chatState);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (scrollTimeoutRef.current !== null) {
-        clearTimeout(scrollTimeoutRef.current);
-      }
-      scrollTimeoutRef.current = setTimeout(() => {
-        const scrollPosition = scrollContainerRef.current?.scrollTop;
-        setChatGlobalState((prev) => ({
-          ...prev,
-          openChatScrollPosition: scrollPosition || 0,
-        }));
-      }, 200);
-    };
-
-    const scrollContainer = scrollContainerRef.current;
-    if (scrollContainer) {
-      scrollContainer.addEventListener('scroll', handleScroll);
-    }
-
-    return () => {
-      if (scrollContainer) {
-        scrollContainer.removeEventListener('scroll', handleScroll);
-      }
-    };
-  }, [setChatGlobalState]);
-
-  useEffect(() => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollTop = chatGlobalState.openChatScrollPosition;
-    }
-  }, [chatGlobalState.openChatScrollPosition]);
+  const { scrollContainerRef, setChatGlobalState, unreadCountsResponseData, chatGlobalState } = useOpenConsultList();
 
   return (
     <div className="h-full overflow-auto bg-white pb-36" ref={scrollContainerRef}>

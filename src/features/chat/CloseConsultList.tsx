@@ -1,10 +1,9 @@
 import Link from 'next/link';
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { ConsultTitle } from './ConsultTitle';
 import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
 import { FetchUnreadCountsResponseData } from '@/hooks/api/chat/useFetchUnreadCounts';
-import { chatState } from '@/globalStates/chat';
-import { useAtom } from 'jotai';
+import { useCloseConsultList } from './useCloseConsultList';
 
 type CloseConsultListProps = {
   chatRoomList?: ChatRoomEntity[];
@@ -13,41 +12,8 @@ type CloseConsultListProps = {
 
 export const CloseConsultList = (props: CloseConsultListProps) => {
   const { chatRoomList, unreadCountList } = props;
-  const [chatGlobalState, setChatGlobalState] = useAtom(chatState);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const { scrollContainerRef, setChatGlobalState } = useCloseConsultList();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (scrollTimeoutRef.current !== null) {
-        clearTimeout(scrollTimeoutRef.current);
-      }
-      scrollTimeoutRef.current = setTimeout(() => {
-        const scrollPosition = scrollContainerRef.current?.scrollTop;
-        setChatGlobalState((prev) => ({
-          ...prev,
-          closeChatScrollPosition: scrollPosition || 0,
-        }));
-      }, 200);
-    };
-
-    const scrollContainer = scrollContainerRef.current;
-    if (scrollContainer) {
-      scrollContainer.addEventListener('scroll', handleScroll);
-    }
-
-    return () => {
-      if (scrollContainer) {
-        scrollContainer.removeEventListener('scroll', handleScroll);
-      }
-    };
-  }, [setChatGlobalState]);
-
-  useEffect(() => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollTop = chatGlobalState.closeChatScrollPosition;
-    }
-  }, [chatGlobalState.closeChatScrollPosition]);
   return (
     <div className="h-full overflow-auto bg-white pb-36" ref={scrollContainerRef}>
       {unreadCountList &&
