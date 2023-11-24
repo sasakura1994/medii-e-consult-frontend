@@ -18,6 +18,7 @@ export const EditProfileStudent = (props: UseEditProfile) => {
           value={profile.graduated_university ?? ''}
           onChange={(e) => setProfileFields({ graduated_university: e.target.value })}
           className="w-full"
+          required
         />
       </div>
     </>

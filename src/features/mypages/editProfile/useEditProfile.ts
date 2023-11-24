@@ -246,6 +246,15 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
       data.speciality_2 = '';
       data.speciality_3 = '';
       data.speciality_4 = '';
+      data.doctor_qualified_year = 9999;
+      data.doctor_qualified_month = 4;
+      data.doctor_qualified_day = 1;
+      data.expertise = '';
+      data.qualification = '';
+      data.prefecture_code = '';
+      data.hospital_id = '';
+      data.hospital_name = '';
+      data.want_to_be_consultant = false;
     }
 
     if (!data.is_mail_notify && !data.is_push_notify) {

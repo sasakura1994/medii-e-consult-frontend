@@ -590,5 +590,83 @@ describe('useEditProfile', () => {
       expect(Array.from(calledFormData.keys())).toMatchObject(Array.from(formData.keys()));
       expect(Array.from(calledFormData.values())).toMatchObject(Array.from(formData.values()));
     });
+
+    test('医学生の場合は使わないフィールドを空で送信する', async () => {
+      (loadLocalStorage as jest.Mock).mockReturnValue(undefined);
+
+      (useFetchProfile as jest.Mock).mockReturnValue({
+        profile: {
+          last_name: 'last_name',
+          first_name: 'first_name',
+          last_name_hira: 'last_name_hira',
+          first_name_hira: 'first_name_hira',
+          doctor_qualified_year: 2020,
+          doctor_qualified_month: 5,
+          doctor_qualified_day: 2,
+          main_speciality: 'ALLERGY',
+          speciality_2: 'BYOURI',
+          speciality_3: 'GANKA',
+          speciality_4: 'HIHUKA',
+          birthday_year: 2000,
+          birthday_month: 5,
+          birthday_day: 2,
+          qualified_year: 2020,
+          expertise: 'expertise',
+          qualification: 'qualification',
+          prefecture_code: '05',
+          is_mail_notify: true,
+          is_push_notify: false,
+          graduated_university: 'uni',
+          hospital_id: 'hospital_id',
+          hospital_name: 'hospital',
+          want_to_be_consultant: true,
+        } as ProfileEntity,
+      });
+
+      const updateProfile = jest.fn();
+      updateProfile.mockResolvedValue({
+        data: {},
+      });
+      const useUpdateProfileMock = useUpdateProfile as jest.Mock;
+      useUpdateProfileMock.mockReturnValue({
+        updateProfile,
+      });
+
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: true }), {}).result;
+
+      act(() => hooks.current.setAccountType('student'));
+      await act(async () => await hooks.current.saveProfile());
+
+      const formData = new FormData();
+      formData.append('last_name', 'last_name');
+      formData.append('first_name', 'first_name');
+      formData.append('last_name_hira', 'last_name_hira');
+      formData.append('first_name_hira', 'first_name_hira');
+      formData.append('doctor_qualified_year', '9999');
+      formData.append('doctor_qualified_month', '4');
+      formData.append('doctor_qualified_day', '1');
+      formData.append('main_speciality', 'STUDENT');
+      formData.append('speciality_2', '');
+      formData.append('speciality_3', '');
+      formData.append('speciality_4', '');
+      formData.append('birthday_year', '2000');
+      formData.append('birthday_month', '5');
+      formData.append('birthday_day', '2');
+      formData.append('qualified_year', '0');
+      formData.append('expertise', '');
+      formData.append('qualification', '');
+      formData.append('prefecture_code', '');
+      formData.append('is_mail_notify', 'true');
+      formData.append('is_push_notify', 'false');
+      formData.append('graduated_university', 'uni');
+      formData.append('hospital_id', '');
+      formData.append('hospital_name', '');
+      formData.append('want_to_be_consultant', 'false');
+
+      const calledFormData = updateProfile.mock.calls[0][0] as FormData;
+
+      expect(Array.from(calledFormData.keys())).toMatchObject(Array.from(formData.keys()));
+      expect(Array.from(calledFormData.values())).toMatchObject(Array.from(formData.values()));
+    });
   });
 });
