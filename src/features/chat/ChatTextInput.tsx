@@ -21,10 +21,11 @@ type ChatTextInputProps = {
   chatRoomId: string;
   mutateChatList?: KeyedMutator<FetchChatListResponseData>;
   mutateChatRoom?: KeyedMutator<FetchChatRoomResponseData>;
+  fetchNewChatList: (uid: number) => void;
 };
 
 export const ChatTextInput = (props: ChatTextInputProps) => {
-  const { chatRoomId, mutateChatList, mutateChatRoom } = props;
+  const { chatRoomId, mutateChatList, mutateChatRoom, fetchNewChatList } = props;
   const {
     isOpenFileInputModal,
     setIsOpenFileInputModal,
@@ -42,7 +43,7 @@ export const ChatTextInput = (props: ChatTextInputProps) => {
     postNewFile,
     updateDraftMessage,
     windowWidth,
-  } = useChatTextInput({ chatRoomId: chatRoomId });
+  } = useChatTextInput({ chatRoomId: chatRoomId, fetchNewChatList: fetchNewChatList });
 
   const submit = async () => {
     await postTextMessage();

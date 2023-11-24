@@ -468,6 +468,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                 chatRoomId={chatRoomData.chat_room.chat_room_id}
                 mutateChatList={mutateChatList}
                 mutateChatRoom={mutateChatRoom}
+                fetchNewChatList={fetchNewChatList}
               />
             </div>
           </div>

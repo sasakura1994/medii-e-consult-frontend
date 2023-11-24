@@ -36,6 +36,7 @@ export const useFetchChatList = (chatRoomId?: string) => {
         setFromUid(uid);
         return;
       }
+      setFromUid(undefined);
     },
     [newData]
   );
