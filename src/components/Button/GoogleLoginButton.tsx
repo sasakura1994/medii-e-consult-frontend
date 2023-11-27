@@ -49,14 +49,14 @@ const GoogleLoginButton = () => {
   const clientId = process.env.GOOGLE_CLIENT_ID || "";
 
   return (
-    <div className='flex justify-center'>
-      <div className='z-50 opacity-0 absolute'>
+    <div className='flex justify-center group'>
+      <div className='z-50 opacity-0 absolute group-hover:bg-monotone-200'>
         <GoogleOAuthProvider clientId={clientId}>
           <LoginButton />
         </GoogleOAuthProvider>
       </div>
       <div
-        className='absolute m-auto border border-border-field rounded-md hover:bg-monotone-200 cursor-pointer'
+        className='absolute m-auto border border-border-field rounded-md group-hover:bg-monotone-200 cursor-pointer'
       >
         <div className='flex justify-center items-center w-[400px] h-[56px]'>
           <div className='mr-[5px]'>

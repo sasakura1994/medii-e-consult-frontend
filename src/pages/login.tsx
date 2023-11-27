@@ -80,6 +80,8 @@ const Login: NextPageWithLayout = () => {
               className="
                 mt-4
                 mb-6
+                text-base
+                font-semibold
                 rounded-full
                 px-14
                 py-2
