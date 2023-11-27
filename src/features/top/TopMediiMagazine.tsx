@@ -13,9 +13,7 @@ export const TopMediiMagazine = () => {
           <button className="text-md text-text-secondary">もっと見る</button>
         </a>
       </div>
-      {posts?.map((post) => (
-        <TopMediiMagazineItem key={post.link} post={post} />
-      ))}
+      {posts?.map((post) => <TopMediiMagazineItem key={post.link} post={post} />)}
     </>
   );
 };

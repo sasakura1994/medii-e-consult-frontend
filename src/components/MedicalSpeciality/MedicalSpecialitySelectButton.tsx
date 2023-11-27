@@ -5,14 +5,14 @@ import { MedicalSpecialitySelectDialog } from './MedicalSpecialitySelectDialog';
 export type MedicalSpecialitySelectButtonProps = {
   specialityCode: string;
   onChange: (specialityCode: string) => void;
+  isGroup?: boolean;
 };
 
-export const MedicalSpecialitySelectButton: React.FC<
-  MedicalSpecialitySelectButtonProps
-> = (props: MedicalSpecialitySelectButtonProps) => {
-  const { isOpen, medicalSpecialityName, setIsOpen } =
-    useMedicalSpecialitySelectButton(props);
-  const { onChange, specialityCode } = props;
+export const MedicalSpecialitySelectButton: React.FC<MedicalSpecialitySelectButtonProps> = (
+  props: MedicalSpecialitySelectButtonProps
+) => {
+  const { isOpen, medicalSpecialityName, setIsOpen } = useMedicalSpecialitySelectButton(props);
+  const { onChange, specialityCode, isGroup } = props;
 
   return (
     <>
@@ -35,6 +35,7 @@ export const MedicalSpecialitySelectButton: React.FC<
           }}
           setShowModal={setIsOpen}
           defaultSpecialityCode={specialityCode}
+          isGroup={isGroup}
         />
       )}
     </>

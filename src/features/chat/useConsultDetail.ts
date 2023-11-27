@@ -5,8 +5,8 @@ import { usePostActivateChatRoom } from '@/hooks/api/chat/usePostActivateChatRoo
 import { useToken } from '@/hooks/authentication/useToken';
 import { useMedicalSpeciality } from '@/hooks/medicalSpeciality/useMedicalSpeciality';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
+import { useSetAtom } from 'jotai';
 import { useState, useRef, useCallback, useMemo, useEffect } from 'react';
-import { useSetRecoilState } from 'recoil';
 
 type useConsultDetailProps = {
   medicalSpecialities?: MedicalSpecialityEntity[];
@@ -26,7 +26,8 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
   const [isOpenTempResolveRequestModal, setIsOpenTempResolveRequestModal] = useState(false);
   const [isOpenCloseChatRoomModal, setIsOpenCloseChatRoomModal] = useState(false);
   const [isOpenResolveChatRoomModal, setIsOpenResolveChatRoomModal] = useState(false);
-  const setIsChatRoomSelected = useSetRecoilState(isChatRoomSelectedState);
+  const [isOpenReConsultSuggestionModal, setIsOpenReConsultSuggestionModal] = useState(false);
+  const setIsChatRoomSelected = useSetAtom(isChatRoomSelectedState);
   const [selectedImage, setSelectedImage] = useState<string>('');
   const { accountId } = useToken();
   const chatListRef = useRef<HTMLDivElement | null>(null);
@@ -58,7 +59,11 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
             };
           }
           return { ...c, displayName: '' };
-        } else if (chatRoomData.members && chatRoomData.members[0].account_id === c.account_id) {
+        } else if (
+          chatRoomData.members &&
+          chatRoomData.members.length > 0 &&
+          chatRoomData.members[0].account_id === c.account_id
+        ) {
           if (chatRoomData.members[0].first_name) {
             return {
               ...c,
@@ -131,6 +136,8 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
     setIsOpenCloseChatRoomModal,
     isOpenResolveChatRoomModal,
     setIsOpenResolveChatRoomModal,
+    isOpenReConsultSuggestionModal,
+    setIsOpenReConsultSuggestionModal,
     selectedImage,
     setSelectedImage,
     setIsChatRoomSelected,

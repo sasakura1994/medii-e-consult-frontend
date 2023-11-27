@@ -8,6 +8,8 @@ type DoctorNumberFormProps = {
   setSelectedWithRedirect: (value: DocumentSelected) => void;
 };
 
+const REGEX_NUMBER = /^[0-9]*$/g;
+
 const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelectedWithRedirect }) => {
   const {
     eraConverter,
@@ -52,9 +54,9 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelectedWithRedi
           <div className="mt-10 px-6  text-center lg:px-0">医師番号と医師免許の取得年月日を入力してください</div>
           <div className="mt-5 text-left font-bold  lg:mt-10">医籍番号 (6桁の数字)</div>
           <input
-            type="text"
+            type="tel"
             placeholder="000000"
-            className="mt-2 h-12 w-32 rounded-md border border-gray-400 px-2"
+            className="mt-2 h-12 w-20 rounded-md border border-gray-400 px-2"
             data-testid="document-input-number-form"
             value={doctorNumber}
             required
@@ -62,8 +64,11 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelectedWithRedi
             maxLength={6}
             onChange={(e) => {
               const value = e.target.value;
-              if (value.length <= 6) {
+              if (value.match(REGEX_NUMBER) && value.length <= 6) {
                 setDoctorNumber(value);
+                return true;
+              } else {
+                return false;
               }
             }}
           />
@@ -75,7 +80,7 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelectedWithRedi
               data-testid="document-input-number-form-month"
               value={doctorLicenseMonth}
               placeholder="-"
-              className="ml-10 h-12 w-20 rounded-md border border-gray-400 px-2"
+              className="ml-1 h-12 w-[60px] rounded-md border border-gray-400 px-2"
               required
               min={1}
               max={12}
@@ -92,7 +97,7 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelectedWithRedi
               data-testid="document-input-number-form-day"
               value={doctorLicenseDay}
               placeholder="-"
-              className="ml-2 h-12 w-20 rounded-md border border-gray-400 px-2"
+              className="ml-1 h-12 w-[60px] rounded-md border border-gray-400 px-2"
               required
               min={1}
               max={31}
@@ -112,7 +117,7 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelectedWithRedi
         <PrimaryButton
           type="submit"
           dataTestId="document-input-number-form-submit"
-          className='px-10 pb-2 pt-1.5 shadow-lg lg:my-10'
+          className="px-10 pb-2 pt-1.5 shadow-lg lg:my-10"
           disabled={!isUpdatePrepared}
         >
           登録を完了する

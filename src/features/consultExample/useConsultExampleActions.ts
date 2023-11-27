@@ -15,14 +15,7 @@ type LikeCommentArgs = {
 export const useConsultExampleActions = (id: string) => {
   const [isCommentSending, setIsCommentSending] = useState(false);
 
-  const {
-    like,
-    likeMessage,
-    unlike,
-    unlikeMessage,
-    likeComment,
-    unlikeComment,
-  } = useConsultExampleActionsApi();
+  const { like, likeMessage, unlike, unlikeMessage, likeComment, unlikeComment } = useConsultExampleActionsApi();
   const { postConsultExampleComment } = usePostConsultExampleComment();
 
   const likeAndMutate = useCallback(async () => {
@@ -101,10 +94,7 @@ export const useConsultExampleActions = (id: string) => {
   );
 
   const createCommentForMessageAndMutate = useCallback(
-    async (
-      consultExampleMessageId: number,
-      data: CreateConsultExampleCommentData
-    ): Promise<boolean> => {
+    async (consultExampleMessageId: number, data: CreateConsultExampleCommentData): Promise<boolean> => {
       setIsCommentSending(true);
 
       const response = await postConsultExampleComment({

@@ -7,9 +7,7 @@
 // const dummyUrl = 'https://jsonplaceholder.typicode.com/users/2';
 
 describe('useFetchCurrentPoint', () => {
-  test.todo(
-    'Need to implement: should return currentPoint data when fetch succeeds.'
-  );
+  test.todo('Need to implement: should return currentPoint data when fetch succeeds.');
   // test('should return currentPoint data when fetch succeeds.', async () => {
   // const { result } = renderHook(() => useFetchCurrentPoint());
 

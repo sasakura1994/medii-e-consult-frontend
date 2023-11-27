@@ -10,8 +10,7 @@ export type UseFetchCurrentPointType = {
 };
 
 export const useFetchCurrentPoint = (): UseFetchCurrentPointType => {
-  const { isLoading, error, data } =
-    useAuthenticatedSWR<CurrentPointEntityType>(endpoint);
+  const { isLoading, error, data } = useAuthenticatedSWR<CurrentPointEntityType>(endpoint);
 
   return {
     isLoading,

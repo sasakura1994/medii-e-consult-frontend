@@ -2,7 +2,6 @@ import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { useGuest } from '@/hooks/authentication/useGuest';
 import { renderHook } from '@testing-library/react';
 import { useRouter } from 'next/router';
-import { RecoilRoot } from 'recoil';
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
@@ -30,9 +29,7 @@ describe('useGuest', () => {
         push: pushMock,
       });
 
-      renderHook(() => useGuest(), {
-        wrapper: RecoilRoot,
-      }).result;
+      renderHook(() => useGuest(), {}).result;
 
       expect(pushMock).not.toBeCalled();
     });
@@ -49,9 +46,7 @@ describe('useGuest', () => {
         push: pushMock,
       });
 
-      renderHook(() => useGuest(), {
-        wrapper: RecoilRoot,
-      }).result;
+      renderHook(() => useGuest(), {}).result;
 
       expect(pushMock).not.toBeCalled();
     });
@@ -68,9 +63,7 @@ describe('useGuest', () => {
         push: pushMock,
       });
 
-      renderHook(() => useGuest(), {
-        wrapper: RecoilRoot,
-      }).result;
+      renderHook(() => useGuest(), {}).result;
 
       expect(pushMock).toBeCalledWith(`/guest?redirect=${encodeURIComponent('/examplelist')}`);
     });

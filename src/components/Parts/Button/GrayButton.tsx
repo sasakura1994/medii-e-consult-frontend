@@ -9,14 +9,7 @@ type Props = {
   type?: 'button' | 'submit' | 'reset';
 };
 
-export const GrayButton: React.FC<Props> = ({
-  children,
-  className,
-  onClick,
-  dataTestId,
-  size,
-  type,
-}: Props) => {
+export const GrayButton: React.FC<Props> = ({ children, className, onClick, dataTestId, size, type }: Props) => {
   return (
     <button
       type={type}

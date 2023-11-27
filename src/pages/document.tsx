@@ -9,6 +9,4 @@ const DocumentPage: NextPageWithLayout = () => {
 
 export default DocumentPage;
 
-DocumentPage.getLayout = (page) => (
-  <MyPageLayoutWithoutSpFooterMenu>{page}</MyPageLayoutWithoutSpFooterMenu>
-);
+DocumentPage.getLayout = (page) => <MyPageLayoutWithoutSpFooterMenu>{page}</MyPageLayoutWithoutSpFooterMenu>;

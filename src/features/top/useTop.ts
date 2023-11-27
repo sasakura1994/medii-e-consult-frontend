@@ -9,8 +9,7 @@ type UseTop = {
 export const useTop = (): UseTop => {
   const router = useRouter();
   const query = router.query;
-  const [showTutorialExplanationModal, setShowTutorialExplanationModal] =
-    useState(query.tutorial === 'true');
+  const [showTutorialExplanationModal, setShowTutorialExplanationModal] = useState(query.tutorial === 'true');
   return {
     showTutorialExplanationModal,
     setShowTutorialExplanationModal,

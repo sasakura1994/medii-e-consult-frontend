@@ -123,10 +123,10 @@ const Login: NextPageWithLayout = () => {
               <div>日経メディカルアカウントでログイン</div>
             </div>
           </a>
-          <div className="">
+          <div>
             <GoogleLoginButton />
           </div>
-          <div className="mt-[68px] mb-6">
+          <div className="mt-[68px] mb-6" onMouseDown={saveRedirectUrl}>
             <AppleSignInButton>Appleでログイン</AppleSignInButton>
           </div>
         </div>

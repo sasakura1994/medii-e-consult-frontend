@@ -6,9 +6,7 @@ type RegistrationProgressProps = {
   mode: DocumentMode;
 };
 
-const RegistrationProgress: React.FC<RegistrationProgressProps> = ({
-  mode,
-}) => {
+const RegistrationProgress: React.FC<RegistrationProgressProps> = ({ mode }) => {
   const getArrowImage = (currentMode: DocumentMode) => {
     switch (true) {
       case mode === currentMode:
@@ -25,9 +23,7 @@ const RegistrationProgress: React.FC<RegistrationProgressProps> = ({
       <div
         className={`flex h-14 w-24 items-center justify-center rounded border-2 bg-white
          text-center text-sm font-bold lg:h-12 lg:w-40 lg:text-base ${
-           mode === 'edit'
-             ? 'border-primary text-primary'
-             : 'border-gray-400 text-gray-400'
+           mode === 'edit' ? 'border-primary text-primary' : 'border-gray-400 text-gray-400'
          }`}
       >
         プロフィール
@@ -53,9 +49,7 @@ const RegistrationProgress: React.FC<RegistrationProgressProps> = ({
       <div
         className={`flex h-14 w-24 items-center justify-center rounded border-2 bg-white
         text-center text-sm font-bold lg:h-12 lg:w-40 lg:text-base ${
-          mode === 'completed'
-            ? 'border-primary text-primary'
-            : 'border-gray-300 text-gray-300'
+          mode === 'completed' ? 'border-primary text-primary' : 'border-gray-300 text-gray-300'
         }`}
       >
         利用開始

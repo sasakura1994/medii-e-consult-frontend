@@ -2,7 +2,6 @@ import { usePostLogin } from '@/hooks/api/doctor/usePostLogin';
 import { useLogin } from '@/hooks/useLogin';
 import { act, renderHook } from '@testing-library/react';
 import { useRouter } from 'next/router';
-import { RecoilRoot } from 'recoil';
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
@@ -24,9 +23,7 @@ describe('useLogin', () => {
         push: pushMock,
       });
 
-      const hooks = renderHook(() => useLogin(), {
-        wrapper: RecoilRoot,
-      }).result;
+      const hooks = renderHook(() => useLogin(), {}).result;
 
       act(() => hooks.current.goToRegistration());
 
@@ -45,9 +42,7 @@ describe('useLogin', () => {
         push: pushMock,
       });
 
-      const hooks = renderHook(() => useLogin(), {
-        wrapper: RecoilRoot,
-      }).result;
+      const hooks = renderHook(() => useLogin(), {}).result;
 
       act(() => hooks.current.goToRegistration());
 
@@ -82,9 +77,7 @@ describe('useLogin', () => {
         login,
       });
 
-      const hooks = renderHook(() => useLogin(), {
-        wrapper: RecoilRoot,
-      }).result;
+      const hooks = renderHook(() => useLogin(), {}).result;
 
       await act(() => {
         hooks.current.setEmail('test@email.com');

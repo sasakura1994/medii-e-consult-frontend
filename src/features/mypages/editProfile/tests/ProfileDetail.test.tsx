@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, act } from '@testing-library/react';
-import { RecoilRoot } from 'recoil';
+
 import { ProfileDetail } from '../ProfileDetail';
 import { useProfile } from '@/hooks/useProfile';
 
@@ -20,13 +20,11 @@ describe('ProfileDetail', () => {
 
       act(() => {
         render(
-          <RecoilRoot>
-            <ProfileDetail
-              onEdit={() => {
-                return;
-              }}
-            />
-          </RecoilRoot>
+          <ProfileDetail
+            onEdit={() => {
+              return;
+            }}
+          />
         );
       });
 
@@ -43,13 +41,11 @@ describe('ProfileDetail', () => {
 
       act(() => {
         render(
-          <RecoilRoot>
-            <ProfileDetail
-              onEdit={() => {
-                return;
-              }}
-            />
-          </RecoilRoot>
+          <ProfileDetail
+            onEdit={() => {
+              return;
+            }}
+          />
         );
       });
 

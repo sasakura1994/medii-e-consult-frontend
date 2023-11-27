@@ -6,7 +6,7 @@ import 'react-popper-tooltip/dist/styles.css';
 import { SWRConfig } from 'swr';
 import { useFetcher } from '@/hooks/network/useFetcher';
 import { CookiesProvider } from 'react-cookie';
-import { RecoilRoot } from 'recoil';
+import { Provider, useAtomValue } from 'jotai';
 import { CustomHead } from '@/components/Layouts/Header/CustomHead';
 import { Layout } from '@/components/Layouts/Layout';
 import type { NextPage } from 'next';
@@ -16,6 +16,8 @@ import { GoogleTagManager } from '@/components/Layouts/GoogleTagManager';
 import Script from 'next/script';
 import { useToken } from '@/hooks/authentication/useToken';
 import { useAuthenticationOnPage } from '@/hooks/authentication/useAuthenticationOnPage';
+import { GlobalStyle } from '@/styles/GlobalStyle';
+import { openModalCountState } from '@/globalStates/modal';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
@@ -27,10 +29,10 @@ type AppPropsWithLayout = AppProps & {
 };
 
 const AppInner = ({ Component, pageProps }: AppPropsWithLayout) => {
-  const router = useRouter();
+  const openModalCount = useAtomValue(openModalCountState);
   const { fetcher } = useFetcher();
   const { accountId, isTokenInitialized } = useToken();
-  useAuthenticationOnPage(router.pathname);
+  useAuthenticationOnPage();
   const getLayout =
     Component.getLayout ||
     ((page) => (
@@ -41,6 +43,7 @@ const AppInner = ({ Component, pageProps }: AppPropsWithLayout) => {
     ));
   return (
     <CookiesProvider>
+      <GlobalStyle openModalCount={openModalCount} />
       {/* GTMタグだけ先に描画されるのを避けるため必ず両方同時にチェック */}
       {(isTokenInitialized || accountId) && (
         <>
@@ -82,28 +85,7 @@ const App = (props: AppPropsWithLayout) => {
     }
     if (
       // 認証が不要なページはsrc/hooks/authentication/useAuthenticationOnPage.tsに記載する
-      [
-        '/',
-        '/affiliate',
-        '/amazongift',
-        '/assign',
-        '/document',
-        '/editprofile',
-        '/examplelist',
-        '/howtouse',
-        '/initpassword',
-        '/login',
-        '/newchatroom',
-        '/notifysettings',
-        '/passwordreset',
-        '/passwordresetrequest',
-        '/pointhistory',
-        '/registration',
-        '/welcome',
-        '/seminar',
-        '/seminar/archives',
-        '/top',
-      ].some((str) => pathname.includes(str))
+      ['/chat', '/group', '/creategroup'].some((str) => pathname.includes(str))
     ) {
       absoluteUrl.pathname = pathname;
       window.location.href = absoluteUrl.toString();
@@ -119,9 +101,9 @@ const App = (props: AppPropsWithLayout) => {
   }, [router]);
 
   return (
-    <RecoilRoot>
+    <Provider>
       <AppInner {...props} />
-    </RecoilRoot>
+    </Provider>
   );
 };
 

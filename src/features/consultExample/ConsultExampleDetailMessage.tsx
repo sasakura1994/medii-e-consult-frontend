@@ -19,10 +19,7 @@ export const ConsultExampleDetailMessage: React.FC<Props> = ({
   onComment,
   onShowComments,
 }: Props) => {
-  const alignItems =
-    consultExampleMessage.account_type === 'doctor'
-      ? 'items-end'
-      : 'items-start';
+  const alignItems = consultExampleMessage.account_type === 'doctor' ? 'items-end' : 'items-start';
 
   return (
     <div className={`flex flex-col ${alignItems}`}>
@@ -52,7 +49,7 @@ export const ConsultExampleDetailMessage: React.FC<Props> = ({
           {consultExampleMessage.file_path == '' ? (
             consultExampleMessage.message.trim()
           ) : (
-            <img src={consultExampleMessage.file_path} alt='image' />
+            <img src={consultExampleMessage.file_path} alt="image" />
           )}
         </div>
         {isShowAction && (
@@ -62,20 +59,10 @@ export const ConsultExampleDetailMessage: React.FC<Props> = ({
               commentCount={consultExampleMessage.comment_count}
               isLiked={consultExampleMessage.is_liked}
               isShortOnMobile
-              onLike={
-                onLike ? () => onLike(consultExampleMessage.uid) : undefined
-              }
-              onUnlike={
-                onUnlike ? () => onUnlike(consultExampleMessage.uid) : undefined
-              }
-              onComment={
-                onComment ? () => onComment(consultExampleMessage) : undefined
-              }
-              onShowComments={
-                onShowComments
-                  ? () => onShowComments(consultExampleMessage)
-                  : undefined
-              }
+              onLike={onLike ? () => onLike(consultExampleMessage.uid) : undefined}
+              onUnlike={onUnlike ? () => onUnlike(consultExampleMessage.uid) : undefined}
+              onComment={onComment ? () => onComment(consultExampleMessage) : undefined}
+              onShowComments={onShowComments ? () => onShowComments(consultExampleMessage) : undefined}
             />
           </div>
         )}

@@ -14,7 +14,7 @@ const UpdateEmailConfirmation = () => {
           <SpinnerBorder />
         ) : (
           <div>
-            {isTokenExist === true && <EditEmailConfirmation {...props} /> }
+            {isTokenExist === true && <EditEmailConfirmation {...props} />}
             {isTokenExist === false && <div className="font-bold text-red-400">データが存在しません。</div>}
           </div>
         )}

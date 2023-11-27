@@ -57,9 +57,11 @@ type FileForReConsult = {
 type NewChatRoomQuery = {
   target_account_id?: string;
   target_group_id?: string;
+  target_speciality?: string;
   reconsult?: string;
   room_type?: ChatRoomType;
   from?: string;
+  utm_source?: string;
 };
 
 const getDefaultRoomType = (query: NewChatRoomQuery): ChatRoomType => {
@@ -144,6 +146,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     publishment_accepted: true,
     target_specialities: [],
     from: query.from || '',
+    utm_source: query.utm_source || '',
   });
   const [ageRange, setAgeRange] = useState<AgeRange>('');
   const [childAge, setChildAge] = useState<string>('');
@@ -158,6 +161,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
   const [isUseDraftImages, setIsUseDraftImages] = useState(false);
   const [initializingStatus, setInitializingStatus] = useState<InitializingStatus>('not_initialized');
   const [draftFrom, setDraftFrom] = useState('');
+  const [draftUtmSource, setDraftUtmSource] = useState('');
   const [draftSavingTimeoutId, setDraftSavingTimeoutId] = useState<NodeJS.Timeout | undefined>();
   const [isDraftConfirming, setIsDraftConfirming] = useState(false);
   const [confirmingDraft, setConfirmingDraft] = useState<NewChatRoomEntity>();
@@ -223,7 +227,17 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     }
 
     setInitializingStatus('initializing');
-
+    if (query.target_speciality) {
+      const targetSpeciality = medicalSpecialities.find(
+        (speciality) => speciality.speciality_code === query.target_speciality
+      );
+      if (targetSpeciality) {
+        setChatRoom((chatRoom) => ({
+          ...chatRoom,
+          target_specialities: [targetSpeciality.speciality_code],
+        }));
+      }
+    }
     if (query.reconsult) {
       const baseChatRoomData = await fetchBaseChatRoomForReConsult(query.reconsult);
       if (!baseChatRoomData) {
@@ -265,6 +279,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     initializingStatus,
     medicalSpecialities,
     query.reconsult,
+    query.target_speciality,
     router.isReady,
   ]);
 
@@ -284,6 +299,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     setChatRoom(confirmingDraft);
     initializeAge(confirmingDraft.age);
     setDraftFrom(confirmingDraft.from);
+    setDraftUtmSource(confirmingDraft.utm_source);
     setIsUseDraftImages(true);
     setIsDraftConfirming(false);
     setConfirmingDraft(undefined);
@@ -463,11 +479,18 @@ export const useNewChatRoom = (): UseNewChatRoom => {
       data.re_consult_file_chat_message_ids = reConsultFileMessages.map((chatMessage) => chatMessage.uid);
     }
 
+    const createSource = Object.assign({}, data.create_source);
     if (draftFrom) {
-      data.create_source = { from: draftFrom };
+      createSource.from = draftFrom;
     } else if (query.from) {
-      data.create_source = { from: query.from };
+      createSource.from = query.from;
     }
+    if (draftUtmSource) {
+      createSource.utm_source = draftUtmSource;
+    } else if (query.utm_source) {
+      createSource.utm_source = query.utm_source;
+    }
+    data.create_source = createSource;
 
     const response = await createNewChatRoom(data).catch((error) => {
       console.error(error);
@@ -512,11 +535,13 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     chatDraftImages,
     createNewChatRoom,
     draftFrom,
+    draftUtmSource,
     filesForReConsult,
     formData,
     postChatMessageFile,
     query.from,
     query.reconsult,
+    query.utm_source,
     reConsultFileMessages,
     router,
     setModeAndScrollToTop,

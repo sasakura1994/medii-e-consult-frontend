@@ -5,25 +5,21 @@ import { ConsultExampleCommentEntity } from '@/types/entities/ConsultExampleComm
 import { ConsultExampleMessageEntity } from '@/types/entities/ConsultExampleMessageEntity';
 
 export const useConsultExampleAllCommentsModal = (consultExampleId: string) => {
-  const { data: fetchConsultExampleAllCommentsResponseData } =
-    useFetchConsultExampleAllComments(consultExampleId);
-  const { comments: consultExampleComments } =
-    fetchConsultExampleAllCommentsResponseData ?? {};
-  const { data: consultExampleMessages } =
-    useFetchConsultExampleMessages(consultExampleId);
+  const { data: fetchConsultExampleAllCommentsResponseData } = useFetchConsultExampleAllComments(consultExampleId);
+  const { comments: consultExampleComments } = fetchConsultExampleAllCommentsResponseData ?? {};
+  const { data: consultExampleMessages } = useFetchConsultExampleMessages(consultExampleId);
 
-  const availableConsultExampleMessages =
-    useMemo((): ConsultExampleMessageEntity[] => {
-      if (!consultExampleComments || !consultExampleMessages) {
-        return [];
-      }
-      const consultExampleMessageIds = consultExampleComments.map(
-        (consultExampleComment) => consultExampleComment.example_message_id
-      );
-      return consultExampleMessages.filter((consultExampleMessage) =>
-        consultExampleMessageIds.includes(consultExampleMessage.uid)
-      );
-    }, [consultExampleMessages, consultExampleComments]);
+  const availableConsultExampleMessages = useMemo((): ConsultExampleMessageEntity[] => {
+    if (!consultExampleComments || !consultExampleMessages) {
+      return [];
+    }
+    const consultExampleMessageIds = consultExampleComments.map(
+      (consultExampleComment) => consultExampleComment.example_message_id
+    );
+    return consultExampleMessages.filter((consultExampleMessage) =>
+      consultExampleMessageIds.includes(consultExampleMessage.uid)
+    );
+  }, [consultExampleMessages, consultExampleComments]);
 
   const getCommentsForMessage = useCallback(
     (consultExampleMessageId: number): ConsultExampleCommentEntity[] => {
@@ -31,8 +27,7 @@ export const useConsultExampleAllCommentsModal = (consultExampleId: string) => {
         return [];
       }
       return consultExampleComments.filter(
-        (consultExampleComment) =>
-          consultExampleComment.example_message_id === consultExampleMessageId
+        (consultExampleComment) => consultExampleComment.example_message_id === consultExampleMessageId
       );
     },
     [consultExampleComments]

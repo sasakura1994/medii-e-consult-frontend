@@ -1,7 +1,7 @@
 import 'cross-fetch/polyfill';
 import { act, renderHook, waitFor } from '@testing-library/react';
 import { useNewChatRoom } from '../useNewChatRoom';
-import { RecoilRoot } from 'recoil';
+
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 import { useGetCurrentChatRoomDraft } from '@/hooks/api/chatRoomDraft/useGetCurrentChatRoomDraft';
@@ -103,12 +103,7 @@ describe('useNewChatRoom', () => {
         postChatRoomDraft,
       });
 
-      const { result } = await act(
-        async () =>
-          await renderHook(() => useNewChatRoom(), {
-            wrapper: RecoilRoot,
-          })
-      );
+      const { result } = await act(async () => await renderHook(() => useNewChatRoom(), {}));
 
       const data = { disease_name: 'disease2', age: 30 };
       await act(async () => await result.current.setChatRoomFields(data));
@@ -138,12 +133,7 @@ describe('useNewChatRoom', () => {
         postChatRoomDraft,
       });
 
-      const { result } = await act(
-        async () =>
-          await renderHook(() => useNewChatRoom(), {
-            wrapper: RecoilRoot,
-          })
-      );
+      const { result } = await act(async () => await renderHook(() => useNewChatRoom(), {}));
 
       const data = { disease_name: 'disease2', age: 30 };
       await act(async () => await result.current.setChatRoomFields(data));
@@ -172,12 +162,7 @@ describe('useNewChatRoom', () => {
           postChatRoomDraft,
         });
 
-        const { result } = await act(
-          async () =>
-            await renderHook(() => useNewChatRoom(), {
-              wrapper: RecoilRoot,
-            })
-        );
+        const { result } = await act(async () => await renderHook(() => useNewChatRoom(), {}));
 
         const data = { disease_name: 'disease2', first_message: 'first message' };
         await act(async () => await result.current.setChatRoomFields(data));
