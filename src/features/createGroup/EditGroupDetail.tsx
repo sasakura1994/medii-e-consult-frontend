@@ -8,14 +8,13 @@ import { ConfirmModal } from '@/components/Parts/Modal/ConfirmModal';
 import { useEditGroupDetail } from './useEditGroupDetail';
 import { EditGroupDetailMemberListTable } from './EditGroupDetailMemberListTable';
 import { GroupEntity, NotificationFrequency } from '@/hooks/api/group/useFetchGetGroup';
-import TertiaryButton from '@/components/Button/TertiaryButton';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
 import { KeyedMutator } from 'swr';
 import { FetchedGroupEntity } from '@/hooks/api/group/useFetchGroup';
 import { DefaultRadio } from '@/components/Parts/Form/DefaultRadio';
 
-type EditGroupDetailProps = {
+export type EditGroupDetailProps = {
   isEdit?: boolean;
   setIsOpenEditModal?: React.Dispatch<React.SetStateAction<boolean>>;
   setIsLeaveGroupConfirmModal?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,6 +22,7 @@ type EditGroupDetailProps = {
   mutateChatRoom?: KeyedMutator<FetchChatRoomResponseData>;
   mutateChatRoomList?: KeyedMutator<ChatRoomEntity[]>;
   mutateGroup?: KeyedMutator<FetchedGroupEntity>;
+  isClickSubmitButton: boolean;
 };
 
 export const EditGroupDetail = (props: EditGroupDetailProps) => {
@@ -34,6 +34,7 @@ export const EditGroupDetail = (props: EditGroupDetailProps) => {
     mutateChatRoom,
     mutateChatRoomList,
     mutateGroup,
+    isClickSubmitButton,
   } = props;
   const {
     myAccountId,
@@ -57,6 +58,7 @@ export const EditGroupDetail = (props: EditGroupDetailProps) => {
     mutateChatRoom: mutateChatRoom,
     mutateChatRoomList: mutateChatRoomList,
     mutateGroup: mutateGroup,
+    isClickSubmitButton: isClickSubmitButton,
   });
 
   return (
@@ -75,10 +77,16 @@ export const EditGroupDetail = (props: EditGroupDetailProps) => {
       )}
       <form
         onSubmit={(e) => {
+          e.preventDefault();
           if (isEdit) {
-            update(e);
+            update();
           } else {
-            submit(e);
+            submit();
+          }
+        }}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
           }
         }}
       >
@@ -180,7 +188,7 @@ export const EditGroupDetail = (props: EditGroupDetailProps) => {
           name="groupDescription"
           className="min-h-[100px] w-full resize-none"
           id="groupDescription"
-          placeholder="グループの説明や特料などを入力"
+          placeholder="グループの説明や特徴などを入力"
           value={editState.explanation}
           onChange={(e) => {
             setEditState((prevState) => {
@@ -283,63 +291,6 @@ export const EditGroupDetail = (props: EditGroupDetailProps) => {
             </label>
           </div>
         )}
-        <div className="mt-2">
-          <label className="text-left font-bold">グループメンバー</label>
-          {/* <div className="text-[13px]">
-            メンバーを追加したい場合は
-            <a target="_blank" className=" text-text-link underline" href={inquiryFormUrl} rel="noreferrer">
-              Mediiコンシェルジュ
-            </a>
-            までお問い合わせください
-          </div> */}
-        </div>
-
-        <div className="mb-2 mt-4 flex items-center gap-4">
-          <PrimaryButton
-            type="button"
-            onClick={() => {
-              setIsOpenInviteMemberModal(true);
-            }}
-          >
-            +メンバー招待
-          </PrimaryButton>
-          <label className="text-left font-bold">メンバー数:{selectedMembers.length}名</label>
-        </div>
-
-        <div className="h-full w-full overflow-auto">
-          <table
-            className="box-border table w-auto min-w-full table-fixed overflow-visible
-                        whitespace-nowrap text-sm"
-          >
-            {medicalSpecialities &&
-              medicalSpecialities.map((medicalSpeciality) => {
-                return (
-                  <>
-                    {selectedMembers.some((member) => {
-                      return member.speciality_code === medicalSpeciality.speciality_code;
-                    }) && (
-                      <EditGroupDetailMemberListTable
-                        selectedMembers={selectedMembers}
-                        setSelectedMembers={setSelectedMembers}
-                        myAccountId={myAccountId ?? ''}
-                        medicalSpeciality={medicalSpeciality}
-                      />
-                    )}
-                  </>
-                );
-              })}
-            {/* 専門家未指定の場合 */}
-            {selectedMembers.some((member) => {
-              return member.speciality_code === '';
-            }) && (
-              <EditGroupDetailMemberListTable
-                selectedMembers={selectedMembers}
-                setSelectedMembers={setSelectedMembers}
-                myAccountId={myAccountId ?? ''}
-              />
-            )}
-          </table>
-        </div>
 
         <div className="mt-2 space-y-1">
           <label className="text-left font-bold">メッセージの通知頻度の設定</label>
@@ -399,6 +350,63 @@ export const EditGroupDetail = (props: EditGroupDetailProps) => {
             }}
           />
         </div>
+        <div className="mt-2">
+          <label className="text-left font-bold">グループメンバー</label>
+          {/* <div className="text-[13px]">
+            メンバーを追加したい場合は
+            <a target="_blank" className=" text-text-link underline" href={inquiryFormUrl} rel="noreferrer">
+              Mediiコンシェルジュ
+            </a>
+            までお問い合わせください
+          </div> */}
+        </div>
+
+        <div className="mt-2 flex items-center gap-4">
+          <PrimaryButton
+            type="button"
+            onClick={() => {
+              setIsOpenInviteMemberModal(true);
+            }}
+          >
+            +メンバー招待
+          </PrimaryButton>
+          <label className="text-left font-bold">メンバー数:{selectedMembers.length}名</label>
+        </div>
+
+        <div className="h-full w-full overflow-auto">
+          <table
+            className="box-border table w-auto min-w-full table-fixed overflow-visible
+                        whitespace-nowrap text-sm"
+          >
+            {medicalSpecialities &&
+              medicalSpecialities.map((medicalSpeciality) => {
+                return (
+                  <>
+                    {selectedMembers.some((member) => {
+                      return member.speciality_code === medicalSpeciality.speciality_code;
+                    }) && (
+                      <EditGroupDetailMemberListTable
+                        selectedMembers={selectedMembers}
+                        setSelectedMembers={setSelectedMembers}
+                        myAccountId={myAccountId ?? ''}
+                        medicalSpeciality={medicalSpeciality}
+                      />
+                    )}
+                  </>
+                );
+              })}
+            {/* 専門家未指定の場合 */}
+            {selectedMembers.some((member) => {
+              return member.speciality_code === '';
+            }) && (
+              <EditGroupDetailMemberListTable
+                selectedMembers={selectedMembers}
+                setSelectedMembers={setSelectedMembers}
+                myAccountId={myAccountId ?? ''}
+              />
+            )}
+          </table>
+        </div>
 
         {!isEdit && (
           <PrimaryButton className="mx-auto mt-12 h-12 px-12" type="submit">
@@ -407,19 +415,6 @@ export const EditGroupDetail = (props: EditGroupDetailProps) => {
         )}
         {isEdit && setIsOpenEditModal && setIsLeaveGroupConfirmModal && (
           <div className="mb-4 mt-8">
-            <div className="mt-4 flex flex-col-reverse items-center justify-center gap-4 lg:flex-row">
-              <TertiaryButton
-                className="w-56 px-6"
-                onClick={() => {
-                  setIsOpenEditModal(false);
-                }}
-              >
-                キャンセル
-              </TertiaryButton>
-              <PrimaryButton className="w-56 px-6" type="submit">
-                グループ情報を更新
-              </PrimaryButton>
-            </div>
             <p
               className="text-[#999999} mt-4 cursor-pointer text-center text-base underline"
               onClick={() => {

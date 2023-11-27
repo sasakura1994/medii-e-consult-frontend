@@ -1,6 +1,4 @@
-import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
-import { GroupEntity, NotificationFrequency } from '@/hooks/api/group/useFetchGetGroup';
-import { FetchedGroupEntity } from '@/hooks/api/group/useFetchGroup';
+import { NotificationFrequency } from '@/hooks/api/group/useFetchGetGroup';
 import { useFetchGroupMemberData } from '@/hooks/api/group/useFetchGroupMemberData';
 import { SearchGroupMember } from '@/hooks/api/group/useFetchSearchMember';
 import { usePostCreateGroup } from '@/hooks/api/group/usePostCreateGroup';
@@ -8,10 +6,9 @@ import { useUpdateGroup } from '@/hooks/api/group/useUpdateGroup';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { useToken } from '@/hooks/authentication/useToken';
 import { saveLocalStorage, loadLocalStorage, removeLocalStorage } from '@/libs/LocalStorageManager';
-import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
 import { useRouter } from 'next/router';
-import { useState, useCallback, useEffect, FormEvent } from 'react';
-import { KeyedMutator } from 'swr';
+import { useState, useCallback, useEffect } from 'react';
+import { EditGroupDetailProps } from './EditGroupDetail';
 
 type EditGroupState = {
   group_id?: string;
@@ -46,17 +43,25 @@ const defaultEditGroupState = {
   assignable: true,
 };
 
-type Props = {
-  isEdit?: boolean;
-  setIsOpenEditModal?: React.Dispatch<React.SetStateAction<boolean>>;
-  originalGroupData?: GroupEntity;
-  mutateChatRoom?: KeyedMutator<FetchChatRoomResponseData>;
-  mutateChatRoomList?: KeyedMutator<ChatRoomEntity[]>;
-  mutateGroup?: KeyedMutator<FetchedGroupEntity>;
-};
+// type Props = {
+//   isEdit?: boolean;
+//   setIsOpenEditModal?: React.Dispatch<React.SetStateAction<boolean>>;
+//   originalGroupData?: GroupEntity;
+//   mutateChatRoom?: KeyedMutator<FetchChatRoomResponseData>;
+//   mutateChatRoomList?: KeyedMutator<ChatRoomEntity[]>;
+//   mutateGroup?: KeyedMutator<FetchedGroupEntity>;
+// };
 
-export const useEditGroupDetail = (props: Props) => {
-  const { isEdit, setIsOpenEditModal, originalGroupData, mutateChatRoom, mutateChatRoomList, mutateGroup } = props;
+export const useEditGroupDetail = (props: EditGroupDetailProps) => {
+  const {
+    isEdit,
+    setIsOpenEditModal,
+    originalGroupData,
+    mutateChatRoom,
+    mutateChatRoomList,
+    mutateGroup,
+    isClickSubmitButton,
+  } = props;
   const router = useRouter();
   const [isOpenInviteMemberModal, setIsOpenInviteMemberModal] = useState(false);
   const [isDraftConfirming, setIsDraftConfirming] = useState(false);
@@ -98,6 +103,46 @@ export const useEditGroupDetail = (props: Props) => {
   const dontUseDraft = () => {
     setIsDraftConfirming(false);
   };
+
+  const submit = useCallback(() => {
+    postCreateGroup({
+      group_name: editState.group_name,
+      area: editState.area,
+      speciality: editState.speciality,
+      disease: editState.disease,
+      explanation: editState.explanation,
+      member_ids: editState.member_ids,
+      notification_frequency: editState.notification_frequency,
+      assignable: editState.assignable,
+      is_public: editState.assignable ? editState.is_public : false,
+    }).then((res) => {
+      const { group_room_id } = res.data;
+      if (res.status === 201 && group_room_id) {
+        router.push({ pathname: '/group', query: { group_room_id: group_room_id } });
+      }
+    });
+    removeLocalStorage('EditGroupDetail::groupData');
+  }, [editState, postCreateGroup, router]);
+
+  const update = useCallback(async () => {
+    await updateGroup({
+      group_id: editState.group_id,
+      group_name: editState.group_name,
+      area: editState.area,
+      speciality: editState.speciality,
+      disease: editState.disease,
+      explanation: editState.explanation,
+      member_ids: editState.member_ids,
+      notification_frequency: editState.notification_frequency,
+      assignable: editState.assignable,
+      is_public: editState.assignable ? editState.is_public : false,
+    });
+    await mutateGroup?.();
+    await mutateChatRoom?.();
+    await mutateChatRoomList?.();
+
+    setIsOpenEditModal?.(false);
+  }, [editState, mutateChatRoom, mutateChatRoomList, mutateGroup, setIsOpenEditModal, updateGroup]);
 
   useEffect(() => {
     if (!isEdit && myAccountId) {
@@ -182,55 +227,6 @@ export const useEditGroupDetail = (props: Props) => {
     }
   }, [isEdit, originalGroupData, fetchGroupMemberData]);
 
-  const submit = useCallback(
-    (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-
-      postCreateGroup({
-        group_name: editState.group_name,
-        area: editState.area,
-        speciality: editState.speciality,
-        disease: editState.disease,
-        explanation: editState.explanation,
-        member_ids: editState.member_ids,
-        notification_frequency: editState.notification_frequency,
-        assignable: editState.assignable,
-        is_public: editState.assignable ? editState.is_public : false,
-      }).then((res) => {
-        const { group_room_id } = res.data;
-        if (res.status === 201 && group_room_id) {
-          router.push({ pathname: '/group', query: { group_room_id: group_room_id } });
-        }
-      });
-      removeLocalStorage('EditGroupDetail::groupData');
-    },
-    [editState, postCreateGroup, router]
-  );
-
-  const update = useCallback(
-    async (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      await updateGroup({
-        group_id: editState.group_id,
-        group_name: editState.group_name,
-        area: editState.area,
-        speciality: editState.speciality,
-        disease: editState.disease,
-        explanation: editState.explanation,
-        member_ids: editState.member_ids,
-        notification_frequency: editState.notification_frequency,
-        assignable: editState.assignable,
-        is_public: editState.assignable ? editState.is_public : false,
-      });
-      await mutateGroup?.();
-      await mutateChatRoom?.();
-      await mutateChatRoomList?.();
-
-      setIsOpenEditModal?.(false);
-    },
-    [editState, mutateChatRoom, mutateChatRoomList, mutateGroup, setIsOpenEditModal, updateGroup]
-  );
-
   const saveLocalStorageDraft = useCallback(
     (newState: EditGroupState) => {
       if (!isEdit) {
@@ -241,6 +237,12 @@ export const useEditGroupDetail = (props: Props) => {
     },
     [isEdit]
   );
+
+  useEffect(() => {
+    if (isClickSubmitButton) {
+      update();
+    }
+  }, [isClickSubmitButton, update]);
 
   return {
     myAccountId,
