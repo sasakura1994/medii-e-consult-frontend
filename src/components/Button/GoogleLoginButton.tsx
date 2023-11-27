@@ -42,16 +42,30 @@ const LoginButton = () => {
     return error;
   };
 
-  return <GoogleLogin onSuccess={onSuccess} onError={onError} type="standard" logo_alignment="left"  width='270'/>;
+  return <GoogleLogin onSuccess={onSuccess} onError={onError} type="standard" logo_alignment="left"  width='400' />;
 };
 
 const GoogleLoginButton = () => {
   const clientId = process.env.GOOGLE_CLIENT_ID || "";
 
   return (
-    <GoogleOAuthProvider clientId={clientId}>
-      <LoginButton />
-    </GoogleOAuthProvider>
+    <div className='flex justify-center'>
+      <div className='z-50 opacity-0 absolute'>
+        <GoogleOAuthProvider clientId={clientId}>
+          <LoginButton />
+        </GoogleOAuthProvider>
+      </div>
+      <div
+        className='absolute m-auto border border-border-field rounded-md hover:bg-monotone-200 cursor-pointer'
+      >
+        <div className='flex justify-center items-center w-[400px] h-[56px]'>
+          <div className='mr-[5px]'>
+            <img src="icons/google.svg" alt="0" width="20" height="20" />
+          </div>
+          <div className='text-text-caption text-base font-semibold'>Googleでログイン</div>
+        </div>
+      </div>
+    </div>
   );
 };
 
