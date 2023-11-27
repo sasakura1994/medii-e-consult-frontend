@@ -23,20 +23,14 @@ export const MedicalSpecialityCategorySelect: React.FC<Props> = ({
       }}
     >
       <div
-        className={`flex items-center justify-between rounded ${
-          isSelected ? 'bg-primary-light' : 'bg-bg'
-        } py-2 px-4`}
+        className={`flex items-center justify-between rounded ${isSelected ? 'bg-primary-light' : 'bg-bg'} px-4 py-2`}
       >
         <div className="grow">
           <span className="font-bold">{medicalSpecialityCategory.name}</span>
           <span>（{selectedCount}件選択中）</span>
         </div>
         <div className="grow-0">
-          <img
-            src="icons/arrow_down.svg"
-            width="12"
-            className={isSelected ? 'rotate-180 transform' : ''}
-          />
+          <img src="icons/arrow_down.svg" width="12" className={isSelected ? 'rotate-180 transform' : ''} />
         </div>
       </div>
     </a>

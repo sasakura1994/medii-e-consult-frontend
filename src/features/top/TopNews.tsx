@@ -8,18 +8,12 @@ export const TopNews = () => {
   return (
     <>
       <div className="flex items-center">
-        <p className="flex-grow text-xxl font-bold text-text-primary">
-          お知らせ
-        </p>
+        <p className="flex-grow text-xxl font-bold text-text-primary">お知らせ</p>
         <a href="https://medii.jp/news/" target="_blank" rel="noreferrer">
-          <button className="text-md text-text-secondary">
-            すべてのお知らせ
-          </button>
+          <button className="text-md text-text-secondary">すべてのお知らせ</button>
         </a>
       </div>
-      {newsList?.map((news) => (
-        <TopNewsItem key={news.title} news={news} />
-      ))}
+      {newsList?.map((news) => <TopNewsItem key={news.title} news={news} />)}
     </>
   );
 };

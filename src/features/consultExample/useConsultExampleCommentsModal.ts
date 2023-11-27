@@ -3,27 +3,17 @@ import { useConsultExampleCommentModal } from './useConsultExampleCommentModal';
 import { useCallback, useMemo } from 'react';
 import { useFetchConsultExampleMessages } from '@/hooks/api/consultExample/useFetchConsultExampleMessages';
 
-export const useConsultExampleCommentsModal = (
-  consultExampleId: string,
-  consultExampleMessageId?: number
-) => {
-  const consultExampleCommentModal =
-    useConsultExampleCommentModal(consultExampleId);
+export const useConsultExampleCommentsModal = (consultExampleId: string, consultExampleMessageId?: number) => {
+  const consultExampleCommentModal = useConsultExampleCommentModal(consultExampleId);
   const { createComment, createCommentForMessage } = consultExampleCommentModal;
-  const {
-    data: fetchConsultExampleCommentsResponseData,
-    mutate: mutateFetchConsultExampleComments,
-  } = useFetchConsultExampleComments(consultExampleId, consultExampleMessageId);
-  const { comments: consultExampleComments } =
-    fetchConsultExampleCommentsResponseData ?? {};
-  const { data: consultExampleMessages } =
-    useFetchConsultExampleMessages(consultExampleId);
+  const { data: fetchConsultExampleCommentsResponseData, mutate: mutateFetchConsultExampleComments } =
+    useFetchConsultExampleComments(consultExampleId, consultExampleMessageId);
+  const { comments: consultExampleComments } = fetchConsultExampleCommentsResponseData ?? {};
+  const { data: consultExampleMessages } = useFetchConsultExampleMessages(consultExampleId);
 
   const consultExampleMessage = useMemo(
     () =>
-      consultExampleMessageId
-        ? consultExampleMessages?.find((m) => m.uid === consultExampleMessageId)
-        : undefined,
+      consultExampleMessageId ? consultExampleMessages?.find((m) => m.uid === consultExampleMessageId) : undefined,
     [consultExampleMessageId, consultExampleMessages]
   );
 
@@ -43,11 +33,7 @@ export const useConsultExampleCommentsModal = (
     }
 
     mutateFetchConsultExampleComments();
-  }, [
-    consultExampleMessageId,
-    createCommentForMessage,
-    mutateFetchConsultExampleComments,
-  ]);
+  }, [consultExampleMessageId, createCommentForMessage, mutateFetchConsultExampleComments]);
 
   return {
     ...consultExampleCommentModal,

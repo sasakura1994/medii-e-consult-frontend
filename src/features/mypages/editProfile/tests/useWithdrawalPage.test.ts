@@ -1,4 +1,3 @@
-import { RecoilRoot } from 'recoil';
 import 'cross-fetch/polyfill';
 import { act, renderHook } from '@testing-library/react';
 import { useWithdrawalPage } from '../useWithdrawalPage';
@@ -29,9 +28,7 @@ describe('useWithdrawalPage', () => {
       ],
     });
 
-    const hooks = renderHook(() => useWithdrawalPage(), {
-      wrapper: RecoilRoot,
-    }).result;
+    const hooks = renderHook(() => useWithdrawalPage(), {}).result;
 
     act(() => hooks.current.toggleQuestionaryItem(2));
     act(() => hooks.current.toggleQuestionaryItem(3));

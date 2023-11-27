@@ -6,11 +6,7 @@ type Props = {
   src: string;
 };
 
-export const ImageEditorToolButton: React.FC<Props> = ({
-  onClick,
-  isDisabled = false,
-  src,
-}: Props) => {
+export const ImageEditorToolButton: React.FC<Props> = ({ onClick, isDisabled = false, src }: Props) => {
   return (
     <a
       href="#"

@@ -1,7 +1,7 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { render, screen, act } from '@testing-library/react';
-import { RecoilRoot } from 'recoil';
+
 import EditProfilePage from '@/pages/editprofile';
 import { useRouter } from 'next/router';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
@@ -33,11 +33,7 @@ describe('/editprofile', () => {
       },
     });
 
-    render(
-      <RecoilRoot>
-        <EditProfilePage />
-      </RecoilRoot>
-    );
+    render(<EditProfilePage />);
 
     const editProfileBtn = screen.getByTestId('btn-profile-edit');
     await act(() => {
@@ -75,11 +71,7 @@ describe('/editprofile', () => {
       } as ProfileEntity)
     );
 
-    render(
-      <RecoilRoot>
-        <EditProfilePage />
-      </RecoilRoot>
-    );
+    render(<EditProfilePage />);
 
     expect(screen.queryByTestId('edit-profile-notification')).toBeInTheDocument();
     expect(screen.queryByTestId('edit-profile-questionary')).toBeInTheDocument();

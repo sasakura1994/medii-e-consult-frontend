@@ -12,10 +12,8 @@ export const useMedicalSpeciality = (): UseMedicalSpeciality => {
 
   const getMedicalSpecialityName = useCallback(
     (specialityCode: string) => {
-      return medicalSpecialities?.find(
-        (medicalSpeciality) =>
-          medicalSpeciality.speciality_code === specialityCode
-      )?.name;
+      return medicalSpecialities?.find((medicalSpeciality) => medicalSpeciality.speciality_code === specialityCode)
+        ?.name;
     },
     [medicalSpecialities]
   );

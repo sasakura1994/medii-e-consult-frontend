@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, act } from '@testing-library/react';
-import { RecoilRoot } from 'recoil';
+
 import { useRouter } from 'next/router';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { UserInfo } from '../UserInfo';
@@ -35,11 +35,7 @@ describe('UserInfo', () => {
         profile: {} as EditingProfile,
         setProfileFields: jest.fn(),
       } as unknown as UseEditProfile & EditProfileProps;
-      render(
-        <RecoilRoot>
-          <UserInfo {...props} />
-        </RecoilRoot>
-      );
+      render(<UserInfo {...props} />);
     });
 
     expect(screen.getByTestId('last_name')).toBeDisabled();
@@ -59,11 +55,7 @@ describe('UserInfo', () => {
         profile: {} as EditingProfile,
         setProfileFields: jest.fn(),
       } as unknown as UseEditProfile & EditProfileProps;
-      render(
-        <RecoilRoot>
-          <UserInfo {...props} />
-        </RecoilRoot>
-      );
+      render(<UserInfo {...props} />);
     });
 
     expect(screen.getByTestId('last_name')).toBeEnabled();

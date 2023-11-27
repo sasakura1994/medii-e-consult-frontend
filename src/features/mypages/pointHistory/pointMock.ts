@@ -1,10 +1,4 @@
-import type {
-  ResponseResolver,
-  DefaultBodyType,
-  RestContext,
-  RestRequest,
-  PathParams,
-} from 'msw';
+import type { ResponseResolver, DefaultBodyType, RestContext, RestRequest, PathParams } from 'msw';
 
 /**
  * Mediiポイントモック

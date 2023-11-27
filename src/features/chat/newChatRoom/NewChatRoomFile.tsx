@@ -12,13 +12,7 @@ export const NewChatRoomFile = (props: Props) => {
 
   return (
     <div className="flex items-center gap-4">
-      <div className="w-full grow">
-        {isImage ? (
-          <img src={url} className="max-w-full" alt="" />
-        ) : (
-          <>{fileName}</>
-        )}
-      </div>
+      <div className="w-full grow">{isImage ? <img src={url} className="max-w-full" alt="" /> : <>{fileName}</>}</div>
       <div className="shrink-0 grow-0">
         <a
           href="#"

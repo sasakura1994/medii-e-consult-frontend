@@ -21,6 +21,8 @@ import { ChatTempResolveRequestModal } from './ChatTempResolveRequestModal';
 import { CloseChatRoomModal } from './CloseChatRoomModal';
 import { ResolveChatRoomModal } from './ResolveChatRoomModal';
 import ChatImageModal from './ChatImageModal';
+import { AllowAddToConsultExampleListModal } from './AllowAddToConsultExampleListModal';
+import { ReConsultSuggestionModal } from './ReConsultSuggestionModal';
 
 type ConsultDetailProps = {
   publishmentStatusData?: {
@@ -33,6 +35,9 @@ type ConsultDetailProps = {
   mutateChatRoomList?: KeyedMutator<ChatRoomEntity[]>;
   mutateChatList?: KeyedMutator<FetchChatListResponseData>;
   mutateFetchUnreadCounts?: KeyedMutator<FetchUnreadCountsResponseData>;
+  mutatePublishmentStatusData?: KeyedMutator<{
+    publishment_accepted: number;
+  }>;
   setSelectedTab: React.Dispatch<React.SetStateAction<'open' | 'close'>>;
 };
 
@@ -45,6 +50,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     mutateChatRoom,
     mutateChatRoomList,
     mutateChatList,
+    mutatePublishmentStatusData,
     setSelectedTab,
   } = props;
   const {
@@ -73,6 +79,8 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     setIsOpenCloseChatRoomModal,
     isOpenResolveChatRoomModal,
     setIsOpenResolveChatRoomModal,
+    isOpenReConsultSuggestionModal,
+    setIsOpenReConsultSuggestionModal,
     selectedImage,
     setSelectedImage,
     setIsChatRoomSelected,
@@ -116,16 +124,20 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
       return (
         <>
           <p className="text-md font-bold">質問医</p>
-          <p className="text-xs">
-            ({getMedicalSpecialityName(chatRoomData.members[0].speciality_1)}・
-            {getExperienceYear(chatRoomData.members[0].qualified_year)}年目)
-          </p>
+          {chatRoomData.members.length > 0 && (
+            <p className="text-xs">
+              ({getMedicalSpecialityName(chatRoomData.members[0].speciality_1)}・
+              {getExperienceYear(chatRoomData.members[0].qualified_year)}年目)
+            </p>
+          )}
         </>
       );
     }
-
-    if (chatRoomData.members.length === 0) {
+    if (chatRoomData.chat_room.status === 'CREATED') {
       return <p className="text-sm font-normal text-strong">回答してくださる専門医の先生を探しています</p>;
+    }
+    if (chatRoomData.members.length === 0) {
+      return <p className="text-sm font-bold">退会済みアカウント</p>;
     }
 
     // 実名グループの場合
@@ -209,6 +221,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
       {chatRoomData && isOpenResolveChatRoomModal && (
         <ResolveChatRoomModal
           setIsOpen={setIsOpenResolveChatRoomModal}
+          setIsOpenReConsultSuggestionModal={setIsOpenReConsultSuggestionModal}
           chatRoomData={chatRoomData}
           setSelectedTab={setSelectedTab}
         />
@@ -219,6 +232,12 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
           onClose={() => {
             setSelectedImage('');
           }}
+        />
+      )}
+      {publishmentStatusData && publishmentStatusData.publishment_accepted === null && chatRoomData && (
+        <AllowAddToConsultExampleListModal
+          chatRoomId={chatRoomData.chat_room.chat_room_id}
+          mutatePublishmentStatusData={mutatePublishmentStatusData}
         />
       )}
       {chatRoomData && publishmentStatusData && accountId && chatListDataWithDisplayName && (
@@ -254,18 +273,23 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
             <ConsultDeleteModal
               chatRoomData={chatRoomData}
               setIsOpenDeleteModal={setIsOpenDeleteModal}
-              mutateChatRoom={mutateChatRoom}
               mutateChatRoomList={mutateChatRoomList}
+            />
+          )}
+          {isOpenReConsultSuggestionModal && (
+            <ReConsultSuggestionModal
+              chatRoomID={chatRoomData.chat_room.chat_room_id}
+              setIsOpenReConsultSuggestionModal={setIsOpenReConsultSuggestionModal}
             />
           )}
 
           <div
-            className="flex h-full w-full flex-col overflow-hidden border border-[#d5d5d5]
-          lg:h-[calc(100vh-62px)] lg:w-[787px]"
+            className="flex h-full flex-grow flex-col overflow-hidden border border-[#d5d5d5]
+          lg:h-[calc(100vh-62px)]"
           >
-            <div className="flex-shrink-0 flex-grow-0 select-none">
+            <div className="flex-shrink-0 flex-grow-0">
               <div className="mb-2 mr-2 items-center space-x-1 lg:flex lg:h-14">
-                <div className="flex flex-none items-center lg:flex-grow">
+                <div className="line-clamp-1 flex items-center lg:flex-grow">
                   <img
                     src="icons/arrow_left.svg"
                     alt=""
@@ -339,6 +363,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                     currentUserAccountId={accountId}
                     chatRoomData={chatRoomData}
                     setSelectedImage={setSelectedImage}
+                    mutateChatList={mutateChatList}
                   />
                 </div>
                 <div className="pointer-events-none absolute inset-0 overflow-hidden bg-black bg-opacity-20" />
@@ -350,6 +375,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                   currentUserAccountId={accountId}
                   chatRoomData={chatRoomData}
                   setSelectedImage={setSelectedImage}
+                  mutateChatList={mutateChatList}
                 />
               </div>
             )}
@@ -357,12 +383,21 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
               <div className="pointer-events-auto bg-[#5c6bc0] p-2 text-center text-sm text-white">
                 <p>解決済みのルームです</p>
                 <div className="flex flex-col justify-center lg:flex-row">
-                  <div
-                    className="mx-3 mt-4 min-w-[40%] cursor-pointer rounded-full bg-white px-4 py-1 text-primary"
-                    onClick={() => setIsOpenRoomReopenModal(true)}
-                  >
-                    <p className="text-sm">このコンサルを再開する</p>
-                  </div>
+                  {chatRoomData.members.length > 0 ? (
+                    <div
+                      className="mx-3 mt-4 min-w-[40%] cursor-pointer rounded-full bg-white px-4 py-1 text-primary"
+                      onClick={() => setIsOpenRoomReopenModal(true)}
+                    >
+                      <p className="text-sm">このコンサルを再開する</p>
+                    </div>
+                  ) : (
+                    <div
+                      className="mx-3 mt-4 min-w-[40%] cursor-not-allowed rounded-full bg-btn-hover-gray
+                     px-4 py-1 text-primary"
+                    >
+                      <p className="text-sm">このコンサルを再開する</p>
+                    </div>
+                  )}
                   {isChatRoomOwner &&
                     (chatRoomData.chat_room.room_type === 'GROUP' ? (
                       <Link
@@ -378,7 +413,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                           <p className="text-sm">同じ医師グループに別の症例を相談する</p>
                         </div>
                       </Link>
-                    ) : (
+                    ) : chatRoomData.members.length > 0 ? (
                       <Link
                         href={{
                           pathname: 'newchatroom',
@@ -392,6 +427,13 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                           <p className="text-sm">同じ医師に別の症例を相談する</p>
                         </div>
                       </Link>
+                    ) : (
+                      <div
+                        className="mx-3 mt-4 min-w-[40%] cursor-not-allowed rounded-full
+                       bg-btn-hover-gray px-4 py-1 text-primary"
+                      >
+                        <p className="text-sm">同じ医師に別の症例を相談する</p>
+                      </div>
                     ))}
                 </div>
               </div>

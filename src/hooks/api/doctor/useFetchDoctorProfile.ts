@@ -5,9 +5,7 @@ export type UseFetchDoctorProfile = {
   doctor?: DoctorEntity;
 };
 
-export const useFetchDoctorProfile = (
-  accountId?: string
-): UseFetchDoctorProfile => {
+export const useFetchDoctorProfile = (accountId?: string): UseFetchDoctorProfile => {
   const { data: doctor } = useAuthenticatedSWR<DoctorEntity>(
     accountId ? `/doctor/doctor_info?account_id=${accountId}` : null
   );

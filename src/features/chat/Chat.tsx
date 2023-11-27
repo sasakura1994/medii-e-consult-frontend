@@ -10,9 +10,9 @@ import { useGetPublishmentStatus } from '@/hooks/api/chat/useGetPublishmentStatu
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { useFetchChatRoomList } from '@/hooks/api/chat/useFetchChatRoomList';
 import { mutateFetchUnreadCounts } from '@/hooks/api/chat/useFetchUnreadCounts';
-import { useRecoilValue } from 'recoil';
 import { isChatRoomSelectedState } from '@/globalStates/chat';
 import Link from 'next/link';
+import { useAtomValue } from 'jotai';
 
 type WebsocketResponseMessage = {
   type: 'subscribe_response' | 'pong' | 'mes';
@@ -31,11 +31,11 @@ export const Chat = () => {
   const { chat_room_id } = router.query as Query;
   const chatRoomIdStr = chat_room_id;
 
-  const isChatRoomSelected = useRecoilValue(isChatRoomSelectedState);
+  const isChatRoomSelected = useAtomValue(isChatRoomSelectedState);
   const { data: chatRoomList, mutate: mutateChatRoomList } = useFetchChatRoomList({
     query: ['FREE', 'BY_NAME', 'GROUP'],
   });
-  const { data: publishmentStatusData } = useGetPublishmentStatus(chatRoomIdStr);
+  const { data: publishmentStatusData, mutate: mutatePublishmentStatusData } = useGetPublishmentStatus(chatRoomIdStr);
   const { data: chatRoomData, mutate: mutateChatRoom } = useFetchChatRoom(chatRoomIdStr);
   const [selectedTab, setSelectedTab] = useState<'open' | 'close'>(
     chatRoomData?.chat_room.status === 'RESOLVED' || chatRoomData?.chat_room.status === 'CLOSED' ? 'close' : 'open'
@@ -108,10 +108,10 @@ export const Chat = () => {
         }, 10000);
       } else if (data.type === 'mes') {
         // TODO: なぜか500ms待機してチャット情報を更新するとチャットの送信が安定する
-        setTimeout(() => {
-          mutateChatList();
-          mutateChatRoom();
-          mutateChatRoomList();
+        setTimeout(async () => {
+          await mutateChatRoom();
+          await mutateChatList();
+          await mutateChatRoomList();
           mutateFetchUnreadCounts();
         }, 500);
       }
@@ -137,11 +137,12 @@ export const Chat = () => {
           chatListData={chatListData}
           mutateChatRoom={mutateChatRoom}
           mutateChatRoomList={mutateChatRoomList}
+          mutatePublishmentStatusData={mutatePublishmentStatusData}
           mutateChatList={mutateChatList}
           setSelectedTab={setSelectedTab}
         />
       ) : (
-        <div className="hidden h-screen w-[787px] flex-col border border-[#d5d5d5] bg-bg lg:flex" />
+        <div className="hidden h-screen flex-grow flex-col border border-[#d5d5d5] bg-bg lg:flex" />
       )}
       <div className="hidden h-[calc(100vh-62px)] w-[316px] flex-shrink-0 flex-grow-0 flex-col justify-between lg:flex">
         <div className="block" />

@@ -31,10 +31,7 @@ export const usePostConsultExampleComment = () => {
         example_id: args.consultExampleId,
         example_message_id: args.consultExampleMessageId,
       };
-      return axios.post<PostConsultExampleCommentResponseData>(
-        '/ConsultExampleComment/store',
-        data
-      );
+      return axios.post<PostConsultExampleCommentResponseData>('/ConsultExampleComment/store', data);
     },
     [axios]
   );
