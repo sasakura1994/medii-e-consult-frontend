@@ -22,7 +22,7 @@ export type EditGroupDetailProps = {
   mutateChatRoom?: KeyedMutator<FetchChatRoomResponseData>;
   mutateChatRoomList?: KeyedMutator<ChatRoomEntity[]>;
   mutateGroup?: KeyedMutator<FetchedGroupEntity>;
-  isClickSubmitButton: boolean;
+  isClickSubmitButtonFromModal?: boolean;
 };
 
 export const EditGroupDetail = (props: EditGroupDetailProps) => {
@@ -34,7 +34,7 @@ export const EditGroupDetail = (props: EditGroupDetailProps) => {
     mutateChatRoom,
     mutateChatRoomList,
     mutateGroup,
-    isClickSubmitButton,
+    isClickSubmitButtonFromModal,
   } = props;
   const {
     myAccountId,
@@ -58,7 +58,7 @@ export const EditGroupDetail = (props: EditGroupDetailProps) => {
     mutateChatRoom: mutateChatRoom,
     mutateChatRoomList: mutateChatRoomList,
     mutateGroup: mutateGroup,
-    isClickSubmitButton: isClickSubmitButton,
+    isClickSubmitButtonFromModal: isClickSubmitButtonFromModal,
   });
 
   return (
@@ -295,7 +295,7 @@ export const EditGroupDetail = (props: EditGroupDetailProps) => {
         <div className="mt-2 space-y-1">
           <label className="text-left font-bold">メッセージの通知頻度の設定</label>
           <div className="text-[13px]">
-            ※このグループカンファレンス内の通知頻度の設定することで、通知回数を抑えることができます。
+            ※このグループカンファレンス内の通知頻度を設定することで、通知回数を抑えることができます。
           </div>
 
           <DefaultRadio

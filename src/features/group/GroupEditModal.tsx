@@ -58,7 +58,7 @@ export const GroupEditModal = (props: GroupEditProps) => {
           setIsOpenEditModal={setIsOpen}
           mutateChatRoom={mutateChatRoom}
           mutateChatRoomList={mutateChatRoomList}
-          isClickSubmitButton={isClickSubmitButton}
+          isClickSubmitButtonFromModal={isClickSubmitButton}
         />
       </div>
     </Modal>

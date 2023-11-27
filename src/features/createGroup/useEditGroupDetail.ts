@@ -60,7 +60,7 @@ export const useEditGroupDetail = (props: EditGroupDetailProps) => {
     mutateChatRoom,
     mutateChatRoomList,
     mutateGroup,
-    isClickSubmitButton,
+    isClickSubmitButtonFromModal,
   } = props;
   const router = useRouter();
   const [isOpenInviteMemberModal, setIsOpenInviteMemberModal] = useState(false);
@@ -239,10 +239,10 @@ export const useEditGroupDetail = (props: EditGroupDetailProps) => {
   );
 
   useEffect(() => {
-    if (isClickSubmitButton) {
+    if (isClickSubmitButtonFromModal) {
       update();
     }
-  }, [isClickSubmitButton, update]);
+  }, [isClickSubmitButtonFromModal, update]);
 
   return {
     myAccountId,
