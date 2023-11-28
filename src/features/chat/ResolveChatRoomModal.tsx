@@ -41,8 +41,6 @@ export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
     setAboutConsultReviews,
     aboutSystemReviews,
     setAboutSystemReviews,
-    aboutConsultComment,
-    setAboutConsultComment,
     aboutSystemComment,
     setAboutSystemComment,
     resolve,
@@ -109,18 +107,6 @@ export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
             {aboutConsultReviews.map((review) => {
               return <ReviewRating key={review.key} review={review} setReviews={setAboutConsultReviews} />;
             })}
-            <TextArea
-              onChange={(e) => {
-                setAboutConsultComment(e.target.value);
-              }}
-              value={aboutConsultComment}
-              id="aboutConsult"
-              name="aboutConsult"
-              labelText="回答した医師へのコメント"
-              placeholder="ご意見をお聞かせください。"
-              className="mt-4 h-[72px] resize-none"
-              labelBadge={<Optional>任意</Optional>}
-            />
           </div>
         </div>
       ) : (
