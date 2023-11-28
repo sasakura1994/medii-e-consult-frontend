@@ -102,7 +102,7 @@ export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
     >
       {page === 'aboutConsult' ? (
         <div className="mb-3">
-          <p className="m-6 text-left text-2xl font-bold text-text-primary">{title}</p>
+          <p className="mx-4 my-6 text-left text-2xl font-bold text-text-primary lg:mx-6">{title}</p>
           <div className="mx-4 lg:mx-6">
             {aboutConsultReviews.map((review) => {
               return <ReviewRating key={review.key} review={review} setReviews={setAboutConsultReviews} />;
@@ -111,7 +111,7 @@ export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
         </div>
       ) : (
         <div className="mb-3">
-          <p className="m-6 text-left text-2xl font-bold text-text-primary">
+          <p className="mx-4 my-6 text-left text-2xl font-bold text-text-primary lg:mx-6">
             E-コンサルについてご意見をお聞かせください。
           </p>
           <div className="mx-4 lg:mx-6">
