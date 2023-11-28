@@ -393,7 +393,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                     </ul>
                   </div>
                   <div
-                    className="mt-2 flex cursor-pointer items-center justify-center"
+                    className="mt-2 flex cursor-pointer items-center justify-center gap-1"
                     onClick={() => {
                       setIsOpenAnnounce(false);
                     }}
