@@ -359,12 +359,12 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
               </div>
             </div>
             <div className={`${isOpenAnnounce ? 'border-none' : 'border-b'}`}>
-              <div className="m-4 flex items-center">
+              <div className={`${isOpenAnnounce ? 'm-4 mb-[10px]' : 'm-4 '} flex items-center`}>
                 <img src="icons/exclamation-triangle-blue.svg" alt="" className="mr-2" />
                 <p className="flex-grow text-base font-bold text-text-primary">E-コンサルからお願い</p>
                 {!isOpenAnnounce && (
                   <div
-                    className="flex cursor-pointer items-center gap-1"
+                    className="flex cursor-pointer items-center gap-0.5"
                     onClick={() => {
                       setIsOpenAnnounce(true);
                     }}
@@ -393,7 +393,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                     </ul>
                   </div>
                   <div
-                    className="mt-2 flex cursor-pointer items-center justify-center gap-1"
+                    className="mt-[10px] flex cursor-pointer items-center justify-center gap-0.5"
                     onClick={() => {
                       setIsOpenAnnounce(false);
                     }}
