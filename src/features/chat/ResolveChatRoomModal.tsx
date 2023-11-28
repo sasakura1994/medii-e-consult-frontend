@@ -111,7 +111,7 @@ export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
         </div>
       ) : (
         <div className="mb-3">
-          <p className="m-4 mt-6 text-center text-2xl font-bold text-text-primary">
+          <p className="m-6 text-left text-2xl font-bold text-text-primary">
             E-コンサルについてご意見をお聞かせください。
           </p>
           <div className="mx-4 lg:mx-6">
