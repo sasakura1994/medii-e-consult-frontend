@@ -22,7 +22,7 @@ export const useResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
     },
     {
       key: 'speed_score',
-      label: '回答までの早さはいかがでしたか？',
+      label: '回答までの早さはいかがでしたか',
       lowRatingText: '遅い',
       mediumRatingText: '期待通り',
       highRatingText: '早い',
