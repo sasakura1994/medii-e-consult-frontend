@@ -109,6 +109,13 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
     }
   }, [chatRoomData, accountId]);
 
+  const isViewingAnnounce = useMemo(() => {
+    if (chatRoomData && accountId) {
+      return chatRoomData.chat_room.owner_account_id === accountId;
+    }
+    return false;
+  }, [chatRoomData, accountId]);
+
   useEffect(() => {
     if (!chatListData) {
       return;
@@ -187,6 +194,7 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
     setIsOpenReConsultSuggestionModal,
     isOpenAnnounce,
     setIsOpenAnnounce,
+    isViewingAnnounce,
     selectedImage,
     setSelectedImage,
     setChatGlobalState,
