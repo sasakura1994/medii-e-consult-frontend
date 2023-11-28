@@ -42,27 +42,25 @@ const LoginButton = () => {
     return error;
   };
 
-  return <GoogleLogin onSuccess={onSuccess} onError={onError} type="standard" logo_alignment="left"  width='400' />;
+  return <GoogleLogin onSuccess={onSuccess} onError={onError} type="standard" logo_alignment="left" width="400" />;
 };
 
 const GoogleLoginButton = () => {
-  const clientId = process.env.GOOGLE_CLIENT_ID || "";
+  const clientId = process.env.GOOGLE_CLIENT_ID || '';
 
   return (
-    <div className='flex justify-center group'>
-      <div className='z-50 opacity-0 absolute group-hover:bg-monotone-200'>
+    <div className="group flex justify-center">
+      <div className="absolute z-50 mt-2 opacity-0 group-hover:bg-monotone-200">
         <GoogleOAuthProvider clientId={clientId}>
           <LoginButton />
         </GoogleOAuthProvider>
       </div>
-      <div
-        className='absolute m-auto border border-border-field rounded-md group-hover:bg-monotone-200 cursor-pointer'
-      >
-        <div className='flex justify-center items-center w-[400px] h-[56px]'>
-          <div className='mr-[5px]'>
+      <div className="absolute m-auto cursor-pointer rounded-md border border-border-field group-hover:bg-monotone-200">
+        <div className="flex h-[56px] w-[311px] items-center justify-center lg:w-[400px]">
+          <div className="mr-[5px]">
             <img src="icons/google.svg" alt="0" width="20" height="20" />
           </div>
-          <div className='text-text-caption text-base font-semibold'>Googleでログイン</div>
+          <div className="text-base font-semibold text-text-caption">Googleでログイン</div>
         </div>
       </div>
     </div>

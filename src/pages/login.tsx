@@ -3,10 +3,11 @@ import type { NextPageWithLayout } from '@/pages/_app';
 import { useLogin } from '@/hooks/useLogin';
 import Link from 'next/link';
 import { TextField } from '@/components/Parts/Form/TextField';
-import { PublicLayout } from '@/components/Layouts/PublicLayout';
 import GoogleLoginButton from '@/components/Button/GoogleLoginButton';
 import { AppleSignInButton } from '@/components/Button/AppleSignInButton';
 import PrimaryButton from '@/components/Button/PrimaryButton';
+import { CustomHead } from '@/components/Layouts/Header/CustomHead';
+import { LayoutLogoOnly } from '@/components/Layouts/LayoutLogoOnly';
 
 const GuideLink = ({
   children,
@@ -29,24 +30,26 @@ const Login: NextPageWithLayout = () => {
     useLogin();
 
   return (
-    <div className="mb-12 md:mt-6">
+    <div className="h-[93.4vh] w-full bg-bg pt-6 lg:pt-10">
       <div
         className="
           mx-auto
           flex
-          max-w-login-container
+          max-w-[345px]
           flex-col
           items-center
+          rounded-lg
           border
           border-solid
           border-login-container-frame
           bg-white
           pb-8
-          pt-4
+          lg:max-w-login-container
+          lg:pt-4
         "
       >
-        <h1 className="my-8 text-center text-2xl">E-コンサルにログイン</h1>
-        <form onSubmit={login} className="flex w-[394px] flex-col items-center">
+        <h1 className="my-6 text-center text-2xl">E-コンサルにログイン</h1>
+        <form onSubmit={login} className="flex w-[311px] flex-col items-center lg:w-[394px]">
           <TextField
             ref={mailAddressRef}
             placeholder="メールアドレス"
@@ -78,16 +81,16 @@ const Login: NextPageWithLayout = () => {
               size="large"
               type="submit"
               className="
-                mt-4
                 mb-6
-                text-base
-                font-semibold
-                rounded-full
+                mt-4
+                h-[56px]
+                w-[311px] 
                 px-14
                 py-2
-                w-[394px]
-                h-[56px]
+                text-base
+                font-semibold
                 drop-shadow-[0_4px_10px_rgba(92,107,192,.3)]
+                lg:w-[394px]
               "
             >
               ログイン
@@ -95,16 +98,18 @@ const Login: NextPageWithLayout = () => {
           </div>
           {errorMessage != '' && <p className="text-center font-bold text-red-500">{errorMessage}</p>}
         </form>
-        <div className="text-center w-[400px]">
-          <div className='flex w-full gap-x-4 items-center justify-center mb-3'>
-            <p className='border w-[93px] h-0'></p>
-            <p className='text-secondary'>その他の方法でログイン</p>
-            <p className='border w-[93px] h-0'></p>
+        <div className="w-[311px] text-center lg:w-[400px]">
+          <div className="mb-3 flex w-full items-center justify-center gap-x-4">
+            <p className="h-0 w-[50px] border lg:w-[93px]"></p>
+            <p className="text-secondary">その他の方法でログイン</p>
+            <p className="h-0 w-[50px] border lg:w-[93px]"></p>
           </div>
           <a href={nmoLoginUrl}>
             <div
               className="
+                mb-3
                 flex
+                h-[72px]
                 flex-col
                 items-center
                 gap-2
@@ -113,12 +118,11 @@ const Login: NextPageWithLayout = () => {
                 border-border-field
                 px-4
                 pb-1
-                pt-2
-                mb-3
-                hover:bg-monotone-200
-                text-text-caption
+                pt-3
                 text-base
                 font-semibold
+                text-text-caption
+                hover:bg-monotone-200
               "
             >
               <img src="images/alliance/logo-nmo-sp.png" alt="" width="100" />
@@ -128,11 +132,11 @@ const Login: NextPageWithLayout = () => {
           <div>
             <GoogleLoginButton />
           </div>
-          <div className="mt-[68px] mb-6" onMouseDown={saveRedirectUrl}>
+          <div className="mb-6 mt-[68px]" onMouseDown={saveRedirectUrl}>
             <AppleSignInButton>Appleでログイン</AppleSignInButton>
           </div>
         </div>
-        <div className='border border-border-divider w-full'></div>
+        <div className="w-full border border-border-divider"></div>
         <form onSubmit={login}>
           <div className="mt-6">
             <GuideLink
@@ -151,8 +155,11 @@ const Login: NextPageWithLayout = () => {
   );
 };
 
-Login.getLayout = (page: React.ReactElement) => {
-  return <PublicLayout>{page}</PublicLayout>;
-};
+Login.getLayout = (page: React.ReactElement) => (
+  <>
+    <CustomHead />
+    <LayoutLogoOnly>{page}</LayoutLogoOnly>
+  </>
+);
 
 export default Login;
