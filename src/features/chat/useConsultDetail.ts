@@ -158,11 +158,11 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
   }, [chatRoomData?.chat_room.chat_room_id]);
 
   useEffect(() => {
-    if (!chatRoomData) {
+    if (!chatListData) {
       return;
     }
-    setIsOpenAnnounce(chatRoomData.members.length === 0);
-  }, [chatRoomData]);
+    setIsOpenAnnounce(!chatListData.some((chat) => chat.account_id !== accountId));
+  }, [accountId, chatListData]);
 
   return {
     accountId,
