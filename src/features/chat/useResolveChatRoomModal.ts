@@ -18,6 +18,7 @@ export const useResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
       mediumRatingText: '期待通り',
       highRatingText: '期待以上',
       value: 0,
+      isRequired: true,
     },
     {
       key: 'speed_score',
@@ -26,6 +27,7 @@ export const useResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
       mediumRatingText: '期待通り',
       highRatingText: '早い',
       value: 0,
+      isRequired: true,
     },
     {
       key: 'repeat_score',
@@ -34,6 +36,7 @@ export const useResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
       mediumRatingText: 'どちらでもない',
       highRatingText: 'したい',
       value: 0,
+      isRequired: true,
     },
   ]);
   const [aboutSystemReviews, setAboutSystemReviews] = useState<Review[]>([
@@ -44,6 +47,7 @@ export const useResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
       mediumRatingText: '期待通り',
       highRatingText: '期待以上',
       value: 0,
+      isRequired: true,
     },
   ]);
   const [aboutConsultComment, setAboutConsultComment] = useState('');

@@ -19,6 +19,7 @@ export type Review = {
   mediumRatingText: string;
   highRatingText: string;
   value: ReviewScoreNumber;
+  isRequired: boolean;
 };
 
 export type ResolveChatRoomModalProps = {
