@@ -19,6 +19,7 @@ export type Review = {
   mediumRatingText: string;
   highRatingText: string;
   value: ReviewScoreNumber;
+  isRequired: boolean;
 };
 
 export type ResolveChatRoomModalProps = {
@@ -40,8 +41,6 @@ export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
     setAboutConsultReviews,
     aboutSystemReviews,
     setAboutSystemReviews,
-    aboutConsultComment,
-    setAboutConsultComment,
     aboutSystemComment,
     setAboutSystemComment,
     resolve,
@@ -103,31 +102,19 @@ export const ResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
     >
       {page === 'aboutConsult' ? (
         <div className="mb-3">
-          <p className="m-4 mt-6 text-center text-2xl font-bold text-text-primary">{title}</p>
-          <div className="mx-4 lg:mx-10">
+          <p className="mx-4 my-6 text-left text-2xl font-bold text-text-primary lg:mx-6">{title}</p>
+          <div className="mx-4 lg:mx-6">
             {aboutConsultReviews.map((review) => {
               return <ReviewRating key={review.key} review={review} setReviews={setAboutConsultReviews} />;
             })}
-            <TextArea
-              onChange={(e) => {
-                setAboutConsultComment(e.target.value);
-              }}
-              value={aboutConsultComment}
-              id="aboutConsult"
-              name="aboutConsult"
-              labelText="回答した医師へのコメント"
-              placeholder="ご意見をお聞かせください。"
-              className="mt-4 h-[72px] resize-none"
-              labelBadge={<Optional>任意</Optional>}
-            />
           </div>
         </div>
       ) : (
         <div className="mb-3">
-          <p className="m-4 mt-6 text-center text-2xl font-bold text-text-primary">
+          <p className="mx-4 my-6 text-left text-2xl font-bold text-text-primary lg:mx-6">
             E-コンサルについてご意見をお聞かせください。
           </p>
-          <div className="mx-4 lg:mx-10">
+          <div className="mx-4 lg:mx-6">
             {aboutSystemReviews.map((review) => {
               return <ReviewRating key={review.key} review={review} setReviews={setAboutSystemReviews} />;
             })}
