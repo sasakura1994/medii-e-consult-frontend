@@ -7,7 +7,7 @@ import { useGetPublishmentStatus } from '@/hooks/api/chat/useGetPublishmentStatu
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { useToken } from '@/hooks/authentication/useToken';
 import { useWebSocket } from '@/hooks/useWebSocket';
-import { useAtomValue } from 'jotai';
+import { useAtom } from 'jotai';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 
@@ -28,7 +28,7 @@ export const useChat = () => {
   const { chat_room_id } = router.query as Query;
   const chatRoomIdStr = chat_room_id;
 
-  const chatGlobalState = useAtomValue(chatState);
+  const [chatGlobalState, setChatGlobalState] = useAtom(chatState);
   const { data: chatRoomList, mutate: mutateChatRoomList } = useFetchChatRoomList({
     query: ['FREE', 'BY_NAME', 'GROUP'],
   });
@@ -127,6 +127,17 @@ export const useChat = () => {
       webSocket.removeEventListener('message', onMessage);
     };
   }, [accountId, mutateChatList, mutateChatRoom, mutateChatRoomList, socket, token]);
+
+  useEffect(() => {
+    if (!chatRoomIdStr) {
+      setChatGlobalState((prev) => {
+        return {
+          ...prev,
+          isSelected: false,
+        };
+      });
+    }
+  }, [chatRoomIdStr, setChatGlobalState]);
 
   return {
     chat_room_id,
