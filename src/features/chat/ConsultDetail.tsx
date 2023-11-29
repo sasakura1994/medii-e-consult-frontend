@@ -39,6 +39,8 @@ type ConsultDetailProps = {
     publishment_accepted: number;
   }>;
   setSelectedTab: React.Dispatch<React.SetStateAction<'open' | 'close'>>;
+  fetchNewChatList: (uid: number) => void;
+  resetChatListFromUid: () => void;
 };
 
 export const ConsultDetail = (props: ConsultDetailProps) => {
@@ -52,6 +54,8 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     mutateChatList,
     mutatePublishmentStatusData,
     setSelectedTab,
+    fetchNewChatList,
+    resetChatListFromUid,
   } = props;
   const {
     accountId,
@@ -83,7 +87,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     setIsOpenReConsultSuggestionModal,
     selectedImage,
     setSelectedImage,
-    setIsChatRoomSelected,
+    setChatGlobalState,
     getMedicalSpecialityName,
     getExperienceYear,
     activateChatRoom,
@@ -91,6 +95,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     medicalSpecialities: medicalSpecialities,
     chatRoomData: chatRoomData,
     chatListData: chatListData,
+    fetchNewChatList: fetchNewChatList,
   });
 
   const isMyRoom = useMemo(() => {
@@ -104,30 +109,26 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     if (!chatRoomData) {
       return <></>;
     }
-
+    const owner = chatRoomData.members.find((member) => member.account_id === chatRoomData.chat_room.owner_account_id);
     if (!isMyRoom) {
       if (chatRoomData.chat_room.is_real_name) {
-        const owner = chatRoomData.members.find(
-          (member) => member.account_id === chatRoomData.chat_room.owner_account_id
+        return (
+          <>
+            <p className="text-md font-bold">{owner?.last_name + ' ' + owner?.first_name + '先生'}</p>
+            <p className="text-xs">
+              ({getMedicalSpecialityName(owner?.speciality_1 ?? '')}・{getExperienceYear(owner?.qualified_year ?? 0)}
+              年目)
+            </p>
+          </>
         );
-        if (owner) {
-          return (
-            <>
-              <p className="text-md font-bold">{owner.last_name + ' ' + owner.first_name + '先生'}</p>
-              <p className="text-xs">
-                ({getMedicalSpecialityName(owner.speciality_1)}・{getExperienceYear(owner.qualified_year)}年目)
-              </p>
-            </>
-          );
-        }
       }
       return (
         <>
           <p className="text-md font-bold">質問医</p>
           {chatRoomData.members.length > 0 && (
             <p className="text-xs">
-              ({getMedicalSpecialityName(chatRoomData.members[0].speciality_1)}・
-              {getExperienceYear(chatRoomData.members[0].qualified_year)}年目)
+              ({getMedicalSpecialityName(owner?.speciality_1 ?? '')}・{getExperienceYear(owner?.qualified_year ?? 0)}
+              年目)
             </p>
           )}
         </>
@@ -221,7 +222,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
       {chatRoomData && isOpenResolveChatRoomModal && (
         <ResolveChatRoomModal
           setIsOpen={setIsOpenResolveChatRoomModal}
-          setIsOpenReConsultSuggestionModal={setIsOpenReConsultSuggestionModal}
+          setIsOpenReConsultConfirmModal={setIsOpenReConsultConfirmModal}
           chatRoomData={chatRoomData}
           setSelectedTab={setSelectedTab}
         />
@@ -240,7 +241,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
           mutatePublishmentStatusData={mutatePublishmentStatusData}
         />
       )}
-      {chatRoomData && publishmentStatusData && accountId && chatListDataWithDisplayName && (
+      {chatRoomData && accountId && chatListDataWithDisplayName && (
         <>
           {isOpenReConsultConfirmModal && (
             <ReConsultConfirmModal
@@ -285,16 +286,16 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
 
           <div
             className="flex h-full flex-grow flex-col overflow-hidden border border-[#d5d5d5]
-          lg:h-[calc(100vh-62px)]"
+          lg:h-[calc(100dvh-62px)]"
           >
             <div className="flex-shrink-0 flex-grow-0">
-              <div className="mb-2 mr-2 items-center space-x-1 lg:flex lg:h-14">
+              <div className="mr-2 items-center space-x-1 lg:flex lg:h-14">
                 <div className="line-clamp-1 flex items-center lg:flex-grow">
                   <img
                     src="icons/arrow_left.svg"
                     alt=""
                     className="ml-3 mt-4 block h-5 w-5 lg:hidden"
-                    onClick={() => setIsChatRoomSelected(false)}
+                    onClick={() => setChatGlobalState((prev) => ({ ...prev, isSelected: false }))}
                   />
                   <div className="mt-2 flex flex-wrap lg:mt-0 lg:flex-none">
                     {isCloseRoom ? (
@@ -405,13 +406,9 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                           pathname: 'newchatroom',
                           query: `target_group_id=${chatRoomData.chat_room.group_id}`,
                         }}
+                        className="mx-3 mt-4 min-w-[40%] cursor-pointer rounded-full bg-white px-4 py-1 text-primary"
                       >
-                        <div
-                          className="mx-3 mt-4 min-w-[40%] cursor-pointer
-                       rounded-full bg-white px-4 py-1 text-primary"
-                        >
-                          <p className="text-sm">同じ医師グループに別の症例を相談する</p>
-                        </div>
+                        <p className="text-sm">同じ医師グループに別の症例を相談する</p>
                       </Link>
                     ) : chatRoomData.members.length > 0 ? (
                       <Link
@@ -419,13 +416,9 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                           pathname: 'newchatroom',
                           query: `target_account_id=${chatRoomData.members[0].account_id}`,
                         }}
+                        className="mx-3 mt-4 min-w-[40%] cursor-pointer rounded-full bg-white px-4 py-1 text-primary"
                       >
-                        <div
-                          className="mx-3 mt-4 min-w-[40%] cursor-pointer
-                      rounded-full bg-white px-4 py-1 text-primary"
-                        >
-                          <p className="text-sm">同じ医師に別の症例を相談する</p>
-                        </div>
+                        <p className="text-sm">同じ医師に別の症例を相談する</p>
                       </Link>
                     ) : (
                       <div
@@ -467,6 +460,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                 chatRoomId={chatRoomData.chat_room.chat_room_id}
                 mutateChatList={mutateChatList}
                 mutateChatRoom={mutateChatRoom}
+                resetChatListFromUid={resetChatListFromUid}
               />
             </div>
           </div>
