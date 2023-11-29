@@ -82,7 +82,11 @@ export const UserConsult = (props: UserConsultProps) => {
           }}
         >
           <Link href="/newchatroom">
-            <PrimaryButton size="large">匿名&無料で質問する</PrimaryButton>
+            <PrimaryButton size="large">
+              匿名&無料で
+              <br />
+              エキスパートに質問する
+            </PrimaryButton>
           </Link>
         </div>
         <div
