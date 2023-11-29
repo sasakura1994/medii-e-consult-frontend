@@ -1,4 +1,4 @@
-import { chatState } from '@/globalStates/chat';
+import { isChatRoomSelectedState } from '@/globalStates/chat';
 import { FetchChatListResponseData } from '@/hooks/api/chat/useFetchChatList';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import { usePostActivateChatRoom } from '@/hooks/api/chat/usePostActivateChatRoom';
@@ -12,11 +12,10 @@ type useConsultDetailProps = {
   medicalSpecialities?: MedicalSpecialityEntity[];
   chatListData?: FetchChatListResponseData;
   chatRoomData?: FetchChatRoomResponseData;
-  fetchNewChatList: (uid: number) => void;
 };
 
 export const useConsultDetail = (props: useConsultDetailProps) => {
-  const { chatListData, chatRoomData, fetchNewChatList } = props;
+  const { chatListData, chatRoomData } = props;
   const [isOpenReConsultConfirmModal, setIsOpenReConsultConfirmModal] = useState(false);
   const [isOpenRoomReopenModal, setIsOpenRoomReopenModal] = useState(false);
   const [isOpenChatEditModal, setIsOpenChatEditModal] = useState(false);
@@ -28,13 +27,12 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
   const [isOpenCloseChatRoomModal, setIsOpenCloseChatRoomModal] = useState(false);
   const [isOpenResolveChatRoomModal, setIsOpenResolveChatRoomModal] = useState(false);
   const [isOpenReConsultSuggestionModal, setIsOpenReConsultSuggestionModal] = useState(false);
-  const setChatGlobalState = useSetAtom(chatState);
+  const setIsChatRoomSelected = useSetAtom(isChatRoomSelectedState);
   const [selectedImage, setSelectedImage] = useState<string>('');
   const { accountId } = useToken();
-  const chatListRef = useRef<HTMLDivElement>(null);
+  const chatListRef = useRef<HTMLDivElement | null>(null);
   const { getMedicalSpecialityName } = useMedicalSpeciality();
   const { activateChatRoom } = usePostActivateChatRoom();
-  const oldScrollHeightRef = useRef(0);
 
   const getExperienceYear = useCallback((year: number) => {
     const date = new Date();
@@ -47,7 +45,6 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
   const chatListDataWithDisplayName = useMemo(() => {
     if (chatListData && chatRoomData) {
       return chatListData.map((c) => {
-        // 自分の場合
         if (chatRoomData.me?.account_id === c.account_id) {
           if (chatRoomData.me.first_name) {
             return { ...c, displayName: chatRoomData.me.last_name + ' ' + chatRoomData.me.first_name + '先生' };
@@ -62,25 +59,23 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
             };
           }
           return { ...c, displayName: '' };
-          // 自分以外の場合
         } else if (
           chatRoomData.members &&
           chatRoomData.members.length > 0 &&
-          chatRoomData.members.some((member) => member.account_id === c.account_id)
+          chatRoomData.members[0].account_id === c.account_id
         ) {
-          const targetMember = chatRoomData.members.find((member) => c.account_id === member.account_id);
-          if (targetMember?.first_name) {
+          if (chatRoomData.members[0].first_name) {
             return {
               ...c,
-              displayName: targetMember.last_name + ' ' + targetMember.first_name + '先生',
+              displayName: chatRoomData.members[0].last_name + ' ' + chatRoomData.members[0].first_name + '先生',
             };
-          } else if (targetMember?.speciality_1) {
+          } else if (chatRoomData.members[0].speciality_1) {
             return {
               ...c,
               displayName:
-                getMedicalSpecialityName(targetMember.speciality_1) +
+                getMedicalSpecialityName(chatRoomData.members[0].speciality_1) +
                 ' ' +
-                getExperienceYear(targetMember.qualified_year) +
+                getExperienceYear(chatRoomData.members[0].qualified_year) +
                 '年目',
             };
           }
@@ -108,46 +103,12 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
     }
   }, [chatRoomData, accountId]);
 
-  useEffect(() => {
-    if (!chatListData) {
-      return;
-    }
-
-    const handleScroll = (e: Event) => {
-      const target = e.target as HTMLDivElement;
-      if (target.scrollTop === 0) {
-        // スクロールが一番上に来たら、一番上のメッセージのUIDを取得
-        const topMessageUid = chatListData[0].uid;
-        // スクロール位置を保存
-        oldScrollHeightRef.current = target.scrollHeight;
-        // fetchNewChatListを呼び出して新しいfromUidを設定する
-
-        fetchNewChatList(topMessageUid);
-      }
-    };
-
-    chatListRef.current?.addEventListener('scroll', handleScroll);
-
-    return () => {
-      chatListRef.current?.removeEventListener('scroll', handleScroll);
-    };
-  }, [chatListData, chatRoomData, fetchNewChatList]);
+  // チャットリストが更新される度にスクロールを一番下にする
   useEffect(() => {
     if (chatListRef.current) {
-      const newScrollHeight = chatListRef.current.scrollHeight;
-      const addedHeight = newScrollHeight - oldScrollHeightRef.current;
-      // スクロール位置を差分だけ下に移動
-      chatListRef.current.scrollTop += addedHeight;
-      oldScrollHeightRef.current = newScrollHeight;
+      chatListRef.current.scrollTop = chatListRef.current.scrollHeight;
     }
   }, [chatListData, chatRoomData]);
-
-  useEffect(() => {
-    // チャットルームIDが変わったときに高さをリセット
-    if (chatListRef.current) {
-      oldScrollHeightRef.current = 0;
-    }
-  }, [chatRoomData?.chat_room.chat_room_id]);
 
   return {
     accountId,
@@ -179,7 +140,7 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
     setIsOpenReConsultSuggestionModal,
     selectedImage,
     setSelectedImage,
-    setChatGlobalState,
+    setIsChatRoomSelected,
     getMedicalSpecialityName,
     getExperienceYear,
     activateChatRoom,

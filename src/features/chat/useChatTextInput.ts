@@ -5,11 +5,10 @@ import { useRef, useState, useCallback, ChangeEvent, useEffect } from 'react';
 
 type UseChatTextInputProps = {
   chatRoomId: string;
-  resetChatListFromUid: () => void;
 };
 
 export const useChatTextInput = (props: UseChatTextInputProps) => {
-  const { chatRoomId, resetChatListFromUid } = props;
+  const { chatRoomId } = props;
   const { postNewMessage } = usePostChatMessageNewText();
   const { postNewFile } = usePostChatMessageNewFiles();
   const textInputRef = useRef<HTMLTextAreaElement>(null);
@@ -18,7 +17,6 @@ export const useChatTextInput = (props: UseChatTextInputProps) => {
   const [editingImage, setEditingImage] = useState<File>();
   const [isUploading, setIsUploading] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
-  const isSendingRef = useRef(false);
 
   const onSelectFile = useCallback(async (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -53,22 +51,19 @@ export const useChatTextInput = (props: UseChatTextInputProps) => {
   };
 
   const postTextMessage = async () => {
-    if (!isSendingRef.current && textInputRef.current && textInputRef.current.value) {
-      isSendingRef.current = true;
-      resetChatListFromUid();
+    if (textInputRef.current) {
       await postNewMessage({
         chat_room_id: chatRoomId,
-        message: textInputRef.current.value,
+        message: textInputRef.current?.value ?? '',
       });
+
       textInputRef.current.value = '';
       resizeHeight();
-      isSendingRef.current = false;
     }
   };
 
   const postFile = async () => {
     if (fileInputRef.current?.files) {
-      resetChatListFromUid();
       setIsUploading(true);
       await postNewFile({
         chat_room_id: chatRoomId,
