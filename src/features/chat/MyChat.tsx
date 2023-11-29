@@ -182,7 +182,7 @@ export const MyChat = (props: MyChatProps) => {
               }}
             >
               <p
-                className="mb-3 mr-3 min-w-[200px] max-w-[670px] whitespace-pre-wrap break-words rounded-lg
+                className="mb-3 mr-3 max-w-[670px] whitespace-pre-wrap break-words rounded-lg
               rounded-tr-none bg-primary-light p-2"
               >
                 {chatData.message}
