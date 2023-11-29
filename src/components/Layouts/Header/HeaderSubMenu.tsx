@@ -19,7 +19,7 @@ export const HeaderSubMenu = () => {
       <nav className="flex items-center text-md text-text-primary">
         <Link href="/newchatroom">
           <PrimaryButton size="large" className="h-[40px] w-[181px] whitespace-nowrap">
-            E-コンサルで相談する
+            無料でエキスパート専門医に相談する
           </PrimaryButton>
         </Link>
         <div className="ml-4 flex items-center">
