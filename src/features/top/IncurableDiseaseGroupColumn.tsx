@@ -7,7 +7,7 @@ export const IncurableDiseaseGroupColumn = () => {
   const { postEventLog } = useEventLog();
 
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-4">
       {incurableDiseaseGroupColumnMock.map((incurableDisease, index) => {
         return (
           <div
@@ -17,7 +17,7 @@ export const IncurableDiseaseGroupColumn = () => {
             key={index}
           >
             <Link href={`${incurableDisease.consultUrl}`} target="_blank">
-              <div>
+              <div className="w-[320px]">
                 <img src={incurableDisease.image} alt="disease" />
               </div>
             </Link>
