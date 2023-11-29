@@ -1,52 +1,55 @@
-import axios from 'axios';
-import React, { useRef } from 'react';
-export const HubspotCTA = () => {
-  const firstNameRef = useRef<HTMLInputElement>(null);
-  const portalId = '43899841';
-  const formGuid = '08c21a97-0a22-4b63-a56b-8f1863b78f29';
-  const config = {
-    headers: {
-      'Message-Type': 'application/json',
-    },
-  };
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
+import HubspotForm from 'react-hubspot-form';
+
+type Props = {
+  accountId: string;
+  chatRoomIdStr: string;
+};
+type Query = {
+  chat_room_id?: string;
+};
+
+export const HubspotCTA = (props: Props) => {
+  const { accountId } = props;
+  const router = useRouter();
+  const { chat_room_id } = router.query as Query;
+
+  useEffect(() => {
+    const observer = new MutationObserver((mutationsList, observer) => {
+      for (const mutation of mutationsList) {
+        if (mutation.type === 'attributes') {
+          const iframeElement = window.document.getElementsByTagName('iframe');
+          if (iframeElement[0]) {
+            const accountIdInput = iframeElement[0].contentDocument?.getElementById(
+              `accountid-${process.env.HUBSPOT_FORM_ID}`
+            );
+            const chatRoomIdInput = iframeElement[0].contentDocument?.getElementById(
+              `chatroom_id-${process.env.HUBSPOT_FORM_ID}`
+            );
+            if (accountIdInput && chatRoomIdInput && accountId && chat_room_id) {
+              console.log('chat_room_id', chat_room_id);
+
+              accountIdInput.setAttribute('disabled', 'disabled');
+              accountIdInput.setAttribute('value', accountId);
+              chatRoomIdInput.setAttribute('disabled', 'disabled');
+              chatRoomIdInput.setAttribute('value', chat_room_id);
+              observer.disconnect();
+            }
+          }
+        }
+      }
+    });
+
+    const config = { attributes: true, childList: true, subtree: true };
+    observer.observe(document.body, config);
+
+    return () => observer.disconnect();
+  }, [accountId, chat_room_id]);
+
   return (
-    <>
-      <form
-        onSubmit={async (e) => {
-          e.preventDefault();
-          await axios.post(
-            `https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formGuid}`,
-            {
-              portalId,
-              formGuid,
-              fields: [
-                {
-                  name: 'firstname',
-                  value: firstNameRef.current?.value,
-                },
-              ],
-            },
-            config
-          );
-        }}
-      >
-        <label>
-          名前
-          <input
-            className="rounded-sm border border-gray-300"
-            type="text"
-            ref={firstNameRef}
-            onChange={(e) => {
-              if (firstNameRef.current) {
-                firstNameRef.current.value = e.target.value;
-              }
-            }}
-          />
-        </label>
-        <button type="submit" value="Submit">
-          送信
-        </button>
-      </form>
-    </>
+    <div className="m-4">
+      <HubspotForm portalId={process.env.HUBSPOT_PORTAL_ID} formId={process.env.HUBSPOT_FORM_ID} />
+    </div>
   );
 };
