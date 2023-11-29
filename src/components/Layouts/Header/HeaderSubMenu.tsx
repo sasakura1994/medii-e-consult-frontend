@@ -20,8 +20,8 @@ export const HeaderSubMenu = () => {
     <>
       <nav className="flex items-center text-md text-text-primary">
         <div
-          onClick={() => {
-            postEventLog({ name: 'header-create-consult' });
+          onClick={async () => {
+            await postEventLog({ name: 'header-create-consult' });
           }}
         >
           <Link href="/newchatroom?from=header">

@@ -77,8 +77,8 @@ export const UserConsult = (props: UserConsultProps) => {
         <p className="flex-grow text-xxl font-bold text-text-primary">あなたに関わるE-コンサル</p>
         <div
           className="hidden whitespace-nowrap lg:block"
-          onClick={() => {
-            postEventLog({ name: 'top-create-consult' });
+          onClick={async () => {
+            await postEventLog({ name: 'top-create-consult' });
           }}
         >
           <Link href="/newchatroom?from=top">
