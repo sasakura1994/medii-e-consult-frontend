@@ -6,6 +6,7 @@ import { useFetchCurrentPoint } from '@/features/mypages/pointHistory/useFetchCu
 import { usePopperTooltip } from 'react-popper-tooltip';
 import { Tooltip } from '@/components/Tooltip/Tooltip';
 import { HeaderMyPageButton } from './HeaderMyPageButton';
+import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 
 export const HeaderSubMenu = () => {
   const ticketTooltip = usePopperTooltip();
@@ -13,15 +14,22 @@ export const HeaderSubMenu = () => {
 
   const { ticketCount } = useFetchTicketCount();
   const { currentPoint } = useFetchCurrentPoint();
+  const { postEventLog } = useEventLog();
 
   return (
     <>
       <nav className="flex items-center text-md text-text-primary">
-        <Link href="/newchatroom">
-          <PrimaryButton size="large" className="h-[40px] w-[181px] whitespace-nowrap">
-            無料でエキスパート専門医に相談する
-          </PrimaryButton>
-        </Link>
+        <div
+          onClick={() => {
+            postEventLog({ name: 'header-create-consult20221129', from: 'header20221129' });
+          }}
+        >
+          <Link href="/newchatroom">
+            <PrimaryButton size="large" className="h-[40px] w-[181px] whitespace-nowrap">
+              無料でエキスパート専門医に相談する
+            </PrimaryButton>
+          </Link>
+        </div>
         <div className="ml-4 flex items-center">
           <HeaderMyPageButton />
         </div>

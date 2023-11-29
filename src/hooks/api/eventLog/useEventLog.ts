@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 type Args = {
   name: string;
   parameter?: string;
+  from?: string;
 };
 
 type UseEventLog = {
