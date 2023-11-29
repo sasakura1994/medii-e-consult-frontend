@@ -26,7 +26,7 @@ export const HeaderSubMenu = () => {
         >
           <Link href="/newchatroom">
             <PrimaryButton size="large" className="h-[40px] w-[181px] whitespace-nowrap">
-              無料でエキスパート専門医に相談する
+              匿名&無料で質問する
             </PrimaryButton>
           </Link>
         </div>
