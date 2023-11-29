@@ -30,7 +30,7 @@ const Login: NextPageWithLayout = () => {
     useLogin();
 
   return (
-    <div className="h-[93.4vh] w-full bg-bg pt-6 lg:pt-10">
+    <div className="h-full w-full bg-bg pt-6 lg:pt-10">
       <div
         className="
           mx-auto
@@ -100,9 +100,9 @@ const Login: NextPageWithLayout = () => {
         </form>
         <div className="w-[311px] text-center lg:w-[400px]">
           <div className="mb-3 flex w-full items-center justify-center gap-x-4">
-            <p className="h-0 w-[50px] border lg:w-[93px]"></p>
+            <p className="h-0 w-[50px] border-t lg:w-[93px]"></p>
             <p className="text-secondary">その他の方法でログイン</p>
-            <p className="h-0 w-[50px] border lg:w-[93px]"></p>
+            <p className="h-0 w-[50px] border-t lg:w-[93px]"></p>
           </div>
           <a href={nmoLoginUrl}>
             <div
@@ -136,7 +136,7 @@ const Login: NextPageWithLayout = () => {
             <AppleSignInButton>Appleでログイン</AppleSignInButton>
           </div>
         </div>
-        <div className="w-full border border-border-divider"></div>
+        <div className="w-full border-t border-border-divider" />
         <form onSubmit={login}>
           <div className="mt-6">
             <GuideLink
@@ -151,6 +151,9 @@ const Login: NextPageWithLayout = () => {
           </div>
         </form>
       </div>
+      <footer className="mt-[168px] bg-white pt-1 text-center text-xs lg:mt-[136px]">
+        @Medii, Inc. All Right Reserved
+      </footer>
     </div>
   );
 };
