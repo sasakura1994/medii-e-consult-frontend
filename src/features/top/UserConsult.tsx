@@ -78,10 +78,10 @@ export const UserConsult = (props: UserConsultProps) => {
         <div
           className="hidden whitespace-nowrap lg:block"
           onClick={() => {
-            postEventLog({ name: 'top-create-consult20221129', from: 'top20221129' });
+            postEventLog({ name: 'top-create-consult' });
           }}
         >
-          <Link href="/newchatroom">
+          <Link href="/newchatroom?from=top">
             <PrimaryButton size="large">
               匿名&無料で
               <br />

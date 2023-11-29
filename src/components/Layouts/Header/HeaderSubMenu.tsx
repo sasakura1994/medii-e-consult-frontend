@@ -21,14 +21,12 @@ export const HeaderSubMenu = () => {
       <nav className="flex items-center text-md text-text-primary">
         <div
           onClick={() => {
-            postEventLog({ name: 'header-create-consult20221129', from: 'header20221129' });
+            postEventLog({ name: 'header-create-consult' });
           }}
         >
-          <Link href="/newchatroom">
-            <PrimaryButton size="large" className="h-[40px] w-[181px] whitespace-nowrap">
-              匿名&無料で
-              <br />
-              エキスパートに質問する
+          <Link href="/newchatroom?from=header">
+            <PrimaryButton size="large" className="h-[50px] w-[181px] whitespace-nowrap">
+              匿名&無料で質問する
             </PrimaryButton>
           </Link>
         </div>
