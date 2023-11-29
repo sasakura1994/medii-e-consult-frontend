@@ -25,8 +25,8 @@ export const RoomReopenModal = (props: RoomReopenModalProps) => {
 
   return (
     <Modal className="w-full px-3 lg:w-[644px]" isCenter setShowModal={setIsOpenRoomReopenModal}>
-      <div className="mx-2 lg:my-[15px]">
-        <p className="mt-9 text-center text-2xl font-bold">このコンサルルームを再度オープンします</p>
+      <div className="mx-2 lg:mx-[82px] lg:my-[15px]">
+        <p className="mt-9 text-2xl font-bold">このコンサルルームを再度オープンします</p>
         {isChatRoomOwner ? (
           <div className="mb-9 mt-3 text-center text-sm font-bold">
             <p className="mb-3">再度オープンの理由をお聞かせください</p>

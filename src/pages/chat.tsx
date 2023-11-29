@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
+import { Layout } from '@/components/Layouts/Layout';
 import { CustomHead } from '@/components/Layouts/Header/CustomHead';
 import { Chat } from '@/features/chat/Chat';
-import { chatState } from '@/globalStates/chat';
+import { NextPageWithLayout } from './_app';
+import { isChatRoomSelectedState } from '@/globalStates/chat';
 import { useRouter } from 'next/router';
 import { useAtom } from 'jotai';
-import { FooterSpMenu } from '@/components/Layouts/Footer/FooterSpMenu';
-import { Header } from '@/components/Layouts/Header/Header';
 
 type Query = {
   chat_room_id?: string;
 };
 
-const ChatPage = () => {
+const ChatPage: NextPageWithLayout = () => {
   const router = useRouter();
   const { chat_room_id } = router.query as Query;
-  const [chatGlobalState, setChatGlobalState] = useAtom(chatState);
+  const [isChatRoomSelected, setIsChatRoomSelected] = useAtom(isChatRoomSelectedState);
   const [windowWidth, setWindowWidth] = useState<number | undefined>(undefined);
 
   useEffect(() => {
@@ -31,35 +31,26 @@ const ChatPage = () => {
 
   useEffect(() => {
     if (chat_room_id) {
-      setChatGlobalState((prev) => ({ ...prev, isSelected: true }));
+      setIsChatRoomSelected(true);
     }
-  }, [chat_room_id, setChatGlobalState]);
+  }, [chat_room_id, setIsChatRoomSelected]);
 
   return (
-    <>
+    <div className="h-[100dvh] overflow-hidden">
       <CustomHead />
-      {windowWidth && windowWidth >= 1024 ? (
-        <div className="h-[100dvh] overflow-hidden">
-          <Header />
+      {(windowWidth && windowWidth >= 1024) || (!isChatRoomSelected && windowWidth && windowWidth < 1024) ? (
+        <Layout>
           <Chat />
-        </div>
-      ) : chatGlobalState.isSelected ? (
-        <div className="h-[100dvh] overflow-hidden">
-          <Chat />
-        </div>
+        </Layout>
       ) : (
-        <div className="h-[100dvh] overflow-hidden">
-          <Header />
-          <Chat />
-          <FooterSpMenu />
-        </div>
+        <Chat />
       )}
-    </>
+    </div>
   );
 };
 
 export default ChatPage;
 
-ChatPage.getLayout = (page: React.ReactElement) => {
+ChatPage.getLayout = (page) => {
   return <>{page}</>;
 };

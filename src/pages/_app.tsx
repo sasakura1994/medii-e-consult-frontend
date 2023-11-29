@@ -85,7 +85,7 @@ const App = (props: AppPropsWithLayout) => {
     }
     if (
       // 認証が不要なページはsrc/hooks/authentication/useAuthenticationOnPage.tsに記載する
-      ['/group', '/creategroup'].some((str) => pathname.includes(str))
+      ['/chat', '/group', '/creategroup'].some((str) => pathname.includes(str))
     ) {
       absoluteUrl.pathname = pathname;
       window.location.href = absoluteUrl.toString();

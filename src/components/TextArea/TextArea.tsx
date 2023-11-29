@@ -47,7 +47,7 @@ const TextArea = (props: TextAreaProps) => {
   return (
     <>
       <label htmlFor={id} className="mb-2 flex items-center gap-x-2">
-        <p className="text-base font-bold text-text-primary">{labelText}</p>
+        <p className="text-base font-semibold text-text-primary">{labelText}</p>
         {labelBadge}
       </label>
       <textarea

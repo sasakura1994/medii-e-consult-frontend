@@ -5,7 +5,6 @@ import { ModalFooter, type ModalFooterProps } from './ModalFooter';
 export type ModalPropsType = {
   children: React.ReactNode;
   pcWidth?: '600' | '400';
-  disableCloseOnOverlayClick?: boolean;
   className?: string;
   isCenter?: boolean;
   setShowModal?: (isShow: boolean) => void;
@@ -13,15 +12,7 @@ export type ModalPropsType = {
 } & ModalFooterProps;
 
 export const Modal: React.FC<ModalPropsType> = (props) => {
-  const {
-    isCenter,
-    children,
-    pcWidth = '600',
-    disableCloseOnOverlayClick,
-    className,
-    dataTestId,
-    ...ModalFooterProps
-  } = props;
+  const { isCenter, children, pcWidth = '600', className, dataTestId, ...ModalFooterProps } = props;
   const { hideModal, modalRef } = useModal(props);
   const pcWidthClass = `w-full lg:w-[${pcWidth}px]`;
   return (
@@ -30,7 +21,7 @@ export const Modal: React.FC<ModalPropsType> = (props) => {
         isCenter === true ? 'flex items-center justify-center' : ''
       }`}
       style={{ height: '100dvh' }}
-      onMouseDown={disableCloseOnOverlayClick ? () => {} : hideModal}
+      onMouseDown={hideModal}
       data-testid={dataTestId}
     >
       <div
