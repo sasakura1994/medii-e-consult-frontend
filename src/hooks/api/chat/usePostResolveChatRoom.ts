@@ -1,10 +1,14 @@
+import { ReviewScoreNumber } from '@/features/chat/ResolveChatRoomModal';
 import { useAxios } from '@/hooks/network/useAxios';
 import { useCallback } from 'react';
 
 export type PostResolveChatRoomRequestData = {
   chat_room_id: string;
-  comment: string;
-  score: number;
+  quality_score: ReviewScoreNumber;
+  speed_score: ReviewScoreNumber;
+  repeat_score: ReviewScoreNumber;
+  responder_comment: string;
+  system_score: ReviewScoreNumber;
   system_comment: string;
 };
 export type PostResolveChatRoomResponseData = {
