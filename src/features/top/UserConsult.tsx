@@ -75,9 +75,14 @@ export const UserConsult = (props: UserConsultProps) => {
     <>
       <div className="flex lg:mt-5">
         <p className="flex-grow text-xxl font-bold text-text-primary">あなたに関わるE-コンサル</p>
-        <div className="hidden whitespace-nowrap lg:block">
+        <div
+          className="hidden whitespace-nowrap lg:block"
+          onClick={() => {
+            postEventLog({ name: 'top-create-consult20221129', from: 'top20221129' });
+          }}
+        >
           <Link href="/newchatroom">
-            <PrimaryButton size="large">E-コンサルで相談する</PrimaryButton>
+            <PrimaryButton size="large">匿名&無料で質問する</PrimaryButton>
           </Link>
         </div>
         <div
