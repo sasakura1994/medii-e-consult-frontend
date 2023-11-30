@@ -3,8 +3,7 @@ import React from 'react';
 import { ConsultTitle } from './ConsultTitle';
 import { ChatRoomEntity } from '@/types/entities/chat/ChatRoomEntity';
 import { FetchUnreadCountsResponseData } from '@/hooks/api/chat/useFetchUnreadCounts';
-import { isChatRoomSelectedState } from '@/globalStates/chat';
-import { useSetAtom } from 'jotai';
+import { useCloseConsultList } from './useCloseConsultList';
 
 type CloseConsultListProps = {
   chatRoomList?: ChatRoomEntity[];
@@ -13,9 +12,10 @@ type CloseConsultListProps = {
 
 export const CloseConsultList = (props: CloseConsultListProps) => {
   const { chatRoomList, unreadCountList } = props;
-  const setIsChatRoomSelected = useSetAtom(isChatRoomSelectedState);
+  const { scrollContainerRef, setChatGlobalState } = useCloseConsultList();
+
   return (
-    <div className="h-full overflow-auto bg-white pb-36">
+    <div className="h-full overflow-auto bg-white pb-36" ref={scrollContainerRef}>
       {unreadCountList &&
         chatRoomList &&
         chatRoomList
@@ -29,7 +29,12 @@ export const CloseConsultList = (props: CloseConsultListProps) => {
                   query: { chat_room_id: chatRoom.chat_room_id },
                 }}
                 onClick={() => {
-                  setIsChatRoomSelected(true);
+                  const scrollPosition = scrollContainerRef.current?.scrollTop;
+                  setChatGlobalState((prev) => ({
+                    ...prev,
+                    isSelected: true,
+                    closeChatScrollPosition: scrollPosition || 0,
+                  }));
                 }}
               >
                 <ConsultTitle

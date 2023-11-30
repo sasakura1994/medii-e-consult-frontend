@@ -57,6 +57,7 @@ type FileForReConsult = {
 type NewChatRoomQuery = {
   target_account_id?: string;
   target_group_id?: string;
+  target_speciality?: string;
   reconsult?: string;
   room_type?: ChatRoomType;
   from?: string;
@@ -226,7 +227,17 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     }
 
     setInitializingStatus('initializing');
-
+    if (query.target_speciality) {
+      const targetSpeciality = medicalSpecialities.find(
+        (speciality) => speciality.speciality_code === query.target_speciality
+      );
+      if (targetSpeciality) {
+        setChatRoom((chatRoom) => ({
+          ...chatRoom,
+          target_specialities: [targetSpeciality.speciality_code],
+        }));
+      }
+    }
     if (query.reconsult) {
       const baseChatRoomData = await fetchBaseChatRoomForReConsult(query.reconsult);
       if (!baseChatRoomData) {
@@ -268,6 +279,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     initializingStatus,
     medicalSpecialities,
     query.reconsult,
+    query.target_speciality,
     router.isReady,
   ]);
 
