@@ -119,6 +119,7 @@ describe('useGroupDetail', () => {
   test('正しい初期値を返す', () => {
     const props: UseGroupDetailProps = {
       chatRoomData: commonChatRoomData,
+      fetchNewChatList: jest.fn(),
     };
 
     const { result } = renderHook(() => useGroupDetail(props));
@@ -137,6 +138,7 @@ describe('useGroupDetail', () => {
   test('モーダルの開閉を制御する', () => {
     const props: UseGroupDetailProps = {
       chatRoomData: commonChatRoomData,
+      fetchNewChatList: jest.fn(),
     };
 
     const { result } = renderHook(() => useGroupDetail(props));
@@ -160,6 +162,7 @@ describe('useGroupDetail', () => {
         ...commonChatRoomData,
         members: [member2],
       },
+      fetchNewChatList: jest.fn(),
     };
 
     const { result } = renderHook(() => useGroupDetail(props));
@@ -175,6 +178,7 @@ describe('useGroupDetail', () => {
         ...commonChatRoomData,
         members: [member1],
       },
+      fetchNewChatList: jest.fn(),
     };
 
     const { result } = renderHook(() => useGroupDetail(props));
