@@ -9,8 +9,8 @@ import { dateFormat } from '@/libs/date';
 import { ConsultExampleActions } from './ConsultExampleActions';
 import { ConsultExampleDetailMessage } from './ConsultExampleDetailMessage';
 import { useConsultExampleActions } from './useConsultExampleActions';
-import { PrimaryButton } from '@/components/Parts/Button/PrimaryButton';
 import Link from 'next/link';
+import PrimaryButton from '@/components/Button/PrimaryButton';
 
 type Props = {
   consultExample: ConsultExampleDetailEntity;
@@ -137,10 +137,10 @@ export const ConsultExampleDetail: React.FC<Props> = ({
       {isShowAction && (
         <Card className="mt-10">
           <section className="mt-10 px-5">
-            <h3 className="text-center text-[36px] font-bold leading-[1.33] text-primary">
+            <h3 className="text-center text-[36px] font-bold leading-[1.33] text-medii-blue-base">
               E-コンサルで
               <br className="lg:hidden" />
-              質問してみませんか?
+              相談してみませんか？
             </h3>
             <p className="mt-8 text-center text-sm leading-7">
               さまざまな理由から解決困難な
@@ -149,10 +149,12 @@ export const ConsultExampleDetail: React.FC<Props> = ({
               <br />
               オンラインを通して、専門・知見のある医師に質問・相談することができます
             </p>
-            <div className="mt-10 text-center font-medium text-primary">小さな課題でも、まずは相談してみませんか？</div>
+            <div className="mt-10 text-center font-medium text-medii-blue-base">
+              小さな課題でも、まずは相談してみませんか？
+            </div>
             <div className="mb-20 mt-4 flex justify-center lg:mb-10">
               <Link href={`/newchatroom?from=example_${consultExample.example_id}`}>
-                <PrimaryButton>匿名でコンサル作成</PrimaryButton>
+                <PrimaryButton>E-コンサルで相談する</PrimaryButton>
               </Link>
             </div>
           </section>
