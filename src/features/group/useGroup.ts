@@ -31,7 +31,12 @@ export const useGroup = () => {
   });
   const { data: chatRoomData, mutate: mutateChatRoom } = useFetchChatRoom(group_room_id);
   const { medicalSpecialities } = useFetchMedicalSpecialities();
-  const { data: chatListData, mutate: mutateChatList } = useFetchChatList(group_room_id);
+  const {
+    data: chatListData,
+    mutate: mutateChatList,
+    fetchNewChatList,
+    resetFromUid: resetChatListFromUid,
+  } = useFetchChatList(group_room_id);
 
   useEffect(() => {
     if (group_room_id) {
@@ -126,5 +131,7 @@ export const useGroup = () => {
     mutateChatRoom,
     mutateChatRoomList,
     mutateChatList,
+    fetchNewChatList,
+    resetChatListFromUid,
   };
 };

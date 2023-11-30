@@ -22,10 +22,20 @@ type ConsultDetailProps = {
   mutateChatRoomList?: KeyedMutator<ChatRoomEntity[]>;
   mutateChatList?: KeyedMutator<FetchChatListResponseData>;
   mutateFetchUnreadCounts?: KeyedMutator<FetchUnreadCountsResponseData>;
+  fetchNewChatList: (uid: number) => void;
+  resetChatListFromUid: () => void;
 };
 
 export const GroupDetail = (props: ConsultDetailProps) => {
-  const { chatRoomData, chatListData, mutateChatRoom, mutateChatRoomList, mutateChatList } = props;
+  const {
+    chatRoomData,
+    chatListData,
+    mutateChatRoom,
+    mutateChatRoomList,
+    mutateChatList,
+    fetchNewChatList,
+    resetChatListFromUid,
+  } = props;
   const {
     group,
     setIsOpenGroupMemberModal,
@@ -45,6 +55,8 @@ export const GroupDetail = (props: ConsultDetailProps) => {
     chatListRef,
   } = useGroupDetail({
     chatRoomData,
+    chatListData,
+    fetchNewChatList,
   });
   const groupDisplayTitle = useMemo(() => {
     if (!group) {
@@ -199,6 +211,7 @@ export const GroupDetail = (props: ConsultDetailProps) => {
               chatRoomId={chatRoomData.chat_room.chat_room_id}
               mutateChatList={mutateChatList}
               mutateChatRoom={mutateChatRoom}
+              resetChatListFromUid={resetChatListFromUid}
             />
           </div>
         </div>

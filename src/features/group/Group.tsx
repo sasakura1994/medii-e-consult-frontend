@@ -15,6 +15,8 @@ export const Group = () => {
     mutateChatRoom,
     mutateChatRoomList,
     mutateChatList,
+    fetchNewChatList,
+    resetChatListFromUid,
   } = useGroup();
   return (
     <div className="flex h-full bg-white">
@@ -27,6 +29,8 @@ export const Group = () => {
           mutateChatRoom={mutateChatRoom}
           mutateChatRoomList={mutateChatRoomList}
           mutateChatList={mutateChatList}
+          fetchNewChatList={fetchNewChatList}
+          resetChatListFromUid={resetChatListFromUid}
         />
       ) : (
         <div className="hidden h-screen flex-grow flex-col border border-[#d5d5d5] bg-bg lg:flex" />
