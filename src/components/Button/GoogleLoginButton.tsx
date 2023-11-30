@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { useGoogleLogin } from '@/hooks/api/doctor/useGoogleLogin';
 import { mutateFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
@@ -42,7 +42,23 @@ const LoginButton = () => {
     return error;
   };
 
-  return <GoogleLogin onSuccess={onSuccess} onError={onError} type="standard" logo_alignment="left" width="400" />;
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWidth(window.innerWidth > 1024 ? 390 : 300);
+    };
+
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  return <GoogleLogin onSuccess={onSuccess} onError={onError} type="standard" logo_alignment="left" width={width} />;
 };
 
 const GoogleLoginButton = () => {
