@@ -1,7 +1,7 @@
 import React from 'react';
+import { incurableDiseaseGroupColumnMock } from '@/hooks/api/doctor/IncurableDiseaseGroupColumn';
 import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 import Link from 'next/link';
-import { incurableDiseaseGroupColumnMock } from '@/hooks/api/doctor/IncurableDiseaseGroupColumn';
 
 export const IncurableDiseaseGroupColumn = () => {
   const { postEventLog } = useEventLog();
