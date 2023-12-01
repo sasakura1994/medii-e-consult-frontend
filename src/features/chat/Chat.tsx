@@ -23,6 +23,7 @@ export const Chat = () => {
     resetChatListFromUid,
     chatGlobalState,
     accountId,
+    isResponderConsult,
   } = useChat();
   return (
     <div className="flex h-full bg-white">
@@ -50,7 +51,9 @@ export const Chat = () => {
       >
         <div className="block" />
         <div className="flex justify-center overflow-auto">
-          {accountId && chat_room_id && <HubspotCTA accountId={accountId} chatRoomId={chat_room_id} />}
+          {accountId && chat_room_id && isResponderConsult && (
+            <HubspotCTA accountId={accountId} chatRoomId={chat_room_id} />
+          )}
         </div>
         <div className="mb-2 ml-2 flex flex-col">
           <Link href="privacyPolicy" className="text-sm text-[#999999] underline">

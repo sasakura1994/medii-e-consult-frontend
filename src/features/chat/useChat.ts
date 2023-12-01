@@ -9,7 +9,7 @@ import { useToken } from '@/hooks/authentication/useToken';
 import { useWebSocket } from '@/hooks/useWebSocket';
 import { useAtom } from 'jotai';
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
 type WebsocketResponseMessage = {
   type: 'subscribe_response' | 'pong' | 'mes';
@@ -44,6 +44,16 @@ export const useChat = () => {
     fetchNewChatList,
     resetFromUid: resetChatListFromUid,
   } = useFetchChatList(chatRoomIdStr);
+
+  const isResponderConsult = useMemo(() => {
+    if (!chatRoomData) {
+      return false;
+    }
+    if (chatRoomData.chat_room.owner_account_id !== accountId) {
+      return true;
+    }
+    return false;
+  }, [chatRoomData, accountId]);
 
   useEffect(() => {
     if (chatRoomIdStr) {
@@ -156,5 +166,6 @@ export const useChat = () => {
     resetChatListFromUid,
     chatGlobalState,
     accountId,
+    isResponderConsult,
   };
 };
