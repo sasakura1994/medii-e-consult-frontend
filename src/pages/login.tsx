@@ -71,7 +71,7 @@ const Login: NextPageWithLayout = () => {
               setPassword(e.target.value);
             }}
           />
-          <div className="mt-4 w-full text-right">
+          <div className="mt-4 w-full text-right hover:underline">
             <GuideLink href="/PasswordResetRequest" onClick={saveRedirectUrl}>
               パスワードをお忘れの方
             </GuideLink>
@@ -89,7 +89,6 @@ const Login: NextPageWithLayout = () => {
                 py-2
                 text-base
                 font-semibold
-                drop-shadow-[0_4px_10px_rgba(92,107,192,.3)]
                 lg:w-[394px]
               "
             >
@@ -138,7 +137,7 @@ const Login: NextPageWithLayout = () => {
         </div>
         <div className="w-full border-t border-border-divider" />
         <form onSubmit={login}>
-          <div className="mt-6">
+          <div className="mt-6 hover:underline">
             <GuideLink
               href="/registration"
               onClick={(e) => {
@@ -151,7 +150,7 @@ const Login: NextPageWithLayout = () => {
           </div>
         </form>
       </div>
-      <footer className="mt-[168px] bg-white pt-1 text-center text-xs lg:mt-[136px]">
+      <footer className="mt-[170px] bg-medii-blue-500 pb-[13px] pt-1 text-center text-xs lg:mt-[138px] lg:bg-white">
         @Medii, Inc. All Right Reserved
       </footer>
     </div>
