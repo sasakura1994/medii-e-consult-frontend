@@ -30,7 +30,7 @@ const Login: NextPageWithLayout = () => {
     useLogin();
 
   return (
-    <div className="h-full w-full bg-bg pt-6 lg:pt-10">
+    <div className="min-h-[93vh] w-full bg-bg pt-6 lg:pt-10">
       <div
         className="
           mx-auto
@@ -150,7 +150,7 @@ const Login: NextPageWithLayout = () => {
           </div>
         </form>
       </div>
-      <footer className="mt-[170px] bg-medii-blue-500 pb-[13px] pt-1 text-center text-xs lg:mt-[138px] lg:bg-white">
+      <footer className="fixed bottom-0 w-full bg-bg-primary pb-[13px] pt-1 text-center text-xs">
         @Medii, Inc. All Right Reserved
       </footer>
     </div>
