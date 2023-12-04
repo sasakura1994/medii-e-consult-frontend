@@ -15,13 +15,11 @@ export const HubspotCTA = (props: Props) => {
     const iframeElement = window.document.getElementsByTagName('iframe')[0];
     if (!iframeElement) return;
 
-    const accountIdInput = iframeElement.contentDocument?.getElementById(`accountid-${process.env.HUBSPOT_FORM_ID}`);
-    const chatRoomIdInput = iframeElement.contentDocument?.getElementById(`chatroom_id-${process.env.HUBSPOT_FORM_ID}`);
+    const accountIdInput = iframeElement.contentDocument?.querySelector('input[name="accountid"]');
+    const chatRoomIdInput = iframeElement.contentDocument?.querySelector('input[name="chatroom_id"]');
 
     if (accountIdInput && chatRoomIdInput) {
-      accountIdInput.setAttribute('disabled', 'disabled');
       accountIdInput.setAttribute('value', accountId);
-      chatRoomIdInput.setAttribute('disabled', 'disabled');
       chatRoomIdInput.setAttribute('value', chatRoomId);
     }
   }, [accountId, isFormReady, chatRoomId]);
