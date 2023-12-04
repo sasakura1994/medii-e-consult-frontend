@@ -13,7 +13,7 @@ type MyChatProps = {
 };
 
 export const MyChat = (props: MyChatProps) => {
-  const { chatData, chatRoomData, setSelectedImage, mutateChatList } = props;
+  const { chatData, chatRoomData, setSelectedImage } = props;
   const [isMouseOver, setIsMouseOver] = useState(false);
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
   const { fecthPresignedFileUrl } = useFetchPresignedFileUrl();
@@ -70,7 +70,6 @@ export const MyChat = (props: MyChatProps) => {
           chatRoomId={chatRoomData.chat_room.chat_room_id}
           chatUid={chatData.uid}
           setIsOpenDeleteModal={setIsOpenDeleteModal}
-          mutateChatList={mutateChatList}
         />
       )}
       <div className="mr-3 flex justify-end">
