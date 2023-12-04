@@ -150,10 +150,18 @@ export const ConsultExampleDetail: React.FC<Props> = ({
               オンラインを通して、専門・知見のある医師に質問・相談することができます
             </p>
             <div className="mt-10 text-center font-medium text-medii-blue-base">
-              小さな課題でも、まずは相談してみませんか？
+              {consultExample.group_name ? (
+                <>{consultExample.group_name}に相談してみませんか？</>
+              ) : (
+                <>小さな課題でも、まずは相談してみませんか？</>
+              )}
             </div>
             <div className="mb-20 mt-4 flex justify-center lg:mb-10">
-              <Link href={`/newchatroom?from=example_${consultExample.example_id}`}>
+              <Link
+                href={`/newchatroom?from=example_${consultExample.example_id}${
+                  consultExample.group_id ? `&target_group_id=${consultExample.group_id}` : ''
+                }`}
+              >
                 <PrimaryButton>E-コンサルで相談する</PrimaryButton>
               </Link>
             </div>
