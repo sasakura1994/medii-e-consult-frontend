@@ -13,7 +13,7 @@ type MyChatProps = {
 };
 
 export const MyChat = (props: MyChatProps) => {
-  const { isGroup, chatData, chatRoomData, setSelectedImage, mutateChatList } = props;
+  const { isGroup, chatData, chatRoomData, setSelectedImage } = props;
   const [isMouseOver, setIsMouseOver] = useState(false);
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
 
@@ -58,7 +58,6 @@ export const MyChat = (props: MyChatProps) => {
           chatRoomId={chatRoomData.chat_room.chat_room_id}
           chatUid={chatData.uid}
           setIsOpenDeleteModal={setIsOpenDeleteModal}
-          mutateChatList={mutateChatList}
         />
       )}
       <div className="mr-3 flex justify-end">
