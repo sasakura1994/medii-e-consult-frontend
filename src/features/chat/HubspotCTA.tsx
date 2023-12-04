@@ -15,8 +15,8 @@ export const HubspotCTA = (props: Props) => {
     const iframeElement = window.document.getElementsByTagName('iframe')[0];
     if (!iframeElement) return;
 
-    const accountIdInput = iframeElement.contentDocument?.querySelector('input[name="accountid"]');
-    const chatRoomIdInput = iframeElement.contentDocument?.querySelector('input[name="chatroom_id"]');
+    const accountIdInput = iframeElement.contentDocument?.querySelector('input[name="accountid"].hs-input');
+    const chatRoomIdInput = iframeElement.contentDocument?.querySelector('input[name="chatroom_id"].hs-input');
 
     if (accountIdInput && chatRoomIdInput) {
       accountIdInput.setAttribute('value', accountId);
