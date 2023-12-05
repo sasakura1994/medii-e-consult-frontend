@@ -48,7 +48,7 @@ export const useAuthenticationOnPage = () => {
 
   useEffect(() => {
     // 現在のページが認証が不要なページのリストに含まれている場合は処理をスキップ
-    if (unauthenticatedPages.includes(router.pathname)) {
+    if (unauthenticatedPages.includes(router.asPath)) {
       return;
     }
     if (!isTokenInitialized) {
@@ -65,5 +65,5 @@ export const useAuthenticationOnPage = () => {
     }
 
     refreshToken();
-  }, [tokenIsEmpty, isTokenInitialized, isTokenRefreshed, router.pathname, refreshToken]);
+  }, [tokenIsEmpty, isTokenInitialized, isTokenRefreshed, refreshToken, router.asPath]);
 };
