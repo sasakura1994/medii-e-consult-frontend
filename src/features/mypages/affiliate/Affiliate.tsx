@@ -24,7 +24,7 @@ export const Affiliate: React.FC = () => {
                 <div>最大4,500円相当のMediiポイント</div>
                 <ul className="mt-1 list-disc pl-6 text-xs text-text-secondary">
                   <li>紹介された人の新規登録で 3,000pt</li>
-                  <li>紹介された人の初回コンサルで 1,000pt</li>
+                  <li>紹介された人の初回コンサルで 1,500pt</li>
                 </ul>
               </div>
             </div>
@@ -38,12 +38,17 @@ export const Affiliate: React.FC = () => {
                 <ul className="mt-1 list-disc pl-6 text-xs text-text-secondary">
                   <li>新規登録で 3,000pt</li>
                   <li>初回アンケートへのご回答 500pt</li>
-                  <li>初回コンサル 1,000pt</li>
+                  <li>初回コンサル 1,500pt</li>
                 </ul>
               </div>
             </div>
           </div>
         </div>
+        <p className="mt-4 text-xs text-text-secondary">
+          ご紹介からポイント付与完了までの期間に退会済みまたは利用制限となった方はポイント付与の対象外となる場合があります。
+          不正行為等によるポイント取得を確認した場合、ポイント付与の対象外とし、付与されたポイントは取消しとなる場合があります。
+          招待した方および招待された方がもらえるポイントは、予告なく変更される場合があります。
+        </p>
         <p className="mt-8 text-l font-bold">紹介ページURL</p>
         <div className="flex flex-col lg:flex-row">
           <div className="flex border-0 border-border-divider pr-6 lg:flex-col lg:border-r">
