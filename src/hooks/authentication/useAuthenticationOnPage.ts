@@ -51,6 +51,10 @@ export const useAuthenticationOnPage = () => {
     if (unauthenticatedPages.includes(router.pathname)) {
       return;
     }
+    if (['/hubspot/questionary'].includes(router.pathname)) {
+      return;
+    }
+
     if (!isTokenInitialized) {
       return;
     }
@@ -60,8 +64,10 @@ export const useAuthenticationOnPage = () => {
       return;
     }
 
-    if (!isTokenRefreshed) {
-      refreshToken();
+    if (isTokenRefreshed) {
+      return;
     }
+
+    refreshToken();
   }, [tokenIsEmpty, isTokenInitialized, isTokenRefreshed, refreshToken, router.pathname]);
 };
