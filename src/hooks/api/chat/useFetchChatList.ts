@@ -65,11 +65,22 @@ export const useFetchChatList = (chatRoomId?: string) => {
     }
   }, [newData]);
 
+  const deleteMessageMutate = useCallback((uid: number) => {
+    setData((prevData) => {
+      if (!prevData) {
+        return undefined;
+      }
+      const updatedData = prevData.map((item) => (item.uid === uid ? { ...item, deleted: true } : item));
+      return updatedData;
+    });
+  }, []);
+
   return {
     error,
     mutate,
     data,
     fetchNewChatList,
     resetFromUid,
+    deleteMessageMutate,
   };
 };
