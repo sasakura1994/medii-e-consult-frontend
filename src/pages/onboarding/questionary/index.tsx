@@ -6,11 +6,10 @@ import PrimaryButton from '@/components/Button/PrimaryButton';
 import SecondaryButton from '@/components/Button/SecondaryButton';
 import { ColoredImage } from '@/components/Image/ColoredImage';
 import { CheckBox } from '@/components/Parts/Form/CheckBox';
-import { ExpandTextArea } from '@/components/Parts/Form/ExpandTextArea';
-import { Optional } from '@/components/Parts/Form/Optional';
-import { Radio } from '@/components/Parts/Form/Radio';
 import { Required } from '@/components/Parts/Form/Required';
+import { SelectBox } from '@/components/Parts/Form/SelectBox';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
+import TextArea from '@/components/TextArea/TextArea';
 import { QuestionaryItems } from '@/features/onboarding/QuestionaryItems';
 import { useOnBoardingQuestionary } from '@/features/onboarding/useOnBoardingQuestionary';
 import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
@@ -18,7 +17,7 @@ import Link from 'next/link';
 import React from 'react';
 
 const OnBoardingQuestionaryPage = () => {
-  const { checkIsCheckboxRequired, isSending, questionAndAnswers, setAnswer, setOther, submit, toggleAnswers } =
+  const { checkIsCheckboxRequired, isSending, questionAndAnswers, setOther, submit, toggleAnswers } =
     useOnBoardingQuestionary();
   const { postEventLog } = useEventLog();
 
@@ -50,66 +49,97 @@ const OnBoardingQuestionaryPage = () => {
         }}
       >
         <div className="mt-10 flex flex-col gap-6">
-          {questionAndAnswers.map(({ question, answer }) => (
-            <section key={question.id}>
-              <div className="flex items-center gap-2">
-                <h3 className="text-md font-bold">
-                  {question.text}
-                  {question.required ? (
-                    <Required className="lg:relative lg:top-[-2px]" isInline>
-                      必須
-                    </Required>
-                  ) : (
-                    <Optional className="lg:relative lg:top-[-2px]" isInline>
-                      任意
-                    </Optional>
-                  )}
-                </h3>
+          {questionAndAnswers[0] && questionAndAnswers[0].question.type === 'MultiChoice' && questionAndAnswers[0] && (
+            <section>
+              <div className="flex items-center">
+                <p className="text-base font-bold text-text-primary">
+                  現在、別の医師の意見を仰ぎたい症例はありますか？（複数選択可）
+                </p>
+                <Required className="">必須</Required>
               </div>
-              {question.type === 'SingleChoice' && (
-                <QuestionaryItems itemCount={question.items.length}>
-                  {question.items.map((item) => (
-                    <Radio
-                      key={item.id}
-                      label={item.text}
-                      name={`questionary_item${question.id}`}
-                      value={item.id.toString()}
-                      checked={item.id === answer.value}
-                      onChange={() => setAnswer(question.id, item.id)}
-                      required={question.required}
-                    />
-                  ))}
-                </QuestionaryItems>
-              )}
-              {question.type === 'MultiChoice' && (
-                <QuestionaryItems itemCount={question.items.length}>
-                  {question.items.map((item) => (
+
+              <QuestionaryItems itemCount={questionAndAnswers[0].question.items.length - 1}>
+                {questionAndAnswers[0].question.items.map((item) => {
+                  if (item.id === 7) {
+                    return <></>;
+                  }
+                  return (
                     <CheckBox
                       key={item.id}
                       label={item.text}
-                      name={`questionary_item${question.id}_${item.id}`}
+                      name={`questionary_item${questionAndAnswers[0].question.id}_${item.id}`}
                       value={item.id.toString()}
-                      checked={answer.values.includes(item.id)}
-                      onChange={() => toggleAnswers(question.id, item.id)}
-                      required={checkIsCheckboxRequired(question.id)}
+                      checked={questionAndAnswers[0].answer.values.includes(item.id)}
+                      onChange={() => toggleAnswers(questionAndAnswers[0].question.id, item.id)}
+                      required={checkIsCheckboxRequired(questionAndAnswers[0].question.id)}
                     />
-                  ))}
-                </QuestionaryItems>
-              )}
-              {question.type === 'TextOnly' && (
-                <ExpandTextArea
-                  name={`other${question.id}`}
-                  className="mt-2 min-h-[112px] w-full"
-                  value={answer.other}
-                  placeholder={question.other_hint}
-                  onChange={(e) => setOther(question.id, e.target.value)}
-                  required={question.required}
-                />
-              )}
+                  );
+                })}
+              </QuestionaryItems>
             </section>
-          ))}
+          )}
+          {questionAndAnswers[1] && questionAndAnswers[1].question.type === 'TextOnly' && (
+            <div>
+              <TextArea
+                id={`questionary_item${questionAndAnswers[1].question.id}`}
+                name={`other${questionAndAnswers[1].question.id}`}
+                labelText="どのようなことを聞きたいですか？"
+                labelBadge={<Required>必須</Required>}
+                className="w-full resize-none"
+                value={questionAndAnswers[1].answer.other}
+                placeholder="他の医師の相談例を参考に、記入してください。"
+                onChange={(e) => setOther(questionAndAnswers[1].question.id, e.target.value)}
+                required={questionAndAnswers[1].question.required}
+              />
+              <div className="mt-2 rounded-lg bg-bg-secondary p-4">
+                <div className="flex gap-4 text-base leading-6">
+                  <p>相談例</p>
+                  <ul className="list-disc pl-4">
+                    <li>発熱を繰り返す男児の診断について</li>
+                    <li>状態の安定した胸腺摘出後の抗AChR抗体陽性重症筋無力症患者のラブリズマブの終了の判断について</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          )}
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center">
+              <p className="text-base font-bold text-text-primary">
+                相談したい症例についてもう少し詳しく教えてください。
+              </p>
+              <Required className="">必須</Required>
+            </div>
+            <div>
+              <p className="text-base text-text-primary">性別</p>
+              <div className="mt-2 flex max-w-[319px] gap-2">
+                <div className="flex h-10 w-full items-center gap-2 rounded-lg border border-medii-blue-base px-3">
+                  <input type="radio" checked />
+                  <p className="text-medii-blue-base">男性</p>
+                </div>
+                <div className="flex h-10 w-full items-center gap-2 rounded-lg border border-border-field px-3">
+                  <input type="radio" />
+                  <p className="">女性</p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <p className="text-base text-text-primary">年齢</p>
+              <div className="mt-2 max-w-[319px]">
+                <SelectBox name="age_range" id="age-range" required>
+                  <option value="" disabled={false}>
+                    年代を入力して下さい
+                  </option>
+                  {[1, 2].map((age) => (
+                    <option value={age} key={age}>
+                      {age}
+                    </option>
+                  ))}
+                </SelectBox>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="mt-2 flex gap-2 bg-bg-secondary p-4">
+        <div className="mt-2 flex gap-2 rounded-lg bg-bg-secondary p-4">
           <div className="shrink-0 pt-1">
             <ColoredImage
               src="icons/exclamation-triangle.svg"
