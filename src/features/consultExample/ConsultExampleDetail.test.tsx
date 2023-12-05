@@ -8,6 +8,8 @@ jest.mock('@/hooks/medicalSpeciality/useMedicalSpeciality');
 
 const baseConsultExample: ConsultExampleDetailEntity = {
   example_id: '',
+  group_id: '',
+  group_name: '',
   gender: 'man',
   title: '',
   category_name: '',
