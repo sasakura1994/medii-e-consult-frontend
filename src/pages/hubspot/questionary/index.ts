@@ -16,8 +16,8 @@ const HubSpotQuestionaryPage = () => {
 
     const url = new URL(redirect);
     url.searchParams.append('accountid', accountId);
-    router.push(url.toString());
-  }, [accountId, router]);
+    window.location.href = url.toString();
+  }, [accountId, router.asPath]);
 };
 
 export default HubSpotQuestionaryPage;
