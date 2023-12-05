@@ -65,5 +65,6 @@ export const useAuthenticationOnPage = () => {
     }
 
     refreshToken();
-  }, [tokenIsEmpty, isTokenInitialized, isTokenRefreshed, refreshToken, router.pathname]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tokenIsEmpty, isTokenInitialized, isTokenRefreshed, router.pathname]);
 };
