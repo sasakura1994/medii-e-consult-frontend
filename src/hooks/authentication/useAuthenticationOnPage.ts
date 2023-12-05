@@ -51,9 +51,6 @@ export const useAuthenticationOnPage = () => {
     if (unauthenticatedPages.includes(router.pathname)) {
       return;
     }
-    if (['/hubspot/questionary'].includes(router.pathname)) {
-      return;
-    }
 
     if (!isTokenInitialized) {
       return;
@@ -61,6 +58,10 @@ export const useAuthenticationOnPage = () => {
 
     if (tokenIsEmpty) {
       redirectToLoginPage();
+      return;
+    }
+
+    if (['/hubspot/questionary'].includes(router.pathname)) {
       return;
     }
 
