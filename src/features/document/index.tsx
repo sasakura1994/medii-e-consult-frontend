@@ -1,46 +1,22 @@
-import React, { useCallback, useState } from 'react';
-import RegistrationProgress, { DocumentMode } from './RegistrationProgress';
+import React from 'react';
+import RegistrationProgress from './RegistrationProgress';
 import DocumentTypeSelect from './DocumentTypeSelect';
 import DoctorNumberForm from './DoctorNumberForm';
 import DocumentInputAuto from './DocumentInputAuto';
 import DocumentInputDocument from './DocumentInputDocument';
 import { Container } from '@/components/Layouts/Container';
 import { useRouter } from 'next/router';
-import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 import { useProfile } from '@/hooks/useProfile';
 import DocumentInputStudentDocument from './DocumentInputStudentDocument';
 import { Heading } from '@/components/Parts/Text/Heading';
+import { useDocument } from './useDocument';
 
 export type DocumentSelected = '' | 'number' | 'document' | 'auto' | 'completed' | 'studentCompleted';
 
 export const Document = () => {
-  const [selected, setSelected] = useState<DocumentSelected>('');
-  const [mode, setMode] = useState<DocumentMode>('document');
   const router = useRouter();
-  const { postEventLog } = useEventLog();
   const { profile } = useProfile();
-
-  const loginRedirectUrlKey = 'Login::RedirectURL';
-
-  const routerPushToQuestionaryPage = useCallback(async () => {
-    await postEventLog({ name: 'document-complete' });
-    router.push('/onboarding/questionary');
-  }, [postEventLog, router]);
-  const setSelectedWithRedirect = useCallback(
-    (value: DocumentSelected) => {
-      setSelected(value);
-      if (value === 'completed' && localStorage) {
-        const savedRedirectUrl = localStorage.getItem(loginRedirectUrlKey);
-        if (savedRedirectUrl && savedRedirectUrl !== '' && savedRedirectUrl.toLocaleLowerCase() !== '/top') {
-          router.push(savedRedirectUrl);
-        } else {
-          routerPushToQuestionaryPage();
-        }
-        localStorage.removeItem(loginRedirectUrlKey);
-      }
-    },
-    [router, routerPushToQuestionaryPage]
-  );
+  const { mode, selected, setMode, setSelected, setSelectedWithRedirect } = useDocument();
 
   if (!profile) return <></>;
 
