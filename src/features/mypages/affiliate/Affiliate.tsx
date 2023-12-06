@@ -38,7 +38,7 @@ export const Affiliate: React.FC = () => {
                 <ul className="mt-1 list-disc pl-6 text-xs text-text-secondary">
                   <li>新規登録で 3,000pt</li>
                   <li>初回アンケートへのご回答 500pt</li>
-                  <li>初回コンサル 1,500pt</li>
+                  <li>初回コンサル 1,000pt</li>
                 </ul>
               </div>
             </div>
