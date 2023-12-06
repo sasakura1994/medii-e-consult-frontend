@@ -162,7 +162,7 @@ export const ConsultExampleDetail: React.FC<Props> = ({
                   consultExample.group_id ? `&target_group_id=${consultExample.group_id}` : ''
                 }`}
               >
-                <PrimaryButton>E-コンサルで相談する</PrimaryButton>
+                <PrimaryButton>匿名&無料で質問する</PrimaryButton>
               </Link>
             </div>
           </section>
