@@ -2,7 +2,7 @@ import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 import Link from 'next/link';
 import React from 'react';
 
-export const TopBanner = () => {
+export const AffiliateBanner = () => {
   const { postEventLog } = useEventLog();
   return (
     <>
@@ -12,7 +12,7 @@ export const TopBanner = () => {
         }}
         className="mb-6 mt-6"
       >
-        <Link href="https://medii.jp/e-consult/invitation?p=AC10-5397-3042-49" target="_blank">
+        <Link href="https://stg-e-consult.medii.jp/affiliate">
           <div className="hidden md:flex">
             <img src="images/top/banner-pc.png" alt="banner-pc" />
           </div>
