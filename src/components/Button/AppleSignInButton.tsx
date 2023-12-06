@@ -29,16 +29,20 @@ export const AppleSignInButton = (props: Props) => {
           className={`
             inline-flex
             w-full
+            h-[56px]
             items-center
             justify-center
             gap-1
             rounded-md
             border
             border-solid
-            ${borderColorClassName ?? 'border-black'}
+            ${borderColorClassName ?? 'border-border-field'}
             px-10
             py-2
-            hover:bg-monotone-100
+            text-text-caption
+            text-base
+            font-semibold
+            hover:bg-monotone-200
           `}
           {...props}
         >

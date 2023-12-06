@@ -19,6 +19,8 @@ const unauthenticatedPages = [
   '/howtouse',
   '/withdrawal/completed',
 ];
+// refreshTokenを行わないページはここに追加する
+const noRefreshTokenPages = ['/hubspot/questionary'];
 
 /**
  * 認証が必要なページに配置する
@@ -51,12 +53,17 @@ export const useAuthenticationOnPage = () => {
     if (unauthenticatedPages.includes(router.pathname)) {
       return;
     }
+
     if (!isTokenInitialized) {
       return;
     }
 
     if (tokenIsEmpty) {
       redirectToLoginPage();
+      return;
+    }
+
+    if (noRefreshTokenPages.includes(router.pathname)) {
       return;
     }
 

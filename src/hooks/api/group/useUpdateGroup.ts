@@ -4,7 +4,7 @@ import { useAxios } from '@/hooks/network/useAxios';
 import { useCallback } from 'react';
 import { NotificationFrequency } from './useFetchGetGroup';
 
-export type PostCreateGroupRequestData = {
+export type UpdateGroupRequestData = {
   group_id?: string;
   is_public: boolean;
   group_name: string;
@@ -17,19 +17,19 @@ export type PostCreateGroupRequestData = {
   assignable: boolean;
 };
 
-type PostCreateGroupResponseData = {
+type UpdateGroupResponseData = {
   group_room_id: string;
 };
 
-export const usePostCreateGroup = () => {
+export const useUpdateGroup = () => {
   const { axios } = useAxios();
 
-  const postCreateGroup = useCallback(
-    (data: PostCreateGroupRequestData) => {
-      return axios.post<PostCreateGroupResponseData>('/group/create_group', data);
+  const updateGroup = useCallback(
+    (data: UpdateGroupRequestData) => {
+      return axios.post<UpdateGroupResponseData>('/group/edit_group', data);
     },
     [axios]
   );
 
-  return { postCreateGroup };
+  return { updateGroup };
 };
