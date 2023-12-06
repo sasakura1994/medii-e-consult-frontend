@@ -1,5 +1,6 @@
 import { useAuthenticatedSWR } from '@/hooks/network/useAuthenticatedSWR';
 import { GroupEntity } from '@/types/entities/GroupEntity';
+import { KeyedMutator } from 'swr';
 
 export type FetchedGroupEntity = Pick<
   GroupEntity,
@@ -19,6 +20,7 @@ export type UseFetchGroup = {
   isLoading: boolean;
   error?: Error;
   group?: FetchedGroupEntity;
+  mutate?: KeyedMutator<FetchedGroupEntity>;
 };
 
 export const useFetchGroup = (groupId?: string): UseFetchGroup => {
@@ -26,11 +28,13 @@ export const useFetchGroup = (groupId?: string): UseFetchGroup => {
     isLoading,
     error,
     data: group,
+    mutate,
   } = useAuthenticatedSWR<FetchedGroupEntity>(groupId ? `/group/get_group?groupId=${groupId}` : null);
 
   return {
     isLoading,
     error,
     group,
+    mutate,
   };
 };
