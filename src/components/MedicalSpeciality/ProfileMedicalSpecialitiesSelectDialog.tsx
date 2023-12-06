@@ -31,7 +31,27 @@ export const ProfileMedicalSpecialitiesSelectDialog = (props: ProfileMedicalSpec
   } = useMedicalSpecialitiesSelectDialog(props, medicalSpecialities);
 
   return (
-    <Modal setShowModal={setShowModal} className="relative pb-[88px] lg:w-[600px]">
+    <Modal
+      setShowModal={setShowModal}
+      className="lg:w-[600px]"
+      isUseFooter
+      closeButton={
+        <TertiaryButton onClick={() => setShowModal(false)} size="large" className="flex-1 lg:flex-initial">
+          閉じる
+        </TertiaryButton>
+      }
+      submitButton={
+        <PrimaryButton
+          type="button"
+          size="large"
+          onClick={submit}
+          className="flex-1 px-4 lg:flex-initial"
+          disabled={!isChanged}
+        >
+          決定
+        </PrimaryButton>
+      }
+    >
       <div className="mx-4 mt-6">
         <Heading>担当科を選択</Heading>
         <div className="mt-8">担当科は、あとから編集可能です。</div>
@@ -61,35 +81,6 @@ export const ProfileMedicalSpecialitiesSelectDialog = (props: ProfileMedicalSpec
             </div>
           ))}
         </div>
-      </div>
-      <div
-        className="
-          absolute
-          bottom-0
-          left-0
-          right-0
-          flex
-          h-[88px]
-          items-center
-          justify-between
-          gap-2
-          bg-white
-          px-4
-          lg:justify-end
-        "
-      >
-        <TertiaryButton onClick={() => setShowModal(false)} size="large" className="flex-1 lg:flex-initial">
-          閉じる
-        </TertiaryButton>
-        <PrimaryButton
-          type="button"
-          size="large"
-          onClick={submit}
-          className="flex-1 px-4 lg:flex-initial"
-          disabled={!isChanged}
-        >
-          決定
-        </PrimaryButton>
       </div>
     </Modal>
   );
