@@ -28,6 +28,10 @@ export const EditProfileBirthday = (props: Props) => {
         dataTestId="birthday"
         value={birthday}
         onChange={(e) => {
+          if (!e.target.value) {
+            return;
+          }
+
           const parts = e.target.value.split(/-/);
           setProfileFields({
             birthday_year: Number(parts[0]).toString(),

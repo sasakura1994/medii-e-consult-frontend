@@ -54,6 +54,10 @@ export const useDoctorNumberForm = ({ setSelectedWithRedirect }: UseDoctorNumber
   }, [profile]);
 
   const parseAndSetDoctorLicenseDate = useCallback((date: string) => {
+    if (!date) {
+      return;
+    }
+
     const parts = date.split(/-/);
     setDoctorLicenseDate(new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2])));
   }, []);
