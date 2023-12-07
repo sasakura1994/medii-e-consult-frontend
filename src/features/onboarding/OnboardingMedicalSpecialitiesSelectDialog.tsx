@@ -20,7 +20,7 @@ export type OnboardingMedicalSpecialitiesSelectDialogProps = {
 };
 
 export const OnboardingMedicalSpecialitiesSelectDialog = (props: OnboardingMedicalSpecialitiesSelectDialogProps) => {
-  const { mainSpeciality, setShowModal, title, description, medicalSpecialities } = props;
+  const { setShowModal, title, description, medicalSpecialities } = props;
   const {
     getMedicalSpecialitiesForCategory,
     isCategoryOpened,
@@ -68,7 +68,6 @@ export const OnboardingMedicalSpecialitiesSelectDialog = (props: OnboardingMedic
                       name="medical_specialityies[]"
                       value={medicalSpeciality.speciality_code}
                       checked={isMedicalSpecialitySelected(medicalSpeciality.speciality_code)}
-                      disabled={medicalSpeciality.speciality_code === mainSpeciality}
                       onChange={() => toggleMedicalSpeciality(medicalSpeciality)}
                     />
                   ))}
