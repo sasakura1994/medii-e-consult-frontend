@@ -10,16 +10,22 @@ import { Required } from '@/components/Parts/Form/Required';
 import { SelectBox } from '@/components/Parts/Form/SelectBox';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 import TextArea from '@/components/TextArea/TextArea';
+import { OnboardingMedicalSpecialitiesSelectDialog } from '@/features/onboarding/OnboardingMedicalSpecialitiesSelectDialog';
 import { QuestionaryItems } from '@/features/onboarding/QuestionaryItems';
 import { useOnBoardingQuestionary } from '@/features/onboarding/useOnBoardingQuestionary';
 import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
+import { useFetchMedicalSpecialitiesWithContract } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialitiesWithContract';
+import { useFetchMedicalSpecialityCategories } from '@/hooks/api/medicalCategoryCategory/useFetchMedicalSpecialityCategories';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 
 const OnBoardingQuestionaryPage = () => {
   const { checkIsCheckboxRequired, isSending, questionAndAnswers, setOther, submit, toggleAnswers } =
     useOnBoardingQuestionary();
+  const { medicalSpecialityCategories } = useFetchMedicalSpecialityCategories();
+  const { medicalSpecialities } = useFetchMedicalSpecialitiesWithContract();
   const { postEventLog } = useEventLog();
+  const [isOpenSelectSpecialitiesModal, setIsOpenSelectSpecialitiesModal] = useState(false);
 
   useEventLog({ name: 'view-onboarding-questionary' });
 
@@ -61,7 +67,7 @@ const OnBoardingQuestionaryPage = () => {
               <QuestionaryItems itemCount={questionAndAnswers[0].question.items.length - 1}>
                 {questionAndAnswers[0].question.items.map((item) => {
                   if (item.id === 7) {
-                    return <></>;
+                    return <div key={item.id} className="sr-only"></div>;
                   }
                   return (
                     <CheckBox
@@ -69,7 +75,6 @@ const OnBoardingQuestionaryPage = () => {
                       label={item.text}
                       name={`questionary_item${questionAndAnswers[0].question.id}_${item.id}`}
                       value={item.id.toString()}
-                      checked={questionAndAnswers[0].answer.values.includes(item.id)}
                       onChange={() => toggleAnswers(questionAndAnswers[0].question.id, item.id)}
                       required={checkIsCheckboxRequired(questionAndAnswers[0].question.id)}
                     />
@@ -91,7 +96,7 @@ const OnBoardingQuestionaryPage = () => {
                 onChange={(e) => setOther(questionAndAnswers[1].question.id, e.target.value)}
                 required={questionAndAnswers[1].question.required}
               />
-              <div className="mt-2 rounded-lg bg-bg-secondary p-4">
+              <div className="mt-2 hidden rounded-lg bg-bg-secondary p-4 lg:block">
                 <div className="flex gap-4 text-base leading-6">
                   <p>相談例</p>
                   <ul className="list-disc pl-4">
@@ -112,14 +117,14 @@ const OnBoardingQuestionaryPage = () => {
             <div>
               <p className="text-base text-text-primary">性別</p>
               <div className="mt-2 flex max-w-[319px] gap-2">
-                <div className="flex h-10 w-full items-center gap-2 rounded-lg border border-medii-blue-base px-3">
-                  <input type="radio" checked />
+                <label className="flex h-10 w-full items-center gap-2 rounded-lg border border-medii-blue-base px-3">
+                  <input type="radio" name="gender" defaultChecked />
                   <p className="text-medii-blue-base">男性</p>
-                </div>
-                <div className="flex h-10 w-full items-center gap-2 rounded-lg border border-border-field px-3">
-                  <input type="radio" />
+                </label>
+                <label className="flex h-10 w-full items-center gap-2 rounded-lg border border-border-field px-3">
+                  <input type="radio" name="gender" />
                   <p className="">女性</p>
-                </div>
+                </label>
               </div>
             </div>
             <div>
@@ -138,7 +143,61 @@ const OnBoardingQuestionaryPage = () => {
               </div>
             </div>
           </div>
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center">
+              <p className="text-base font-bold text-text-primary">
+                どの診療科の医師に相談したいですか？（4つまで選択可）
+              </p>
+              <Required className="">必須</Required>
+            </div>
+            <div className="hidden lg:block">
+              {medicalSpecialityCategories &&
+                medicalSpecialityCategories.map((category) => (
+                  <section key={category.id}>
+                    <div className="mt-2 text-base font-bold text-text-primary">{category.name}</div>
+                    <div className="mt-2 grid gap-y-2 lg:grid-cols-5">
+                      {medicalSpecialities &&
+                        medicalSpecialities
+                          .filter(
+                            (medicalSpecialities) => medicalSpecialities.medical_speciality_category_id === category.id
+                          )
+                          .map((medicalSpeciality) => (
+                            <CheckBox
+                              key={`${medicalSpeciality.speciality_code}`}
+                              label={medicalSpeciality.name}
+                              name={`medical_speciality${medicalSpeciality.medical_speciality_category_id}`}
+                              value={medicalSpeciality.medical_speciality_category_id.toString()}
+                            />
+                          ))}
+                    </div>
+                  </section>
+                ))}
+            </div>
+            <div
+              className="flex h-10 w-full items-center justify-center rounded-md border border-border-field
+            lg:hidden"
+              onClick={() => setIsOpenSelectSpecialitiesModal(true)}
+            >
+              <p>診療科を選択</p>
+            </div>
+          </div>
         </div>
+        {medicalSpecialities && isOpenSelectSpecialitiesModal && (
+          <OnboardingMedicalSpecialitiesSelectDialog
+            medicalSpecialities={medicalSpecialities}
+            defaultSelectedMedicalSpecialities={[]}
+            mainSpeciality={''}
+            onChange={(medicalSpecialities) => {
+              setIsOpenSelectSpecialitiesModal(false);
+              console.log(medicalSpecialities);
+            }}
+            setShowModal={() => {
+              setIsOpenSelectSpecialitiesModal(false);
+            }}
+            title="診療科を選択"
+            maxSelectableSpecialities={4}
+          />
+        )}
         <div className="mt-2 flex gap-2 rounded-lg bg-bg-secondary p-4">
           <div className="shrink-0 pt-1">
             <ColoredImage
@@ -166,23 +225,23 @@ const OnBoardingQuestionaryPage = () => {
             </div>
           </div>
         </div>
-        <div className="mt-10 flex justify-center">
+        <div className="mt-10 flex w-full justify-center">
           {isSending ? (
             <SpinnerBorder />
           ) : (
-            <div className="flex">
+            <div className="flex flex-col-reverse gap-2 lg:flex-row lg:gap-10">
               <div
                 onClick={async () => {
                   await postEventLog({ name: 'click-answer-later' });
                 }}
               >
                 <Link href={'/top'}>
-                  <SecondaryButton size="large" className="mr-10 px-4">
+                  <SecondaryButton size="large" className="w-full px-4 lg:w-auto">
                     あとでアンケートに回答する
                   </SecondaryButton>
                 </Link>
               </div>
-              <PrimaryButton size="large" className="px-4">
+              <PrimaryButton size="large" className="w-full px-4 lg:w-auto">
                 アンケートを送信する
               </PrimaryButton>
             </div>

@@ -25,7 +25,7 @@
     display: block;
     width: 14px;
     height: 14px;
-    border: 1.5px solid #cccccc;
+    border: 1.5px solid #d7dae0;
     border-radius: 50%;
     position: absolute;
     top: 50%;
@@ -53,5 +53,10 @@
 
   &__input:focus + &__label::before {
     box-shadow: 0 0 0 2px rgba(#3e82ff, 0.3);
+  }
+
+  &__input:disabled + &__label::before {
+    border-color: #d7dae0;
+    background-color: #f6f7f8;
   }
 }

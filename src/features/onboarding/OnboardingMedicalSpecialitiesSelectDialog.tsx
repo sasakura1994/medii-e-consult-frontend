@@ -1,24 +1,26 @@
-import React from 'react';
-import { Modal } from '../Parts/Modal/Modal';
-import { useMedicalSpecialitiesSelectDialog } from './useMedicalSpecialitiesSelectDialog';
-import { MedicalSpecialityCategorySelect } from './MedicalSpecialityCategorySelect';
-import { CheckBox } from '../Parts/Form/CheckBox';
+import PrimaryButton from '@/components/Button/PrimaryButton';
+import TertiaryButton from '@/components/Button/TertiaryButton';
+import { MedicalSpecialityCategorySelect } from '@/components/MedicalSpeciality/MedicalSpecialityCategorySelect';
+import { useMedicalSpecialitiesSelectDialog } from '@/components/MedicalSpeciality/useMedicalSpecialitiesSelectDialog';
+import { CheckBox } from '@/components/Parts/Form/CheckBox';
+import { Modal } from '@/components/Parts/Modal/Modal';
+import { Heading } from '@/components/Parts/Text/Heading';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
-import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
-import { Heading } from '../Parts/Text/Heading';
-import TertiaryButton from '../Button/TertiaryButton';
-import PrimaryButton from '../Button/PrimaryButton';
+import React from 'react';
 
-export type ProfileMedicalSpecialitiesSelectDialogProps = {
+export type OnboardingMedicalSpecialitiesSelectDialogProps = {
   defaultSelectedMedicalSpecialities: MedicalSpecialityEntity[];
   mainSpeciality: string;
   onChange: (medicalSpecialities: MedicalSpecialityEntity[]) => void;
   setShowModal: (isShow: boolean) => void;
+  title?: string;
+  description?: string;
+  maxSelectableSpecialities: number;
+  medicalSpecialities: MedicalSpecialityEntity[];
 };
 
-export const ProfileMedicalSpecialitiesSelectDialog = (props: ProfileMedicalSpecialitiesSelectDialogProps) => {
-  const { mainSpeciality, setShowModal } = props;
-  const { medicalSpecialities } = useFetchMedicalSpecialities();
+export const OnboardingMedicalSpecialitiesSelectDialog = (props: OnboardingMedicalSpecialitiesSelectDialogProps) => {
+  const { mainSpeciality, setShowModal, title, description, medicalSpecialities } = props;
   const {
     getMedicalSpecialitiesForCategory,
     isCategoryOpened,
@@ -36,25 +38,19 @@ export const ProfileMedicalSpecialitiesSelectDialog = (props: ProfileMedicalSpec
       className="lg:w-[600px]"
       isUseFooter
       closeButton={
-        <TertiaryButton onClick={() => setShowModal(false)} size="large" className="flex-1 lg:flex-initial">
+        <TertiaryButton onClick={() => setShowModal(false)} size="large" className="w-full">
           閉じる
         </TertiaryButton>
       }
       submitButton={
-        <PrimaryButton
-          type="button"
-          size="large"
-          onClick={submit}
-          className="flex-1 px-4 lg:flex-initial"
-          disabled={!isChanged}
-        >
-          決定
+        <PrimaryButton type="button" size="large" onClick={submit} className="w-full px-4" disabled={!isChanged}>
+          完了
         </PrimaryButton>
       }
     >
       <div className="mx-4 mt-6">
-        <Heading>担当科を選択</Heading>
-        <div className="mt-8">担当科は、あとから編集可能です。</div>
+        {title && <Heading>{title}</Heading>}
+        {description && <div className="mt-8">{description}</div>}
         <div className="mt-6 flex flex-col gap-6">
           {medicalSpecialityCategories?.map((medicalSpecialityCategory) => (
             <div key={medicalSpecialityCategory.id}>
