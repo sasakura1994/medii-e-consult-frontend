@@ -7,7 +7,9 @@ import userEvent from '@testing-library/user-event';
 
 jest.mock('@/hooks/api/doctor/useFetchProfile');
 jest.mock('next/router', () => ({
-  useRouter: jest.fn(),
+  useRouter: jest.fn().mockReturnValue({
+    isReady: true,
+  }),
 }));
 describe('EditProfile', () => {
   describe('医師＆医学生', () => {
