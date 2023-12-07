@@ -36,7 +36,7 @@ export const ProfileMedicalSpecialitiesSelectDialog = (props: ProfileMedicalSpec
       className="lg:w-[600px]"
       isUseFooter
       closeButton={
-        <TertiaryButton onClick={() => setShowModal(false)} size="large" className="flex-1 lg:flex-initial">
+        <TertiaryButton onClick={() => setShowModal(false)} size="large" className="w-full flex-1 lg:flex-initial">
           閉じる
         </TertiaryButton>
       }
@@ -45,7 +45,7 @@ export const ProfileMedicalSpecialitiesSelectDialog = (props: ProfileMedicalSpec
           type="button"
           size="large"
           onClick={submit}
-          className="flex-1 px-4 lg:flex-initial"
+          className="w-full flex-1 px-4 lg:flex-initial"
           disabled={!isChanged}
         >
           決定
