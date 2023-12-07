@@ -20,6 +20,14 @@ describe('InitPassword', () => {
     const data: PostResetPasswordResponseData = { code: 1, message: '' };
     apiClientMock.createApiClient.mockReturnValue({
       post: jest.fn(() => Promise.resolve({ data })),
+      interceptors: {
+        request: {
+          use: jest.fn(),
+        },
+        response: {
+          use: jest.fn(),
+        },
+      },
     } as unknown as AxiosInstance);
 
     const useRouterMock = useRouter as jest.Mocked<typeof useRouter>;
