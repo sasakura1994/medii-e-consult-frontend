@@ -7,7 +7,7 @@ import { Radio } from '@/components/Parts/Form/Radio';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 
 export const NotifySettings: React.FC = () => {
-  const { notifySettings, isError, changeNotifyNew, changeNotifySeminar, update } = useNotifySettings();
+  const { notifySettings, isChanged, isError, changeNotifyNew, changeNotifySeminar, update } = useNotifySettings();
 
   return (
     <>
@@ -81,7 +81,7 @@ export const NotifySettings: React.FC = () => {
         </div>
 
         <nav className="text-center">
-          <PrimaryButton type="button" onClick={update} size="large" className="mx-auto">
+          <PrimaryButton type="button" onClick={update} size="large" className="mx-auto" disabled={!isChanged}>
             通知設定を更新
           </PrimaryButton>
         </nav>
