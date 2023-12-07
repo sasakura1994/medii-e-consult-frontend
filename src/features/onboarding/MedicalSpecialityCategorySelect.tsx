@@ -1,3 +1,4 @@
+// TODO: プロフィール登録で同じコンポーネントを使う予定なので共通化する
 import { MedicalSpecialityCategoryEntity } from '@/types/entities/medicalSpecialityCategoryEntity';
 import React from 'react';
 

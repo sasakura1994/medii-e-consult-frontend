@@ -1,3 +1,4 @@
+// TODO: プロフィール登録で同じコンポーネントを使う予定なので共通化する
 import React from 'react';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import { SelectedMedicalSpecialities } from '@/components/MedicalSpeciality/SelectedMedicalSpecialities';
@@ -36,7 +37,7 @@ export const MedicalSpecialitiesSelectDialog: React.FC<MedicalSpecialitiesSelect
   } = useMedicalSpecialitiesSelectDialog(props, medicalSpecialities);
 
   return (
-    <Modal setShowModal={setShowModal} className={`lg:w-[740px]`}>
+    <Modal setShowModal={setShowModal}>
       <div className="mx-6 my-10 lg:mx-20">
         <ModalTitleWithCloseButton title="診療科で指定する" onClose={() => setShowModal(false)} />
         <div className="mt-4">選択した順番でコンサル依頼先の優先度を指定できます</div>

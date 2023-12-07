@@ -1,3 +1,4 @@
+// TODO: プロフィール登録で同じコンポーネントを使う予定なので共通化する
 import { useMedicalSpecialitySelect } from '@/components/MedicalSpeciality/useMedicalSpecialitySelect';
 import { moveItem } from '@/libs/dnd';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
