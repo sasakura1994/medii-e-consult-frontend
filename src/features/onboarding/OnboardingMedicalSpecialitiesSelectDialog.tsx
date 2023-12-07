@@ -1,12 +1,12 @@
+import React from 'react';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import TertiaryButton from '@/components/Button/TertiaryButton';
-import { MedicalSpecialityCategorySelect } from '@/components/MedicalSpeciality/MedicalSpecialityCategorySelect';
-import { useMedicalSpecialitiesSelectDialog } from '@/components/MedicalSpeciality/useMedicalSpecialitiesSelectDialog';
 import { CheckBox } from '@/components/Parts/Form/CheckBox';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import { Heading } from '@/components/Parts/Text/Heading';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
-import React from 'react';
+import { MedicalSpecialityCategorySelect } from './MedicalSpecialityCategorySelect';
+import { useMedicalSpecialitiesSelectDialog } from './useMedicalSpecialitiesSelectDialog';
 
 export type OnboardingMedicalSpecialitiesSelectDialogProps = {
   defaultSelectedMedicalSpecialities: MedicalSpecialityEntity[];

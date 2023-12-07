@@ -46,10 +46,6 @@ export const useOnBoardingQuestionary = () => {
     targetSpecialities: [],
   });
 
-  useEffect(() => {
-    console.log(consultAnswers);
-  }, [consultAnswers]);
-
   // questionAndAnswersを初期化
   useEffect(() => {
     if (!questions || questionAndAnswers.length !== 0) {
@@ -114,11 +110,11 @@ export const useOnBoardingQuestionary = () => {
       return;
     }
 
-    setonboardingAnswered(consultAnswers);
     // バナーの非表示のため
     mutateFetchFlag('OnboardingAnswered');
     // アンケート結果によって変わるため次のページで取得するためにmutateしておく
     mutateFetchFlag('FirstConsultCampaign');
+    setonboardingAnswered(consultAnswers);
 
     setIsOpenConsultPointModal(true);
   }, [consultAnswers, postQuestionaryItemsForOnboarding, questionAndAnswers, setonboardingAnswered]);

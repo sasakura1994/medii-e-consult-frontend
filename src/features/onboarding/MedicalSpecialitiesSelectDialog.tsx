@@ -1,17 +1,18 @@
 import React from 'react';
-import { Modal } from '../Parts/Modal/Modal';
-import { ModalTitleWithCloseButton } from '../Parts/Modal/ModalTitleWithCloseButton';
-import { PrimaryButton } from '../Parts/Button/PrimaryButton';
-import { useMedicalSpecialitiesSelectDialog } from './useMedicalSpecialitiesSelectDialog';
-import { MedicalSpecialityCategorySelect } from './MedicalSpecialityCategorySelect';
-import { CheckBox } from '../Parts/Form/CheckBox';
-import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
-import { OutlinedSquareButton } from '../Parts/Button/OutlinedSquareButton';
-import { SelectedMedicalSpecialities } from './SelectedMedicalSpecialities';
+import PrimaryButton from '@/components/Button/PrimaryButton';
+import { SelectedMedicalSpecialities } from '@/components/MedicalSpeciality/SelectedMedicalSpecialities';
+import { OutlinedSquareButton } from '@/components/Parts/Button/OutlinedSquareButton';
+import { CheckBox } from '@/components/Parts/Form/CheckBox';
+import { Modal } from '@/components/Parts/Modal/Modal';
+import { ModalTitleWithCloseButton } from '@/components/Parts/Modal/ModalTitleWithCloseButton';
 import { useFetchMedicalSpecialitiesWithContract } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialitiesWithContract';
+import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
+import { MedicalSpecialityCategorySelect } from './MedicalSpecialityCategorySelect';
+import { useMedicalSpecialitiesSelectDialog } from './useMedicalSpecialitiesSelectDialog';
 
 export type MedicalSpecialitiesSelectDialogProps = {
   defaultSelectedMedicalSpecialities: MedicalSpecialityEntity[];
+  maxSelectableSpecialities?: number;
   onChange: (medicalSpecialities: MedicalSpecialityEntity[]) => void;
   setShowModal: (isShow: boolean) => void;
 };
@@ -23,7 +24,6 @@ export const MedicalSpecialitiesSelectDialog: React.FC<MedicalSpecialitiesSelect
   const { medicalSpecialities } = useFetchMedicalSpecialitiesWithContract();
   const {
     getMedicalSpecialitiesForCategory,
-    getSelectedCountForCategory,
     isCategoryOpened,
     isMedicalSpecialitySelected,
     medicalSpecialityCategories,
@@ -39,8 +39,8 @@ export const MedicalSpecialitiesSelectDialog: React.FC<MedicalSpecialitiesSelect
     <Modal setShowModal={setShowModal} className={`lg:w-[740px]`}>
       <div className="mx-6 my-10 lg:mx-20">
         <ModalTitleWithCloseButton title="診療科で指定する" onClose={() => setShowModal(false)} />
-        <div className="mt-4 text-block-gray">選択した順番でコンサル依頼先の優先度を指定できます</div>
-        <div className="mt-10 flex flex-col gap-2">
+        <div className="mt-4">選択した順番でコンサル依頼先の優先度を指定できます</div>
+        <div className="mt-10 flex flex-col gap-6">
           {medicalSpecialityCategories?.map((medicalSpecialityCategory) => (
             <>
               <MedicalSpecialityCategorySelect
@@ -48,10 +48,9 @@ export const MedicalSpecialitiesSelectDialog: React.FC<MedicalSpecialitiesSelect
                 medicalSpecialityCategory={medicalSpecialityCategory}
                 isSelected={isCategoryOpened(medicalSpecialityCategory.id)}
                 onClick={() => toggleCategory(medicalSpecialityCategory.id)}
-                selectedCount={getSelectedCountForCategory(medicalSpecialityCategory.id)}
               />
               {isCategoryOpened(medicalSpecialityCategory.id) && (
-                <div className="my-4 grid grid-cols-2 gap-y-4 text-sm lg:mx-4 lg:grid-cols-3">
+                <div className="grid grid-cols-2 gap-y-2 lg:grid-cols-3">
                   {getMedicalSpecialitiesForCategory(medicalSpecialityCategory.id).map((medicalSpeciality) => (
                     <CheckBox
                       key={medicalSpeciality.speciality_code}
