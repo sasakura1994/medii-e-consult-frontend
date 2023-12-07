@@ -16,7 +16,7 @@ type ResponseData = {
   questions: Question[];
 };
 
-export const useFetchQuestionaryItemsById = (id: 'onboarding2') => {
+export const useFetchQuestionaryItemsById = (id: 'onboarding3') => {
   const { isLoading, error, data } = useAuthenticatedSWR<ResponseData>(`/questionary/questions?id=${id}`);
 
   return {

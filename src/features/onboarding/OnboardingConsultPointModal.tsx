@@ -1,49 +1,36 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import Link from 'next/link';
 import TertiaryButton from '@/components/Button/TertiaryButton';
 import PrimaryButton from '@/components/Button/PrimaryButton';
-import { useFetchFlag } from '@/hooks/api/account/useFetchFlags';
 import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
-import { whatListenState } from '@/globalStates/onboarding';
+import { onboardingAnsweredState } from '@/globalStates/onboarding';
 import TextArea from '@/components/TextArea/TextArea';
 import { useAtomValue } from 'jotai';
 
 export const OnboardingConsultPointModal = () => {
-  const [isClosed, setIsClosed] = useState(false);
-  const { flag: isFirstConsultCampaignAvailable, isLoading: isLoadingFlag } = useFetchFlag('FirstConsultCampaign');
-  const whatListen = useAtomValue(whatListenState);
+  const onboardingAnswered = useAtomValue(onboardingAnsweredState);
   const { postEventLog } = useEventLog();
 
   const showOnboardingConsultPointModal = useCallback(async () => {
     await postEventLog({ name: 'show-first-consult-campaign-popup' });
   }, [postEventLog]);
 
-  if (isClosed || isFirstConsultCampaignAvailable !== true || isLoadingFlag) {
-    return <></>;
-  }
-
   showOnboardingConsultPointModal();
 
   return (
     <Modal
       isCenter
+      disableCloseOnOverlayClick
       pcWidth="600"
-      setShowModal={() => {
-        setIsClosed(true);
-      }}
       dataTestId="onboarding-questionary-modal"
       isUseFooter
       closeButton={
-        <TertiaryButton
-          size="large"
-          className="whitespace-nowrap px-4"
-          onClick={() => {
-            setIsClosed(true);
-          }}
-        >
-          閉じる
-        </TertiaryButton>
+        <Link href="/top">
+          <TertiaryButton size="large" className="whitespace-nowrap px-4">
+            閉じる
+          </TertiaryButton>
+        </Link>
       }
       submitButton={
         <div>
@@ -73,7 +60,7 @@ export const OnboardingConsultPointModal = () => {
           disabled
           id="answerDetail"
           className="min-h-[160px] w-full resize-none disabled:text-text-primary"
-          value={whatListen}
+          value={onboardingAnswered.title}
           labelText="回答いただいたご相談内容"
         />
         <p className="mt-4 text-center text-sm text-medii-blue-base">
