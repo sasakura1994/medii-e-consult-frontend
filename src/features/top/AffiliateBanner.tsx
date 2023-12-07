@@ -12,7 +12,7 @@ export const AffiliateBanner = () => {
         }}
         className="mb-6 mt-6"
       >
-        <Link href="https://stg-e-consult.medii.jp/affiliate">
+        <Link href="/affiliate">
           <div className="hidden md:flex">
             <img src="images/top/banner-pc.png" alt="banner-pc" />
           </div>
