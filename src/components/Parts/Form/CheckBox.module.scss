@@ -27,30 +27,29 @@
     transform: translateY(-50%);
     width: 17px;
     height: 17px;
-    border: 2px solid #d7dae0;
+    border: 2px solid #ccc;
     border-radius: 2px;
   }
 
   &__input:checked + &__label::before {
-    background-color: #0758e4;
-    border: 2px solid #0758e4;
+    background-color: #5c6bc0;
+    border: 2px solid #5c6bc0;
   }
 
   &__input:checked + &__label::after {
     content: "";
     display: block;
     position: absolute;
-    top: 7px;
-    left: 6px;
-    width: 5px;
-    height: 8px;
-    transform: rotate(40deg);
+    top: 4px;
+    left: 5px;
+    width: 7px;
+    height: 11px;
+    transform: rotate(45deg);
     border-bottom: 2px solid #fff;
     border-right: 2px solid #fff;
   }
 
-  &__input:disabled + &__label::before {
-    background-color: #f6f7f8;
-    border-color: #d7dae0;
+  &__input:focus + &__label::before {
+    box-shadow: 0 0 0 2px rgba(#3e82ff, 0.3);
   }
 }

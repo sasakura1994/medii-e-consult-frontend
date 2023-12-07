@@ -9,11 +9,10 @@ type PropsType = {
   label?: string | JSX.Element;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   required?: boolean;
-  disabled?: boolean;
 };
 
 export const Radio: React.FC<PropsType> = (props) => {
-  const { name, value, checked, id, label, onChange, required = false, disabled } = props;
+  const { name, value, checked, id, label, onChange, required = false } = props;
 
   return (
     <label htmlFor={id} className={styles.radio}>
@@ -27,7 +26,6 @@ export const Radio: React.FC<PropsType> = (props) => {
         className={`${styles.radio__input} ${styles.visually_hidden}`}
         onChange={onChange}
         required={required}
-        disabled={disabled}
       />
       <span className={styles.radio__label} role="checkbox" aria-checked={checked}>
         {label}
