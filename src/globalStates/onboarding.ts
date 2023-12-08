@@ -7,9 +7,4 @@ type OnboardingAnsweredState = {
   targetSpecialities: string[];
 };
 
-export const onboardingAnsweredState = atom<OnboardingAnsweredState>({
-  title: '',
-  gender: 'man',
-  age: null,
-  targetSpecialities: [],
-});
+export const onboardingAnsweredState = atom<OnboardingAnsweredState | null>(null);

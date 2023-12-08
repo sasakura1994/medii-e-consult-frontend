@@ -1,4 +1,5 @@
 import { consultMessageTemplates } from '@/data/chatRoom';
+import { onboardingAnsweredState } from '@/globalStates/onboarding';
 import { mutateFetchFlag } from '@/hooks/api/account/useFetchFlags';
 import { useDeleteChatDraftImage } from '@/hooks/api/chat/useDeleteChatDraftImage';
 import { useFetchBaseChatRoomForReConsult } from '@/hooks/api/chat/useFetchBaseChatRoomForReConsult';
@@ -25,6 +26,7 @@ import { NewChatRoomEntity } from '@/types/entities/chat/NewChatRoomEntity';
 import { DoctorEntity } from '@/types/entities/doctorEntity';
 import { MedicalSpecialityCategoryEntity } from '@/types/entities/medicalSpecialityCategoryEntity';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
+import { useAtomValue } from 'jotai';
 import { useRouter } from 'next/router';
 import {
   ChangeEvent,
@@ -180,6 +182,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
   const { getCurrentChatRoomDraft } = useGetCurrentChatRoomDraft();
   const { postChatRoomDraft } = usePostChatRoomDraft();
   const { updateChatRoomDraft } = useUpdateChatRoomDraft();
+  const onboardingAnswered = useAtomValue(onboardingAnsweredState);
 
   const imageInput = useRef<HTMLInputElement>(null);
 
@@ -227,6 +230,16 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     }
 
     setInitializingStatus('initializing');
+    if (onboardingAnswered) {
+      setChatRoom((chatRoom) => ({
+        ...chatRoom,
+        disease_name: onboardingAnswered.title,
+        age: onboardingAnswered.age ?? undefined,
+        target_specialities: onboardingAnswered.targetSpecialities,
+        gender: onboardingAnswered.gender,
+      }));
+      initializeAge(onboardingAnswered.age);
+    }
     if (query.target_speciality) {
       const targetSpeciality = medicalSpecialities.find(
         (speciality) => speciality.speciality_code === query.target_speciality
@@ -278,6 +291,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     initializeAge,
     initializingStatus,
     medicalSpecialities,
+    onboardingAnswered,
     query.reconsult,
     query.target_speciality,
     router.isReady,

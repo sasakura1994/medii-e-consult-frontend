@@ -13,7 +13,6 @@ export const useModalFooter = () => {
     const checkButtonWidth = () => {
       const closeBtnWidth = closeButtonRef.current ? closeButtonRef.current.offsetWidth : 0;
       const submitBtnWidth = submitButtonRef.current ? submitButtonRef.current.offsetWidth : 0;
-      console.log(closeBtnWidth, submitBtnWidth);
 
       if (closeBtnWidth + submitBtnWidth > MAX_WIDTH) {
         setIsOverMaxWidth(true);

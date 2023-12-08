@@ -32,6 +32,7 @@ const OnBoardingQuestionaryPage = () => {
     medicalSpecialities,
     consultAnswers,
     setConsultAnswers,
+    setOnboardingAnswered,
   } = useOnBoardingQuestionary();
   const { postEventLog } = useEventLog();
 
@@ -174,7 +175,7 @@ const OnBoardingQuestionaryPage = () => {
                     }}
                   >
                     <option value="">年代を入力して下さい</option>
-                    <option value="child">小児</option>
+                    <option value={1}>小児</option>
                     {ages.map((age) => (
                       <option value={age.age} key={age.age}>
                         {age.label}
@@ -305,6 +306,7 @@ const OnBoardingQuestionaryPage = () => {
               <div className="flex flex-col-reverse gap-2 lg:flex-row lg:gap-10">
                 <div
                   onClick={async () => {
+                    setOnboardingAnswered(null);
                     await postEventLog({ name: 'click-answer-later' });
                   }}
                 >

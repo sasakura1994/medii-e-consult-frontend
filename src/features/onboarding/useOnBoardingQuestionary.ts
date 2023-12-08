@@ -31,7 +31,7 @@ export const useOnBoardingQuestionary = () => {
   const [isOpenSelectSpecialitiesModal, setIsOpenSelectSpecialitiesModal] = useState(false);
   const [questionAndAnswers, setQuestionAndAnswers] = useState<QuestionAndAnswer[]>([]);
   const [isSending, setIsSending] = useState(false);
-  const setonboardingAnswered = useSetAtom(onboardingAnsweredState);
+  const setOnboardingAnswered = useSetAtom(onboardingAnsweredState);
   const { questions } = useFetchQuestionaryItemsById('onboarding3');
   // const { postQuestionaryItemsForOnboarding } = usePostQuestionaryItemsForOnboarding();
   const { medicalSpecialityCategories } = useFetchMedicalSpecialityCategories();
@@ -111,10 +111,10 @@ export const useOnBoardingQuestionary = () => {
     mutateFetchFlag('OnboardingAnswered');
     // アンケート結果によって変わるため次のページで取得するためにmutateしておく
     mutateFetchFlag('FirstConsultCampaign');
-    setonboardingAnswered(consultAnswers);
+    setOnboardingAnswered(consultAnswers);
 
     setIsOpenConsultPointModal(true);
-  }, [consultAnswers, setonboardingAnswered]);
+  }, [consultAnswers, setOnboardingAnswered]);
 
   const checkIsCheckboxRequired = useCallback(
     (questionId: string) => {
@@ -149,5 +149,6 @@ export const useOnBoardingQuestionary = () => {
     medicalSpecialities,
     consultAnswers,
     setConsultAnswers,
+    setOnboardingAnswered,
   };
 };
