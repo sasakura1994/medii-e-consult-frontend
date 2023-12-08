@@ -7,7 +7,7 @@ import PrimaryButton from '@/components/Button/PrimaryButton';
 import { Card } from '@/components/Parts/Card/Card';
 import { usePopperTooltip } from 'react-popper-tooltip';
 import { Tooltip } from '@/components/Tooltip/Tooltip';
-import { useBreakpoint } from '@/hooks/useBreakPoint';
+import { useBreakpoint } from '@/hooks/useBreakpoint';
 
 export const NotifySettings: React.FC = () => {
   const { notifySettings, isChanged, isError, changeNotifyNew, changeNotifySeminar, update } = useNotifySettings();
