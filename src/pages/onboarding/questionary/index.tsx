@@ -5,6 +5,8 @@ import PrimaryButton from '@/components/Button/PrimaryButton';
 import SecondaryButton from '@/components/Button/SecondaryButton';
 import { ColoredImage } from '@/components/Image/ColoredImage';
 import { CheckBox } from '@/components/Parts/Form/CheckBox';
+import { Optional } from '@/components/Parts/Form/Optional';
+import { Radio } from '@/components/Parts/Form/Radio';
 import { Required } from '@/components/Parts/Form/Required';
 import { SelectBox } from '@/components/Parts/Form/SelectBox';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
@@ -25,6 +27,8 @@ const OnBoardingQuestionaryPage = () => {
     questionAndAnswers,
     submit,
     toggleAnswers,
+    setAnswer,
+    setOther,
     isOpenSelectSpecialitiesModal,
     setIsOpenSelectSpecialitiesModal,
     isOpenConsultPointModal,
@@ -66,36 +70,65 @@ const OnBoardingQuestionaryPage = () => {
           }}
         >
           <div className="mt-10 flex flex-col gap-6">
-            {questionAndAnswers[0] &&
-              questionAndAnswers[0].question.type === 'MultiChoice' &&
-              questionAndAnswers[0] && (
-                <section>
-                  <div className="flex items-center">
-                    <p className="text-base font-bold text-text-primary">
-                      現在、別の医師の意見を仰ぎたい症例はありますか？（複数選択可）
-                    </p>
-                    <Required className="">必須</Required>
-                  </div>
-
-                  <QuestionaryItems itemCount={questionAndAnswers[0].question.items.length - 1}>
-                    {questionAndAnswers[0].question.items.map((item) => {
-                      if (item.id === 7) {
-                        return <div key={item.id} className="sr-only"></div>;
-                      }
-                      return (
-                        <CheckBox
-                          key={item.id}
-                          label={item.text}
-                          name={`questionary_item${questionAndAnswers[0].question.id}_${item.id}`}
-                          value={item.id.toString()}
-                          onChange={() => toggleAnswers(questionAndAnswers[0].question.id, item.id)}
-                          required={checkIsCheckboxRequired(questionAndAnswers[0].question.id)}
-                        />
-                      );
-                    })}
+            {questionAndAnswers.map(({ question, answer }) => (
+              <section key={question.id}>
+                <div className="flex items-center gap-2">
+                  <h3 className="text-md font-bold">
+                    {question.text}
+                    {question.required ? (
+                      <Required className="lg:relative lg:top-[-2px]" isInline>
+                        必須
+                      </Required>
+                    ) : (
+                      <Optional className="lg:relative lg:top-[-2px]" isInline>
+                        任意
+                      </Optional>
+                    )}
+                  </h3>
+                </div>
+                {question.type === 'SingleChoice' && (
+                  <QuestionaryItems itemCount={question.items.length}>
+                    {question.items.map((item) => (
+                      <Radio
+                        key={item.id}
+                        label={item.text}
+                        name={`questionary_item${question.id}`}
+                        value={item.id.toString()}
+                        checked={item.id === answer.value}
+                        onChange={() => setAnswer(question.id, item.id)}
+                        required={question.required}
+                      />
+                    ))}
                   </QuestionaryItems>
-                </section>
-              )}
+                )}
+                {question.type === 'MultiChoice' && (
+                  <QuestionaryItems itemCount={question.items.length}>
+                    {question.items.map((item) => (
+                      <CheckBox
+                        key={item.id}
+                        label={item.text}
+                        name={`questionary_item${question.id}_${item.id}`}
+                        value={item.id.toString()}
+                        checked={answer.values.includes(item.id)}
+                        onChange={() => toggleAnswers(question.id, item.id)}
+                        required={checkIsCheckboxRequired(question.id)}
+                      />
+                    ))}
+                  </QuestionaryItems>
+                )}
+                {question.type === 'TextOnly' && (
+                  <TextArea
+                    id={`other${question.id}`}
+                    name={`other${question.id}`}
+                    className="mt-2 min-h-[112px] w-full"
+                    value={answer.other}
+                    placeholder={question.other_hint}
+                    onChange={(e) => setOther(question.id, e.target.value)}
+                    required={question.required}
+                  />
+                )}
+              </section>
+            ))}
 
             <div>
               <TextArea

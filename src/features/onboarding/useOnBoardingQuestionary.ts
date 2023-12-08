@@ -62,6 +62,15 @@ export const useOnBoardingQuestionary = () => {
     );
   }, [questions, questionAndAnswers]);
 
+  const setAnswer = useCallback((questionId: string, value: number) => {
+    setQuestionAndAnswers((questionAndAnswers) =>
+      questionAndAnswers.map(({ question, answer }) => ({
+        question,
+        answer: question.id === questionId ? { ...answer, value } : answer,
+      }))
+    );
+  }, []);
+
   const toggleValues = useCallback((values: number[], value: number) => {
     if (values.includes(value)) {
       return values.filter((v) => v !== value);
@@ -81,6 +90,15 @@ export const useOnBoardingQuestionary = () => {
     },
     [toggleValues]
   );
+
+  const setOther = useCallback((questionId: string, other: string) => {
+    setQuestionAndAnswers((questionAndAnswers) =>
+      questionAndAnswers.map(({ question, answer }) => ({
+        question,
+        answer: question.id === questionId ? { ...answer, other } : answer,
+      }))
+    );
+  }, []);
 
   const submit = useCallback(async () => {
     if (consultAnswers.targetSpecialities.length === 0) {
@@ -142,6 +160,8 @@ export const useOnBoardingQuestionary = () => {
     questionAndAnswers,
     submit,
     toggleAnswers,
+    setAnswer,
+    setOther,
     isOpenSelectSpecialitiesModal,
     setIsOpenSelectSpecialitiesModal,
     isOpenConsultPointModal,
