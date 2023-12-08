@@ -6,6 +6,7 @@ import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import { KeyedMutator } from 'swr';
 
 type ChatListProps = {
+  isGroup?: boolean;
   chatListData: (ChatData & { displayName: string })[];
   currentUserAccountId: string;
   chatRoomData: FetchChatRoomResponseData;
@@ -23,7 +24,7 @@ const NewBorder = () => {
 };
 
 export const ChatList = (props: ChatListProps) => {
-  const { chatListData, chatRoomData, currentUserAccountId, mutateChatList, setSelectedImage } = props;
+  const { isGroup, chatListData, chatRoomData, currentUserAccountId, mutateChatList, setSelectedImage } = props;
   const [readUntil, setReadUntil] = useState(chatRoomData.me?.read_until);
   // 最後に読んだメッセージのインデックスを特定する
   const lastReadMessageIndex = chatListData.findIndex((c) => c.uid === readUntil);
@@ -48,6 +49,7 @@ export const ChatList = (props: ChatListProps) => {
               {index > 0 && showNewBorder && <NewBorder />}
               {isMyChat ? (
                 <MyChat
+                  isGroup={isGroup}
                   chatData={c}
                   chatRoomData={chatRoomData}
                   mutateChatList={mutateChatList}

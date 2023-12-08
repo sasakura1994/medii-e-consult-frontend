@@ -14,7 +14,7 @@ import { useState, useEffect } from 'react';
 type WebsocketResponseMessage = {
   type: 'subscribe_response' | 'pong' | 'mes';
   param: string;
-  data: string;
+  data?: { event_type: 'DELETE'; uid: number };
 };
 
 type Query = {
@@ -43,6 +43,7 @@ export const useChat = () => {
     mutate: mutateChatList,
     fetchNewChatList,
     resetFromUid: resetChatListFromUid,
+    deleteMessageMutate,
   } = useFetchChatList(chatRoomIdStr);
 
   useEffect(() => {
@@ -111,6 +112,9 @@ export const useChat = () => {
       } else if (data.type === 'mes') {
         // TODO: なぜか500ms待機してチャット情報を更新するとチャットの送信が安定する
         setTimeout(async () => {
+          if (data.data?.event_type === 'DELETE') {
+            deleteMessageMutate(data.data.uid);
+          }
           await mutateChatRoom();
           await mutateChatList();
           await mutateChatRoomList();
@@ -126,7 +130,7 @@ export const useChat = () => {
       webSocket.removeEventListener('open', onOpen);
       webSocket.removeEventListener('message', onMessage);
     };
-  }, [accountId, mutateChatList, mutateChatRoom, mutateChatRoomList, socket, token]);
+  }, [accountId, deleteMessageMutate, mutateChatList, mutateChatRoom, mutateChatRoomList, socket, token]);
 
   useEffect(() => {
     if (!chatRoomIdStr) {

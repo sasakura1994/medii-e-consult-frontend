@@ -3,9 +3,9 @@ import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import React, { useMemo, useState } from 'react';
 import { ChatDeleteModal } from './ChatDeleteModal';
 import { KeyedMutator } from 'swr';
-import { useFetchPresignedFileUrl } from '@/hooks/api/chat/useFetchPresignedFileUrl';
 
 type MyChatProps = {
+  isGroup?: boolean;
   chatData: ChatData & { displayName: string };
   chatRoomData: FetchChatRoomResponseData;
   mutateChatList?: KeyedMutator<FetchChatListResponseData>;
@@ -13,10 +13,9 @@ type MyChatProps = {
 };
 
 export const MyChat = (props: MyChatProps) => {
-  const { chatData, chatRoomData, setSelectedImage, mutateChatList } = props;
+  const { isGroup, chatData, chatRoomData, setSelectedImage } = props;
   const [isMouseOver, setIsMouseOver] = useState(false);
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
-  const { fecthPresignedFileUrl } = useFetchPresignedFileUrl();
 
   const date = new Date(chatData.created_date);
   const formattedDate = date.toLocaleString(undefined, {
@@ -27,26 +26,15 @@ export const MyChat = (props: MyChatProps) => {
   });
 
   const downloadFile = async () => {
-    try {
-      const res = await fecthPresignedFileUrl({
-        chat_room_id: chatRoomData.chat_room.chat_room_id,
-        file_id: chatData.file_id,
-      });
-
-      if (res.data) {
-        const response = await fetch(res.data.url);
-        const arrayBuffer = await response.arrayBuffer();
-        const blob = new Blob([arrayBuffer], { type: chatData.content_type });
-        const downloadLink = document.createElement('a');
-        downloadLink.href = URL.createObjectURL(blob);
-        downloadLink.download = chatData.file_name;
-        document.body.appendChild(downloadLink); // Append to the body
-        downloadLink.click();
-        document.body.removeChild(downloadLink); // Remove after click
-      }
-    } catch (error) {
-      console.error('Error downloading file:', error);
-    }
+    const response = await fetch(chatData.file_path);
+    const arrayBuffer = await response.arrayBuffer();
+    const blob = new Blob([arrayBuffer], { type: chatData.content_type });
+    const downloadLink = document.createElement('a');
+    downloadLink.href = URL.createObjectURL(blob);
+    downloadLink.download = chatData.file_name;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
   };
 
   const unreadView = useMemo(() => {
@@ -70,7 +58,6 @@ export const MyChat = (props: MyChatProps) => {
           chatRoomId={chatRoomData.chat_room.chat_room_id}
           chatUid={chatData.uid}
           setIsOpenDeleteModal={setIsOpenDeleteModal}
-          mutateChatList={mutateChatList}
         />
       )}
       <div className="mr-3 flex justify-end">
@@ -80,7 +67,7 @@ export const MyChat = (props: MyChatProps) => {
       <div className="flex justify-end">
         {chatData.deleted ? (
           <p
-            className="mb-3 mr-3 max-w-[670px] whitespace-pre-wrap rounded-lg rounded-tr-none
+            className="mb-3 mr-3 max-w-[670px] whitespace-pre-wrap rounded-2xl rounded-tr-none
            bg-block-gray p-2 text-white"
           >
             削除済みメッセージ
@@ -156,7 +143,7 @@ export const MyChat = (props: MyChatProps) => {
               }}
             >
               <div
-                className="mb-3 mr-3 flex cursor-pointer items-center rounded-lg bg-white p-2"
+                className="mb-3 mr-3 flex cursor-pointer items-center rounded-2xl bg-white p-2"
                 onClick={downloadFile}
                 onMouseOver={() => {
                   setIsMouseOver(true);
@@ -182,8 +169,8 @@ export const MyChat = (props: MyChatProps) => {
               }}
             >
               <p
-                className="mb-3 mr-3 max-w-[670px] whitespace-pre-wrap break-words rounded-lg
-              rounded-tr-none bg-primary-light p-2"
+                className={`mb-3 mr-3 max-w-[670px] whitespace-pre-wrap break-words rounded-2xl
+              rounded-tr-none p-2 ${isGroup ? 'bg-[#d0f0ea]' : 'bg-primary-light'}`}
               >
                 {chatData.message}
               </p>

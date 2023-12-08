@@ -13,6 +13,7 @@ import Link from 'next/link';
 import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 import { IntroduceResponseDoctors } from './IntroduceResponseDoctors';
 import { AffiliateBanner } from './AffiliateBanner';
+import { IncurableDiseaseGroupColumns } from './IncurableDiseaseGroupColumns';
 
 export const Top = () => {
   const { showTutorialExplanationModal, setShowTutorialExplanationModal } = useTop();
@@ -28,6 +29,7 @@ export const Top = () => {
           <AffiliateBanner />
           <UserConsult setShowTutorialExplanationModal={setShowTutorialExplanationModal} />
           <IntroduceResponseDoctors />
+          <IncurableDiseaseGroupColumns />
           <TopExamples />
           <div className="mt-10">
             <TopUpcomingSeminars />

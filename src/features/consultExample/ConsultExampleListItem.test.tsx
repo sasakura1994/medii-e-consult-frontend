@@ -20,6 +20,8 @@ describe('ConsultExampleListItem', () => {
     const consultExample: ConsultExampleEntity = {
       uid: 0,
       example_id: '',
+      group_id: '',
+      group_name: '',
       gender: 'man',
       title: '',
       category_name: '',
@@ -51,6 +53,8 @@ describe('ConsultExampleListItem', () => {
     const consultExample: ConsultExampleEntity = {
       uid: 0,
       example_id: '',
+      group_id: '',
+      group_name: '',
       gender: 'man',
       title: '',
       category_name: '',
@@ -84,6 +88,8 @@ describe('ConsultExampleListItem', () => {
     const consultExample: ConsultExampleEntity = {
       uid: 0,
       example_id: '',
+      group_id: '',
+      group_name: '',
       gender: 'man',
       title: '',
       category_name: '',
@@ -117,6 +123,8 @@ describe('ConsultExampleListItem', () => {
     const consultExample: ConsultExampleEntity = {
       uid: 0,
       example_id: '',
+      group_id: '',
+      group_name: '',
       gender: 'man',
       title: '',
       category_name: 'グループ1',

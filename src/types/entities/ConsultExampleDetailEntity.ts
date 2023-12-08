@@ -6,6 +6,8 @@ export type ConsultExampleDetailEntity = Pick<
   | 'gender'
   | 'title'
   | 'category_name'
+  | 'group_id'
+  | 'group_name'
   | 'speciality_code'
   | 'age'
   | 'background'
