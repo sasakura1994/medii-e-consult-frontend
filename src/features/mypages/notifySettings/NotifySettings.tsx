@@ -46,7 +46,7 @@ export const NotifySettings: React.FC = () => {
                 name="new_notify"
                 checked={notifySettings.is_mail_notify && !notifySettings.is_push_notify ? true : false}
                 id="mail"
-                label="メール通知"
+                label="メール通知のみ受け取る"
                 onChange={changeNotifyNew}
               />
             </li>
@@ -56,7 +56,13 @@ export const NotifySettings: React.FC = () => {
                 name="new_notify"
                 checked={!notifySettings.is_mail_notify && notifySettings.is_push_notify ? true : false}
                 id="push"
-                label="プッシュ通知（パソコン／アプリ版）"
+                label={
+                  <>
+                    プッシュ通知のみ受け取る
+                    <br className="lg:hidden" />
+                    （パソコン/アプリ版）
+                  </>
+                }
                 onChange={changeNotifyNew}
               />
             </li>
