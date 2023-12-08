@@ -5,9 +5,14 @@ import { useNotifySettings } from './useNotifySettings';
 import { Radio } from '@/components/Parts/Form/Radio';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import { Card } from '@/components/Parts/Card/Card';
+import { usePopperTooltip } from 'react-popper-tooltip';
+import { Tooltip } from '@/components/Tooltip/Tooltip';
+import { useBreakpoint } from '@/hooks/useBreakPoint';
 
 export const NotifySettings: React.FC = () => {
   const { notifySettings, isChanged, isError, changeNotifyNew, changeNotifySeminar, update } = useNotifySettings();
+  const { isMobile } = useBreakpoint();
+  const tooltip = usePopperTooltip({ placement: 'top', trigger: isMobile ? 'click' : 'hover' });
 
   return (
     <>
@@ -15,7 +20,14 @@ export const NotifySettings: React.FC = () => {
         <div>
           <h2 className="text-xl">通知設定</h2>
 
-          <h2 className="mt-6 font-bold">コンサル・グループチャットの新しい返信</h2>
+          <h2 className="mt-6 flex items-center gap-2 font-bold">
+            <div>コンサル・グループチャットの新しい返信 </div>
+            <img
+              ref={tooltip.setTriggerRef}
+              src="icons/question-circle.svg"
+              alt="コンサルの相手 または グループチャットのメンバーからメッセージがきた時の通知の受取方法を選択できます。コンサル・グループチャットに関わる重要な通知のため、通知を停止することはできません。"
+            />
+          </h2>
 
           <ul className="mt-4 flex flex-col gap-2">
             <li>
@@ -94,6 +106,12 @@ export const NotifySettings: React.FC = () => {
             : 'bg-toast-success text-white text-center py-2 shadow-md'
         }
       />
+      {tooltip.visible && (
+        <Tooltip tooltip={tooltip} className="w-[350px] text-sm" style={{ padding: '8px' }}>
+          コンサルの相手 または
+          グループチャットのメンバーからメッセージがきた時の通知の受取方法を選択できます。コンサル・グループチャットに関わる重要な通知のため、通知を停止することはできません。
+        </Tooltip>
+      )}
     </>
   );
 };
