@@ -27,45 +27,47 @@ export const OnboardingConsultPointModal = () => {
       isUseFooter
       closeButton={
         <Link href="/top">
-          <TertiaryButton size="large" className="whitespace-nowrap px-4">
-            閉じる
+          <TertiaryButton size="large" className="w-full whitespace-nowrap px-4">
+            トップページに戻る
           </TertiaryButton>
         </Link>
       }
       submitButton={
         <div>
           <Link href="/newchatroom?from=onboarding_questionary_completed">
-            <PrimaryButton size="large" className="whitespace-nowrap px-4">
-              相談内容の編集に進む
+            <PrimaryButton size="large" className="w-full whitespace-nowrap px-4">
+              相談の編集に進む（無料・匿名）
             </PrimaryButton>
           </Link>
         </div>
       }
     >
       <p
-        className="mx-auto mt-6 w-[300px] rounded-full bg-medii-blue-base px-4 py-1.5 text-center
-       text-base font-semibold text-white lg:w-[400px]"
+        className="mx-auto mt-6 w-[323px] rounded-full bg-medii-blue-base px-4 py-1.5
+                    text-center text-base font-semibold text-white lg:w-[452px]"
       >
-        はじめてのコンサルで
+        はじめての相談で、
         <br className="block lg:hidden" />
-        1,000円相当のポイント進呈
+        さらに1,000円相当のポイント進呈
       </p>
       <p className="mb-4 mt-3 px-3 text-center text-2xl font-semibold text-text-primary">
-        アンケートにご回答された疑問を
-        <br className="hidden lg:block" />
-        経験豊富な専門医に相談してみませんか？
+        アンケートの回答
+        <br className="block lg:hidden" />
+        ありがとうございました
       </p>
-      <div className="px-6 py-4">
+      <div className="flex flex-col gap-4 px-6 py-4 pb-0">
+        <p>
+          アンケートへのご回答、ありがとうございます。500ポイントを進呈いたしました。
+          <br />
+          アンケートでご回答いただいた内容をそのままエキスパート専門医へご相談いただくと、追加で1000ポイントを進呈いたします。
+        </p>
         <TextArea
           disabled
           id="answerDetail"
-          className="min-h-[160px] w-full resize-none disabled:text-text-primary"
+          className="min-h-[64px] w-full resize-none disabled:text-text-primary"
           value={onboardingAnswered.title}
           labelText="回答いただいたご相談内容"
         />
-        <p className="mt-4 text-center text-sm text-medii-blue-base">
-          意見を仰ぎたい医師や内容は「相談内容の編集に進む」から編集・投稿いただけます
-        </p>
       </div>
     </Modal>
   );

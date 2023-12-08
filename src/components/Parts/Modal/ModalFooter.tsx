@@ -9,18 +9,22 @@ export type ModalFooterProps = {
 
 export const ModalFooter = (props: ModalFooterProps) => {
   const { isUseFooter = false, closeButton, submitButton } = props;
-  const { flexDirection, closeButtonRef, submitButtonRef } = useModalFooter();
+  const { isOverMaxWidth, closeButtonRef, submitButtonRef } = useModalFooter();
 
   if (!isUseFooter) return <></>;
   return (
-    <div className={'flex items-center justify-center gap-2 self-stretch p-4 lg:justify-end ' + flexDirection}>
+    <div
+      className={`flex items-center justify-center gap-2 self-stretch p-4 lg:justify-end ${
+        isOverMaxWidth ? 'flex-col-reverse lg:flex-row' : 'flex-row'
+      }`}
+    >
       {closeButton && (
-        <div className="flex-grow lg:flex-grow-0" ref={closeButtonRef}>
+        <div className={`flex-grow lg:flex-grow-0 ${isOverMaxWidth ? 'w-full lg:w-auto' : ''}`} ref={closeButtonRef}>
           {closeButton}
         </div>
       )}
       {submitButton && (
-        <div className="flex-grow lg:flex-grow-0" ref={submitButtonRef}>
+        <div className={`flex-grow lg:flex-grow-0 ${isOverMaxWidth ? 'w-full lg:w-auto' : ''}`} ref={submitButtonRef}>
           {submitButton}
         </div>
       )}
