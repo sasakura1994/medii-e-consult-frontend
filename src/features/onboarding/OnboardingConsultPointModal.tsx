@@ -65,7 +65,7 @@ export const OnboardingConsultPointModal = () => {
           disabled
           id="answerDetail"
           className="min-h-[64px] w-full resize-none disabled:text-text-primary"
-          value={onboardingAnswered.title}
+          value={onboardingAnswered?.title}
           labelText="回答いただいたご相談内容"
         />
       </div>
