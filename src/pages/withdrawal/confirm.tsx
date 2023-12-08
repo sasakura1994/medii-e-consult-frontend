@@ -7,6 +7,7 @@ import { WithdrawalCard } from '@/features/withdrawal/WithdrawalCard';
 import SecondaryButton from '@/components/Button/SecondaryButton';
 import Link from 'next/link';
 import PrimaryButton from '@/components/Button/PrimaryButton';
+import { contactUrl } from '@/data/constants';
 
 const WithdrawalConfirmPage: NextPageWithLayout = () => {
   return (
@@ -43,7 +44,7 @@ const WithdrawalConfirmPage: NextPageWithLayout = () => {
         <h3 className="mt-6 text-l font-semibold">お問い合わせ</h3>
         <div className="mt-1 text-md">なにかお困りの際は、Medii医師会員コンシェルジュへお気軽にご相談ください。</div>
         <div className="mt-3">
-          <a href="https://tayori.com/form/62897c986d36f5b573fec1a04508f24b70b11fe6" target="_blank" rel="noreferrer">
+          <a href={contactUrl} target="_blank" rel="noreferrer">
             <SecondaryButton>問い合わせ</SecondaryButton>
           </a>
         </div>

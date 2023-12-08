@@ -4,6 +4,7 @@ import { usePopperTooltip } from 'react-popper-tooltip';
 import { HeaderMyPageMenuItem } from './HeaderMyPageMenuItem';
 import { removeAuthToken } from '@/libs/cookie';
 import { useRouter } from 'next/router';
+import { contactUrl, faqUrl } from '@/data/constants';
 
 export const HeaderMyPageButton = () => {
   const router = useRouter();
@@ -30,13 +31,10 @@ export const HeaderMyPageButton = () => {
           <HeaderMyPageMenuItem href="/pointhistory">Mediiポイントを確認・利用する</HeaderMyPageMenuItem>
           <hr className="my-2 border-t border-border-divider" />
           <HeaderMyPageMenuItem href="/howtouse">E-コンサルの使い方</HeaderMyPageMenuItem>
-          <HeaderMyPageMenuItem href="https://tayori.com/faq/4cb3c7c0fd09ab493d1efcbf01dcf76729c62202/" target="_blank">
+          <HeaderMyPageMenuItem href={faqUrl} target="_blank">
             よくある質問
           </HeaderMyPageMenuItem>
-          <HeaderMyPageMenuItem
-            href="https://tayori.com/form/62897c986d36f5b573fec1a04508f24b70b11fe6/"
-            target="_blank"
-          >
+          <HeaderMyPageMenuItem href={contactUrl} target="_blank">
             お問い合わせ
           </HeaderMyPageMenuItem>
           <HeaderMyPageMenuItem
