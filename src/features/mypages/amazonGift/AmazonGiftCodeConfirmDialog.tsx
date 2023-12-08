@@ -21,7 +21,7 @@ export const AmazonGiftCodeConfirmDialog: React.FC = () => {
         </div>
 
         <p className="mb-4">
-          ご登録頂いてメールアドレスに確認コードをお送りしました。メールに記載されている確認コードをご入力下さい。
+          ご登録いただいているメールアドレスに確認コードをお送りしました。メールに記載されている確認コードをご入力下さい。
         </p>
 
         <div className="mb-4 flex items-center">
