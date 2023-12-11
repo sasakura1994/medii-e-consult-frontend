@@ -4,7 +4,6 @@ import { ToastContainer } from 'react-toastify';
 import { useNotifySettings } from './useNotifySettings';
 import { Radio } from '@/components/Parts/Form/Radio';
 import PrimaryButton from '@/components/Button/PrimaryButton';
-import { Card } from '@/components/Parts/Card/Card';
 import { usePopperTooltip } from 'react-popper-tooltip';
 import { Tooltip } from '@/components/Tooltip/Tooltip';
 import { useBreakpoint } from '@/hooks/useBreakpoint';
@@ -16,7 +15,7 @@ export const NotifySettings: React.FC = () => {
 
   return (
     <>
-      <Card className="mt-[48px] px-6 py-10">
+      <div className="relative mb-12 mt-10 w-full px-4 py-4 lg:mb-10">
         <div>
           <h2 className="text-xl">通知設定</h2>
 
@@ -99,7 +98,7 @@ export const NotifySettings: React.FC = () => {
             通知設定を更新
           </PrimaryButton>
         </nav>
-      </Card>
+      </div>
 
       <ToastContainer
         hideProgressBar={true}

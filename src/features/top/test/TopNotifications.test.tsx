@@ -71,20 +71,4 @@ describe('TopNotifications', () => {
 
     expect(screen.queryByTestId('top-notification-input-profile')).toBeInTheDocument();
   });
-
-  test('nmoのためプロフィールが不足している場合', async () => {
-    (useFetchProfile as jest.Mock).mockReturnValue({
-      profile: {
-        registration_source: 'nmo',
-        last_name_hira: '',
-        status: 'CREATED',
-      },
-    });
-
-    await act(async () => {
-      await render(<TopNotifications />);
-    });
-
-    expect(screen.queryByTestId('top-notification-nmo-input-profile')).toBeInTheDocument();
-  });
 });

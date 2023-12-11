@@ -21,7 +21,8 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, PropsType>((props:
 
   const textAreaClassName = React.useMemo(() => {
     let customClassName =
-      'border border-solid border-block-gray rounded px-2 py-[6px] font-[monospace] text-[15px] leading-[1.4] disabled:bg-[#d5d5d5] disabled:text-block-gray w-full';
+      'border border-solid border-border-field rounded px-2 py-[6px] font-[monospace] text-[15px] leading-[1.4]' +
+      ' disabled:bg-[#d5d5d5] disabled:text-block-gray w-full';
     if (className) customClassName = `${customClassName} ${className}`;
     return customClassName;
   }, [className]);

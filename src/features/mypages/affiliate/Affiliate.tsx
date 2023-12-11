@@ -2,7 +2,6 @@ import React from 'react';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import { useAffiliate } from './useAffiliate';
-import { Card } from '@/components/Parts/Card/Card';
 import SecondaryButton from '@/components/Button/SecondaryButton';
 import TextField from '@/components/TextField/TextField';
 import { HowToInvitation } from './HowToInvitation';
@@ -12,7 +11,7 @@ export const Affiliate: React.FC = () => {
 
   return (
     <>
-      <Card className="mt-10 px-6 py-10">
+      <div className="mt-10 px-6 py-10">
         <p className="text-left text-xxl font-bold">医師紹介キャンペーン</p>
         <p className="mt-8 text-l font-bold">ご紹介特典</p>
         <div className="flex flex-col items-center lg:flex-row lg:space-x-4 ">
@@ -66,7 +65,7 @@ export const Affiliate: React.FC = () => {
           number={3}
           text={'あなた専用の紹介ページから会員登録いただくと、あなたと新規会員へ紹介特典をプレゼント'}
         />
-      </Card>
+      </div>
 
       <ToastContainer
         hideProgressBar={true}

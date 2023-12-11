@@ -2,73 +2,85 @@ import React from 'react';
 import { useDocumentInputDocument } from './useDocumentInputDocument';
 import { DocumentSelected } from '.';
 import PrimaryButton from '@/components/Button/PrimaryButton';
+import SecondaryButton from '@/components/Button/SecondaryButton';
+import { ColoredImage } from '@/components/Image/ColoredImage';
+import { ErrorMessage } from '@/components/Parts/Text/ErrorMessage';
+import { Heading } from '@/components/Parts/Text/Heading';
 
 type DocumentInputDocumentProps = {
   setSelectedWithRedirect: (value: DocumentSelected) => void;
 };
 
 const DocumentInputDocument = ({ setSelectedWithRedirect }: DocumentInputDocumentProps) => {
-  const { imageSource, onFileSelected, openFileSelector, fileSelectorRef, errorMessage, submit } =
+  const { file, imageSource, onFileSelected, openFileSelector, fileSelectorRef, errorMessage, reset, submit } =
     useDocumentInputDocument({ setSelectedWithRedirect });
 
   return (
     <form onSubmit={submit} data-testid="document-input-document">
-      <div className="border-1 rounded-xs -mb-10 mt-10 w-full border bg-white px-2 lg:mb-0 lg:px-16 lg:pb-6">
-        <div className="mx-2 mb-6 mt-6">
-          <div className="relative flex text-left text-2xl font-bold lg:mt-10 lg:text-center">
-            <div className="hidden cursor-pointer lg:block">
-              <img src="icons/arrow_left.svg" className="mt-1.5 h-3 w-3" alt="" />
-              <div
-                className="absolute left-0 top-0 pl-4 text-base"
-                onClick={() => {
-                  setSelectedWithRedirect('');
+      <div className="mt-8 px-4 lg:w-[600px] lg:px-0">
+        <Heading as="h2">医師免許証を登録</Heading>
+        <div className="mt-2">
+          医師であることを証明できる画像をアップロードしてください
+          <br />
+          医師免許証、所属医療機関のIDカード、医師資格証、専門医証明書などが対象です
+          <br />
+          ※氏名・交付年月日などが記載された面をアップロードしてください
+        </div>
+        <div className={`mt-8 flex flex-col gap-2 lg:flex-row lg:gap-6 ${file ? 'items-center' : ''}`}>
+          <SecondaryButton type="button" onClick={openFileSelector} className="w-fit">
+            画像を選択
+          </SecondaryButton>
+          {file ? (
+            <div className="flex items-center gap-1">
+              <div>{file.name}</div>
+              <a
+                className="block p-[6px]"
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  reset();
                 }}
               >
-                選択へ戻る
-              </div>
+                <ColoredImage src="icons/close.svg" color="#16191D" width="11px" height="11px" />
+              </a>
             </div>
-            <div className="mx-auto">画像アップロード</div>
-          </div>
-          <div className="mt-10 text-center lg:px-0">医師であることを証明できる画像をアップロードしてください</div>
-          <div className="mt-1 text-center lg:px-0">
-            医師免許証、所属医療機関のIDカード、医師資格証、
-            <br />
-            専門医証明書などが対象です
-          </div>
+          ) : (
+            <>
+              <div className="text-text-secondary">
+                {errorMessage ? <ErrorMessage>{errorMessage}</ErrorMessage> : <p>画像がアップロードされてません</p>}
 
-          <div className="ml-4 mt-2 text-left text-sm">
-            ※氏名・交付年月日などが記載された面をアップロードしてください
-          </div>
-
-          <div
-            onClick={openFileSelector}
-            className="mt-10 cursor-pointer rounded-md border border-dashed px-6 py-6
-             text-center font-bold text-gray-700"
-          >
-            {imageSource === '' ? (
-              'クリックして画像ファイル選択'
-            ) : (
-              <img src={imageSource} id="accountDocumentImage" className="w-full" alt="" />
-            )}
-          </div>
-          <input
-            ref={fileSelectorRef}
-            onChange={onFileSelected}
-            accept="image/*"
-            type="file"
-            name="file"
-            className="hidden"
-          />
-          <img src="images/document/license_sample.png" className="mt-6 max-w-full" alt="" />
-          <div className="mt-1 text-center">＜画像例＞</div>
+                <p>（.jpg/.jpeg/.png形式でアップロードしてください）</p>
+              </div>
+            </>
+          )}
+        </div>
+        <input
+          ref={fileSelectorRef}
+          onChange={onFileSelected}
+          accept="image/*"
+          type="file"
+          name="file"
+          className="hidden"
+        />
+        <div className="mt-6">
+          {imageSource === '' ? (
+            <div className="rounded border border-border-divider p-4">
+              <div className="mb-2 text-text-secondary">＜画像例＞</div>
+              <img src="images/document/license_sample.png" className="max-w-full" alt="画像例" />
+            </div>
+          ) : (
+            <img src={imageSource} id="accountDocumentImage" className="w-full" alt="" />
+          )}
         </div>
       </div>
-      {errorMessage && <div className="mt-5 text-center text-base font-bold text-red-400">{errorMessage}</div>}
-      <div className="-mb-19 mt-12 flex justify-center lg:mb-0 lg:mt-4">
+      <div className="mt-8 flex justify-center gap-2">
+        <SecondaryButton onClick={() => setSelectedWithRedirect('')} size="large">
+          選択へ戻る
+        </SecondaryButton>
         <PrimaryButton
           type="submit"
+          dataTestId="document-input-number-form-submit"
           size="large"
-          className="px-10 pb-2 pt-1.5 shadow-lg"
           disabled={imageSource ? false : true}
         >
           登録を完了する

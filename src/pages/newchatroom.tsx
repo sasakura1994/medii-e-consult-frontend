@@ -5,7 +5,6 @@ import { useNewChatRoom } from '@/features/chat/newChatRoom/useNewChatRoom';
 import { NewChatRoomInput } from '@/features/chat/newChatRoom/NewChatRoomInput';
 import { NewChatRoomConfirmation } from '@/features/chat/newChatRoom/NewChatRoomConfirmation';
 import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
-import { useNmo } from '@/hooks/alliance/useNmo';
 import { ImcompleteProfileModal } from '@/components/Parts/Modal/ImcompleteProfileModal';
 import { DocumentConfirmingMessage } from '@/components/Doctor/DocumentConfirmingMessage';
 import { Header } from '@/components/Layouts/Header/Header';
@@ -19,7 +18,6 @@ const NewChatRoomPage: NextPageWithLayout = () => {
   useEventLog({ name: '/NewChatRoom' });
   const { mode, isDraftConfirming, applyDraft, dontUseDraft } = newChatRoom;
   const { profile, isNeedToInputProfile } = useProfile();
-  const { isNeedToInputProfile: isNeedToInputProfileForNmo } = useNmo();
 
   if (profile?.main_speciality === 'STUDENT') {
     return (
@@ -53,12 +51,6 @@ const NewChatRoomPage: NextPageWithLayout = () => {
           <NeedToInputProfileModal
             href={`/fill-profile?redirect=${encodeURIComponent('/newchatroom')}`}
             dataTestId="need-to-fill-profile-modal"
-          />
-        )}
-        {isNeedToInputProfileForNmo && (
-          <NeedToInputProfileModal
-            href={`/nmo/input-profile?redirect=${encodeURIComponent('/newchatroom')}`}
-            dataTestId="nmo-modal"
           />
         )}
       </main>

@@ -11,7 +11,9 @@ export const useMedicalSpecialitySelect = (medicalSpecialities?: MedicalSpeciali
   const getMedicalSpecialitiesForCategory = React.useCallback(
     (medicalSpecialityCategoryId: string) =>
       medicalSpecialities?.filter(
-        (medicalSpeciality) => medicalSpeciality.medical_speciality_category_id === medicalSpecialityCategoryId
+        (medicalSpeciality) =>
+          medicalSpeciality.medical_speciality_category_id === medicalSpecialityCategoryId &&
+          medicalSpeciality.speciality_code !== 'STUDENT'
       ) || [],
     [medicalSpecialities]
   );

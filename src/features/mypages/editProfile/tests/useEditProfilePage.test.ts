@@ -39,17 +39,45 @@ describe('useEditProfilePage', () => {
       expect(hooks.current.editProfileMode).toEqual('edit');
     });
 
-    test('VERIFIEDでない場合は強制的に編集画面を表示', async () => {
-      (useFetchProfile as jest.Mock).mockReturnValue({
-        profile: { status: 'PROFILE', last_name: 'last_name' },
-      });
-      (useRouter as jest.Mock).mockReturnValue({
-        query: {},
+    describe('VERIFIEDでもPENDINGでもない場合は強制的に編集画面を表示', () => {
+      test('PROFILE', async () => {
+        (useFetchProfile as jest.Mock).mockReturnValue({
+          profile: { status: 'PROFILE', last_name: 'last_name' },
+        });
+        (useRouter as jest.Mock).mockReturnValue({
+          query: {},
+        });
+
+        const hooks = await renderHook(() => useEditProfilePage(), {}).result;
+
+        expect(hooks.current.editProfileMode).toEqual('edit');
       });
 
-      const hooks = await renderHook(() => useEditProfilePage(), {}).result;
+      test('VERIFIED', async () => {
+        (useFetchProfile as jest.Mock).mockReturnValue({
+          profile: { status: 'VERIFIED', last_name: 'last_name' },
+        });
+        (useRouter as jest.Mock).mockReturnValue({
+          query: {},
+        });
 
-      expect(hooks.current.editProfileMode).toEqual('edit');
+        const hooks = await renderHook(() => useEditProfilePage(), {}).result;
+
+        expect(hooks.current.editProfileMode).toEqual('profile');
+      });
+
+      test('PENDING*', async () => {
+        (useFetchProfile as jest.Mock).mockReturnValue({
+          profile: { status: 'PENDING_AUTO', last_name: 'last_name' },
+        });
+        (useRouter as jest.Mock).mockReturnValue({
+          query: {},
+        });
+
+        const hooks = await renderHook(() => useEditProfilePage(), {}).result;
+
+        expect(hooks.current.editProfileMode).toEqual('profile');
+      });
     });
 
     test('氏名が入力されてない場合は強制的に編集画面を表示', async () => {
