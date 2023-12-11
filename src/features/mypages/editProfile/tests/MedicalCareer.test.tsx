@@ -19,6 +19,8 @@ describe('MedicalCareer', () => {
     test('常に表示', async () => {
       act(() => {
         const props = {
+          addBlurFields: jest.fn(),
+          blurFields: [],
           isRegisterMode: true,
           profile: {
             qualified_year: '',
@@ -35,6 +37,8 @@ describe('MedicalCareer', () => {
     test('is_hospital_doctor === true の場合は表示', async () => {
       act(() => {
         const props = {
+          addBlurFields: jest.fn(),
+          blurFields: [],
           isRegisterMode: true,
           profile: {
             is_hospital_doctor: true,
@@ -51,6 +55,8 @@ describe('MedicalCareer', () => {
     test('招待の場合は表示', async () => {
       act(() => {
         const props = {
+          addBlurFields: jest.fn(),
+          blurFields: [],
           isRegisterMode: true,
           profile: {
             is_invited: true,
@@ -67,6 +73,8 @@ describe('MedicalCareer', () => {
     test('utm_sourceで承認の場合は表示', async () => {
       act(() => {
         const props = {
+          addBlurFields: jest.fn(),
+          blurFields: [],
           isRegisterMode: true,
           profile: {
             is_skip_confirmation_by_utm_source: true,
@@ -83,6 +91,8 @@ describe('MedicalCareer', () => {
     test('HUFユーザーの場合は表示', async () => {
       act(() => {
         const props = {
+          addBlurFields: jest.fn(),
+          blurFields: [],
           isRegisterMode: true,
           profile: {
             is_huf_user: true,
@@ -99,6 +109,8 @@ describe('MedicalCareer', () => {
     test('編集時は入力欄がdisabled', async () => {
       act(() => {
         const props = {
+          addBlurFields: jest.fn(),
+          blurFields: [],
           isRegisterMode: false,
           profile: {
             qualified_year: '2000',
@@ -114,6 +126,8 @@ describe('MedicalCareer', () => {
     test('新規登録時はYearInputを表示', async () => {
       act(() => {
         const props = {
+          addBlurFields: jest.fn(),
+          blurFields: [],
           isRegisterMode: true,
           profile: {
             qualified_year: '2000',

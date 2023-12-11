@@ -22,7 +22,7 @@ export const PointHistory: React.FC = () => {
   }
 
   return (
-    <div className="mt-10 rounded border-[1px] border-solid border-[#d5d5d5] bg-white px-4 pt-4">
+    <div className="my-10 px-4 pt-4">
       <div className="mb-3">
         <h2>Medii ポイント残高</h2>
         <p className="text-[28px]">

@@ -31,6 +31,8 @@ describe('UserInfo', () => {
   test('編集時は入力欄がdisabled', async () => {
     act(() => {
       const props = {
+        addBlurFields: jest.fn(),
+        blurFields: [],
         isRegisterMode: false,
         profile: {} as EditingProfile,
         setProfileFields: jest.fn(),
@@ -42,15 +44,14 @@ describe('UserInfo', () => {
     expect(screen.getByTestId('first_name')).toBeDisabled();
     expect(screen.getByTestId('last_name_hira')).toBeDisabled();
     expect(screen.getByTestId('first_name_hira')).toBeDisabled();
-    expect(screen.getByTestId('birthday_year')).toBeDisabled();
-    expect(screen.getByTestId('birthday_month')).toBeDisabled();
-    expect(screen.getByTestId('birthday_day')).toBeDisabled();
-    expect(screen.getByTestId('graduated_university')).toBeDisabled();
+    expect(screen.queryByTestId('birthday')).not.toBeInTheDocument();
   });
 
   test('新規登録時は入力欄が有効', async () => {
     act(() => {
       const props = {
+        addBlurFields: jest.fn(),
+        blurFields: [],
         isRegisterMode: true,
         profile: {} as EditingProfile,
         setProfileFields: jest.fn(),
@@ -62,9 +63,6 @@ describe('UserInfo', () => {
     expect(screen.getByTestId('first_name')).toBeEnabled();
     expect(screen.getByTestId('last_name_hira')).toBeEnabled();
     expect(screen.getByTestId('first_name_hira')).toBeEnabled();
-    expect(screen.getByTestId('year-input-year')).toBeEnabled();
-    expect(screen.getByTestId('birthday_month')).toBeEnabled();
-    expect(screen.getByTestId('birthday_day')).toBeEnabled();
-    expect(screen.getByTestId('graduated_university')).toBeEnabled();
+    expect(screen.getByTestId('birthday')).toBeEnabled();
   });
 });

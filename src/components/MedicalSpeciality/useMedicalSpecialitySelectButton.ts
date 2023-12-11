@@ -1,10 +1,13 @@
-import React, { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { MedicalSpecialitySelectButtonProps } from './MedicalSpecialitySelectButton';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 
-export const useMedicalSpecialitySelectButton = ({ specialityCode, isGroup }: MedicalSpecialitySelectButtonProps) => {
-  const [selectedSpecialityCode, setSelectedSpecialityCode] = React.useState('');
-  const [isOpen, setIsOpen] = React.useState(false);
+export const useMedicalSpecialitySelectButton = ({
+  specialityCode,
+  isGroup,
+}: Pick<MedicalSpecialitySelectButtonProps, 'specialityCode' | 'isGroup'>) => {
+  const [selectedSpecialityCode, setSelectedSpecialityCode] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
   const { medicalSpecialities: medicalSpecialityList } = useFetchMedicalSpecialities();
 
   const medicalSpecialities = useMemo(() => {
@@ -23,7 +26,7 @@ export const useMedicalSpecialitySelectButton = ({ specialityCode, isGroup }: Me
     return medicalSpecialityList;
   }, [isGroup, medicalSpecialityList]);
 
-  const medicalSpecialityName = React.useMemo(
+  const medicalSpecialityName = useMemo(
     () => medicalSpecialities?.find((medicalSpeciality) => medicalSpeciality.speciality_code === specialityCode)?.name,
     [specialityCode, medicalSpecialities]
   );

@@ -30,7 +30,10 @@ export const useEditProfilePage = (): UseEditProfilePage => {
       return 'edit';
     }
 
-    if (profile && (profile.status !== 'VERIFIED' || profile.last_name === '')) {
+    if (
+      profile &&
+      ((profile.status !== 'VERIFIED' && !profile.status.startsWith('PENDING')) || profile.last_name === '')
+    ) {
       return 'edit';
     }
 

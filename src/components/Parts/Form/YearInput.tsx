@@ -1,31 +1,33 @@
 import { Era, UseEraConverter } from '@/hooks/useEraConverter';
-import React from 'react';
+import React, { FocusEventHandler } from 'react';
+import { SelectBox } from './SelectBox';
+import TextField from '@/components/TextField/TextField';
 
 type Props = UseEraConverter & {
   value: number;
   onChange: (value: number) => void;
+  onBlur?: FocusEventHandler<HTMLInputElement>;
+  hasError?: boolean;
 };
 
 export const YearInput = (props: Props) => {
-  const { convertYear, era, setEra, onChange, validation, value } = props;
+  const { convertYear, era, hasError, setEra, onBlur, onChange, validation, value } = props;
 
   return (
     <div className="flex">
-      <select
-        required
-        className="h-12 w-20 rounded-md border border-gray-400 px-2"
-        onChange={(e) => setEra(e.target.value as Era)}
-      >
-        <option value="year">西暦</option>
-        <option value="showa">昭和</option>
-        <option value="heisei">平成</option>
-        <option value="reiwa">令和</option>
-      </select>
-      <input
+      <div className="w-[104px]">
+        <SelectBox required className="w-20 px-2" onChange={(e) => setEra(e.target.value as Era)}>
+          <option value="year">西暦</option>
+          <option value="showa">昭和</option>
+          <option value="heisei">平成</option>
+          <option value="reiwa">令和</option>
+        </SelectBox>
+      </div>
+      <TextField
         type="number"
-        placeholder="-"
+        placeholder="yyyy"
         value={convertYear(value.toString(), 'year', era)}
-        className="ml-2 h-12 w-[70px] rounded-md border border-gray-400 px-2 lg:w-40"
+        className="ml-2 h-10 w-20 px-2 lg:w-40"
         required
         min={validation.min}
         max={validation.max}
@@ -36,9 +38,11 @@ export const YearInput = (props: Props) => {
             onChange(Number(year));
           }
         }}
-        data-testid="year-input-year"
+        onBlur={onBlur}
+        hasError={hasError}
+        dataTestId="year-input-year"
       />
-      <div className="ml-1 mt-5">年</div>
+      <div className="ml-1 mt-4">年</div>
     </div>
   );
 };

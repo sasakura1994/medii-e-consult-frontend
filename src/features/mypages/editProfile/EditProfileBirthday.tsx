@@ -1,9 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { EditProfileLabel } from './EditProfileLabel';
-import { YearInput } from '@/components/Parts/Form/YearInput';
-import { TextField } from '@/components/Parts/Form/TextField';
 import { useEditProfile } from './useEditProfile';
-import { useEraConverter } from '@/hooks/useEraConverter';
+import { DateField } from '@/components/Form/DateField';
 
 type Props = Pick<ReturnType<typeof useEditProfile>, 'profile' | 'setProfileFields'> & {
   isEnabled: boolean;
@@ -11,7 +9,12 @@ type Props = Pick<ReturnType<typeof useEditProfile>, 'profile' | 'setProfileFiel
 
 export const EditProfileBirthday = (props: Props) => {
   const { isEnabled, profile, setProfileFields } = props;
-  const eraConverter = useEraConverter();
+  const birthday = useMemo(() => {
+    if (!profile) {
+      return undefined;
+    }
+    return new Date(Number(profile.birthday_year), Number(profile.birthday_month) - 1, Number(profile.birthday_day));
+  }, [profile]);
 
   if (!profile) {
     return <></>;
@@ -19,44 +22,25 @@ export const EditProfileBirthday = (props: Props) => {
 
   return (
     <>
-      <EditProfileLabel required={isEnabled ? true : undefined}>生年月日（半角）</EditProfileLabel>
-      <div className="flex gap-3">
-        {isEnabled ? (
-          <YearInput
-            {...eraConverter}
-            value={Number(profile.birthday_year)}
-            onChange={(value) => setProfileFields({ birthday_year: value.toString() })}
-          />
-        ) : (
-          <TextField
-            name="birthday_year"
-            value={profile.birthday_year}
-            onChange={(e) => setProfileFields({ birthday_year: e.target.value })}
-            disabled={!isEnabled}
-            id="birthday_year"
-            className="!w-32 lg:!w-40"
-            subscript="年"
-          />
-        )}
+      <EditProfileLabel required={isEnabled ? true : undefined}>生年月日</EditProfileLabel>
+      <DateField
+        id="birthday"
+        dataTestId="birthday"
+        value={birthday}
+        onChange={(e) => {
+          if (!e.target.value) {
+            return;
+          }
 
-        <TextField
-          name="birthday_month"
-          value={profile.birthday_month}
-          onChange={(e) => setProfileFields({ birthday_month: e.target.value })}
-          disabled={!isEnabled}
-          id="birthday_month"
-          subscript="月"
-        />
-
-        <TextField
-          name="birthday_day"
-          value={profile.birthday_day}
-          onChange={(e) => setProfileFields({ birthday_day: e.target.value })}
-          disabled={!isEnabled}
-          id="birthday_day"
-          subscript="日"
-        />
-      </div>
+          const parts = e.target.value.split(/-/);
+          setProfileFields({
+            birthday_year: Number(parts[0]).toString(),
+            birthday_month: Number(parts[1]).toString(),
+            birthday_day: Number(parts[2]).toString(),
+          });
+        }}
+        disabled={!isEnabled}
+      />
     </>
   );
 };
