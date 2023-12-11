@@ -12,6 +12,7 @@ export type ChatData = {
   file_path: string;
   file_size: number;
   message: string;
+  only_me: boolean;
   modified: number;
   uid: number;
   read_count: number;

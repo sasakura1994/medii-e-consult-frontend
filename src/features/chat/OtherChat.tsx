@@ -63,12 +63,17 @@ export const OtherChat = (props: OtherChatProps) => {
         ) : chatData.content_type.startsWith('video/') ? (
           <video src={chatData.file_path} className="aspect-auto h-[250px] cursor-pointer object-contain" controls />
         ) : (
-          <p
+          <div
             className="mb-3 mr-3 max-w-[670px] whitespace-pre-wrap break-words rounded-2xl rounded-tl-none
            bg-white p-2"
           >
-            {chatData.message}
-          </p>
+            {chatData.only_me && (
+              <div className="font-bold" data-testid="only-me">
+                &lt;あなただけに表示されています&gt;
+              </div>
+            )}
+            <p>{chatData.message}</p>
+          </div>
         )}
       </div>
     </>
