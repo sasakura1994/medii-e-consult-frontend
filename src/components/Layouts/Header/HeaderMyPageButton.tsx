@@ -20,11 +20,16 @@ export const HeaderMyPageButton = () => {
           <HeaderMyPageMenuItem href="/editprofile">プロフィール</HeaderMyPageMenuItem>
           <HeaderMyPageMenuItem href="/notifysettings">通知設定</HeaderMyPageMenuItem>
           <HeaderMyPageMenuItem href="/affiliate">
-            <div>知り合いの医師にMediiを紹介する</div>
-            <div className="text-medii-sm font-semibold text-medii-blue-base">
-              対象医師を1人紹介すると
-              <br />
-              E-カンファ視聴チケットをプレゼント
+            <div>知り合いの医師にE-コンサルを紹介</div>
+            <div className="mt-1 flex items-center gap-1 rounded-sm border border-medii-sky-base bg-[#E8FAFC] p-2">
+              <div>
+                <img src="icons/point_invitation.svg" width="21" height="21" alt="" />
+              </div>
+              <div>
+                お一人紹介で
+                <br />
+                <span className="font-bold text-medii-sky-base">最大4,500円相当</span>のポイント進呈
+              </div>
             </div>
           </HeaderMyPageMenuItem>
           <HeaderMyPageMenuItem href="/pointhistory">Mediiポイントを確認・利用する</HeaderMyPageMenuItem>
