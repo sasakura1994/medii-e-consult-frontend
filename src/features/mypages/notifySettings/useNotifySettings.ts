@@ -131,6 +131,7 @@ export const useNotifySettings = (): UseNotifySettings => {
       return;
     }
 
+    setDefaultSettings(notifySettings);
     toast('通知設定を変更しました');
   }, [notifySettings, updateNotifySettings]);
 
