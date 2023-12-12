@@ -19,10 +19,8 @@ export const useAxios = (contentType?: string) => {
       const key = `${config.method}-${config.url}`;
 
       if (ongoingRequests.current[key] === true) {
-        console.log('reject', key);
         throw new axios.Cancel('duplicate request');
       }
-      console.log('request', key);
 
       ongoingRequests.current[key] = true;
       return config;
@@ -35,7 +33,6 @@ export const useAxios = (contentType?: string) => {
         }
 
         const key = `${response.config.method}-${response.config.url}`;
-        console.log('response', key);
         ongoingRequests.current[key] = false;
         return response;
       },
