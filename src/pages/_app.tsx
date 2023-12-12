@@ -102,8 +102,8 @@ const App = (props: AppPropsWithLayout) => {
         }
       });
       const newUrl = window.location.pathname + (currentParams.toString() ? '?' + currentParams.toString() : '');
-      // replaceStateはURLを置き換えるだけでリダイレクトは行わない
-      window.history.replaceState(null, '', newUrl);
+      // URLを置き換えるだけでリダイレクトは行わない
+      router.replace(newUrl);
     }
   };
 
