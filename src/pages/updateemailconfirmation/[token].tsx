@@ -1,15 +1,15 @@
 import React from 'react';
-import { MyPageLayout } from '@/components/Layouts/MyPageLayout';
 import EditEmailConfirmation from '@/features/mypages/updateEmailConfirmation/EditEmailConfirmation';
 import { useUpdateEmailConfirmation } from '@/features/mypages/updateEmailConfirmation/useUpdateEmailConfirmation';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
+import { MyPageLayout } from '@/components/Layouts/MyPageLayout';
 
 const UpdateEmailConfirmation = () => {
   const { isTokenExist, isSending, ...props } = useUpdateEmailConfirmation();
 
   return (
-    <div className="flex h-screen bg-bg">
-      <div className="m-auto mt-6 flex w-[644px] justify-center rounded border border-[#ddd] bg-white py-10">
+    <div className="flex h-screen">
+      <div className="m-auto mt-6 flex w-[644px] justify-center py-10">
         {isSending ? (
           <SpinnerBorder />
         ) : (

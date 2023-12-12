@@ -12,6 +12,7 @@ import { useFetchFlag } from '@/hooks/api/account/useFetchFlags';
 import Link from 'next/link';
 import { useEventLog } from '@/hooks/api/eventLog/useEventLog';
 import { IntroduceResponseDoctors } from './IntroduceResponseDoctors';
+import { AffiliateBanner } from './AffiliateBanner';
 import { IncurableDiseaseGroupColumns } from './IncurableDiseaseGroupColumns';
 
 export const Top = () => {
@@ -25,6 +26,7 @@ export const Top = () => {
       <div className="mx-4 flex min-h-screen flex-col pb-12 pt-6 lg:mx-10 lg:flex-row lg:justify-center">
         <div className="max-w-[1024px] pb-8 lg:w-0 lg:flex-grow">
           <TopNotifications />
+          <AffiliateBanner />
           <UserConsult setShowTutorialExplanationModal={setShowTutorialExplanationModal} />
           <IntroduceResponseDoctors />
           <IncurableDiseaseGroupColumns />

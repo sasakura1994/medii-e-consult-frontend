@@ -32,12 +32,9 @@ export const TopNewerConsult = (props: Props) => {
         </div>
 
         <div className="w-28">
-          <Label
-            text={getMedicalSpecialityName(consult.speciality_code) ?? ''}
-            color="gray"
-            size="sm"
-            className="font-bold"
-          />
+          <Label color="gray" size="sm" className="font-bold">
+            {getMedicalSpecialityName(consult.speciality_code) ?? ''}
+          </Label>
         </div>
       </div>
     </div>

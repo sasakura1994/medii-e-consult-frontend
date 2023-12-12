@@ -2,6 +2,7 @@
 
 import { useAxios } from '@/hooks/network/useAxios';
 import { useCallback } from 'react';
+import { NotificationFrequency } from './useFetchGetGroup';
 
 export type PostCreateGroupRequestData = {
   group_id?: string;
@@ -12,7 +13,7 @@ export type PostCreateGroupRequestData = {
   disease: string;
   explanation: string;
   member_ids: string[];
-  notification_frequency: 'ALL' | 'HOURLY' | 'DAILY';
+  notification_frequency: NotificationFrequency;
   assignable: boolean;
 };
 

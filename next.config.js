@@ -14,6 +14,7 @@ const nextConfig = {
     NMO_URL: process.env.NMO_URL,
     HUBSPOT_FORM_ID: process.env.HUBSPOT_FORM_ID,
     HUBSPOT_PORTAL_ID: process.env.HUBSPOT_PORTAL_ID,
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
   },
   async redirects() {
     return [

@@ -22,7 +22,7 @@ export const AmazonGift: React.FC = () => {
 
   return (
     <>
-      <div className="relative mb-12 mt-10 w-full rounded border border-gray-300 bg-white px-4 py-4 lg:mb-10">
+      <div className="relative mb-12 mt-10 w-full px-4 py-4 lg:mb-10">
         <div className="mb-4">
           <p className="border-b border-solid border-b-heading-line pb-1" data-testid="txt-point-balance">
             Mediiポイント残高

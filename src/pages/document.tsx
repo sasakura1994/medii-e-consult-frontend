@@ -1,7 +1,7 @@
 import React from 'react';
 import { Document } from '@/features/document';
 import { NextPageWithLayout } from './_app';
-import { MyPageLayoutWithoutSpFooterMenu } from '@/components/Layouts/MyPageLayoutWithoutSpFooterMenu';
+import { ProfileRegistrationLayout } from '@/components/Layouts/ProfileRegistrationLayout';
 
 const DocumentPage: NextPageWithLayout = () => {
   return <Document />;
@@ -9,4 +9,4 @@ const DocumentPage: NextPageWithLayout = () => {
 
 export default DocumentPage;
 
-DocumentPage.getLayout = (page) => <MyPageLayoutWithoutSpFooterMenu>{page}</MyPageLayoutWithoutSpFooterMenu>;
+DocumentPage.getLayout = (page) => <ProfileRegistrationLayout>{page}</ProfileRegistrationLayout>;

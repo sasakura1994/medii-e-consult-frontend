@@ -29,9 +29,14 @@ type Option = {
   label: string;
 };
 
-type HospitalInputType = 'free' | 'select';
+export type HospitalInputType = 'free' | 'select';
+
+type AccountType = 'doctor' | 'student';
 
 export type UseEditProfile = {
+  accountType: AccountType;
+  addBlurFields: (fieldName: string) => void;
+  blurFields: string[];
   errorMessage: string;
   hospitalInputType: HospitalInputType;
   hospitalOptions: Option[];
@@ -44,8 +49,9 @@ export type UseEditProfile = {
   saveProfile: () => Promise<boolean>;
   selectedHospital?: Option;
   selectHospital: (selected: Option | null) => void;
-  selectMedicalSpecialities: (medicalSpecialities: MedicalSpecialityEntity[]) => void;
+  selectInChargeMedicalSpecialities: (medicalSpecialities: MedicalSpecialityEntity[]) => void;
   selectedQuestionaryItemIds: string[];
+  setAccountType: Dispatch<SetStateAction<AccountType>>;
   setHospitalInputType: Dispatch<SetStateAction<HospitalInputType>>;
   setHospitalName: (hospitalName: string) => void;
   setHospitalSearchText: Dispatch<SetStateAction<string>>;
@@ -62,10 +68,12 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
   const [profile, setProfile] = useState<EditingProfile>();
   const [isInitialized, setIsInitialized] = useState(false);
   const [hospitalInputType, setHospitalInputType] = useState<HospitalInputType>('select');
+  const [accountType, setAccountType] = useState<AccountType>('doctor');
   const [hospitalSearchText, setHospitalSearchText] = useState('');
   const [selectedHospital, setSelectedHospital] = useState<Option>();
   const [isSending, setIsSending] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [blurFields, setBlurFields] = useState<string[]>([]);
 
   const { profile: fetchedProfile } = useFetchProfile();
   const { hospital: defaultHospital } = useFetchHospital(isInitialized ? fetchedProfile?.hospital_id : undefined);
@@ -103,6 +111,10 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
       }
     }
 
+    if (accountType === 'student') {
+      return true;
+    }
+
     if (!isHospitalDisabled) {
       if (
         profile.qualified_year === '' ||
@@ -115,7 +127,7 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
     }
 
     return profile.main_speciality !== '';
-  }, [profile, isHospitalDisabled, isRegisterMode, hospitalInputType]);
+  }, [profile, isRegisterMode, accountType, isHospitalDisabled, hospitalInputType]);
 
   useEffect(() => {
     if (!defaultHospital) {
@@ -156,9 +168,9 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
     } else {
       setProfile({
         ...fetchedProfile,
-        birthday_year: fetchedProfile.birthday_year === 9999 ? '' : numberToString(fetchedProfile.birthday_year),
-        birthday_month: fetchedProfile.birthday_year === 9999 ? '' : numberToString(fetchedProfile.birthday_month),
-        birthday_day: fetchedProfile.birthday_year === 9999 ? '' : numberToString(fetchedProfile.birthday_day),
+        birthday_year: fetchedProfile.birthday_year === 9999 ? '1990' : numberToString(fetchedProfile.birthday_year),
+        birthday_month: fetchedProfile.birthday_year === 9999 ? '1' : numberToString(fetchedProfile.birthday_month),
+        birthday_day: fetchedProfile.birthday_year === 9999 ? '1' : numberToString(fetchedProfile.birthday_day),
         qualified_year: numberToString(fetchedProfile.qualified_year),
         graduated_university: fetchedProfile.graduated_university === 'null' ? '' : fetchedProfile.graduated_university,
         is_mail_notify:
@@ -169,6 +181,7 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
     }
 
     setHospitalInputType(currentProfile.hospital_id === '' && currentProfile.hospital_name !== '' ? 'free' : 'select');
+    setAccountType(currentProfile.main_speciality === 'STUDENT' ? 'student' : 'doctor');
     setIsInitialized(true);
   }, [fetchedProfile, getDraftProfile, isInitialized]);
 
@@ -211,16 +224,15 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
     [profile, setProfileFields]
   );
 
-  const selectMedicalSpecialities = useCallback(
+  const selectInChargeMedicalSpecialities = useCallback(
     (medicalSpecialities: MedicalSpecialityEntity[]) => {
       if (!profile) {
         return;
       }
       setProfileFields({
-        main_speciality: medicalSpecialities.length > 0 ? medicalSpecialities[0].speciality_code : '',
-        speciality_2: medicalSpecialities.length > 1 ? medicalSpecialities[1].speciality_code : '',
-        speciality_3: medicalSpecialities.length > 2 ? medicalSpecialities[2].speciality_code : '',
-        speciality_4: medicalSpecialities.length > 3 ? medicalSpecialities[3].speciality_code : '',
+        speciality_2: medicalSpecialities.length > 0 ? medicalSpecialities[0].speciality_code : '',
+        speciality_3: medicalSpecialities.length > 1 ? medicalSpecialities[1].speciality_code : '',
+        speciality_4: medicalSpecialities.length > 2 ? medicalSpecialities[2].speciality_code : '',
       });
     },
     [profile, setProfileFields]
@@ -231,6 +243,23 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
     setErrorMessage('');
 
     const data = { ...profile };
+
+    if (accountType === 'student') {
+      data.main_speciality = 'STUDENT';
+      data.speciality_2 = '';
+      data.speciality_3 = '';
+      data.speciality_4 = '';
+      data.qualified_year = '0';
+      data.doctor_qualified_year = 9999;
+      data.doctor_qualified_month = 4;
+      data.doctor_qualified_day = 1;
+      data.expertise = '';
+      data.qualification = '';
+      data.prefecture_code = '';
+      data.hospital_id = '';
+      data.hospital_name = '';
+      data.want_to_be_consultant = false;
+    }
 
     if (!data.is_mail_notify && !data.is_push_notify) {
       data.is_mail_notify = true;
@@ -270,7 +299,7 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
 
     mutateFetchProfile();
     return true;
-  }, [hospitalInputType, isHospitalDisabled, profile, updateProfile]);
+  }, [accountType, hospitalInputType, isHospitalDisabled, profile, updateProfile]);
 
   const submit = useCallback(async () => {
     if (!profile) {
@@ -312,7 +341,20 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
     [profile, selectedQuestionaryItemIds, setProfileFields]
   );
 
+  const addBlurFields = useCallback(
+    (fieldName: string) => {
+      if (blurFields.includes(fieldName)) {
+        return;
+      }
+      setBlurFields([...blurFields, fieldName]);
+    },
+    [blurFields]
+  );
+
   return {
+    accountType,
+    addBlurFields,
+    blurFields,
     errorMessage,
     hospitalInputType,
     hospitalOptions,
@@ -325,8 +367,9 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
     saveProfile,
     selectedHospital,
     selectHospital,
-    selectMedicalSpecialities,
+    selectInChargeMedicalSpecialities,
     selectedQuestionaryItemIds,
+    setAccountType,
     setHospitalInputType,
     setHospitalName,
     setHospitalSearchText,

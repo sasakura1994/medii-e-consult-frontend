@@ -1,7 +1,9 @@
-import React from 'react';
+import { Required } from '@/components/Parts/Form/Required';
+import Label from '@/components/Parts/Label/Label';
+import React, { ReactNode } from 'react';
 
 type Props = {
-  children?: string | JSX.Element;
+  children?: ReactNode;
   required?: boolean;
   id?: string;
 };
@@ -14,18 +16,17 @@ export const EditProfileLabel = (props: Props) => {
   }
 
   return (
-    <label htmlFor={id} className="mb-1 flex items-center font-bold">
-      {required === true && (
-        <span className="mr-1 w-11 rounded border border-solid border-rose-400 px-1 py-1 text-xs leading-none text-rose-400">
-          必須
-        </span>
-      )}
-      {required === false && (
-        <span className="mr-1 w-11 rounded border border-solid border-primary px-1 py-1 text-xs leading-none text-primary">
+    <label htmlFor={id} className="mb-2 flex items-center gap-2 font-bold">
+      <div>{children}</div>
+      {required === true ? (
+        <Required>必須</Required>
+      ) : required === false ? (
+        <Label color="gray" size="sm" className="whitespace-nowrap">
           任意
-        </span>
+        </Label>
+      ) : (
+        <></>
       )}
-      {children}
     </label>
   );
 };
