@@ -22,7 +22,7 @@ describe('useOnBoardingQuestionary', () => {
       push: jest.fn(),
     });
     (usePostQuestionaryItemsForOnboarding as jest.Mock).mockReturnValue({
-      postQuestionaryItemsForOnboarding: jest.fn().mockResolvedValue(true),
+      postQuestionaryItemsForOnboarding: jest.fn().mockResolvedValue({ status: 200 }),
     });
     (useFetchMedicalSpecialityCategories as jest.Mock).mockReturnValue({
       medicalSpecialityCategories: [],
@@ -32,7 +32,7 @@ describe('useOnBoardingQuestionary', () => {
     });
   });
 
-  test('メール・プッシュ通知両方受け取るを選択した場合に状態が変わること', async () => {
+  test('ユーザーがオンボーディングに回答し、正常に送信したときにmutateされること', async () => {
     const hooks = renderHook(() => useOnBoardingQuestionary(), {}).result;
 
     act(() => {
