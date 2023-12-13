@@ -26,7 +26,12 @@ export const OnboardingConsultPointModal = () => {
       dataTestId="onboarding-questionary-modal"
       isUseFooter
       closeButton={
-        <Link href="/top">
+        <Link
+          href="/top"
+          onClick={() => {
+            postEventLog({ name: 'click-top-page-button-from-onboarding-modal' });
+          }}
+        >
           <TertiaryButton size="large" className="w-full whitespace-nowrap px-4">
             トップページに戻る
           </TertiaryButton>
@@ -34,7 +39,12 @@ export const OnboardingConsultPointModal = () => {
       }
       submitButton={
         <div>
-          <Link href="/newchatroom?from=onboarding_questionary_completed">
+          <Link
+            href="/newchatroom?from=onboarding_questionary_completed"
+            onClick={() => {
+              postEventLog({ name: 'click-newchatroom-page-button-from-onboarding-modal' });
+            }}
+          >
             <PrimaryButton size="large" className="w-full whitespace-nowrap px-4">
               相談の編集に進む（無料・匿名）
             </PrimaryButton>

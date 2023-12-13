@@ -23,12 +23,11 @@ export const useEventLog = (args?: Args): UseEventLog => {
 
   const postEventLog = useCallback(
     async (postArgs: Args) => {
-      if (hasToken && !isSent) {
-        setIsSent(true);
+      if (hasToken) {
         await axios.post('/event-log', postArgs);
       }
     },
-    [axios, hasToken, isSent]
+    [axios, hasToken]
   );
 
   return { postEventLog };
