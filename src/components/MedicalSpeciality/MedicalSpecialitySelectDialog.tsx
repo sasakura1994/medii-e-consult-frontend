@@ -64,7 +64,27 @@ export const MedicalSpecialitySelectDialog = (props: MedicalSpecialitySelectDial
   );
 
   return (
-    <Modal setShowModal={setShowModal} className="relative pb-[88px] lg:w-[600px]">
+    <Modal
+      setShowModal={setShowModal}
+      pcWidth="600"
+      isUseFooter
+      submitButton={
+        <PrimaryButton
+          type="button"
+          size="large"
+          onClick={submit}
+          className="w-full px-4"
+          disabled={required && selectedSpecialityCode === ''}
+        >
+          決定
+        </PrimaryButton>
+      }
+      closeButton={
+        <TertiaryButton onClick={() => setShowModal(false)} size="large" className="w-full">
+          閉じる
+        </TertiaryButton>
+      }
+    >
       <div className="mx-4 my-6">
         <Heading>所属科を選択</Heading>
         {description && <div className="mt-8">{description}</div>}
@@ -93,35 +113,6 @@ export const MedicalSpecialitySelectDialog = (props: MedicalSpecialitySelectDial
               )}
             </div>
           ))}
-        </div>
-        <div
-          className="
-            absolute
-            bottom-0
-            left-0
-            right-0
-            flex
-            h-[88px]
-            items-center
-            justify-between
-            gap-2
-            bg-white
-            px-4
-            lg:justify-end
-          "
-        >
-          <TertiaryButton onClick={() => setShowModal(false)} size="large" className="flex-1 lg:flex-initial">
-            閉じる
-          </TertiaryButton>
-          <PrimaryButton
-            type="button"
-            size="large"
-            onClick={submit}
-            className="flex-1 px-4 lg:flex-initial"
-            disabled={required && selectedSpecialityCode === ''}
-          >
-            決定
-          </PrimaryButton>
         </div>
       </div>
     </Modal>

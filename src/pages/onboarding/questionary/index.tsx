@@ -2,7 +2,7 @@ import { Breadcrumb } from '@/components/Breadcrumb/Breadcrumb';
 import { BreadcrumbItem } from '@/components/Breadcrumb/BreadcrumbItem';
 import { BreadcrumbLink } from '@/components/Breadcrumb/BreadcrumbLink';
 import PrimaryButton from '@/components/Button/PrimaryButton';
-import SecondaryButton from '@/components/Button/SecondaryButton';
+import TertiaryButton from '@/components/Button/TertiaryButton';
 import { ColoredImage } from '@/components/Image/ColoredImage';
 import { CheckBox } from '@/components/Parts/Form/CheckBox';
 import { Optional } from '@/components/Parts/Form/Optional';
@@ -75,7 +75,7 @@ const OnBoardingQuestionaryPage = () => {
             {questionAndAnswers.map(({ question, answer }) => (
               <section key={question.id}>
                 <div className="flex items-center gap-2">
-                  <h3 className="text-md font-bold">
+                  <h3 className="text-base font-bold">
                     {question.text}
                     {question.required ? (
                       <Required className="lg:relative lg:top-[-2px]" isInline>
@@ -146,9 +146,9 @@ const OnBoardingQuestionaryPage = () => {
                 placeholder="他の医師の相談例を参考に、記入してください。"
                 required={true}
               />
-              <div className="mt-2 hidden rounded-lg bg-bg-secondary p-4 lg:block">
+              <div className="mt-2 rounded-lg bg-bg-secondary p-4">
                 <div className="flex gap-4 text-base leading-6">
-                  <p>相談例</p>
+                  <p className="whitespace-nowrap">相談例</p>
                   <ul className="list-disc pl-4">
                     <li>発熱を繰り返す男児の診断について</li>
                     <li>状態の安定した胸腺摘出後の抗AChR抗体陽性重症筋無力症患者のラブリズマブの終了の判断について</li>
@@ -170,7 +170,9 @@ const OnBoardingQuestionaryPage = () => {
                   <label
                     htmlFor="man"
                     className={`flex h-10 w-full items-center gap-2 rounded-lg border ${
-                      consultAnswers.gender === 'man' ? 'border-medii-blue-base' : 'border-border-field'
+                      consultAnswers.gender === 'man'
+                        ? 'border-medii-blue-base bg-medii-blue-100'
+                        : 'border-border-field'
                     }  px-3`}
                   >
                     <input
@@ -186,7 +188,9 @@ const OnBoardingQuestionaryPage = () => {
                   <label
                     htmlFor="woman"
                     className={`flex h-10 w-full items-center gap-2 rounded-lg border ${
-                      consultAnswers.gender === 'woman' ? 'border-medii-blue-base' : 'border-border-field'
+                      consultAnswers.gender === 'woman'
+                        ? 'border-medii-blue-base bg-medii-blue-100'
+                        : 'border-border-field'
                     }  px-3`}
                   >
                     <input
@@ -215,7 +219,7 @@ const OnBoardingQuestionaryPage = () => {
                       setConsultAnswers((prev) => ({ ...prev, age: Number(e.target.value) }));
                     }}
                   >
-                    <option value="">年代を入力して下さい</option>
+                    <option value="">年代を選択</option>
                     <option value="child">小児</option>
                     {ages.map((age) => (
                       <option value={age.age} key={age.age}>
@@ -255,7 +259,7 @@ const OnBoardingQuestionaryPage = () => {
                 {medicalSpecialityCategories &&
                   medicalSpecialityCategories.map((category) => (
                     <section key={category.id}>
-                      <div className="mt-2 text-base font-bold text-text-primary">{category.name}</div>
+                      <div className="mt-2 text-base text-text-primary">{category.name}</div>
                       <div className="mt-2 grid gap-y-2 lg:grid-cols-5">
                         {medicalSpecialities &&
                           medicalSpecialities
@@ -362,7 +366,7 @@ const OnBoardingQuestionaryPage = () => {
             {isSending ? (
               <SpinnerBorder />
             ) : (
-              <div className="flex flex-col-reverse gap-2 lg:flex-row lg:gap-10">
+              <div className="flex w-full flex-col-reverse gap-2 lg:w-fit lg:flex-row lg:gap-10">
                 <div
                   onClick={async () => {
                     setOnboardingAnswered(null);
@@ -370,9 +374,9 @@ const OnBoardingQuestionaryPage = () => {
                   }}
                 >
                   <Link href={'/top'}>
-                    <SecondaryButton size="large" className="w-full px-4 lg:w-auto">
+                    <TertiaryButton size="large" className="w-full px-4 lg:w-auto">
                       あとでアンケートに回答する
-                    </SecondaryButton>
+                    </TertiaryButton>
                   </Link>
                 </div>
                 <PrimaryButton size="large" className="w-full px-4 lg:w-auto">
