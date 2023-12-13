@@ -33,6 +33,33 @@ describe('useRegister', () => {
 
       expect(hooks.current.loginUrl).toBe('/login?redirect=/seminar');
     });
+
+    test('nmo再登録', async () => {
+      (useRouter as jest.Mock).mockReturnValue({
+        query: {
+          from: 'nmo_registration_again',
+          token: 'nmo_token',
+        },
+      });
+
+      const post = jest.fn();
+      post.mockResolvedValue(true);
+      (useAxios as jest.Mock).mockReturnValue({
+        axios: { post },
+      });
+
+      const hooks = renderHook(() => useRegister(), {}).result;
+
+      await act(async () => await hooks.current.register());
+
+      expect(post).toBeCalledWith('/doctor/create_account', {
+        mail_address: '',
+        queries: {
+          from: 'nmo_registration_again',
+        },
+        token: 'nmo_token',
+      });
+    });
   });
 
   test('register', async () => {

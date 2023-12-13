@@ -11,12 +11,14 @@ type Query = {
   redirect?: string;
   p?: string;
   from?: RegistrationFromQuery;
+  token?: string;
 };
 
 type CreateAccountRequestData = {
   mail_address: string;
   parent_account_id?: string;
   queries: ParsedUrlQuery;
+  token?: string;
 };
 
 export type UseRegisterType = Pick<Query, 'from'> & {
@@ -59,10 +61,14 @@ export const useRegister = (): UseRegisterType => {
   }, [redirect]);
 
   const createAccount = useCallback(() => {
+    // nmo再登録のtokemはqueries煮含めない
+    const { token, ...queries } = router.query as Query;
+
     const data: CreateAccountRequestData = {
       mail_address: email,
       parent_account_id: parentAccountId,
-      queries: router.query,
+      queries,
+      token,
     };
 
     return axios.post('/doctor/create_account', data);
