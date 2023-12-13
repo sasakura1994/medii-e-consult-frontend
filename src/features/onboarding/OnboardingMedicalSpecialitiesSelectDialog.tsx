@@ -5,8 +5,8 @@ import { CheckBox } from '@/components/Parts/Form/CheckBox';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import { Heading } from '@/components/Parts/Text/Heading';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
-import { MedicalSpecialityCategorySelect } from './MedicalSpecialityCategorySelect';
-import { useMedicalSpecialitiesSelectDialog } from './useMedicalSpecialitiesSelectDialog';
+import { useMedicalSpecialitiesSelectDialog } from '@/components/MedicalSpeciality/useMedicalSpecialitiesSelectDialog';
+import { MedicalSpecialityCategorySelect } from '@/components/MedicalSpeciality/MedicalSpecialityCategorySelect';
 
 export type OnboardingMedicalSpecialitiesSelectDialogProps = {
   defaultSelectedMedicalSpecialities: MedicalSpecialityEntity[];
