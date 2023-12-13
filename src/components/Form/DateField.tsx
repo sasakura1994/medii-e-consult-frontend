@@ -22,7 +22,7 @@ export const DateField = (props: Props) => {
     id,
     dataTestId,
     disabled = false,
-    fromYear = 1970,
+    fromYear = new Date().getFullYear() - 100,
     toYear = new Date().getFullYear() + 1,
     value,
     onChange,

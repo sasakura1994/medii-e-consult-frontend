@@ -120,7 +120,7 @@ export const Registration = (props: UseRegisterType) => {
                 <div>/</div>
                 <a
                   // eslint-disable-next-line max-len
-                  href="https://tayori.com/faq/4cb3c7c0fd09ab493d1efcbf01dcf76729c62202/category/fea2bb08831c952f089f3f8a91b98f72c6ec300b/"
+                  href="https://support.medii.jp/faq/%E3%81%9D%E3%81%AE%E4%BB%96medii%E3%83%9D%E3%82%A4%E3%83%B3%E3%83%88-%E4%BC%9A%E5%93%A1%E6%83%85%E5%A0%B1%E3%81%AA%E3%81%A9%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6"
                   className="underline"
                   target="_blank"
                   rel="noreferrer nofollow"

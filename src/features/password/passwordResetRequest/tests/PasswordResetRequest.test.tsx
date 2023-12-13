@@ -14,6 +14,14 @@ describe('PasswordResetRequest', () => {
     const apiClientMock = apiClient as jest.Mocked<typeof apiClient>;
     apiClientMock.createApiClient.mockReturnValue({
       post: jest.fn(() => Promise.resolve({ data: data, status: 204 })),
+      interceptors: {
+        request: {
+          use: jest.fn(),
+        },
+        response: {
+          use: jest.fn(),
+        },
+      },
     } as unknown as AxiosInstance);
     const data: PostRequestResetPasswordResponseData = { code: 1, message: '' };
 
