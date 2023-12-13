@@ -43,6 +43,7 @@ export const useOnBoardingQuestionary = () => {
     age: null,
     targetSpecialities: [],
   });
+  const [isSelectedChildOption, setIsSelectedChildOption] = useState(false);
 
   // questionAndAnswersを初期化
   useEffect(() => {
@@ -171,5 +172,7 @@ export const useOnBoardingQuestionary = () => {
     consultAnswers,
     setConsultAnswers,
     setOnboardingAnswered,
+    isSelectedChildOption,
+    setIsSelectedChildOption,
   };
 };

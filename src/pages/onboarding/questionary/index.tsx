@@ -11,7 +11,7 @@ import { Required } from '@/components/Parts/Form/Required';
 import { SelectBox } from '@/components/Parts/Form/SelectBox';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 import TextArea from '@/components/TextArea/TextArea';
-import { ages } from '@/data/age';
+import { ages, childAges } from '@/data/age';
 import { OnboardingConsultPointModal } from '@/features/onboarding/OnboardingConsultPointModal';
 import { OnboardingMedicalSpecialitiesSelectDialog } from '@/features/onboarding/OnboardingMedicalSpecialitiesSelectDialog';
 import { QuestionaryItems } from '@/features/onboarding/QuestionaryItems';
@@ -37,6 +37,8 @@ const OnBoardingQuestionaryPage = () => {
     consultAnswers,
     setConsultAnswers,
     setOnboardingAnswered,
+    isSelectedChildOption,
+    setIsSelectedChildOption,
   } = useOnBoardingQuestionary();
   const { postEventLog } = useEventLog();
 
@@ -204,11 +206,17 @@ const OnBoardingQuestionaryPage = () => {
                     name="age_range"
                     required
                     onChange={(e) => {
+                      if (e.target.value === 'child') {
+                        setConsultAnswers((prev) => ({ ...prev, age: null }));
+                        setIsSelectedChildOption(true);
+                        return;
+                      }
+                      setIsSelectedChildOption(false);
                       setConsultAnswers((prev) => ({ ...prev, age: Number(e.target.value) }));
                     }}
                   >
                     <option value="">年代を入力して下さい</option>
-                    <option value={1}>小児</option>
+                    <option value="child">小児</option>
                     {ages.map((age) => (
                       <option value={age.age} key={age.age}>
                         {age.label}
@@ -216,6 +224,24 @@ const OnBoardingQuestionaryPage = () => {
                     ))}
                   </SelectBox>
                 </div>
+                {isSelectedChildOption && (
+                  <div className="mt-2 max-w-[319px]">
+                    <SelectBox
+                      name="child_age"
+                      required
+                      onChange={(e) => {
+                        setConsultAnswers((prev) => ({ ...prev, age: Number(e.target.value) }));
+                      }}
+                    >
+                      <option value="">小児年齢を入力して下さい</option>
+                      {childAges.map((age) => (
+                        <option value={age.age} key={age.age}>
+                          {age.label}
+                        </option>
+                      ))}
+                    </SelectBox>
+                  </div>
+                )}
               </div>
             </div>
             <div className="flex flex-col gap-4">
