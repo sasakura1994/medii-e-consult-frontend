@@ -97,7 +97,7 @@ export const ChatEditModal = (props: ChatEditModalProps) => {
             <PrimaryButton
               className="w-[223px]"
               onClick={async () => {
-                const res = await updateChatRoom({
+                await updateChatRoom({
                   chat_room_id: chatRoomData.chat_room.chat_room_id,
                   age: selectedAge,
                   disease_name: summary,
@@ -106,11 +106,9 @@ export const ChatEditModal = (props: ChatEditModalProps) => {
                   const error = e as AxiosError<UpdateChatRoomResponseData>;
                   setErrorMessage(error.response?.data.message);
                 });
-                if (res?.data.code) {
-                  await mutateChatRoom?.();
-                  await mutateChatRoomList?.();
-                  setIsOpenChatEditModal(false);
-                }
+                setIsOpenChatEditModal(false);
+                await mutateChatRoom?.();
+                await mutateChatRoomList?.();
               }}
             >
               ルームを更新
