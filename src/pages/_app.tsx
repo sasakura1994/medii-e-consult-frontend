@@ -102,8 +102,12 @@ const App = (props: AppPropsWithLayout) => {
         }
       });
       const newUrl = window.location.pathname + (currentParams.toString() ? '?' + currentParams.toString() : '');
+      const absoluteUrl = new URL(newUrl, window.location.origin).toString();
       // URLを置き換えるだけでリダイレクトは行わない
-      router.replace(newUrl);
+
+      if (absoluteUrl !== window.location.href) {
+        router.replace(newUrl);
+      }
     }
   };
 
