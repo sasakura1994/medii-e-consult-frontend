@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent, FocusEventHandler, MouseEventHandler } from 'react';
 
 type TextFieldProps = {
   id?: string;
@@ -9,10 +9,16 @@ type TextFieldProps = {
   name?: string;
   placeholder?: string;
   value?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  onClick?: MouseEventHandler<HTMLInputElement>;
+  onBlur?: FocusEventHandler<HTMLInputElement>;
   subText?: string;
   required?: boolean;
   dataTestId?: string;
+  minLength?: number;
+  maxLength?: number;
+  min?: number;
+  max?: number;
   hasError?: boolean;
 };
 
@@ -27,14 +33,20 @@ const TextField = (props: TextFieldProps) => {
     placeholder,
     value,
     onChange,
+    onClick,
+    onBlur,
     subText,
     required,
     dataTestId,
+    minLength,
+    maxLength,
+    min,
+    max,
     hasError = false,
   } = props;
   return (
     <>
-      <label className="text-md text-text-primary">{label}</label>
+      {label && <label className="text-md text-text-primary">{label}</label>}
       <input
         id={id}
         type={type}
@@ -47,8 +59,14 @@ const TextField = (props: TextFieldProps) => {
         } px-3 py-2 text-md  ${className}`}
         value={value}
         onChange={onChange}
+        onClick={onClick}
+        onBlur={onBlur}
         placeholder={placeholder}
         data-testid={dataTestId}
+        minLength={minLength}
+        maxLength={maxLength}
+        min={min}
+        max={max}
         required={required}
       ></input>
       <p className="text-medii-sm text-text-secondary">{subText}</p>

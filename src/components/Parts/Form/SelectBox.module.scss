@@ -5,11 +5,11 @@
   &::before {
     content: "";
     display: block;
-    background-image: url("/icons/arrow_pull.svg");
+    background-image: url("/icons/caret-down-fill.svg");
     background-size: contain;
     background-repeat: no-repeat;
-    height: 12px;
-    width: 12px;
+    height: 16px;
+    width: 16px;
     position: absolute;
     top: 50%;
     right: 12px;

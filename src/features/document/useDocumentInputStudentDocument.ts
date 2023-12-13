@@ -15,10 +15,13 @@ export const useDocumentInputStudentDocument = ({ selected, setSelected }: UseDo
   const { profile } = useFetchProfile();
   const { uploadDocument } = useUploadDocument();
   const [year, setYear] = useState(0);
-  const { imageSource, onFileSelected, setImageSource, openFileSelector, fileSelectorRef } = useSelectedFile();
+  const { file, imageSource, setImageSource, onFileSelected, openFileSelector, fileSelectorRef, reset } =
+    useSelectedFile();
   const eraConverter = useEraConverter();
 
   const [errorMessage, setErrorMessage] = useState('');
+
+  const isValid = imageSource && year.toString().length === 4;
 
   const submit = useCallback(
     async (e: React.FormEvent) => {
@@ -63,11 +66,14 @@ export const useDocumentInputStudentDocument = ({ selected, setSelected }: UseDo
 
   return {
     eraConverter,
+    file,
     imageSource,
     onFileSelected,
     openFileSelector,
     fileSelectorRef,
     errorMessage,
+    isValid,
+    reset,
     submit,
     year,
     setYear,

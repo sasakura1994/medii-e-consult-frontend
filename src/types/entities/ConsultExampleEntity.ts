@@ -6,6 +6,8 @@ export type ConsultExampleEntity = {
   gender: ConsultExampleGender;
   title: string;
   category_name: string;
+  group_id: string;
+  group_name: string;
   speciality_code: string;
   age: number | null;
   background: string;

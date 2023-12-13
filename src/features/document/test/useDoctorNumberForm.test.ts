@@ -68,22 +68,13 @@ describe('useDoctorNumberForm', () => {
 
     act(() => {
       result.current.setDoctorNumber('123456');
-      result.current.setDoctorLicenseMonth('11');
-      result.current.setDoctorLicenseDay('12');
-      result.current.eraConverter.setEra('year');
-      result.current.setYear(2020);
+      result.current.setDoctorLicenseDate(new Date(2020, 11, 12));
     });
 
     expect(result.current.doctorNumber).toBe('123456');
-    expect(result.current.doctorLicenseMonth).toBe('11');
-    expect(result.current.doctorLicenseDay).toBe('12');
-    expect(result.current.year).toBe(2020);
-
-    act(() => {
-      result.current.eraConverter.setEra('reiwa');
-    });
-
-    expect(result.current.year).toBe(2020);
+    expect(result.current.doctorLicenseDate?.getMonth()).toBe(11);
+    expect(result.current.doctorLicenseDate?.getDate()).toBe(12);
+    expect(result.current.doctorLicenseDate?.getFullYear()).toBe(2020);
   });
 
   test('エラー時にはsetSelectedにcompletedがセットされないこと', async () => {

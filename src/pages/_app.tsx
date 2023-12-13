@@ -18,6 +18,8 @@ import { useToken } from '@/hooks/authentication/useToken';
 import { useAuthenticationOnPage } from '@/hooks/authentication/useAuthenticationOnPage';
 import { GlobalStyle } from '@/styles/GlobalStyle';
 import { openModalCountState } from '@/globalStates/modal';
+import 'react-day-picker/dist/style.css';
+import '../components/Form/DateField.scss';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {

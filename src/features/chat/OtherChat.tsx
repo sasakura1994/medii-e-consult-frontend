@@ -1,6 +1,5 @@
 import { ChatData } from '@/hooks/api/chat/useFetchChatList';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
-import { useFetchPresignedFileUrl } from '@/hooks/api/chat/useFetchPresignedFileUrl';
 import React from 'react';
 
 type OtherChatProps = {
@@ -10,9 +9,8 @@ type OtherChatProps = {
 };
 
 export const OtherChat = (props: OtherChatProps) => {
-  const { chatData, chatRoomData, setSelectedImage } = props;
+  const { chatData, setSelectedImage } = props;
   const date = new Date(chatData.created_date);
-  const { fecthPresignedFileUrl } = useFetchPresignedFileUrl();
 
   const formattedDate = date.toLocaleString(undefined, {
     month: 'numeric',
@@ -21,26 +19,15 @@ export const OtherChat = (props: OtherChatProps) => {
     minute: 'numeric',
   });
   const downloadFile = async () => {
-    try {
-      const res = await fecthPresignedFileUrl({
-        chat_room_id: chatRoomData.chat_room.chat_room_id,
-        file_id: chatData.file_id,
-      });
-
-      if (res.data) {
-        const response = await fetch(res.data.url);
-        const arrayBuffer = await response.arrayBuffer();
-        const blob = new Blob([arrayBuffer], { type: chatData.content_type });
-        const downloadLink = document.createElement('a');
-        downloadLink.href = URL.createObjectURL(blob);
-        downloadLink.download = chatData.file_name;
-        document.body.appendChild(downloadLink); // Append to the body
-        downloadLink.click();
-        document.body.removeChild(downloadLink); // Remove after click
-      }
-    } catch (error) {
-      console.error('Error downloading file:', error);
-    }
+    const response = await fetch(chatData.file_path);
+    const arrayBuffer = await response.arrayBuffer();
+    const blob = new Blob([arrayBuffer], { type: chatData.content_type });
+    const downloadLink = document.createElement('a');
+    downloadLink.href = URL.createObjectURL(blob);
+    downloadLink.download = chatData.file_name;
+    document.body.appendChild(downloadLink); // Append to the body
+    downloadLink.click();
+    document.body.removeChild(downloadLink); // Remove after click
   };
 
   return (
@@ -52,7 +39,7 @@ export const OtherChat = (props: OtherChatProps) => {
       <div className="ml-3 flex justify-start">
         {chatData.deleted ? (
           <p
-            className="mb-3 mr-3 max-w-[670px] whitespace-pre-wrap rounded-lg rounded-tl-none
+            className="mb-3 mr-3 max-w-[670px] whitespace-pre-wrap rounded-2xl rounded-tl-none
            bg-block-gray p-2 text-white"
           >
             削除済みメッセージ
@@ -69,7 +56,7 @@ export const OtherChat = (props: OtherChatProps) => {
             />
           </div>
         ) : chatData.content_type.startsWith('application/') ? (
-          <div className="mb-3 mr-3 flex cursor-pointer items-center rounded-lg bg-white p-2" onClick={downloadFile}>
+          <div className="mb-3 mr-3 flex cursor-pointer items-center rounded-2xl bg-white p-2" onClick={downloadFile}>
             <img src="icons/insert_drive_file.svg" alt="" className="h-10 w-10" />
             <p className="max-w-[670px] whitespace-pre-wrap break-words">{chatData.file_name}</p>
           </div>
@@ -77,7 +64,7 @@ export const OtherChat = (props: OtherChatProps) => {
           <video src={chatData.file_path} className="aspect-auto h-[250px] cursor-pointer object-contain" controls />
         ) : (
           <p
-            className="mb-3 mr-3 max-w-[670px] whitespace-pre-wrap break-words rounded-lg rounded-tl-none
+            className="mb-3 mr-3 max-w-[670px] whitespace-pre-wrap break-words rounded-2xl rounded-tl-none
            bg-white p-2"
           >
             {chatData.message}

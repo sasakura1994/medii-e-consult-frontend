@@ -4,7 +4,7 @@ import { ModalFooter, type ModalFooterProps } from './ModalFooter';
 
 export type ModalPropsType = {
   children: React.ReactNode;
-  pcWidth?: '600' | '400';
+  pcWidth?: '600' | '400' | 'auto';
   disableCloseOnOverlayClick?: boolean;
   className?: string;
   isCenter?: boolean;
@@ -23,7 +23,7 @@ export const Modal: React.FC<ModalPropsType> = (props) => {
     ...ModalFooterProps
   } = props;
   const { hideModal, modalRef } = useModal(props);
-  const pcWidthClass = `w-full lg:w-[${pcWidth}px]`;
+  const pcWidthClass = pcWidth === 'auto' ? '' : `w-full lg:w-[${pcWidth}px]`;
   return (
     <div
       className={`fixed left-0 top-0 z-[200] flex w-screen overflow-hidden bg-bg-overlay ${

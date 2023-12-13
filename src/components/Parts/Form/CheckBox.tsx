@@ -10,10 +10,11 @@ type PropsType = {
   label?: string | JSX.Element;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   required?: boolean;
+  disabled?: boolean;
 };
 
 export const CheckBox: React.FC<PropsType> = (props) => {
-  const { name, value, checked, defaultChecked, id, label, onChange, required = false } = props;
+  const { name, value, checked, defaultChecked, id, label, onChange, required = false, disabled } = props;
 
   return (
     <label htmlFor={id} className={styles.check_box}>
@@ -28,6 +29,7 @@ export const CheckBox: React.FC<PropsType> = (props) => {
         className={`${styles.check_box__input} ${styles.visually_hidden}`}
         onChange={onChange}
         required={required}
+        disabled={disabled}
       />
       <span className={styles.check_box__label} role="checkbox" aria-checked={defaultChecked}>
         {label}
