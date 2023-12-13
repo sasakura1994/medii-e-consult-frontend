@@ -8,6 +8,11 @@ type Query = {
   redirect: string;
 };
 
+type LoginRequestData = {
+  key: string;
+  queries: Query;
+};
+
 type LoginResponseData = {
   jwt_token: string;
 };
@@ -18,7 +23,8 @@ type UseAuthCallback = {
 
 export const useAuthCallback = (): UseAuthCallback => {
   const router = useRouter();
-  const { key, redirect } = router.query as Query;
+  const query = router.query as Query;
+  const { key, redirect } = query;
   const [isProcessing, setIsProcessing] = useState(false);
   const [isFailed, setIsFailed] = useState(false);
   const { axios } = useAxios();
@@ -31,7 +37,7 @@ export const useAuthCallback = (): UseAuthCallback => {
 
     setIsProcessing(true);
 
-    const data = { key };
+    const data: LoginRequestData = { key, queries: query };
     const response = await axios.post<LoginResponseData>('/nmo/login', data).catch((error) => {
       console.error(error);
       return null;

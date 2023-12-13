@@ -13,13 +13,14 @@ jest.mock('@/hooks/authentication/useToken');
 
 describe('useAuthCallback', () => {
   test('ログイン', async () => {
+    const query = {
+      key: 'ky012345678901234567890123456789',
+      redirect: 'https://example.com',
+    };
     const pushMock = jest.fn();
     const useRouterMock = useRouter as jest.Mocked<typeof useRouter>;
     (useRouterMock as jest.Mock).mockReturnValue({
-      query: {
-        key: 'ky012345678901234567890123456789',
-        redirect: 'https://example.com',
-      },
+      query,
       push: pushMock,
     });
 
@@ -45,6 +46,10 @@ describe('useAuthCallback', () => {
     await renderHook(() => useAuthCallback()).result;
 
     waitFor(() => {
+      expect(postMock).toBeCalledWith('/nmo/login', {
+        key: query.key,
+        queries: query,
+      });
       expect(setTokenAndMarkInitializedMock).toBeCalledWith('token');
       expect(pushMock).toBeCalledWith('https://example.com');
     });
