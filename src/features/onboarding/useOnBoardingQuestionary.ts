@@ -1,11 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Question, useFetchQuestionaryItemsById } from '@/hooks/api/questionary/useFetchQuestionaryItemsById';
-// import { usePostQuestionaryItemsForOnboarding } from '@/hooks/api/questionary/usePostQuestionaryItemsForOnboarding';
+import { usePostQuestionaryItemsForOnboarding } from '@/hooks/api/questionary/usePostQuestionaryItemsForOnboarding';
 import { mutateFetchFlag } from '@/hooks/api/account/useFetchFlags';
 import { onboardingAnsweredState } from '@/globalStates/onboarding';
 import { useSetAtom } from 'jotai';
 import { useFetchMedicalSpecialityCategories } from '@/hooks/api/medicalCategoryCategory/useFetchMedicalSpecialityCategories';
 import { useFetchMedicalSpecialitiesWithContract } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialitiesWithContract';
+import { PostQuestionaryItemsForOnboardingAnswer } from '@/hooks/api/questionary/usePostQuestionaryItemsForOnboarding';
 
 type Answer = {
   questionId: string;
@@ -33,7 +34,7 @@ export const useOnBoardingQuestionary = () => {
   const [isSending, setIsSending] = useState(false);
   const setOnboardingAnswered = useSetAtom(onboardingAnsweredState);
   const { questions } = useFetchQuestionaryItemsById('onboarding3');
-  // const { postQuestionaryItemsForOnboarding } = usePostQuestionaryItemsForOnboarding();
+  const { postQuestionaryItemsForOnboarding } = usePostQuestionaryItemsForOnboarding();
   const { medicalSpecialityCategories } = useFetchMedicalSpecialityCategories();
   const { medicalSpecialities } = useFetchMedicalSpecialitiesWithContract();
   const [consultAnswers, setConsultAnswers] = useState<ConsultAnswers>({
@@ -107,23 +108,23 @@ export const useOnBoardingQuestionary = () => {
     }
     setIsSending(true);
 
-    // const answers: PostQuestionaryItemsForOnboardingAnswer[] = questionAndAnswers.map(({ question, answer }) => ({
-    //   question_id: question.id,
-    //   choice_ids: question.type === 'SingleChoice' ? [answer.value] : answer.values,
-    //   other_text: answer.other,
-    // }));
+    const answers: PostQuestionaryItemsForOnboardingAnswer[] = questionAndAnswers.map(({ question, answer }) => ({
+      question_id: question.id,
+      choice_ids: question.type === 'SingleChoice' ? [answer.value] : answer.values,
+      other_text: answer.other,
+    }));
 
-    // const response = await postQuestionaryItemsForOnboarding(answers).catch((error) => {
-    //   console.error(error);
-    //   return null;
-    // });
+    const response = await postQuestionaryItemsForOnboarding(answers).catch((error) => {
+      console.error(error);
+      return null;
+    });
 
     setIsSending(false);
 
-    // if (!response) {
-    //   alert('既に回答済みです');
-    //   return;
-    // }
+    if (response?.status !== 200) {
+      alert('既に回答済みです');
+      return;
+    }
 
     // バナーの非表示のため
     mutateFetchFlag('OnboardingAnswered');
@@ -132,7 +133,7 @@ export const useOnBoardingQuestionary = () => {
     setOnboardingAnswered(consultAnswers);
 
     setIsOpenConsultPointModal(true);
-  }, [consultAnswers, setOnboardingAnswered]);
+  }, [consultAnswers, postQuestionaryItemsForOnboarding, questionAndAnswers, setOnboardingAnswered]);
 
   const checkIsCheckboxRequired = useCallback(
     (questionId: string) => {
