@@ -5,9 +5,12 @@ import { loginRedirectUrlKey } from '@/data/localStorage';
 import { ParsedUrlQuery } from 'querystring';
 import { toast } from 'react-toastify';
 
+type RegistrationFromQuery = 'nmo_registration_again';
+
 type Query = {
   redirect?: string;
   p?: string;
+  from?: RegistrationFromQuery;
 };
 
 type CreateAccountRequestData = {
@@ -16,7 +19,7 @@ type CreateAccountRequestData = {
   queries: ParsedUrlQuery;
 };
 
-export type UseRegisterType = {
+export type UseRegisterType = Pick<Query, 'from'> & {
   back: () => void;
   email: string;
   setEmail: React.Dispatch<React.SetStateAction<string>>;
@@ -32,7 +35,7 @@ export type UseRegisterType = {
 
 export const useRegister = (): UseRegisterType => {
   const router = useRouter();
-  const { redirect, p: parentAccountId } = router.query as Query;
+  const { from, redirect, p: parentAccountId } = router.query as Query;
   const { axios } = useAxios();
   const [email, setEmail] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -108,6 +111,7 @@ export const useRegister = (): UseRegisterType => {
   return {
     back,
     email,
+    from,
     setEmail,
     errorMessage,
     loginUrl,
