@@ -77,15 +77,7 @@ const OnBoardingQuestionaryPage = () => {
                 <div className="flex items-center gap-2">
                   <h3 className="text-base font-bold">
                     {question.text}
-                    {question.required ? (
-                      <Required className="lg:relative lg:top-[-2px]" isInline>
-                        必須
-                      </Required>
-                    ) : (
-                      <Optional className="lg:relative lg:top-[-2px]" isInline>
-                        任意
-                      </Optional>
-                    )}
+                    {question.required ? <Required isInline>必須</Required> : <Optional isInline>任意</Optional>}
                   </h3>
                 </div>
                 {question.type === 'SingleChoice' && (
@@ -158,12 +150,11 @@ const OnBoardingQuestionaryPage = () => {
             </div>
 
             <div className="flex flex-col gap-4">
-              <div className="flex items-center">
-                <p className="text-base font-bold text-text-primary">
-                  相談したい症例についてもう少し詳しく教えてください。
-                </p>
-                <Required className="">必須</Required>
-              </div>
+              <p className="text-base font-bold text-text-primary">
+                相談したい症例についてもう少し詳しく教えてください。
+                <Required isInline>必須</Required>
+              </p>
+
               <div>
                 <p className="text-base text-text-primary">性別</p>
                 <div className="mt-2 flex max-w-[319px] gap-2">
@@ -249,12 +240,11 @@ const OnBoardingQuestionaryPage = () => {
               </div>
             </div>
             <div className="flex flex-col gap-4">
-              <div className="flex items-center">
-                <p className="text-base font-bold text-text-primary">
-                  どの診療科の医師に相談したいですか？（4つまで選択可）
-                </p>
-                <Required className="">必須</Required>
-              </div>
+              <p className="text-base font-bold text-text-primary">
+                どの診療科の医師に相談したいですか？（4つまで選択可）
+                <Required isInline>必須</Required>
+              </p>
+
               <div className="hidden lg:block">
                 {medicalSpecialityCategories &&
                   medicalSpecialityCategories.map((category) => (

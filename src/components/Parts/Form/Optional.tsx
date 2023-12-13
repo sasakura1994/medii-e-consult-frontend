@@ -11,7 +11,7 @@ export const Optional = (props: Props) => {
   return (
     <div
       className={`
-        ${isInline ? 'inline-block' : 'flex'} h-5 items-center justify-center whitespace-nowrap rounded
+        ${isInline ? 'inline-flex' : 'flex'} h-5 items-center justify-center whitespace-nowrap rounded
         bg-bg-secondary px-1 text-xs font-light text-caption
         ${className ?? ''}
         `}
