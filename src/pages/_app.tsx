@@ -78,6 +78,7 @@ const AppInner = ({ Component, pageProps }: AppPropsWithLayout) => {
 };
 
 const App = (props: AppPropsWithLayout) => {
+  // 認証が不要なページはsrc/hooks/authentication/useAuthenticationOnPage.tsに記載する
   const router = useRouter();
   const queryRef = useRef<ParsedUrlQuery>();
 
@@ -117,21 +118,8 @@ const App = (props: AppPropsWithLayout) => {
     const newQuery = Object.fromEntries(currentQuery.entries());
     // クエリパラメータを保持
     queryRef.current = { ...queryRef.current, ...newQuery };
-
-    const pathname = absoluteUrl.pathname.toLowerCase();
-    // 同じページに遷移する場合は画面のリダイレクトを行わない
-    if (router.pathname.toLowerCase() === pathname) {
-      return;
-    }
-    if (
-      // 認証が不要なページはsrc/hooks/authentication/useAuthenticationOnPage.tsに記載する
-      ['/group', '/creategroup'].some((str) => pathname.includes(str))
-    ) {
-      absoluteUrl.pathname = pathname;
-      window.location.href = absoluteUrl.toString();
-      throw 'routeChange aborted.';
-    }
   };
+
   useEffect(() => {
     router.events.on('routeChangeStart', handleStart);
     router.events.on('routeChangeComplete', replaceWithMergedQuery);
