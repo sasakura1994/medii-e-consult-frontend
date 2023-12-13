@@ -86,6 +86,11 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
             };
           }
           return { ...c, displayName: '' };
+        } else if (c.account_id.startsWith('ST')) {
+          return {
+            ...c,
+            displayName: 'Mediiからのメッセージ',
+          };
         } else if (c.account_id === 'CHATBOT') {
           return {
             ...c,
