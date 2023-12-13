@@ -5,6 +5,7 @@ import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 import { Card } from '@/components/Parts/Card/Card';
 import { HeaderLogoOnly } from '@/components/Layouts/Header/HeaderLogoOnly';
 import Link from 'next/link';
+import { contactUrl } from '@/data/constants';
 
 const AuthCallbackPage: NextPageWithLayout = () => {
   const { isFailed } = useAuthCallback();
@@ -26,11 +27,7 @@ const AuthCallbackPage: NextPageWithLayout = () => {
                   <Link href="/login">ログイン</Link>
                 </div>
                 <div className="mt-4">
-                  <a
-                    href="https://tayori.com/form/62897c986d36f5b573fec1a04508f24b70b11fe6/"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
+                  <a href={contactUrl} target="_blank" rel="noreferrer">
                     お問い合わせ
                   </a>
                 </div>
