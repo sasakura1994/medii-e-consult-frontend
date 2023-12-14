@@ -1,7 +1,7 @@
 import { usePostResolveChatRoom } from '@/hooks/api/chat/usePostResolveChatRoom';
 import { useFetchQuestionaryItemsForTransform } from '@/hooks/api/questionary/useFetchQuestionaryItemsForTransform';
 import { usePostQuestionaryAnswers } from '@/hooks/api/questionary/usePostQuestionaryAnswers';
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback } from 'react';
 import { ResolveChatRoomModalProps, Review } from './ResolveChatRoomModal';
 
 export const useResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
@@ -9,11 +9,10 @@ export const useResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
   const { questionaryItems } = useFetchQuestionaryItemsForTransform();
   const { postQuestionaryAnswers } = usePostQuestionaryAnswers();
   const [questionaryAnswers, setQuestionaryAnswers] = useState<number[]>([]);
-  const [page, setPage] = useState<'aboutConsult' | 'aboutSystem'>('aboutConsult');
   const [aboutConsultReviews, setAboutConsultReviews] = useState<Review[]>([
     {
       key: 'quality_score',
-      label: '回答は診療の助けになりましたか',
+      label: '先生の回答は診療の助けになりましたか',
       lowRatingText: '期待以下',
       mediumRatingText: '期待通り',
       highRatingText: '期待以上',
@@ -31,7 +30,7 @@ export const useResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
     },
     {
       key: 'repeat_score',
-      label: 'また機会があれば、この先生に相談したいですか',
+      label: 'また機会があれば、今回担当いただいた先生に相談したいですか',
       lowRatingText: 'したくない',
       mediumRatingText: 'どちらでもない',
       highRatingText: 'したい',
@@ -39,18 +38,6 @@ export const useResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
       isRequired: true,
     },
   ]);
-  const [aboutSystemReviews, setAboutSystemReviews] = useState<Review[]>([
-    {
-      key: 'system_score',
-      label: 'E-コンサルの使い心地はいかがですか？',
-      lowRatingText: '期待以下',
-      mediumRatingText: '期待通り',
-      highRatingText: '期待以上',
-      value: 0,
-      isRequired: true,
-    },
-  ]);
-  const [aboutSystemComment, setAboutSystemComment] = useState('');
 
   const { resolveChatRoom } = usePostResolveChatRoom();
 
@@ -61,8 +48,6 @@ export const useResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
       speed_score: aboutConsultReviews[1].value,
       repeat_score: aboutConsultReviews[2].value,
       responder_comment: '',
-      system_score: aboutSystemReviews[0].value,
-      system_comment: aboutSystemComment,
     });
     await postQuestionaryAnswers({
       answer_ids: questionaryAnswers,
@@ -77,8 +62,6 @@ export const useResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
     setSelectedTab('close');
   }, [
     aboutConsultReviews,
-    aboutSystemComment,
-    aboutSystemReviews,
     chatRoomData.chat_room.chat_room_id,
     chatRoomData.chat_room.room_type,
     mutateChatRoom,
@@ -90,25 +73,9 @@ export const useResolveChatRoomModal = (props: ResolveChatRoomModalProps) => {
     setSelectedTab,
   ]);
 
-  const title = useMemo(() => {
-    if (chatRoomData.chat_room.room_type === 'GROUP') {
-      return 'このグループの回答はいかがでしたか。';
-    }
-    if (chatRoomData.members.length > 0) {
-      return chatRoomData.members[0].last_name + chatRoomData.members[0].first_name + '先生の回答はいかがでしたか。';
-    }
-    return 'このコンサルの回答はいかがでしたか。';
-  }, [chatRoomData]);
   return {
-    title,
-    page,
-    setPage,
     aboutConsultReviews,
     setAboutConsultReviews,
-    aboutSystemReviews,
-    setAboutSystemReviews,
-    aboutSystemComment,
-    setAboutSystemComment,
     resolve,
     questionaryItems,
     questionaryAnswers,
