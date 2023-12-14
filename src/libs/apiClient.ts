@@ -58,7 +58,7 @@ export const redirectToLoginPage = () => {
   const redirectParam =
     '?redirect=' + encodeURIComponent(window.location.pathname.replace(externalDir, '') + window.location.search);
   const redirectUrl = loginPageUrl + redirectParam;
-  Router.push(redirectUrl);
+  Router.replace(redirectUrl);
 };
 
 const handleApiError = (apiClient: AxiosInstance) => {
