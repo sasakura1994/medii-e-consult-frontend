@@ -1,5 +1,6 @@
 import axios from 'axios';
 import type { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
+import Router from 'next/router';
 
 export type ApiClientOption = {
   token?: string | null;
@@ -56,7 +57,8 @@ export const redirectToLoginPage = () => {
   // 外部ドメイン経由の場合は常にExternalディレクトリに展開されるので、リダイレクト時には除去
   const redirectParam =
     '?redirect=' + encodeURIComponent(window.location.pathname.replace(externalDir, '') + window.location.search);
-  window.location.href = loginPageUrl + redirectParam;
+  const redirectUrl = loginPageUrl + redirectParam;
+  Router.push(redirectUrl);
 };
 
 const handleApiError = (apiClient: AxiosInstance) => {
