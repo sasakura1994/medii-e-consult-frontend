@@ -42,7 +42,7 @@ export const OnboardingConsultPointModal = () => {
           <Link
             href="/newchatroom?from=onboarding_questionary_completed"
             onClick={() => {
-              postEventLog({ name: 'click-newchatroom-page-button-from-onboarding-modal' });
+              postEventLog({ name: 'click-newchatroom-page-button-from-onboarding-modal', parameter: '202312' });
             }}
           >
             <PrimaryButton size="large" className="w-full whitespace-nowrap px-4">
