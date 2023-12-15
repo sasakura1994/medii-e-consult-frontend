@@ -10,7 +10,7 @@ type Query = {
 
 type LoginRequestData = {
   key: string;
-  queries: Query;
+  queries: { [key: string]: string };
 };
 
 type LoginResponseData = {
@@ -30,6 +30,21 @@ export const useAuthCallback = (): UseAuthCallback => {
   const { axios } = useAxios();
   const { setTokenAndMarkInitialized } = useToken();
 
+  const parseQuery = useCallback(() => {
+    const redirectUrl = decodeURIComponent(redirect);
+    const urlParts = redirectUrl.split('?');
+    if (urlParts.length < 2) {
+      return {};
+    }
+
+    const parts = urlParts[1].split(/&/).map((part) => part.split(/=/));
+    const queries: { [key: string]: string } = {};
+    parts.forEach((part) => {
+      queries[part[0]] = part[1];
+    });
+    return queries;
+  }, [redirect]);
+
   const initialize = useCallback(async () => {
     if (!key || !redirect || isProcessing) {
       return;
@@ -37,7 +52,7 @@ export const useAuthCallback = (): UseAuthCallback => {
 
     setIsProcessing(true);
 
-    const data: LoginRequestData = { key, queries: query };
+    const data: LoginRequestData = { key, queries: parseQuery() };
     const response = await axios.post<LoginResponseData>('/nmo/login', data).catch((error) => {
       console.error(error);
       return null;
@@ -49,7 +64,7 @@ export const useAuthCallback = (): UseAuthCallback => {
 
     setTokenAndMarkInitialized(response.data.jwt_token);
     router.push(redirect);
-  }, [key, redirect, isProcessing, axios, setTokenAndMarkInitialized, router]);
+  }, [key, redirect, isProcessing, parseQuery, axios, setTokenAndMarkInitialized, router]);
 
   useEffect(() => {
     initialize();
