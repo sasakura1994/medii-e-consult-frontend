@@ -9,6 +9,7 @@ export const Document = () => {
       <Head>
         <base href={baseDir} />
         <link rel="icon" href="favicon.ico" />
+        <link rel="stylesheet" href="https://js.hscta.com/embeddable_cta_placeholder_v1.css" />
       </Head>
       <body>
         <Main />

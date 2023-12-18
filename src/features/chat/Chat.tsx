@@ -2,6 +2,7 @@ import React from 'react';
 import { ConsultList } from './ConsultList';
 import { ConsultDetail } from './ConsultDetail';
 import Link from 'next/link';
+import { HubspotCTA } from './HubspotCTA';
 import { useChat } from './useChat';
 
 export const Chat = () => {
@@ -21,6 +22,8 @@ export const Chat = () => {
     fetchNewChatList,
     resetChatListFromUid,
     chatGlobalState,
+    accountId,
+    isResponderConsult,
   } = useChat();
   return (
     <div className="flex h-full bg-white">
@@ -47,6 +50,11 @@ export const Chat = () => {
       lg:flex"
       >
         <div className="block" />
+        <div className="flex justify-center overflow-auto">
+          {accountId && chat_room_id && isResponderConsult && (
+            <HubspotCTA accountId={accountId} chatRoomId={chat_room_id} />
+          )}
+        </div>
         <div className="mb-2 ml-2 flex flex-col">
           <Link href="privacyPolicy" className="text-sm text-[#999999] underline">
             プライバシーポリシー
