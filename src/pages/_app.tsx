@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import '@/styles/globals.scss';
 import '@/styles/swiperjs-custom.scss';
 import 'react-toastify/dist/ReactToastify.css';
@@ -20,6 +20,7 @@ import { GlobalStyle } from '@/styles/GlobalStyle';
 import { openModalCountState } from '@/globalStates/modal';
 import 'react-day-picker/dist/style.css';
 import '../components/Form/DateField.scss';
+import { ParsedUrlQuery } from 'querystring';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
@@ -77,27 +78,54 @@ const AppInner = ({ Component, pageProps }: AppPropsWithLayout) => {
 };
 
 const App = (props: AppPropsWithLayout) => {
+  // 認証が不要なページはsrc/hooks/authentication/useAuthenticationOnPage.tsに記載する
   const router = useRouter();
-  const handleStart = (url: string) => {
-    const absoluteUrl = new URL(url, window.location.origin);
-    const pathname = absoluteUrl.pathname.toLowerCase();
-    // 同じページに遷移する場合は画面のリダイレクトを行わない
-    if (router.pathname.toLowerCase() === pathname) {
-      return;
-    }
-    if (
-      // 認証が不要なページはsrc/hooks/authentication/useAuthenticationOnPage.tsに記載する
-      ['/group', '/creategroup'].some((str) => pathname.includes(str))
-    ) {
-      absoluteUrl.pathname = pathname;
-      window.location.href = absoluteUrl.toString();
-      throw 'routeChange aborted.';
+  const queryRef = useRef<ParsedUrlQuery>();
+
+  const persistQuery = ['utm_source'];
+
+  useEffect(() => {
+    // 初回のクエリパラメータを保持
+    const currentParams = new URLSearchParams(window.location.search);
+    queryRef.current = Object.fromEntries(currentParams.entries());
+  }, []);
+
+  const replaceWithMergedQuery = () => {
+    if (queryRef.current) {
+      // 現在のページのクエリパラメータを取得
+      const currentParams = new URLSearchParams(window.location.search);
+      // 新しいクエリパラメータを作成
+      const newParams = new URLSearchParams(queryRef.current as Record<string, string>);
+      // 現在のクエリパラメータと新しいクエリパラメータをマージ
+      newParams.forEach((value, key) => {
+        if (persistQuery.includes(key) && !currentParams.has(key)) {
+          currentParams.set(key, value);
+        }
+      });
+      const newUrl = window.location.pathname + (currentParams.toString() ? '?' + currentParams.toString() : '');
+      const absoluteUrl = new URL(newUrl, window.location.origin).toString();
+      // URLを置き換えるだけでリダイレクトは行わない
+
+      if (absoluteUrl !== window.location.href) {
+        router.replace(newUrl);
+      }
     }
   };
+
+  const handleStart = (url: string) => {
+    const absoluteUrl = new URL(url, window.location.origin);
+    const currentQuery = new URLSearchParams(absoluteUrl.search);
+    const newQuery = Object.fromEntries(currentQuery.entries());
+    // クエリパラメータを保持
+    queryRef.current = { ...queryRef.current, ...newQuery };
+  };
+
   useEffect(() => {
     router.events.on('routeChangeStart', handleStart);
+    router.events.on('routeChangeComplete', replaceWithMergedQuery);
     return () => {
       router.events.off('routeChangeStart', handleStart);
+      router.events.off('routeChangeComplete', replaceWithMergedQuery);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
