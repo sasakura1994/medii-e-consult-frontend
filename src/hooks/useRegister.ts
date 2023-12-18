@@ -5,18 +5,23 @@ import { loginRedirectUrlKey } from '@/data/localStorage';
 import { ParsedUrlQuery } from 'querystring';
 import { toast } from 'react-toastify';
 
+type RegistrationFromQuery = 'nmo_registration_again';
+
 type Query = {
   redirect?: string;
   p?: string;
+  from?: RegistrationFromQuery;
+  token?: string;
 };
 
 type CreateAccountRequestData = {
   mail_address: string;
   parent_account_id?: string;
   queries: ParsedUrlQuery;
+  token?: string;
 };
 
-export type UseRegisterType = {
+export type UseRegisterType = Pick<Query, 'from'> & {
   back: () => void;
   email: string;
   setEmail: React.Dispatch<React.SetStateAction<string>>;
@@ -32,7 +37,7 @@ export type UseRegisterType = {
 
 export const useRegister = (): UseRegisterType => {
   const router = useRouter();
-  const { redirect, p: parentAccountId } = router.query as Query;
+  const { from, redirect, p: parentAccountId } = router.query as Query;
   const { axios } = useAxios();
   const [email, setEmail] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -56,10 +61,14 @@ export const useRegister = (): UseRegisterType => {
   }, [redirect]);
 
   const createAccount = useCallback(() => {
+    // nmo再登録のtokenはqueriesに含めない
+    const { token, ...queries } = router.query as Query;
+
     const data: CreateAccountRequestData = {
       mail_address: email,
       parent_account_id: parentAccountId,
-      queries: router.query,
+      queries,
+      token,
     };
 
     return axios.post('/doctor/create_account', data);
@@ -108,6 +117,7 @@ export const useRegister = (): UseRegisterType => {
   return {
     back,
     email,
+    from,
     setEmail,
     errorMessage,
     loginUrl,
