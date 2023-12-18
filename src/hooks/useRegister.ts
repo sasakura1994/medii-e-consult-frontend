@@ -61,7 +61,7 @@ export const useRegister = (): UseRegisterType => {
   }, [redirect]);
 
   const createAccount = useCallback(() => {
-    // nmo再登録のtokemはqueries煮含めない
+    // nmo再登録のtokenはqueriesに含めない
     const { token, ...queries } = router.query as Query;
 
     const data: CreateAccountRequestData = {
