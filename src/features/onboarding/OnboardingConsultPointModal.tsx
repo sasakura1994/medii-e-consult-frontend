@@ -47,7 +47,7 @@ export const OnboardingConsultPointModal = () => {
             postEventLog({ name: 'click-newchatroom-page-button-from-onboarding-modal', parameter: '202312' });
           }}
         >
-          <PrimaryButton size="large" className="block whitespace-nowrap px-4 lg:hidden">
+          <PrimaryButton size="large" className="block w-full whitespace-nowrap px-4 lg:hidden">
             相談内容の編集に進む
           </PrimaryButton>
           <PrimaryButton size="large" className="hidden w-full whitespace-nowrap px-4 lg:block">

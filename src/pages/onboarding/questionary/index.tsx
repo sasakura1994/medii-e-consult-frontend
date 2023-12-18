@@ -75,10 +75,10 @@ const OnBoardingQuestionaryPage = () => {
             {questionAndAnswers.map(({ question, answer }) => (
               <section key={question.id}>
                 <div className="flex items-center gap-2">
-                  <h3 className="text-base font-bold">
+                  <div className="text-base font-bold">
                     {question.text}
                     {question.required ? <Required isInline>必須</Required> : <Optional isInline>任意</Optional>}
-                  </h3>
+                  </div>
                 </div>
                 {question.type === 'SingleChoice' && (
                   <QuestionaryItems itemCount={question.items.length}>
@@ -150,10 +150,10 @@ const OnBoardingQuestionaryPage = () => {
             </div>
 
             <div className="flex flex-col gap-4">
-              <p className="text-base font-bold text-text-primary">
+              <div className="text-base font-bold text-text-primary">
                 相談したい症例についてもう少し詳しく教えてください。
                 <Required isInline>必須</Required>
-              </p>
+              </div>
 
               <div>
                 <p className="text-base text-text-primary">性別</p>
@@ -240,10 +240,10 @@ const OnBoardingQuestionaryPage = () => {
               </div>
             </div>
             <div className="flex flex-col gap-4">
-              <p className="text-base font-bold text-text-primary">
+              <div className="text-base font-bold text-text-primary">
                 どの診療科の医師に相談したいですか？（4つまで選択可）
                 <Required isInline>必須</Required>
-              </p>
+              </div>
 
               <div className="hidden lg:block">
                 {medicalSpecialityCategories &&
