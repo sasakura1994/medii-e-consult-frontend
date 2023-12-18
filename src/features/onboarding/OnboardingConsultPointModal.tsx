@@ -32,24 +32,28 @@ export const OnboardingConsultPointModal = () => {
             postEventLog({ name: 'click-top-page-button-from-onboarding-modal' });
           }}
         >
-          <TertiaryButton size="large" className="w-full whitespace-nowrap px-4">
+          <TertiaryButton size="large" className="block w-full whitespace-nowrap px-4 lg:hidden">
+            閉じる
+          </TertiaryButton>
+          <TertiaryButton size="large" className="hidden w-full whitespace-nowrap px-4 lg:block">
             トップページに戻る
           </TertiaryButton>
         </Link>
       }
       submitButton={
-        <div>
-          <Link
-            href="/newchatroom?from=onboarding_questionary_completed"
-            onClick={() => {
-              postEventLog({ name: 'click-newchatroom-page-button-from-onboarding-modal', parameter: '202312' });
-            }}
-          >
-            <PrimaryButton size="large" className="w-full whitespace-nowrap px-4">
-              相談の編集に進む（無料・匿名）
-            </PrimaryButton>
-          </Link>
-        </div>
+        <Link
+          href="/newchatroom?from=onboarding_questionary_completed"
+          onClick={() => {
+            postEventLog({ name: 'click-newchatroom-page-button-from-onboarding-modal', parameter: '202312' });
+          }}
+        >
+          <PrimaryButton size="large" className="block whitespace-nowrap px-4 lg:hidden">
+            相談内容の編集に進む
+          </PrimaryButton>
+          <PrimaryButton size="large" className="hidden w-full whitespace-nowrap px-4 lg:block">
+            相談の編集に進む（無料・匿名）
+          </PrimaryButton>
+        </Link>
       }
     >
       <p
