@@ -8,8 +8,6 @@ export type PostResolveChatRoomRequestData = {
   speed_score: ReviewScoreNumber;
   repeat_score: ReviewScoreNumber;
   responder_comment: string;
-  system_score: ReviewScoreNumber;
-  system_comment: string;
 };
 export type PostResolveChatRoomResponseData = {
   code?: number;

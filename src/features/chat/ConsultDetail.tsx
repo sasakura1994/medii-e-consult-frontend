@@ -228,6 +228,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
           setIsOpenReConsultConfirmModal={setIsOpenReConsultConfirmModal}
           chatRoomData={chatRoomData}
           setSelectedTab={setSelectedTab}
+          mutateChatRoom={mutateChatRoom}
         />
       )}
       {selectedImage && (
