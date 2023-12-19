@@ -248,6 +248,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
         ...chatRoom,
         age: baseChatRoomData.chat_room.age ?? undefined,
         disease_name: baseChatRoomData.chat_room.disease_name,
+        gender: baseChatRoomData.chat_room.gender,
         first_message: baseChatRoomData.first_message,
         target_specialities: baseChatRoomData.medical_specialities.map(
           (medicalSpeciality) => medicalSpeciality.speciality_code
