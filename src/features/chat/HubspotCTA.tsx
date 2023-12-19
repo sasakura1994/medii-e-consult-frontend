@@ -23,20 +23,22 @@ export const HubspotCTA = (props: Props) => {
       chatRoomIdInput.setAttribute('value', chatRoomId);
     }
   }, [accountId, isFormReady, chatRoomId]);
-
-  return (
-    <div className="m-4">
-      <HubspotForm
-        portalId={process.env.HUBSPOT_PORTAL_ID}
-        formId={process.env.HUBSPOT_FORM_ID}
-        onReady={(form: Element) => {
-          if (form) {
-            setTimeout(() => {
-              setIsFormReady(true);
-            }, 1000);
-          }
-        }}
-      />
-    </div>
-  );
+  if (process.env.HUBSPOT_PORTAL_ID && process.env.HUBSPOT_FORM_ID) {
+    return (
+      <div className="m-4">
+        <HubspotForm
+          portalId={process.env.HUBSPOT_PORTAL_ID}
+          formId={process.env.HUBSPOT_FORM_ID}
+          onReady={(form: Element) => {
+            if (form) {
+              setTimeout(() => {
+                setIsFormReady(true);
+              }, 1000);
+            }
+          }}
+        />
+      </div>
+    );
+  }
+  return <></>;
 };
