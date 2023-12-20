@@ -8,6 +8,7 @@ import { AppleSignInButton } from '@/components/Button/AppleSignInButton';
 import PrimaryButton from '@/components/Button/PrimaryButton';
 import { CustomHead } from '@/components/Layouts/Header/CustomHead';
 import { LayoutLogoOnly } from '@/components/Layouts/LayoutLogoOnly';
+import { useRouter } from 'next/router';
 
 const GuideLink = ({
   children,
@@ -26,6 +27,7 @@ const GuideLink = ({
 };
 
 const Login: NextPageWithLayout = () => {
+  const router = useRouter();
   const { setEmail, setPassword, login, errorMessage, nmoLoginUrl, mailAddressRef, goToRegistration, saveRedirectUrl } =
     useLogin();
 
@@ -132,7 +134,9 @@ const Login: NextPageWithLayout = () => {
             <GoogleLoginButton />
           </div>
           <div className="mb-6 mt-[68px]" onMouseDown={saveRedirectUrl}>
-            <AppleSignInButton>Appleでログイン</AppleSignInButton>
+            <AppleSignInButton state={router.asPath.includes('?') ? router.asPath.replace(/^[^?]+\?/, '') : ''}>
+              Appleでログイン
+            </AppleSignInButton>
           </div>
         </div>
         <div className="w-full border-t border-border-divider" />

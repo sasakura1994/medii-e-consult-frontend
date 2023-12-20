@@ -6,10 +6,11 @@ import { AiFillApple } from 'react-icons/ai';
 type Props = {
   children: ReactNode;
   borderColorClassName?: string;
+  state: string;
 };
 
 export const AppleSignInButton = (props: Props) => {
-  const { children, borderColorClassName } = props;
+  const { children, borderColorClassName, state } = props;
 
   return (
     <AppleSignin
@@ -17,7 +18,7 @@ export const AppleSignInButton = (props: Props) => {
         clientId: 'jp.medii.e-consult',
         scope: 'email',
         redirectURI: `${process.env.ENDPOINT_URL}/apple_auth/callback`,
-        state: '',
+        state,
         nonce: 'nonce',
         usePopup: false,
       }}
