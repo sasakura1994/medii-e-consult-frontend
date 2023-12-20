@@ -107,16 +107,6 @@ describe('Document', () => {
     });
   });
 
-  // test('is_invitedがtrueの場合、/onboarding/questionaryに遷移すること', async () => {
-  //   (useProfile as jest.Mock).mockReturnValue({
-  //     profile: { is_invited: true },
-  //   });
-  //   await getRender();
-  //   await waitFor(() => {
-  //     expect(mockRouter.push).toHaveBeenCalledWith('/onboarding/questionary');
-  //   });
-  // });
-
   test('is_skip_confirmation_by_utm_sourceがtrueの場合、/onboarding/questionaryに遷移すること', async () => {
     (useProfile as jest.Mock).mockReturnValue({
       profile: { is_skip_confirmation_by_utm_source: true },
