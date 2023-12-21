@@ -14,12 +14,11 @@ const HubSpotQuestionaryPage = () => {
     const redirectMatch = router.asPath.match(/redirect=([^&]+(&[^&]+)*)/);
     const redirect = redirectMatch ? decodeURIComponent(redirectMatch[1]) : null;
 
-    if (!redirect || !accountId || profile === undefined) {
+    if (!redirect || !accountId || !profile) {
       return;
     }
 
     if (profile.status === 'VERIFIED' || profile.status.match(/^PENDING_/)) {
-      console.log('3');
       const url = new URL(redirect);
       url.searchParams.append('accountid', accountId);
       router.push(url.toString());
