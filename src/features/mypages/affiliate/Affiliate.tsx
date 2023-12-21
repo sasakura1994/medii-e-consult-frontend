@@ -25,6 +25,7 @@ export const Affiliate: React.FC = () => {
         {!isFinishedCampaign && (
           <>
             <p className="text-left text-xxl font-bold">医師紹介キャンペーン</p>
+            <p className="mt-4 text-left text-l font-bold">2023年12月28日までに登録いただいた方が対象です</p>
             <p className="mt-8 text-l font-bold">ご紹介特典</p>
             <div className="mt-4 grid auto-cols-max grid-cols-1 gap-4 lg:grid-cols-2">
               <div className="p-2 shadow-low">
@@ -61,7 +62,8 @@ export const Affiliate: React.FC = () => {
               招待した方および招待された方がもらえるポイントは、予告なく変更される場合があります。
               医師をご紹介いただいた場合のみ対象となります。医学生は対象外となりますのでご了承ください。(医学生が医師をご紹介いただいた場合は対象となります。)
               <br />
-              2023年12月28日までにご紹介いただいた医師がプロフィール登録完了していることが条件となります。期日以降に登録いただいたり、プロフィール登録が完了していない、正しくない場合はポイント付与の対象外となります。
+              2023年12月28日までにご紹介いただいた医師がプロフィール登録を完了していることが条件となります。期日以降に登録いただいたり、
+              プロフィール登録が完了していない、プロフィールが正しくないなどの場合はポイント付与の対象外となります。
               なお、ポイント付与までに2-3営業日かかることがございます。
             </p>
           </>
@@ -95,12 +97,18 @@ export const Affiliate: React.FC = () => {
         />
         <HowToInvitation
           number={2}
-          text={'お知り合いの医師は、紹介ページにアクセスし、紹介特典とE-コンサルについての情報を受け取る'}
+          text={
+            isFinishedCampaign
+              ? 'お知り合いの医師は、紹介ページにアクセスし、E-コンサルについての情報を受け取る'
+              : 'お知り合いの医師は、紹介ページにアクセスし、紹介特典とE-コンサルについての情報を受け取る'
+          }
         />
-        <HowToInvitation
-          number={3}
-          text={'あなた専用の紹介ページから会員登録いただくと、あなたと新規会員へ紹介特典をプレゼント'}
-        />
+        {!isFinishedCampaign && (
+          <HowToInvitation
+            number={3}
+            text={'あなた専用の紹介ページから会員登録いただくと、あなたと新規会員へ紹介特典をプレゼント'}
+          />
+        )}
       </div>
 
       <ToastContainer
