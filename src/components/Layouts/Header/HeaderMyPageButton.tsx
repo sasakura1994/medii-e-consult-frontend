@@ -1,5 +1,5 @@
 import { Tooltip } from '@/components/Tooltip/Tooltip';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { usePopperTooltip } from 'react-popper-tooltip';
 import { HeaderMyPageMenuItem } from './HeaderMyPageMenuItem';
 import { removeAuthToken } from '@/libs/cookie';
@@ -9,6 +9,16 @@ import { contactUrl, faqUrl } from '@/data/constants';
 export const HeaderMyPageButton = () => {
   const router = useRouter();
   const tooltip = usePopperTooltip({ trigger: 'click', interactive: true });
+
+  // TODO: [紹介キャンペーンの年内終了]2023/12/29 00:00まで表示する
+  const isFinishedCampaign = useMemo(() => {
+    const today = new Date();
+    const end = new Date('2023/12/29 00:00:00');
+    if (today > end) {
+      return true;
+    }
+    return false;
+  }, []);
 
   return (
     <>
@@ -22,16 +32,18 @@ export const HeaderMyPageButton = () => {
           <HeaderMyPageMenuItem href="/notifysettings">通知設定</HeaderMyPageMenuItem>
           <HeaderMyPageMenuItem href="/affiliate">
             <div>知り合いの医師にE-コンサルを紹介</div>
-            <div className="mt-1 flex items-center gap-1 rounded-sm border border-medii-sky-base bg-[#E8FAFC] p-2">
-              <div>
-                <img src="icons/point_invitation.svg" width="21" height="21" alt="" />
+            {!isFinishedCampaign && (
+              <div className="mt-1 flex items-center gap-1 rounded-sm border border-medii-sky-base bg-[#E8FAFC] p-2">
+                <div>
+                  <img src="icons/point_invitation.svg" width="21" height="21" alt="" />
+                </div>
+                <div>
+                  お一人紹介で
+                  <br />
+                  <span className="font-bold text-medii-sky-base">最大4,500円相当</span>のポイント進呈
+                </div>
               </div>
-              <div>
-                お一人紹介で
-                <br />
-                <span className="font-bold text-medii-sky-base">最大4,500円相当</span>のポイント進呈
-              </div>
-            </div>
+            )}
           </HeaderMyPageMenuItem>
           <HeaderMyPageMenuItem href="/pointhistory">Mediiポイントを確認・利用する</HeaderMyPageMenuItem>
           <hr className="my-2 border-t border-border-divider" />

@@ -4,6 +4,12 @@ import React from 'react';
 
 export const AffiliateBanner = () => {
   const { postEventLog } = useEventLog();
+  // TODO: [紹介キャンペーンの年内終了]2023/12/29 00:00まで表示する
+  const today = new Date();
+  const end = new Date('2023/12/29 00:00:00');
+  if (today > end) {
+    return null;
+  }
   return (
     <>
       <div
