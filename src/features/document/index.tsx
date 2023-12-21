@@ -20,7 +20,7 @@ export const Document = () => {
 
   if (!profile) return <></>;
 
-  if (profile.is_invited || profile.is_skip_confirmation_by_utm_source || profile.is_huf_user) {
+  if (profile.is_skip_confirmation_by_utm_source || profile.is_huf_user) {
     router.push('/onboarding/questionary');
     return <></>;
   }
