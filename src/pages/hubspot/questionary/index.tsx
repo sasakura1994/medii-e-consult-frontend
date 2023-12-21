@@ -29,7 +29,8 @@ const HubSpotQuestionaryPage = () => {
     if (profile?.status === 'CREATED') {
       return (
         <InlineNotification
-          text="プロフィール登録が完了していません。以下より、プロフィール登録をお願いいたします。"
+          text="プロフィール情報が入力されておりません。アンケートにご回答いただくためにプロフィールのご入力をお願いいたします。
+                会員登録いただくことで、アンケート謝礼ポイントの進呈および、ポイント交換が可能になります。"
           dataTestId="hubspot-questionary-notification-is-imperfect-profile"
           buttonText="プロフィール登録"
           buttonOnClick={() => router.push('/editprofile?registerMode=true')}
@@ -38,7 +39,7 @@ const HubSpotQuestionaryPage = () => {
     } else if (profile?.status === 'PROFILE') {
       return (
         <InlineNotification
-          text="医師確認が完了していません。以下より、医師確認書類のアップロードをお願いいたします"
+          text="医師確認資料が提出されておりません。アンケートにご回答いただくために医師確認資料のご提出をお願いいたします。会員登録いただくことで、アンケート謝礼ポイントの進呈および、ポイント交換が可能になります。"
           dataTestId="hubspot-questionary-notification-need-to-send-confirmation"
           buttonText="医師確認"
           buttonOnClick={() => router.push('/document')}
