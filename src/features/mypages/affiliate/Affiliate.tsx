@@ -25,7 +25,7 @@ export const Affiliate: React.FC = () => {
         {!isFinishedCampaign && (
           <>
             <p className="text-left text-xxl font-bold">医師紹介キャンペーン</p>
-            <p className="mt-4 text-left text-l font-bold">2023年12月28日までに登録いただいた方が対象です</p>
+            <p className="mt-4 text-left text-l font-bold">キャンペーン期日：2023年12月28日まで</p>
             <p className="mt-8 text-l font-bold">ご紹介特典</p>
             <div className="mt-4 grid auto-cols-max grid-cols-1 gap-4 lg:grid-cols-2">
               <div className="p-2 shadow-low">
