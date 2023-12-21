@@ -16,7 +16,7 @@ import { AffiliateBanner } from './AffiliateBanner';
 import { IncurableDiseaseGroupColumns } from './IncurableDiseaseGroupColumns';
 
 export const Top = () => {
-  const { showTutorialExplanationModal, setShowTutorialExplanationModal } = useTop();
+  const { showTutorialExplanationModal, setShowTutorialExplanationModal, profile } = useTop();
   const { flag: isOnboardingQuestionaryAnswered } = useFetchFlag('OnboardingAnswered');
   const { flag: hasConsulted } = useFetchFlag('HasConsulted');
   const { postEventLog } = useEventLog();
@@ -37,23 +37,26 @@ export const Top = () => {
         </div>
         <div className="mt-2 lg:mx-4 lg:ml-10 lg:mt-0 lg:w-[296px]">
           <TopNewerConsults />
-          {isOnboardingQuestionaryAnswered === false && hasConsulted === false && (
-            <div
-              className="my-6"
-              data-testid="onboarding-questionary-banner"
-              onClick={async () => {
-                await postEventLog({ name: 'click-onboarding-questionary' });
-              }}
-            >
-              <Link href="/onboarding/questionary">
-                <img
-                  src="images/onboarding/questionary_banner.png"
-                  alt="アンケートに答えて100Mediiポイント進呈"
-                  className="w-full"
-                />
-              </Link>
-            </div>
-          )}
+          {isOnboardingQuestionaryAnswered === false &&
+            hasConsulted === false &&
+            profile &&
+            profile.main_speciality !== 'STUDENT' && (
+              <div
+                className="my-6"
+                data-testid="onboarding-questionary-banner"
+                onClick={async () => {
+                  await postEventLog({ name: 'click-onboarding-questionary' });
+                }}
+              >
+                <Link href="/onboarding/questionary">
+                  <img
+                    src="images/onboarding/questionary_banner.png"
+                    alt="アンケートに答えて100Mediiポイント進呈"
+                    className="w-full"
+                  />
+                </Link>
+              </div>
+            )}
           <div className="mt-4">
             <TopNews />
           </div>
