@@ -10,6 +10,7 @@ jest.mock('next/router', () => ({
 describe('/registration', () => {
   test('通常時', async () => {
     (useRouter as jest.Mock).mockReturnValue({
+      asPath: '',
       query: {},
     });
 
@@ -22,6 +23,7 @@ describe('/registration', () => {
 
   test('nmoの再登録の場合は専用の注意書きが表示される', async () => {
     (useRouter as jest.Mock).mockReturnValue({
+      asPath: '',
       query: {
         from: 'nmo_registration_again',
       },
