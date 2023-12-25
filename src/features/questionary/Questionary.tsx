@@ -49,7 +49,7 @@ export const Questionary = () => {
             if (data.submissionValues.if_consult === '1' || data.submissionValues.if_consult === '2') {
               router.replace('/newchatroom');
             } else {
-              router.replace('/top');
+              router.replace('/seminar/archives');
             }
           }, 5000);
         }}
