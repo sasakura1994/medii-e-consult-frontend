@@ -24,19 +24,14 @@ export const AboutTicketModal: React.FC<AboutTicketModalPropsType> = (props) => 
         <p className="py-10 pt-10">
           チケットとは、E-カンファアーカイブ動画を閲覧するために必要なものです。
           <br />
-          E-コンサルで相談する、もしくはお知り合いの医師にMediiをご紹介いただくとチケットを1枚獲得できます。
+          E-コンサルで相談するとチケット1枚獲得できます。
         </p>
         <img className="hidden md:block" src="images/seminar/about_ticket_pc.png" alt="" />
         <img className="md:hidden" src="images/seminar/about_ticket_sp.png" alt="" />
-        <div className="mt-4 flex lg:gap-40">
+        <div className="mt-4">
           <Link href="/newchatroom">
             <PrimaryButton size="large">
               <p>コンサル作成</p>
-            </PrimaryButton>
-          </Link>
-          <Link href="/affiliate">
-            <PrimaryButton size="large">
-              <p>医師を招待</p>
             </PrimaryButton>
           </Link>
         </div>
