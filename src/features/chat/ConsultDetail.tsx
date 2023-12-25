@@ -365,7 +365,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                 <div className={`${isOpenAnnounce ? 'border-none' : 'border-b'}`}>
                   <div className={`${isOpenAnnounce ? 'm-4 mb-[10px]' : 'm-4 '} flex items-center`}>
                     <img src="icons/exclamation-triangle-blue.svg" alt="" className="mr-2" />
-                    <p className="flex-grow text-base font-bold text-text-primary">E-コンサルからお願い</p>
+                    <p className="flex-grow text-base font-bold text-text-primary">先生方へのお願い</p>
                     {!isOpenAnnounce && (
                       <div
                         className="flex cursor-pointer items-center gap-0.5"
@@ -374,7 +374,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                         }}
                       >
                         <p className="whitespace-nowrap text-sm text-medii-blue-base">詳細を見る</p>
-                        <img src="icons/chevron-down-blue.svg" alt="" />
+                        <img src="icons/caret.svg" alt="" className="rotate-180" />
                       </div>
                     )}
                   </div>
@@ -383,18 +383,12 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                   <div className="border-b">
                     <div className="m-4 mt-0">
                       <div className="text-base text-text-primary">
-                        <p>E-コンサルへのご相談をありがとうございます。</p>
-
-                        <p>E-コンサルをご使用される上では、以下の注意点を守っていただけると幸いです。</p>
-                        <ul className="ml-4 list-disc">
-                          <li>E-コンサルはエキスパート専門医の温かいボランティア精神によって成立しています。 </li>
-                          <li>
-                            そのため、臨床疑問が解決しましたら、解決ボタンを押す前に感謝のお気持ちをお伝えいただきますようお願いいたします。
-                          </li>
-                          <li>
-                            回答された先生へMediiより謝礼をお渡しするため、最後に解決ボタンを押していただきますようお願いいたします。
-                          </li>
-                        </ul>
+                        <p>
+                          E-コンサルは温かいボランティア精神で成り立っています。
+                          <br />
+                          解決しましたら、感謝の気持ちをお伝えください。
+                          回答された先生にMediiから謝礼をお渡しするため、解決後には解決ボタンを押していただきますようお願いいたします。
+                        </p>
                       </div>
                       <div
                         className="mt-[10px] flex cursor-pointer items-center justify-center gap-0.5"
@@ -403,7 +397,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                         }}
                       >
                         <p className="text-sm text-medii-blue-base">閉じる</p>
-                        <img src="icons/chevron-up-blue.svg" alt="" />
+                        <img src="icons/caret.svg" alt="" />
                       </div>
                     </div>
                   </div>
