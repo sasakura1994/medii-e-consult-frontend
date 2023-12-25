@@ -47,7 +47,7 @@ export const Questionary = () => {
             // if_consultが存在し、かつ下記形式ではないとうまく動作しないので注意
             // if_consult: 1: 相談したい, 2: どちらともいえない, 3: 相談したくない
             if (data.submissionValues.if_consult === '1' || data.submissionValues.if_consult === '2') {
-              router.replace('/newchatroom');
+              router.replace({ pathname: '/newchatroom', query: { from: `questionary_${fromId}` } });
             } else {
               router.replace('/seminar/archives');
             }
