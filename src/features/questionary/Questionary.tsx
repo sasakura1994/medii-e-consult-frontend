@@ -1,39 +1,41 @@
-import { useToken } from '@/hooks/authentication/useToken';
-import { useProfile } from '@/hooks/useProfile';
-import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import { InlineNotification } from '@/components/Notification/InlineNotification';
+import React, { useMemo } from 'react';
 import HubspotForm from 'react-hubspot-form';
-
-type Query = {
-  id: string;
-};
+import { useQuestionary } from './useQuestionary';
 
 export const Questionary = () => {
-  const router = useRouter();
-  const { accountId } = useToken();
-  const { email } = useProfile();
-  const { id: fromId } = router.query as Query;
-  const [isFormReady, setIsFormReady] = useState(false);
+  const { isAvailable, profile, router, fromId, setIsFormReady } = useQuestionary();
 
-  useEffect(() => {
-    if (!email || !accountId || !isFormReady) return;
-
-    const iframeElement = window.document.getElementsByTagName('iframe')[0];
-    if (!iframeElement.contentDocument) return;
-
-    // accountidとemailを設定する（この要素名でないとアンケートフォームに埋め込むことはできない）
-    const accountIdInput = iframeElement.contentDocument.querySelector('input[name="accountid"].hs-input');
-    const chatRoomIdInput = iframeElement.contentDocument.querySelector('input[name="email"].hs-input');
-
-    if (accountIdInput && chatRoomIdInput) {
-      accountIdInput.setAttribute('value', accountId);
-      chatRoomIdInput.setAttribute('value', email.mail_address);
+  const notification = useMemo(() => {
+    if (profile && profile.status === 'CREATED') {
+      return (
+        <InlineNotification
+          text="プロフィール情報が入力されておりません。アンケートにご回答いただくためにプロフィールのご入力をお願いいたします。
+                会員登録いただくことで、アンケート謝礼ポイントの進呈および、ポイント交換が可能になります。"
+          dataTestId="hubspot-questionary-notification-is-imperfect-profile"
+          buttonText="プロフィール登録"
+          buttonOnClick={() => router.push('/editprofile?registerMode=true')}
+        />
+      );
+    } else if (profile && profile.status === 'PROFILE') {
+      return (
+        <InlineNotification
+          text="医師確認資料が提出されておりません。アンケートにご回答いただくために医師確認資料のご提出をお願いいたします。会員登録いただくことで、アンケート謝礼ポイントの進呈および、ポイント交換が可能になります。"
+          dataTestId="hubspot-questionary-notification-need-to-send-confirmation"
+          buttonText="医師確認"
+          buttonOnClick={() => router.push('/document')}
+        />
+      );
     }
-  }, [accountId, isFormReady, email]);
+  }, [profile, router]);
 
-  if (!process.env.HUBSPOT_PORTAL_ID || !fromId) {
+  if (!isAvailable) {
+    if (notification) {
+      return notification;
+    }
     return <></>;
   }
+
   return (
     <div className="m-4 lg:mx-24">
       <HubspotForm
