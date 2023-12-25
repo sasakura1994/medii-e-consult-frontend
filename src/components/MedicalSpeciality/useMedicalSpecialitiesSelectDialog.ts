@@ -8,7 +8,7 @@ export const useMedicalSpecialitiesSelectDialog = (
   props: MedicalSpecialitiesSelectDialogProps,
   medicalSpecialities?: MedicalSpecialityEntity[]
 ) => {
-  const { defaultSelectedMedicalSpecialities, onChange } = props;
+  const { defaultSelectedMedicalSpecialities, onChange, maxSelectableSpecialities } = props;
   const { getMedicalSpecialitiesForCategory, isCategoryOpened, medicalSpecialityCategories, toggleCategory } =
     useMedicalSpecialitySelect(medicalSpecialities);
 
@@ -42,7 +42,7 @@ export const useMedicalSpecialitiesSelectDialog = (
         return;
       }
 
-      if (selectedMedicalSpecialities.length >= 3) {
+      if (selectedMedicalSpecialities.length >= (maxSelectableSpecialities ?? 3)) {
         return;
       }
 
@@ -51,7 +51,7 @@ export const useMedicalSpecialitiesSelectDialog = (
         toggledMedicalSpeciality,
       ]);
     },
-    [selectedMedicalSpecialities.length, selectedSpecialityCodes]
+    [maxSelectableSpecialities, selectedMedicalSpecialities.length, selectedSpecialityCodes]
   );
 
   const isMedicalSpecialitySelected = useCallback(

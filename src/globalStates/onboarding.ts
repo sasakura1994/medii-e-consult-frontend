@@ -1,3 +1,10 @@
 import { atom } from 'jotai';
 
-export const whatListenState = atom('');
+type OnboardingAnsweredState = {
+  title: string;
+  gender: 'man' | 'woman';
+  age: number | null;
+  targetSpecialities: string[];
+};
+
+export const onboardingAnsweredState = atom<OnboardingAnsweredState | null>(null);

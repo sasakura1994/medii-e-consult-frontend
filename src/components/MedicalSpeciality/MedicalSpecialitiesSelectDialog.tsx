@@ -12,6 +12,7 @@ import { useFetchMedicalSpecialitiesWithContract } from '@/hooks/api/medicalCate
 
 export type MedicalSpecialitiesSelectDialogProps = {
   defaultSelectedMedicalSpecialities: MedicalSpecialityEntity[];
+  maxSelectableSpecialities?: number;
   onChange: (medicalSpecialities: MedicalSpecialityEntity[]) => void;
   setShowModal: (isShow: boolean) => void;
 };

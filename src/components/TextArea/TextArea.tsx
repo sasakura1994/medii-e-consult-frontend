@@ -38,7 +38,7 @@ const TextArea = (props: TextAreaProps) => {
   useEffect(() => {
     if (textArea.current) {
       //textareaの高さを再設定
-      textArea.current.style.height = 'auto';
+      textArea.current.style.height = '0';
       //textareaの高さに入力内容の高さを設定
       textArea.current.style.height = textArea.current.scrollHeight + 'px';
     }

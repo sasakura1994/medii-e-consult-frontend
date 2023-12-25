@@ -1,13 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Question, useFetchQuestionaryItemsById } from '@/hooks/api/questionary/useFetchQuestionaryItemsById';
-import {
-  PostQuestionaryItemsForOnboardingAnswer,
-  usePostQuestionaryItemsForOnboarding,
-} from '@/hooks/api/questionary/usePostQuestionaryItemsForOnboarding';
-import { useRouter } from 'next/router';
+import { usePostQuestionaryItemsForOnboarding } from '@/hooks/api/questionary/usePostQuestionaryItemsForOnboarding';
 import { mutateFetchFlag } from '@/hooks/api/account/useFetchFlags';
-import { whatListenState } from '@/globalStates/onboarding';
+import { onboardingAnsweredState } from '@/globalStates/onboarding';
 import { useSetAtom } from 'jotai';
+import { useFetchMedicalSpecialityCategories } from '@/hooks/api/medicalCategoryCategory/useFetchMedicalSpecialityCategories';
+import { useFetchMedicalSpecialitiesWithContract } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialitiesWithContract';
+import { PostQuestionaryItemsForOnboardingAnswer } from '@/hooks/api/questionary/usePostQuestionaryItemsForOnboarding';
 
 type Answer = {
   questionId: string;
@@ -21,13 +20,30 @@ type QuestionAndAnswer = {
   answer: Answer;
 };
 
+type ConsultAnswers = {
+  title: string;
+  gender: 'man' | 'woman';
+  age: number | null;
+  targetSpecialities: string[];
+};
+
 export const useOnBoardingQuestionary = () => {
-  const router = useRouter();
+  const [isOpenConsultPointModal, setIsOpenConsultPointModal] = useState(false);
+  const [isOpenSelectSpecialitiesModal, setIsOpenSelectSpecialitiesModal] = useState(false);
   const [questionAndAnswers, setQuestionAndAnswers] = useState<QuestionAndAnswer[]>([]);
   const [isSending, setIsSending] = useState(false);
-  const setWhatListen = useSetAtom(whatListenState);
-  const { questions } = useFetchQuestionaryItemsById('onboarding2');
+  const setOnboardingAnswered = useSetAtom(onboardingAnsweredState);
+  const { questions } = useFetchQuestionaryItemsById('onboarding3');
   const { postQuestionaryItemsForOnboarding } = usePostQuestionaryItemsForOnboarding();
+  const { medicalSpecialityCategories } = useFetchMedicalSpecialityCategories();
+  const { medicalSpecialities } = useFetchMedicalSpecialitiesWithContract();
+  const [consultAnswers, setConsultAnswers] = useState<ConsultAnswers>({
+    title: '',
+    gender: 'man',
+    age: null,
+    targetSpecialities: [],
+  });
+  const [isSelectedChildOption, setIsSelectedChildOption] = useState(false);
 
   // questionAndAnswersを初期化
   useEffect(() => {
@@ -77,24 +93,20 @@ export const useOnBoardingQuestionary = () => {
     [toggleValues]
   );
 
-  const setOther = useCallback(
-    (questionId: string, other: string) => {
-      setQuestionAndAnswers((questionAndAnswers) =>
-        questionAndAnswers.map(({ question, answer }) => ({
-          question,
-          answer: question.id === questionId ? { ...answer, other } : answer,
-        }))
-      );
-
-      // idが"WhatListen"の場合は、その値をJotaiに保持する
-      if (questionId === 'WhatListen') {
-        setWhatListen(other);
-      }
-    },
-    [setWhatListen]
-  );
+  const setOther = useCallback((questionId: string, other: string) => {
+    setQuestionAndAnswers((questionAndAnswers) =>
+      questionAndAnswers.map(({ question, answer }) => ({
+        question,
+        answer: question.id === questionId ? { ...answer, other } : answer,
+      }))
+    );
+  }, []);
 
   const submit = useCallback(async () => {
+    if (consultAnswers.targetSpecialities.length === 0) {
+      alert('対象の診療科を選択してください（4つまで選択可）');
+      return;
+    }
     setIsSending(true);
 
     const answers: PostQuestionaryItemsForOnboardingAnswer[] = questionAndAnswers.map(({ question, answer }) => ({
@@ -110,7 +122,7 @@ export const useOnBoardingQuestionary = () => {
 
     setIsSending(false);
 
-    if (!response) {
+    if (response?.status !== 200) {
       alert('既に回答済みです');
       return;
     }
@@ -119,9 +131,10 @@ export const useOnBoardingQuestionary = () => {
     mutateFetchFlag('OnboardingAnswered');
     // アンケート結果によって変わるため次のページで取得するためにmutateしておく
     mutateFetchFlag('FirstConsultCampaign');
+    setOnboardingAnswered(consultAnswers);
 
-    router.push('/onboarding/questionary/completed');
-  }, [postQuestionaryItemsForOnboarding, questionAndAnswers, router]);
+    setIsOpenConsultPointModal(true);
+  }, [consultAnswers, postQuestionaryItemsForOnboarding, questionAndAnswers, setOnboardingAnswered]);
 
   const checkIsCheckboxRequired = useCallback(
     (questionId: string) => {
@@ -147,9 +160,19 @@ export const useOnBoardingQuestionary = () => {
     checkIsCheckboxRequired,
     isSending,
     questionAndAnswers,
-    setAnswer,
-    setOther,
     submit,
     toggleAnswers,
+    setAnswer,
+    setOther,
+    isOpenSelectSpecialitiesModal,
+    setIsOpenSelectSpecialitiesModal,
+    isOpenConsultPointModal,
+    medicalSpecialityCategories,
+    medicalSpecialities,
+    consultAnswers,
+    setConsultAnswers,
+    setOnboardingAnswered,
+    isSelectedChildOption,
+    setIsSelectedChildOption,
   };
 };

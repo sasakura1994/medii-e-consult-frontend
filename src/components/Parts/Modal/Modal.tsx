@@ -41,7 +41,7 @@ export const Modal: React.FC<ModalPropsType> = (props) => {
         role="dialog"
         onMouseDown={(e) => e.stopPropagation()}
       >
-        <div ref={modalRef} className="max-h-[80dvh] overflow-y-auto overscroll-y-contain">
+        <div ref={modalRef} className="relative max-h-[80dvh] overflow-y-auto overscroll-y-contain">
           {children}
         </div>
         <div className="mt-auto">
