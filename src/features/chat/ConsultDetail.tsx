@@ -406,7 +406,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
             )}
             {isCloseRoom ? (
               <div className="relative flex flex-grow overflow-hidden">
-                <div className="flex-grow overflow-y-scroll bg-bg" ref={chatListRef}>
+                <div className="flex-grow overflow-y-auto overscroll-none bg-bg" ref={chatListRef}>
                   <ChatList
                     chatListData={chatListDataWithDisplayName}
                     currentUserAccountId={accountId}
@@ -418,7 +418,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                 <div className="pointer-events-none absolute inset-0 overflow-hidden bg-black bg-opacity-20" />
               </div>
             ) : (
-              <div className="flex-shrink flex-grow overflow-auto bg-bg pb-2" ref={chatListRef}>
+              <div className="flex-shrink flex-grow overflow-y-auto overscroll-none bg-bg pb-2" ref={chatListRef}>
                 <ChatList
                   chatListData={chatListDataWithDisplayName}
                   currentUserAccountId={accountId}
