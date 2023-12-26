@@ -115,8 +115,12 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
   }, [chatRoomData, accountId]);
 
   const isViewingAnnounce = useMemo(() => {
-    if (chatRoomData && accountId) {
-      return chatRoomData.chat_room.owner_account_id === accountId;
+    if (chatRoomData && accountId && chatRoomData.chat_room.owner_account_id === accountId) {
+      // チャットが解決済みかCLOSEDの場合は表示しない
+      if (chatRoomData.chat_room.status === 'RESOLVED' || chatRoomData.chat_room.status === 'CLOSED') {
+        return false;
+      }
+      return true;
     }
     return false;
   }, [chatRoomData, accountId]);
@@ -142,6 +146,7 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
     chatListRef.current?.addEventListener('scroll', handleScroll);
 
     return () => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       chatListRef.current?.removeEventListener('scroll', handleScroll);
     };
   }, [chatListData, chatRoomData, fetchNewChatList]);
