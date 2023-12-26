@@ -13,6 +13,7 @@
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\""
   },
   "dependencies": {
+    "@next/third-parties": "^14.0.4",
     "@react-oauth/google": "^0.11.1",
     "@tailwindcss/line-clamp": "^0.4.4",
     "axios": "^1.2.3",
