@@ -8,11 +8,11 @@ import { useRouter } from 'next/router';
 import { useLogin } from '@/hooks/useLogin';
 import { CredentialResponse } from '@react-oauth/google';
 
-type Props = {
+type GoogleRegisterProps = {
   googleRegister?: boolean;
 };
 
-const LoginButton = ({ googleRegister }: Props) => {
+const LoginButton = ({ googleRegister }: GoogleRegisterProps) => {
   const { googleLogin } = useGoogleLogin();
   const { setTokenAndMarkInitialized } = useToken();
   const router = useRouter();
@@ -69,7 +69,7 @@ const LoginButton = ({ googleRegister }: Props) => {
   return <GoogleLogin onSuccess={onSuccess} onError={onError} type="standard" logo_alignment="left" width={width} />;
 };
 
-const GoogleLoginButton = ({ googleRegister }: Props) => {
+const GoogleLoginButton = ({ googleRegister }: GoogleRegisterProps) => {
   const clientId = process.env.GOOGLE_CLIENT_ID || '';
 
   return (
