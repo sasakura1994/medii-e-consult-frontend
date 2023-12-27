@@ -2,7 +2,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@next/third-parties/google": ["./node_modules/@next/third-parties/dist/google"]
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],

@@ -12,8 +12,6 @@ import { Layout } from '@/components/Layouts/Layout';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
-import { GoogleTagManager } from '@/components/Layouts/GoogleTagManager';
-import Script from 'next/script';
 import { useToken } from '@/hooks/authentication/useToken';
 import { useAuthenticationOnPage } from '@/hooks/authentication/useAuthenticationOnPage';
 import { GlobalStyle } from '@/styles/GlobalStyle';
@@ -21,6 +19,8 @@ import { openModalCountState } from '@/globalStates/modal';
 import 'react-day-picker/dist/style.css';
 import '../components/Form/DateField.scss';
 import { ParsedUrlQuery } from 'querystring';
+import { GoogleTagManager } from '@next/third-parties/google';
+import Script from 'next/script';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
@@ -61,7 +61,7 @@ const AppInner = ({ Component, pageProps }: AppPropsWithLayout) => {
               }}
             />
           )}
-          <GoogleTagManager />
+          <GoogleTagManager gtmId="GTM-NDS6MKM" />
         </>
       )}
       <SWRConfig
