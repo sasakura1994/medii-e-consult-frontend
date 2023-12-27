@@ -20,6 +20,7 @@ import 'react-day-picker/dist/style.css';
 import '../components/Form/DateField.scss';
 import { ParsedUrlQuery } from 'querystring';
 import { GoogleTagManager } from '@next/third-parties/google';
+import Script from 'next/script';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
@@ -47,8 +48,21 @@ const AppInner = ({ Component, pageProps }: AppPropsWithLayout) => {
     <CookiesProvider>
       <GlobalStyle openModalCount={openModalCount} />
       {/* GTMタグだけ先に描画されるのを避けるため必ず両方同時にチェック */}
-      {(isTokenInitialized || accountId) && (
-        <GoogleTagManager gtmId="GTM-NDS6MKM" dataLayer={accountId ? [`{ account_id: ${accountId} }`] : []} />
+      {isTokenInitialized && accountId && (
+        <>
+          {accountId && (
+            <Script
+              id="gtm-data-layer"
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  window.dataLayer.push({ account_id: '${accountId}' })
+                  `,
+              }}
+            />
+          )}
+          <GoogleTagManager gtmId="GTM-NDS6MKM" />
+        </>
       )}
       <SWRConfig
         value={{
