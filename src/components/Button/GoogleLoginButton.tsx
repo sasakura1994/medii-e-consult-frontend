@@ -19,14 +19,16 @@ const LoginButton = ({ googleRegister }: GoogleRegisterProps) => {
   const { redirectUrl } = useLogin();
 
   const onSuccess = async (credentialResponse: CredentialResponse) => {
+    console.log('credentialResponse', credentialResponse);
     const id_token = credentialResponse?.credential;
+    const client_id = credentialResponse?.clientId;
 
-    if (!id_token) {
+    if (!id_token || !client_id) {
       console.error('ID Token not found:', credentialResponse);
       return;
     }
 
-    const res = await googleLogin(id_token).catch((error) => {
+    const res = await googleLogin(id_token, client_id).catch((error) => {
       console.error(error);
     });
 

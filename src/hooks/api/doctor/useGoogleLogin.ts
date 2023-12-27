@@ -11,9 +11,10 @@ export const useGoogleLogin = () => {
   const { axios } = useAxios();
 
   const googleLogin = useCallback(
-    (id_token: string) => {
+    (id_token: string, client_id: string) => {
       return axios.post<PostGoogleLoginResponseData>('/oauth/google/verify-token', {
         id_token: id_token,
+        client_id: client_id,
       });
     },
     [axios]
