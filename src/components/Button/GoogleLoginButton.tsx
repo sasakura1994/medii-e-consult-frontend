@@ -88,7 +88,9 @@ const GoogleLoginButton = ({ googleRegister }: Props) => {
           <div className="mr-[5px]">
             <img src="icons/google.svg" alt="0" width="20" height="20" />
           </div>
-          <div className="text-base font-semibold text-text-caption">Googleでログイン</div>
+          <div className="text-base font-semibold text-text-caption">
+            {googleRegister ? 'Googleアカウントで登録する' : 'Googleでログイン'}
+          </div>
         </div>
       </div>
     </div>
