@@ -33,7 +33,7 @@ type AppPropsWithLayout = AppProps & {
 const AppInner = ({ Component, pageProps }: AppPropsWithLayout) => {
   const openModalCount = useAtomValue(openModalCountState);
   const { fetcher } = useFetcher();
-  const { accountId } = useToken();
+  const { accountId, isTokenInitialized } = useToken();
   useAuthenticationOnPage();
   const getLayout =
     Component.getLayout ||
@@ -46,7 +46,10 @@ const AppInner = ({ Component, pageProps }: AppPropsWithLayout) => {
   return (
     <CookiesProvider>
       <GlobalStyle openModalCount={openModalCount} />
-      <GoogleTagManager gtmId="GTM-NDS6MKM" dataLayer={accountId ? [`{ account_id: ${accountId} }`] : []} />
+      {/* GTMタグだけ先に描画されるのを避けるため必ず両方同時にチェック */}
+      {(isTokenInitialized || accountId) && (
+        <GoogleTagManager gtmId="GTM-NDS6MKM" dataLayer={accountId ? [`{ account_id: ${accountId} }`] : []} />
+      )}
       <SWRConfig
         value={{
           fetcher,
