@@ -48,16 +48,16 @@ const AppInner = ({ Component, pageProps }: AppPropsWithLayout) => {
     <CookiesProvider>
       <GlobalStyle openModalCount={openModalCount} />
       {/* GTMタグだけ先に描画されるのを避けるため必ず両方同時にチェック */}
-      {isTokenInitialized && accountId && (
+      {(isTokenInitialized || accountId) && (
         <>
           {accountId && (
             <Script
               id="gtm-data-layer"
               dangerouslySetInnerHTML={{
                 __html: `
-                  window.dataLayer = window.dataLayer || [];
-                  window.dataLayer.push({ account_id: '${accountId}' })
-                  `,
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({ account_id: '${accountId}' })
+            `,
               }}
             />
           )}
