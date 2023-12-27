@@ -8,7 +8,11 @@ import { useRouter } from 'next/router';
 import { useLogin } from '@/hooks/useLogin';
 import { CredentialResponse } from '@react-oauth/google';
 
-const LoginButton = () => {
+type Props = {
+  googleRegister?: boolean;
+};
+
+const LoginButton = ({ googleRegister }: Props) => {
   const { googleLogin } = useGoogleLogin();
   const { setTokenAndMarkInitialized } = useToken();
   const router = useRouter();
@@ -46,7 +50,11 @@ const LoginButton = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      setWidth(window.innerWidth > 1024 ? 390 : 300);
+      if (!googleRegister) {
+        setWidth(window.innerWidth > 1024 ? 390 : 300);
+      } else {
+        setWidth(window.innerWidth > 1024 ? 310 : 300);
+      }
     };
 
     handleResize();
@@ -61,18 +69,22 @@ const LoginButton = () => {
   return <GoogleLogin onSuccess={onSuccess} onError={onError} type="standard" logo_alignment="left" width={width} />;
 };
 
-const GoogleLoginButton = () => {
+const GoogleLoginButton = ({ googleRegister }: Props) => {
   const clientId = process.env.GOOGLE_CLIENT_ID || '';
 
   return (
     <div className="group flex justify-center">
       <div className="absolute z-50 mt-2 opacity-0 group-hover:bg-monotone-200">
         <GoogleOAuthProvider clientId={clientId}>
-          <LoginButton />
+          <LoginButton googleRegister={googleRegister} />
         </GoogleOAuthProvider>
       </div>
       <div className="absolute m-auto cursor-pointer rounded-md border border-border-field group-hover:bg-monotone-200">
-        <div className="flex h-[56px] w-[311px] items-center justify-center lg:w-[400px]">
+        <div
+          className={`flex h-[56px] ${googleRegister ? 'w-[317px]' : 'w-[310px]'} items-center justify-center ${
+            googleRegister ? 'lg:w-[320px]' : 'lg:w-[400px]'
+          }`}
+        >
           <div className="mr-[5px]">
             <img src="icons/google.svg" alt="0" width="20" height="20" />
           </div>

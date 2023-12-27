@@ -131,7 +131,7 @@ const Login: NextPageWithLayout = () => {
             </div>
           </a>
           <div>
-            <GoogleLoginButton />
+            <GoogleLoginButton googleRegister={false} />
           </div>
           <div className="mb-6 mt-[68px]" onMouseDown={saveRedirectUrl}>
             <AppleSignInButton state={router.asPath.includes('?') ? router.asPath.replace(/^[^?]+\?/, '') : ''}>
