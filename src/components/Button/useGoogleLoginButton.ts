@@ -69,7 +69,7 @@ export const useGoogleLoginButton = ({ googleRegister }: Props) => {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [googleRegister]);
 
   return { clientId, onSuccess, onError, width };
 };

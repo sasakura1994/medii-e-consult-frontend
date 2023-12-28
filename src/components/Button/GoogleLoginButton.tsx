@@ -12,7 +12,7 @@ const GoogleLoginButton = (props: GoogleRegisterProps) => {
 
   return (
     <div className="group flex justify-center">
-      <div className="opacity-1 absolute z-50 mt-2 group-hover:bg-monotone-200">
+      <div className="absolute z-50 mt-2 opacity-0 group-hover:bg-monotone-200">
         <GoogleOAuthProvider clientId={clientId}>
           <GoogleLogin onSuccess={onSuccess} onError={onError} type="standard" logo_alignment="left" width={width} />
         </GoogleOAuthProvider>
