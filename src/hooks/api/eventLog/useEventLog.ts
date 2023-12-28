@@ -1,5 +1,5 @@
 import { useAxios } from '@/hooks/network/useAxios';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 type Args = {
   name: string;
@@ -12,14 +12,14 @@ type UseEventLog = {
 
 export const useEventLog = (args?: Args): UseEventLog => {
   const { axios, hasToken } = useAxios();
-  const [isSent, setIsSent] = useState(false);
+  const sentCountRef = useRef(0);
 
   useEffect(() => {
-    if (args && hasToken && !isSent) {
-      setIsSent(true);
+    if (args && hasToken && sentCountRef.current === 0) {
+      sentCountRef.current++;
       axios.post('/event-log', args);
     }
-  }, [args, axios, hasToken, isSent]);
+  }, [args, axios, hasToken]);
 
   const postEventLog = useCallback(
     async (postArgs: Args) => {
