@@ -130,9 +130,7 @@ export const Affiliate: React.FC = () => {
   } else {
     return (
       <>
-        <p className={`${isFinishedCampaign ? 'mt-4' : 'mt-8'} text-l font-bold`}>
-          医師確認完了後、専用の紹介URLが発行されます。
-        </p>
+        <p className="mt-8 text-l font-bold">医師確認完了後、専用の紹介URLが発行されます。</p>
       </>
     );
   }
