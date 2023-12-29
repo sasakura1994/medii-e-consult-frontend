@@ -127,11 +127,11 @@ export const Affiliate: React.FC = () => {
         />
       </>
     );
-  } else {
-    return (
-      <>
-        <p className="mt-8 text-l font-bold">医師確認完了後、専用の紹介URLが発行されます。</p>
-      </>
-    );
   }
+
+  return (
+    <>
+      <p className="mt-8 text-l font-bold">医師確認完了後、専用の紹介URLが発行されます。</p>
+    </>
+  );
 };
