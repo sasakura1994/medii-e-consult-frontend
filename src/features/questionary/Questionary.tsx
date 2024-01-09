@@ -55,7 +55,7 @@ export const Questionary = () => {
             }
           }, 5000);
         }}
-        onReady={(form: Element) => {
+        onFormReady={(form: Element) => {
           if (form) {
             setTimeout(() => {
               setIsFormReady(true);
