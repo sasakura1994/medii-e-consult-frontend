@@ -13,6 +13,7 @@ import TertiaryButton from '@/components/Button/TertiaryButton';
 import { AppleSignInButton } from '@/components/Button/AppleSignInButton';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 import { useRouter } from 'next/router';
+import GoogleLoginButton from '@/components/Button/GoogleLoginButton';
 
 export const Registration = (props: UseRegisterType) => {
   const router = useRouter();
@@ -112,6 +113,10 @@ export const Registration = (props: UseRegisterType) => {
               <div className="mt-6 font-light text-text-secondary">または</div>
 
               <div className="mt-6">
+                <GoogleLoginButton googleRegister={true} />
+              </div>
+
+              <div className="mt-[70px]">
                 <AppleSignInButton
                   state={router.asPath.includes('?') ? router.asPath.replace(/^[^?]+\?/, '') : ''}
                   borderColorClassName="border-[#DADFE5]"
