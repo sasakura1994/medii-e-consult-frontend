@@ -56,7 +56,6 @@ describe('useAffiliate', () => {
     const { result } = renderHook(() => useAffiliate());
     await waitFor(() => {
       expect(result.current.isError).toBe(false);
-      expect(result.current.qrCodeUrl).toBe(mockQrCodeUrl);
     });
   });
 

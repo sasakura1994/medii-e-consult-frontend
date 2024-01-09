@@ -6,9 +6,10 @@ import SecondaryButton from '@/components/Button/SecondaryButton';
 import TextField from '@/components/TextField/TextField';
 import { HowToInvitation } from './HowToInvitation';
 import { useProfile } from '@/hooks/useProfile';
+import QRCode from 'qrcode.react';
 
 export const Affiliate: React.FC = () => {
-  const { isError, qrCodeUrl, downloadQrCode, clipboard, invitationUrl } = useAffiliate();
+  const { isError, downloadQrCode, clipboard, invitationUrl } = useAffiliate();
   const { profile } = useProfile();
 
   // TODO: [紹介キャンペーンの年内終了]2023/12/29 00:00まで表示する
@@ -74,8 +75,8 @@ export const Affiliate: React.FC = () => {
           <p className={`${isFinishedCampaign ? 'mt-4' : 'mt-8'} text-l font-bold`}>紹介ページURL</p>
           <div className="flex flex-col lg:flex-row">
             <div className="flex border-0 border-border-divider pr-6 lg:flex-col lg:border-r">
-              <div className="mx-auto h-[120px] w-[120px]">
-                <img src={qrCodeUrl} alt="" />
+              <div className="flex h-[120px] w-[120px] items-center justify-center lg:w-auto">
+                {invitationUrl && <QRCode className="mx-auto" size={80} value={invitationUrl} />}
               </div>
               <div className="my-auto w-[140px] lg:mx-auto">
                 <SecondaryButton onClick={downloadQrCode} className="whitespace-nowrap">
