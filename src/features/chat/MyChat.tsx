@@ -37,6 +37,22 @@ export const MyChat = (props: MyChatProps) => {
     document.body.removeChild(downloadLink);
   };
 
+  const setUrlLinkForMessage = (originalText: string) => {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const splited = originalText.split(urlRegex);
+    let editedMessage = '';
+    splited.forEach((e) => {
+      if (e.startsWith('https://') || e.startsWith('http://')) {
+        const withLink =
+          '<a target="_blank" style="color: #0758E4;" rel="noopener noreferrer" href="' + e + '"' + '>' + e + '</a>';
+        editedMessage += withLink;
+      } else {
+        editedMessage += e;
+      }
+    });
+    return editedMessage;
+  };
+
   const unreadView = useMemo(() => {
     if (chatData.read_count) {
       if (chatRoomData.members.length > 1) {
@@ -170,10 +186,9 @@ export const MyChat = (props: MyChatProps) => {
             >
               <p
                 className={`mb-3 mr-3 max-w-[670px] whitespace-pre-wrap break-words rounded-2xl
-              rounded-tr-none p-2 ${isGroup ? 'bg-[#d0f0ea]' : 'bg-primary-light'}`}
-              >
-                {chatData.message}
-              </p>
+                rounded-tr-none p-2 ${isGroup ? 'bg-[#d0f0ea]' : 'bg-primary-light'}`}
+                dangerouslySetInnerHTML={{ __html: setUrlLinkForMessage(chatData.message) }}
+              />
             </div>
           </>
         )}

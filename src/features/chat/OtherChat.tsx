@@ -30,6 +30,22 @@ export const OtherChat = (props: OtherChatProps) => {
     document.body.removeChild(downloadLink); // Remove after click
   };
 
+  const setUrlLinkForMessage = (originalText: string) => {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const splited = originalText.split(urlRegex);
+    let editedMessage = '';
+    splited.forEach((e) => {
+      if (e.startsWith('https://') || e.startsWith('http://')) {
+        const withLink =
+          '<a target="_blank" style="color: #0758E4;" rel="noopener noreferrer" href="' + e + '"' + '>' + e + '</a>';
+        editedMessage += withLink;
+      } else {
+        editedMessage += e;
+      }
+    });
+    return editedMessage;
+  };
+
   return (
     <>
       <div className="ml-3 flex">
@@ -72,7 +88,7 @@ export const OtherChat = (props: OtherChatProps) => {
                 &lt;あなただけに表示されています&gt;
               </div>
             )}
-            <p>{chatData.message}</p>
+            <p dangerouslySetInnerHTML={{ __html: setUrlLinkForMessage(chatData.message) }} />
           </div>
         )}
       </div>
