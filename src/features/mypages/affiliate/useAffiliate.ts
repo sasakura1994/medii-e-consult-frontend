@@ -1,17 +1,16 @@
 import { useToken } from '@/hooks/authentication/useToken';
 import React, { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import QRCode from 'qrcode';
 
 const qrCodeFileName = 'Medii医師紹介QRコード.png';
 
 export type AffiliateUrlsType = {
-  qrCode: string;
   clipboard: string;
 };
 
 export type UseAffiliateType = {
   isError: boolean;
-  qrCodeUrl: string;
   downloadQrCode: () => void;
   clipboard: () => void;
   invitationUrl: string;
@@ -20,7 +19,6 @@ export type UseAffiliateType = {
 export const useAffiliate = (): UseAffiliateType => {
   const { accountId } = useToken();
   const [isError, setIsError] = useState(false);
-  const [qrCodeUrl, setQrcodeUrl] = useState('');
   const [invitationUrl, setInvitationUrl] = useState('');
 
   /**
@@ -32,15 +30,6 @@ export const useAffiliate = (): UseAffiliateType => {
     try {
       if (accountId) {
         const urls = getAffiliateUrls(accountId);
-        const response = await fetch(urls.qrCode, {
-          method: 'GET',
-          headers: {},
-        });
-
-        const buffer = await response.arrayBuffer();
-        const blob = new Blob([buffer]);
-        const url = window.URL.createObjectURL(blob);
-        setQrcodeUrl(url);
         setInvitationUrl(urls.clipboard);
       }
     } catch (e) {
@@ -60,9 +49,7 @@ export const useAffiliate = (): UseAffiliateType => {
    */
   const getAffiliateUrls = (accountId: string): AffiliateUrlsType => {
     const url = `${process.env.INVITATION_URL}?p=${accountId}`;
-    const qrCodeUrl = `https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl=${url}`;
     return {
-      qrCode: qrCodeUrl,
       clipboard: url,
     };
   };
@@ -70,17 +57,18 @@ export const useAffiliate = (): UseAffiliateType => {
   /**
    * QR コードのダウンロード
    */
-  const downloadQrCode = React.useCallback(() => {
-    if (!qrCodeUrl) {
+  const downloadQrCode = React.useCallback(async () => {
+    if (!invitationUrl) {
       return;
     }
+    const qrCodeDataURL = await QRCode.toDataURL(invitationUrl);
     const link = document.createElement('a');
-    link.href = qrCodeUrl;
+    link.href = qrCodeDataURL;
     link.setAttribute('download', qrCodeFileName);
     document.body.appendChild(link);
     link.click();
     link.remove();
-  }, [qrCodeUrl]);
+  }, [invitationUrl]);
 
   /**
    * 紹介用 URL のコピー
@@ -95,7 +83,6 @@ export const useAffiliate = (): UseAffiliateType => {
 
   return {
     isError,
-    qrCodeUrl,
     downloadQrCode,
     clipboard,
     invitationUrl,
