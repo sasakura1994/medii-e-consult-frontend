@@ -1,6 +1,7 @@
 import { ChatData } from '@/hooks/api/chat/useFetchChatList';
 import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import React from 'react';
+import Linkify from 'react-linkify';
 
 type OtherChatProps = {
   chatData: ChatData & { displayName: string };
@@ -72,7 +73,15 @@ export const OtherChat = (props: OtherChatProps) => {
                 &lt;あなただけに表示されています&gt;
               </div>
             )}
-            <p>{chatData.message}</p>
+            <Linkify
+              componentDecorator={(decoratedHref, decoratedText, key) => (
+                <a target="_blank" href={decoratedHref} key={key} rel="noreferrer" className="text-text-link">
+                  {decoratedText}
+                </a>
+              )}
+            >
+              <p>{chatData.message}</p>
+            </Linkify>
           </div>
         )}
       </div>

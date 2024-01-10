@@ -3,6 +3,7 @@ import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import React, { useMemo, useState } from 'react';
 import { ChatDeleteModal } from './ChatDeleteModal';
 import { KeyedMutator } from 'swr';
+import Linkify from 'react-linkify';
 
 type MyChatProps = {
   isGroup?: boolean;
@@ -168,12 +169,20 @@ export const MyChat = (props: MyChatProps) => {
                 setIsMouseOver(false);
               }}
             >
-              <p
-                className={`mb-3 mr-3 max-w-[670px] whitespace-pre-wrap break-words rounded-2xl
-              rounded-tr-none p-2 ${isGroup ? 'bg-[#d0f0ea]' : 'bg-primary-light'}`}
+              <Linkify
+                componentDecorator={(decoratedHref, decoratedText, key) => (
+                  <a target="_blank" href={decoratedHref} key={key} rel="noreferrer" className="text-text-link">
+                    {decoratedText}
+                  </a>
+                )}
               >
-                {chatData.message}
-              </p>
+                <p
+                  className={`mb-3 mr-3 max-w-[670px] whitespace-pre-wrap break-words rounded-2xl
+                rounded-tr-none p-2 ${isGroup ? 'bg-[#d0f0ea]' : 'bg-primary-light'}`}
+                >
+                  {chatData.message}
+                </p>
+              </Linkify>
             </div>
           </>
         )}
