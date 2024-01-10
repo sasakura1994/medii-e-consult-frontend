@@ -5,6 +5,8 @@ export type PointHistoryEntityType = {
   delta: number;
   ref_id: string;
   uid: number;
+  action: string;
+  remarks: string;
 };
 
 export type CurrentPointEntityType = {

@@ -4,14 +4,8 @@ import { dateFormat } from '@/libs/date';
 import { usePointHistory } from './usePointHistory';
 
 export const PointHistory: React.FC = () => {
-  const {
-    fetchCurrentPointLoading,
-    fetchPointHistoryLoading,
-    currentPoint,
-    pointHistories,
-    getActionNameFromRefId,
-    getChatRoomLink,
-  } = usePointHistory();
+  const { fetchCurrentPointLoading, fetchPointHistoryLoading, currentPoint, pointHistories, getChatRoomLink } =
+    usePointHistory();
 
   if (fetchCurrentPointLoading && !currentPoint) {
     return null;
@@ -47,16 +41,19 @@ export const PointHistory: React.FC = () => {
             {pointHistories &&
               pointHistories.map((pointHistory) => (
                 <tr className="pb-3" key={pointHistory.uid}>
-                  <td className="pr-5 text-md">{getActionNameFromRefId(pointHistory.ref_id)}</td>
+                  <td className="pr-5 text-md">{pointHistory.action}</td>
                   <td className="pr-5 text-md">{dateFormat(pointHistory.created_date, 'YYYY/M/D HH:mm')}</td>
                   <td className="pr-5 text-right text-md">
                     {pointHistory.delta ? new Intl.NumberFormat('ja-JP').format(pointHistory.delta) : 0}
                   </td>
                   <td className="pr-5 text-md">
+                    {pointHistory.remarks && <div>{pointHistory.remarks}</div>}
                     {pointHistory.ref_id.startsWith('con') && (
-                      <Link href={getChatRoomLink(pointHistory.ref_id)} className="text-[#0000ee] underline">
-                        該当E-コンサル
-                      </Link>
+                      <div>
+                        <Link href={getChatRoomLink(pointHistory.ref_id)} className="text-[#0000ee] underline">
+                          該当E-コンサル
+                        </Link>
+                      </div>
                     )}
                   </td>
                 </tr>
