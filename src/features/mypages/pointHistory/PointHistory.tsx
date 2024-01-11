@@ -47,13 +47,14 @@ export const PointHistory: React.FC = () => {
                     {pointHistory.delta ? new Intl.NumberFormat('ja-JP').format(pointHistory.delta) : 0}
                   </td>
                   <td className="pr-5 text-md">
-                    {pointHistory.remarks && <div>{pointHistory.remarks}</div>}
-                    {pointHistory.ref_id.startsWith('con') && (
+                    {pointHistory.ref_id.startsWith('con') ? (
                       <div>
                         <Link href={getChatRoomLink(pointHistory.ref_id)} className="text-[#0000ee] underline">
                           該当E-コンサル
                         </Link>
                       </div>
+                    ) : (
+                      <div>{pointHistory.remarks}</div>
                     )}
                   </td>
                 </tr>
