@@ -9,7 +9,7 @@ import { useProfile } from '@/hooks/useProfile';
 import QRCode from 'qrcode.react';
 
 export const Affiliate: React.FC = () => {
-  const { isCampaign, isError, downloadQrCode, clipboard, invitationUrl, period } = useAffiliate();
+  const { isCampaign, downloadQrCode, clipboard, invitationUrl, period } = useAffiliate();
   const { profile } = useProfile();
 
   if (profile && profile.status === 'VERIFIED') {
@@ -77,7 +77,7 @@ export const Affiliate: React.FC = () => {
             <div className="my-auto lg:ml-3">
               <p className="mb-1 ml-2 text-md lg:mb-0">またはURLを共有</p>
               <div className="flex items-center space-x-1">
-                <TextField className="min-w-0 flex-shrink lg:w-[260px]" value={invitationUrl} />
+                <TextField className="min-w-0 flex-shrink lg:w-[260px]" value={invitationUrl} onChange={() => {}} />
                 <SecondaryButton onClick={clipboard} className="whitespace-nowrap">
                   リンクをコピー
                 </SecondaryButton>
@@ -110,11 +110,7 @@ export const Affiliate: React.FC = () => {
           autoClose={2000}
           position={toast.POSITION.BOTTOM_CENTER}
           closeButton={false}
-          toastClassName={() =>
-            isError
-              ? 'bg-toast-error text-white text-center py-2 shadow-md'
-              : 'bg-toast-success text-white text-center py-2 shadow-md'
-          }
+          toastClassName={() => 'bg-toast-success text-white text-center py-2 shadow-md'}
         />
       </>
     );
