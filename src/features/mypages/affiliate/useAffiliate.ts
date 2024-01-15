@@ -1,7 +1,9 @@
 import { useToken } from '@/hooks/authentication/useToken';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 import QRCode from 'qrcode';
+import { useExistCampaign } from '@/hooks/api/campaign/useExistCampaign';
+import { dateFormat } from '@/libs/date';
 
 const qrCodeFileName = 'Medii医師紹介QRコード.png';
 
@@ -10,16 +12,29 @@ export type AffiliateUrlsType = {
 };
 
 export type UseAffiliateType = {
+  isCampaign: boolean;
   isError: boolean;
   downloadQrCode: () => void;
   clipboard: () => void;
   invitationUrl: string;
+  period?: string;
 };
 
 export const useAffiliate = (): UseAffiliateType => {
   const { accountId } = useToken();
   const [isError, setIsError] = useState(false);
   const [invitationUrl, setInvitationUrl] = useState('');
+  const { isCampaign, data: campaign } = useExistCampaign();
+
+  const period = useMemo(() => {
+    if (!campaign) {
+      return undefined;
+    }
+
+    const startAt = campaign.start_at ? dateFormat(campaign.start_at, 'YYYY年M月D日') : '';
+    const endAt = campaign.end_at ? dateFormat(campaign.end_at, 'YYYY年M月D日') : '';
+    return `${startAt}～${endAt}`;
+  }, [campaign]);
 
   /**
    * QR コードの取得
@@ -82,9 +97,11 @@ export const useAffiliate = (): UseAffiliateType => {
   }, [invitationUrl]);
 
   return {
+    isCampaign,
     isError,
     downloadQrCode,
     clipboard,
     invitationUrl,
+    period,
   };
 };

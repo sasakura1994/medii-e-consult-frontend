@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import { useAffiliate } from './useAffiliate';
@@ -7,23 +7,10 @@ import TextField from '@/components/TextField/TextField';
 import { HowToInvitation } from './HowToInvitation';
 import { useProfile } from '@/hooks/useProfile';
 import QRCode from 'qrcode.react';
-import { useExistCampaign } from '@/hooks/api/campaign/useExistCampaign';
-import { dateFormat } from '@/libs/date';
 
 export const Affiliate: React.FC = () => {
-  const { isError, downloadQrCode, clipboard, invitationUrl } = useAffiliate();
+  const { isCampaign, isError, downloadQrCode, clipboard, invitationUrl, period } = useAffiliate();
   const { profile } = useProfile();
-  const { isCampaign, data: campaign } = useExistCampaign();
-
-  const period = useMemo(() => {
-    if (!campaign) {
-      return undefined;
-    }
-
-    const startAt = campaign.start_at ? dateFormat(campaign.start_at, 'YYYY年M月D日') : '';
-    const endAt = campaign.end_at ? dateFormat(campaign.end_at, 'YYYY年M月D日') : '';
-    return `${startAt}～${endAt}`;
-  }, [campaign]);
 
   if (profile && profile.status === 'VERIFIED') {
     return (
