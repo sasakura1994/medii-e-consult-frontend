@@ -7,29 +7,32 @@ import TextField from '@/components/TextField/TextField';
 import { HowToInvitation } from './HowToInvitation';
 import { useProfile } from '@/hooks/useProfile';
 import QRCode from 'qrcode.react';
+import { useExistCampaign } from '@/hooks/api/campaign/useExistCampaign';
+import { dateFormat } from '@/libs/date';
 
 export const Affiliate: React.FC = () => {
   const { isError, downloadQrCode, clipboard, invitationUrl } = useAffiliate();
   const { profile } = useProfile();
+  const { isCampaign, data: campaign } = useExistCampaign();
 
-  // TODO: [紹介キャンペーンの年内終了]2023/12/29 00:00まで表示する
-  const isFinishedCampaign = useMemo(() => {
-    const today = new Date();
-    const end = new Date('2023/12/29 00:00:00');
-    if (today > end) {
-      return true;
+  const period = useMemo(() => {
+    if (!campaign) {
+      return undefined;
     }
-    return false;
-  }, []);
+
+    const startAt = campaign.start_at ? dateFormat(campaign.start_at, 'YYYY年M月D日') : '';
+    const endAt = campaign.end_at ? dateFormat(campaign.end_at, 'YYYY年M月D日') : '';
+    return `${startAt}～${endAt}`;
+  }, [campaign]);
 
   if (profile && profile.status === 'VERIFIED') {
     return (
       <>
-        <div className={`${isFinishedCampaign ? '' : 'mt-10'} px-6 py-10`}>
-          {!isFinishedCampaign && (
+        <div className={`${!isCampaign ? '' : 'mt-10'} px-6 py-10`}>
+          {isCampaign && period && (
             <>
               <p className="text-left text-xxl font-bold">医師紹介キャンペーン</p>
-              <p className="mt-4 text-left text-l font-bold">キャンペーン期日：2023年12月28日まで</p>
+              <p className="mt-4 text-left text-l font-bold">キャンペーン期日：{period}</p>
               <p className="mt-8 text-l font-bold">ご紹介特典</p>
               <div className="mt-4 grid auto-cols-max grid-cols-1 gap-4 lg:grid-cols-2">
                 <div className="p-2 shadow-low">
@@ -37,10 +40,10 @@ export const Affiliate: React.FC = () => {
                   <div className="flex items-start justify-center gap-1">
                     <img src="icons/point_invitation.svg" alt="" width="21" height="21" />
                     <div>
-                      <div>最大4,500円相当のMediiポイント</div>
+                      <div>最大5,000円相当のMediiポイント</div>
                       <ul className="mt-1 list-disc pl-6 text-xs text-text-secondary">
-                        <li>紹介された人の新規登録で 3,000pt</li>
-                        <li>紹介された人の初回コンサルで 1,500pt</li>
+                        <li>紹介された人の新規登録で 2,000pt</li>
+                        <li>紹介された人の初回コンサルで 3,000pt</li>
                       </ul>
                     </div>
                   </div>
@@ -50,11 +53,10 @@ export const Affiliate: React.FC = () => {
                   <div className="flex items-start justify-center gap-1">
                     <img src="icons/point_invitation.svg" alt="" width="21" height="21" />
                     <div>
-                      <div>最大4,500円相当のMediiポイント</div>
+                      <div>最大5,000円相当のMediiポイント</div>
                       <ul className="mt-1 list-disc pl-6 text-xs text-text-secondary">
-                        <li>新規登録で 3,000pt</li>
-                        <li>初回アンケートへのご回答 500pt</li>
-                        <li>初回コンサル 1,000pt</li>
+                        <li>新規登録で 2,000pt</li>
+                        <li>初回コンサル 3,000pt</li>
                       </ul>
                     </div>
                   </div>
@@ -66,13 +68,14 @@ export const Affiliate: React.FC = () => {
                 招待した方および招待された方がもらえるポイントは、予告なく変更される場合があります。
                 医師をご紹介いただいた場合のみ対象となります。医学生は対象外となりますのでご了承ください。(医学生が医師をご紹介いただいた場合は対象となります。)
                 <br />
-                2023年12月28日までにご紹介いただいた医師がプロフィール登録を完了していることが条件となります。期日以降に登録いただいたり、
+                {period}
+                までにご紹介いただいた医師がプロフィール登録を完了していることが条件となります。期日以降に登録いただいたり、
                 プロフィール登録が完了していない、プロフィールが正しくないなどの場合はポイント付与の対象外となります。
                 なお、ポイント付与までに2-3営業日かかることがございます。
               </p>
             </>
           )}
-          <p className={`${isFinishedCampaign ? 'mt-4' : 'mt-8'} text-l font-bold`}>紹介ページURL</p>
+          <p className={`${!isCampaign ? 'mt-4' : 'mt-8'} text-l font-bold`}>紹介ページURL</p>
           <div className="flex flex-col lg:flex-row">
             <div className="flex border-0 border-border-divider pr-6 lg:flex-col lg:border-r">
               <div className="flex h-[120px] w-[120px] items-center justify-center lg:w-auto">
@@ -102,12 +105,12 @@ export const Affiliate: React.FC = () => {
           <HowToInvitation
             number={2}
             text={
-              isFinishedCampaign
+              !isCampaign
                 ? 'お知り合いの医師は、紹介ページにアクセスし、E-コンサルについての情報を受け取る'
                 : 'お知り合いの医師は、紹介ページにアクセスし、紹介特典とE-コンサルについての情報を受け取る'
             }
           />
-          {!isFinishedCampaign && (
+          {isCampaign && (
             <HowToInvitation
               number={3}
               text={'あなた専用の紹介ページから会員登録いただくと、あなたと新規会員へ紹介特典をプレゼント'}
