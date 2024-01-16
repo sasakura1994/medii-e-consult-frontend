@@ -19,6 +19,7 @@ export const Affiliate: React.FC = () => {
           {isCampaign && period && (
             <>
               <p className="text-left text-xxl font-bold">医師紹介キャンペーン</p>
+              <p className="mt-4 text-left text-l font-bold">対象：医師3年目以上の方(研修医を除く)</p>
               <p className="mt-4 text-left text-l font-bold">キャンペーン期間：{period}</p>
               <p className="mt-8 text-l font-bold">ご紹介特典</p>
               <div className="mt-4 grid auto-cols-max grid-cols-1 gap-4 lg:grid-cols-2">
@@ -29,36 +30,39 @@ export const Affiliate: React.FC = () => {
                     <div>
                       <div>最大5,000円相当のMediiポイント</div>
                       <ul className="mt-1 list-disc pl-6 text-xs text-text-secondary">
-                        <li>紹介された人の新規登録で 2,000pt</li>
-                        <li>紹介された人の初回コンサルで 3,000pt</li>
+                        <li>紹介された方が新規登録で 2,000pt</li>
+                        <li>紹介された方が症例相談で 3,000pt</li>
                       </ul>
                     </div>
                   </div>
                 </div>
                 <div className="p-2 shadow-low">
-                  <p className="mb-1 text-center font-bold">ご入会いただいた方</p>
+                  <p className="mb-1 text-center font-bold">紹介された方</p>
                   <div className="flex items-start justify-center gap-1">
                     <img src="icons/point_invitation.svg" alt="" width="21" height="21" />
                     <div>
                       <div>最大5,000円相当のMediiポイント</div>
                       <ul className="mt-1 list-disc pl-6 text-xs text-text-secondary">
                         <li>新規登録で 2,000pt</li>
-                        <li>初回コンサル 3,000pt</li>
+                        <li>症例相談で 3,000pt</li>
                       </ul>
                     </div>
                   </div>
                 </div>
               </div>
               <p className="mt-4 text-xs text-text-secondary">
-                ご紹介からポイント付与完了までの期間に退会済みまたは利用制限となった方はポイント付与の対象外となる場合があります。
-                不正行為等によるポイント取得を確認した場合、ポイント付与の対象外とし、付与されたポイントは取消しとなる場合があります。
-                招待した方および招待された方がもらえるポイントは、予告なく変更される場合があります。
-                医師をご紹介いただいた場合のみ対象となります。医学生は対象外となりますのでご了承ください。(医学生が医師をご紹介いただいた場合は対象となります。)
+                【登録による進呈】 ご紹介いただいた医師が新規登録・医師資格の確認完了で2,000ptを進呈いたします。
+                新規登録後、1営業日を目安にポイントを進呈いたします。
                 <br />
-                {period}
-                までにご紹介いただいた医師がプロフィール登録を完了していることが条件となります。期日以降に登録いただいたり、
-                プロフィール登録が完了していない、プロフィールが正しくないなどの場合はポイント付与の対象外となります。
-                なお、ポイント付与までに2-3営業日かかることがございます。
+                【症例相談による進呈】
+                ご紹介いただいた医師がキャンペーン期間中に現在診ている症例の相談と解決後のお礼で3,000ptを進呈いたします。
+                キャンペーン期間終了後に進呈いたします。
+                <br />
+                【注意事項】紹介された方が、過去E-コンサルにご登録されたことがある場合は対象外となります。
+                一般的な医学知識に関する相談など、現在診ている患者さんの症例ではないと判断された場合はポイント付与の対象外とさせていただくことがございます。
+                また、相談を投稿した後、回答者へのお礼がない、回答者への返答がない場合も対象外となります。
+                本キャンペーンにより進呈されるポイントは、紹介された方が新規会員登録された後と、キャンペーン終了後の2回に分けてに進呈予定です。
+                本キャンペーンは、予告なく終了する可能性があります。
               </p>
             </>
           )}
