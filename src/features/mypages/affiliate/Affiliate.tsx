@@ -18,9 +18,18 @@ export const Affiliate: React.FC = () => {
         <div className={`${!isCampaign ? '' : 'mt-10'} px-6 py-10`}>
           {isCampaign && period && (
             <>
+              <div className="mb-2 w-[340px]">
+                <div className="flex items-center justify-center gap-[10px] rounded p-2 shadow-low">
+                  <img src="icons/top-popup-back.svg" alt="" />
+                  <p className="text-sm font-light">キャンペーン情報が表示されている方限定！</p>
+                </div>
+                <div className="flex px-4">
+                  <img src="icons/top-popup-arrow.svg" className="drop-shadow-popup" alt="" />
+                </div>
+              </div>
               <p className="text-left text-xxl font-bold">医師紹介キャンペーン</p>
               <p className="mt-4 text-left text-l font-bold">対象：医師3年目以上の方(研修医を除く)</p>
-              <p className="mt-4 text-left text-l font-bold">キャンペーン期間：{period}</p>
+              <p className="mt-2 text-left text-l font-bold">キャンペーン期間：{period}</p>
               <p className="mt-8 text-l font-bold">ご紹介特典</p>
               <div className="mt-4 grid auto-cols-max grid-cols-1 gap-4 lg:grid-cols-2">
                 <div className="p-2 shadow-low">
