@@ -1,7 +1,9 @@
 import { useToken } from '@/hooks/authentication/useToken';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { toast } from 'react-toastify';
 import QRCode from 'qrcode';
+import { useExistCampaign } from '@/hooks/api/campaign/useExistCampaign';
+import { dateFormat } from '@/libs/date';
 
 const qrCodeFileName = 'Medii医師紹介QRコード.png';
 
@@ -10,49 +12,35 @@ export type AffiliateUrlsType = {
 };
 
 export type UseAffiliateType = {
-  isError: boolean;
+  isCampaign: boolean;
   downloadQrCode: () => void;
   clipboard: () => void;
   invitationUrl: string;
+  period?: string;
 };
 
 export const useAffiliate = (): UseAffiliateType => {
   const { accountId } = useToken();
-  const [isError, setIsError] = useState(false);
-  const [invitationUrl, setInvitationUrl] = useState('');
+  const { isCampaign, data: campaign, isLoading: isLoadingCampaign } = useExistCampaign();
 
-  /**
-   * QR コードの取得
-   */
-  const fetchQrCode = useCallback(async () => {
-    setIsError(false);
-
-    try {
-      if (accountId) {
-        const urls = getAffiliateUrls(accountId);
-        setInvitationUrl(urls.clipboard);
-      }
-    } catch (e) {
-      setIsError(true);
-      const error = e as { message: string; response: { data: { message: string } } };
-      console.log('*** error ***', error.response?.data?.message);
-      toast('QRコードの取得に失敗しました');
+  const period = useMemo(() => {
+    if (!campaign) {
+      return undefined;
     }
-  }, [accountId]);
 
-  useEffect(() => {
-    fetchQrCode();
-  }, [fetchQrCode]);
+    const startAt = campaign.start_at ? dateFormat(campaign.start_at, 'YYYY年M月D日') : '';
+    const endAt = campaign.end_at ? dateFormat(campaign.end_at, 'YYYY年M月D日') : '';
+    return `${startAt}～${endAt}`;
+  }, [campaign]);
 
-  /**
-   * URL の取得
-   */
-  const getAffiliateUrls = (accountId: string): AffiliateUrlsType => {
-    const url = `${process.env.INVITATION_URL}?p=${accountId}`;
-    return {
-      clipboard: url,
-    };
-  };
+  const invitationUrl = useMemo(() => {
+    if (isLoadingCampaign || !accountId) {
+      return '';
+    }
+    return isCampaign
+      ? `https://medii.jp/e-consult/invitation-cp?p=${accountId}`
+      : `https://medii.jp/e-consult/invitation?p=${accountId}`;
+  }, [accountId, isLoadingCampaign, isCampaign]);
 
   /**
    * QR コードのダウンロード
@@ -82,9 +70,10 @@ export const useAffiliate = (): UseAffiliateType => {
   }, [invitationUrl]);
 
   return {
-    isError,
+    isCampaign,
     downloadQrCode,
     clipboard,
     invitationUrl,
+    period,
   };
 };

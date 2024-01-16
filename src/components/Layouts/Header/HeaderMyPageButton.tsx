@@ -1,24 +1,16 @@
 import { Tooltip } from '@/components/Tooltip/Tooltip';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { usePopperTooltip } from 'react-popper-tooltip';
 import { HeaderMyPageMenuItem } from './HeaderMyPageMenuItem';
 import { removeAuthToken } from '@/libs/cookie';
 import { useRouter } from 'next/router';
 import { contactUrl, faqUrl } from '@/data/constants';
+import { useExistCampaign } from '@/hooks/api/campaign/useExistCampaign';
 
 export const HeaderMyPageButton = () => {
   const router = useRouter();
   const tooltip = usePopperTooltip({ trigger: 'click', interactive: true });
-
-  // TODO: [紹介キャンペーンの年内終了]2023/12/29 00:00まで表示する
-  const isFinishedCampaign = useMemo(() => {
-    const today = new Date();
-    const end = new Date('2023/12/29 00:00:00');
-    if (today > end) {
-      return true;
-    }
-    return false;
-  }, []);
+  const { isCampaign } = useExistCampaign();
 
   return (
     <>
@@ -32,7 +24,7 @@ export const HeaderMyPageButton = () => {
           <HeaderMyPageMenuItem href="/notifysettings">通知設定</HeaderMyPageMenuItem>
           <HeaderMyPageMenuItem href="/affiliate">
             <div>知り合いの医師にE-コンサルを紹介</div>
-            {!isFinishedCampaign && (
+            {isCampaign && (
               <div className="mt-1 flex items-center gap-1 rounded-sm border border-medii-sky-base bg-[#E8FAFC] p-2">
                 <div>
                   <img src="icons/point_invitation.svg" width="21" height="21" alt="" />
@@ -40,7 +32,7 @@ export const HeaderMyPageButton = () => {
                 <div>
                   お一人紹介で
                   <br />
-                  <span className="font-bold text-medii-sky-base">最大4,500円相当</span>のポイント進呈
+                  <span className="font-bold text-medii-sky-base">最大5,000円相当</span>のポイント進呈
                 </div>
               </div>
             )}

@@ -51,14 +51,6 @@ describe('useAffiliate', () => {
     cleanup();
   });
 
-  test('should get qrcode url when to called fetchQrCode.', async () => {
-    (useToken as jest.Mock).mockReturnValue({ accountId: 'accountId' });
-    const { result } = renderHook(() => useAffiliate());
-    await waitFor(() => {
-      expect(result.current.isError).toBe(false);
-    });
-  });
-
   test('アカウントIDを含むURLが取得できること', async () => {
     (useToken as jest.Mock).mockReturnValue({ accountId: 'accountId' });
     const { result } = renderHook(() => useAffiliate());
