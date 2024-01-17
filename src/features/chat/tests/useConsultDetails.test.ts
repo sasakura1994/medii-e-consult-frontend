@@ -149,6 +149,34 @@ describe('useConsultDetails', () => {
 
         expect(result.current.chatListDataWithDisplayName?.[0].displayName).toBe('ICU/集中治療科 21年目');
       });
+
+      test('名前も所属科もない場合', async () => {
+        const { result } = renderHook(() =>
+          useConsultDetail({
+            chatListData: [
+              {
+                account_id: 'AC0001',
+              } as ChatData,
+            ],
+            chatRoomData: {
+              chat_room: {
+                status: 'ACTIVE',
+                owner_account_id: 'AC0001',
+              },
+              members: [
+                {
+                  account_id: 'AC0001',
+                  speciality_1: '',
+                  qualified_year: new Date().getFullYear() - 20,
+                },
+              ],
+            } as unknown as FetchChatRoomResponseData,
+            fetchNewChatList: jest.fn(),
+          })
+        );
+
+        expect(result.current.chatListDataWithDisplayName?.[0].displayName).toBe('質問医');
+      });
     });
 
     test('送信者がスタッフIDの時', async () => {

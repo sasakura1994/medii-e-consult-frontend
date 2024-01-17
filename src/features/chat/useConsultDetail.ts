@@ -89,7 +89,7 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
                 '年目',
             };
           }
-          return { ...c, displayName: '' };
+          return { ...c, displayName: chatRoomData.chat_room.owner_account_id === c.account_id ? '質問医' : '' };
         } else if (c.account_id.startsWith('ST')) {
           return {
             ...c,
