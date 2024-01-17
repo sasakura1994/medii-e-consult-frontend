@@ -62,7 +62,11 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
                 '年目',
             };
           }
-          return { ...c, displayName: '' };
+
+          return {
+            ...c,
+            displayName: chatRoomData.chat_room.owner_account_id === chatRoomData.me?.account_id ? '質問医' : '',
+          };
           // 自分以外の場合
         } else if (
           chatRoomData.members &&
