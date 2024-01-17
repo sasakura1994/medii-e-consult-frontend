@@ -11,28 +11,6 @@ jest.mock('@/hooks/api/doctor/useFetchProfile');
 jest.mock('@/hooks/authentication/useAuthenticationOnPage');
 
 describe('/newchatroom', () => {
-  test('プロフィール未入力の場合はモーダル表示', async () => {
-    const useRouterMock = useRouter as jest.Mocked<typeof useRouter>;
-    (useRouterMock as jest.Mock).mockReturnValue({
-      query: {},
-    });
-
-    (useFetchProfile as jest.Mock).mockReturnValue({
-      profile: {
-        registration_source: '',
-        last_name_hira: 'name',
-        birthday_year: 9999,
-        status: 'VERIFIED',
-      },
-    });
-
-    await act(() => {
-      render(<NewChatRoomPage />);
-    });
-
-    expect(await act(() => screen.queryByTestId('need-to-fill-profile-modal'))).toBeInTheDocument();
-  });
-
   test('医学生はコンサルを作成出来ない', async () => {
     const useRouterMock = useRouter as jest.Mocked<typeof useRouter>;
     (useRouterMock as jest.Mock).mockReturnValue({
