@@ -1,6 +1,6 @@
 import { consultMessageTemplates } from '@/data/chatRoom';
 import { onboardingAnsweredState } from '@/globalStates/onboarding';
-import { mutateFetchFlag } from '@/hooks/api/account/useFetchFlags';
+import { mutateFetchFlag, useFetchFlag } from '@/hooks/api/account/useFetchFlags';
 import { useDeleteChatDraftImage } from '@/hooks/api/chat/useDeleteChatDraftImage';
 import { useFetchBaseChatRoomForReConsult } from '@/hooks/api/chat/useFetchBaseChatRoomForReConsult';
 import { useGetChatDraftImages } from '@/hooks/api/chat/useGetChatDraftImages';
@@ -62,7 +62,7 @@ type NewChatRoomQuery = {
   target_speciality?: string;
   reconsult?: string;
   room_type?: ChatRoomType;
-  from?: string;
+  from?: string | 'e-detail';
   utm_source?: string;
 };
 
@@ -89,6 +89,7 @@ export type UseNewChatRoom = {
   childAge: string;
   changeMedicalSpecialities: (medicalSpecialities: MedicalSpecialityEntity[]) => void;
   chatDraftImages?: ChatDraftImageEntity[];
+  closeEDtailModal: () => void;
   confirmInput: (e: FormEvent<HTMLFormElement>) => void;
   deleteChatDraftImageById: (chatDraftImageId: string) => Promise<void>;
   deleteFileForReConsult: (id: number) => void;
@@ -104,6 +105,7 @@ export type UseNewChatRoom = {
   imageInput: RefObject<HTMLInputElement>;
   isDoctorSearchModalShown: boolean;
   isDraftConfirming: boolean;
+  isEDetailModalShown: boolean;
   isMedicalSpecialitiesSelectDialogShown: boolean;
   isSearchGroupModalShown: boolean;
   isSending: boolean;
@@ -168,6 +170,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
   const [isDraftConfirming, setIsDraftConfirming] = useState(false);
   const [confirmingDraft, setConfirmingDraft] = useState<NewChatRoomEntity>();
   const [draftOnDb, setDraftOnDb] = useState<GetCurrentChatRoomDraftResponeData>();
+  const [isEDetailModalClosed, setIsEDetailModalClosed] = useState(false);
 
   const { createNewChatRoom } = usePostChatRoom();
   const { createDraftImage } = usePostDraftImage();
@@ -182,6 +185,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
   const { getCurrentChatRoomDraft } = useGetCurrentChatRoomDraft();
   const { postChatRoomDraft } = usePostChatRoomDraft();
   const { updateChatRoomDraft } = useUpdateChatRoomDraft();
+  const { flag: hasConsulted, isLoading: isLoadingFetchFlag } = useFetchFlag('HasConsulted');
   const onboardingAnswered = useAtomValue(onboardingAnsweredState);
 
   const imageInput = useRef<HTMLInputElement>(null);
@@ -670,6 +674,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     childAge,
     changeMedicalSpecialities,
     chatDraftImages,
+    closeEDtailModal: () => setIsEDetailModalClosed(true),
     confirmInput,
     deleteChatDraftImageById,
     deleteFileForReConsult,
@@ -685,6 +690,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     imageInput,
     isDoctorSearchModalShown,
     isDraftConfirming,
+    isEDetailModalShown: !isLoadingFetchFlag && !hasConsulted && !isEDetailModalClosed,
     isMedicalSpecialitiesSelectDialogShown,
     isSearchGroupModalShown,
     isSending,
