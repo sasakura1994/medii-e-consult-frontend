@@ -242,6 +242,7 @@ describe('useNewChatRoom', () => {
       expect(createNewChatRoomMock).toBeCalled();
       expect(mutateFetchFlagMock).toHaveBeenCalledWith('FirstConsultCampaign');
       expect(result.current.isNeedToInputProfileModalShown).toBeTruthy();
+      expect(result.current.fillProfileRedirectUrl).toBe('/chat?chat_room_id=chatroomid');
     });
 
     test('再コンサル時', async () => {

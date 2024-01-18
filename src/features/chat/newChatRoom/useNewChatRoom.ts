@@ -101,6 +101,7 @@ export type UseNewChatRoom = {
   chatRoom: NewChatRoomEntity;
   dontUseDraft: () => void;
   filesForReConsult: FileForReConsult[];
+  fillProfileRedirectUrl: string;
   group?: FetchedGroupEntity;
   imageInput: RefObject<HTMLInputElement>;
   isDoctorSearchModalShown: boolean;
@@ -171,6 +172,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
   const [confirmingDraft, setConfirmingDraft] = useState<NewChatRoomEntity>();
   const [draftOnDb, setDraftOnDb] = useState<GetCurrentChatRoomDraftResponeData>();
   const [isNeedToInputProfileModalShown, setIsNeedToInputProfileModalShown] = useState(false);
+  const [createdChatRoomId, setCreatedChatRoomId] = useState('');
 
   const { createNewChatRoom } = usePostChatRoom();
   const { createDraftImage } = usePostDraftImage();
@@ -187,6 +189,8 @@ export const useNewChatRoom = (): UseNewChatRoom => {
   const { updateChatRoomDraft } = useUpdateChatRoomDraft();
   const { isNeedToInputProfile } = useProfile();
   const onboardingAnswered = useAtomValue(onboardingAnsweredState);
+
+  const fillProfileRedirectUrl = `/chat?chat_room_id=${createdChatRoomId}`;
 
   const imageInput = useRef<HTMLInputElement>(null);
 
@@ -551,6 +555,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     removeLocalStorage(newChatRoomFormDataKey);
 
     if (isNeedToInputProfile) {
+      setCreatedChatRoomId(response.data.chat_room_id);
       setIsNeedToInputProfileModalShown(true);
     } else {
       router.push(`/chat?chat_room_id=${response.data.chat_room_id}`);
@@ -691,6 +696,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     errorMessage,
     chatRoom,
     filesForReConsult,
+    fillProfileRedirectUrl,
     group,
     imageInput,
     isDoctorSearchModalShown,

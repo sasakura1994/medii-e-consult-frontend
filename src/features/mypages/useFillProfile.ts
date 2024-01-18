@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useEditProfile } from './editProfile/useEditProfile';
 import { useRouter } from 'next/router';
 import { mutateFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
@@ -15,16 +15,18 @@ export const useFillProfile = () => {
   const editProfile = useEditProfile({ isRegisterMode: false });
   const { profile, saveProfile } = editProfile;
   const { isNeedToInputProfile } = useProfile();
+  const [isFinished, setIsFinished] = useState(false);
 
   useEffect(() => {
-    if (!profile) {
+    if (!profile || isFinished) {
       return;
     }
 
+    // 完了時にも動いてしまうのでisFinishedでガード
     if (!isNeedToInputProfile) {
-      router.push('/top');
+      router.push(redirect ?? '/top');
     }
-  }, [isNeedToInputProfile, profile, router]);
+  }, [isFinished, isNeedToInputProfile, profile, redirect, router]);
 
   const submitFillProfile = useCallback(async () => {
     if (!profile) {
@@ -36,6 +38,7 @@ export const useFillProfile = () => {
       return;
     }
 
+    setIsFinished(true);
     mutateFetchProfile();
     router.push(redirect ?? '/top');
   }, [profile, redirect, router, saveProfile]);
