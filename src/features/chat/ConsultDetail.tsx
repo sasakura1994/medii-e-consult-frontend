@@ -114,6 +114,10 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     }
     const owner = chatRoomData.members.find((member) => member.account_id === chatRoomData.chat_room.owner_account_id);
     if (!isMyRoom) {
+      if (!owner?.speciality_1) {
+        // プロフィール未入力ユーザー
+        return <p className="text-md font-bold">質問医</p>;
+      }
       if (chatRoomData.chat_room.is_real_name) {
         return (
           <>
@@ -129,7 +133,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
         <>
           <p className="text-md font-bold">質問医</p>
           {chatRoomData.members.length > 0 && (
-            <p className="text-xs">
+            <p className="text-xs" data-testid="chat-room-display-name-speciality-and-year">
               ({getMedicalSpecialityName(owner?.speciality_1 ?? '')}・{getExperienceYear(owner?.qualified_year ?? 0)}
               年目)
             </p>
