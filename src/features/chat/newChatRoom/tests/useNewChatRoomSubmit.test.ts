@@ -54,6 +54,8 @@ usePostChatRoomMock.mockReturnValue({
   createNewChatRoom: jest.fn(),
 });
 
+jest.spyOn(useFetchFlagModule, 'useFetchFlag').mockReturnValue({ flag: false, isLoading: false });
+
 const baseChatRoomForReConsultData: FetchBaseChatRoomForReConsultResponseData = {
   chat_room: {
     chat_room_id: 'chatroomid',
