@@ -9,6 +9,10 @@ import { useConsultDetail } from '../useConsultDetail';
 jest.mock('../useConsultDetail');
 
 describe('ConsultDetail', () => {
+  jest.useFakeTimers();
+  const now = new Date();
+  jest.setSystemTime(new Date(now.getFullYear(), 3, 1));
+
   describe('chatRoomDisplayName', () => {
     describe('自分が専門医', () => {
       (useConsultDetail as jest.Mock).mockReturnValue({

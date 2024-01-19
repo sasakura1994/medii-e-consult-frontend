@@ -1,9 +1,10 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import { ChatMemberEntity } from '@/types/entities/chat/ChatMemberEntity';
 import { Dispatch, SetStateAction } from 'react';
 import { ChatDoctorDetailModal } from './ChatDoctorDetailModal';
 import { useMedicalSpeciality } from '@/hooks/medicalSpeciality/useMedicalSpeciality';
+import { useDoctor } from '@/hooks/useDoctor';
 
 type ChatGroupMemberModalProps = {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
@@ -15,17 +16,8 @@ export const ChatGroupMemberModal = (props: ChatGroupMemberModalProps) => {
   const [isOpenDoctorDetailModal, setIsOpenDoctorDetailModal] = useState(false);
   const [selectedMember, setSelectedMember] = useState<ChatMemberEntity | null>(null);
   const { getMedicalSpecialityName } = useMedicalSpeciality();
+  const { calculateExperienceYear } = useDoctor();
 
-  const calculateExperienceYear = useCallback((qualifiedYear: number) => {
-    const experienceYear = Math.max(1, new Date().getFullYear() - qualifiedYear + 1);
-
-    const month = new Date().getMonth() + 1;
-    if (month < 4) {
-      return experienceYear - 1;
-    }
-
-    return experienceYear;
-  }, []);
   const displayName = (member: ChatMemberEntity) => {
     if (member.speciality_1 === 'STUDENT') {
       return '(医学生)';

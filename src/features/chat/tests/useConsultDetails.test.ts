@@ -13,6 +13,10 @@ getMedicalSpecialityName.mockReturnValue('ICU/集中治療科');
 });
 
 describe('useConsultDetails', () => {
+  jest.useFakeTimers();
+  const now = new Date();
+  jest.setSystemTime(new Date(now.getFullYear(), 3, 1));
+
   describe('chatListDataWithDisplayName', () => {
     describe('自分の場合', () => {
       test('名前がある場合', async () => {

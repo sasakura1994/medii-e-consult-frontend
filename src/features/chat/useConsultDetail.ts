@@ -4,9 +4,10 @@ import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import { usePostActivateChatRoom } from '@/hooks/api/chat/usePostActivateChatRoom';
 import { useToken } from '@/hooks/authentication/useToken';
 import { useMedicalSpeciality } from '@/hooks/medicalSpeciality/useMedicalSpeciality';
+import { useDoctor } from '@/hooks/useDoctor';
 import { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 import { useSetAtom } from 'jotai';
-import { useState, useRef, useCallback, useMemo, useEffect } from 'react';
+import { useState, useRef, useMemo, useEffect } from 'react';
 
 type useConsultDetailProps = {
   medicalSpecialities?: MedicalSpecialityEntity[];
@@ -31,19 +32,14 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
   const [isOpenAnnounce, setIsOpenAnnounce] = useState(false);
   const setChatGlobalState = useSetAtom(chatState);
   const [selectedImage, setSelectedImage] = useState<string>('');
+
   const { accountId } = useToken();
   const chatListRef = useRef<HTMLDivElement>(null);
   const { getMedicalSpecialityName } = useMedicalSpeciality();
   const { activateChatRoom } = usePostActivateChatRoom();
+  const { calculateExperienceYear } = useDoctor();
+
   const oldScrollHeightRef = useRef(0);
-
-  const getExperienceYear = useCallback((year: number) => {
-    const date = new Date();
-    const currentYear = date.getFullYear();
-    const passedYear = currentYear - year;
-
-    return passedYear + 1;
-  }, []);
 
   const chatListDataWithDisplayName = useMemo(() => {
     if (chatListData && chatRoomData) {
@@ -58,7 +54,7 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
               displayName:
                 getMedicalSpecialityName(chatRoomData.me.speciality_1) +
                 ' ' +
-                getExperienceYear(chatRoomData.me.qualified_year) +
+                calculateExperienceYear(chatRoomData.me.qualified_year) +
                 '年目',
             };
           }
@@ -85,7 +81,7 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
               displayName:
                 getMedicalSpecialityName(targetMember.speciality_1) +
                 ' ' +
-                getExperienceYear(targetMember.qualified_year) +
+                calculateExperienceYear(targetMember.qualified_year) +
                 '年目',
             };
           }
@@ -104,7 +100,7 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
         return { ...c, displayName: '' };
       });
     }
-  }, [chatListData, chatRoomData, getExperienceYear, getMedicalSpecialityName]);
+  }, [chatListData, chatRoomData, calculateExperienceYear, getMedicalSpecialityName]);
 
   const isCloseRoom = useMemo(() => {
     if (chatRoomData) {
@@ -213,7 +209,6 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
     setSelectedImage,
     setChatGlobalState,
     getMedicalSpecialityName,
-    getExperienceYear,
     activateChatRoom,
   };
 };

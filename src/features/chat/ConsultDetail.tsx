@@ -23,6 +23,7 @@ import { ResolveChatRoomModal } from './ResolveChatRoomModal';
 import ChatImageModal from './ChatImageModal';
 import { AllowAddToConsultExampleListModal } from './AllowAddToConsultExampleListModal';
 import { ReConsultSuggestionModal } from './ReConsultSuggestionModal';
+import { useDoctor } from '@/hooks/useDoctor';
 
 type ConsultDetailProps = {
   publishmentStatusData?: {
@@ -92,7 +93,6 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     setSelectedImage,
     setChatGlobalState,
     getMedicalSpecialityName,
-    getExperienceYear,
     activateChatRoom,
   } = useConsultDetail({
     medicalSpecialities: medicalSpecialities,
@@ -100,6 +100,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     chatListData: chatListData,
     fetchNewChatList: fetchNewChatList,
   });
+  const { calculateExperienceYear } = useDoctor();
 
   const isMyRoom = useMemo(() => {
     if (chatRoomData && accountId) {
@@ -123,7 +124,8 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
           <>
             <p className="text-md font-bold">{owner?.last_name + ' ' + owner?.first_name + '先生'}</p>
             <p className="text-xs">
-              ({getMedicalSpecialityName(owner?.speciality_1 ?? '')}・{getExperienceYear(owner?.qualified_year ?? 0)}
+              ({getMedicalSpecialityName(owner?.speciality_1 ?? '')}・
+              {calculateExperienceYear(owner?.qualified_year ?? 0)}
               年目)
             </p>
           </>
@@ -134,7 +136,8 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
           <p className="text-md font-bold">質問医</p>
           {chatRoomData.members.length > 0 && (
             <p className="text-xs" data-testid="chat-room-display-name-speciality-and-year">
-              ({getMedicalSpecialityName(owner?.speciality_1 ?? '')}・{getExperienceYear(owner?.qualified_year ?? 0)}
+              ({getMedicalSpecialityName(owner?.speciality_1 ?? '')}・
+              {calculateExperienceYear(owner?.qualified_year ?? 0)}
               年目)
             </p>
           )}
@@ -165,7 +168,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
               {owner.last_name + ' ' + owner.first_name + '先生'}
             </p>
             <p className="text-xs">
-              ({getMedicalSpecialityName(owner.speciality_1)}・{getExperienceYear(owner.qualified_year)}
+              ({getMedicalSpecialityName(owner.speciality_1)}・{calculateExperienceYear(owner.qualified_year)}
               年目)
             </p>
           </>
@@ -188,13 +191,13 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
         </p>
         <p className="text-xs">
           ({getMedicalSpecialityName(chatRoomData.members[0].speciality_1)}・
-          {getExperienceYear(chatRoomData.members[0].qualified_year)}年目)
+          {calculateExperienceYear(chatRoomData.members[0].qualified_year)}年目)
         </p>
       </>
     );
   }, [
     chatRoomData,
-    getExperienceYear,
+    calculateExperienceYear,
     getMedicalSpecialityName,
     isMyRoom,
     setIsOpenDoctorDetailModal,
