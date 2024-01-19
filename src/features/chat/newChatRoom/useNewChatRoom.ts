@@ -690,7 +690,8 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     imageInput,
     isDoctorSearchModalShown,
     isDraftConfirming,
-    isEDetailModalShown: query.from === 'e-detail' && !isLoadingFetchFlag && !hasConsulted && !isEDetailModalClosed,
+    isEDetailModalShown:
+      query.from === 'e-detail' && !isLoadingFetchFlag && hasConsulted === false && !isEDetailModalClosed,
     isMedicalSpecialitiesSelectDialogShown,
     isSearchGroupModalShown,
     isSending,
