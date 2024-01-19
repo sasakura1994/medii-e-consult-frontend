@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, act } from '@testing-library/react';
+import { render, screen, act, waitFor } from '@testing-library/react';
 import NewChatRoomPage from '@/pages/newchatroom';
 import { useRouter } from 'next/router';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
@@ -99,36 +99,67 @@ describe('/newchatroom', () => {
   });
 
   describe('e-detailパラメータのモーダル', () => {
-    const useRouterMock = useRouter as jest.Mocked<typeof useRouter>;
-    (useRouterMock as jest.Mock).mockReturnValue({
-      query: { from: 'e-detail' },
-    });
+    describe('パラメータが存在する', () => {
+      beforeEach(() => {
+        (useRouter as jest.Mock).mockReturnValue({
+          query: { from: 'e-detail' },
+        });
 
-    (useFetchProfile as jest.Mock).mockReturnValue({
-      profile: {
-        status: 'VERIFIED',
-      },
-    });
-
-    test('表示', async () => {
-      await act(() => {
-        render(<NewChatRoomPage />);
+        (useFetchProfile as jest.Mock).mockReturnValue({
+          profile: {
+            status: 'VERIFIED',
+          },
+        });
       });
 
-      expect(await act(() => screen.queryByTestId('e-detail-modal'))).toBeInTheDocument();
+      test('表示', async () => {
+        await act(() => {
+          render(<NewChatRoomPage />);
+        });
+
+        await waitFor(() => {
+          expect(screen.queryByTestId('e-detail-modal')).toBeInTheDocument();
+        });
+      });
+
+      test('コンサル済みの場合は表示しない', async () => {
+        (useFetchFlag as jest.Mock).mockReturnValue({
+          flag: true,
+          isLoading: false,
+        });
+
+        await act(() => {
+          render(<NewChatRoomPage />);
+        });
+
+        await waitFor(() => {
+          expect(screen.queryByTestId('e-detail-modal')).not.toBeInTheDocument();
+        });
+      });
     });
 
-    test('コンサル済みの場合は表示しない', async () => {
-      (useFetchFlag as jest.Mock).mockReturnValue({
-        flag: true,
-        isLoading: false,
+    describe('パラメータが存在しない', () => {
+      beforeEach(() => {
+        (useRouter as jest.Mock).mockReturnValue({
+          query: {},
+        });
+
+        (useFetchProfile as jest.Mock).mockReturnValue({
+          profile: {
+            status: 'VERIFIED',
+          },
+        });
       });
 
-      await act(() => {
-        render(<NewChatRoomPage />);
-      });
+      test('表示しない', async () => {
+        await act(() => {
+          render(<NewChatRoomPage />);
+        });
 
-      expect(await act(() => screen.queryByTestId('e-detail-modal'))).not.toBeInTheDocument();
+        await waitFor(async () => {
+          expect(await act(() => screen.queryByTestId('e-detail-modal'))).not.toBeInTheDocument();
+        });
+      });
     });
   });
 });
