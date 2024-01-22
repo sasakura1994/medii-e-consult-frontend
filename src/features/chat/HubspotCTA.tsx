@@ -3,11 +3,12 @@ import React, { useEffect, useState } from 'react';
 import HubspotForm from 'react-hubspot-form';
 
 type Props = {
+  formId: string;
   accountId: string;
   chatRoomId: string;
 };
 export const HubspotCTA = (props: Props) => {
-  const { accountId, chatRoomId } = props;
+  const { formId, accountId, chatRoomId } = props;
   const [isFormReady, setIsFormReady] = useState(false);
   const { email } = useFetchEmail();
 
@@ -42,12 +43,12 @@ export const HubspotCTA = (props: Props) => {
     emailInput.setAttribute('value', email.mail_address);
   }, [email, isFormReady]);
 
-  if (process.env.HUBSPOT_PORTAL_ID && process.env.HUBSPOT_FORM_ID) {
+  if (process.env.HUBSPOT_PORTAL_ID) {
     return (
       <div className="m-4">
         <HubspotForm
           portalId={process.env.HUBSPOT_PORTAL_ID}
-          formId={process.env.HUBSPOT_FORM_ID}
+          formId={formId}
           onFormReady={(form: Element) => {
             if (form) {
               setTimeout(() => {
