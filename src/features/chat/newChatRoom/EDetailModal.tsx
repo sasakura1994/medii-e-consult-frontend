@@ -1,7 +1,8 @@
 import React from 'react';
 import { Modal } from '@/components/Parts/Modal/Modal';
 import TertiaryButton from '@/components/Button/TertiaryButton';
-import SecondaryButton from '@/components/Button/SecondaryButton';
+import { Heading } from '@/components/Parts/Text/Heading';
+import PrimaryButton from '@/components/Button/PrimaryButton';
 
 type Props = {
   onClose: () => void;
@@ -22,18 +23,19 @@ export const EDetailModal = (props: Props) => {
     >
       <div className="flex flex-col items-center" data-testid="e-detail-modal">
         <div className="my-5 flex flex-col gap-4">
-          <p>E-コンサルのご利用ありがとうございます。</p>
+          <Heading as="h2" className="text-center">
+            E-コンサルのご利用ありがとうございます。
+          </Heading>
           <p>
             E-コンサルは患者の診断や治療方針に悩む医師が、 近くにいない専門領域の専門医に症例を相談できる
             完全無料のオンライン専門医相談サービスです。
           </p>
-          <p>詳細は以下をご確認ください。</p>
-          <a href="https://medii.jp/e-consult" target="_blank" rel="nofollow noreferrer">
-            <SecondaryButton>E-コンサルサービス紹介ページ</SecondaryButton>
-          </a>
-        </div>
-        <div className="my-6">
-          <TertiaryButton onClick={() => onClose()}>閉じる</TertiaryButton>
+          <div className="flex justify-center gap-4">
+            <PrimaryButton onClick={() => onClose()}>無料・匿名で相談する</PrimaryButton>
+            <a href="https://medii.jp/e-consult" target="_blank" rel="nofollow noreferrer">
+              <TertiaryButton>E-コンサルの詳細を見る</TertiaryButton>
+            </a>
+          </div>
         </div>
       </div>
     </Modal>
