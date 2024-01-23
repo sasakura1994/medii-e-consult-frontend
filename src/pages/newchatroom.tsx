@@ -12,12 +12,21 @@ import { FooterSpMenu } from '@/components/Layouts/Footer/FooterSpMenu';
 import { useProfile } from '@/hooks/useProfile';
 import { NeedToInputProfileModal } from '@/components/Parts/Modal/NeedToInputProfileModal';
 import { ConfirmModal } from '@/components/Parts/Modal/ConfirmModal';
+import { EDetailModal } from '@/features/chat/newChatRoom/EDetailModal';
 
 const NewChatRoomPage: NextPageWithLayout = () => {
   const newChatRoom = useNewChatRoom();
   useEventLog({ name: '/NewChatRoom' });
-  const { mode, isDraftConfirming, isNeedToInputProfileModalShown, applyDraft, dontUseDraft, fillProfileRedirectUrl } =
-    newChatRoom;
+  const {
+    mode,
+    isDraftConfirming,
+    isEDetailModalShown,
+    closeEDtailModal,
+    isNeedToInputProfileModalShown,
+    applyDraft,
+    dontUseDraft,
+    fillProfileRedirectUrl,
+  } = newChatRoom;
   const { profile } = useProfile();
 
   if (profile?.main_speciality === 'STUDENT') {
@@ -61,6 +70,7 @@ const NewChatRoomPage: NextPageWithLayout = () => {
           下書きに作成途中のコンサルがあります。作成途中のコンサルを続けて編集しますか？
         </ConfirmModal>
       )}
+      {isEDetailModalShown && <EDetailModal onClose={closeEDtailModal} />}
     </>
   );
 };

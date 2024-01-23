@@ -31,7 +31,9 @@ jest.mock('@/hooks/api/medicalCategory/useFetchMedicalSpecialities');
 jest.mock('@/hooks/api/chat/useFetchBaseChatRoomForReConsult');
 jest.mock('@/hooks/api/chat/usePostChatRoom');
 jest.mock('@/hooks/api/chat/usePostChatMessageFile');
-jest.mock('@/hooks/api/account/useFetchFlags');
+jest.mock('@/hooks/api/account/useFetchFlags', () => ({
+  useFetchFlag: jest.fn().mockReturnValue({ flag: false, isLoading: false }),
+}));
 jest.mock('@/hooks/api/chatRoomDraft/useGetCurrentChatRoomDraft');
 jest.mock('@/hooks/api/chatRoomDraft/usePostChatRoomDraft');
 jest.mock('@/hooks/api/chatRoomDraft/useUpdateChatRoomDraft');
