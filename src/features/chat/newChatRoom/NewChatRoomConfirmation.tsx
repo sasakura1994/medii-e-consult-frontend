@@ -89,6 +89,13 @@ export const NewChatRoomConfirmation: React.FC<Props> = (props: Props) => {
         <NewChatRoomConfirmationLabel className="mt-10">要約</NewChatRoomConfirmationLabel>
         <NewChatRoomConfirmationValue className="mt-4">{chatRoom.disease_name}</NewChatRoomConfirmationValue>
         <NewChatRoomConfirmationLabel className="mt-10">コンサル文</NewChatRoomConfirmationLabel>
+        {chatRoom.first_message.trim().length > 70 ? (
+          ''
+        ) : (
+          <div className="my-8 text-center text-sm text-strong">
+            &lt;アラート&gt;ストーリーコンサルが70文字以内です。
+          </div>
+        )}
         <div className="mt-4 whitespace-pre-wrap break-words text-sm">{chatRoom.first_message}</div>
         {filesForReConsult.length > 0 || reConsultFileMessages.length > 0 ? (
           <div className="mt-8 flex flex-col gap-4">
