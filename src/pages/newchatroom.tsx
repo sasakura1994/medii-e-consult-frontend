@@ -16,8 +16,9 @@ import { ConfirmModal } from '@/components/Parts/Modal/ConfirmModal';
 const NewChatRoomPage: NextPageWithLayout = () => {
   const newChatRoom = useNewChatRoom();
   useEventLog({ name: '/NewChatRoom' });
-  const { mode, isDraftConfirming, applyDraft, dontUseDraft } = newChatRoom;
-  const { profile, isNeedToInputProfile } = useProfile();
+  const { mode, isDraftConfirming, isNeedToInputProfileModalShown, applyDraft, dontUseDraft, fillProfileRedirectUrl } =
+    newChatRoom;
+  const { profile } = useProfile();
 
   if (profile?.main_speciality === 'STUDENT') {
     return (
@@ -47,9 +48,9 @@ const NewChatRoomPage: NextPageWithLayout = () => {
         <Card className="px-8 py-4 lg:px-0">
           {mode === 'input' ? <NewChatRoomInput {...newChatRoom} /> : <NewChatRoomConfirmation {...newChatRoom} />}
         </Card>
-        {isNeedToInputProfile && (
+        {isNeedToInputProfileModalShown && (
           <NeedToInputProfileModal
-            href={`/fill-profile?redirect=${encodeURIComponent('/newchatroom')}`}
+            href={`/fill-profile?redirect=${encodeURIComponent(fillProfileRedirectUrl)}`}
             dataTestId="need-to-fill-profile-modal"
           />
         )}

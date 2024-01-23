@@ -17,6 +17,7 @@ import { useFetchDoctorProfile } from '@/hooks/api/doctor/useFetchDoctorProfile'
 import { FetchedGroupEntity, useFetchGroup } from '@/hooks/api/group/useFetchGroup';
 import { useFetchMedicalSpecialities } from '@/hooks/api/medicalCategory/useFetchMedicalSpecialities';
 import { useFetchMedicalSpecialityCategories } from '@/hooks/api/medicalCategoryCategory/useFetchMedicalSpecialityCategories';
+import { useProfile } from '@/hooks/useProfile';
 import { loadLocalStorage, removeLocalStorage } from '@/libs/LocalStorageManager';
 import { moveItem } from '@/libs/dnd';
 import { ChatDraftImageEntity } from '@/types/entities/chat/ChatDraftImageEntity';
@@ -100,11 +101,13 @@ export type UseNewChatRoom = {
   chatRoom: NewChatRoomEntity;
   dontUseDraft: () => void;
   filesForReConsult: FileForReConsult[];
+  fillProfileRedirectUrl: string;
   group?: FetchedGroupEntity;
   imageInput: RefObject<HTMLInputElement>;
   isDoctorSearchModalShown: boolean;
   isDraftConfirming: boolean;
   isMedicalSpecialitiesSelectDialogShown: boolean;
+  isNeedToInputProfileModalShown: boolean;
   isSearchGroupModalShown: boolean;
   isSending: boolean;
   isUseDraftImages: boolean;
@@ -168,6 +171,8 @@ export const useNewChatRoom = (): UseNewChatRoom => {
   const [isDraftConfirming, setIsDraftConfirming] = useState(false);
   const [confirmingDraft, setConfirmingDraft] = useState<NewChatRoomEntity>();
   const [draftOnDb, setDraftOnDb] = useState<GetCurrentChatRoomDraftResponeData>();
+  const [isNeedToInputProfileModalShown, setIsNeedToInputProfileModalShown] = useState(false);
+  const [createdChatRoomId, setCreatedChatRoomId] = useState('');
 
   const { createNewChatRoom } = usePostChatRoom();
   const { createDraftImage } = usePostDraftImage();
@@ -182,7 +187,10 @@ export const useNewChatRoom = (): UseNewChatRoom => {
   const { getCurrentChatRoomDraft } = useGetCurrentChatRoomDraft();
   const { postChatRoomDraft } = usePostChatRoomDraft();
   const { updateChatRoomDraft } = useUpdateChatRoomDraft();
+  const { isNeedToInputProfile } = useProfile();
   const onboardingAnswered = useAtomValue(onboardingAnsweredState);
+
+  const fillProfileRedirectUrl = `/chat?chat_room_id=${createdChatRoomId}`;
 
   const imageInput = useRef<HTMLInputElement>(null);
 
@@ -545,7 +553,13 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     mutateFetchFlag('FirstConsultCampaign');
     setIsSending(false);
     removeLocalStorage(newChatRoomFormDataKey);
-    router.push(`/chat?chat_room_id=${response.data.chat_room_id}`);
+
+    if (isNeedToInputProfile) {
+      setCreatedChatRoomId(response.data.chat_room_id);
+      setIsNeedToInputProfileModalShown(true);
+    } else {
+      router.push(`/chat?chat_room_id=${response.data.chat_room_id}`);
+    }
   }, [
     chatDraftImages,
     createNewChatRoom,
@@ -553,6 +567,7 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     draftUtmSource,
     filesForReConsult,
     formData,
+    isNeedToInputProfile,
     postChatMessageFile,
     query.from,
     query.reconsult,
@@ -681,11 +696,13 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     errorMessage,
     chatRoom,
     filesForReConsult,
+    fillProfileRedirectUrl,
     group,
     imageInput,
     isDoctorSearchModalShown,
     isDraftConfirming,
     isMedicalSpecialitiesSelectDialogShown,
+    isNeedToInputProfileModalShown,
     isSearchGroupModalShown,
     isSending,
     isUseDraftImages,
