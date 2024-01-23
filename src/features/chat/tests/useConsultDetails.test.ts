@@ -13,6 +13,10 @@ getMedicalSpecialityName.mockReturnValue('ICU/集中治療科');
 });
 
 describe('useConsultDetails', () => {
+  jest.useFakeTimers();
+  const now = new Date();
+  jest.setSystemTime(new Date(now.getFullYear(), 3, 1));
+
   describe('chatListDataWithDisplayName', () => {
     describe('自分の場合', () => {
       test('名前がある場合', async () => {
@@ -65,6 +69,33 @@ describe('useConsultDetails', () => {
         );
 
         expect(result.current.chatListDataWithDisplayName?.[0].displayName).toBe('ICU/集中治療科 21年目');
+      });
+
+      test('名前も所属科もない場合', async () => {
+        const { result } = renderHook(() =>
+          useConsultDetail({
+            chatListData: [
+              {
+                account_id: 'AC0001',
+              } as ChatData,
+            ],
+            chatRoomData: {
+              chat_room: {
+                owner_account_id: 'AC0001',
+                status: 'ACTIVE',
+              },
+              members: [],
+              me: {
+                account_id: 'AC0001',
+                speciality_1: '',
+                qualified_year: new Date().getFullYear() - 20,
+              },
+            } as unknown as FetchChatRoomResponseData,
+            fetchNewChatList: jest.fn(),
+          })
+        );
+
+        expect(result.current.chatListDataWithDisplayName?.[0].displayName).toBe('質問医');
       });
     });
 
@@ -121,6 +152,34 @@ describe('useConsultDetails', () => {
         );
 
         expect(result.current.chatListDataWithDisplayName?.[0].displayName).toBe('ICU/集中治療科 21年目');
+      });
+
+      test('名前も所属科もない場合', async () => {
+        const { result } = renderHook(() =>
+          useConsultDetail({
+            chatListData: [
+              {
+                account_id: 'AC0001',
+              } as ChatData,
+            ],
+            chatRoomData: {
+              chat_room: {
+                status: 'ACTIVE',
+                owner_account_id: 'AC0001',
+              },
+              members: [
+                {
+                  account_id: 'AC0001',
+                  speciality_1: '',
+                  qualified_year: new Date().getFullYear() - 20,
+                },
+              ],
+            } as unknown as FetchChatRoomResponseData,
+            fetchNewChatList: jest.fn(),
+          })
+        );
+
+        expect(result.current.chatListDataWithDisplayName?.[0].displayName).toBe('質問医');
       });
     });
 

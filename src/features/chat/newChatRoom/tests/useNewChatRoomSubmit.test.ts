@@ -20,6 +20,7 @@ import * as useFetchFlagModule from '@/hooks/api/account/useFetchFlags';
 import { useGetCurrentChatRoomDraft } from '@/hooks/api/chatRoomDraft/useGetCurrentChatRoomDraft';
 import { usePostChatRoomDraft } from '@/hooks/api/chatRoomDraft/usePostChatRoomDraft';
 import { useUpdateChatRoomDraft } from '@/hooks/api/chatRoomDraft/useUpdateChatRoomDraft';
+import { useProfile } from '@/hooks/useProfile';
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn().mockReturnValue({
@@ -35,6 +36,7 @@ jest.mock('@/hooks/api/account/useFetchFlags');
 jest.mock('@/hooks/api/chatRoomDraft/useGetCurrentChatRoomDraft');
 jest.mock('@/hooks/api/chatRoomDraft/usePostChatRoomDraft');
 jest.mock('@/hooks/api/chatRoomDraft/useUpdateChatRoomDraft');
+jest.mock('@/hooks/useProfile');
 
 const medicalSpecialitiesMock: MedicalSpecialityEntity[] = [
   { speciality_code: 'ALLERGY' } as MedicalSpecialityEntity,
@@ -133,6 +135,10 @@ beforeEach(() => {
 describe('useNewChatRoom', () => {
   describe('submit', () => {
     test('通常', async () => {
+      (useProfile as jest.Mock).mockReturnValue({
+        isNeedToInputProfile: false,
+      });
+
       const createNewChatRoomMock = jest.fn();
       createNewChatRoomMock.mockResolvedValueOnce({
         data: {
@@ -162,7 +168,7 @@ describe('useNewChatRoom', () => {
 
       await act(() => result.current.submit());
 
-      expect(pushMock).toBeCalled();
+      expect(pushMock).toBeCalledWith(`/chat?chat_room_id=chatroomid`);
       expect(createNewChatRoomMock).toBeCalledWith({
         age: 0,
         chat_draft_image_ids: [],
@@ -181,9 +187,71 @@ describe('useNewChatRoom', () => {
       });
       expect(createNewChatRoomMock).toBeCalled();
       expect(mutateFetchFlagMock).toHaveBeenCalledWith('FirstConsultCampaign');
+      expect(result.current.isNeedToInputProfileModalShown).toBeFalsy();
+    });
+
+    test('プロフィールが不足している時', async () => {
+      (useProfile as jest.Mock).mockReturnValue({
+        isNeedToInputProfile: true,
+      });
+
+      const createNewChatRoomMock = jest.fn();
+      createNewChatRoomMock.mockResolvedValueOnce({
+        data: {
+          chat_room_id: 'chatroomid',
+          code: 1,
+        },
+      });
+      const usePostChatRoomMock = jest.mocked(usePostChatRoom);
+      usePostChatRoomMock.mockReturnValue({
+        createNewChatRoom: createNewChatRoomMock,
+      });
+
+      const pushMock = jest.fn();
+      const useRouterMock = jest.mocked(useRouter);
+      useRouterMock.mockReturnValue({
+        query: {
+          from: 'mail',
+          utm_source: 'utm',
+        },
+        push: pushMock,
+        isReady: true,
+      } as unknown as ReturnType<typeof useRouter>);
+
+      const mutateFetchFlagMock = jest.spyOn(useFetchFlagModule, 'mutateFetchFlag');
+
+      const { result } = await renderHook(() => useNewChatRoom(), {});
+
+      await act(() => result.current.submit());
+
+      expect(pushMock).not.toBeCalledWith();
+      expect(createNewChatRoomMock).toBeCalledWith({
+        age: 0,
+        chat_draft_image_ids: [],
+        chat_room_id: expect.anything(),
+        disease_name: '',
+        first_message: '',
+        create_source: { from: 'mail', utm_source: 'utm' },
+        gender: 'man',
+        group_id: undefined,
+        publishment_accepted: true,
+        room_type: 'FREE',
+        target_doctor: undefined,
+        target_specialities: [],
+        from: 'mail',
+        utm_source: 'utm',
+      });
+      expect(createNewChatRoomMock).toBeCalled();
+      expect(mutateFetchFlagMock).toHaveBeenCalledWith('FirstConsultCampaign');
+      expect(result.current.isNeedToInputProfileModalShown).toBeTruthy();
+      expect(result.current.fillProfileRedirectUrl).toBe('/chat?chat_room_id=chatroomid');
     });
 
     test('再コンサル時', async () => {
+      (useProfile as jest.Mock).mockReturnValue({
+        isNeedToInputProfile: false,
+      });
+
       const createNewChatRoomMock = jest.fn();
       createNewChatRoomMock.mockResolvedValueOnce({
         data: {
