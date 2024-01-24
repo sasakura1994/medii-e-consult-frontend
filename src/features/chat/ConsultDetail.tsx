@@ -140,6 +140,13 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     if (chatRoomData.chat_room.status === 'CREATED') {
       return <p className="text-sm font-normal text-strong">回答してくださる専門医の先生を探しています</p>;
     }
+    if (chatRoomData.chat_room.status === 'PENDING') {
+      return (
+        <p className="text-sm font-normal text-strong">
+          現在、コンサルの内容を確認しています。情報の追記などをお願いする場合がございます。
+        </p>
+      );
+    }
     if (chatRoomData.members.length === 0) {
       return <p className="text-sm font-bold">退会済みアカウント</p>;
     }
