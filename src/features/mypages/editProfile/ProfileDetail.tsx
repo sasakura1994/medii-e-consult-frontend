@@ -1,23 +1,22 @@
 import React from 'react';
 import { CaptionWithBody } from '@/components/Parts/CaptionWithBody';
 import { OutlinedSquareButton } from '@/components/Parts/Button/OutlinedSquareButton';
-import { removeAuthToken } from '@/libs/cookie';
-import { useRouter } from 'next/router';
 import { useMedicalSpeciality } from '@/hooks/medicalSpeciality/useMedicalSpeciality';
 import { usePrefecture } from '@/hooks/prefecture/usePrefecture';
 import { useProfile } from '@/hooks/useProfile';
 import Link from 'next/link';
 import { EditProfileHeading } from './EditProfileHeading';
+import { useAuthentication } from '@/hooks/authentication/useAuthentication';
 
 type Props = {
   onEdit: () => void;
 };
 
 export const ProfileDetail: React.FC<Props> = ({ onEdit }: Props) => {
-  const router = useRouter();
   const { getMedicalSpecialityName } = useMedicalSpeciality();
   const { getPrefectureNameByCode } = usePrefecture();
   const { profile, email, hospitalName } = useProfile();
+  const { signOut } = useAuthentication();
   const isStudent = profile?.main_speciality === 'STUDENT';
 
   return (
@@ -170,14 +169,7 @@ export const ProfileDetail: React.FC<Props> = ({ onEdit }: Props) => {
       </div>
 
       <div className="mt-12 text-center lg:pb-20">
-        <button
-          type="button"
-          className="text-[#999999] underline"
-          onClick={() => {
-            removeAuthToken();
-            router.push('/login');
-          }}
-        >
+        <button type="button" className="text-[#999999] underline" onClick={signOut}>
           ログアウト
         </button>
       </div>

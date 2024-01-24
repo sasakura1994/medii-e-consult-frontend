@@ -2,15 +2,14 @@ import { Tooltip } from '@/components/Tooltip/Tooltip';
 import React from 'react';
 import { usePopperTooltip } from 'react-popper-tooltip';
 import { HeaderMyPageMenuItem } from './HeaderMyPageMenuItem';
-import { removeAuthToken } from '@/libs/cookie';
-import { useRouter } from 'next/router';
 import { contactUrl, faqUrl } from '@/data/constants';
 import { useExistCampaign } from '@/hooks/api/campaign/useExistCampaign';
+import { useAuthentication } from '@/hooks/authentication/useAuthentication';
 
 export const HeaderMyPageButton = () => {
-  const router = useRouter();
   const tooltip = usePopperTooltip({ trigger: 'click', interactive: true });
   const { isCampaign } = useExistCampaign();
+  const { signOut } = useAuthentication();
 
   return (
     <>
@@ -50,8 +49,7 @@ export const HeaderMyPageButton = () => {
             href="#"
             onClick={(e) => {
               e.preventDefault();
-              removeAuthToken();
-              router.push('/login');
+              signOut();
             }}
           >
             ログアウト
