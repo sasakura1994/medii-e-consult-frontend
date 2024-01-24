@@ -92,8 +92,10 @@ export const NewChatRoomConfirmation: React.FC<Props> = (props: Props) => {
         {chatRoom.first_message.trim().length > 70 ? (
           ''
         ) : (
-          <div className="my-8 text-center text-sm text-strong">
-            &lt;アラート&gt;ストーリーコンサルが70文字以内です。
+          <div className="my-8 text-sm text-strong">
+            コンサル文が簡潔だと、回答医は十分な情報を得られず、回答が難しくなることがあります。
+            <br />
+            患者の背景や検査結果など、具体的な情報を追記いただくと、より適切な回答を期待できます。
           </div>
         )}
         <div className="mt-4 whitespace-pre-wrap break-words text-sm">{chatRoom.first_message}</div>
