@@ -5,15 +5,14 @@ import { UrlPublish } from '@/features/mypages/editProfile/UrlPublish';
 import { useEditProfilePage } from '@/features/mypages/editProfile/useEditProfilePage';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import Link from 'next/link';
-import { removeAuthToken } from '@/libs/cookie';
-import { useRouter } from 'next/router';
 import { MyPageLayout } from '@/components/Layouts/MyPageLayout';
+import { useAuthentication } from '@/hooks/authentication/useAuthentication';
 
 const EditProfileCompletedPage: NextPageWithLayout = () => {
-  const router = useRouter();
   const editProfilePage = useEditProfilePage();
   const { isRegisterMode } = editProfilePage;
   const { profile } = useFetchProfile();
+  const { signOut } = useAuthentication();
 
   return (
     <>
@@ -34,14 +33,7 @@ const EditProfileCompletedPage: NextPageWithLayout = () => {
         </div>
 
         <div className="mt-12 text-center lg:pb-20">
-          <button
-            type="button"
-            className="text-[#999999] underline"
-            onClick={() => {
-              removeAuthToken();
-              router.push('/login');
-            }}
-          >
+          <button type="button" className="text-[#999999] underline" onClick={signOut}>
             ログアウト
           </button>
         </div>
