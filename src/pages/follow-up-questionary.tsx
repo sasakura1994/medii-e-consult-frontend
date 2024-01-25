@@ -5,10 +5,11 @@ import { useFollowUpQuestionary } from '@/features/chat/useFollowUpQuestionary';
 import { SpinnerBorder } from '@/components/Parts/Spinner/SpinnerBorder';
 import SecondaryButton from '@/components/Button/SecondaryButton';
 import Link from 'next/link';
+import TertiaryButton from '@/components/Button/TertiaryButton';
 
 const ChatFollowUpQuestionaryPage = () => {
   const { accountId } = useToken();
-  const { answered, chatRoomId, onSubmit } = useFollowUpQuestionary();
+  const { answered, chatRoom, chatRoomId, group, onSubmit, targetName } = useFollowUpQuestionary();
 
   if (answered === undefined) {
     return (
@@ -34,6 +35,22 @@ const ChatFollowUpQuestionaryPage = () => {
 
   return (
     <div className="mx-auto lg:w-[644px]" data-testid="form">
+      {chatRoom && (
+        <div className="p-4">
+          <div>対象のコンサル：{chatRoom.title}</div>
+          <div>コンサル作成日：{chatRoom.created_date.substring(0, 10)}</div>
+          {chatRoom.room_type === 'GROUP' ? (
+            <div>回答いただいたグループ：{group?.group_name}</div>
+          ) : (
+            <div>回答いただいた医師：{targetName}</div>
+          )}
+          <div className="mt-1">
+            <Link href={`/chat?chat_room_id=${chatRoomId}`}>
+              <TertiaryButton>該当のコンサル</TertiaryButton>
+            </Link>
+          </div>
+        </div>
+      )}
       <HubspotCTA
         formId={process.env.HUBSPOT_FOLLOW_UP_FORM_ID ?? ''}
         accountId={accountId ?? ''}
