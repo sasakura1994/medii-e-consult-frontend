@@ -95,6 +95,7 @@ const commonChatRoomData = {
     dont_close: 0,
     group_id: '1',
     is_real_name: false,
+    created_date: '2022-01-02 00:00:00',
   },
   members: [],
   me: member1,
