@@ -89,6 +89,15 @@ export const NewChatRoomConfirmation: React.FC<Props> = (props: Props) => {
         <NewChatRoomConfirmationLabel className="mt-10">要約</NewChatRoomConfirmationLabel>
         <NewChatRoomConfirmationValue className="mt-4">{chatRoom.disease_name}</NewChatRoomConfirmationValue>
         <NewChatRoomConfirmationLabel className="mt-10">コンサル文</NewChatRoomConfirmationLabel>
+        {chatRoom.first_message.trim().length > 70 ? (
+          ''
+        ) : (
+          <div className="my-2 text-sm text-strong">
+            コンサル文が簡潔すぎると、お相手の医師が十分な情報を得られず、回答が難しくなることがあります。
+            <br />
+            患者の背景や検査結果など、具体的な情報を追記いただくと、より適切な回答を期待できます。
+          </div>
+        )}
         <div className="mt-4 whitespace-pre-wrap break-words text-sm">{chatRoom.first_message}</div>
         {filesForReConsult.length > 0 || reConsultFileMessages.length > 0 ? (
           <div className="mt-8 flex flex-col gap-4">
