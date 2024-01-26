@@ -9,14 +9,20 @@ export type PostLoginResponseData = {
   doctor: ProfileEntity;
 };
 
+type Query = {
+  from?: 'case_bank' | undefined;
+  redirect?: string | undefined;
+};
+
 export const usePostLogin = () => {
   const { axios } = useAxios();
 
   const login = React.useCallback(
-    (mail_address: string, password: string) => {
+    (mail_address: string, password: string, queries: Query) => {
       return axios.post<PostLoginResponseData>('/doctor/login', {
         mail_address,
         password,
+        queries,
       });
     },
     [axios]

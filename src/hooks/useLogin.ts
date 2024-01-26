@@ -71,7 +71,8 @@ export const useLogin = (): UseLogin => {
     async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      const res = await postLogin(email, password).catch((error) => {
+      const queries = router.query as Query;
+      const res = await postLogin(email, password, queries).catch((error) => {
         console.error(error);
         setErrorMessage(error.response?.data?.message || 'エラーが発生しました');
         return null;
