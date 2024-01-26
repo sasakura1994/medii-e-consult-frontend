@@ -16,7 +16,7 @@ const DocumentTypeSelect: React.FC<DocumentTypeSelectProps> = ({ setSelected }) 
       <div className="mt-2 text-left lg:px-0">Mediiは医師および医学生のみご利用いただけます。</div>
       <div className="mt-6 text-lg font-semibold">医師資格の確認方法を選択してください</div>
       <div className="mt-2 flex justify-center">
-        <div className="grid grid-cols-2 gap-4 lg:grid-cols-3">
+        <div className="grid grid-cols-2 gap-4">
           <DocumentTypeSelectButton
             id="number"
             text="医師番号を入力"
@@ -32,14 +32,6 @@ const DocumentTypeSelect: React.FC<DocumentTypeSelectProps> = ({ setSelected }) 
             onClick={() => setSelected('document')}
           >
             医師免許証、所属医療機関のIDカード、医師資格証、専門医証明書などが対象です
-          </DocumentTypeSelectButton>
-          <DocumentTypeSelectButton
-            id="auto"
-            text="Mediiにおまかせ"
-            image="icons/medii.svg"
-            onClick={() => setSelected('auto')}
-          >
-            入力していただいた内容からMediiが医師資格確認を行います
           </DocumentTypeSelectButton>
         </div>
       </div>

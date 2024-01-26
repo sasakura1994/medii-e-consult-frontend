@@ -2,7 +2,6 @@ import React from 'react';
 import RegistrationProgress from './RegistrationProgress';
 import DocumentTypeSelect from './DocumentTypeSelect';
 import DoctorNumberForm from './DoctorNumberForm';
-import DocumentInputAuto from './DocumentInputAuto';
 import DocumentInputDocument from './DocumentInputDocument';
 import { Container } from '@/components/Layouts/Container';
 import { useRouter } from 'next/router';
@@ -11,7 +10,7 @@ import DocumentInputStudentDocument from './DocumentInputStudentDocument';
 import { Heading } from '@/components/Parts/Text/Heading';
 import { useDocument } from './useDocument';
 
-export type DocumentSelected = '' | 'number' | 'document' | 'auto' | 'completed' | 'studentCompleted';
+export type DocumentSelected = '' | 'number' | 'document' | 'completed' | 'studentCompleted';
 
 export const Document = () => {
   const router = useRouter();
@@ -47,7 +46,6 @@ export const Document = () => {
             {selected === '' && <DocumentTypeSelect setSelected={setSelected} />}
             {selected === 'number' && <DoctorNumberForm setSelectedWithRedirect={setSelectedWithRedirect} />}
             {selected === 'document' && <DocumentInputDocument setSelectedWithRedirect={setSelectedWithRedirect} />}
-            {selected === 'auto' && <DocumentInputAuto setSelectedWithRedirect={setSelectedWithRedirect} />}
           </>
         )}
       </div>

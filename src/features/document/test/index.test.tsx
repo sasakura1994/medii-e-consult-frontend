@@ -151,18 +151,6 @@ describe('Document', () => {
     });
   });
 
-  test('selectedがautoの場合、DocumentInputAutoがレンダリングされること', async () => {
-    await getRender();
-    act(() => {
-      const auto = screen.getByTestId('auto');
-      expect(auto).toBeInTheDocument();
-      userEvent.click(auto);
-    });
-    await waitFor(() => {
-      expect(screen.getByTestId('document-input-auto')).toBeInTheDocument();
-    });
-  });
-
   test('STUDENTの場合、DocumentInputStudentがレンダリングされること', async () => {
     (useProfile as jest.Mock).mockReturnValue({
       profile: {
