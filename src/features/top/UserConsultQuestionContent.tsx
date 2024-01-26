@@ -19,9 +19,8 @@ export const UserConsultQuestionContent = (props: UserConsultQuestionContentProp
     // TODO: ここの仕様は現在確認中
     switch (chatRoomMineOwn.status) {
       case 'CREATED':
-        return <p className={activeClass}>新着</p>;
       case 'PENDING':
-        return <p className={activeClass}>新着ラベル</p>;
+        return <p className={activeClass}>新着</p>;
       case 'ACTIVE':
       case 'REOPEN':
       case 'TEMP_RESOLVED':
