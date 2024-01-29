@@ -26,6 +26,7 @@ const chatRoom: ChatRoomEntity = {
   dont_close: 0,
   group_id: null,
   is_real_name: false,
+  created_date: '2023-10-23 16:25:40',
 };
 
 const chatData: ChatData = {

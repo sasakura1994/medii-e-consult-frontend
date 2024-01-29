@@ -26,4 +26,5 @@ export type ChatRoomEntity = {
   dont_close: number;
   group_id: string | null;
   is_real_name: boolean;
+  created_date: string;
 };

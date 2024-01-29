@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-
   reactStrictMode: true,
   env: {
     WEB_SERVER_URL: process.env.WEB_SERVER_URL,
@@ -14,6 +13,7 @@ const nextConfig = {
     NMO_URL: process.env.NMO_URL,
     HUBSPOT_FORM_ID: process.env.HUBSPOT_FORM_ID,
     HUBSPOT_PORTAL_ID: process.env.HUBSPOT_PORTAL_ID,
+    HUBSPOT_FOLLOW_UP_FORM_ID: process.env.HUBSPOT_FOLLOW_UP_FORM_ID,
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
   },
   async redirects() {
