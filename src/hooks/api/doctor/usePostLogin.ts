@@ -14,10 +14,22 @@ export const usePostLogin = () => {
 
   const login = React.useCallback(
     (mail_address: string, password: string, queries: { [key: string]: string }) => {
+      const flattenedQueries = Object.entries(queries).reduce(
+        (acc, [key, value]) => {
+          if (Array.isArray(value)) {
+            acc[key] = value[value.length - 1];
+          } else {
+            acc[key] = value;
+          }
+          return acc;
+        },
+        {} as { [key: string]: string }
+      );
+
       return axios.post<PostLoginResponseData>('/doctor/login', {
         mail_address,
         password,
-        queries,
+        queries: flattenedQueries,
       });
     },
     [axios]
