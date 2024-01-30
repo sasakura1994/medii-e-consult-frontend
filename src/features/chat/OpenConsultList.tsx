@@ -26,6 +26,7 @@ export const OpenConsultList = (props: OpenConsultListProps) => {
                 (c) =>
                   c.room_type !== 'GROUP' &&
                   (c.status === 'CREATED' ||
+                    c.status === 'PENDING' ||
                     c.status === 'ACTIVE' ||
                     c.status === 'REOPEN' ||
                     c.status === 'TEMP_RESOLVED')
@@ -46,7 +47,11 @@ export const OpenConsultList = (props: OpenConsultListProps) => {
           .filter(
             (c) =>
               c.room_type !== 'GROUP' &&
-              (c.status === 'CREATED' || c.status === 'ACTIVE' || c.status === 'REOPEN' || c.status === 'TEMP_RESOLVED')
+              (c.status === 'CREATED' ||
+                c.status === 'PENDING' ||
+                c.status === 'ACTIVE' ||
+                c.status === 'REOPEN' ||
+                c.status === 'TEMP_RESOLVED')
           )
           .map((chatRoom) => {
             return (
@@ -90,6 +95,7 @@ export const OpenConsultList = (props: OpenConsultListProps) => {
                 (c) =>
                   c.room_type === 'GROUP' &&
                   (c.status === 'CREATED' ||
+                    c.status === 'PENDING' ||
                     c.status === 'ACTIVE' ||
                     c.status === 'REOPEN' ||
                     c.status === 'TEMP_RESOLVED')
@@ -110,7 +116,11 @@ export const OpenConsultList = (props: OpenConsultListProps) => {
           .filter(
             (c) =>
               c.room_type === 'GROUP' &&
-              (c.status === 'CREATED' || c.status === 'ACTIVE' || c.status === 'REOPEN' || c.status === 'TEMP_RESOLVED')
+              (c.status === 'CREATED' ||
+                c.status === 'PENDING' ||
+                c.status === 'ACTIVE' ||
+                c.status === 'REOPEN' ||
+                c.status === 'TEMP_RESOLVED')
           )
           .map((chatRoom) => {
             return (

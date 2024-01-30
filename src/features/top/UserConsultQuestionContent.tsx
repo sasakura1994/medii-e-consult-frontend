@@ -19,6 +19,7 @@ export const UserConsultQuestionContent = (props: UserConsultQuestionContentProp
     // TODO: ここの仕様は現在確認中
     switch (chatRoomMineOwn.status) {
       case 'CREATED':
+      case 'PENDING':
         return <p className={activeClass}>新着</p>;
       case 'ACTIVE':
       case 'REOPEN':
@@ -35,6 +36,8 @@ export const UserConsultQuestionContent = (props: UserConsultQuestionContentProp
   const respondentLabel = useMemo(() => {
     if (chatRoomMineOwn.status === 'CREATED') {
       return '回答医を探しています';
+    } else if (chatRoomMineOwn.status === 'PENDING') {
+      return 'コンサル内容を確認中です';
     } else if (chatRoomMineOwn.room_type === 'GROUP') {
       return chatRoomMineOwn.attending_group_name + ' グループが回答';
     } else {
