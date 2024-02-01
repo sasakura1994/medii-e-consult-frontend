@@ -10,6 +10,7 @@ export const HeaderMyPageButton = () => {
   const tooltip = usePopperTooltip({ trigger: 'click', interactive: true });
   const { isCampaign } = useExistCampaign();
   const { signOut } = useAuthentication();
+  const { data } = useExistCampaign();
 
   return (
     <>
@@ -31,7 +32,10 @@ export const HeaderMyPageButton = () => {
                 <div>
                   お一人紹介で
                   <br />
-                  <span className="font-bold text-medii-sky-base">最大5,000円相当</span>のポイント進呈
+                  <span className="font-bold text-medii-sky-base">
+                    最大{`${(data?.child_register_point || 0) + (data?.child_consult_point || 0)}`}円相当
+                  </span>
+                  のポイント進呈
                 </div>
               </div>
             )}
