@@ -62,7 +62,7 @@ export const OnboardingConsultPointModal = () => {
       >
         はじめての相談で、
         <br className="block lg:hidden" />
-        さらに3,000円相当のポイント進呈
+        さらに1,000円相当のポイント進呈
       </p>
       <p className="mb-4 mt-3 px-3 text-center text-2xl font-semibold text-text-primary">
         アンケートの回答
@@ -73,7 +73,7 @@ export const OnboardingConsultPointModal = () => {
         <p>
           アンケートへのご回答、ありがとうございます。500ポイントを進呈いたしました。
           <br />
-          アンケートでご回答いただいた内容をそのままエキスパート専門医へご相談いただくと、追加で3,000ポイントを進呈いたします。
+          アンケートでご回答いただいた内容をそのままエキスパート専門医へご相談いただくと、追加で1,000ポイントを進呈いたします。
         </p>
         <TextArea
           disabled
