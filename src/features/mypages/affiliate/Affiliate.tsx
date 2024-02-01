@@ -40,12 +40,12 @@ export const Affiliate: React.FC = () => {
                     <img src="icons/point_invitation.svg" alt="" width="21" height="21" />
                     <div>
                       <div>
-                        最大{`${(data?.child_register_point || 0) + (data?.child_consult_point || 0)}`}
+                        最大{`${(data?.parent_register_point || 0) + (data?.parent_consult_point || 0)}`}
                         円相当のMediiポイント
                       </div>
                       <ul className="mt-1 list-disc pl-6 text-xs text-text-secondary">
-                        <li>紹介いただいた医師が新規登録で {data?.child_register_point}pt</li>
-                        <li>紹介いただいた医師が症例相談で {data?.child_consult_point}pt</li>
+                        <li>紹介いただいた医師が新規登録で {data?.parent_register_point}pt</li>
+                        <li>紹介いただいた医師が症例相談で {data?.parent_consult_point}pt</li>
                       </ul>
                     </div>
                   </div>
@@ -68,11 +68,11 @@ export const Affiliate: React.FC = () => {
                 </div>
               </div>
               <p className="mt-4 text-xs text-text-secondary">
-                【登録による進呈】 ご紹介いただいた医師が新規登録・医師資格の確認完了で{data?.child_register_point}
+                【登録による進呈】 ご紹介いただいた医師が新規登録・医師資格の確認完了で{data?.parent_register_point}
                 ptを進呈いたします。 新規登録後、1営業日を目安にポイントを進呈いたします。
                 <br />
                 【症例相談による進呈】 ご紹介いただいた医師がキャンペーン期間中に現在診ている症例の相談と解決後のお礼で
-                {data?.child_consult_point}ptを進呈いたします。 キャンペーン期間終了後に進呈いたします。
+                {data?.parent_consult_point}ptを進呈いたします。 キャンペーン期間終了後に進呈いたします。
                 <br />
                 【注意事項】紹介された方が、過去E-コンサルにご登録されたことがある場合は対象外となります。
                 一般的な医学知識に関する相談など、現在診ている患者さんの症例ではないと判断された場合はポイント付与の対象外とさせていただくことがございます。

@@ -33,7 +33,7 @@ export const HeaderMyPageButton = () => {
                   お一人紹介で
                   <br />
                   <span className="font-bold text-medii-sky-base">
-                    最大{`${(data?.child_register_point || 0) + (data?.child_consult_point || 0)}`}円相当
+                    最大{`${(data?.parent_register_point || 0) + (data?.parent_consult_point || 0)}`}円相当
                   </span>
                   のポイント進呈
                 </div>
