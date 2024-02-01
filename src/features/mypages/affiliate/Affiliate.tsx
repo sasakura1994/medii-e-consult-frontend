@@ -28,7 +28,7 @@ export const Affiliate: React.FC = () => {
                 </div>
               </div>
               <p className="text-left text-xxl font-bold">医師紹介キャンペーン</p>
-              <p className="mt-4 text-left text-l font-bold">対象：医師3年目以上の方(研修医を除く)</p>
+              <p className="mt-4 text-left text-l font-bold">対象：医師3年目以上の方(初期研修医を除く)</p>
               <p className="mt-2 text-left text-l font-bold">キャンペーン期間：{period}</p>
               <p className="mt-8 text-l font-bold">ご紹介特典</p>
               <div className="mt-4 grid auto-cols-max grid-cols-1 gap-4 lg:grid-cols-2">
@@ -39,14 +39,14 @@ export const Affiliate: React.FC = () => {
                     <div>
                       <div>最大5,000円相当のMediiポイント</div>
                       <ul className="mt-1 list-disc pl-6 text-xs text-text-secondary">
-                        <li>紹介された方が新規登録で 2,000pt</li>
-                        <li>紹介された方が症例相談で 3,000pt</li>
+                        <li>紹介いただいた医師が新規登録で 2,000pt</li>
+                        <li>紹介いただいた医師が症例相談で 3,000pt</li>
                       </ul>
                     </div>
                   </div>
                 </div>
                 <div className="p-2 shadow-low">
-                  <p className="mb-1 text-center font-bold">紹介された方</p>
+                  <p className="mb-1 text-center font-bold">新規ご登録者様</p>
                   <div className="flex items-start justify-center gap-1">
                     <img src="icons/point_invitation.svg" alt="" width="21" height="21" />
                     <div>
