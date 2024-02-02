@@ -4,4 +4,8 @@ export type CampaignEntity = {
   sp_banner_url: string | null;
   start_at: string | null;
   end_at: string | null;
+  child_register_point: number | null;
+  child_consult_point: number | null;
+  parent_register_point: number | null;
+  parent_consult_point: number | null;
 };

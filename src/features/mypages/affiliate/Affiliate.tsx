@@ -7,10 +7,12 @@ import TextField from '@/components/TextField/TextField';
 import { HowToInvitation } from './HowToInvitation';
 import { useProfile } from '@/hooks/useProfile';
 import QRCode from 'qrcode.react';
+import { useExistCampaign } from '@/hooks/api/campaign/useExistCampaign';
 
 export const Affiliate: React.FC = () => {
   const { isCampaign, downloadQrCode, clipboard, invitationUrl, period } = useAffiliate();
   const { profile } = useProfile();
+  const { data } = useExistCampaign();
 
   if (profile && profile.status === 'VERIFIED') {
     return (
@@ -28,7 +30,7 @@ export const Affiliate: React.FC = () => {
                 </div>
               </div>
               <p className="text-left text-xxl font-bold">医師紹介キャンペーン</p>
-              <p className="mt-4 text-left text-l font-bold">対象：医師3年目以上の方(研修医を除く)</p>
+              <p className="mt-4 text-left text-l font-bold">対象：医師3年目以上の方(初期研修医を除く)</p>
               <p className="mt-2 text-left text-l font-bold">キャンペーン期間：{period}</p>
               <p className="mt-8 text-l font-bold">ご紹介特典</p>
               <div className="mt-4 grid auto-cols-max grid-cols-1 gap-4 lg:grid-cols-2">
@@ -37,35 +39,40 @@ export const Affiliate: React.FC = () => {
                   <div className="flex items-start justify-center gap-1">
                     <img src="icons/point_invitation.svg" alt="" width="21" height="21" />
                     <div>
-                      <div>最大5,000円相当のMediiポイント</div>
+                      <div>
+                        最大{`${(data?.parent_register_point || 0) + (data?.parent_consult_point || 0)}`}
+                        円相当のMediiポイント
+                      </div>
                       <ul className="mt-1 list-disc pl-6 text-xs text-text-secondary">
-                        <li>紹介された方が新規登録で 2,000pt</li>
-                        <li>紹介された方が症例相談で 3,000pt</li>
+                        <li>紹介いただいた医師が新規登録で {data?.parent_register_point}pt</li>
+                        <li>紹介いただいた医師が症例相談で {data?.parent_consult_point}pt</li>
                       </ul>
                     </div>
                   </div>
                 </div>
                 <div className="p-2 shadow-low">
-                  <p className="mb-1 text-center font-bold">紹介された方</p>
+                  <p className="mb-1 text-center font-bold">新規ご登録者様</p>
                   <div className="flex items-start justify-center gap-1">
                     <img src="icons/point_invitation.svg" alt="" width="21" height="21" />
                     <div>
-                      <div>最大5,000円相当のMediiポイント</div>
+                      <div>
+                        最大{`${(data?.child_register_point || 0) + (data?.child_consult_point || 0)}`}
+                        円相当のMediiポイント
+                      </div>
                       <ul className="mt-1 list-disc pl-6 text-xs text-text-secondary">
-                        <li>新規登録で 2,000pt</li>
-                        <li>症例相談で 3,000pt</li>
+                        <li>新規登録で {data?.child_register_point}pt</li>
+                        <li>症例相談で {data?.child_consult_point}pt</li>
                       </ul>
                     </div>
                   </div>
                 </div>
               </div>
               <p className="mt-4 text-xs text-text-secondary">
-                【登録による進呈】 ご紹介いただいた医師が新規登録・医師資格の確認完了で2,000ptを進呈いたします。
-                新規登録後、1営業日を目安にポイントを進呈いたします。
+                【登録による進呈】 ご紹介いただいた医師が新規登録・医師資格の確認完了で{data?.parent_register_point}
+                ptを進呈いたします。 新規登録後、1営業日を目安にポイントを進呈いたします。
                 <br />
-                【症例相談による進呈】
-                ご紹介いただいた医師がキャンペーン期間中に現在診ている症例の相談と解決後のお礼で3,000ptを進呈いたします。
-                キャンペーン期間終了後に進呈いたします。
+                【症例相談による進呈】 ご紹介いただいた医師がキャンペーン期間中に現在診ている症例の相談と解決後のお礼で
+                {data?.parent_consult_point}ptを進呈いたします。 キャンペーン期間終了後に進呈いたします。
                 <br />
                 【注意事項】紹介された方が、過去E-コンサルにご登録されたことがある場合は対象外となります。
                 一般的な医学知識に関する相談など、現在診ている患者さんの症例ではないと判断された場合はポイント付与の対象外とさせていただくことがございます。
