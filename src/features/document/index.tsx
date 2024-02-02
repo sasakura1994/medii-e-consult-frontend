@@ -5,7 +5,6 @@ import DoctorNumberForm from './DoctorNumberForm';
 import DocumentInputDocument from './DocumentInputDocument';
 import { Container } from '@/components/Layouts/Container';
 import { useRouter } from 'next/router';
-import { useProfile } from '@/hooks/useProfile';
 import DocumentInputStudentDocument from './DocumentInputStudentDocument';
 import { Heading } from '@/components/Parts/Text/Heading';
 import { useDocument } from './useDocument';
@@ -14,13 +13,13 @@ export type DocumentSelected = '' | 'number' | 'document' | 'completed' | 'stude
 
 export const Document = () => {
   const router = useRouter();
-  const { profile } = useProfile();
-  const { mode, selected, setMode, setSelected, setSelectedWithRedirect } = useDocument();
+  const { isOnboardingQuestionaryIsNotNeeded, mode, profile, selected, setMode, setSelected, setSelectedWithRedirect } =
+    useDocument();
 
   if (!profile) return <></>;
 
   if (profile.is_skip_confirmation_by_utm_source || profile.is_huf_user) {
-    router.push('/onboarding/questionary');
+    router.push(isOnboardingQuestionaryIsNotNeeded ? '/top' : '/onboarding/questionary');
     return <></>;
   }
 

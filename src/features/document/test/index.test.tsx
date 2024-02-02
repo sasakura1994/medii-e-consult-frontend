@@ -107,23 +107,49 @@ describe('Document', () => {
     });
   });
 
-  test('is_skip_confirmation_by_utm_sourceがtrueの場合、/onboarding/questionaryに遷移すること', async () => {
-    (useProfile as jest.Mock).mockReturnValue({
-      profile: { is_skip_confirmation_by_utm_source: true },
+  describe('is_skip_confirmation_by_utm_sourceがtrueの場合', () => {
+    test('/onboarding/questionaryに遷移すること', async () => {
+      (useProfile as jest.Mock).mockReturnValue({
+        profile: { is_skip_confirmation_by_utm_source: true },
+      });
+      await getRender();
+      await waitFor(() => {
+        expect(mockRouter.push).toHaveBeenCalledWith('/onboarding/questionary');
+      });
     });
-    await getRender();
-    await waitFor(() => {
-      expect(mockRouter.push).toHaveBeenCalledWith('/onboarding/questionary');
+
+    test('経験不足の場合はtopに遷移すること', async () => {
+      (useProfile as jest.Mock).mockReturnValue({
+        profile: { is_skip_confirmation_by_utm_source: true },
+        isOnboardingQuestionaryIsNotNeeded: true,
+      });
+      await getRender();
+      await waitFor(() => {
+        expect(mockRouter.push).toHaveBeenCalledWith('/top');
+      });
     });
   });
 
-  test('HUFユーザーの場合、/onboarding/questionaryに遷移すること', async () => {
-    (useProfile as jest.Mock).mockReturnValue({
-      profile: { is_huf_user: true },
+  describe('HUFユーザーの場合', () => {
+    test('/onboarding/questionaryに遷移すること', async () => {
+      (useProfile as jest.Mock).mockReturnValue({
+        profile: { is_huf_user: true },
+      });
+      await getRender();
+      await waitFor(() => {
+        expect(mockRouter.push).toHaveBeenCalledWith('/onboarding/questionary');
+      });
     });
-    await getRender();
-    await waitFor(() => {
-      expect(mockRouter.push).toHaveBeenCalledWith('/onboarding/questionary');
+
+    test('経験不足の場合はtopに遷移すること', async () => {
+      (useProfile as jest.Mock).mockReturnValue({
+        profile: { is_huf_user: true },
+        isOnboardingQuestionaryIsNotNeeded: true,
+      });
+      await getRender();
+      await waitFor(() => {
+        expect(mockRouter.push).toHaveBeenCalledWith('/top');
+      });
     });
   });
 

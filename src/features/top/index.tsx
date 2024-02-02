@@ -16,7 +16,8 @@ import { AffiliateBanner } from './AffiliateBanner';
 import { IncurableDiseaseGroupColumns } from './IncurableDiseaseGroupColumns';
 
 export const Top = () => {
-  const { showTutorialExplanationModal, setShowTutorialExplanationModal, profile } = useTop();
+  const { showTutorialExplanationModal, setShowTutorialExplanationModal, profile, isOnboardingQuestionaryIsNotNeeded } =
+    useTop();
   const { flag: isOnboardingQuestionaryAnswered } = useFetchFlag('OnboardingAnswered');
   const { flag: hasConsulted } = useFetchFlag('HasConsulted');
   const { postEventLog } = useEventLog();
@@ -38,6 +39,7 @@ export const Top = () => {
         <div className="mt-2 lg:mx-4 lg:ml-10 lg:mt-0 lg:w-[296px]">
           <TopNewerConsults />
           {isOnboardingQuestionaryAnswered === false &&
+            !isOnboardingQuestionaryIsNotNeeded &&
             hasConsulted === false &&
             profile &&
             profile.main_speciality !== 'STUDENT' && (
@@ -51,7 +53,7 @@ export const Top = () => {
                 <Link href="/onboarding/questionary">
                   <img
                     src="images/onboarding/questionary_banner.png"
-                    alt="アンケートに答えて100Mediiポイント進呈"
+                    alt="アンケートに答えて500Mediiポイント進呈"
                     className="w-full"
                   />
                 </Link>
