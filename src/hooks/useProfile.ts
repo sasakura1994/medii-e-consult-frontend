@@ -9,12 +9,14 @@ import type { EmailEntityType } from '@/types/entities/emailEntity';
 import type { MedicalSpecialityEntity } from '@/types/entities/medicalSpecialityEntity';
 import type { PrefectureEntityType } from '@/types/entities/prefectureEntity';
 import type { HospitalEntity } from '@/types/entities/hospitalEntity';
+import { useDoctor } from './useDoctor';
 
 export type UseProfile = {
   profile: ProfileEntity | undefined;
   email: EmailEntityType | undefined;
   hospitalName: string;
   isNeedToInputProfile: boolean;
+  isOnboardingQuestionaryIsNotNeeded: boolean;
   medicalSpeciality: MedicalSpecialityEntity[] | undefined;
   prefecture: PrefectureEntityType[] | undefined;
   hospital: HospitalEntity | undefined;
@@ -28,6 +30,7 @@ export const useProfile = (): UseProfile => {
   const { medicalSpecialities } = useFetchMedicalSpecialities();
   const { prefecture } = useFetchPrefecture();
   const { hospital } = useFetchHospital(profile?.hospital_id);
+  const { calculateExperienceYear } = useDoctor();
 
   const hospitalName = useMemo(() => {
     if (!profile) {
@@ -46,6 +49,13 @@ export const useProfile = (): UseProfile => {
     [profile]
   );
 
+  const isOnboardingQuestionaryIsNotNeeded = useMemo(() => {
+    if (!profile) {
+      return false;
+    }
+    return profile.main_speciality === 'KENSYU' || calculateExperienceYear(profile.qualified_year) < 3;
+  }, [calculateExperienceYear, profile]);
+
   const getPrefectureNameByCode = useCallback(
     (code: string | undefined): string | undefined => {
       if (!code || !prefecture) return undefined;
@@ -61,6 +71,7 @@ export const useProfile = (): UseProfile => {
     email,
     hospitalName,
     isNeedToInputProfile,
+    isOnboardingQuestionaryIsNotNeeded,
     medicalSpeciality: medicalSpecialities,
     prefecture,
     hospital,

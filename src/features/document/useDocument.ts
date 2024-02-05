@@ -5,6 +5,7 @@ import { DocumentMode } from './RegistrationProgress';
 import { DocumentSelected } from '.';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { useFetchFlag } from '@/hooks/api/account/useFetchFlags';
+import { useProfile } from '@/hooks/useProfile';
 
 const loginRedirectUrlKey = 'Login::RedirectURL';
 
@@ -15,6 +16,7 @@ export const useDocument = () => {
   const { postEventLog } = useEventLog();
   const { getItem, removeItem } = useLocalStorage();
   const { flag: isOnboardingAnswered } = useFetchFlag('OnboardingAnswered');
+  const { profile, isOnboardingQuestionaryIsNotNeeded } = useProfile();
 
   const setSelectedWithRedirect = useCallback(
     async (value: DocumentSelected) => {
@@ -30,7 +32,7 @@ export const useDocument = () => {
         removeItem(loginRedirectUrlKey);
         await postEventLog({ name: 'document-complete' });
 
-        if (isOnboardingAnswered === true) {
+        if (isOnboardingAnswered === true || isOnboardingQuestionaryIsNotNeeded) {
           router.push('/top');
           return;
         }
@@ -38,11 +40,13 @@ export const useDocument = () => {
         router.push('/onboarding/questionary');
       }
     },
-    [getItem, isOnboardingAnswered, postEventLog, removeItem, router]
+    [getItem, isOnboardingAnswered, isOnboardingQuestionaryIsNotNeeded, postEventLog, removeItem, router]
   );
 
   return {
+    isOnboardingQuestionaryIsNotNeeded,
     mode,
+    profile,
     selected,
     setMode,
     setSelected,
