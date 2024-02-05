@@ -38,15 +38,16 @@ export const Affiliate: React.FC = () => {
                     <img src="icons/point_invitation.svg" alt="" width="21" height="21" />
                     <div>
                       <div>
-                        最大{`${(campaign.parent_register_point || 0) + (campaign.parent_consult_point || 0)}`}
+                        {(campaign.parent_consult_point || 0) > 0 && '最大'}
+                        {`${(campaign.parent_register_point || 0) + (campaign.parent_consult_point || 0)}`}
                         円相当のMediiポイント
                       </div>
-                      <ul className="mt-1 list-disc pl-6 text-xs text-text-secondary">
-                        <li>紹介いただいた医師が新規登録で {campaign.parent_register_point}pt</li>
-                        {(campaign.parent_consult_point || 0) > 0 && (
+                      {(campaign.parent_consult_point || 0) > 0 && (
+                        <ul className="mt-1 list-disc pl-6 text-xs text-text-secondary">
+                          <li>紹介いただいた医師が新規登録で {campaign.parent_register_point}pt</li>
                           <li>紹介いただいた医師が症例相談で {campaign.parent_consult_point}pt</li>
-                        )}
-                      </ul>
+                        </ul>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -56,15 +57,16 @@ export const Affiliate: React.FC = () => {
                     <img src="icons/point_invitation.svg" alt="" width="21" height="21" />
                     <div>
                       <div>
-                        最大{`${(campaign.child_register_point || 0) + (campaign.child_consult_point || 0)}`}
+                        {(campaign.child_consult_point || 0) > 0 && '最大'}
+                        {`${(campaign.child_register_point || 0) + (campaign.child_consult_point || 0)}`}
                         円相当のMediiポイント
                       </div>
-                      <ul className="mt-1 list-disc pl-6 text-xs text-text-secondary">
-                        <li>新規登録で {campaign.child_register_point}pt</li>
-                        {(campaign.child_consult_point || 0) > 0 && (
+                      {(campaign.child_consult_point || 0) > 0 && (
+                        <ul className="mt-1 list-disc pl-6 text-xs text-text-secondary">
+                          <li>新規登録で {campaign.child_register_point}pt</li>
                           <li>症例相談で {campaign.child_consult_point}pt</li>
-                        )}
-                      </ul>
+                        </ul>
+                      )}
                     </div>
                   </div>
                 </div>
