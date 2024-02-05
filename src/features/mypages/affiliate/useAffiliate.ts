@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import QRCode from 'qrcode';
 import { useExistCampaign } from '@/hooks/api/campaign/useExistCampaign';
 import { dateFormat } from '@/libs/date';
+import { CampaignEntity } from '@/types/entities/CampaignEntity';
 
 const qrCodeFileName = 'Medii医師紹介QRコード.png';
 
@@ -12,6 +13,7 @@ export type AffiliateUrlsType = {
 };
 
 export type UseAffiliateType = {
+  campaign?: CampaignEntity;
   isCampaign: boolean;
   downloadQrCode: () => void;
   clipboard: () => void;
@@ -70,6 +72,7 @@ export const useAffiliate = (): UseAffiliateType => {
   }, [invitationUrl]);
 
   return {
+    campaign,
     isCampaign,
     downloadQrCode,
     clipboard,
