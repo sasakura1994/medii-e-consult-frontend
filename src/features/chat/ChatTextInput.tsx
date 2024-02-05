@@ -42,7 +42,6 @@ export const ChatTextInput = (props: ChatTextInputProps) => {
     resetFileInput,
     postNewFile,
     updateDraftMessage,
-    windowWidth,
   } = useChatTextInput({ chatRoomId: chatRoomId, resetChatListFromUid });
 
   const submit = async () => {
@@ -94,13 +93,7 @@ export const ChatTextInput = (props: ChatTextInputProps) => {
           }}
           className="ml-2 flex flex-grow resize-none rounded border border-solid border-block-gray px-2
           py-1 placeholder-gray-600 disabled:bg-[#d5d5d5] disabled:text-block-gray"
-          placeholder={windowWidth >= 1024 ? 'メッセージを入力 (Shift + Enterキーで送信)' : 'メッセージを入力'}
-          onKeyDown={async (e) => {
-            if (e.key === 'Enter' && e.shiftKey) {
-              e.preventDefault();
-              submit();
-            }
-          }}
+          placeholder="メッセージを入力"
         />
         <input
           type="file"
@@ -120,9 +113,7 @@ export const ChatTextInput = (props: ChatTextInputProps) => {
           src="icons/send_message.svg"
           alt=""
           className="mx-3 my-auto h-[30px] w-[30px] cursor-pointer"
-          onClick={async () => {
-            submit();
-          }}
+          onClick={submit}
         />
         {editingImage && (
           <ImageEditorComponent
