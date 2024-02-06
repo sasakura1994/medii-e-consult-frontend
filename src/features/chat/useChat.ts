@@ -44,6 +44,7 @@ export const useChat = () => {
     fetchNewChatList,
     resetFromUid: resetChatListFromUid,
     deleteMessageMutate,
+    updateMessageMutate,
   } = useFetchChatList(chatRoomIdStr);
 
   const isResponderConsult = useMemo(() => {
@@ -171,5 +172,8 @@ export const useChat = () => {
     chatGlobalState,
     accountId,
     isResponderConsult,
+    updateMessageMutate,
   };
 };
+
+export type UseChat = ReturnType<typeof useChat>;

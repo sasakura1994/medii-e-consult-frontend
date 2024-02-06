@@ -25,8 +25,9 @@ import { AllowAddToConsultExampleListModal } from './AllowAddToConsultExampleLis
 import { ReConsultSuggestionModal } from './ReConsultSuggestionModal';
 import { ChatFirstMessageEditModal } from './ChatFirstMessageEditModal';
 import { ChatRoomDisplayName } from './ChatRoomDisplayName';
+import { UseChat } from './useChat';
 
-type ConsultDetailProps = {
+type ConsultDetailProps = Pick<UseChat, 'updateMessageMutate'> & {
   publishmentStatusData?: {
     publishment_accepted: number;
   };
@@ -58,6 +59,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     setSelectedTab,
     fetchNewChatList,
     resetChatListFromUid,
+    updateMessageMutate,
   } = props;
   const {
     accountId,
@@ -186,10 +188,12 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
               mutateChatRoomList={mutateChatRoomList}
             />
           )}
-          {isOpenChatFirstMessageEditModal && (
+          {isOpenChatFirstMessageEditModal && chatListData && (
             <ChatFirstMessageEditModal
-              defaultMessage={chatRoomData.chat_room.content}
+              chatRoomId={chatRoomData.chat_room.chat_room_id}
+              firstMessage={chatListData[0]}
               onClose={() => setIsOpenChatFirstMessageEditModal(false)}
+              updateMessageMutate={updateMessageMutate}
             />
           )}
           {isOpenDeleteModal && (
@@ -253,7 +257,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                   onClick={() => setIsOpenChatEditModal(true)}
                 />
               </div>
-              <div className="flex flex-wrap items-center space-x-1 border-t lg:h-7 lg:border-b">
+              <div className="flex flex-wrap items-center space-x-1 border-t p-2 lg:border-b">
                 {chatRoomData.members[0] && <p className="-mb-2 mt-2 text-xxs lg:mt-0 lg:border-t-0">E-コンサル</p>}
                 <div className="block h-0 w-full lg:hidden" />
                 <div className="flex flex-grow items-center lg:flex-grow-0">
@@ -263,6 +267,7 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
                       isMyRoom={isMyRoom}
                       setIsOpenDoctorDetailModal={setIsOpenDoctorDetailModal}
                       setIsOpenGroupMemberModal={setIsOpenGroupMemberModal}
+                      setIsOpenChatFirstMessageEditModal={setIsOpenChatFirstMessageEditModal}
                     />
                   )}
                 </div>

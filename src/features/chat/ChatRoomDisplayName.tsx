@@ -3,14 +3,24 @@ import { FetchChatRoomResponseData } from '@/hooks/api/chat/useFetchChatRoom';
 import { useMedicalSpeciality } from '@/hooks/medicalSpeciality/useMedicalSpeciality';
 import { useDoctor } from '@/hooks/useDoctor';
 import { UseConsultDetail } from './useConsultDetail';
+import PrimaryButton from '@/components/Button/PrimaryButton';
 
-type Props = Pick<UseConsultDetail, 'setIsOpenDoctorDetailModal' | 'setIsOpenGroupMemberModal'> & {
+type Props = Pick<
+  UseConsultDetail,
+  'setIsOpenDoctorDetailModal' | 'setIsOpenGroupMemberModal' | 'setIsOpenChatFirstMessageEditModal'
+> & {
   chatRoomData: FetchChatRoomResponseData;
   isMyRoom: boolean;
 };
 
 export const ChatRoomDisplayName = (props: Props) => {
-  const { chatRoomData, isMyRoom, setIsOpenDoctorDetailModal, setIsOpenGroupMemberModal } = props;
+  const {
+    chatRoomData,
+    isMyRoom,
+    setIsOpenDoctorDetailModal,
+    setIsOpenGroupMemberModal,
+    setIsOpenChatFirstMessageEditModal,
+  } = props;
   const { getMedicalSpecialityName } = useMedicalSpeciality();
   const { calculateExperienceYear } = useDoctor();
 
@@ -50,9 +60,14 @@ export const ChatRoomDisplayName = (props: Props) => {
   }
   if (chatRoomData.chat_room.status === 'PENDING') {
     return (
-      <p className="text-sm font-normal text-strong">
-        現在、コンサルの内容を確認しています。情報の追記などをお願いする場合がございます。
-      </p>
+      <div>
+        <p className="text-sm font-normal text-strong">
+          現在、コンサルの内容を確認しています。情報の追記などをお願いする場合がございます。
+        </p>
+        <div className="py-1">
+          <PrimaryButton onClick={() => setIsOpenChatFirstMessageEditModal(true)}>コンサル文を編集する</PrimaryButton>
+        </div>
+      </div>
     );
   }
   if (chatRoomData.members.length === 0) {
