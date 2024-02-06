@@ -23,7 +23,8 @@ import { ResolveChatRoomModal } from './ResolveChatRoomModal';
 import ChatImageModal from './ChatImageModal';
 import { AllowAddToConsultExampleListModal } from './AllowAddToConsultExampleListModal';
 import { ReConsultSuggestionModal } from './ReConsultSuggestionModal';
-import { useDoctor } from '@/hooks/useDoctor';
+import { ChatFirstMessageEditModal } from './ChatFirstMessageEditModal';
+import { ChatRoomDisplayName } from './ChatRoomDisplayName';
 
 type ConsultDetailProps = {
   publishmentStatusData?: {
@@ -70,6 +71,8 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     setIsOpenRoomReopenModal,
     isOpenChatEditModal,
     setIsOpenChatEditModal,
+    isOpenChatFirstMessageEditModal,
+    setIsOpenChatFirstMessageEditModal,
     isOpenDeleteModal,
     setIsOpenDeleteModal,
     isOpenDoctorDetailModal,
@@ -92,7 +95,6 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     selectedImage,
     setSelectedImage,
     setChatGlobalState,
-    getMedicalSpecialityName,
     activateChatRoom,
   } = useConsultDetail({
     medicalSpecialities: medicalSpecialities,
@@ -100,7 +102,6 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     chatListData: chatListData,
     fetchNewChatList: fetchNewChatList,
   });
-  const { calculateExperienceYear } = useDoctor();
 
   const isMyRoom = useMemo(() => {
     if (chatRoomData && accountId) {
@@ -108,108 +109,6 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
     }
     return false;
   }, [chatRoomData, accountId]);
-
-  const chatRoomDisplayName = useMemo(() => {
-    if (!chatRoomData) {
-      return <></>;
-    }
-    const owner = chatRoomData.members.find((member) => member.account_id === chatRoomData.chat_room.owner_account_id);
-    if (!isMyRoom) {
-      if (!owner?.speciality_1) {
-        // プロフィール未入力ユーザー
-        return <p className="text-md font-bold">質問医</p>;
-      }
-      if (chatRoomData.chat_room.is_real_name) {
-        return (
-          <>
-            <p className="text-md font-bold">{owner?.last_name + ' ' + owner?.first_name + '先生'}</p>
-            <p className="text-xs">
-              ({getMedicalSpecialityName(owner?.speciality_1 ?? '')}・
-              {calculateExperienceYear(owner?.qualified_year ?? 0)}
-              年目)
-            </p>
-          </>
-        );
-      }
-      return (
-        <>
-          <p className="text-md font-bold">質問医</p>
-          {chatRoomData.members.length > 0 && (
-            <p className="text-xs" data-testid="chat-room-display-name-speciality-and-year">
-              ({getMedicalSpecialityName(owner?.speciality_1 ?? '')}・
-              {calculateExperienceYear(owner?.qualified_year ?? 0)}
-              年目)
-            </p>
-          )}
-        </>
-      );
-    }
-    if (chatRoomData.chat_room.status === 'CREATED') {
-      return <p className="text-sm font-normal text-strong">回答してくださる専門医の先生を探しています</p>;
-    }
-    if (chatRoomData.chat_room.status === 'PENDING') {
-      return (
-        <p className="text-sm font-normal text-strong">
-          現在、コンサルの内容を確認しています。情報の追記などをお願いする場合がございます。
-        </p>
-      );
-    }
-    if (chatRoomData.members.length === 0) {
-      return <p className="text-sm font-bold">退会済みアカウント</p>;
-    }
-
-    // 実名グループの場合
-    if (
-      chatRoomData.chat_room &&
-      !isMyRoom &&
-      chatRoomData.chat_room.room_type === 'GROUP' &&
-      chatRoomData.chat_room.is_real_name
-    ) {
-      const owner = chatRoomData.members.find(
-        (member) => member.account_id === chatRoomData.chat_room.owner_account_id
-      );
-      if (owner) {
-        return (
-          <>
-            <p className="cursor-pointer text-md font-bold underline" onClick={() => setIsOpenDoctorDetailModal(true)}>
-              {owner.last_name + ' ' + owner.first_name + '先生'}
-            </p>
-            <p className="text-xs">
-              ({getMedicalSpecialityName(owner.speciality_1)}・{calculateExperienceYear(owner.qualified_year)}
-              年目)
-            </p>
-          </>
-        );
-      }
-    }
-
-    if (chatRoomData.chat_room.room_type === 'GROUP') {
-      return (
-        <p className="cursor-pointer text-md font-bold underline" onClick={() => setIsOpenGroupMemberModal(true)}>
-          {chatRoomData.members.length}人の専門医メンバー
-        </p>
-      );
-    }
-
-    return (
-      <>
-        <p className="cursor-pointer text-md font-bold underline" onClick={() => setIsOpenDoctorDetailModal(true)}>
-          {chatRoomData.members[0].last_name + ' ' + chatRoomData.members[0].first_name + ' 先生'}
-        </p>
-        <p className="text-xs">
-          ({getMedicalSpecialityName(chatRoomData.members[0].speciality_1)}・
-          {calculateExperienceYear(chatRoomData.members[0].qualified_year)}年目)
-        </p>
-      </>
-    );
-  }, [
-    chatRoomData,
-    calculateExperienceYear,
-    getMedicalSpecialityName,
-    isMyRoom,
-    setIsOpenDoctorDetailModal,
-    setIsOpenGroupMemberModal,
-  ]);
 
   return (
     <>
@@ -287,7 +186,12 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
               mutateChatRoomList={mutateChatRoomList}
             />
           )}
-
+          {isOpenChatFirstMessageEditModal && (
+            <ChatFirstMessageEditModal
+              defaultMessage={chatRoomData.chat_room.content}
+              onClose={() => setIsOpenChatFirstMessageEditModal(false)}
+            />
+          )}
           {isOpenDeleteModal && (
             <ConsultDeleteModal
               chatRoomData={chatRoomData}
@@ -352,7 +256,16 @@ export const ConsultDetail = (props: ConsultDetailProps) => {
               <div className="flex flex-wrap items-center space-x-1 border-t lg:h-7 lg:border-b">
                 {chatRoomData.members[0] && <p className="-mb-2 mt-2 text-xxs lg:mt-0 lg:border-t-0">E-コンサル</p>}
                 <div className="block h-0 w-full lg:hidden" />
-                <div className="flex flex-grow items-center lg:flex-grow-0">{chatRoomDisplayName}</div>
+                <div className="flex flex-grow items-center lg:flex-grow-0">
+                  {chatRoomData && (
+                    <ChatRoomDisplayName
+                      chatRoomData={chatRoomData}
+                      isMyRoom={isMyRoom}
+                      setIsOpenDoctorDetailModal={setIsOpenDoctorDetailModal}
+                      setIsOpenGroupMemberModal={setIsOpenGroupMemberModal}
+                    />
+                  )}
+                </div>
 
                 <img
                   src="icons/btn_menu.svg"
