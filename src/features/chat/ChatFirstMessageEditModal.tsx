@@ -38,11 +38,11 @@ export const ChatFirstMessageEditModal = (props: ChatFirstMessageEditModalProps)
               required
             />
           </div>
-          <div className="mb-10 mt-8 flex justify-center space-x-4">
-            <SecondaryButton className="w-[223px]" onClick={() => onClose()}>
+          <div className="mb-10 mt-8 flex justify-end space-x-4">
+            <SecondaryButton className="grow lg:grow-0" onClick={() => onClose()}>
               キャンセル
             </SecondaryButton>
-            <PrimaryButton className="w-[223px]" type="submit">
+            <PrimaryButton className="grow lg:grow-0" type="submit">
               コンサル文を更新
             </PrimaryButton>
           </div>
