@@ -6,7 +6,7 @@ import React, { useMemo } from 'react';
 export const TopNotifications = () => {
   const router = useRouter();
   // nmoも条件的には同じため流用
-  const { isNeedToInputProfile, profile } = useProfile();
+  const { isNeedToInputProfile, profile, isStudentCanToBeDoctor } = useProfile();
 
   const profileNotification = useMemo(() => {
     if (!profile) {
@@ -62,6 +62,14 @@ export const TopNotifications = () => {
         </>
       ) : (
         profileNotification
+      )}
+      {isStudentCanToBeDoctor && (
+        <InlineNotification
+          text="医師登録を行うことができます。"
+          dataTestId="top-notification-student-to-doctor"
+          buttonText="医師登録を行う"
+          buttonOnClick={() => router.push('/editprofile?registerMode=1&student_to_doctor=1')}
+        />
       )}
     </>
   );
