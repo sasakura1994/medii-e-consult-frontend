@@ -46,6 +46,7 @@ export type UseEditProfile = {
   isCompleted: boolean;
   isHospitalDisabled: boolean;
   isSending: boolean;
+  isStudentToDoctor: boolean;
   profile?: EditingProfile;
   saveProfile: () => Promise<boolean>;
   selectedHospital?: Option;
@@ -371,6 +372,7 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
     isCompleted,
     isHospitalDisabled,
     isSending,
+    isStudentToDoctor,
     profile,
     saveProfile,
     selectedHospital,
