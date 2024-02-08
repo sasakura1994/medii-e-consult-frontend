@@ -42,4 +42,73 @@ describe('useProfile', () => {
       expect(hooks.current.isOnboardingQuestionaryIsNotNeeded).toBe(true);
     });
   });
+
+  describe('isStudentCanToBeDoctor', () => {
+    jest.useFakeTimers();
+
+    describe('期間チェック', () => {
+      beforeEach(() => {
+        (useFetchProfile as jest.Mock).mockReturnValue({
+          profile: {
+            main_speciality: 'STUDENT',
+            graduation_year: 2024,
+            status: 'VERIFIED',
+          },
+        });
+      });
+
+      test('医師に転向可能（同年）', () => {
+        jest.setSystemTime(new Date(2024, 3, 1));
+
+        const hooks = renderHook(() => useProfile(), {}).result;
+        expect(hooks.current.isStudentCanToBeDoctor).toBe(true);
+      });
+
+      test('医師に転向可能（昨年以前）', () => {
+        jest.setSystemTime(new Date(2025, 3, 1));
+
+        const hooks = renderHook(() => useProfile(), {}).result;
+        expect(hooks.current.isStudentCanToBeDoctor).toBe(true);
+      });
+
+      test('3月以前は不可能', () => {
+        jest.setSystemTime(new Date(2024, 2, 31));
+
+        const hooks = renderHook(() => useProfile(), {}).result;
+        expect(hooks.current.isStudentCanToBeDoctor).toBe(false);
+      });
+    });
+
+    describe('false', () => {
+      beforeEach(() => {
+        jest.setSystemTime(new Date(2024, 3, 1));
+      });
+
+      test('医学生でない', () => {
+        (useFetchProfile as jest.Mock).mockReturnValue({
+          profile: {
+            main_speciality: 'NAIKA',
+            graduation_year: 2024,
+            status: 'VERIFIED',
+          },
+        });
+
+        const hooks = renderHook(() => useProfile(), {}).result;
+        expect(hooks.current.isStudentCanToBeDoctor).toBe(false);
+      });
+
+      test('VERIFIEDでない', () => {
+        (useFetchProfile as jest.Mock).mockReturnValue({
+          profile: {
+            main_speciality: 'NAIKA',
+            graduation_year: 2024,
+            status: 'PROFILE',
+          },
+        });
+
+        const hooks = renderHook(() => useProfile(), {}).result;
+        expect(hooks.current.isStudentCanToBeDoctor).toBe(false);
+      });
+    });
+  });
 });

@@ -17,6 +17,7 @@ export type UseProfile = {
   hospitalName: string;
   isNeedToInputProfile: boolean;
   isOnboardingQuestionaryIsNotNeeded: boolean;
+  isStudentCanToBeDoctor: boolean;
   medicalSpeciality: MedicalSpecialityEntity[] | undefined;
   prefecture: PrefectureEntityType[] | undefined;
   hospital: HospitalEntity | undefined;
@@ -56,6 +57,20 @@ export const useProfile = (): UseProfile => {
     return profile.main_speciality === 'KENSYU' || calculateExperienceYear(profile.qualified_year) < 3;
   }, [calculateExperienceYear, profile]);
 
+  const isStudentCanToBeDoctor = useMemo(() => {
+    if (!profile?.graduation_year) {
+      return false;
+    }
+
+    const year = new Date().getFullYear();
+    const month = new Date().getMonth() + 1;
+    return (
+      (year > profile.graduation_year || (year === profile.graduation_year && month >= 4)) &&
+      profile.main_speciality === 'STUDENT' &&
+      profile.status === 'VERIFIED'
+    );
+  }, [profile]);
+
   const getPrefectureNameByCode = useCallback(
     (code: string | undefined): string | undefined => {
       if (!code || !prefecture) return undefined;
@@ -72,6 +87,7 @@ export const useProfile = (): UseProfile => {
     hospitalName,
     isNeedToInputProfile,
     isOnboardingQuestionaryIsNotNeeded,
+    isStudentCanToBeDoctor,
     medicalSpeciality: medicalSpecialities,
     prefecture,
     hospital,
