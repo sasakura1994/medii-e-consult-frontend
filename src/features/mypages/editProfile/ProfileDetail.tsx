@@ -7,6 +7,7 @@ import { useProfile } from '@/hooks/useProfile';
 import Link from 'next/link';
 import { EditProfileHeading } from './EditProfileHeading';
 import { useAuthentication } from '@/hooks/authentication/useAuthentication';
+import PrimaryButton from '@/components/Button/PrimaryButton';
 
 type Props = {
   onEdit: () => void;
@@ -15,7 +16,7 @@ type Props = {
 export const ProfileDetail: React.FC<Props> = ({ onEdit }: Props) => {
   const { getMedicalSpecialityName } = useMedicalSpeciality();
   const { getPrefectureNameByCode } = usePrefecture();
-  const { profile, email, hospitalName } = useProfile();
+  const { profile, email, hospitalName, isStudentCanToBeDoctor } = useProfile();
   const { signOut } = useAuthentication();
   const isStudent = profile?.main_speciality === 'STUDENT';
 
@@ -33,6 +34,15 @@ export const ProfileDetail: React.FC<Props> = ({ onEdit }: Props) => {
 
         {profile && (
           <>
+            {isStudentCanToBeDoctor && (
+              <div className="my-8">
+                <Link href="/editprofile?registerMode=1&student_to_doctor=1">
+                  <PrimaryButton size="large" className="w-full">
+                    医師登録を行う
+                  </PrimaryButton>
+                </Link>
+              </div>
+            )}
             <div className="mb-10">
               <EditProfileHeading className="mb-4">利用者情報</EditProfileHeading>
               <div className="flex">

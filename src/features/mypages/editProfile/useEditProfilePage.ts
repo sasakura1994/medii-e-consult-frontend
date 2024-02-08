@@ -3,8 +3,9 @@ import { ProfileEntity } from '@/types/entities/profileEntity';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useMemo, useState } from 'react';
 
-type Query = {
+export type Query = {
   registerMode: string;
+  student_to_doctor?: string;
 };
 
 type EditProfileMode = 'profile' | 'edit';
