@@ -65,7 +65,7 @@ export const TopNotifications = () => {
       )}
       {isStudentCanToBeDoctor && (
         <InlineNotification
-          text="医師登録を行うことができます。"
+          text="ご卒業おめでとうございます。E-コンサル内の全機能をご利用いただくため、ぜひ医師登録をお願いいたします。"
           dataTestId="top-notification-student-to-doctor"
           buttonText="医師登録を行う"
           buttonOnClick={() => router.push('/editprofile?registerMode=1&student_to_doctor=1')}
