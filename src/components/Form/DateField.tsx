@@ -30,7 +30,25 @@ export const DateField = (props: Props) => {
   const ref = useRef<HTMLInputElement>(null);
   const [isSafari, setIsSafari] = useState(false);
   const [isModalShown, setIsModalShown] = useState(false);
+  const [birthday, setBirthday] = useState<string>('');
   const selectedDate = value ? dayjsDate(value as string) : undefined;
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const value = e.target.value;
+
+    setBirthday(value);
+  };
+
+  const handleBlur = () => {
+    onChange?.({
+      target: { value: dateFormat(birthday, 'YYYY-MM-DD') },
+    } as unknown as ChangeEvent<HTMLInputElement>);
+  };
+
+  useEffect(() => {
+    if (value) setBirthday(dateFormat(value, 'YYYY-MM-DD'));
+  }, [value]);
 
   useEffect(() => {
     if (isSafari || !router.isReady || typeof navigator === 'undefined') {
@@ -53,8 +71,9 @@ export const DateField = (props: Props) => {
           ref.current?.showPicker();
         }}
         // これを入れておかないとテスト時に文句を言われる
-        onChange={() => {}}
-        value={value ? dateFormat(value, 'YYYY/M/D') : ''}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        value={birthday}
         // 画像が表示されなくても支障なし
         // eslint-disable-next-line rulesdir/dont-use-url-properties
         className="bg-[url('/icons/caret-down-fill.svg')] bg-[center_right_12px] bg-no-repeat"
@@ -67,8 +86,9 @@ export const DateField = (props: Props) => {
           type="date"
           id={id}
           data-testid={dataTestId}
-          value={value ? dateFormat(value, 'YYYY-MM-DD') : ''}
-          onChange={onChange}
+          defaultValue={birthday}
+          onChange={handleChange}
+          onBlur={handleBlur}
           className="invisible h-0 w-0"
         />
       )}
