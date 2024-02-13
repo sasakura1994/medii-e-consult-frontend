@@ -24,6 +24,7 @@ export const Chat = () => {
     chatGlobalState,
     accountId,
     isResponderConsult,
+    updateMessageMutate,
   } = useChat();
   return (
     <div className="flex h-full bg-white">
@@ -41,6 +42,7 @@ export const Chat = () => {
           setSelectedTab={setSelectedTab}
           fetchNewChatList={fetchNewChatList}
           resetChatListFromUid={resetChatListFromUid}
+          updateMessageMutate={updateMessageMutate}
         />
       ) : (
         <div className="hidden h-screen flex-grow flex-col border border-[#d5d5d5] bg-bg lg:flex" />

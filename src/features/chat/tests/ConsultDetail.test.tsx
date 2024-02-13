@@ -42,6 +42,7 @@ describe('ConsultDetail', () => {
             setSelectedTab={jest.fn()}
             fetchNewChatList={jest.fn()}
             resetChatListFromUid={jest.fn()}
+            updateMessageMutate={jest.fn()}
           />
         );
         expect(screen.getByTestId('chat-room-display-name-speciality-and-year')).toBeInTheDocument();
@@ -66,6 +67,7 @@ describe('ConsultDetail', () => {
             setSelectedTab={jest.fn()}
             fetchNewChatList={jest.fn()}
             resetChatListFromUid={jest.fn()}
+            updateMessageMutate={jest.fn()}
           />
         );
         await waitFor(() => {
