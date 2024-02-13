@@ -36,18 +36,13 @@ export const DateField = (props: Props) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const value = e.target.value;
-
     setBirthday(value);
   };
 
-  const handleBlur = () => {
-    onChange?.({
-      target: { value: dateFormat(birthday, 'YYYY-MM-DD') },
-    } as unknown as ChangeEvent<HTMLInputElement>);
-  };
-
   useEffect(() => {
-    if (value) setBirthday(dateFormat(value, 'YYYY-MM-DD'));
+    if (value) {
+      setBirthday(dateFormat(value, 'YYYY/MM/DD'));
+    }
   }, [value]);
 
   useEffect(() => {
@@ -60,7 +55,7 @@ export const DateField = (props: Props) => {
   return (
     <>
       <TextField
-        type="text"
+        type="date"
         placeholder="yyyy/mm/dd"
         onClick={() => {
           if (isSafari) {
@@ -68,11 +63,9 @@ export const DateField = (props: Props) => {
             setIsModalShown(true);
             return;
           }
-          ref.current?.showPicker();
         }}
         // これを入れておかないとテスト時に文句を言われる
         onChange={handleChange}
-        onBlur={handleBlur}
         value={birthday}
         // 画像が表示されなくても支障なし
         // eslint-disable-next-line rulesdir/dont-use-url-properties
@@ -82,13 +75,11 @@ export const DateField = (props: Props) => {
       />
       {!disabled && (
         <input
-          ref={ref}
           type="date"
           id={id}
           data-testid={dataTestId}
           defaultValue={birthday}
           onChange={handleChange}
-          onBlur={handleBlur}
           className="invisible h-0 w-0"
         />
       )}
