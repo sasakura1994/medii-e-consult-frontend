@@ -37,6 +37,13 @@ export const DateField = (props: Props) => {
     e.preventDefault();
     const value = e.target.value;
     setBirthday(value);
+    if (
+      Number(value.split('-')[0]) >= 1000 &&
+      (dateFormat(value, 'YYYY') < fromYear.toString() ||
+        dateFormat(value, 'YYYY') > new Date().getFullYear().toString())
+    ) {
+      setBirthday(dateFormat(value, 'YYYY'));
+    }
   };
 
   useEffect(() => {
