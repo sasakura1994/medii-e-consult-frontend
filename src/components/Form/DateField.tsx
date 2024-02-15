@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { ja } from 'date-fns/locale';
 import { DayPicker } from 'react-day-picker';
 import { Modal } from '../Parts/Modal/Modal';
+import { ErrorMessage } from '../Parts/Text/ErrorMessage';
 
 type Props = {
   id?: string;
@@ -31,26 +32,33 @@ export const DateField = (props: Props) => {
   const [isSafari, setIsSafari] = useState(false);
   const [isModalShown, setIsModalShown] = useState(false);
   const [birthday, setBirthday] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState('');
   const selectedDate = value ? dayjsDate(value as string) : undefined;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const value = e.target.value;
     setBirthday(value);
-    if (
-      Number(value.split('-')[0]) >= 1000 &&
-      (dateFormat(value, 'YYYY') < fromYear.toString() ||
-        dateFormat(value, 'YYYY') > new Date().getFullYear().toString())
-    ) {
-      setBirthday(dateFormat(value, 'YYYY'));
-    }
+    setErrorMessage('');
   };
 
-  useEffect(() => {
-    if (value) {
-      setBirthday(dateFormat(value, 'YYYY/MM/DD'));
+  const handleBlur = () => {
+    if (birthday == '') {
+      setErrorMessage('エラーが発生しました。');
     }
-  }, [value]);
+
+    if (
+      (Number(birthday.split('-')[0]) >= 1000 && dateFormat(birthday, 'YYYY') < fromYear.toString()) ||
+      Number(dateFormat(birthday, 'YYYY')) > new Date().getFullYear() ||
+      (Number(dateFormat(birthday, 'YYYY')) === new Date().getFullYear() &&
+        Number(dateFormat(birthday, 'MM')) > new Date().getMonth()) ||
+      (Number(dateFormat(birthday, 'YYYY')) === new Date().getFullYear() &&
+        Number(dateFormat(birthday, 'MM')) === new Date().getMonth() &&
+        Number(dateFormat(birthday, 'DD')) > new Date().getDate())
+    ) {
+      setErrorMessage('エラーが発生しました。');
+    }
+  };
 
   useEffect(() => {
     if (isSafari || !router.isReady || typeof navigator === 'undefined') {
@@ -73,6 +81,7 @@ export const DateField = (props: Props) => {
         }}
         // これを入れておかないとテスト時に文句を言われる
         onChange={handleChange}
+        onBlur={handleBlur}
         value={birthday}
         // 画像が表示されなくても支障なし
         // eslint-disable-next-line rulesdir/dont-use-url-properties
@@ -80,6 +89,7 @@ export const DateField = (props: Props) => {
         // iOSで操作するとフォーカスしたカーソルが残ってしまうため
         disabled={disabled || isModalShown}
       />
+      {errorMessage && <ErrorMessage className="mt-4">{errorMessage}</ErrorMessage>}
       {!disabled && (
         <input
           type="date"
