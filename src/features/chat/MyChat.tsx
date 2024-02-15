@@ -187,7 +187,7 @@ export const MyChat = (props: MyChatProps) => {
           </>
         )}
       </div>
-      {isMouseOver && (
+      {isMouseOver && !chatData.is_first && (
         <div
           className="flex justify-end"
           onMouseOver={() => {
