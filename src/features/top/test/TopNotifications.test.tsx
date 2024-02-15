@@ -71,4 +71,23 @@ describe('TopNotifications', () => {
 
     expect(screen.queryByTestId('top-notification-input-profile')).toBeInTheDocument();
   });
+
+  test('医学生から医師への変更メッセージ', async () => {
+    (useFetchProfile as jest.Mock).mockReturnValue({
+      profile: {
+        registration_source: '',
+        last_name_hira: 'name',
+        main_speciality: 'STUDENT',
+        status: 'VERIFIED',
+        graduation_year: 2000,
+        birthday_year: 9999,
+      },
+    });
+
+    await act(async () => {
+      await render(<TopNotifications />);
+    });
+
+    expect(screen.queryByTestId('top-notification-student-to-doctor')).toBeInTheDocument();
+  });
 });

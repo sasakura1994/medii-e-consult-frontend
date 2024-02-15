@@ -20,7 +20,8 @@ export type EditProfileProps = {
 export const EditProfile = (props: EditProfileProps) => {
   const { isRegisterMode } = props;
   const editProfile = useEditProfile(props);
-  const { accountType, errorMessage, isHospitalDisabled, profile, setAccountType, submit } = editProfile;
+  const { accountType, errorMessage, isHospitalDisabled, isStudentToDoctor, profile, setAccountType, submit } =
+    editProfile;
   const { profile: fetchedProfile } = useFetchProfile();
 
   if (!profile) {
@@ -84,7 +85,7 @@ export const EditProfile = (props: EditProfileProps) => {
                   <HospitalAffiliation {...editProfile} />
                 </div>
               )}
-              {fetchedProfile?.registration_source !== 'nmo' && (
+              {fetchedProfile?.registration_source !== 'nmo' && !isStudentToDoctor && (
                 <div className="mt-8">
                   <UsageClassification {...editProfile} isRegisterMode={isRegisterMode} />
                 </div>

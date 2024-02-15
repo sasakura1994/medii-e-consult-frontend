@@ -1,7 +1,7 @@
-import React from 'react';
+import { useCallback } from 'react';
 
 export const useDoctor = () => {
-  const calculateExperienceYear = React.useCallback((qualifiedYear: number) => {
+  const calculateExperienceYear = useCallback((qualifiedYear: number) => {
     const experienceYear = Math.max(1, new Date().getFullYear() - qualifiedYear + 1);
 
     const month = new Date().getMonth() + 1;

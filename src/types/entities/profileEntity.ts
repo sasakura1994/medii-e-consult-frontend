@@ -1,3 +1,5 @@
+export type DoctorStatus = 'CREATED' | 'PROFILE' | 'PENDING_MANUAL' | 'PENDING_AUTO' | 'VERIFIED';
+
 export type ProfileEntity = {
   document_file_path: string;
   document: File | undefined | null;
@@ -22,7 +24,7 @@ export type ProfileEntity = {
   doctor_qualified_day: number;
   doctor_number: string;
   tel: string;
-  status: string;
+  status: DoctorStatus;
   need_to_send_confimation: boolean;
   is_imperfect_profile: boolean;
   is_hospital_doctor: boolean;
