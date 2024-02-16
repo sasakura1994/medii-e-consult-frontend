@@ -129,7 +129,6 @@ const Seminar: NextPage = () => {
                     <p className="pr-4 text-2xl text-primary lg:text-lg lg:font-bold">講師</p>
                     <p className="whitespace-pre-wrap text-base lg:text-lg">
                       {seminar?.doctor_name !== undefined ? seminar.doctor_name : ''}
-                      先生
                     </p>
                   </div>
                 </div>
@@ -142,7 +141,7 @@ const Seminar: NextPage = () => {
                   </div>
                 </div>
                 <div className="rounded-lg border p-4 text-base">
-                  <p className="pb-2">{seminar && seminar?.doctor_name}先生</p>
+                  <p className="pb-2">{seminar && seminar?.doctor_name}</p>
                   <p className="whitespace-pre-wrap text-primary">{seminar && seminar?.doctor_profile}</p>
                 </div>
                 {seminar && seminar.account_id && seminar.is_consult_available && (
