@@ -512,10 +512,10 @@ export const useNewChatRoom = (): UseNewChatRoom => {
     } else if (query.from) {
       createSource.from = query.from;
     }
-    if (draftUtmSource) {
-      createSource.utm_source = draftUtmSource;
-    } else if (query.utm_source) {
+    if (query.utm_source) {
       createSource.utm_source = query.utm_source;
+    } else if (draftUtmSource) {
+      createSource.utm_source = draftUtmSource;
     }
     data.create_source = createSource;
 
