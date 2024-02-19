@@ -6,6 +6,9 @@ import { ja } from 'date-fns/locale';
 import { DayPicker } from 'react-day-picker';
 import { Modal } from '../Parts/Modal/Modal';
 import { ErrorMessage } from '../Parts/Text/ErrorMessage';
+import dayjs from 'dayjs';
+
+type DateType = 'year' | 'month' | 'day';
 
 type Props = {
   id?: string;
@@ -31,31 +34,40 @@ export const DateField = (props: Props) => {
   const ref = useRef<HTMLInputElement>(null);
   const [isSafari, setIsSafari] = useState(false);
   const [isModalShown, setIsModalShown] = useState(false);
-  const [birthday, setBirthday] = useState<string>('');
+  const [year, setYear] = useState<string>('');
+  const [month, setMonth] = useState<string>('');
+  const [date, setDate] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [dateStr, setDateStr] = useState('');
   const selectedDate = value ? dayjsDate(value as string) : undefined;
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeDate = (e: ChangeEvent<HTMLInputElement>, dateType: DateType) => {
     e.preventDefault();
-    const value = e.target.value;
-    setBirthday(value);
-    setErrorMessage('');
+    switch (dateType) {
+      case 'year':
+        setYear(e.target.value);
+        setDateStr(`${e.target.value}-${month}-${date}`);
+        break;
+      case 'month':
+        setMonth(e.target.value);
+        setDateStr(`${year}-${e.target.value}-${date}`);
+        break;
+      case 'day':
+        setDate(e.target.value);
+        setDateStr(`${year}-${month}-${e.target.value}`);
+        break;
+      default:
+    }
   };
 
   const handleBlur = () => {
-    if (birthday == '') {
-      setErrorMessage('エラーが発生しました。');
-    }
-
-    if (
-      (Number(birthday.split('-')[0]) >= 1000 && dateFormat(birthday, 'YYYY') < fromYear.toString()) ||
-      Number(dateFormat(birthday, 'YYYY')) > new Date().getFullYear() ||
-      (Number(dateFormat(birthday, 'YYYY')) === new Date().getFullYear() &&
-        Number(dateFormat(birthday, 'MM')) > new Date().getMonth()) ||
-      (Number(dateFormat(birthday, 'YYYY')) === new Date().getFullYear() &&
-        Number(dateFormat(birthday, 'MM')) === new Date().getMonth() &&
-        Number(dateFormat(birthday, 'DD')) > new Date().getDate())
-    ) {
+    if (dayjs(dateStr, 'YYYY-MM-DD', true).isValid()) {
+      if (dayjs().isAfter(dayjs(dateStr))) {
+        setErrorMessage('');
+      } else {
+        setErrorMessage('エラーが発生しました。');
+      }
+    } else {
       setErrorMessage('エラーが発生しました。');
     }
   };
@@ -69,36 +81,54 @@ export const DateField = (props: Props) => {
 
   return (
     <>
-      <TextField
-        type="date"
-        placeholder="yyyy/mm/dd"
-        onClick={() => {
-          if (isSafari) {
-            ref.current?.focus();
-            setIsModalShown(true);
-            return;
-          }
-        }}
-        // これを入れておかないとテスト時に文句を言われる
-        onChange={handleChange}
-        onBlur={handleBlur}
-        value={birthday}
-        // 画像が表示されなくても支障なし
-        // eslint-disable-next-line rulesdir/dont-use-url-properties
-        className="bg-[url('/icons/caret-down-fill.svg')] bg-[center_right_12px] bg-no-repeat"
-        // iOSで操作するとフォーカスしたカーソルが残ってしまうため
-        disabled={disabled || isModalShown}
-      />
+      <div className="flex">
+        <TextField
+          type="text"
+          placeholder="1990"
+          onClick={() => {
+            if (isSafari) {
+              ref.current?.focus();
+              setIsModalShown(true);
+              return;
+            }
+          }}
+          // これを入れておかないとテスト時に文句を言われる
+          onChange={(e) => {
+            handleChangeDate(e, 'year');
+          }}
+          onBlur={handleBlur}
+          value={year}
+          // 画像が表示されなくても支障なし
+          // eslint-disable-next-line rulesdir/dont-use-url-properties
+          className="w-20"
+          // iOSで操作するとフォーカスしたカーソルが残ってしまうため
+          disabled={disabled || isModalShown}
+        />
+        <p className="mx-3 flex items-center">年</p>
+        <TextField
+          placeholder="06"
+          type="text"
+          onChange={(e) => handleChangeDate(e, 'month')}
+          onBlur={handleBlur}
+          value={month}
+          className="w-20"
+        />
+        <p className="mx-3 flex items-center">月</p>
+        <TextField
+          placeholder="25"
+          type="text"
+          onChange={(e) => {
+            handleChangeDate(e, 'day');
+          }}
+          onBlur={handleBlur}
+          value={date}
+          className="w-20"
+        />
+        <p className="mx-3 flex items-center">日</p>
+      </div>
       {errorMessage && <ErrorMessage className="mt-4">{errorMessage}</ErrorMessage>}
       {!disabled && (
-        <input
-          type="date"
-          id={id}
-          data-testid={dataTestId}
-          defaultValue={birthday}
-          onChange={handleChange}
-          className="invisible h-0 w-0"
-        />
+        <input type="date" id={id} data-testid={dataTestId} defaultValue={year} className="invisible h-0 w-0" />
       )}
       {isModalShown && (
         <Modal setShowModal={setIsModalShown} pcWidth="auto" className="" isCenter>
