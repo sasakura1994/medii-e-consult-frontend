@@ -8,7 +8,7 @@ import { Modal } from '../Parts/Modal/Modal';
 import { ErrorMessage } from '../Parts/Text/ErrorMessage';
 import dayjs from 'dayjs';
 
-type DateType = 'year' | 'month' | 'day';
+type DateType = 'year' | 'month' | 'date';
 
 type Props = {
   id?: string;
@@ -34,9 +34,9 @@ export const DateField = (props: Props) => {
   const ref = useRef<HTMLInputElement>(null);
   const [isSafari, setIsSafari] = useState(false);
   const [isModalShown, setIsModalShown] = useState(false);
-  const [year, setYear] = useState<string>('');
-  const [month, setMonth] = useState<string>('');
-  const [date, setDate] = useState<string>('');
+  const [year, setYear] = useState<string>(dateFormat(value, 'YYYY'));
+  const [month, setMonth] = useState<string>(dateFormat(value, 'MM'));
+  const [date, setDate] = useState<string>(dateFormat(value, 'DD'));
   const [errorMessage, setErrorMessage] = useState('');
   const [dateStr, setDateStr] = useState('');
   const selectedDate = value ? dayjsDate(value as string) : undefined;
@@ -52,7 +52,7 @@ export const DateField = (props: Props) => {
         setMonth(e.target.value);
         setDateStr(`${year}-${e.target.value}-${date}`);
         break;
-      case 'day':
+      case 'date':
         setDate(e.target.value);
         setDateStr(`${year}-${month}-${e.target.value}`);
         break;
@@ -108,7 +108,9 @@ export const DateField = (props: Props) => {
         <TextField
           placeholder="06"
           type="text"
-          onChange={(e) => handleChangeDate(e, 'month')}
+          onChange={(e) => {
+            handleChangeDate(e, 'month');
+          }}
           onBlur={handleBlur}
           value={month}
           className="w-20"
@@ -118,7 +120,7 @@ export const DateField = (props: Props) => {
           placeholder="25"
           type="text"
           onChange={(e) => {
-            handleChangeDate(e, 'day');
+            handleChangeDate(e, 'date');
           }}
           onBlur={handleBlur}
           value={date}
