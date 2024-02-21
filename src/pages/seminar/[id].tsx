@@ -41,22 +41,21 @@ const Seminar: NextPage = () => {
       >
         <div
           className="
-        mx-auto pt-28 lg:max-w-[960px] lg:rounded-2xl lg:bg-white lg:p-10  lg:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]
+        mx-auto lg:max-w-[960px] lg:rounded-2xl lg:bg-white lg:p-10  lg:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]
         "
         >
           <div
             className="
-            relative
             mx-auto
             w-full
             bg-white
-            pt-32
+            pt-8
             lg:mt-0
             lg:max-w-[960px] lg:rounded-2xl lg:bg-transparent lg:pt-0
           "
           >
             {seminar?.movie_url ? (
-              <div className="absolute top-[-79px] w-full px-[27px] lg:static lg:px-0">
+              <div className="top-[-79px] w-full px-[27px] lg:static lg:px-0">
                 <iframe
                   src={seminar.movie_url}
                   title="YouTube video player"
@@ -69,7 +68,7 @@ const Seminar: NextPage = () => {
               <img
                 src={seminar && seminar.image_url}
                 className="
-                object-cotain absolute left-0 right-0 top-[-79px] z-20 mx-auto w-5/6
+                object-cotain left-0 right-0 top-[-79px] z-20 mx-auto w-5/6
                 shadow-lg lg:static lg:mt-0 lg:w-full lg:max-w-[960px] lg:bg-white lg:pt-0 lg:shadow-none
               "
                 alt="サムネイル"
