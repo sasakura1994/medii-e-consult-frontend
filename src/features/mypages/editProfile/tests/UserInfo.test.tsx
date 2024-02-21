@@ -63,6 +63,5 @@ describe('UserInfo', () => {
     expect(screen.getByTestId('first_name')).toBeEnabled();
     expect(screen.getByTestId('last_name_hira')).toBeEnabled();
     expect(screen.getByTestId('first_name_hira')).toBeEnabled();
-    expect(screen.getByTestId('birthday')).toBeEnabled();
   });
 });

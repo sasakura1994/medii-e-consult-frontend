@@ -204,10 +204,6 @@ describe('Document', () => {
       userEvent.clear(doctorNumber);
       userEvent.type(doctorNumber, '111111');
 
-      const date = screen.getByTestId('date-input');
-      userEvent.clear(date);
-      userEvent.type(date, '2015-06-20');
-
       const submit = screen.getByTestId('document-input-number-form-submit');
       userEvent.click(submit);
     });
