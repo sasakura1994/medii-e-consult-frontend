@@ -16,7 +16,7 @@ export const SeminarCard: React.FC<Props> = ({ seminar, className }: Props) => {
     >
       <Link href={`/seminar/${seminar.seminar_id}`} className="block p-6">
         <div className="w-full">
-          <img src={seminar.image_url} className="aspect-video w-full" alt="" />
+          <img src={seminar.image_url} className="w-full object-contain" alt="" />
           <div
             className={`relative mt-8 w-full rounded-md ${
               seminar.movie_url ? 'bg-primary' : 'bg-[#f5847d]'

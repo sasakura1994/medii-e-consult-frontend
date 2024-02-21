@@ -69,7 +69,7 @@ const Seminar: NextPage = () => {
               <img
                 src={seminar && seminar.image_url}
                 className="
-                absolute left-0 right-0 top-[-79px] z-20 mx-auto aspect-video w-5/6
+                object-cotain absolute left-0 right-0 top-[-79px] z-20 mx-auto w-5/6
                 shadow-lg lg:static lg:mt-0 lg:w-full lg:max-w-[960px] lg:bg-white lg:pt-0 lg:shadow-none
               "
                 alt="サムネイル"
