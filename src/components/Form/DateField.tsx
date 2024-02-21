@@ -1,74 +1,55 @@
-import React, { ChangeEvent, ChangeEventHandler, useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import TextField from '../TextField/TextField';
-import { dateFormat, dayjsDate } from '@/libs/date';
+import { dateFormat } from '@/libs/date';
 import { useRouter } from 'next/router';
-import { ja } from 'date-fns/locale';
-import { DayPicker } from 'react-day-picker';
-import { Modal } from '../Parts/Modal/Modal';
 import { ErrorMessage } from '../Parts/Text/ErrorMessage';
 import dayjs from 'dayjs';
 
 type DateType = 'year' | 'month' | 'date';
 
 type Props = {
-  id?: string;
   value?: Date | string | null;
-  dataTestId?: string;
   disabled?: boolean;
-  fromYear?: number;
-  toYear?: number;
-  onChange?: ChangeEventHandler<HTMLInputElement>;
+  onChange: (fullDate: string) => void;
 };
 
 export const DateField = (props: Props) => {
   const router = useRouter();
-  const {
-    id,
-    dataTestId,
-    disabled = false,
-    fromYear = new Date().getFullYear() - 100,
-    toYear = new Date().getFullYear() + 1,
-    value,
-    onChange,
-  } = props;
+  const { disabled = false, value, onChange } = props;
   const ref = useRef<HTMLInputElement>(null);
   const [isSafari, setIsSafari] = useState(false);
-  const [isModalShown, setIsModalShown] = useState(false);
   const [year, setYear] = useState<string>(dateFormat(value, 'YYYY'));
   const [month, setMonth] = useState<string>(dateFormat(value, 'MM'));
   const [date, setDate] = useState<string>(dateFormat(value, 'DD'));
   const [errorMessage, setErrorMessage] = useState('');
-  const [dateStr, setDateStr] = useState('');
-  const selectedDate = value ? dayjsDate(value as string) : undefined;
 
   const handleChangeDate = (e: ChangeEvent<HTMLInputElement>, dateType: DateType) => {
     e.preventDefault();
     switch (dateType) {
       case 'year':
         setYear(e.target.value);
-        setDateStr(`${e.target.value}-${month}-${date}`);
         break;
       case 'month':
         setMonth(e.target.value);
-        setDateStr(`${year}-${e.target.value}-${date}`);
         break;
       case 'date':
         setDate(e.target.value);
-        setDateStr(`${year}-${month}-${e.target.value}`);
         break;
       default:
     }
   };
 
   const handleBlur = () => {
+    const dateStr = `${year}-${month.padStart(2, '0')}-${date.padStart(2, '0')}`;
     if (dayjs(dateStr, 'YYYY-MM-DD', true).isValid()) {
       if (dayjs().isAfter(dayjs(dateStr))) {
         setErrorMessage('');
+        onChange(dateStr);
       } else {
-        setErrorMessage('エラーが発生しました。');
+        setErrorMessage('入力された年月日が現在の日付を超えることはできません。');
       }
     } else {
-      setErrorMessage('エラーが発生しました。');
+      setErrorMessage('入力した日付が存在しません。');
     }
   };
 
@@ -88,7 +69,6 @@ export const DateField = (props: Props) => {
           onClick={() => {
             if (isSafari) {
               ref.current?.focus();
-              setIsModalShown(true);
               return;
             }
           }}
@@ -102,7 +82,7 @@ export const DateField = (props: Props) => {
           // eslint-disable-next-line rulesdir/dont-use-url-properties
           className="w-20"
           // iOSで操作するとフォーカスしたカーソルが残ってしまうため
-          disabled={disabled || isModalShown}
+          disabled={disabled}
         />
         <p className="mx-3 flex items-center">年</p>
         <TextField
@@ -114,6 +94,7 @@ export const DateField = (props: Props) => {
           onBlur={handleBlur}
           value={month}
           className="w-20"
+          disabled={disabled}
         />
         <p className="mx-3 flex items-center">月</p>
         <TextField
@@ -125,35 +106,11 @@ export const DateField = (props: Props) => {
           onBlur={handleBlur}
           value={date}
           className="w-20"
+          disabled={disabled}
         />
         <p className="mx-3 flex items-center">日</p>
       </div>
       {errorMessage && <ErrorMessage className="mt-4">{errorMessage}</ErrorMessage>}
-      {!disabled && (
-        <input type="date" id={id} data-testid={dataTestId} defaultValue={year} className="invisible h-0 w-0" />
-      )}
-      {isModalShown && (
-        <Modal setShowModal={setIsModalShown} pcWidth="auto" className="" isCenter>
-          <DayPicker
-            mode="single"
-            captionLayout="dropdown-buttons"
-            fromYear={fromYear}
-            toYear={toYear}
-            defaultMonth={selectedDate}
-            selected={selectedDate}
-            onSelect={(day: Date | null | undefined) => {
-              if (day) {
-                onChange?.({
-                  target: { value: dateFormat(day, 'YYYY-MM-DD') },
-                } as unknown as ChangeEvent<HTMLInputElement>);
-                setIsModalShown(false);
-              }
-            }}
-            locale={ja}
-            weekStartsOn={1}
-          />
-        </Modal>
-      )}
     </>
   );
 };

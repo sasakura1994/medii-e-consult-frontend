@@ -24,15 +24,13 @@ export const EditProfileBirthday = (props: Props) => {
     <>
       <EditProfileLabel required={isEnabled ? true : undefined}>生年月日</EditProfileLabel>
       <DateField
-        id="birthday"
-        dataTestId="birthday"
         value={birthday}
-        onChange={(e) => {
-          if (!e.target.value) {
+        onChange={(fullDate: string) => {
+          if (fullDate === '') {
             return;
           }
 
-          const parts = e.target.value.split(/-/);
+          const parts = fullDate.split(/-/);
           setProfileFields({
             birthday_year: Number(parts[0]).toString(),
             birthday_month: Number(parts[1]).toString(),
