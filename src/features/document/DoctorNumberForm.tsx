@@ -66,10 +66,8 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelectedWithRedi
         </div>
         <div className="mt-2">
           <DateField
-            id="date-input"
-            dataTestId="date-input"
             value={doctorLicenseDate}
-            onChange={(e) => parseAndSetDoctorLicenseDate(e.target.value)}
+            onChange={(fullDate: string) => parseAndSetDoctorLicenseDate(fullDate)}
           />
         </div>
       </div>
