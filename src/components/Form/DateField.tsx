@@ -65,7 +65,7 @@ export const DateField = (props: Props) => {
       <div className="flex">
         <TextField
           type="text"
-          placeholder="1990"
+          placeholder="yyyy"
           onClick={() => {
             if (isSafari) {
               ref.current?.focus();
@@ -86,7 +86,7 @@ export const DateField = (props: Props) => {
         />
         <p className="mx-3 flex items-center">年</p>
         <TextField
-          placeholder="06"
+          placeholder="mm"
           type="text"
           onChange={(e) => {
             handleChangeDate(e, 'month');
@@ -98,7 +98,7 @@ export const DateField = (props: Props) => {
         />
         <p className="mx-3 flex items-center">月</p>
         <TextField
-          placeholder="25"
+          placeholder="dd"
           type="text"
           onChange={(e) => {
             handleChangeDate(e, 'date');
