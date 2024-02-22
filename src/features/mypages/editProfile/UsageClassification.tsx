@@ -7,9 +7,6 @@ import { EditProfileLabel } from './EditProfileLabel';
 import { MedicalCareerSpecialities } from './MedicalCareerSpecialities';
 import { ExpandTextArea } from '@/components/Parts/Form/ExpandTextArea';
 
-const now = new Date();
-const doctorApprovalYear = now.getFullYear() - (now.getMonth() <= 3 ? 7 : 6);
-
 type Props = UseEditProfile & {
   isRegisterMode: boolean;
 };
@@ -89,7 +86,7 @@ export const UsageClassification = (props: Props) => {
       <div className="mt-4">
         <ul className="ml-6 list-disc text-text-secondary">
           <li>ご回答いただくエキスパート専門医の登録には、審査を行っております</li>
-          <li>医師卒後年数7年目(～{doctorApprovalYear}年度医師登録)以上を一つの条件とし、総合的に判定しております</li>
+          <li>専門医資格をお持ちであること等を一つの条件とし、総合的に判定しております</li>
           <li>エキスパート専門医に登録いただいても、E-コンサルへのご回答は任意です</li>
           <li>回答する毎にAmazonギフト券と交換できるポイントが付与されます</li>
         </ul>
