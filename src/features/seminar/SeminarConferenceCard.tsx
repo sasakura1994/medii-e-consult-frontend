@@ -19,8 +19,8 @@ export const SeminarConferenceCard = (props: SeminarConferenceCardProps) => {
   }, [seminar.seminar_date, seminar.seminar_start_time]);
   if (index === 0) {
     return (
-      <div className="mt-6 flex h-auto w-[343px] flex-wrap rounded-lg bg-white p-4 shadow-high lg:w-[928px] lg:p-0">
-        <img alt="" src={seminar.image_url} className="h-[183px] w-[327px] lg:m-4 lg:h-[237px] lg:w-[424px]" />
+      <div className="mt-6 flex h-auto w-[343px] flex-wrap items-start rounded-lg bg-white p-4 shadow-high lg:w-[928px] lg:p-0">
+        <img alt="" src={seminar.image_url} className="w-[327px] object-contain lg:m-4 lg:w-[424px]" />
         <div className="ml-0 w-full lg:m-4 lg:w-[440px]">
           <div className="mt-1 flex items-center">
             <p className="text-md">{dateTime}</p>
