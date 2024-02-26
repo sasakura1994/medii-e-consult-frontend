@@ -41,6 +41,7 @@ const chatData: ChatData = {
   file_size: 0,
   message: '',
   only_me: true,
+  is_first: false,
   modified: 0,
   uid: 1,
   read_count: 0,

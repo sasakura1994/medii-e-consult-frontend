@@ -21,6 +21,7 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
   const [isOpenReConsultConfirmModal, setIsOpenReConsultConfirmModal] = useState(false);
   const [isOpenRoomReopenModal, setIsOpenRoomReopenModal] = useState(false);
   const [isOpenChatEditModal, setIsOpenChatEditModal] = useState(false);
+  const [isOpenChatFirstMessageEditModal, setIsOpenChatFirstMessageEditModal] = useState(false);
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
   const [isOpenDoctorDetailModal, setIsOpenDoctorDetailModal] = useState(false);
   const [isOpenGroupMemberModal, setIsOpenGroupMemberModal] = useState(false);
@@ -186,6 +187,8 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
     setIsOpenRoomReopenModal,
     isOpenChatEditModal,
     setIsOpenChatEditModal,
+    isOpenChatFirstMessageEditModal,
+    setIsOpenChatFirstMessageEditModal,
     isOpenDeleteModal,
     setIsOpenDeleteModal,
     isOpenDoctorDetailModal,
@@ -208,7 +211,8 @@ export const useConsultDetail = (props: useConsultDetailProps) => {
     selectedImage,
     setSelectedImage,
     setChatGlobalState,
-    getMedicalSpecialityName,
     activateChatRoom,
   };
 };
+
+export type UseConsultDetail = ReturnType<typeof useConsultDetail>;

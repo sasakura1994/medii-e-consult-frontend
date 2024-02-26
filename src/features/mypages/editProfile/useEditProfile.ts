@@ -9,6 +9,7 @@ import { Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState } f
 import { EditProfileProps } from './EditProfile';
 import { loadLocalStorage, saveLocalStorage } from '@/libs/LocalStorageManager';
 import { HospitalEntity } from '@/types/entities/hospitalEntity';
+import { Query } from './useEditProfilePage';
 
 const editProfileFormDataKey = 'EditProfile::formData';
 
@@ -45,6 +46,7 @@ export type UseEditProfile = {
   isCompleted: boolean;
   isHospitalDisabled: boolean;
   isSending: boolean;
+  isStudentToDoctor: boolean;
   profile?: EditingProfile;
   saveProfile: () => Promise<boolean>;
   selectedHospital?: Option;
@@ -63,6 +65,8 @@ export type UseEditProfile = {
 export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
   const { isRegisterMode } = props;
   const router = useRouter();
+  const { student_to_doctor } = router.query as Query;
+  const isStudentToDoctor = student_to_doctor !== undefined;
 
   // setProfileはsetProfileFieldsでラップしているので基本使わない
   const [profile, setProfile] = useState<EditingProfile>();
@@ -171,7 +175,12 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
         birthday_year: fetchedProfile.birthday_year === 9999 ? '1990' : numberToString(fetchedProfile.birthday_year),
         birthday_month: fetchedProfile.birthday_year === 9999 ? '1' : numberToString(fetchedProfile.birthday_month),
         birthday_day: fetchedProfile.birthday_year === 9999 ? '1' : numberToString(fetchedProfile.birthday_day),
-        qualified_year: numberToString(fetchedProfile.qualified_year),
+        qualified_year: numberToString(
+          isStudentToDoctor && fetchedProfile.graduation_year
+            ? fetchedProfile.graduation_year
+            : fetchedProfile.qualified_year
+        ),
+        main_speciality: isStudentToDoctor ? '' : fetchedProfile.main_speciality,
         graduated_university: fetchedProfile.graduated_university === 'null' ? '' : fetchedProfile.graduated_university,
         is_mail_notify:
           !fetchedProfile.is_mail_notify && !fetchedProfile.is_push_notify ? true : fetchedProfile.is_mail_notify,
@@ -181,9 +190,9 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
     }
 
     setHospitalInputType(currentProfile.hospital_id === '' && currentProfile.hospital_name !== '' ? 'free' : 'select');
-    setAccountType(currentProfile.main_speciality === 'STUDENT' ? 'student' : 'doctor');
+    setAccountType(currentProfile.main_speciality === 'STUDENT' && !isStudentToDoctor ? 'student' : 'doctor');
     setIsInitialized(true);
-  }, [fetchedProfile, getDraftProfile, isInitialized]);
+  }, [fetchedProfile, getDraftProfile, isInitialized, isStudentToDoctor]);
 
   // 下書き保存も同時に行うため基本的にはsetProfileでなくこれを使う
   const setProfileFields = useCallback(
@@ -363,6 +372,7 @@ export const useEditProfile = (props: EditProfileProps): UseEditProfile => {
     isCompleted,
     isHospitalDisabled,
     isSending,
+    isStudentToDoctor,
     profile,
     saveProfile,
     selectedHospital,

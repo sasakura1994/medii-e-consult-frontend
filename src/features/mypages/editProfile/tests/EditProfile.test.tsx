@@ -4,11 +4,13 @@ import { render, screen, act, waitFor } from '@testing-library/react';
 import { useFetchProfile } from '@/hooks/api/doctor/useFetchProfile';
 import { EditProfile } from '../EditProfile';
 import userEvent from '@testing-library/user-event';
+import { useRouter } from 'next/router';
 
 jest.mock('@/hooks/api/doctor/useFetchProfile');
 jest.mock('next/router', () => ({
   useRouter: jest.fn().mockReturnValue({
     isReady: true,
+    query: {},
   }),
 }));
 describe('EditProfile', () => {
@@ -89,6 +91,33 @@ describe('EditProfile', () => {
 
     await act(() => {
       render(<EditProfile isRegisterMode={false} />);
+    });
+
+    const editProfileUsageClassification = await act(
+      async () => await waitFor(() => screen.queryByTestId('edit-profile-usage-classification'))
+    );
+    expect(editProfileUsageClassification).not.toBeInTheDocument();
+  });
+
+  test('医学生から医師になる場合は利用区分を表示しない', async () => {
+    (useRouter as jest.Mock).mockReturnValue({
+      isReady: true,
+      query: {
+        student_to_doctor: 'true',
+      },
+    });
+    (useFetchProfile as jest.Mock).mockReturnValue({
+      profile: {
+        birthday_year: 2000,
+        birthday_month: 4,
+        birthday_day: 1,
+        qualified_year: 2020,
+        registration_source: '',
+      },
+    });
+
+    await act(() => {
+      render(<EditProfile isRegisterMode={true} />);
     });
 
     const editProfileUsageClassification = await act(

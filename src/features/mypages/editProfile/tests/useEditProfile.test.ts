@@ -17,7 +17,9 @@ jest.mock('@/hooks/api/hospital/useSearchHospitals');
 jest.mock('@/hooks/api/doctor/useUpdateProfile');
 jest.mock('@/libs/LocalStorageManager');
 jest.mock('next/router', () => ({
-  useRouter: jest.fn(),
+  useRouter: jest.fn().mockReturnValue({
+    query: {},
+  }),
 }));
 
 describe('useEditProfile', () => {
@@ -169,6 +171,80 @@ describe('useEditProfile', () => {
       const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {}).result;
 
       expect(hooks.current.profile?.last_name).toEqual('not draft');
+    });
+  });
+
+  describe('医学生から医師になる場合の初期化', () => {
+    test('医学生でない場合', async () => {
+      const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
+      (useFetchProfileMock as jest.Mock).mockReturnValue({
+        profile: {
+          birthday_year: 2000,
+          birthday_month: 4,
+          birthday_day: 1,
+          qualified_year: 2020,
+          hospital_id: '',
+          hospital_name: 'free input',
+          main_speciality: 'GANKA',
+          status: 'VERIFIED',
+          graduation_year: 2024,
+        } as ProfileEntity,
+      });
+
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {}).result;
+
+      expect(hooks.current.accountType).toEqual('doctor');
+      expect(hooks.current.profile?.qualified_year).toEqual('2020');
+    });
+
+    test('医学生の場合', async () => {
+      const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
+      (useFetchProfileMock as jest.Mock).mockReturnValue({
+        profile: {
+          birthday_year: 2000,
+          birthday_month: 4,
+          birthday_day: 1,
+          qualified_year: 2020,
+          hospital_id: '',
+          hospital_name: 'free input',
+          main_speciality: 'STUDENT',
+          status: 'VERIFIED',
+          graduation_year: 2024,
+        } as ProfileEntity,
+      });
+
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {}).result;
+
+      expect(hooks.current.accountType).toEqual('student');
+      expect(hooks.current.profile?.qualified_year).toEqual('2020');
+    });
+
+    test('医師になる場合', async () => {
+      (useRouter as jest.Mock).mockReturnValue({
+        query: {
+          student_to_doctor: '1',
+        },
+      });
+
+      const useFetchProfileMock = useFetchProfile as jest.Mocked<typeof useFetchProfile>;
+      (useFetchProfileMock as jest.Mock).mockReturnValue({
+        profile: {
+          birthday_year: 2000,
+          birthday_month: 4,
+          birthday_day: 1,
+          qualified_year: 2020,
+          hospital_id: '',
+          hospital_name: 'free input',
+          main_speciality: 'STUDENT',
+          status: 'VERIFIED',
+          graduation_year: 2024,
+        } as ProfileEntity,
+      });
+
+      const hooks = renderHook(() => useEditProfile({ isRegisterMode: false }), {}).result;
+
+      expect(hooks.current.accountType).toEqual('doctor');
+      expect(hooks.current.profile?.qualified_year).toEqual('2024');
     });
   });
 
@@ -440,9 +516,9 @@ describe('useEditProfile', () => {
       });
 
       const pushMock = jest.fn();
-      const useRouterMock = useRouter as jest.Mocked<typeof useRouter>;
-      (useRouterMock as jest.Mock).mockReturnValue({
+      (useRouter as jest.Mock).mockReturnValue({
         push: pushMock,
+        query: {},
       });
 
       const updateProfileMock = jest.fn().mockResolvedValue({ response: { data: {} } });
@@ -479,9 +555,9 @@ describe('useEditProfile', () => {
       });
 
       const pushMock = jest.fn();
-      const useRouterMock = useRouter as jest.Mocked<typeof useRouter>;
-      (useRouterMock as jest.Mock).mockReturnValue({
+      (useRouter as jest.Mock).mockReturnValue({
         push: pushMock,
+        query: {},
       });
 
       const hooks = renderHook(() => useEditProfile({ isRegisterMode: true }), {}).result;
@@ -559,6 +635,7 @@ describe('useEditProfile', () => {
           is_push_notify: false,
           graduated_university: 'uni',
           hospital_name: '',
+          main_speciality: 'NAIKA',
         } as ProfileEntity,
       });
 
@@ -584,6 +661,7 @@ describe('useEditProfile', () => {
       formData.append('is_push_notify', 'true');
       formData.append('graduated_university', 'uni');
       formData.append('hospital_name', '');
+      formData.append('main_speciality', 'NAIKA');
 
       const calledFormData = updateProfile.mock.calls[0][0] as FormData;
 

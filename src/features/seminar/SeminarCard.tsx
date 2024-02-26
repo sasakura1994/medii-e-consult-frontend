@@ -16,7 +16,7 @@ export const SeminarCard: React.FC<Props> = ({ seminar, className }: Props) => {
     >
       <Link href={`/seminar/${seminar.seminar_id}`} className="block p-6">
         <div className="w-full">
-          <img src={seminar.image_url} className="aspect-video w-full" alt="" />
+          <img src={seminar.image_url} className="w-full object-contain" alt="" />
           <div
             className={`relative mt-8 w-full rounded-md ${
               seminar.movie_url ? 'bg-primary' : 'bg-[#f5847d]'
@@ -36,7 +36,7 @@ export const SeminarCard: React.FC<Props> = ({ seminar, className }: Props) => {
             <p className="mt-4 line-clamp-3 h-auto font-bold">{seminar.subject}</p>
             <dl className="grid grid-cols-[3rem_auto] gap-x-2 text-sm lg:mb-4 lg:mt-6 lg:gap-y-4">
               <dt className="pr-4 font-bold text-primary">講師</dt>
-              <dd className="whitespace-pre-wrap text-sm">{seminar.doctor_name}先生</dd>
+              <dd className="whitespace-pre-wrap text-sm">{seminar.doctor_name}</dd>
               <dt className="pr-4 font-bold text-primary">概要</dt>
               <dd className="line-clamp-2 h-10 text-sm">{seminar.description}</dd>
             </dl>

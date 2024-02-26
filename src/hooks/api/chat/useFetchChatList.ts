@@ -13,6 +13,7 @@ export type ChatData = {
   file_size: number;
   message: string;
   only_me: boolean;
+  is_first: boolean;
   modified: number;
   uid: number;
   read_count: number;
@@ -66,6 +67,15 @@ export const useFetchChatList = (chatRoomId?: string) => {
     }
   }, [newData]);
 
+  const updateMessageMutate = useCallback((uid: number, message: ChatData) => {
+    setData((prevData) => {
+      if (!prevData) {
+        return undefined;
+      }
+      return prevData.map((item) => (item.uid === uid ? message : item));
+    });
+  }, []);
+
   const deleteMessageMutate = useCallback((uid: number) => {
     setData((prevData) => {
       if (!prevData) {
@@ -83,5 +93,6 @@ export const useFetchChatList = (chatRoomId?: string) => {
     fetchNewChatList,
     resetFromUid,
     deleteMessageMutate,
+    updateMessageMutate,
   };
 };

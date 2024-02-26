@@ -11,7 +11,11 @@ export type UseFetchMedicalSpecialityType = {
 const endpoint = '/medical_category/medical_specialities';
 
 export const useFetchMedicalSpecialities = (): UseFetchMedicalSpecialityType => {
-  const { isLoading, error, data: medicalSpecialities } = useAuthenticatedSWR<MedicalSpecialityEntity[]>(endpoint);
+  const {
+    isLoading,
+    error,
+    data: medicalSpecialities,
+  } = useAuthenticatedSWR<MedicalSpecialityEntity[]>(endpoint, { revalidateIfStale: false });
 
   return {
     isLoading,
