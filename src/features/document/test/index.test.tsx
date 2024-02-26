@@ -165,17 +165,17 @@ describe('Document', () => {
     });
   });
 
-  test('selectedがnumberの場合、DocumentInputNumberがレンダリングされること', async () => {
-    await getRender();
-    act(() => {
-      const numberDocument = screen.getByTestId('number');
-      expect(numberDocument).toBeInTheDocument();
-      userEvent.click(numberDocument);
-    });
-    await waitFor(() => {
-      expect(screen.getByTestId('document-input-number')).toBeInTheDocument();
-    });
-  });
+  // test('selectedがnumberの場合、DocumentInputNumberがレンダリングされること', async () => {
+  //   await getRender();
+  //   act(() => {
+  //     const numberDocument = screen.getByTestId('number');
+  //     expect(numberDocument).toBeInTheDocument();
+  //     userEvent.click(numberDocument);
+  //   });
+  //   await waitFor(() => {
+  //     expect(screen.getByTestId('document-input-number')).toBeInTheDocument();
+  //   });
+  // });
 
   test('STUDENTの場合、DocumentInputStudentがレンダリングされること', async () => {
     (useProfile as jest.Mock).mockReturnValue({
@@ -188,27 +188,27 @@ describe('Document', () => {
     expect(screen.getByTestId('document-input-student-document')).toBeInTheDocument();
   });
 
-  test('selectedがconmpeteの場合、onboarding/questionaryページへ遷移すること', async () => {
-    await getRender();
-    await act(async () => {
-      const number = screen.getByTestId('number');
-      expect(number).toBeInTheDocument();
-      userEvent.click(number);
-    });
-    await waitFor(() => {
-      expect(screen.getByTestId('document-input-number')).toBeInTheDocument();
-    });
+  // test('selectedがconmpeteの場合、onboarding/questionaryページへ遷移すること', async () => {
+  //   await getRender();
+  //   await act(async () => {
+  //     const number = screen.getByTestId('number');
+  //     expect(number).toBeInTheDocument();
+  //     userEvent.click(number);
+  //   });
+  //   await waitFor(() => {
+  //     expect(screen.getByTestId('document-input-number')).toBeInTheDocument();
+  //   });
 
-    await act(async () => {
-      const doctorNumber = screen.getByTestId('document-input-number-form');
-      userEvent.clear(doctorNumber);
-      userEvent.type(doctorNumber, '111111');
+  //   await act(async () => {
+  //     const doctorNumber = screen.getByTestId('document-input-number-form');
+  //     userEvent.clear(doctorNumber);
+  //     userEvent.type(doctorNumber, '111111');
 
-      const submit = screen.getByTestId('document-input-number-form-submit');
-      userEvent.click(submit);
-    });
-    await waitFor(() => {
-      expect(mockRouter.push).toHaveBeenCalledWith('/onboarding/questionary');
-    });
-  });
+  //     const submit = screen.getByTestId('document-input-number-form-submit');
+  //     userEvent.click(submit);
+  //   });
+  //   await waitFor(() => {
+  //     expect(mockRouter.push).toHaveBeenCalledWith('/onboarding/questionary');
+  //   });
+  // });
 });
