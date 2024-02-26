@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { DocumentSelected } from '.';
 import { useDoctorNumberForm } from './useDoctorNumberForm';
 import PrimaryButton from '@/components/Button/PrimaryButton';
@@ -7,6 +7,7 @@ import TextField from '@/components/TextField/TextField';
 import SecondaryButton from '@/components/Button/SecondaryButton';
 import { DateField } from '@/components/Form/DateField';
 import { Heading } from '@/components/Parts/Text/Heading';
+import { useEditProfile } from '../mypages/editProfile/useEditProfile';
 
 type DoctorNumberFormProps = {
   setSelectedWithRedirect: (value: DocumentSelected) => void;
@@ -15,15 +16,20 @@ type DoctorNumberFormProps = {
 const REGEX_NUMBER = /^[0-9]*$/g;
 
 const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelectedWithRedirect }) => {
-  const {
-    doctorNumber,
-    setDoctorNumber,
-    errorMessage,
-    isUpdatePrepared,
-    submit,
-    doctorLicenseDate,
-    parseAndSetDoctorLicenseDate,
-  } = useDoctorNumberForm({ setSelectedWithRedirect });
+  const { doctorNumber, setDoctorNumber, errorMessage, isUpdatePrepared, submit, parseAndSetDoctorLicenseDate } =
+    useDoctorNumberForm({ setSelectedWithRedirect });
+
+  const { profile } = useEditProfile({ isRegisterMode: true });
+  const birthday = useMemo(() => {
+    if (!profile) {
+      return undefined;
+    }
+    return new Date(Number(profile.birthday_year), Number(profile.birthday_month) - 1, Number(profile.birthday_day));
+  }, [profile]);
+
+  if (!profile) {
+    return <></>;
+  }
 
   return (
     <form
@@ -65,10 +71,7 @@ const DoctorNumberForm: React.FC<DoctorNumberFormProps> = ({ setSelectedWithRedi
           <Required>必須</Required>
         </div>
         <div className="mt-2">
-          <DateField
-            value={doctorLicenseDate}
-            onChange={(fullDate: string) => parseAndSetDoctorLicenseDate(fullDate)}
-          />
+          <DateField value={birthday} onChange={(fullDate: string) => parseAndSetDoctorLicenseDate(fullDate)} />
         </div>
       </div>
       {errorMessage && <div className="mt-5 text-center text-base font-bold text-red-500">{errorMessage}</div>}
