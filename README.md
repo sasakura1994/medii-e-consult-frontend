@@ -6,7 +6,6 @@
 - React
 - Tailwind CSS
 - Jest
-- React Testing Library
 
 ### Execution environment
 
