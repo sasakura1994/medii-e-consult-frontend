@@ -1,5 +1,13 @@
 ## Getting Started
 
+## Language
+- Next.js
+- TypeScript
+- React
+- Tailwind CSS
+- Jest
+- React Testing Library
+
 ### Execution environment
 
 - Node version: 18.14.0
