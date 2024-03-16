@@ -1,12 +1,5 @@
 ## Getting Started
 
-## Language
-- Next.js
-- TypeScript
-- React
-- Tailwind CSS
-- Jest
-
 ### Execution environment
 
 - Node version: 18.14.0
